@@ -1,0 +1,29 @@
+name: soknad-personopplysninger_backend-api
+image: repo.adeo.no:5443/innsyn/personopplysninger_backend
+replicas:
+  min: 2
+  max: 4
+  cpuThresholdPercentage: 50
+port: 8080
+prometheus:
+  enabled: true
+  path: /api/actuator/prometheus
+healthcheck:
+  liveness:
+    initialDelay: 60
+    path: /api/status/isAlive
+  readiness:
+    initialDelay: 60
+    path: /api/status/isAlive
+fasitResources:
+  used:
+  - alias: aad_b2c_clientid
+    resourceType: credential
+    propertyMap:
+      username: NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_ACCEPTEDAUDIENCE
+  - alias: aad_b2c_discovery
+    resourceType: baseurl
+    propertyMap:
+      url: NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_DISCOVERYURL
+  - alias: appres.cms
+    resourceType: baseUrl
