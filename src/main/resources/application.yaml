@@ -8,10 +8,6 @@ http.proxy: http://webproxy-nais.nav.no:8088
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
-#    discoveryurl: <Hentes fra fasit>
-#    acceptedaudience: <Hentes fra fasit>
-#    cookie_name: selvbetjening_idtoken
-#Midlertidige satte verdier
-         discoveryurl: http://metadata
-         accepted_audience: aud-localhost
-         cookie_name: localhost-idtoken
+    discoveryurl: <Hentes fra fasit>
+    acceptedaudience: <Hentes fra fasit>
+    cookie_name: selvbetjening_idtoken
