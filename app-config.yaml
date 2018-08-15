@@ -1,5 +1,6 @@
-name: soknad-personopplysninger_backend-api
-image: repo.adeo.no:5443/innsyn/personopplysninger_backend
+team: "personbruker"
+name: personopplysninger_backend
+image: repo.adeo.no:5443/personbruker/personopplysninger_backend
 replicas:
   min: 2
   max: 4
