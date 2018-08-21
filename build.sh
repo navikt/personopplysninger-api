@@ -18,7 +18,7 @@ Gyldige OPTIONS:
 
 # Default verdier
 v=${versjon}
-IMAGE_NAME="personopplysninger_backend"
+IMAGE_NAME="personopplysninger-backend"
 DOCKER_REGISTRY="repo.adeo.no:5443"
 DOCKER_REPOSITORY="innsyn"
 TAG="${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/${IMAGE_NAME}:${v:="unversioned"}"

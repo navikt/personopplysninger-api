@@ -1,6 +1,6 @@
 team: "personbruker"
-name: personopplysninger_backend
-image: repo.adeo.no:5443/personbruker/personopplysninger_backend
+name: personopplysninger-backend
+image: repo.adeo.no:5443/personbruker/personopplysninger-backend
 replicas:
   min: 2
   max: 4
