@@ -20,7 +20,7 @@ Gyldige OPTIONS:
 v=${versjon}
 IMAGE_NAME="personopplysninger-backend"
 DOCKER_REGISTRY="repo.adeo.no:5443"
-DOCKER_REPOSITORY="innsyn"
+DOCKER_REPOSITORY="personbruker"
 TAG="${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/${IMAGE_NAME}:${v:="unversioned"}"
 BUILDER_IMAGE="repo.adeo.no:5443/soknad/soknad-docker-builder:0.1.1"
 
