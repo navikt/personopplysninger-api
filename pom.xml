@@ -10,7 +10,7 @@
         <version>2.0.2.RELEASE</version>
     </parent>
 
-    <groupId>no.nav.personopplysninger-backend</groupId>
+    <groupId>no.nav.sbl</groupId>
     <artifactId>personopplysninger-backend</artifactId>
     <version>1</version>
     <packaging>jar</packaging>

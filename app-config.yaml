@@ -1,5 +1,7 @@
-name: soknad-personopplysninger_backend-api
-image: repo.adeo.no:5443/innsyn/personopplysninger_backend
+#jeg vil ikke ha hjelp fra pus
+team: "personbruker"
+name: personopplysninger-backend
+image: repo.adeo.no:5443/personbruker/personopplysninger-backend
 replicas:
   min: 2
   max: 4
