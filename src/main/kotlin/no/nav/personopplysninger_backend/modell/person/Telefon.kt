@@ -1,13 +1,13 @@
 package no.nav.personopplysninger_backend.modell.person
 
 data class Telefon(
-        val jobb: String,
-        val jobbDatoRegistrert: String,
-        val jobbKilde: String,
-        val mobil: String,
-        val mobilDatoRegistrert: String,
-        val mobilKilde: String,
-        val privat: String,
-        val privatDatoRegistrert: String,
-        val privatKilde: String
+        val jobb: String? = null,
+        val jobbDatoRegistrert: String? = null,
+        val jobbKilde: String? = null,
+        val mobil: String? = null,
+        val mobilDatoRegistrert: String? = null,
+        val mobilKilde: String? = null,
+        val privat: String? = null,
+        val privatDatoRegistrert: String? = null,
+        val privatKilde: String? = null
 )

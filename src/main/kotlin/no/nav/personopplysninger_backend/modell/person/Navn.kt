@@ -1,11 +1,11 @@
 package no.nav.personopplysninger_backend.modell.person
 
 data class Navn(
-        val datoFraOgMed: String,
-        val forkortetNavn: String,
-        val fornavn: String,
-        val kilde: String,
-        val mellomnavn: String,
-        val slektsnavn: String,
-        val slektsnavnUgift: String
+        val datoFraOgMed: String? = null,
+        val forkortetNavn: String? = null,
+        val fornavn: String? = null,
+        val kilde: String? = null,
+        val mellomnavn: String? = null,
+        val slektsnavn: String? = null,
+        val slektsnavnUgift: String? = null
 )
