@@ -1,3 +1,5 @@
+#jeg vil ikke ha hjelp fra pus
+#Vi må ha kommentaren over så lenge vi ikke bruker appdynamics her, dette bør vi fikse på sikt
 team: "personbruker"
 name: personopplysninger-backend
 image: repo.adeo.no:5443/personbruker/personopplysninger-backend
