@@ -45,19 +45,8 @@ case $arg in
 esac
 done
 
-
-function build_command {
-    docker run \
-        --rm \
-        --volume $(pwd):/var/workspace \
-        --volume /var/run/docker.sock:/var/run/docker.sock \
-        $BUILDER_IMAGE \
-        "$@"
-}
-
-
 function build_target {
-    build_command mvn clean verify
+    mvn clean verify
 }
 
 
