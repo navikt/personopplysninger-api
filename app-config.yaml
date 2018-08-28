@@ -16,6 +16,9 @@ healthcheck:
   readiness:
     initialDelay: 60
     path: /api/status/isAlive
+resources:
+  limits:
+    cpu: 3
 fasitResources:
   used:
   - alias: aad_b2c_clientid
