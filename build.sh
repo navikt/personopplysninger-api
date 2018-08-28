@@ -19,7 +19,7 @@ Gyldige OPTIONS:
 # Default verdier
 v=${versjon}
 IMAGE_NAME="personopplysninger-backend"
-DOCKER_REGISTRY="repo.adeo.no:5443"
+DOCKER_REGISTRY="docker.adeo.no:5000"
 DOCKER_REPOSITORY="personbruker"
 TAG="${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/${IMAGE_NAME}:${v:="unversioned"}"
 BUILDER_IMAGE="docker.adeo.no:5000/personbruker/personbruker-builder:1.1.0"
