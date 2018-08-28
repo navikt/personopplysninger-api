@@ -33,9 +33,6 @@ case $arg in
         echo "$usage" >&2
         exit 1
         ;;
-    --publish)
-        PUBLISH=true
-        ;;
     *) # ukjent argument
         printf "Ukjent argument: %s\n" "$1" >&2
         echo ""
@@ -61,17 +58,15 @@ function create_version_file {
 }
 
 function publish_container() {
-    docker push ${TAG}
+    if [ -z ${versjon+x} ]; then
+        echo "versjon er ikke satt - publiserer ikke!"
+        exit 1;
+        else docker push ${TAG};
+    fi
 }
 
 build_target
 create_version_file
 build_container
+publish_container
 
-if [[ $PUBLISH ]]; then
-    if [ -z ${versjon+x} ]; then
-        echo "versjon er ikke satt - publiserer ikke!"
-        exit 1;
-        else publish_container;
-    fi
-fi
