@@ -1,7 +1,8 @@
 #jeg vil ikke ha hjelp fra pus
+#Vi må ha kommentaren over så lenge vi ikke bruker appdynamics her, dette bør vi fikse på sikt
 team: "personbruker"
 name: personopplysninger-backend
-image: repo.adeo.no:5443/personbruker/personopplysninger-backend
+image: docker.adeo.no:5000/personbruker/personopplysninger-backend
 replicas:
   min: 2
   max: 4
@@ -17,6 +18,9 @@ healthcheck:
   readiness:
     initialDelay: 60
     path: /api/status/isAlive
+resources:
+  limits:
+    cpu: 3
 fasitResources:
   used:
   - alias: aad_b2c_clientid
