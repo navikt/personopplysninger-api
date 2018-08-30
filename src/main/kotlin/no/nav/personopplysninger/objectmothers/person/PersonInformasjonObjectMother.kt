@@ -1,8 +1,6 @@
 package no.nav.personopplysninger.objectmothers.person
 
 import no.nav.personopplysninger.modell.person.PersonInformasjon
-import no.nav.personopplysninger.modell.person.Telefon
-import no.nav.personopplysninger.objectmothers.person.NavnObjectMother
 
 object PersonInformasjonObjectMother{
         fun getUngUgiftKvinne(): PersonInformasjon{

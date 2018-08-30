@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.api.rest.person
 
 import com.google.gson.GsonBuilder
-import no.nav.personopplysninger.modell.person.mock.PersonInformasjonMock
+import no.nav.personopplysninger.objectmothers.person.*
 import no.nav.security.oidc.api.ProtectedWithClaims
 import no.nav.security.oidc.api.Unprotected
 import org.springframework.stereotype.Component
@@ -23,5 +23,7 @@ class PersonInformasjonResurs{
         @Produces(MediaType.APPLICATION_JSON)
         @Path("/personinfo")
         @Unprotected
-        get() =  gson.toJson(PersonInformasjonMock().mockPersonInformasjon())
+        get() {
+            return gson.toJson(PersonInformasjonObjectMother.getUngUgiftKvinne())
+        }
 }
