@@ -1,8 +1,8 @@
 #jeg vil ikke ha hjelp fra pus
 #Vi må ha kommentaren over så lenge vi ikke bruker appdynamics her, dette bør vi fikse på sikt
 team: "personbruker"
-name: personopplysninger-backend
-image: docker.adeo.no:5000/personbruker/personopplysninger-backend
+name: personopplysninger-api
+image: docker.adeo.no:5000/personbruker/personopplysninger-api
 replicas:
   min: 2
   max: 4
