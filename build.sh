@@ -18,7 +18,7 @@ Gyldige OPTIONS:
 
 # Default verdier
 v=${versjon}
-IMAGE_NAME="personopplysninger-backend"
+IMAGE_NAME="personopplysninger-api"
 DOCKER_REGISTRY="docker.adeo.no:5000"
 DOCKER_REPOSITORY="personbruker"
 TAG="${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}/${IMAGE_NAME}:${v:="unversioned"}"
