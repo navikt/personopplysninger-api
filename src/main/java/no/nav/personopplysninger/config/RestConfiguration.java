@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.config;
 
-import no.nav.personopplysninger.api.rest.StatusResource;
+import no.nav.personopplysninger.features.status.StatusResource;
 import no.nav.personopplysninger.api.rest.person.PersonInformasjonResurs;
 import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
