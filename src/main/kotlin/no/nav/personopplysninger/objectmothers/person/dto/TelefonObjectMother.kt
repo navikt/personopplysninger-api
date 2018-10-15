@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.objectmothers.person
+package no.nav.personopplysninger.objectmothers.person.dto
 
 import no.nav.personopplysninger.features.person.model.dto.Telefon
 

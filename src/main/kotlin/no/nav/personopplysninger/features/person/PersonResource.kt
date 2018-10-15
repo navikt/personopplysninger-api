@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.person
 
 import com.google.gson.GsonBuilder
-import no.nav.personopplysninger.objectmothers.person.*
+import no.nav.personopplysninger.objectmothers.person.dto.PersonInformasjonObjectMother
 import no.nav.security.oidc.api.ProtectedWithClaims
 import no.nav.security.oidc.api.Unprotected
 import org.springframework.stereotype.Component
