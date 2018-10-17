@@ -27,7 +27,7 @@ class PersonaliaResource{
         get() {
             return Response
                     .noContent()
-                    .build();
+                    .build()
         }
 
     val hentPersonaliaMock: Response
@@ -37,7 +37,7 @@ class PersonaliaResource{
         @Unprotected
         get() {
             return Response
-                    .ok(gson.toJson(Personalia("Kari","Nordmann","123345678911")))
-                    .build();
+                    .ok(gson.toJson(Personalia("Kari", "Nordmann", "123345678911")))
+                    .build()
         }
 }

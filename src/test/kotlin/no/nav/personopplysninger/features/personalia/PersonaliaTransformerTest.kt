@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
-import no.nav.personopplysninger.features.personalia.objectmothers.PersonaliaObjectMother
-import no.nav.personopplysninger.features.personalia.objectmothers.dto.PersonInformasjonObjectMother
+import no.nav.personopplysninger.features.personalia.model.PersonaliaObjectMother
+import no.nav.personopplysninger.features.personalia.dto.PersonInformasjonObjectMother
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
@@ -14,7 +14,7 @@ class PersonaliaTransformerTest {
 
     @Test
     fun transformPersoninformasjonToPersonalia() {
-        assertEquals(PersonaliaObjectMother.getUngUgiftKvinne(), personTransformer.toInternal(PersonInformasjonObjectMother.getUngUgiftKvinne()))
+        assertEquals(PersonaliaObjectMother.kvinne, personTransformer.toInternal(PersonInformasjonObjectMother.ungUgiftKvinne))
     }
 }
 
