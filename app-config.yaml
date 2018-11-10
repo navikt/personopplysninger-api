@@ -4,7 +4,7 @@ team: "personbruker"
 name: personopplysninger-api
 image: docker.adeo.no:5000/personbruker/personopplysninger-api
 replicas:
-  min: 2
+  min: 1
   max: 4
   cpuThresholdPercentage: 50
 port: 8080
@@ -13,10 +13,10 @@ prometheus:
   path: /api/actuator/prometheus
 healthcheck:
   liveness:
-    initialDelay: 60
+    initialDelay: 15
     path: /api/status/isAlive
   readiness:
-    initialDelay: 60
+    initialDelay: 15
     path: /api/status/isAlive
 resources:
   limits:
