@@ -6,16 +6,14 @@ import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
-public class RestConfiguration extends ResourceConfig {
+public class RestResourceConfiguration extends ResourceConfig {
 
 
-    public RestConfiguration() {
-
+    public RestResourceConfiguration() {
         register(JacksonFeature.class);
         register(StatusResource.class);
         register(PersonaliaResource.class);
         register(OidcContainerRequestFilter.class);
-
     }
 
 }

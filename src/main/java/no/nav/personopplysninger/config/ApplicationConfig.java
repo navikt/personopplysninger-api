@@ -54,7 +54,7 @@ public class ApplicationConfig implements EnvironmentAware {
 
         ServletRegistrationBean<?> jerseyServletRegistration = new ServletRegistrationBean<>(new ServletContainer());
 
-        jerseyServletRegistration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, RestConfiguration.class.getName());
+        jerseyServletRegistration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, RestResourceConfiguration.class.getName());
 
         return jerseyServletRegistration;
     }
@@ -94,7 +94,7 @@ public class ApplicationConfig implements EnvironmentAware {
         String proxyParameterName = env.getProperty("http.proxy.parametername", "http.proxy");
         String proxyconfig = env.getProperty(proxyParameterName);
         URL proxy = null;
-        if (proxyconfig.trim().length() > 0) {
+        if (isProxyConfigAvailable(proxyconfig)) {
             log.info("Proxy configuration found [" + proxyParameterName + "] was " + proxyconfig);
             try {
                 proxy = new URL(proxyconfig);
@@ -105,6 +105,10 @@ public class ApplicationConfig implements EnvironmentAware {
             log.info("No proxy configuration found [" + proxyParameterName + "]");
         }
         return proxy;
+    }
+
+    private boolean isProxyConfigAvailable(String proxyconfig) {
+        return proxyconfig != null && proxyconfig.trim().length() > 0;
     }
 
     @Override

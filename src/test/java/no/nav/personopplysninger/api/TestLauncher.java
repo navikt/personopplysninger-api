@@ -41,7 +41,7 @@ public class TestLauncher {
 
         ServletRegistrationBean<?> jerseyServletRegistration = new ServletRegistrationBean<>(new ServletContainer());
 
-        jerseyServletRegistration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, TestRestConfiguration.class.getName());
+        jerseyServletRegistration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, TestRestResourceConfiguration.class.getName());
 
         return jerseyServletRegistration;
     }
