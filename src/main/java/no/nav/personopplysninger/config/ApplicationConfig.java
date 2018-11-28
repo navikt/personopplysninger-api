@@ -1,5 +1,7 @@
 package no.nav.personopplysninger.config;
 
+import no.nav.log.LogFilter;
+import no.nav.personopplysninger.features.personalia.PersonRestConfiguration;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
@@ -16,6 +18,7 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.web.context.request.RequestContextListener;
@@ -28,6 +31,9 @@ import java.util.EnumSet;
 @SpringBootConfiguration
 @ComponentScan({"no.nav.personopplysninger.api"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
+@Import({RestClientConfiguration.class,
+        PersonRestConfiguration.class
+})
 public class ApplicationConfig implements EnvironmentAware {
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);
@@ -90,6 +96,15 @@ public class ApplicationConfig implements EnvironmentAware {
         return resourceRetriever;
     }
 
+    @Bean
+    public FilterRegistrationBean<LogFilter> logFilter() {
+        log.info("Registering LogFilter filter");
+        final FilterRegistrationBean<LogFilter> filterRegistration = new FilterRegistrationBean<>();
+        filterRegistration.setFilter(new LogFilter());
+        filterRegistration.setOrder(1);
+        return filterRegistration;
+    }
+
     private URL getConfiguredProxy() {
         String proxyParameterName = env.getProperty("http.proxy.parametername", "http.proxy");
         String proxyconfig = env.getProperty(proxyParameterName);
@@ -115,6 +130,5 @@ public class ApplicationConfig implements EnvironmentAware {
     public void setEnvironment(Environment env) {
         this.env = env;
     }
-
 
 }

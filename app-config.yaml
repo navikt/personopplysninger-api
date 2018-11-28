@@ -33,3 +33,7 @@ fasitResources:
       url: NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_DISCOVERYURL
   - alias: appres.cms
     resourceType: baseUrl
+  - alias: tps-proxy.api.v1.innsyn
+    resourceType: restservice
+  - alias: personopplysninger-api-tps-proxy.api.v1.innsyn-apiKey
+    resourceType: credential
