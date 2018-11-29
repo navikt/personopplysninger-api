@@ -14,6 +14,7 @@ public class RestResourceConfiguration extends ResourceConfig {
         register(StatusResource.class);
         register(PersonaliaResource.class);
         register(OidcContainerRequestFilter.class);
+        register(CORSResponseFilter.class);
     }
 
 }
