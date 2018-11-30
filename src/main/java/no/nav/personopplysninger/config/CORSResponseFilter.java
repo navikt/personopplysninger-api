@@ -11,7 +11,8 @@ public class CORSResponseFilter implements ContainerResponseFilter {
 
     private static final List<String> ALLOWED_ORIGINS = asList(
             "http://localhost:8080",
-            "https://personopplysninger-t6.nais.oera-q.local"
+            "https://personopplysninger-t6.nais.oera-q.local",
+            "https://tjenester-t6.nav.no"
     );
 
     @Override
