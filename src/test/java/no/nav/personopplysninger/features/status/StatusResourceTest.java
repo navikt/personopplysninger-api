@@ -53,4 +53,36 @@ public class StatusResourceTest {
         assertThat(response.getStatus(), is(equalTo(Response.Status.UNAUTHORIZED.getStatusCode())));
     }
 
+    @Test
+    public void optionsSkalGi200UtenHeaders() {
+        WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
+        Response response = target.path("/status/ping")
+                .request()
+                .options();
+
+        assertThat(response.getStatus(), is(equalTo(Response.Status.OK.getStatusCode())));
+    }
+
+    @Test
+    public void optionsSkalGi200WithFirefoxDefaultAcceptHeader() {
+        WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
+        Response response = target.path("/status/ping")
+                .request()
+                .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+                .options();
+
+        assertThat(response.getStatus(), is(equalTo(Response.Status.OK.getStatusCode())));
+    }
+
+    @Test
+    public void optionsSkalGi200WithChromeDefaultAcceptHeader() {
+        WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
+        Response response = target.path("/status/ping")
+                .request()
+                .header("Accept", "*/*")
+                .options();
+
+        assertThat(response.getStatus(), is(equalTo(Response.Status.OK.getStatusCode())));
+    }
+
 }

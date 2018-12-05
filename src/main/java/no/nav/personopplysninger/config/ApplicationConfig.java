@@ -5,6 +5,7 @@ import no.nav.personopplysninger.features.personalia.PersonRestConfiguration;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.slf4j.Logger;
@@ -63,6 +64,11 @@ public class ApplicationConfig implements EnvironmentAware {
         jerseyServletRegistration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, RestResourceConfiguration.class.getName());
 
         return jerseyServletRegistration;
+    }
+
+    @Bean
+    public ResourceConfig jerseyConfig() {
+        return new RestResourceConfiguration();
     }
 
     @Bean
