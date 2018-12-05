@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 
-@Controller
+@Component
 @Path("status")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = arrayOf("acr=Level4"))
 class StatusResource {

@@ -22,9 +22,9 @@ public class RestResourceConfiguration extends ResourceConfig {
         register(JacksonFeature.class);
         register(StatusResource.class);
         register(PersonaliaResource.class);
+        register(CORSResponseFilter.class);
         //register(OidcContainerRequestFilter.class);
         register(OidcResourceFilteringFeature.class);
-        register(CORSResponseFilter.class);
     }
 
     public static class OidcResourceFilteringFeature implements DynamicFeature {

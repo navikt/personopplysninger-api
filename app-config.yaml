@@ -13,10 +13,10 @@ prometheus:
   path: /api/actuator/prometheus
 healthcheck:
   liveness:
-    initialDelay: 15
+    initialDelay: 20
     path: /api/status/isAlive
   readiness:
-    initialDelay: 15
+    initialDelay: 20
     path: /api/status/isAlive
 resources:
   limits:

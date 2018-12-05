@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response
 import no.nav.security.oidc.jaxrs.OidcRequestContext
 import org.springframework.stereotype.Controller
 
-@Controller
+@Component
 @Path("/personalia")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = arrayOf("acr=Level4"))
 class PersonaliaResource @Autowired constructor(
