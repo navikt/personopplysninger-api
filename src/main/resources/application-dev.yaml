@@ -1,4 +1,13 @@
-spring.autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+spring:
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  jersey:
+    application-path: /api
+    servlet:
+      load-on-startup: 1
+server:
+  port: 8080
+  servlet:
+    context-path: /personopplysninger-api
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:

@@ -10,14 +10,14 @@ replicas:
 port: 8080
 prometheus:
   enabled: true
-  path: /api/actuator/prometheus
+  path: /personopplysninger-api/actuator/prometheus
 healthcheck:
   liveness:
     initialDelay: 20
-    path: /api/status/isAlive
+    path: /personopplysninger-api/status/isAlive
   readiness:
     initialDelay: 20
-    path: /api/status/isAlive
+    path: /personopplysninger-api/status/isAlive
 resources:
   limits:
     cpu: 3
