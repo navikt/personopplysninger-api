@@ -1,7 +1,5 @@
 package no.nav.personopplysninger.features.personalia
 
-import no.nav.personopplysninger.features.personalia.model.Personalia
-
 class PersonaliaTransformer{
 
     // TODO Are

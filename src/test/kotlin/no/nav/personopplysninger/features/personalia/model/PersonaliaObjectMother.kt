@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.personalia.model
 
 object PersonaliaObjectMother {
-    val kvinne = Personalia("Kari", "Nordmann", "12345678911")
+    // TODO Are
+//    val kvinne = Personalia("Kari", "Nordmann", "12345678911")
 }
