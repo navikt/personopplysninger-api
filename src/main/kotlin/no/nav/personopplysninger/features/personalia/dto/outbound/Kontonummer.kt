@@ -9,21 +9,21 @@
 * https://github.com/swagger-api/swagger-codegen.git
 * Do not edit the class manually.
 */
-package no.nav.personopplysninger.features.personalia.dto.out
+package no.nav.personopplysninger.features.personalia.dto.outbound
 
 
 /**
- * Informajson om egenansatt
+ * Informasjon om kontonummer
  * @param datoFraOgMed Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd
- * @param erEgenansatt Er person egenansatt
  * @param kilde 
+ * @param nummer Kontonummer
  */
-data class Egenansatt (
+data class Kontonummer (
 
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
     val datoFraOgMed: kotlin.String? = null,
-    /* Er person egenansatt */
-    val erEgenansatt: kotlin.Boolean? = null,
-    val kilde: kotlin.String? = null
+    val kilde: kotlin.String? = null,
+    /* Kontonummer */
+    val nummer: kotlin.String? = null
 ) {
 }

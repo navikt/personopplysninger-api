@@ -9,23 +9,20 @@
 * https://github.com/swagger-api/swagger-codegen.git
 * Do not edit the class manually.
 */
-package no.nav.personopplysninger.features.personalia.dto.out
+package no.nav.personopplysninger.features.personalia.dto.outbound
 
 
 /**
- * Informasjon on tiltak
+ * Informasjon om kode, verdi, dato og opprinnelse
  * @param datoFraOgMed Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd
- * @param datoTil Dato til når informasjonen er gyldig, format (ISO-8601): yyyy-MM-dd
  * @param kilde 
- * @param type 
+ * @param kode 
  */
-data class Tiltak (
+data class KodeMedDatoOgKilde (
 
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
     val datoFraOgMed: kotlin.String? = null,
-    /* Dato til når informasjonen er gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoTil: kotlin.String? = null,
     val kilde: kotlin.String? = null,
-    val type: Kode? = null
+    val kode: Kode? = null
 ) {
 }

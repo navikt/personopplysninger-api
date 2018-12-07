@@ -9,21 +9,27 @@
 * https://github.com/swagger-api/swagger-codegen.git
 * Do not edit the class manually.
 */
-package no.nav.personopplysninger.features.personalia.dto.out
+package no.nav.personopplysninger.features.personalia.dto.outbound
 
 
 /**
- * Informasjon on dødsdato
- * @param dato Dato død, format (ISO-8601): yyyy-MM-dd
+ * Informasjon om geografisk tilknytning
+ * @param bydel Bydel
  * @param datoFraOgMed Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd
  * @param kilde 
+ * @param kommune Kommune
+ * @param land Land
  */
-data class Doedsdato (
+data class GeografiskTilknytning (
 
-    /* Dato død, format (ISO-8601): yyyy-MM-dd */
-    val dato: kotlin.String? = null,
+    /* Bydel */
+    val bydel: kotlin.String? = null,
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
     val datoFraOgMed: kotlin.String? = null,
-    val kilde: kotlin.String? = null
+    val kilde: kotlin.String? = null,
+    /* Kommune */
+    val kommune: kotlin.String? = null,
+    /* Land */
+    val land: kotlin.String? = null
 ) {
 }

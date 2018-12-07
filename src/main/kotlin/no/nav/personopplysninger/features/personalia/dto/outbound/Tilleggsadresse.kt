@@ -9,20 +9,28 @@
 * https://github.com/swagger-api/swagger-codegen.git
 * Do not edit the class manually.
 */
-package no.nav.personopplysninger.features.personalia.dto.out
+package no.nav.personopplysninger.features.personalia.dto.outbound
 
 
 /**
- * Informasjon om utenlandsk adresse
+ * Informasjon on tilleggsadresse
  * @param adresse1 Adresselinje 1
  * @param adresse2 Adresselinje 2
  * @param adresse3 Adresselinje 3
+ * @param bolignummer Bolignummer
+ * @param bydel Bydel
  * @param datoFraOgMed Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd
  * @param datoTilOgMed Dato til når informasjonen er gyldig, format (ISO-8601): yyyy-MM-dd
+ * @param gateKode Gatekoade
+ * @param husbokstav Husbokstav
+ * @param husnummer Husnummer
  * @param kilde 
- * @param land Landkode
+ * @param kommunenummer Kommunenummer
+ * @param postboksanlegg 
+ * @param postboksnummer 
+ * @param postnummer Postnummer
  */
-data class UtenlandskAdresse (
+data class Tilleggsadresse (
 
     /* Adresselinje 1 */
     val adresse1: kotlin.String? = null,
@@ -30,12 +38,26 @@ data class UtenlandskAdresse (
     val adresse2: kotlin.String? = null,
     /* Adresselinje 3 */
     val adresse3: kotlin.String? = null,
+    /* Bolignummer */
+    val bolignummer: kotlin.String? = null,
+    /* Bydel */
+    val bydel: kotlin.String? = null,
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
     val datoFraOgMed: kotlin.String? = null,
     /* Dato til når informasjonen er gyldig, format (ISO-8601): yyyy-MM-dd */
     val datoTilOgMed: kotlin.String? = null,
+    /* Gatekoade */
+    val gateKode: kotlin.String? = null,
+    /* Husbokstav */
+    val husbokstav: kotlin.String? = null,
+    /* Husnummer */
+    val husnummer: kotlin.String? = null,
     val kilde: kotlin.String? = null,
-    /* Landkode */
-    val land: kotlin.String? = null
+    /* Kommunenummer */
+    val kommunenummer: kotlin.String? = null,
+    val postboksanlegg: kotlin.String? = null,
+    val postboksnummer: kotlin.String? = null,
+    /* Postnummer */
+    val postnummer: kotlin.String? = null
 ) {
 }

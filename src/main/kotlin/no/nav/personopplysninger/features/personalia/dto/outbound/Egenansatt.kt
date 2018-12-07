@@ -9,33 +9,21 @@
 * https://github.com/swagger-api/swagger-codegen.git
 * Do not edit the class manually.
 */
-package no.nav.personopplysninger.features.personalia.dto.out
+package no.nav.personopplysninger.features.personalia.dto.outbound
 
 
 /**
- * Informasjon om postadresse
- * @param adresse1 Adresse1
- * @param adresse2 Adresse2
- * @param adresse3 Adresse3
+ * Informajson om egenansatt
  * @param datoFraOgMed Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd
+ * @param erEgenansatt Er person egenansatt
  * @param kilde 
- * @param land Land
- * @param postnummer Postnummer
  */
-data class Postadresse (
+data class Egenansatt (
 
-    /* Adresse1 */
-    val adresse1: kotlin.String? = null,
-    /* Adresse2 */
-    val adresse2: kotlin.String? = null,
-    /* Adresse3 */
-    val adresse3: kotlin.String? = null,
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
     val datoFraOgMed: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
-    /* Land */
-    val land: kotlin.String? = null,
-    /* Postnummer */
-    val postnummer: kotlin.String? = null
+    /* Er person egenansatt */
+    val erEgenansatt: kotlin.Boolean? = null,
+    val kilde: kotlin.String? = null
 ) {
 }
