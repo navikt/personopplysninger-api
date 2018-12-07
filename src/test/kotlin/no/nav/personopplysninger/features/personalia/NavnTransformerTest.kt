@@ -10,18 +10,22 @@ import kotlin.test.assertEquals
 class NavnTransformerTest {
 
     @Test
-    fun aaaaaa(){
+    fun gittNavn_skalFaaNavn(){
         val inbound = Navn(fornavn = "anyFornavn", mellomnavn = "anyMellomnavn", slektsnavn = "anySlektsnavn")
+
         val actual = NavnTransformer.toOutbound(inbound)
+
         assertEquals(inbound.fornavn, actual.fornavn)
         assertEquals(inbound.mellomnavn, actual.mellomnavn)
         assertEquals(inbound.slektsnavn, actual.slektsnavn)
     }
 
     @Test
-    fun bbbbbb(){
+    fun gittNull_skalFaaNull(){
         val inbound = Navn(fornavn = null, mellomnavn = null, slektsnavn = null)
+
         val actual = NavnTransformer.toOutbound(inbound)
+
         assertEquals(inbound.fornavn, actual.fornavn)
         assertEquals(inbound.mellomnavn, actual.mellomnavn)
         assertEquals(inbound.slektsnavn, actual.slektsnavn)

@@ -97,7 +97,6 @@
                             <sourceDirs>
                                 <sourceDir>src/test/java</sourceDir>
                                 <sourceDir>src/test/kotlin</sourceDir>
-                                <sourceDir>${project.build.directory}/generated-sources/swagger/person</sourceDir>
                             </sourceDirs>
                         </configuration>
                     </execution>

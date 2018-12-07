@@ -1,20 +1,21 @@
 package no.nav.personopplysninger.features.personalia
 
-import no.nav.personopplysninger.features.personalia.model.PersonaliaObjectMother
+import no.nav.tps.person.Personinfo
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import kotlin.test.assertEquals
+import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestInstance(PER_CLASS)
 class PersonaliaTransformerTest {
 
-    private val personTransformer: PersonaliaTransformer = PersonaliaTransformer()
-
     @Test
-    fun transformPersoninformasjonToPersonalia() {
+    fun aaaaa() {
+
         // TODO Are
-//        assertEquals(PersonaliaObjectMother.kvinne, personTransformer.toInternal(PersonInformasjonObjectMother.ungUgiftKvinne))
+//        val inbound: Personinfo = PersoninfoObjectMother.allFieldsHaveValues
+        assertTrue(false)
     }
 }
 
