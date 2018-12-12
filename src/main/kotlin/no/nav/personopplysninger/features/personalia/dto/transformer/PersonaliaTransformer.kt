@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.features.personalia.dto.outbound.Personinfo
+import no.nav.tps.person.Personinfo
 
 class PersonaliaTransformer{
 
@@ -8,4 +8,8 @@ class PersonaliaTransformer{
     /*fun toInternal(external: Personinfo): Personalia {
         return Personalia(external.navn?.fornavn, external.navn?.slektsnavn, external.ident)
     }*/
+
+    fun toOutbound(inboud: Personinfo) {
+
+    }
 }
