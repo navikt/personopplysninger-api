@@ -15,7 +15,7 @@ import org.springframework.stereotype.Controller
 @Path("/personalia")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = arrayOf("acr=Level4"))
 class PersonaliaResource @Autowired constructor(
-        private var personConsumer : PersonConsumer
+        private var personaliaService : PersonaliaService
 ){
 
     private val SELVBETJENING = "selvbetjening"
@@ -25,9 +25,8 @@ class PersonaliaResource @Autowired constructor(
         @Produces(MediaType.APPLICATION_JSON)
         @Path("/hent")
         get() {
-            val fodeselsnr = hentFnrFraToken()
-            // TODO: Dette er kun en midlertidig direkte kobling mot PersononConsumer, det skal kalles mot en PersonService etc.
-            val personInfo = personConsumer.hentPersonInfo(fodeselsnr)
+            val fodselsnr = hentFnrFraToken()
+            val personInfo = personaliaService.hentPersoninfo(fodselsnr)
             return Response
                     .ok(personInfo)
                     .build()

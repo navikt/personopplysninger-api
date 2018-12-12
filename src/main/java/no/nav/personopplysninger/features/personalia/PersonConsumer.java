@@ -34,6 +34,8 @@ public class PersonConsumer {
             throw new RuntimeException(response.readEntity(String.class));
         }
 
+        //Her kalles transformer
+
         Personinfo dto = response.readEntity(Personinfo.class);
 
         // TODO: Legg på feilhåndtering

@@ -20,7 +20,9 @@ public class CORSResponseFilter implements ContainerResponseFilter {
             "https://tjenester-t6.nav.no",
             "https://tjenester-q6.nav.no",
             "https://tjenester-q4.nav.no",
-            "https://tjenester-q0.nav.no"
+            "https://tjenester-q0.nav.no",
+            "https://person-q.nav.no",
+            "https://person.nav.no"
     );
 
     @Override

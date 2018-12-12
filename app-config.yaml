@@ -8,6 +8,8 @@ replicas:
   max: 4
   cpuThresholdPercentage: 50
 port: 8080
+ingress:
+  enabled: true
 prometheus:
   enabled: true
   path: /personopplysninger-api/actuator/prometheus
@@ -37,3 +39,5 @@ fasitResources:
     resourceType: restservice
   - alias: personopplysninger-api-tps-proxy.api.v1.innsyn-apiKey
     resourceType: credential
+  - alias: loadbalancer:personopplysninger-api
+    resourceType: loadbalancerconfig

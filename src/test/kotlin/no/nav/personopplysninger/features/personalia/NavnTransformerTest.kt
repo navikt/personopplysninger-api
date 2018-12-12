@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
+import no.nav.personopplysninger.features.personalia.dto.transformer.NavnTransformer
 import no.nav.tps.person.Navn
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance

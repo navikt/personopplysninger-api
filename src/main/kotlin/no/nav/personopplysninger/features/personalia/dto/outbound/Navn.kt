@@ -13,12 +13,12 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 
 data class Navn(
         /* Format (ISO-8601): yyyy-MM-dd */
-        val datoFraOgMed: String? = null,
-        val forkortetNavn: String? = null,
+        //val datoFraOgMed: String? = null,
+        //val forkortetNavn: String? = null,
         val fornavn: String? = null,
         val kilde: String? = null,
         val mellomnavn: String? = null,
-        val slektsnavn: String? = null,
-        val slektsnavnUgift: String? = null
+        val slektsnavn: String? = null
+        //val slektsnavnUgift: String? = null
 ) {
 }
