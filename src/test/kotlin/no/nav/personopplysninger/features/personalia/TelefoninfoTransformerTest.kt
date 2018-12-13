@@ -4,7 +4,9 @@ import junit.framework.Assert.assertEquals
 import no.nav.personopplysninger.features.personalia.dto.transformer.TelefoninfoTransformer
 import no.nav.tps.person.Telefoninfo
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TelefoninfoTransformerTest {
 
     @Test
