@@ -1,10 +1,10 @@
 package no.nav.personopplysninger.features.personalia
 
-import junit.framework.Assert.assertEquals
 import no.nav.personopplysninger.features.personalia.dto.transformer.TelefoninfoTransformer
 import no.nav.tps.person.Telefoninfo
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TelefoninfoTransformerTest {

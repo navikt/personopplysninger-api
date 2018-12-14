@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.AdresseinfoTransformer
-import no.nav.tps.person.Adresseinfo
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
@@ -13,11 +12,7 @@ class AdresseinfoTransformerTest {
 
     @Test
     fun gittAdresse_skalFaaAdresse() {
-        val inbound = Adresseinfo(
-                boadresse = BoadresseObjectMother.vardeveien7(),
-                postadresse = PostadresseObjectMother.testPostadresse(),
-                utenlandskAdresse = UtenlandskAdresseObjectMother.utenlandskTestadresse()
-        )
+        val inbound = AdresseinfoObjectMother.adresseinfoTestObject()
 
         val actual = AdresseinfoTransformer.toOutbound(inbound)
 
@@ -28,11 +23,7 @@ class AdresseinfoTransformerTest {
 
     @Test
     fun gittNull_skalFaaNull() {
-        val inbound = Adresseinfo(
-                boadresse = null,
-                postadresse = null,
-                utenlandskAdresse = null
-        )
+        val inbound = AdresseinfoObjectMother.adresseinfoNullObject()
 
         val actual = AdresseinfoTransformer.toOutbound(inbound)
 

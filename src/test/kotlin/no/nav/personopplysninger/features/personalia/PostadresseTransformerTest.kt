@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia
+
 import no.nav.personopplysninger.features.personalia.dto.transformer.PostadresseTransformer
-import no.nav.tps.person.Postadresse
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
@@ -11,13 +11,7 @@ class PostadresseTransformerTest {
 
     @Test
     fun gitPostadresse_skalFaaPostadresse() {
-        val inbound = Postadresse(
-                adresse1 = "Adresselinje 1",
-                adresse2 = "Adresselinje 2",
-                adresse3 = "adresselinje 3",
-                land = "Norge",
-                postnummer = "0010"
-        )
+        val inbound = PostadresseObjectMother.testPostadresse()
 
         val actual = PostadresseTransformer.toOutbound(inbound)
 
@@ -30,13 +24,7 @@ class PostadresseTransformerTest {
 
     @Test
     fun gittNull_skalFaaNull() {
-        val inbound = Postadresse(
-                adresse1 = null,
-                adresse2 = null,
-                adresse3 = null,
-                land = null,
-                postnummer = null
-        )
+        val inbound = PostadresseObjectMother.postadresseNullObject()
 
         val actual = PostadresseTransformer.toOutbound(inbound)
 

@@ -1,18 +1,17 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.VeiadresseTransformer
-import kotlin.test.assertEquals
-import no.nav.tps.person.Veiadresse
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
+import kotlin.test.assertEquals
 
 @TestInstance(PER_CLASS)
 class VeiadresseTransformerTest {
 
     @Test
     fun gittVeiadresse_skalFaaVeiadresse() {
-        val inbound = Veiadresse(bokstav = "A", bolignummer = "H303", gatekode = "123", husnummer = "1")
+        val inbound = VeiadresseObjectMother.vardeveien7()
 
         val actual = VeiadresseTransformer.toOutbound(inbound)
 
@@ -24,7 +23,7 @@ class VeiadresseTransformerTest {
 
     @Test
     fun gittNull_skalFaaNull() {
-        val inbound = Veiadresse(bokstav = null, bolignummer = null, gatekode = null, husnummer = null)
+        val inbound = VeiadresseObjectMother.veiadresseNullObject()
 
         val actual = VeiadresseTransformer.toOutbound(inbound)
 

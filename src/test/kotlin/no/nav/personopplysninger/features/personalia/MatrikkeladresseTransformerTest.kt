@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.MatrikkeladresseTransformer
-import no.nav.tps.person.Matrikkeladresse
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
@@ -12,8 +11,7 @@ class MatrikkeladresseTransformerTest {
 
     @Test
     fun gittMatrikkeladress_skalFaaMatrikkeladresse() {
-        val inbound = Matrikkeladresse(bruksnummer = "5002", festenummer = "34", gaardsnummer = "2", undernummer = "23")
-
+        val inbound = MatrikkeladresseObjectMother.vardeveien7()
         val actual = MatrikkeladresseTransformer.toOutbound(inbound)
 
         assertEquals(inbound.bruksnummer, actual.bruksnummer)
@@ -24,7 +22,7 @@ class MatrikkeladresseTransformerTest {
 
     @Test
     fun gittNull_skalFaaNull() {
-        val inbound = Matrikkeladresse(bruksnummer = null, festenummer = null, gaardsnummer = null, undernummer = null)
+        val inbound = MatrikkeladresseObjectMother.matrikkeladresseNullObject()
 
         val actual = MatrikkeladresseTransformer.toOutbound(inbound)
 

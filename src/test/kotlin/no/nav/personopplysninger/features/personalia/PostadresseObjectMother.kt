@@ -12,4 +12,14 @@ object PostadresseObjectMother {
                 postnummer = "0010"
         )
     }
+
+    fun postadresseNullObject(): Postadresse {
+        return Postadresse(
+                adresse1 = null,
+                adresse2 = null,
+                adresse3 = null,
+                land = null,
+                postnummer = null
+        )
+    }
 }

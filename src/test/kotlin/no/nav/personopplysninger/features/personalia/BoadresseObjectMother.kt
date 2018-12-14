@@ -12,4 +12,14 @@ object BoadresseObjectMother {
                 veiadresse = VeiadresseObjectMother.vardeveien7()
         )
     }
+
+    fun boadresseNullObject(): Boadresse {
+        return Boadresse(
+                adresse = null,
+                kommune = null,
+                matrikkeladresse = null,
+                postnummer = null,
+                veiadresse = null
+        )
+    }
 }

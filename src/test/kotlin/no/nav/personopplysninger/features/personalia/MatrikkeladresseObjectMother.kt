@@ -7,7 +7,7 @@ object MatrikkeladresseObjectMother {
         return Matrikkeladresse(bruksnummer = "5002", festenummer = "34", gaardsnummer = "Vardeveien 7", undernummer = "23")
     }
 
-    fun bareNull(): Matrikkeladresse {
+    fun matrikkeladresseNullObject(): Matrikkeladresse {
         return Matrikkeladresse(bruksnummer = null, festenummer = null, gaardsnummer = null, undernummer = null)
     }
 }

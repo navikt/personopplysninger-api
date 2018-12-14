@@ -11,4 +11,13 @@ object UtenlandskAdresseObjectMother {
                 land = "Utlandet"
         )
     }
+
+    fun utenslandskAdresseNullObject(): UtenlandskAdresse {
+        return UtenlandskAdresse(
+                adresse1 = null,
+                adresse2 = null,
+                adresse3 = null,
+                land = null
+        )
+    }
 }

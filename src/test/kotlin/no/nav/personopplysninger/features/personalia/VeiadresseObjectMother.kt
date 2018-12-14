@@ -7,7 +7,7 @@ object VeiadresseObjectMother {
         return Veiadresse(bokstav = "A", bolignummer = "H102", gatekode = "12", husnummer = "7")
     }
 
-    fun bareNull(): Veiadresse {
+    fun veiadresseNullObject(): Veiadresse {
         return Veiadresse(bokstav = null, bolignummer = null, gatekode = null, husnummer = null)
     }
 }
