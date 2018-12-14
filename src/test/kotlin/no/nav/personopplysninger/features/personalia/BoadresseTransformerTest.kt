@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 @TestInstance(PER_CLASS)
 class BoadresseTransformerTest {
@@ -27,9 +29,9 @@ class BoadresseTransformerTest {
 
         assertEquals(inbound.adresse, actual.adresse)
         assertEquals(inbound.kommune, actual.kommune)
-        //assertEquals(inbound.matrikkeladresse, `is`(notNullValue()))
+        assertNotNull(actual.matrikkeladresse)
         assertEquals(inbound.postnummer, actual.postnummer)
-        //assertEquals(inbound.veiadresse , `is`(notNullValue()))
+        assertNotNull(actual.veiadresse)
     }
 
     @Test
@@ -37,17 +39,17 @@ class BoadresseTransformerTest {
         val inbound = Boadresse(
                 adresse = null,
                 kommune = null,
-                matrikkeladresse = MatrikkeladresseObjectMother.bareNull(),
+                matrikkeladresse = null,
                 postnummer = null,
-                veiadresse = VeiadresseObjectMother.bareNull()
+                veiadresse = null
         )
 
         val actual = BoadresseTransformer.toOutbound(inbound)
 
         assertEquals(inbound.adresse, actual.adresse)
         assertEquals(inbound.kommune, actual.kommune)
-        //assertEquals(inbound.matrikkeladresse, actual.matrikkeladresse)
+        assertNull(actual.matrikkeladresse)
         assertEquals(inbound.postnummer, actual.postnummer)
-        //assertEquals(inbound.veiadresse, actual.veiadresse)
+        assertNull(actual.veiadresse)
     }
 }
