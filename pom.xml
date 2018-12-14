@@ -139,6 +139,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>io.arrow-kt</groupId>
+            <artifactId>arrow-core</artifactId>
+            <version>LATEST</version>
+        </dependency>
 
         <!-- spring boot -->
         <dependency>
