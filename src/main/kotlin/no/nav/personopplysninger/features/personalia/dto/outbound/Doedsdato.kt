@@ -21,9 +21,9 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class Doedsdato (
 
     /* Dato død, format (ISO-8601): yyyy-MM-dd */
-    val dato: kotlin.String? = null,
+    val dato: String? = null,
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
-    val kilde: kotlin.String? = null
+    val datoFraOgMed: String? = null,
+    val kilde: String? = null
 ) {
 }

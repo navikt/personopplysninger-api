@@ -25,17 +25,17 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class Postadresse (
 
     /* Adresse1 */
-    val adresse1: kotlin.String? = null,
+    val adresse1: String? = null,
     /* Adresse2 */
-    val adresse2: kotlin.String? = null,
+    val adresse2: String? = null,
     /* Adresse3 */
-    val adresse3: kotlin.String? = null,
+    val adresse3: String? = null,
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
+    val kilde: String? = null,
     /* Land */
-    val land: kotlin.String? = null,
+    val land: String? = null,
     /* Postnummer */
-    val postnummer: kotlin.String? = null
+    val postnummer: String? = null
 ) {
 }

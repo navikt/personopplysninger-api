@@ -29,21 +29,21 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class Boadresse (
 
     /* Primæradresse */
-    val adresse: kotlin.String? = null,
+    val adresse: String? = null,
     /* Adressetillegg */
-    val adressetillegg: kotlin.String? = null,
+    val adressetillegg: String? = null,
     /* Bydel */
-    val bydel: kotlin.String? = null,
+    val bydel: String? = null,
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
+    val kilde: String? = null,
     /* Kommune */
-    val kommune: kotlin.String? = null,
+    val kommune: String? = null,
     /* Landkode */
-    val landkode: kotlin.String? = null,
+    val landkode: String? = null,
     val matrikkeladresse: Matrikkeladresse? = null,
     /* Postnummer */
-    val postnummer: kotlin.String? = null,
+    val postnummer: String? = null,
     val veiadresse: Veiadresse? = null
 ) {
 }

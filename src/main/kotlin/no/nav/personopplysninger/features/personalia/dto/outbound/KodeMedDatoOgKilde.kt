@@ -21,8 +21,8 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class KodeMedDatoOgKilde (
 
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
+    val kilde: String? = null,
     val kode: Kode? = null
 ) {
 }

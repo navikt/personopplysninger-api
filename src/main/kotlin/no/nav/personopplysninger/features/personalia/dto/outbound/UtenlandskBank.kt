@@ -30,25 +30,25 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class UtenlandskBank (
 
     /* Bank adresselinje 1 */
-    val adresse1: kotlin.String? = null,
+    val adresse1: String? = null,
     /* Bank adresselinje 2 */
-    val adresse2: kotlin.String? = null,
+    val adresse2: String? = null,
     /* Bank adreeselinje 3 */
-    val adresse3: kotlin.String? = null,
+    val adresse3: String? = null,
     /* Bankkode */
-    val bankkode: kotlin.String? = null,
+    val bankkode: String? = null,
     /* Banknavn */
-    val banknavn: kotlin.String? = null,
+    val banknavn: String? = null,
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
     /* IBAN */
-    val iban: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
+    val iban: String? = null,
+    val kilde: String? = null,
     /* Kontonummer */
-    val kontonummer: kotlin.String? = null,
+    val kontonummer: String? = null,
     val land: Kode? = null,
     /* Swift kode */
-    val swiftkode: kotlin.String? = null,
+    val swiftkode: String? = null,
     val valuta: Kode? = null
 ) {
 }

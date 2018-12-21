@@ -31,4 +31,9 @@ class AdresseinfoTransformerTest {
         assertNull(actual.postadresse)
         assertNull(actual.utenlandskAdresse)
     }
+
+    @Test
+    fun alleUnikeDatakilderSkalRegistreres() {
+        // TODO Are: Verifiser at alle ulike kilder har blir plukket opp og puttet i settet "datakilder"
+    }
 }

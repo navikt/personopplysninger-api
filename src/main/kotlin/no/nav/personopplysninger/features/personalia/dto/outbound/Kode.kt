@@ -19,7 +19,7 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
  */
 data class Kode (
 
-    val kodeverk: kotlin.String? = null,
-    val verdi: kotlin.String? = null
+    val kodeverk: String? = null,
+    val verdi: String? = null
 ) {
 }

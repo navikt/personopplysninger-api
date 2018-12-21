@@ -22,11 +22,11 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class Matrikkeladresse (
 
     /* Bruksnummer */
-    val bruksnummer: kotlin.String? = null,
-    val festenummer: kotlin.String? = null,
+    val bruksnummer: String? = null,
+    val festenummer: String? = null,
     /* Gårdsnummer */
-    val gaardsnummer: kotlin.String? = null,
+    val gaardsnummer: String? = null,
     /* Undernummer */
-    val undernummer: kotlin.String? = null
+    val undernummer: String? = null
 ) {
 }

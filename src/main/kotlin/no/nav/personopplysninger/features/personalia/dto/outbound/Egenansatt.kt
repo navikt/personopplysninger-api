@@ -21,9 +21,9 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class Egenansatt (
 
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
     /* Er person egenansatt */
     val erEgenansatt: kotlin.Boolean? = null,
-    val kilde: kotlin.String? = null
+    val kilde: String? = null
 ) {
 }
