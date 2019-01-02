@@ -3,10 +3,7 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 import no.nav.personopplysninger.features.personalia.dto.outbound.Kilde
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
-import no.nav.tps.person.Kontonummer
-import no.nav.tps.person.Navn
-import no.nav.tps.person.Personinfo
-import no.nav.tps.person.Telefoninfo
+import no.nav.tps.person.*
 
 
 object PersoninfoTransformer {
@@ -52,10 +49,19 @@ object PersoninfoTransformer {
                 tlfnr = inbound.telefon?.let { tlfnr(it) },
                 spraak = inbound.spraak?.let { it.kode?.let { it.verdi } }, // TODO Are: Kodeverk. Husk Kilde
                 epostadr = "TODO", // TODO Are: Hvor finner vi epostadr?
-                // TODO Are: Alle felter i GUI
+                personstatus = inbound.status?.let { it.kode?.let { it.verdi } }, // TODO Are: Kodeverk. Husk kilde
+                statsborgerskap = inbound.statsborgerskap?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk kilde
+                foedested = foedested(inbound.foedtIKommune, inbound.foedtILand), // TODO Are: Kodeverk.
+                sivilstand = inbound.sivilstand?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk kilde
+                kjoenn = inbound.kjonn,
                 datakilder = kilder
         )
 
+    }
+
+    private fun foedested(foedtIKommune: Kode?, foedtILand: Kode?): String? {
+        val names = listOfNotNull(foedtIKommune?.verdi, foedtILand?.verdi)
+        return if (names.isEmpty()) null else names.joinToString(", ")
     }
 
 

@@ -7,11 +7,7 @@ import org.springframework.stereotype.Service
 @Service
 class PersonaliaService @Autowired constructor(
         private var personConsumer: PersonConsumer
-){
+) {
 
-    fun hentPersoninfo(fodselsnr: String): Personinfo {
-        val personinfo = personConsumer.hentPersonInfo(fodselsnr)
-        return personinfo
-    }
-
+    fun hentPersoninfo(fodselsnr: String): Personinfo = personConsumer.hentPersonInfo(fodselsnr)
 }

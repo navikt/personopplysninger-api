@@ -15,7 +15,7 @@ data class Personalia(
         val foedested: String? = null,
         val sivilstand: String? = null,
         val kjoenn: String? = null,
-        val datakilder: Set<Kilde>? = null
+        val datakilder: Set<Kilde>
 )
 
 data class Adresser(

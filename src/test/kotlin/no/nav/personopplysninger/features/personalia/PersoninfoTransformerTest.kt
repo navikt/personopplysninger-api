@@ -3,6 +3,7 @@ package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersoninfoTransformer
+import no.nav.tps.person.Kode
 import no.nav.tps.person.Navn
 import no.nav.tps.person.Personinfo
 import no.nav.tps.person.Telefoninfo
@@ -28,7 +29,17 @@ class PersoninfoTransformerTest {
         assertTlfnr(inbound.telefon!!, actual.tlfnr!!)
         assertEquals(inbound.spraak!!.kode!!.verdi!!, actual.spraak!!) // TODO Are IN-708: Kodeverk. Husk kilde.
         assertEquals("TODO", actual.epostadr) // TODO Are: Egen integrasjon for å finne epost? Husk å registrer datakilden.
-        assertEquals(inbound.status!!.kode!!.verdi, actual.personstatus) // TODO Are: Kodeverk. Husk kilde. Er det riktig felt som mappes? (status == perosnstatus ?)
+        assertEquals(inbound.status!!.kode!!.verdi!!, actual.personstatus) // TODO Are: Kodeverk. Husk kilde. Er det riktig felt som mappes? (status == personstatus ?)
+        assertEquals(inbound.statsborgerskap!!.kode!!.verdi!!, actual.statsborgerskap) // TODO Are: Kodeverk. Husk kilde.
+        assertFoedested(inbound.foedtIKommune!!, inbound.foedtILand!!, actual.foedested!!)
+        assertEquals(inbound.sivilstand!!.kode!!.verdi!!, actual.sivilstand)// TODO Are: Kodeverk. Husk kilde.
+        assertEquals(inbound.kjonn!!, actual.kjoenn)
+    }
+
+    private fun assertFoedested(expectedKommune: Kode, expectedLand: Kode, actualFoedested: String) {
+        // TODO Are: Kodeverk.
+        val expected = expectedKommune.verdi!! + ", " + expectedLand.verdi!!
+        assertEquals(expected, actualFoedested, "Fødested skal ha formen '<kommunenavn>, <landnavn>' (uten fnutter)")
     }
 
     private fun assertTlfnr(expected: Telefoninfo, actual: Tlfnr) {
