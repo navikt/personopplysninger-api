@@ -24,14 +24,14 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class InnvandringUtvandring (
 
     /* Dato innvandret, format (ISO-8601): yyyy-MM-dd */
-    val innvandretDato: kotlin.String? = null,
+    val innvandretDato: String? = null,
     /* Fra hvor informasjonen er sendt fra */
-    val innvandretKilde: kotlin.String? = null,
+    val innvandretKilde: String? = null,
     val innvandretLand: Kode? = null,
     /* Dato utvandret, format (ISO-8601): yyyy-MM-dd */
-    val utvandretDato: kotlin.String? = null,
+    val utvandretDato: String? = null,
     /* Fra hvor informasjonen er sendt fra */
-    val utvandretKilde: kotlin.String? = null,
+    val utvandretKilde: String? = null,
     val utvandretLand: Kode? = null
 ) {
 }

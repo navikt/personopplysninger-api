@@ -33,31 +33,31 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class Tilleggsadresse (
 
     /* Adresselinje 1 */
-    val adresse1: kotlin.String? = null,
+    val adresse1: String? = null,
     /* Adresselinje 2 */
-    val adresse2: kotlin.String? = null,
+    val adresse2: String? = null,
     /* Adresselinje 3 */
-    val adresse3: kotlin.String? = null,
+    val adresse3: String? = null,
     /* Bolignummer */
-    val bolignummer: kotlin.String? = null,
+    val bolignummer: String? = null,
     /* Bydel */
-    val bydel: kotlin.String? = null,
+    val bydel: String? = null,
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
     /* Dato til når informasjonen er gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoTilOgMed: kotlin.String? = null,
+    val datoTilOgMed: String? = null,
     /* Gatekoade */
-    val gateKode: kotlin.String? = null,
+    val gateKode: String? = null,
     /* Husbokstav */
-    val husbokstav: kotlin.String? = null,
+    val husbokstav: String? = null,
     /* Husnummer */
-    val husnummer: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
+    val husnummer: String? = null,
+    val kilde: String? = null,
     /* Kommunenummer */
-    val kommunenummer: kotlin.String? = null,
-    val postboksanlegg: kotlin.String? = null,
-    val postboksnummer: kotlin.String? = null,
+    val kommunenummer: String? = null,
+    val postboksanlegg: String? = null,
+    val postboksnummer: String? = null,
     /* Postnummer */
-    val postnummer: kotlin.String? = null
+    val postnummer: String? = null
 ) {
 }

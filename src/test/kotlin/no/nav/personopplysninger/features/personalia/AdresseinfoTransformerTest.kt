@@ -1,11 +1,11 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.AdresseinfoTransformer
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 
 @TestInstance(PER_CLASS)
 class AdresseinfoTransformerTest {
@@ -30,5 +30,10 @@ class AdresseinfoTransformerTest {
         assertNull(actual.boadresse)
         assertNull(actual.postadresse)
         assertNull(actual.utenlandskAdresse)
+    }
+
+    @Test
+    fun alleUnikeDatakilderSkalRegistreres() {
+        // TODO Are: Verifiser at alle ulike kilder har blir plukket opp og puttet i settet "datakilder"
     }
 }

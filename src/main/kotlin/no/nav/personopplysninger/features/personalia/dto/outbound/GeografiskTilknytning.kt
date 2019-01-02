@@ -23,13 +23,13 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class GeografiskTilknytning (
 
     /* Bydel */
-    val bydel: kotlin.String? = null,
+    val bydel: String? = null,
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
+    val kilde: String? = null,
     /* Kommune */
-    val kommune: kotlin.String? = null,
+    val kommune: String? = null,
     /* Land */
-    val land: kotlin.String? = null
+    val land: String? = null
 ) {
 }

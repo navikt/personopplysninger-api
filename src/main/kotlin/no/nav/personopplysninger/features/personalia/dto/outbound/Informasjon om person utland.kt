@@ -36,35 +36,35 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class Informasjon_om_person_utland (
 
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
     /* Familienavn */
-    val familienavnFodt: kotlin.String? = null,
+    val familienavnFodt: String? = null,
     /* Etternavn far */
-    val farsFamilenavn: kotlin.String? = null,
+    val farsFamilenavn: String? = null,
     /* Fornavn far */
-    val farsFornavn: kotlin.String? = null,
+    val farsFornavn: String? = null,
     /* Fødested */
-    val foedested: kotlin.String? = null,
+    val foedested: String? = null,
     /* Fornavn */
-    val fornavnFodt: kotlin.String? = null,
+    val fornavnFodt: String? = null,
     /* Utenlandsk id */
-    val idOff: kotlin.String? = null,
+    val idOff: String? = null,
     /* Instutisjon */
-    val institusjon: kotlin.String? = null,
+    val institusjon: String? = null,
     /* InstutisjonNavn */
-    val institusjonNavn: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
+    val institusjonNavn: String? = null,
+    val kilde: String? = null,
     /* Kilde pinnummer */
-    val kildePin: kotlin.String? = null,
+    val kildePin: String? = null,
     val land: Kode? = null,
     /* Etternavn mor */
-    val morsFamilenavn: kotlin.String? = null,
+    val morsFamilenavn: String? = null,
     /* Fornavn mor */
-    val morsFornavn: kotlin.String? = null,
+    val morsFornavn: String? = null,
     /* Nasjonal id */
-    val nasjonalId: kotlin.String? = null,
+    val nasjonalId: String? = null,
     val nasjonalitet: Kode? = null,
-    val sedRef: kotlin.String? = null,
+    val sedRef: String? = null,
     val sektor: Kode? = null
 ) {
 }

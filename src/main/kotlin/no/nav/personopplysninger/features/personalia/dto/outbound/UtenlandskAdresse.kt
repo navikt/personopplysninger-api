@@ -25,17 +25,17 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class UtenlandskAdresse (
 
     /* Adresselinje 1 */
-    val adresse1: kotlin.String? = null,
+    val adresse1: String? = null,
     /* Adresselinje 2 */
-    val adresse2: kotlin.String? = null,
+    val adresse2: String? = null,
     /* Adresselinje 3 */
-    val adresse3: kotlin.String? = null,
+    val adresse3: String? = null,
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
     /* Dato til når informasjonen er gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoTilOgMed: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
+    val datoTilOgMed: String? = null,
+    val kilde: String? = null,
     /* Landkode */
-    val land: kotlin.String? = null
+    val land: String? = null
 ) {
 }
