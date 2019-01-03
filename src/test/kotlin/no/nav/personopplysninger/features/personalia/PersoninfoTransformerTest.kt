@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
 
+import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersoninfoTransformer
 import no.nav.tps.person.Kode
@@ -20,7 +21,7 @@ class PersoninfoTransformerTest {
     fun gittPersonalia_skalFaaPersonalia() {
         val inbound: Personinfo = PersoninfoObjectMother.allFieldsHaveValues
 
-        val actual = PersoninfoTransformer.toOutbound(inbound)
+        val actual: Personalia = PersoninfoTransformer.toOutbound(inbound)
 
         assertFornavn(inbound.navn!!, actual.fornavn!!)
         assertEtternavn(inbound.navn!!, actual.etternavn!!)

@@ -15,15 +15,15 @@ data class Personalia(
         val foedested: String? = null,
         val sivilstand: String? = null,
         val kjoenn: String? = null,
-        val datakilder: Set<Kilde>
+        val datakilder: Set<Kilde> // TODO Are: Må være annen type for å kunne serialiseres til JSON?
 )
 
 data class Adresser(
         val boadresse: Boadresse? = null,
         val geografiskTilknytning: GeografiskTilknytning? = null,
         val postadresse: Postadresse? = null,
-        val prioritertAdresse: KodeMedDatoOgKilde? = null,
+        val prioritertAdresse: String? = null,
         val tilleggsadresse: Tilleggsadresse? = null,
         val utenlandskAdresse: UtenlandskAdresse? = null,
-        val datakilder: MutableSet<Kilde> = mutableSetOf() // TODO Are: Må typen være Array<String> for at den skal kunne mappes til JSON?
+        val datakilder: Set<Kilde> // TODO Are: Må være annen type for å kunne serialiseres til JSON?
 )

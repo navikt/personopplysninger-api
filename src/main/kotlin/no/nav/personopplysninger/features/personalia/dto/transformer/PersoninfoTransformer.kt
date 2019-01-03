@@ -47,9 +47,9 @@ object PersoninfoTransformer {
                 fnr = inbound.foedselsdato, // TODO Are: Hvor finner vi fnr?
                 kontonr = inbound.kontonummer?.let { kontonr(it) },
                 tlfnr = inbound.telefon?.let { tlfnr(it) },
-                spraak = inbound.spraak?.let { it.kode?.let { it.verdi } }, // TODO Are: Kodeverk. Husk Kilde
+                spraak = inbound.spraak?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk Kilde
                 epostadr = "TODO", // TODO Are: Hvor finner vi epostadr?
-                personstatus = inbound.status?.let { it.kode?.let { it.verdi } }, // TODO Are: Kodeverk. Husk kilde
+                personstatus = inbound.status?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk kilde
                 statsborgerskap = inbound.statsborgerskap?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk kilde
                 foedested = foedested(inbound.foedtIKommune, inbound.foedtILand), // TODO Are: Kodeverk.
                 sivilstand = inbound.sivilstand?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk kilde

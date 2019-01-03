@@ -4,7 +4,7 @@ import no.nav.tps.person.*
 
 object PersoninfoObjectMother {
     val allFieldsHaveValues: Personinfo = Personinfo(
-            adresseinfo = AdresseinfoObjectMother.adresseinfoTestObject(),
+            adresseinfo = AdresseinfoObjectMother.allFieldsHaveValues,
             alder = 20,
             antallBarn = 2,
             antallLevendeBarnUnder18 = 2,
