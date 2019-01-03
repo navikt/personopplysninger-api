@@ -17,10 +17,14 @@ class BoadresseTransformerTest {
 
         val actual = BoadresseTransformer.toOutbound(inbound)
 
-        assertEquals(inbound.adresse, actual.adresse)
-        assertEquals(inbound.kommune, actual.kommune)
+        assertEquals(inbound.adresse!!, actual.adresse)
+        assertEquals(inbound.adressetillegg!!, actual.adressetillegg)
+        assertEquals(inbound.bydel!!, actual.bydel)
+        assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
+        assertEquals(inbound.kommune!!, actual.kommune)
+        assertEquals(inbound.landkode!!, actual.landkode)
         assertNotNull(actual.matrikkeladresse)
-        assertEquals(inbound.postnummer, actual.postnummer)
+        assertEquals(inbound.postnummer!!, actual.postnummer)
         assertNotNull(actual.veiadresse)
     }
 
@@ -30,10 +34,14 @@ class BoadresseTransformerTest {
 
         val actual = BoadresseTransformer.toOutbound(inbound)
 
-        assertEquals(inbound.adresse, actual.adresse)
-        assertEquals(inbound.kommune, actual.kommune)
+        assertNull(actual.adresse)
+        assertNull(actual.adressetillegg)
+        assertNull(actual.bydel)
+        assertNull(actual.datoFraOgMed)
+        assertNull(actual.kommune)
+        assertNull(actual.landkode)
         assertNull(actual.matrikkeladresse)
-        assertEquals(inbound.postnummer, actual.postnummer)
+        assertNull(actual.postnummer)
         assertNull(actual.veiadresse)
     }
 }

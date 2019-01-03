@@ -11,4 +11,13 @@ object GeografiskTilknytningObjectMother {
             kommune = "dummy kommune"
     )
 
+    val nullObject = GeografiskTilknytning(
+            bydel = null,
+            kilde = null,
+            datoFraOgMed = null,
+            land = null,
+            kommune = null
+    )
+
+
 }

@@ -8,6 +8,7 @@ object PostadresseObjectMother {
                 adresse1 = "Adresselinje 1",
                 adresse2 = "Adresselinje 2",
                 adresse3 = "adresselinje 3",
+                datoFraOgMed = "dummy dato",
                 land = "Norge",
                 postnummer = "0010"
         )

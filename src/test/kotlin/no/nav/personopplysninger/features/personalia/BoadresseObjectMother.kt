@@ -6,7 +6,11 @@ object BoadresseObjectMother {
     fun vardeveien7(): Boadresse {
         return Boadresse(
                 adresse = "Vardeveien 7",
+                adressetillegg = "dummy adressetillegg",
+                bydel = "dummy bydel",
+                datoFraOgMed = "dummy dato",
                 kommune = "Kristiansand",
+                landkode = "dummy landkode",
                 matrikkeladresse = MatrikkeladresseObjectMother.vardeveien7(),
                 postnummer = "5002",
                 veiadresse = VeiadresseObjectMother.vardeveien7()
@@ -16,7 +20,11 @@ object BoadresseObjectMother {
     fun boadresseNullObject(): Boadresse {
         return Boadresse(
                 adresse = null,
+                adressetillegg = null,
+                bydel = null,
+                datoFraOgMed = null,
                 kommune = null,
+                landkode = null,
                 matrikkeladresse = null,
                 postnummer = null,
                 veiadresse = null

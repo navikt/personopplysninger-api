@@ -21,4 +21,22 @@ object TilleggsadresseObjectMother {
             postnummer = "dummy postnr"
     )
 
+    val nullObject = Tilleggsadresse(
+            adresse1 = null,
+            adresse2 = null,
+            adresse3 = null,
+            kilde = null,
+            datoFraOgMed = null,
+            bolignummer = null,
+            bydel = null,
+            datoTilOgMed = null,
+            gateKode = null,
+            husbokstav = null,
+            husnummer = null,
+            kommunenummer = null,
+            postboksanlegg = null,
+            postboksnummer = null,
+            postnummer = null
+    )
+
 }

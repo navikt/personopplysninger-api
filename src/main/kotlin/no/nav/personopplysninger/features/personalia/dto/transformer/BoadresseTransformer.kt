@@ -1,14 +1,17 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import arrow.core.toOption
-import no.nav.tps.person.Boadresse
+import no.nav.personopplysninger.features.personalia.dto.outbound.Boadresse
 
 object BoadresseTransformer {
-    fun toOutbound(inbound: Boadresse) = no.nav.personopplysninger.features.personalia.dto.outbound.Boadresse(
+    fun toOutbound(inbound: no.nav.tps.person.Boadresse) = Boadresse(
             adresse = inbound.adresse,
+            adressetillegg = inbound.adressetillegg,
+            bydel = inbound.bydel,
+            datoFraOgMed = inbound.datoFraOgMed,
             kommune = inbound.kommune,
-            matrikkeladresse = inbound.matrikkeladresse.toOption().map { MatrikkeladresseTransformer.toOutbound(it) }.orNull(),
+            landkode = inbound.landkode,
+            matrikkeladresse = inbound.matrikkeladresse?.let { MatrikkeladresseTransformer.toOutbound(it) },
             postnummer = inbound.postnummer,
-            veiadresse = inbound.veiadresse.toOption().map { VeiadresseTransformer.toOutbound(it) }.orNull()
+            veiadresse = inbound.veiadresse?.let { VeiadresseTransformer.toOutbound(it) }
     )
 }

@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.UtenlandskAdresseTransformer
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
@@ -15,10 +16,12 @@ class UtenlandskAdresseTransformerTest {
 
         val actual = UtenlandskAdresseTransformer.toOutbound(inbound)
 
-        assertEquals(inbound.adresse1, actual.adresse1)
-        assertEquals(inbound.adresse2, actual.adresse2)
-        assertEquals(inbound.adresse3, actual.adresse3)
-        assertEquals(inbound.land, actual.land)
+        assertEquals(inbound.adresse1!!, actual.adresse1)
+        assertEquals(inbound.adresse2!!, actual.adresse2)
+        assertEquals(inbound.adresse3!!, actual.adresse3)
+        assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
+        assertEquals(inbound.datoTilOgMed!!, actual.datoTilOgMed)
+        assertEquals(inbound.land!!, actual.land)
     }
 
     @Test
@@ -27,9 +30,11 @@ class UtenlandskAdresseTransformerTest {
 
         val actual = UtenlandskAdresseTransformer.toOutbound(inbound)
 
-        assertEquals(inbound.adresse1, actual.adresse1)
-        assertEquals(inbound.adresse2, actual.adresse2)
-        assertEquals(inbound.adresse3, actual.adresse3)
-        assertEquals(inbound.land, actual.land)
+        assertNull(actual.adresse1)
+        assertNull(actual.adresse2)
+        assertNull(actual.adresse3)
+        assertNull(actual.datoFraOgMed)
+        assertNull(actual.datoTilOgMed)
+        assertNull(actual.land)
     }
 }
