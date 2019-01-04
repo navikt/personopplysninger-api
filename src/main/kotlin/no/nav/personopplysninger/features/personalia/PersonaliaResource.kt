@@ -10,9 +10,11 @@ import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
+private const val claimsIssuer = "selvbetjening"
+
 @Component
 @Path("/personalia")
-@ProtectedWithClaims(issuer = "selvbetjening", claimMap = arrayOf("acr=Level4"))
+@ProtectedWithClaims(issuer = claimsIssuer, claimMap = arrayOf("acr=Level4"))
 class PersonaliaResource @Autowired constructor(
         private var personaliaService: PersonaliaService // TODO Are: @Inject istedenfor @Autowire? val istedenfor var?
 ) {
@@ -31,7 +33,7 @@ class PersonaliaResource @Autowired constructor(
 
     private fun hentFnrFraToken(): String {
         val context = OidcRequestContext.getHolder().oidcValidationContext
-        return context.getClaims("selvbetjening").claimSet.subject
+        return context.getClaims(claimsIssuer).claimSet.subject
     }
 
 }
