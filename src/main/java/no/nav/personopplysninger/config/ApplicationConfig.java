@@ -30,7 +30,7 @@ import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
-@ComponentScan({"no.nav.personopplysninger.api"})
+@ComponentScan({"no.nav.personopplysninger.features", "no.nav.personopplysninger.api"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 @Import({RestClientConfiguration.class,
         PersonRestConfiguration.class
@@ -54,16 +54,6 @@ public class ApplicationConfig implements EnvironmentAware {
     @Bean
     public RequestContextListener requestContextListener() {
         return new RequestContextListener();
-    }
-
-    @Bean
-    ServletRegistrationBean<?> jerseyServletRegistration() {
-
-        ServletRegistrationBean<?> jerseyServletRegistration = new ServletRegistrationBean<>(new ServletContainer());
-
-        jerseyServletRegistration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, RestResourceConfiguration.class.getName());
-
-        return jerseyServletRegistration;
     }
 
     @Bean

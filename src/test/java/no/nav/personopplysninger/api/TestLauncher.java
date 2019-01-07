@@ -3,23 +3,16 @@ package no.nav.personopplysninger.api;
 import no.nav.personopplysninger.config.ApplicationConfig;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.test.support.FileResourceRetriever;
-import org.glassfish.jersey.servlet.ServletContainer;
-import org.glassfish.jersey.servlet.ServletProperties;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
-import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootApplication
-@ComponentScan({"no.nav.personopplysninger.api"})
-@EnableAutoConfiguration(exclude = ErrorMvcAutoConfiguration.class)
-@Import(ApplicationConfig.class)
+@SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
+@Import({ApplicationConfig.class})
 public class TestLauncher {
 
     public static void main(String... args) {
@@ -38,12 +31,7 @@ public class TestLauncher {
 
     @Bean
     @Primary
-    ServletRegistrationBean<?> jerseyServletRegistration() {
-
-        ServletRegistrationBean<?> jerseyServletRegistration = new ServletRegistrationBean<>(new ServletContainer());
-
-        jerseyServletRegistration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, TestRestResourceConfiguration.class.getName());
-
-        return jerseyServletRegistration;
+    public ResourceConfig testJerseyConfig() {
+        return new TestRestResourceConfiguration();
     }
 }
