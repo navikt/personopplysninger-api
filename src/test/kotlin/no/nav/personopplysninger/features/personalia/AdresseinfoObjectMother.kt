@@ -3,13 +3,13 @@ package no.nav.personopplysninger.features.personalia
 import no.nav.tps.person.Adresseinfo
 
 object AdresseinfoObjectMother {
-    val allFieldsHaveValues = Adresseinfo(
+    val withValuesInAllFields = Adresseinfo(
             boadresse = BoadresseObjectMother.vardeveien7(),
             postadresse = PostadresseObjectMother.testPostadresse(),
             utenlandskAdresse = UtenlandskAdresseObjectMother.utenlandskTestadresse(),
-            geografiskTilknytning = GeografiskTilknytningObjectMother.allFieldsHaveValues,
+            geografiskTilknytning = GeografiskTilknytningObjectMother.withValuesInAllFields,
             prioritertAdresse = KodeMedDatoOgKildeObjectMother.dummyValues.copy(kilde = "kilde for Adresseinfo.prioritertAdresse"),
-            tilleggsadresse = TilleggsadresseObjectMother.allFieldsHaveValues
+            tilleggsadresse = TilleggsadresseObjectMother.withValuesInAllFields
     )
 
     val adresseinfoNullObject = Adresseinfo(

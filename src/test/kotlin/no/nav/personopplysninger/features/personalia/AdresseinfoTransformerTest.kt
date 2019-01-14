@@ -12,7 +12,7 @@ class AdresseinfoTransformerTest {
 
     @Test
     fun gittAdresse_skalFaaAdresse() {
-        val inbound = AdresseinfoObjectMother.allFieldsHaveValues
+        val inbound = AdresseinfoObjectMother.withValuesInAllFields
 
         val actual: Adresser = AdresseinfoTransformer.toOutbound(inbound)
 

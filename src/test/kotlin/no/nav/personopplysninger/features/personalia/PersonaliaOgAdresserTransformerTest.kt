@@ -14,7 +14,7 @@ class PersonaliaOgAdresserTransformerTest {
 
     @Test
     fun gittPersonaliaOgAdresser_skalFaaPersnaliaOgAdresser() {
-        val inbound = PersoninfoObjectMother.allFieldsHaveValues
+        val inbound = PersoninfoObjectMother.withValuesInAllFields
 
         val actual = PersonaliaOgAdresserTransformer.toOutbound(inbound)
 
@@ -24,7 +24,7 @@ class PersonaliaOgAdresserTransformerTest {
 
     @Test
     fun gittIngenAdresseinfio_skalIkkeFaaAdresser() {
-        val inbound = PersoninfoObjectMother.allFieldsHaveValues.copy(adresseinfo = null)
+        val inbound = PersoninfoObjectMother.withValuesInAllFields.copy(adresseinfo = null)
 
         val actual = PersonaliaOgAdresserTransformer.toOutbound(inbound)
 

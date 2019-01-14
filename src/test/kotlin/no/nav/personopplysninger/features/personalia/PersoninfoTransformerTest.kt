@@ -19,7 +19,7 @@ class PersoninfoTransformerTest {
 
     @Test
     fun gittPersonalia_skalFaaPersonalia() {
-        val inbound: Personinfo = PersoninfoObjectMother.allFieldsHaveValues
+        val inbound: Personinfo = PersoninfoObjectMother.withValuesInAllFields
 
         val actual: Personalia = PersoninfoTransformer.toOutbound(inbound)
 

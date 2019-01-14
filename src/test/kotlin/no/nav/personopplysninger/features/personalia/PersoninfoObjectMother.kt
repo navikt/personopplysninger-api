@@ -3,8 +3,8 @@ package no.nav.personopplysninger.features.personalia
 import no.nav.tps.person.*
 
 object PersoninfoObjectMother {
-    val allFieldsHaveValues: Personinfo = Personinfo(
-            adresseinfo = AdresseinfoObjectMother.allFieldsHaveValues,
+    val withValuesInAllFields: Personinfo = Personinfo(
+            adresseinfo = AdresseinfoObjectMother.withValuesInAllFields,
             alder = 20,
             antallBarn = 2,
             antallLevendeBarnUnder18 = 2,

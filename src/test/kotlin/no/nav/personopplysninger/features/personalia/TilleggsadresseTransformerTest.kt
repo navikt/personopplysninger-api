@@ -12,7 +12,7 @@ class TilleggsadresseTransformerTest {
 
     @Test
     fun gittTilleggsadresse_skalFaaBoTilleggsadresse() {
-        val inbound = TilleggsadresseObjectMother.allFieldsHaveValues
+        val inbound = TilleggsadresseObjectMother.withValuesInAllFields
 
         val actual = TilleggsadresseTransformer.toOutbound(inbound)
 

@@ -3,7 +3,7 @@ package no.nav.personopplysninger.features.personalia
 import no.nav.tps.person.Tilleggsadresse
 
 object TilleggsadresseObjectMother {
-    val allFieldsHaveValues = Tilleggsadresse(
+    val withValuesInAllFields = Tilleggsadresse(
             adresse1 = "dummy adr1",
             adresse2 = "dummy adr2",
             adresse3 = "dummy adr3",

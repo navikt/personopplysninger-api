@@ -12,7 +12,7 @@ class GeografiskTilknytningTransformerTest {
 
     @Test
     fun gittGeografiskTilknytning_skalFaaGeografiskTilknytning() {
-        val inbound = GeografiskTilknytningObjectMother.allFieldsHaveValues
+        val inbound = GeografiskTilknytningObjectMother.withValuesInAllFields
 
         val actual = GeografiskTilknytningTransformer.toOutbound(inbound)
 
