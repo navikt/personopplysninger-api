@@ -25,7 +25,7 @@ class PersoninfoTransformerTest {
 
         assertFornavn(inbound.navn!!, actual.fornavn!!)
         assertEtternavn(inbound.navn!!, actual.etternavn!!)
-        assertEquals(inbound.foedselsdato, actual.fnr)  // TODO Are IN-708: Det er fnr som skal vises. Denne testen må endres når det blir klart hvordan vi skaffer fnr.
+        assertEquals(inbound.foedselsdato, actual.fnr)  // TODO Are IN-735: Det er fnr/personident som skal vises. Denne testen må endres når det blir klart hvordan vi skaffer fnr.
         assertEquals(inbound.kontonummer!!.nummer!!, actual.kontonr!!)
         assertTlfnr(inbound.telefon!!, actual.tlfnr!!)
         assertEquals(inbound.spraak!!.kode!!.verdi!!, actual.spraak!!) // TODO Are IN-708: Kodeverk. Husk kilde.
