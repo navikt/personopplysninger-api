@@ -35,7 +35,6 @@ public class PersonConsumer {
 
         try (Response response = request.get()) {
             if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
-                // TODO Are: Mer proff feilhåndtering: Logg hva ble forsøkt, hvilken URL ble brukt, HTTP statuskode, fnr/fdato
                 String msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[" + endpoint + "], HTTP response status=[" + response.getStatus() + "]";
                 throw new RuntimeException(msg + " - " + response.readEntity(String.class));
             } else {
