@@ -19,7 +19,7 @@ object PersoninfoTransformer {
                 if (inbound.fornavn == null && inbound.mellomnavn == null) null
                 else {
                     addKilde(inbound.kilde)
-                    listOfNotNull(inbound.fornavn, inbound.mellomnavn).joinToString(separator = " ")
+                    "${inbound.fornavn ?: ""} ${inbound.mellomnavn ?: ""}".trim()
                 }
 
         fun etternavn(inbound: Navn): String? =
