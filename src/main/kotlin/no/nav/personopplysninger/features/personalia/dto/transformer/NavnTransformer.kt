@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import arrow.core.toOption
 import no.nav.personopplysninger.features.personalia.dto.outbound.Kilde
 import no.nav.personopplysninger.features.personalia.dto.outbound.Navn
 
@@ -11,7 +10,7 @@ object NavnTransformer {
                 mellomnavn = inbound.mellomnavn,
                 slektsnavn = inbound.slektsnavn
         )
-        val kilde: Set<Kilde> = inbound.kilde.toOption().map { Kilde(it) }.toList().toSet()
+        val kilde: Set<Kilde> = inbound.kilde?.let { setOf(Kilde(it)) }.orEmpty()
         return Pair(navn, kilde)
     }
 }
