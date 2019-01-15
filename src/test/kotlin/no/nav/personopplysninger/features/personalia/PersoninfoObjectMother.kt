@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.personalia.kodeverk.Kjoennstype
+import no.nav.personopplysninger.features.personalia.kodeverk.Personstatus
 import no.nav.personopplysninger.features.personalia.kodeverk.Sivilstand
 import no.nav.tps.person.*
 
@@ -43,7 +44,7 @@ object PersoninfoObjectMother {
             spesiellOpplysning = KodeMedDatoOgKildeObjectMother.dummyValues,
             spraak = KodeMedDatoOgKildeObjectMother.dummyValues,
             statsborgerskap = KodeMedDatoOgKildeObjectMother.dummyValues,
-            status = KodeMedDatoOgKildeObjectMother.dummyValues,
+            status = KodeMedDatoOgKildeObjectMother.medKode(Personstatus.FØDR.name),
             telefon = TelefoninfoObjectMother.dummyValues,
             tiltak = Tiltak(
                     datoFraOgMed = dummyDato,
