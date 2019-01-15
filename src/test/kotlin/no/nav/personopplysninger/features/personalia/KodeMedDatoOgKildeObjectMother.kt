@@ -24,4 +24,6 @@ object KodeMedDatoOgKildeObjectMother {
                     )
             )
     )
+
+    fun medKode(kode: String) = dummyValues.copy(kode = dummyValues.kode!!.copy(verdi = kode))
 }

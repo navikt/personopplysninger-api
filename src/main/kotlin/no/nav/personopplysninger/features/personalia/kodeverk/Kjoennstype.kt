@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.personalia
+package no.nav.personopplysninger.features.personalia.kodeverk
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -16,7 +16,7 @@ enum class Kjoennstype(val beskrivelse: String) {
                 return Kjoennstype.valueOf(kode).beskrivelse
             } catch (e: IllegalArgumentException) {
                 log.warn("Enum for kodeverk for kjønnstype mangler gitt kode [" + kode + "]", e)
-                return ""
+                return "-"
             }
         }
     }

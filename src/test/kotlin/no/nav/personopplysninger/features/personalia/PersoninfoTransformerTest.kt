@@ -32,7 +32,7 @@ class PersoninfoTransformerTest {
         assertEquals(inbound.status!!.kode!!.verdi!!, actual.personstatus) // TODO Are: Kodeverk. Husk kilde. Er det riktig felt som mappes? (status == personstatus ?)
         assertEquals(inbound.statsborgerskap!!.kode!!.verdi!!, actual.statsborgerskap) // TODO Are: Kodeverk. Husk kilde.
         assertFoedested(inbound.foedtIKommune!!, inbound.foedtILand!!, actual.foedested!!)
-        assertEquals(inbound.sivilstand!!.kode!!.verdi!!, actual.sivilstand)// TODO Are: Kodeverk. Husk kilde.
+        assertEquals("Gift", actual.sivilstand)// TODO Are: Kodeverk. Husk kilde.
         assertEquals("Mann", actual.kjoenn)
     }
 
