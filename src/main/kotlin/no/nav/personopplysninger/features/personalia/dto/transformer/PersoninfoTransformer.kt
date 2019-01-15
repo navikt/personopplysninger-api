@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
+import no.nav.personopplysninger.features.personalia.Kjoennstype
 import no.nav.personopplysninger.features.personalia.dto.outbound.Kilde
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
@@ -52,7 +53,7 @@ object PersoninfoTransformer {
                 statsborgerskap = inbound.statsborgerskap?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk kilde
                 foedested = foedested(inbound.foedtIKommune, inbound.foedtILand), // TODO Are: Kodeverk.
                 sivilstand = inbound.sivilstand?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk kilde
-                kjoenn = inbound.kjonn,
+                kjoenn = inbound.kjonn?.let { Kjoennstype.dekode(it) },
                 datakilder = kilder
         )
 

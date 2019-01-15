@@ -28,7 +28,7 @@ object PersoninfoObjectMother {
             ident = "dummy ident",
             identtype = dummyKode,
             innvandringUtvandring = InnvandringUtvandringObjectMother.dummyValues,
-            kjonn = "dummy kjønn",
+            kjonn = Kjoennstype.M.name,
             kontonummer = Kontonummer(
                     datoFraOgMed = dummyDato,
                     kilde = dummyKilde,
