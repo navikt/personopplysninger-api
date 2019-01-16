@@ -22,10 +22,10 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class Tiltak (
 
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
     /* Dato til når informasjonen er gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoTil: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
+    val datoTil: String? = null,
+    val kilde: String? = null,
     val type: Kode? = null
 ) {
 }

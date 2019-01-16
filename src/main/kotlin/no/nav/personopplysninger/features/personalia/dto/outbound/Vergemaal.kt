@@ -32,24 +32,24 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class Vergemaal (
 
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
     /* Verge egenansatt */
     val egenansatt: kotlin.Boolean? = null,
     val embete: Kode? = null,
     /* Fødselsnummer */
-    val fnr: kotlin.String? = null,
+    val fnr: String? = null,
     /* Verge forkortet navn */
-    val forkortetNavn: kotlin.String? = null,
+    val forkortetNavn: String? = null,
     /* Id */
-    val id: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
+    val id: String? = null,
+    val kilde: String? = null,
     val mandattype: Kode? = null,
     /* Saksid */
-    val saksId: kotlin.String? = null,
+    val saksId: String? = null,
     val sakstype: Kode? = null,
     val spesreg: Kode? = null,
     val type: Kode? = null,
     /* Dato for vedtak, format (ISO-8601): yyyy-MM-dd */
-    val vedtaksdato: kotlin.String? = null
+    val vedtaksdato: String? = null
 ) {
 }

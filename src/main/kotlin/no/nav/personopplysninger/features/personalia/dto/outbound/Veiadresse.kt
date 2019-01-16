@@ -22,12 +22,12 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 data class Veiadresse (
 
     /* Husbokstav */
-    val bokstav: kotlin.String? = null,
+    val bokstav: String? = null,
     /* Bolignummer */
-    val bolignummer: kotlin.String? = null,
+    val bolignummer: String? = null,
     /* Gatekode */
-    val gatekode: kotlin.String? = null,
+    val gatekode: String? = null,
     /* Husnummer */
-    val husnummer: kotlin.String? = null
+    val husnummer: String? = null
 ) {
 }

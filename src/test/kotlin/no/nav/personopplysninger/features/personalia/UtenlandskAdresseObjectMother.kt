@@ -8,6 +8,8 @@ object UtenlandskAdresseObjectMother {
                 adresse1 = "Adresselinje 1",
                 adresse2 = "Adresselinje 2",
                 adresse3 = "adresselinje 3",
+                datoFraOgMed = "dummy dato",
+                datoTilOgMed = "dummy dato",
                 land = "Utlandet"
         )
     }
@@ -17,6 +19,8 @@ object UtenlandskAdresseObjectMother {
                 adresse1 = null,
                 adresse2 = null,
                 adresse3 = null,
+                datoFraOgMed = null,
+                datoTilOgMed = null,
                 land = null
         )
     }

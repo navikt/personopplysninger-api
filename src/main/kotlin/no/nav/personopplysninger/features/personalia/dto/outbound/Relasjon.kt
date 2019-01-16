@@ -33,20 +33,20 @@ data class Relasjon (
     /* Alder */
     val alder: kotlin.Int? = null,
     /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
-    val datoFraOgMed: kotlin.String? = null,
+    val datoFraOgMed: String? = null,
     val doedsdato: Doedsdato? = null,
     val egenansatt: Egenansatt? = null,
     /* Fødselsdato, format (ISO-8601): yyyy-MM-dd */
-    val foedselsdato: kotlin.String? = null,
+    val foedselsdato: String? = null,
     /* Personidentifikator */
-    val forkortetNavn: kotlin.String? = null,
+    val forkortetNavn: String? = null,
     /* Har samme adresse som Nav-Personidentifikator */
     val harSammeAdresse: kotlin.Boolean? = null,
     /* Personidentifikator */
-    val ident: kotlin.String? = null,
-    val kilde: kotlin.String? = null,
+    val ident: String? = null,
+    val kilde: String? = null,
     /* Kjønn */
-    val kjoenn: kotlin.String? = null,
+    val kjoenn: String? = null,
     val relasjonsType: Kode? = null,
     val spesiellOpplysning: KodeMedDatoOgKilde? = null,
     val statsborgerskap: KodeMedDatoOgKilde? = null

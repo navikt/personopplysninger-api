@@ -6,15 +6,12 @@ import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.servlet.ServletContainer;
-import org.glassfish.jersey.servlet.ServletProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +27,7 @@ import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
-@ComponentScan({"no.nav.personopplysninger.api"})
+@ComponentScan({"no.nav.personopplysninger.features", "no.nav.personopplysninger.api"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 @Import({RestClientConfiguration.class,
         PersonRestConfiguration.class
@@ -41,45 +38,38 @@ public class ApplicationConfig implements EnvironmentAware {
 
     private Environment env;
 
+
     @Bean
     ServletWebServerFactory servletWebServerFactory() {
-
         JettyServletWebServerFactory serverFactory = new JettyServletWebServerFactory();
-
         serverFactory.setPort(8080);
-
         return serverFactory;
     }
+
 
     @Bean
     public RequestContextListener requestContextListener() {
         return new RequestContextListener();
     }
 
-    @Bean
-    ServletRegistrationBean<?> jerseyServletRegistration() {
-
-        ServletRegistrationBean<?> jerseyServletRegistration = new ServletRegistrationBean<>(new ServletContainer());
-
-        jerseyServletRegistration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, RestResourceConfiguration.class.getName());
-
-        return jerseyServletRegistration;
-    }
 
     @Bean
     public ResourceConfig jerseyConfig() {
         return new RestResourceConfiguration();
     }
 
+
     @Bean
     public MultiIssuerConfiguraton multiIssuerConfiguration(MultiIssuerProperties issuerProperties, OIDCResourceRetriever resourceRetriever) {
         return new MultiIssuerConfiguraton(issuerProperties.getIssuer(), resourceRetriever);
     }
 
+
     @Bean
     public JaxrsOIDCTokenValidationFilter tokenValidationFilter(MultiIssuerConfiguraton config) {
         return new JaxrsOIDCTokenValidationFilter(config);
     }
+
 
     @Bean
     public FilterRegistrationBean<JaxrsOIDCTokenValidationFilter> oidcTokenValidationFilterBean(JaxrsOIDCTokenValidationFilter validationFilter) {
@@ -94,6 +84,7 @@ public class ApplicationConfig implements EnvironmentAware {
         return filterRegistration;
     }
 
+
     @Bean
     public OIDCResourceRetriever oidcResourceRetriever() {
         OIDCResourceRetriever resourceRetriever = new OIDCResourceRetriever();
@@ -101,6 +92,7 @@ public class ApplicationConfig implements EnvironmentAware {
         resourceRetriever.setUsePlainTextForHttps(Boolean.parseBoolean(env.getProperty("https.plaintext", "false")));
         return resourceRetriever;
     }
+
 
     @Bean
     public FilterRegistrationBean<LogFilter> logFilter() {
@@ -110,6 +102,7 @@ public class ApplicationConfig implements EnvironmentAware {
         filterRegistration.setOrder(1);
         return filterRegistration;
     }
+
 
     private URL getConfiguredProxy() {
         String proxyParameterName = env.getProperty("http.proxy.parametername", "http.proxy");
@@ -128,9 +121,11 @@ public class ApplicationConfig implements EnvironmentAware {
         return proxy;
     }
 
+
     private boolean isProxyConfigAvailable(String proxyconfig) {
         return proxyconfig != null && proxyconfig.trim().length() > 0;
     }
+
 
     @Override
     public void setEnvironment(Environment env) {
