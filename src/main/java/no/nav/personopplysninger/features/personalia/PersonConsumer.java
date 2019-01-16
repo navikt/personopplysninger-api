@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia;
 
 import no.nav.log.MDCConstants;
+import no.nav.personopplysninger.features.personalia.exceptions.TpsProxyConsumerException;
 import no.nav.tps.person.Personinfo;
 import org.slf4j.MDC;
 
