@@ -44,7 +44,7 @@ object PersoninfoTransformer {
         return Personalia(
                 fornavn = inbound.navn?.let { fornavn(it) },
                 etternavn = inbound.navn?.let { etternavn(it) },
-                fnr = inbound.foedselsdato, // TODO Are: Hvor finner vi fnr?
+                fnr = inbound.foedselsdato, // TODO Are: Hvor finner vi fnr? Se IN-735
                 kontonr = inbound.kontonummer?.let { kontonr(it) },
                 tlfnr = inbound.telefon?.let { tlfnr(it) },
                 spraak = inbound.spraak?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk Kilde
