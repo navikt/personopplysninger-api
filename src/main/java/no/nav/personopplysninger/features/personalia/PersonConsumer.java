@@ -78,15 +78,4 @@ public class PersonConsumer {
     }
 
 
-    public class TpsProxyConsumerException extends RuntimeException {
-        private TpsProxyConsumerException(String msg, Throwable cause) {
-            super(msg, cause);
-        }
-
-
-        private TpsProxyConsumerException(String msg) {
-            super(msg);
-        }
-    }
-
 }
