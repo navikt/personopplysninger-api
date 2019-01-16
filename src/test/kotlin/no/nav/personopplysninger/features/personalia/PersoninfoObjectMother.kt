@@ -29,7 +29,7 @@ object PersoninfoObjectMother {
             foedtILand = dummyKode,
             foreldreansvar = KodeMedDatoOgKildeObjectMother.dummyValues,
             ident = "dummy ident",
-            identtype = dummyKode,
+            identtype = dummyKode.copy(verdi = "DNR"),
             innvandringUtvandring = InnvandringUtvandringObjectMother.dummyValues,
             kjonn = Kjoennstype.M.name,
             kontonummer = Kontonummer(

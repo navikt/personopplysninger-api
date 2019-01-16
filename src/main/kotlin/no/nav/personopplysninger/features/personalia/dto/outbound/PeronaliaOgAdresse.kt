@@ -5,7 +5,7 @@ data class PersonaliaOgAdresser(val personalia: Personalia, val adresser: Adress
 data class Personalia(
         val fornavn: String? = null,
         val etternavn: String? = null,
-        val fnr: String? = null,
+        val personident: Personident? = null,
         val kontonr: String? = null,
         val tlfnr: Tlfnr? = null,
         val spraak: String? = null,

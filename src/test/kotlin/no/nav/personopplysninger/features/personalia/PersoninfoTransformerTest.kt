@@ -34,6 +34,8 @@ class PersoninfoTransformerTest {
         assertFoedested(inbound.foedtIKommune!!, inbound.foedtILand!!, actual.foedested!!)
         assertEquals("Gift", actual.sivilstand)// TODO Are: Kodeverk. Husk kilde.
         assertEquals("Mann", actual.kjoenn)
+        assertEquals(inbound.ident!!, actual.personident!!.verdi)
+        assertEquals(inbound.identtype!!.verdi!!, actual.personident!!.type)
     }
 
     private fun assertFoedested(expectedKommune: Kode, expectedLand: Kode, actualFoedested: String) {

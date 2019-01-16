@@ -12,9 +12,7 @@ class PersonaliaService @Autowired constructor(
 
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
         val inbound = personConsumer.hentPersonInfo(fodselsnr)
-        val thinDto = PersonaliaOgAdresserTransformer.toOutbound(inbound)
-        val dtoWithFnr = thinDto.copy(personalia = thinDto.personalia.copy(fnr = fodselsnr))
         // TODO Are IN-702: Oppslag i kodeverkstjeneste
-        return dtoWithFnr
+        return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }
 }

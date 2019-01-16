@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.Kilde
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
+import no.nav.personopplysninger.features.personalia.dto.outbound.Personident
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.kodeverk.Kjoennstype
 import no.nav.personopplysninger.features.personalia.kodeverk.Personstatus
@@ -47,6 +48,7 @@ object PersoninfoTransformer {
         return Personalia(
                 fornavn = inbound.navn?.let { fornavn(it) },
                 etternavn = inbound.navn?.let { etternavn(it) },
+                personident = inbound.ident?.let { Personident(it, inbound.identtype?.verdi) },
                 kontonr = inbound.kontonummer?.let { kontonr(it) },
                 tlfnr = inbound.telefon?.let { tlfnr(it) },
                 spraak = inbound.spraak?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk Kilde
