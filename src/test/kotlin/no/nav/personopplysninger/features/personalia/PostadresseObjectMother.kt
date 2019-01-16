@@ -10,7 +10,7 @@ object PostadresseObjectMother {
                 adresse3 = "adresselinje 3",
                 datoFraOgMed = "dummy dato",
                 land = "Norge",
-                postnummer = "0010"
+                postnummer = "2974"
         )
     }
 

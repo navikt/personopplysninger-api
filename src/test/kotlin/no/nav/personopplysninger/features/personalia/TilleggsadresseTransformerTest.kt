@@ -29,6 +29,7 @@ class TilleggsadresseTransformerTest {
         assertEquals(inbound.kommunenummer!!, actual.kommunenummer)
         assertEquals(inbound.postboksanlegg!!, actual.postboksanlegg)
         assertEquals(inbound.postnummer!!, actual.postnummer)
+        assertEquals("VANG I VALDRES", actual.poststed)
     }
 
 
@@ -51,5 +52,6 @@ class TilleggsadresseTransformerTest {
         assertNull(actual.kommunenummer)
         assertNull(actual.postboksanlegg)
         assertNull(actual.postnummer)
+        assertNull(actual.poststed)
     }
 }

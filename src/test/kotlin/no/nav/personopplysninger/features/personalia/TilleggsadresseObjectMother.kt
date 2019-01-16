@@ -18,7 +18,7 @@ object TilleggsadresseObjectMother {
             kommunenummer = "dummy kommunenr",
             postboksanlegg = "dummy postboksanlegg",
             postboksnummer = "dummy postboksnr",
-            postnummer = "dummy postnr"
+            postnummer = "2974"
     )
 
     val nullObject = Tilleggsadresse(

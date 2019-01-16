@@ -9,5 +9,6 @@ data class Postadresse(
         /* Dato gyldig fra, format (ISO-8601): yyyy-MM-dd */
         val datoFraOgMed: String? = null,
         val land: String? = null,
-        val postnummer: String? = null
+        val postnummer: String? = null,
+        val poststed: String? = null
 )

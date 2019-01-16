@@ -13,5 +13,6 @@ data class Boadresse(
         val landkode: String? = null,
         val matrikkeladresse: Matrikkeladresse? = null,
         val postnummer: String? = null,
+        val poststed: String? = null,
         val veiadresse: Veiadresse? = null
 )
