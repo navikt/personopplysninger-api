@@ -27,7 +27,7 @@ class PersoninfoTransformerTest {
         assertEtternavn(inbound.navn!!, actual.etternavn!!)
         assertEquals(inbound.kontonummer!!.nummer!!, actual.kontonr!!)
         assertTlfnr(inbound.telefon!!, actual.tlfnr!!)
-        assertEquals(inbound.spraak!!.kode!!.verdi!!, actual.spraak!!) // TODO Are IN-708: Kodeverk. Husk kilde.
+        assertEquals("Nynorsk", actual.spraak!!) // TODO Are: Kodeverk. Husk kilde.
         assertEquals("TODO", actual.epostadr) // TODO Are: Egen integrasjon for å finne epost? Husk å registrer datakilden.
         assertEquals("Fødselsregistrert", actual.personstatus) // TODO Are: Kodeverk. Husk kilde.
         assertEquals(inbound.statsborgerskap!!.kode!!.verdi!!, actual.statsborgerskap) // TODO Are: Kodeverk. Husk kilde.

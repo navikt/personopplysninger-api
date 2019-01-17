@@ -4,10 +4,7 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.Kilde
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personident
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
-import no.nav.personopplysninger.features.personalia.kodeverk.Kjoennstype
-import no.nav.personopplysninger.features.personalia.kodeverk.Landkode
-import no.nav.personopplysninger.features.personalia.kodeverk.Personstatus
-import no.nav.personopplysninger.features.personalia.kodeverk.Sivilstand
+import no.nav.personopplysninger.features.personalia.kodeverk.*
 import no.nav.tps.person.*
 import org.slf4j.LoggerFactory
 
@@ -54,7 +51,7 @@ object PersoninfoTransformer {
                 personident = inbound.ident?.let { Personident(it, inbound.identtype?.verdi) },
                 kontonr = inbound.kontonummer?.let { kontonr(it) },
                 tlfnr = inbound.telefon?.let { tlfnr(it) },
-                spraak = inbound.spraak?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk Kilde
+                spraak = inbound.spraak?.kode?.verdi?.let { Spraak.dekode(it) }, // TODO Are: Kodeverk. Husk Kilde
                 epostadr = "TODO", // TODO Are: Hvor finner vi epostadr?
                 personstatus = inbound.status?.kode?.verdi?.let { Personstatus.dekode(it) }, // TODO Are: Kodeverk. Husk kilde
                 statsborgerskap = inbound.statsborgerskap?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk kilde
