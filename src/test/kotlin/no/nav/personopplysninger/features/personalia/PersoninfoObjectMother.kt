@@ -26,7 +26,7 @@ object PersoninfoObjectMother {
             ),
             foedselsdato = dummyDato,
             foedtIKommune = dummyKode,
-            foedtILand = dummyKode,
+            foedtILand = Kode("Landkoder", "NOR"),
             foreldreansvar = KodeMedDatoOgKildeObjectMother.dummyValues,
             ident = "dummy ident",
             identtype = dummyKode.copy(verdi = "DNR"),

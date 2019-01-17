@@ -31,16 +31,16 @@ class PersoninfoTransformerTest {
         assertEquals("TODO", actual.epostadr) // TODO Are: Egen integrasjon for å finne epost? Husk å registrer datakilden.
         assertEquals("Fødselsregistrert", actual.personstatus) // TODO Are: Kodeverk. Husk kilde.
         assertEquals(inbound.statsborgerskap!!.kode!!.verdi!!, actual.statsborgerskap) // TODO Are: Kodeverk. Husk kilde.
-        assertFoedested(inbound.foedtIKommune!!, inbound.foedtILand!!, actual.foedested!!)
+        assertFoedested(inbound.foedtIKommune!!, "NORGE", actual.foedested!!)
         assertEquals("Gift", actual.sivilstand)// TODO Are: Kodeverk. Husk kilde.
         assertEquals("Mann", actual.kjoenn)
         assertEquals(inbound.ident!!, actual.personident!!.verdi)
         assertEquals(inbound.identtype!!.verdi!!, actual.personident!!.type)
     }
 
-    private fun assertFoedested(expectedKommune: Kode, expectedLand: Kode, actualFoedested: String) {
+    private fun assertFoedested(expectedKommune: Kode, expectedLand: String, actualFoedested: String) {
         // TODO Are: Kodeverk.
-        val expected = expectedKommune.verdi!! + ", " + expectedLand.verdi!!
+        val expected = expectedKommune.verdi!! + ", " + expectedLand
         assertEquals(expected, actualFoedested, "Fødested skal ha formen '<kommunenavn>, <landnavn>' (uten fnutter)")
     }
 
