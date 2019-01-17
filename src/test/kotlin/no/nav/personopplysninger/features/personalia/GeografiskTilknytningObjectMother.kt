@@ -7,7 +7,7 @@ object GeografiskTilknytningObjectMother {
             bydel = "dummy bydel",
             kilde = "kilde for GeografiskTilknytning",
             datoFraOgMed = "dummy dato",
-            land = "dummy land",
+            land = "NOR",
             kommune = "dummy kommune"
     )
 
