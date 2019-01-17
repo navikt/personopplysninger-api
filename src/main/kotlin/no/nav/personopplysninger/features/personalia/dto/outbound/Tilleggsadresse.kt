@@ -18,5 +18,6 @@ data class Tilleggsadresse(
         val kommunenummer: String? = null,
         val postboksanlegg: String? = null,
         val postboksnummer: String? = null,
-        val postnummer: String? = null
+        val postnummer: String? = null,
+        val poststed: String? = null
 )

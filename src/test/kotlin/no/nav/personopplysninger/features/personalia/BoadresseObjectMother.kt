@@ -12,7 +12,7 @@ object BoadresseObjectMother {
                 kommune = "Kristiansand",
                 landkode = "dummy landkode",
                 matrikkeladresse = MatrikkeladresseObjectMother.vardeveien7(),
-                postnummer = "5002",
+                postnummer = "2974",
                 veiadresse = VeiadresseObjectMother.vardeveien7()
         )
     }

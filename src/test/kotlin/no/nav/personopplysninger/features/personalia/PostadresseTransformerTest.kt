@@ -22,6 +22,7 @@ class PostadresseTransformerTest {
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
         assertEquals(inbound.land!!, actual.land)
         assertEquals(inbound.postnummer!!, actual.postnummer)
+        assertEquals("VANG I VALDRES", actual.poststed)
     }
 
     @Test
@@ -36,5 +37,6 @@ class PostadresseTransformerTest {
         assertNull(actual.datoFraOgMed)
         assertNull(actual.land)
         assertNull(actual.postnummer)
+        assertNull(actual.poststed)
     }
 }

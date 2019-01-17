@@ -25,16 +25,17 @@ class PersoninfoTransformerTest {
 
         assertFornavn(inbound.navn!!, actual.fornavn!!)
         assertEtternavn(inbound.navn!!, actual.etternavn!!)
-        assertEquals(inbound.foedselsdato, actual.fnr)  // TODO Are IN-735: Det er fnr/personident som skal vises. Denne testen må endres når det blir klart hvordan vi skaffer fnr.
         assertEquals(inbound.kontonummer!!.nummer!!, actual.kontonr!!)
         assertTlfnr(inbound.telefon!!, actual.tlfnr!!)
         assertEquals(inbound.spraak!!.kode!!.verdi!!, actual.spraak!!) // TODO Are IN-708: Kodeverk. Husk kilde.
         assertEquals("TODO", actual.epostadr) // TODO Are: Egen integrasjon for å finne epost? Husk å registrer datakilden.
-        assertEquals(inbound.status!!.kode!!.verdi!!, actual.personstatus) // TODO Are: Kodeverk. Husk kilde. Er det riktig felt som mappes? (status == personstatus ?)
+        assertEquals("Fødselsregistrert", actual.personstatus) // TODO Are: Kodeverk. Husk kilde.
         assertEquals(inbound.statsborgerskap!!.kode!!.verdi!!, actual.statsborgerskap) // TODO Are: Kodeverk. Husk kilde.
         assertFoedested(inbound.foedtIKommune!!, inbound.foedtILand!!, actual.foedested!!)
-        assertEquals(inbound.sivilstand!!.kode!!.verdi!!, actual.sivilstand)// TODO Are: Kodeverk. Husk kilde.
-        assertEquals(inbound.kjonn!!, actual.kjoenn)
+        assertEquals("Gift", actual.sivilstand)// TODO Are: Kodeverk. Husk kilde.
+        assertEquals("Mann", actual.kjoenn)
+        assertEquals(inbound.ident!!, actual.personident!!.verdi)
+        assertEquals(inbound.identtype!!.verdi!!, actual.personident!!.type)
     }
 
     private fun assertFoedested(expectedKommune: Kode, expectedLand: Kode, actualFoedested: String) {
