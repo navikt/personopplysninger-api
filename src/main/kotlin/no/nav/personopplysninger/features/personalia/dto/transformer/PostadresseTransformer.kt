@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.Postadresse
+import no.nav.personopplysninger.features.personalia.kodeverk.Landkode
 import no.nav.personopplysninger.features.personalia.kodeverk.Postnummer
 
 
@@ -10,7 +11,7 @@ object PostadresseTransformer {
             adresse2 = inbound.adresse2,
             adresse3 = inbound.adresse3,
             datoFraOgMed = inbound.datoFraOgMed,
-            land = inbound.land,
+            land = inbound.land?.let { Landkode.dekode(it) },
             postnummer = inbound.postnummer,
             poststed = inbound.postnummer?.let { Postnummer.poststed(it) }
     )

@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
+import no.nav.personopplysninger.features.personalia.kodeverk.Landkode
 import no.nav.tps.person.Boadresse
 
 object BoadresseObjectMother {
@@ -10,7 +11,7 @@ object BoadresseObjectMother {
                 bydel = "dummy bydel",
                 datoFraOgMed = "dummy dato",
                 kommune = "Kristiansand",
-                landkode = "NOR",
+                landkode = Landkode.NOR.name,
                 matrikkeladresse = MatrikkeladresseObjectMother.vardeveien7(),
                 postnummer = "2974",
                 veiadresse = VeiadresseObjectMother.vardeveien7()

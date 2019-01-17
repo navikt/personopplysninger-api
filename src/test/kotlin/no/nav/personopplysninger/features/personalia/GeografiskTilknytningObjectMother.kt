@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
+import no.nav.personopplysninger.features.personalia.kodeverk.Landkode
 import no.nav.tps.person.GeografiskTilknytning
 
 object GeografiskTilknytningObjectMother {
@@ -7,7 +8,7 @@ object GeografiskTilknytningObjectMother {
             bydel = "dummy bydel",
             kilde = "kilde for GeografiskTilknytning",
             datoFraOgMed = "dummy dato",
-            land = "NOR",
+            land = Landkode.NOR.name,
             kommune = "dummy kommune"
     )
 
