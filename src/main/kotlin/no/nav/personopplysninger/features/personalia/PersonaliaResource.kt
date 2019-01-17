@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.security.oidc.api.ProtectedWithClaims
+import no.nav.security.oidc.jaxrs.OidcRequestContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import javax.ws.rs.GET
@@ -8,33 +9,31 @@ import javax.ws.rs.Path
 import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
-import no.nav.security.oidc.jaxrs.OidcRequestContext
-import org.springframework.stereotype.Controller
+
+private const val claimsIssuer = "selvbetjening"
 
 @Component
 @Path("/personalia")
-@ProtectedWithClaims(issuer = "selvbetjening", claimMap = arrayOf("acr=Level4"))
+@ProtectedWithClaims(issuer = claimsIssuer, claimMap = arrayOf("acr=Level4"))
 class PersonaliaResource @Autowired constructor(
-        private var personaliaService : PersonaliaService
-){
+        private var personaliaService: PersonaliaService // TODO Are: @Inject istedenfor @Autowire? val istedenfor var?
+) {
 
-    private val SELVBETJENING = "selvbetjening"
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/hent")
+    fun hentPersonalia(): Response {
+        val fodselsnr = hentFnrFraToken()
+        val personaliaOgAdresser = personaliaService.hentPersoninfo(fodselsnr)
+        return Response
+                .ok(personaliaOgAdresser)
+                .build()
+    }
 
-    val hentPersonalia: Response
-        @GET
-        @Produces(MediaType.APPLICATION_JSON)
-        @Path("/hent")
-        get() {
-            val fodselsnr = hentFnrFraToken()
-            val personInfo = personaliaService.hentPersoninfo(fodselsnr)
-            return Response
-                    .ok(personInfo)
-                    .build()
-        }
 
-    fun hentFnrFraToken(): String {
+    private fun hentFnrFraToken(): String {
         val context = OidcRequestContext.getHolder().oidcValidationContext
-        return context.getClaims(SELVBETJENING).claimSet.subject
+        return context.getClaims(claimsIssuer).claimSet.subject
     }
 
 }

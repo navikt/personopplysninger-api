@@ -7,6 +7,8 @@ object UtenlandskAdresseTransformer {
             adresse1 = inbound.adresse1,
             adresse2 = inbound.adresse2,
             adresse3 = inbound.adresse3,
+            datoFraOgMed = inbound.datoFraOgMed,
+            datoTilOgMed = inbound.datoTilOgMed,
             land = inbound.land
     )
 }

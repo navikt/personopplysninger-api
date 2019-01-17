@@ -1,12 +1,11 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.BoadresseTransformer
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 
 @TestInstance(PER_CLASS)
 class BoadresseTransformerTest {
@@ -17,10 +16,15 @@ class BoadresseTransformerTest {
 
         val actual = BoadresseTransformer.toOutbound(inbound)
 
-        assertEquals(inbound.adresse, actual.adresse)
-        assertEquals(inbound.kommune, actual.kommune)
+        assertEquals(inbound.adresse!!, actual.adresse)
+        assertEquals(inbound.adressetillegg!!, actual.adressetillegg)
+        assertEquals(inbound.bydel!!, actual.bydel)
+        assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
+        assertEquals(inbound.kommune!!, actual.kommune)
+        assertEquals(inbound.landkode!!, actual.landkode)
         assertNotNull(actual.matrikkeladresse)
-        assertEquals(inbound.postnummer, actual.postnummer)
+        assertEquals(inbound.postnummer!!, actual.postnummer)
+        Assertions.assertEquals("VANG I VALDRES", actual.poststed)
         assertNotNull(actual.veiadresse)
     }
 
@@ -30,10 +34,15 @@ class BoadresseTransformerTest {
 
         val actual = BoadresseTransformer.toOutbound(inbound)
 
-        assertEquals(inbound.adresse, actual.adresse)
-        assertEquals(inbound.kommune, actual.kommune)
+        assertNull(actual.adresse)
+        assertNull(actual.adressetillegg)
+        assertNull(actual.bydel)
+        assertNull(actual.datoFraOgMed)
+        assertNull(actual.kommune)
+        assertNull(actual.landkode)
         assertNull(actual.matrikkeladresse)
-        assertEquals(inbound.postnummer, actual.postnummer)
+        assertNull(actual.postnummer)
+        assertNull(actual.poststed)
         assertNull(actual.veiadresse)
     }
 }
