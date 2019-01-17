@@ -10,7 +10,7 @@ data class Boadresse(
         /* Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd */
         val datoFraOgMed: String? = null,
         val kommune: String? = null,
-        val landkode: String? = null,
+        val land: String? = null,
         val matrikkeladresse: Matrikkeladresse? = null,
         val postnummer: String? = null,
         val poststed: String? = null,
