@@ -67,7 +67,6 @@ object PersoninfoTransformer {
     }
 
     private fun foedested(foedtIKommune: Kode?, foedtILand: Kode?): String? {
-        log.info("AAAA fødested foedtIKommune=[${foedtIKommune}], foedtILand=[${foedtILand}]") // TODO Are: Slett
         val landnavn: String? = foedtILand?.verdi?.let { Landkode.dekode(it) }
         val names = listOfNotNull(foedtIKommune?.verdi, landnavn)
         return if (names.isEmpty()) null else names.joinToString(", ")
