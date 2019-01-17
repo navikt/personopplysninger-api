@@ -13,7 +13,7 @@ object Postnummer {
         try {
             return postnrTilPoststed.getValue(postnr)
         } catch (e: NoSuchElementException) {
-            log.warn("Enum for kodeverk for postnummer mangler gitt postnr [" + postnr + "]", e)
+            log.warn("Hardkodet kopi av kodeverk for postnummer mangler gitt postnr [" + postnr + "]", e)
             return "-"
         }
     }
