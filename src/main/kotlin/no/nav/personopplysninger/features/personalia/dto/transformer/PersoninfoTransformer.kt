@@ -5,12 +5,15 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personident
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.kodeverk.Kjoennstype
+import no.nav.personopplysninger.features.personalia.kodeverk.Landkode
 import no.nav.personopplysninger.features.personalia.kodeverk.Personstatus
 import no.nav.personopplysninger.features.personalia.kodeverk.Sivilstand
 import no.nav.tps.person.*
+import org.slf4j.LoggerFactory
 
 
 object PersoninfoTransformer {
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     fun toOutbound(inbound: Personinfo): Personalia {
         val kilder: MutableSet<Kilde> = mutableSetOf()
@@ -64,7 +67,8 @@ object PersoninfoTransformer {
     }
 
     private fun foedested(foedtIKommune: Kode?, foedtILand: Kode?): String? {
-        val names = listOfNotNull(foedtIKommune?.verdi, foedtILand?.verdi)
+        val landnavn: String? = foedtILand?.verdi?.let { Landkode.dekode(it) }
+        val names = listOfNotNull(foedtIKommune?.verdi, landnavn)
         return if (names.isEmpty()) null else names.joinToString(", ")
     }
 

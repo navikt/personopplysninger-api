@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
+import no.nav.personopplysninger.features.personalia.kodeverk.Landkode
 import no.nav.tps.person.UtenlandskAdresse
 
 object UtenlandskAdresseTransformer {
@@ -9,6 +10,6 @@ object UtenlandskAdresseTransformer {
             adresse3 = inbound.adresse3,
             datoFraOgMed = inbound.datoFraOgMed,
             datoTilOgMed = inbound.datoTilOgMed,
-            land = inbound.land
+            land = inbound.land?.let { Landkode.dekode(it) }
     )
 }

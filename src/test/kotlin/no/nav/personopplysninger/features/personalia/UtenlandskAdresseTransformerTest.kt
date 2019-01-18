@@ -21,7 +21,7 @@ class UtenlandskAdresseTransformerTest {
         assertEquals(inbound.adresse3!!, actual.adresse3)
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
         assertEquals(inbound.datoTilOgMed!!, actual.datoTilOgMed)
-        assertEquals(inbound.land!!, actual.land)
+        assertEquals("KAPP VERDE", actual.land)
     }
 
     @Test
