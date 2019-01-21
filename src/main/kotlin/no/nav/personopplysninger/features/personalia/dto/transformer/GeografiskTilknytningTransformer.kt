@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskTilknytning
+import no.nav.personopplysninger.features.personalia.kodeverk.Landkode
 
 
 object GeografiskTilknytningTransformer {
@@ -8,7 +9,7 @@ object GeografiskTilknytningTransformer {
             bydel = inbound.bydel,
             datoFraOgMed = inbound.datoFraOgMed,
             kommune = inbound.kommune,
-            land = inbound.land
+            land = inbound.land?.let { Landkode.dekode(it) }
     )
 
 }

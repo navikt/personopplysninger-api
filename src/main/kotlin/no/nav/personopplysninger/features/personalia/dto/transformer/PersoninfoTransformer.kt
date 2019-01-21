@@ -4,13 +4,13 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.Kilde
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personident
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
-import no.nav.personopplysninger.features.personalia.kodeverk.Kjoennstype
-import no.nav.personopplysninger.features.personalia.kodeverk.Personstatus
-import no.nav.personopplysninger.features.personalia.kodeverk.Sivilstand
+import no.nav.personopplysninger.features.personalia.kodeverk.*
 import no.nav.tps.person.*
+import org.slf4j.LoggerFactory
 
 
 object PersoninfoTransformer {
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     fun toOutbound(inbound: Personinfo): Personalia {
         val kilder: MutableSet<Kilde> = mutableSetOf()
@@ -51,10 +51,10 @@ object PersoninfoTransformer {
                 personident = inbound.ident?.let { Personident(it, inbound.identtype?.verdi) },
                 kontonr = inbound.kontonummer?.let { kontonr(it) },
                 tlfnr = inbound.telefon?.let { tlfnr(it) },
-                spraak = inbound.spraak?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk Kilde
+                spraak = inbound.spraak?.kode?.verdi?.let { Spraak.dekode(it) }, // TODO Are: Kodeverk. Husk Kilde
                 epostadr = "TODO", // TODO Are: Hvor finner vi epostadr?
                 personstatus = inbound.status?.kode?.verdi?.let { Personstatus.dekode(it) }, // TODO Are: Kodeverk. Husk kilde
-                statsborgerskap = inbound.statsborgerskap?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk kilde
+                statsborgerskap = inbound.statsborgerskap?.kode?.verdi?.let { StatsborgerskapFreg.dekode(it) }, // TODO Are: Kodeverk. Husk kilde
                 foedested = foedested(inbound.foedtIKommune, inbound.foedtILand), // TODO Are: Kodeverk.
                 sivilstand = inbound.sivilstand?.kode?.verdi?.let { Sivilstand.dekode(it) }, // TODO Are: Kodeverk. Husk kilde
                 kjoenn = inbound.kjonn?.let { Kjoennstype.dekode(it) },
@@ -64,7 +64,8 @@ object PersoninfoTransformer {
     }
 
     private fun foedested(foedtIKommune: Kode?, foedtILand: Kode?): String? {
-        val names = listOfNotNull(foedtIKommune?.verdi, foedtILand?.verdi)
+        val landnavn: String? = foedtILand?.verdi?.let { Landkode.dekode(it) }
+        val names = listOfNotNull(foedtIKommune?.verdi, landnavn)
         return if (names.isEmpty()) null else names.joinToString(", ")
     }
 

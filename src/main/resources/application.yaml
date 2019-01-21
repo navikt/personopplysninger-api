@@ -2,23 +2,16 @@ spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
   main.banner-mode: "off"
   jersey:
-    application-path: "/api"
-    servlet:
-      load-on-startup: 1
-  metrics.web.server.auto-time-request: true
-
+    application-path: /
 server:
   servlet:
     context-path: /personopplysninger-api
 
 management:
   endpoint:
-    endpoints.web.exposure.include: '*'
-
+#   endpoints.web.exposure.include: '*'
     health:
       show-details: always
-
-  endpoints:
     web:
       exposure:
         include: info, health, metrics, prometheus
@@ -29,6 +22,7 @@ management:
     export:
       prometheus:
         enabled: true
+
 http.proxy: http://webproxy-nais.nav.no:8088
 
 logging:

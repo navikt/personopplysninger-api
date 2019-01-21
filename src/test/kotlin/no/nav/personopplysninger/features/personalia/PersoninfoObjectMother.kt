@@ -1,8 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
-import no.nav.personopplysninger.features.personalia.kodeverk.Kjoennstype
-import no.nav.personopplysninger.features.personalia.kodeverk.Personstatus
-import no.nav.personopplysninger.features.personalia.kodeverk.Sivilstand
+import no.nav.personopplysninger.features.personalia.kodeverk.*
 import no.nav.tps.person.*
 
 object PersoninfoObjectMother {
@@ -26,7 +24,7 @@ object PersoninfoObjectMother {
             ),
             foedselsdato = dummyDato,
             foedtIKommune = dummyKode,
-            foedtILand = dummyKode,
+            foedtILand = Kode("Landkoder", Landkode.NOR.name),
             foreldreansvar = KodeMedDatoOgKildeObjectMother.dummyValues,
             ident = "dummy ident",
             identtype = dummyKode.copy(verdi = "DNR"),
@@ -42,8 +40,8 @@ object PersoninfoObjectMother {
             relasjonFinnes = true,
             sivilstand = KodeMedDatoOgKildeObjectMother.medKode(Sivilstand.GIFT.name),
             spesiellOpplysning = KodeMedDatoOgKildeObjectMother.dummyValues,
-            spraak = KodeMedDatoOgKildeObjectMother.dummyValues,
-            statsborgerskap = KodeMedDatoOgKildeObjectMother.dummyValues,
+            spraak = KodeMedDatoOgKildeObjectMother.dummyValues.copy(kode = Kode("Språk", Spraak.NN.name)),
+            statsborgerskap = KodeMedDatoOgKildeObjectMother.dummyValues.copy(kode = Kode("StatsborgerskapFreg", "KOR")),
             status = KodeMedDatoOgKildeObjectMother.medKode(Personstatus.FØDR.name),
             telefon = TelefoninfoObjectMother.dummyValues,
             tiltak = Tiltak(
