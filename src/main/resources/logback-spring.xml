@@ -9,12 +9,12 @@
         <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
             <evaluator>
                 <matcher>
-                    <Name>isalive</Name>
-                    <!-- filter out odd numbered statements -->
+                    <Name>isAlive</Name>
+                    <!-- filtrere ut isAlive fra nais plattformen -->
                     <regex>status=200, method=GET, path=(\/internal\/status\/isAlive|\/internal\/prometheus)</regex>
                 </matcher>
 
-                <expression>isalive.matches(formattedMessage)</expression>
+                <expression>isAlive.matches(formattedMessage)</expression>
             </evaluator>
             <OnMismatch>NEUTRAL</OnMismatch>
             <OnMatch>DENY</OnMatch>

@@ -15,7 +15,7 @@ class StatusResource {
 
     val isAlive: String
         @GET
-        @Path("isAlive")
+        @Path("/status/isAlive")
         @Unprotected
         get() = "Ok"
 
