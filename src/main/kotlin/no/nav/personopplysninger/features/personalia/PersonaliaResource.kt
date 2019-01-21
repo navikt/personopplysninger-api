@@ -21,7 +21,6 @@ class PersonaliaResource @Autowired constructor(
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/hent")
     fun hentPersonalia(): Response {
         val fodselsnr = hentFnrFraToken()
         val personaliaOgAdresser = personaliaService.hentPersoninfo(fodselsnr)
