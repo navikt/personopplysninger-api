@@ -54,7 +54,7 @@ object PersoninfoTransformer {
                 spraak = inbound.spraak?.kode?.verdi?.let { Spraak.dekode(it) }, // TODO Are: Kodeverk. Husk Kilde
                 epostadr = "TODO", // TODO Are: Hvor finner vi epostadr?
                 personstatus = inbound.status?.kode?.verdi?.let { Personstatus.dekode(it) }, // TODO Are: Kodeverk. Husk kilde
-                statsborgerskap = inbound.statsborgerskap?.let { it.kode?.verdi }, // TODO Are: Kodeverk. Husk kilde
+                statsborgerskap = inbound.statsborgerskap?.kode?.verdi?.let { StatsborgerskapFreg.dekode(it) }, // TODO Are: Kodeverk. Husk kilde
                 foedested = foedested(inbound.foedtIKommune, inbound.foedtILand), // TODO Are: Kodeverk.
                 sivilstand = inbound.sivilstand?.kode?.verdi?.let { Sivilstand.dekode(it) }, // TODO Are: Kodeverk. Husk kilde
                 kjoenn = inbound.kjonn?.let { Kjoennstype.dekode(it) },

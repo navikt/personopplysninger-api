@@ -41,7 +41,7 @@ object PersoninfoObjectMother {
             sivilstand = KodeMedDatoOgKildeObjectMother.medKode(Sivilstand.GIFT.name),
             spesiellOpplysning = KodeMedDatoOgKildeObjectMother.dummyValues,
             spraak = KodeMedDatoOgKildeObjectMother.dummyValues.copy(kode = Kode("Språk", Spraak.NN.name)),
-            statsborgerskap = KodeMedDatoOgKildeObjectMother.dummyValues,
+            statsborgerskap = KodeMedDatoOgKildeObjectMother.dummyValues.copy(kode = Kode("StatsborgerskapFreg", "KOR")),
             status = KodeMedDatoOgKildeObjectMother.medKode(Personstatus.FØDR.name),
             telefon = TelefoninfoObjectMother.dummyValues,
             tiltak = Tiltak(
