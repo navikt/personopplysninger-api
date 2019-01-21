@@ -1,11 +1,11 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.features.personalia.dto.outbound.Kilde
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personident
-import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.kodeverk.*
-import no.nav.tps.person.*
+import no.nav.tps.person.Kode
+import no.nav.tps.person.Navn
+import no.nav.tps.person.Personinfo
 import org.slf4j.LoggerFactory
 
 
@@ -13,52 +13,26 @@ object PersoninfoTransformer {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     fun toOutbound(inbound: Personinfo): Personalia {
-        val kilder: MutableSet<Kilde> = mutableSetOf()
-
-        fun addKilde(kilde: String?): Unit {
-            kilde?.let { kilder.add(Kilde(it)) }
-        }
 
         fun fornavn(inbound: Navn): String? =
                 if (inbound.fornavn == null && inbound.mellomnavn == null) null
                 else {
-                    addKilde(inbound.kilde)
                     "${inbound.fornavn ?: ""} ${inbound.mellomnavn ?: ""}".trim()
                 }
 
-        fun etternavn(inbound: Navn): String? =
-                inbound.slektsnavn?.let {
-                    addKilde(inbound.kilde)
-                    it
-                }
-
-        fun kontonr(inbound: Kontonummer): String? =
-                inbound.nummer?.let {
-                    addKilde(inbound.kilde)
-                    it
-                }
-
-        fun tlfnr(inbound: Telefoninfo): Tlfnr {
-            val outbound = TelefoninfoTransformer.toOutbound(inbound)
-            kilder.addAll(outbound.datakilder)
-            return outbound
-        }
-
-
         return Personalia(
                 fornavn = inbound.navn?.let { fornavn(it) },
-                etternavn = inbound.navn?.let { etternavn(it) },
+                etternavn = inbound.navn?.slektsnavn,
                 personident = inbound.ident?.let { Personident(it, inbound.identtype?.verdi) },
-                kontonr = inbound.kontonummer?.let { kontonr(it) },
-                tlfnr = inbound.telefon?.let { tlfnr(it) },
-                spraak = inbound.spraak?.kode?.verdi?.let { Spraak.dekode(it) }, // TODO Are: Kodeverk. Husk Kilde
-                epostadr = "TODO", // TODO Are: Hvor finner vi epostadr?
-                personstatus = inbound.status?.kode?.verdi?.let { Personstatus.dekode(it) }, // TODO Are: Kodeverk. Husk kilde
-                statsborgerskap = inbound.statsborgerskap?.kode?.verdi?.let { StatsborgerskapFreg.dekode(it) }, // TODO Are: Kodeverk. Husk kilde
-                foedested = foedested(inbound.foedtIKommune, inbound.foedtILand), // TODO Are: Kodeverk.
-                sivilstand = inbound.sivilstand?.kode?.verdi?.let { Sivilstand.dekode(it) }, // TODO Are: Kodeverk. Husk kilde
-                kjoenn = inbound.kjonn?.let { Kjoennstype.dekode(it) },
-                datakilder = kilder
+                kontonr = inbound.kontonummer?.nummer,
+                tlfnr = inbound.telefon?.let { TelefoninfoTransformer.toOutbound(it) },
+                spraak = inbound.spraak?.kode?.verdi?.let { Spraak.dekode(it) },
+                epostadr = "TODO",
+                personstatus = inbound.status?.kode?.verdi?.let { Personstatus.dekode(it) },
+                statsborgerskap = inbound.statsborgerskap?.kode?.verdi?.let { StatsborgerskapFreg.dekode(it) },
+                foedested = foedested(inbound.foedtIKommune, inbound.foedtILand),
+                sivilstand = inbound.sivilstand?.kode?.verdi?.let { Sivilstand.dekode(it) },
+                kjoenn = inbound.kjonn?.let { Kjoennstype.dekode(it) }
         )
 
     }
