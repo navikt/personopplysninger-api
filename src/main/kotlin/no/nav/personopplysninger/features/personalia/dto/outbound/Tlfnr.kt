@@ -7,6 +7,5 @@ data class Tlfnr(
         /* Telefonnummer mobil */
         val mobil: String? = null,
         /* Telefonnummer privat */
-        val privat: String? = null,
-        val datakilder: Set<Kilde>
+        val privat: String? = null
 )

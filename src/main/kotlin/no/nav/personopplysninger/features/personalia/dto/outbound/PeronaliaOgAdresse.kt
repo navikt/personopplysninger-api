@@ -14,9 +14,7 @@ data class Personalia(
         val statsborgerskap: String? = null,
         val foedested: String? = null,
         val sivilstand: String? = null,
-        val kjoenn: String? = null,
-        val datakilder: Set<Kilde> // TODO Are: Må være annen type for å kunne serialiseres til JSON?
-)
+        val kjoenn: String? = null)
 
 data class Adresser(
         val boadresse: Boadresse? = null,
@@ -24,6 +22,5 @@ data class Adresser(
         val postadresse: Postadresse? = null,
         val prioritertAdresse: String? = null,
         val tilleggsadresse: Tilleggsadresse? = null,
-        val utenlandskAdresse: UtenlandskAdresse? = null,
-        val datakilder: Set<Kilde> // TODO Are: Må være annen type for å kunne serialiseres til JSON?
+        val utenlandskAdresse: UtenlandskAdresse? = null
 )

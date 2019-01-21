@@ -14,10 +14,8 @@ private const val claimsIssuer = "selvbetjening"
 
 @Component
 @Path("/personalia")
-@ProtectedWithClaims(issuer = claimsIssuer, claimMap = arrayOf("acr=Level4"))
-class PersonaliaResource @Autowired constructor(
-        private var personaliaService: PersonaliaService // TODO Are: @Inject istedenfor @Autowire? val istedenfor var?
-) {
+@ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
+class PersonaliaResource @Autowired constructor(private var personaliaService: PersonaliaService) {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
