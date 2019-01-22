@@ -10,7 +10,7 @@
             <evaluator>
                 <matcher>
                     <Name>isAlive</Name>
-                    <!-- filtrere ut isAlive fra nais plattformen -->
+                    <!-- filtrerer ut promethius innslag i info loggen -->
                     <regex>status=200, method=GET, path=(\/internal\/status\/isAlive|\/internal\/prometheus)</regex>
                 </matcher>
 
