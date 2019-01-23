@@ -11,7 +11,7 @@
                 <matcher>
                     <Name>isAlive</Name>
                     <!-- filtrerer ut promethius innslag i info loggen -->
-                    <regex>status=200, method=GET, path=(\/internal\/status\/isAlive|\/internal\/prometheus)</regex>
+                    <regex>status=200, method=GET, path=(\/personopplysninger-api\/internal\/status\/isAlive|\/personopplysninger-api\/internal\/prometheus)</regex>
                 </matcher>
 
                 <expression>isAlive.matches(formattedMessage)</expression>
