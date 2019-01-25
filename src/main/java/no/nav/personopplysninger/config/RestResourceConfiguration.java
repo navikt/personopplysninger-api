@@ -20,7 +20,7 @@ public class RestResourceConfiguration extends ResourceConfig {
 
     public RestResourceConfiguration() {
         register(JacksonFeature.class);
-        register(StatusResource.class);
+        ResourceConfig register = register (StatusResource.class);
         register(PersonaliaResource.class);
         register(CORSResponseFilter.class);
         //register(OidcContainerRequestFilter.class);

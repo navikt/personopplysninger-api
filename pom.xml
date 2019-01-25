@@ -84,8 +84,8 @@
                         </goals>
                         <configuration>
                             <sourceDirs>
-                                <sourceDir>${project.basedir}/src/test/java</sourceDir>
-                                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                                <sourceDir>src/test/java</sourceDir>
+                                <sourceDir>src/test/kotlin</sourceDir>
                             </sourceDirs>
                         </configuration>
                     </execution>
