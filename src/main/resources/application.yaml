@@ -9,6 +9,7 @@ server:
     context-path: /personopplysninger-api
 
 management:
+  endpoints.web.exposure.include: '*'
   endpoint:
     health:
       show-details: always
