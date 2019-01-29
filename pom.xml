@@ -246,6 +246,10 @@
             <artifactId>log</artifactId>
             <version>${common-java-modules.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
