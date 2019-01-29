@@ -35,7 +35,7 @@ public class StatusResourceTest {
 
         WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT("12345678911");
-        Response response = target.path("/status/ping")
+        Response response = target.path("/internal/ping")
                 .request()
                 .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
                 .get();
@@ -46,7 +46,7 @@ public class StatusResourceTest {
     @Test
     public void skalGi401UtenToken() {
         WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
-        Response response = target.path("/status/ping")
+        Response response = target.path("/internal/ping")
                 .request()
                 .get();
 
@@ -56,7 +56,7 @@ public class StatusResourceTest {
     @Test
     public void optionsSkalGi200UtenHeaders() {
         WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
-        Response response = target.path("/status/ping")
+        Response response = target.path("/internal/ping")
                 .request()
                 .options();
 
@@ -66,7 +66,7 @@ public class StatusResourceTest {
     @Test
     public void optionsSkalGi200WithFirefoxDefaultAcceptHeader() {
         WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
-        Response response = target.path("/status/ping")
+        Response response = target.path("/internal/ping")
                 .request()
                 .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
                 .options();
@@ -77,7 +77,7 @@ public class StatusResourceTest {
     @Test
     public void optionsSkalGi200WithChromeDefaultAcceptHeader() {
         WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
-        Response response = target.path("/status/ping")
+        Response response = target.path("/internal/ping")
                 .request()
                 .header("Accept", "*/*")
                 .options();

@@ -9,13 +9,13 @@ import javax.ws.rs.GET
 import javax.ws.rs.Path
 
 @Component
-@Path("status")
+@Path("internal")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = arrayOf("acr=Level4"))
 class StatusResource {
 
     val isAlive: String
         @GET
-        @Path("isAlive")
+        @Path("/status/isAlive")
         @Unprotected
         get() = "Ok"
 
