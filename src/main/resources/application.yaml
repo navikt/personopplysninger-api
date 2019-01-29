@@ -3,7 +3,7 @@ spring:
   main.banner-mode: "off"
   jersey:
     application-path: /
-  metrics.web.werver.auto-time-request: true
+  metrics.web.server.auto-time-request: true
 server:
   servlet:
     context-path: /personopplysninger-api
