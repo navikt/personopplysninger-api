@@ -2,7 +2,7 @@
 #Vi må ha kommentaren over så lenge vi ikke bruker appdynamics her, dette bør vi fikse på sikt
 team: "personbruker"
 name: personopplysninger-api
-image: docker.adeo.no:5000/personbruker/person/personopplysninger-api
+image: docker.adeo.no:5000/personbruker/personopplysninger-api
 replicas:
   min: 1
   max: 4
@@ -12,14 +12,14 @@ ingress:
   enabled: true
 prometheus:
   enabled: true
-  path: /personopplysninger-api/internal/prometheus
+  path: /internal/prometheus
 healthcheck:
   liveness:
     initialDelay: 20
-    path: /personopplysninger-api/internal/status/isAlive
+    path: /internal/status/isAlive
   readiness:
     initialDelay: 20
-    path: /personopplysninger-api/internal/status/isAlive
+    path: /internal/status/isAlive
 resources:
   limits:
     cpu: 3
