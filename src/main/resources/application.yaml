@@ -6,7 +6,7 @@ jersey:
 metrics.web.server.auto-time-request: true
 server:
   servlet:
-    context-path: /person/personopplysninger-api
+    context-path: /personopplysninger-api
 
 management:
   endpoint:
