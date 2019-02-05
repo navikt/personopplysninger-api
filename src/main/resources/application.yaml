@@ -1,9 +1,10 @@
-pring:
-autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
-main.banner-mode: "off"
-jersey:
-  application-path: /
-metrics.web.server.auto-time-request: true
+spring:
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  main.banner-mode: "off"
+  jersey:
+    application-path: /
+  metrics.web.server.auto-time-request: true
+
 server:
   servlet:
     context-path: /person/personopplysninger-api
@@ -12,12 +13,13 @@ management:
   endpoint:
     health:
       show-details: always
+  endpoints:
     web:
       exposure:
         include: info, health, metrics, prometheus
-        base-path: "/internal"
-        path-mapping:
-          info: "isAlive"
+      base-path: "/internal"
+      path-mapping:
+        info: "/status/isAlive"
   metrics:
     export:
       prometheus:

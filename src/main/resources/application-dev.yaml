@@ -8,6 +8,7 @@ server:
   port: 8080
   servlet:
     context-path: /person/personopplysninger-api
+
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
@@ -15,7 +16,6 @@ no.nav.security.oidc:
      accepted_audience: aud-localhost
      cookie_name: localhost-idtoken
 
-# TODO: Rydde i disse property-ene. Definer disse på en mer enhetlig måte slik som de andre property-ene i appen.
-TPS_PROXY_API_V1_INNSYN_URL: https://tps-proxy.nais.preprod.local/api/v1/innsyn/
-PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME: x-nav-apiKey
-PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD: personopplysninger-api+7f584507a67f45e0a19e1b17c1b97797
+tpsInnsynURL: https://tps-proxy.nais.preprod.local/api/v1/innsyn/
+tpsProxyUsername: x-nav-apiKey
+tpsProxyPassword: personopplysninger-api+7f584507a67f45e0a19e1b17c1b97797
