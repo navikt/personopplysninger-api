@@ -7,7 +7,7 @@ spring:
 
 server:
   servlet:
-    context-path: /personopplysninger-api
+    context-path: /person/personopplysninger-api
 
 management:
   endpoint:

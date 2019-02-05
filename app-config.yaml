@@ -12,14 +12,14 @@ ingress:
   enabled: true
 prometheus:
   enabled: true
-  path: /personopplysninger-api/internal/prometheus
+  path: person/personopplysninger-api/internal/prometheus
 healthcheck:
   liveness:
     initialDelay: 20
-    path: /personopplysninger-api/internal/status/isAlive
+    path: person/personopplysninger-api/internal/status/isAlive
   readiness:
     initialDelay: 20
-    path: /personopplysninger-api/internal/status/isAlive
+    path: person/personopplysninger-api/internal/status/isAlive
 resources:
   limits:
     cpu: 3
