@@ -10,7 +10,7 @@ object BoadresseObjectMother {
                 adressetillegg = "dummy adressetillegg",
                 bydel = "dummy bydel",
                 datoFraOgMed = "dummy dato",
-                kommune = "Kristiansand",
+                kommune = "0911",
                 landkode = Landkode.NOR.name,
                 matrikkeladresse = MatrikkeladresseObjectMother.vardeveien7(),
                 postnummer = "2974",
