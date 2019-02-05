@@ -22,7 +22,10 @@ public class CORSResponseFilter implements ContainerResponseFilter {
             "https://tjenester-q4.nav.no",
             "https://tjenester-q0.nav.no",
             "https://person-q.nav.no",
-            "https://person.nav.no"
+            "https://person.nav.no",
+            "https://www-q0.nav.no",
+            "https://www-q1.nav.no",
+            "https://www.nav.no"
     );
 
     @Override
