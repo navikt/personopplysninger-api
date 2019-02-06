@@ -20,16 +20,16 @@ import java.util.logging.Logger;
 @Configuration
 public class PersonRestConfiguration {
 
-    @Value("${tpsProxyUsername}")
+    @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME}")
     private String tpsProxyApiKeyUsername;
 
-    @Value("${tpsProxyPassword}")
+    @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD}")
     private String tpsProxyApiKeyPassword;
 
     @Bean
     public PersonConsumer personConsumer(
             @Named("tpsProxyClient") Client client,
-            @Value("${tpsInnsynURL}") String personServiceUri) throws URISyntaxException {
+            @Value("${TPS_PROXY_API_V1_INNSYN_URL}") String personServiceUri) throws URISyntaxException {
         return new PersonConsumer(client, new URI(personServiceUri));
     }
 
