@@ -23,7 +23,7 @@ public class PersonRestConfiguration {
     @Value("${tpsProxyUsername}")
     private String tpsProxyApiKeyUsername;
 
-    @Value("${tpsProxyUsername}")
+    @Value("${tpsProxyPassword}")
     private String tpsProxyApiKeyPassword;
 
     @Bean
