@@ -4,6 +4,7 @@ package no.nav.personopplysninger.features.personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersoninfoTransformer
+import no.nav.personopplysninger.features.personalia.kodeverk.Kommune
 import no.nav.tps.person.Kode
 import no.nav.tps.person.Navn
 import no.nav.tps.person.Personinfo
@@ -31,15 +32,15 @@ class PersoninfoTransformerTest {
         assertEquals("TODO", actual.epostadr)
         assertEquals("Fødselsregistrert", actual.personstatus)
         assertEquals("SØR-KOREA", actual.statsborgerskap)
-        assertFoedested(inbound.foedtIKommune!!, "NORGE", actual.foedested!!)
+        assertFoedested(inbound.foedtIKommune?.verdi?.let { Kommune.kommunenavn(it) }, "NORGE", actual.foedested!!)
         assertEquals("Gift", actual.sivilstand)
         assertEquals("Mann", actual.kjoenn)
         assertEquals(inbound.ident!!, actual.personident!!.verdi)
         assertEquals(inbound.identtype!!.verdi!!, actual.personident!!.type)
     }
 
-    private fun assertFoedested(expectedKommune: Kode, expectedLand: String, actualFoedested: String) {
-        val expected = expectedKommune.verdi!! + ", " + expectedLand
+    private fun assertFoedested(expectedKommune: String?, expectedLand: String, actualFoedested: String) {
+        val expected = expectedKommune + ", " + expectedLand
         assertEquals(expected, actualFoedested, "Fødested skal ha formen '<kommunenavn>, <landnavn>' (uten fnutter)")
     }
 

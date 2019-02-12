@@ -30,16 +30,16 @@ object PersoninfoTransformer {
                 epostadr = "TODO",
                 personstatus = inbound.status?.kode?.verdi?.let { Personstatus.dekode(it) },
                 statsborgerskap = inbound.statsborgerskap?.kode?.verdi?.let { StatsborgerskapFreg.dekode(it) },
-                foedested = foedested(inbound.foedtIKommune, inbound.foedtILand),
+                foedested = foedested(inbound.foedtIKommune?.verdi?.let  { Kommune.kommunenavn(it)  }, inbound.foedtILand),
                 sivilstand = inbound.sivilstand?.kode?.verdi?.let { Sivilstand.dekode(it) },
                 kjoenn = inbound.kjonn?.let { Kjoennstype.dekode(it) }
         )
 
     }
 
-    private fun foedested(foedtIKommune: Kode?, foedtILand: Kode?): String? {
+    private fun foedested(foedtIKommune: String?, foedtILand: Kode?): String? {
         val landnavn: String? = foedtILand?.verdi?.let { Landkode.dekode(it) }
-        val names = listOfNotNull(foedtIKommune?.verdi, landnavn)
+        val names = listOfNotNull(foedtIKommune, landnavn)
         return if (names.isEmpty()) null else names.joinToString(", ")
     }
 
