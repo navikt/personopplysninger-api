@@ -39,7 +39,7 @@ object PersoninfoTransformer {
 
     private fun foedested(foedtIKommune: String?, foedtILand: Kode?): String? {
         val landnavn: String? = foedtILand?.verdi?.let { Landkode.dekode(it) }
-        val names = listOfNotNull(foedtIKommune?.let  { Kommune.kommunenavn(it)  }, landnavn)
+        val names = listOfNotNull(foedtIKommune, landnavn)
         return if (names.isEmpty()) null else names.joinToString(", ")
     }
 
