@@ -31,8 +31,7 @@ import java.util.EnumSet;
 @ComponentScan({"no.nav.personopplysninger.features", "no.nav.personopplysninger.api"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 @Import({RestClientConfiguration.class,
-        PersonRestConfiguration.class,
-        KodeverkRestConfiguration.class
+        PersonRestConfiguration.class
 })
 public class ApplicationConfig implements EnvironmentAware {
 
