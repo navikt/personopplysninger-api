@@ -19,5 +19,3 @@ TPS_PROXY_API_V1_INNSYN_URL: https://tps-proxy.nais.preprod.local/api/v1/innsyn/
 PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME: x-nav-apiKey
 PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD: personopplysninger-api+7f584507a67f45e0a19e1b17c1b97797
 
-server.drek.url=https://drek.nais.preprod.local/
-
