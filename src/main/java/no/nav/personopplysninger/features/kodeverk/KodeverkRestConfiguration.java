@@ -21,13 +21,13 @@ public class KodeverkRestConfiguration {
 
     @Bean
     public KodeverkConsumer kjonnConsumer(
-            @Named("kjonnClient") Client client,
+            @Named("kodeverkClient") Client client,
             @Value("${kodeverk.ws.url}") String kodeServiceUri) throws URISyntaxException {
         return new KodeverkConsumer(client, new URI(kodeServiceUri));
     }
 
     @Bean
-    public Client kjonnClient(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
+    public Client kodeverkClient(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
         return ClientBuilder.newBuilder()
                 .register(OidcClientRequestFilter.class)
                 .register(clientObjectMapperResolver)
