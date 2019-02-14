@@ -24,7 +24,7 @@ public class KodeverkRestConfiguration {
     @Bean
     public KjonnConsumer kjonnConsumer(
             @Named("kjonnClient") Client client,
-            @Value("${server.drek}") String kjonnServiceUri) throws URISyntaxException {
+            @Value("${kodeverk}") String kjonnServiceUri) throws URISyntaxException {
         return new KjonnConsumer(client, new URI(kjonnServiceUri));
     }
 
