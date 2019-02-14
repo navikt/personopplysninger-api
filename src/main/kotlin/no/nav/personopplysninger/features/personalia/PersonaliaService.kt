@@ -8,17 +8,13 @@ import org.springframework.stereotype.Service
 
 @Service
 class PersonaliaService @Autowired constructor(
-        private var personConsumer: PersonConsumer,
-        private var kodeverkConsumer: KjonnConsumer
+        private var personConsumer: PersonConsumer
 ) {
 
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
         val inbound = personConsumer.hentPersonInfo(fodselsnr)
         val kjonn = inbound.kjonn
         System.out.println(kjonn)
-        kodeverkConsumer.hentKjonn(kjonn)
-
-
         // TODO Are IN-702: Oppslag i kodeverkstjeneste
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }
