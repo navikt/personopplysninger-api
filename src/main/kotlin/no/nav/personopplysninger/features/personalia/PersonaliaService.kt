@@ -22,7 +22,7 @@ class PersonaliaService @Autowired constructor(
         val inbound = personConsumer.hentPersonInfo(fodselsnr)
         val kjonn = inbound.kjonn
         kodeverkConsumer.hentKjonn(kjonn)
-        System.out.println("Kjonn er " + kjonn)
+        log.warn("Kjonn er " + kjonn)
         // TODO Are IN-702: Oppslag i kodeverkstjeneste
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }

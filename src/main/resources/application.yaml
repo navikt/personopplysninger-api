@@ -39,5 +39,5 @@ no.nav.security.oidc:
     cookie_name: selvbetjening-idtoken
 
 
-kodeverk.ws.url: https://kodeverk:nais:preprod:local/ws/kodeverk/v2
+kodeverk.ws.url: https://kodeverk.nais.preprod.local/ws/kodeverk/v2
 
