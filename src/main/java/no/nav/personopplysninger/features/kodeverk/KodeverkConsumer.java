@@ -13,13 +13,13 @@ import java.net.URI;
 
 import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
-public class KjonnConsumer {
+public class KodeverkConsumer {
 
     private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     private Client client;
     private URI endpoint;
 
-    public KjonnConsumer(Client client, URI endpoint) {
+    public KodeverkConsumer(Client client, URI endpoint) {
         this.client = client;
         this.endpoint = endpoint;
     }
@@ -32,7 +32,7 @@ public class KjonnConsumer {
 
     private Invocation.Builder buildRequest(String kode) {
         return client.target(endpoint)
-                .path("kjonn")
+                .path("kodeverk")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
