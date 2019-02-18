@@ -46,7 +46,7 @@ public class KodeverkConsumer {
         } catch (KodeverkConsumerException e) {
             throw e;
         } catch (Exception e) {
-            String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "].";
+            String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "]." + e.getStackTrace();
             throw new KodeverkConsumerException(msg, e);
         }
     }
