@@ -39,5 +39,5 @@ no.nav.security.oidc:
     cookie_name: selvbetjening-idtoken
 
 
-kodeverk.ws.url: https://kodeverk.nais.preprod.local/api/v1/kodeverk/Landkoder/koder
+kodeverk.ws.url: https://kodeverk.nais.preprod.local/api/v1/kodeverk/Landkoder/koder/betydninger
 
