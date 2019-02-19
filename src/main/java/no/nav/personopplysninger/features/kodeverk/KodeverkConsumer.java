@@ -52,6 +52,17 @@ public class KodeverkConsumer {
         }
     }
 
+    private Kjoennstype hentLandkode(Invocation.Builder request) {
+        try (Response response = request.get()) {
+            return readResponse(response);
+        } catch (KodeverkConsumerException e) {
+            throw e;
+        } catch (Exception e) {
+            String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "]." + e.getStackTrace().toString() + e.getMessage();
+            throw new KodeverkConsumerException(msg, e);
+        }
+    }
+
 
     private Kjoennstype readResponse(Response r) {
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
