@@ -39,3 +39,5 @@ fasitResources:
     resourceType: restservice
   - alias: personopplysninger-api-tps-proxy.api.v1.innsyn-apiKey
     resourceType: credential
+    alias: personopplysninger-api-kodeverk.rest-api-apiKey
+    resourceType: credential
