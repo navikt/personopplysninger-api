@@ -20,12 +20,6 @@ import java.util.logging.Logger;
 @Configuration
 public class KodeverkRestConfiguration {
 
-    @Value("${personopplysninger-api-kodeverk.rest-api-apiKey_USERNAME}")
-    private String kodeverkApiKeyUsername;
-
-    @Value("${personopplysninger-api-kodeverk.rest-api-apiKey_PASSWORD}")
-    private String kodeverkApiKeyPassword;
-
     @Bean
     public KodeverkConsumer kjonnConsumer(
             @Named("kodeverkClient") Client client,
