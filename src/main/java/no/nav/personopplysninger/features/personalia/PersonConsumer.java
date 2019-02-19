@@ -36,7 +36,7 @@ public class PersonConsumer {
         return client.target(endpoint)
                 .path("person")
                 .request()
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header("Nav-Personident", fnr);
     }
