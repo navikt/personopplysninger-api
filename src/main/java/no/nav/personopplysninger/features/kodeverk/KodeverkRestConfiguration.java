@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.ext.ContextResolver;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,6 +19,12 @@ import java.util.logging.Logger;
 
 @Configuration
 public class KodeverkRestConfiguration {
+
+    @Value("${personopplysninger-api-kodeverk.rest-api-apiKey_USERNAME}")
+    private String kodeverkApiKeyUsername;
+
+    @Value("${personopplysninger-api-kodeverk.rest-api-apiKey_PASSWORD}")
+    private String kodeverkApiKeyPassword;
 
     @Bean
     public KodeverkConsumer kjonnConsumer(
@@ -32,6 +39,7 @@ public class KodeverkRestConfiguration {
                 .register(OidcClientRequestFilter.class)
                 .register(clientObjectMapperResolver)
                 .register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO, LoggingFeature.Verbosity.HEADERS_ONLY, Integer.MAX_VALUE))
+                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(kodeverkApiKeyUsername,kodeverkApiKeyPassword))
                 .build();
     }
 
