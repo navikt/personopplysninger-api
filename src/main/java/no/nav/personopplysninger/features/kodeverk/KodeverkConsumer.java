@@ -34,19 +34,12 @@ public class KodeverkConsumer {
         return createMetricsProxyWithInstanceSwitcher("kodeverk", prod, prod, KODEVERK_MOCK_KEY, KodeverkPortType.class);
     }
 
-    public KodeverkPortType selfTestKodeverkPortType() {
-        return createKodeverkPortTypeCXFClient().configureStsForSystemUser().build();
-    }
-
-
     private CXFClient<KodeverkPortType> createKodeverkPortTypeCXFClient() {
         return new CXFClient<>(KodeverkPortType.class)
                 .timeout(15000, 15000)
                 .address(endpoint.toString())
                 .wsdl("classpath:kodeverk/no/nav/tjeneste/virksomhet/kodeverk/v2/Kodeverk.wsdl")
-                .withProperty("ws-security.must-understand", false); /* setter mustunderstand i header slik at tjenester som ikke forstår sikkerhetsheader ikke skal avvise requester
-                                                                       Burde brukt konstant fra org.apache.cxf.ws.security.SecurityConstants.MUST_UNDERSTAND, men det går ikke pga.
-                                                                       dependency fucks siden det er det eneste vi bruker fra biblioteket */
+                .withProperty("ws-security.must-understand", false);
     }
 
     public Kjoennstype hentKjonn(String kode) {
