@@ -29,7 +29,7 @@ public class KodeverkRestConfiguration {
     @Bean
     public KodeverkConsumer kodeverkConsumer(
             @Named("kodeverkClient") Client client,
-            @Value("${KODEVERK_REST_API_URL} " + "v1/kodeverk/Landkoder/koder") String kodeServiceUri) throws URISyntaxException {
+            @Value("${KODEVERK_REST_API_URL}") String kodeServiceUri) throws URISyntaxException {
         return new KodeverkConsumer(client, new URI(kodeServiceUri));
     }
 
