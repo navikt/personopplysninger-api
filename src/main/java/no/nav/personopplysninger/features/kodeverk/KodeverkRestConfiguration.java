@@ -20,10 +20,10 @@ import java.util.logging.Logger;
 @Configuration
 public class KodeverkRestConfiguration {
 
-    @Value("${personopplysninger-api-kodeverk.rest-api-apiKey_USERNAME}")
+    @Value("${PERSONOPPLYSNINGER-API-KODEVERK_REST-API-APIKEY_USERNAME}")
     private String kodeverkApiKeyUsername;
 
-    @Value("${personopplysninger-api-kodeverk.rest-api-apiKey_PASSWORD}")
+    @Value("${PERSONOPPLYSNINGER-API-KODEVERK_REST-API-APIKEY_PASSWORD}")
     private String kodeverkApiKeyPassword;
 
     @Bean

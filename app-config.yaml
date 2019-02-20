@@ -25,17 +25,21 @@ resources:
     cpu: 3
 fasitResources:
   used:
-     alias: aad_b2c_clientid
+    - alias: kodeverk.rest-api
+      resourceType: restservice
+    - alias: personopplysninger-api-kodeverk.rest-api-apiKey
+      resourceType: credential
+    - alias: aad_b2c_clientid
       resourceType: credential
       propertyMap:
         username: NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_ACCEPTEDAUDIENCE
-     alias: aad_b2c_discovery
+    - alias: aad_b2c_discovery
       resourceType: baseurl
       propertyMap:
         url: NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_DISCOVERYURL
-     alias: appres.cms
+    - alias: appres.cms
       resourceType: baseUrl
-     alias: tps-proxy.api.v1.innsyn
+    - alias: tps-proxy.api.v1.innsyn
       resourceType: restservice
-     alias: personopplysninger-api-tps-proxy.api.v1.innsyn-apiKey
+    - alias: personopplysninger-api-tps-proxy.api.v1.innsyn-apiKey
       resourceType: credential
