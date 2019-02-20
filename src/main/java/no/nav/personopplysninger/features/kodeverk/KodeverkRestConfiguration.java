@@ -27,9 +27,9 @@ public class KodeverkRestConfiguration {
     private String kodeverkApiKeyPassword;
 
     @Bean
-    public KodeverkConsumer kjonnConsumer(
+    public KodeverkConsumer kodeverkConsumer(
             @Named("kodeverkClient") Client client,
-            @Value("${kodeverk.ws.url}") String kodeServiceUri) throws URISyntaxException {
+            @Value("${kodeverk.rest-api}") String kodeServiceUri) throws URISyntaxException {
         return new KodeverkConsumer(client, new URI(kodeServiceUri));
     }
 

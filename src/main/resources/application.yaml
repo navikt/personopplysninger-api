@@ -38,6 +38,5 @@ no.nav.security.oidc:
     acceptedaudience: <Hentes fra fasit>
     cookie_name: selvbetjening-idtoken
 
-kodeverk.ws.url: https://api-gw-q0.oera.no/kodeverk/api/v1/kodeverk
 # kodeverk.ws.url: https://kodeverk.nais.preprod.local/api/v1/kodeverk/Landkoder/koder/betydninger?ekskluderUgyldige=true
 
