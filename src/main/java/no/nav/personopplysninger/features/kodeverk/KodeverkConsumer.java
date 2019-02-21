@@ -33,7 +33,7 @@ public class KodeverkConsumer {
 
     private Invocation.Builder buildRequest(String kode) {
         return client.target(endpoint)
-                .path("kodeverk")
+                .path("v1/kodeverk/Landkoder/koder")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
@@ -47,7 +47,7 @@ public class KodeverkConsumer {
         } catch (KodeverkConsumerException e) {
             throw e;
         } catch (Exception e) {
-            String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "]." + e.getStackTrace().toString() + e.getMessage();
+            String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "]." + e.getStackTrace().toString() + e.getMessage() + " " + CONSUMER_ID + " " +  MDC.get(MDCConstants.MDC_CALL_ID) + " " + request.toString();
             throw new KodeverkConsumerException(msg, e);
         }
     }
