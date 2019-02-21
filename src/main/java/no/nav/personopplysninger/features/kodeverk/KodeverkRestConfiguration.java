@@ -29,8 +29,8 @@ public class KodeverkRestConfiguration {
     @Bean
     public KodeverkConsumer kodeverkConsumer(
             @Named("kodeverkClient") Client client,
-            @Value("${KODEVERK_REST_API_URL}") String kodeServiceUri) throws URISyntaxException {
-        return new KodeverkConsumer(client, new URI(kodeServiceUri + "v1/kodeverk/Landkoder/koder"));
+            @Value("${TPS_PROXY_API_V1_INNSYN_URL}") String kodeServiceUri) throws URISyntaxException {
+        return new KodeverkConsumer(client, new URI(kodeServiceUri ));
     }
 
     @Bean
