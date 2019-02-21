@@ -20,18 +20,17 @@ import java.util.logging.Logger;
 @Configuration
 public class KodeverkRestConfiguration {
 
+    @Value("${PERSONOPPLYSNINGER-API-KODEVERK_REST-API-APIKEY_USERNAME}")
+    private String kodeverkApiKeyUsername;
 
-    @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME}")
-    private String tpsProxyApiKeyUsername;
-
-    @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD}")
-    private String tpsProxyApiKeyPassword;
+    @Value("${PERSONOPPLYSNINGER-API-KODEVERK_REST-API-APIKEY_PASSWORD}")
+    private String kodeverkApiKeyPassword;
 
     @Bean
     public KodeverkConsumer kodeverkConsumer(
             @Named("kodeverkClient") Client client,
-            @Value("${TPS_PROXY_API_V1_INNSYN_URL}") String kodeServiceUri) throws URISyntaxException {
-        return new KodeverkConsumer(client, new URI(kodeServiceUri ));
+            @Value("${KODEVERK_REST_API_URL}") String kodeServiceUri) throws URISyntaxException {
+        return new KodeverkConsumer(client, new URI(kodeServiceUri));
     }
 
     @Bean
@@ -40,7 +39,7 @@ public class KodeverkRestConfiguration {
                 .register(OidcClientRequestFilter.class)
                 .register(clientObjectMapperResolver)
                 .register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO, LoggingFeature.Verbosity.HEADERS_ONLY, Integer.MAX_VALUE))
-                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword))
+                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(kodeverkApiKeyUsername,kodeverkApiKeyPassword))
                 .build();
     }
 
