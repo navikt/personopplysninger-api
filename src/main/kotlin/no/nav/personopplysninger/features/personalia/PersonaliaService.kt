@@ -21,7 +21,7 @@ class PersonaliaService @Autowired constructor(
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
         val inbound = personConsumer.hentPersonInfo(fodselsnr)
         val kjonn = inbound.kjonn
-        kodeverkConsumer.hentKjonn(kjonn)
+        // kodeverkConsumer.hentKjonn(kjonn)
         log.warn("Kjonn er " + kjonn)
         // TODO Are IN-702: Oppslag i kodeverkstjeneste
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
