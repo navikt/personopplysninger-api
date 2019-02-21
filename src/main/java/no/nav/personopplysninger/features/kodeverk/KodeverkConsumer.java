@@ -25,7 +25,7 @@ public class KodeverkConsumer {
     }
 
 
-    public Kjoennstype hentKjonn(String kode) {
+    public String hentKjonn(String kode) {
         Invocation.Builder request = buildRequest(kode);
         return hentKjonn(request);
     }
@@ -41,7 +41,7 @@ public class KodeverkConsumer {
     }
 
 
-    private Kjoennstype hentKjonn(Invocation.Builder request) {
+    private String hentKjonn(Invocation.Builder request) {
         try (Response response = request.get()) {
             return readResponse(response);
         } catch (KodeverkConsumerException e) {
@@ -52,7 +52,7 @@ public class KodeverkConsumer {
         }
     }
 
-    private Kjoennstype hentLandkode(Invocation.Builder request) {
+    private String hentLandkode(Invocation.Builder request) {
         try (Response response = request.get()) {
             return readResponse(response);
         } catch (KodeverkConsumerException e) {
@@ -64,12 +64,12 @@ public class KodeverkConsumer {
     }
 
 
-    private Kjoennstype readResponse(Response r) {
+    private String readResponse(Response r) {
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
-            return readEntity(Kjoennstype.class, r);
+            return readEntity(String.class, r);
         }
     }
 
