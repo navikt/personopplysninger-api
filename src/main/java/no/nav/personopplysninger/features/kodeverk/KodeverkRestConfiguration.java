@@ -20,11 +20,12 @@ import java.util.logging.Logger;
 @Configuration
 public class KodeverkRestConfiguration {
 
-    @Value("${PERSONOPPLYSNINGER-API-KODEVERK_REST-API-APIKEY_USERNAME}")
-    private String kodeverkApiKeyUsername;
 
-    @Value("${PERSONOPPLYSNINGER-API-KODEVERK_REST-API-APIKEY_PASSWORD}")
-    private String kodeverkApiKeyPassword;
+    @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME}")
+    private String tpsProxyApiKeyUsername;
+
+    @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD}")
+    private String tpsProxyApiKeyPassword;
 
     @Bean
     public KodeverkConsumer kodeverkConsumer(
