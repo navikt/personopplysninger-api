@@ -1,8 +1,11 @@
 package no.nav.personopplysninger.features.kodeverk;
 
 import no.nav.log.MDCConstants;
+import no.nav.personopplysninger.config.ApplicationConfig;
 import no.nav.personopplysninger.features.kodeverk.exceptions.KodeverkConsumerException;
 import no.nav.kodeverk.GetKodeverkKoderBetydningerResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.ws.rs.ProcessingException;
@@ -15,9 +18,13 @@ import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 public class KodeverkConsumer {
 
+    private static final Logger log = LoggerFactory.getLogger(KodeverkConsumer.class);
+
     private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     private Client client;
     private URI endpoint;
+
+
 
     public KodeverkConsumer(Client client, URI endpoint) {
         this.client = client;
@@ -64,6 +71,8 @@ public class KodeverkConsumer {
 
     private <T> T readEntity(Class<T> responsklasse, Response response) {
         try {
+            log.warn("Respons " + response.toString());
+            log.warn("Respons " + responsklasse.getName());
             return response.readEntity(responsklasse);
         } catch (ProcessingException e) {
             throw new KodeverkConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
