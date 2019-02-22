@@ -3,6 +3,7 @@ package no.nav.personopplysninger.features.kodeverk;
 import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.kodeverk.exceptions.KodeverkConsumerException;
 import no.nav.personopplysninger.features.personalia.kodeverk.Kjoennstype;
+import no.nav.personopplysninger.features.personalia.kodeverk.Kjonnstype;
 import org.slf4j.MDC;
 
 import javax.ws.rs.ProcessingException;
@@ -25,7 +26,7 @@ public class KodeverkConsumer {
     }
 
 
-    public String hentKjonn(String kode) {
+    public Kjonnstype hentKjonn(String kode) {
         Invocation.Builder request = buildRequest(kode);
         return hentKjonn(request);
     }
@@ -42,7 +43,7 @@ public class KodeverkConsumer {
     }
 
 
-    private String hentKjonn(Invocation.Builder request) {
+    private Kjonnstype hentKjonn(Invocation.Builder request) {
         try (Response response = request.get()) {
             return readResponse(response);
         } catch (KodeverkConsumerException e) {
@@ -53,7 +54,7 @@ public class KodeverkConsumer {
         }
     }
 
-    private String hentLandkode(Invocation.Builder request) {
+   /* private String hentLandkode(Invocation.Builder request) {
         try (Response response = request.get()) {
             return readResponse(response);
         } catch (KodeverkConsumerException e) {
@@ -62,15 +63,15 @@ public class KodeverkConsumer {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "]." + e.getStackTrace().toString() + e.getMessage();
             throw new KodeverkConsumerException(msg, e);
         }
-    }
+    }*/
 
 
-    private String readResponse(Response r) {
+    private Kjonnstype readResponse(Response r) {
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
-            return readEntity(String.class, r);
+            return readEntity(Kjonnstype.class, r);
         }
     }
 
