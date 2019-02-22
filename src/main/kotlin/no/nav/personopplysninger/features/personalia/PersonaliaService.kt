@@ -18,8 +18,11 @@ class PersonaliaService @Autowired constructor(
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
         val inbound = personConsumer.hentPersonInfo(fodselsnr)
         val kjonn = inbound.kjonn
+        val land = inbound.foedtILand
         log.warn("Kjonn er " + kjonn)
+        val kodeverklandkoder = kodeverkConsumer.hentLandKoder(land)
         val kodeverkkjonn = kodeverkConsumer.hentKjonn(kjonn)
+        log.warn("KodeverkLandkoder er " + kodeverklandkoder)
         log.warn("KodeverkKjonn er " + kodeverkkjonn)
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }

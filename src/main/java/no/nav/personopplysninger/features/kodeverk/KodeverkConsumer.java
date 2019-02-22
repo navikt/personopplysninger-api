@@ -1,9 +1,11 @@
 package no.nav.personopplysninger.features.kodeverk;
 
+import no.nav.kodeverk.GetKodeverkKoderResponse;
 import no.nav.log.MDCConstants;
-import no.nav.personopplysninger.config.ApplicationConfig;
+
 import no.nav.personopplysninger.features.kodeverk.exceptions.KodeverkConsumerException;
 import no.nav.kodeverk.GetKodeverkKoderBetydningerResponse;
+import no.nav.tps.person.Kode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -37,6 +39,11 @@ public class KodeverkConsumer {
         return hentKjonn(request);
     }
 
+    public GetKodeverkKoderResponse hentLandKoder(Kode land) {
+        Invocation.Builder request = buildRequest(land);
+        return hentLandkoder(request);
+    }
+
 
     private Invocation.Builder buildRequest(String kode) {
         return client.target(endpoint)
@@ -47,10 +54,19 @@ public class KodeverkConsumer {
                 .header("Nav-Personident", kode);
     }
 
+    private Invocation.Builder buildRequest(Kode kode) {
+        return client.target(endpoint)
+                .path("v1/kodeverk/Landkoder/koder")
+                .request()
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .header("Nav-Personident", kode);
+    }
+
 
     private GetKodeverkKoderBetydningerResponse hentKjonn(Invocation.Builder request) {
         try (Response response = request.get()) {
-            return readResponse(response);
+            return readResponseBetydning(response);
         } catch (KodeverkConsumerException e) {
             throw e;
         } catch (Exception e) {
@@ -59,12 +75,32 @@ public class KodeverkConsumer {
         }
     }
 
-    private GetKodeverkKoderBetydningerResponse readResponse(Response r) {
+    private GetKodeverkKoderResponse hentLandkoder(Invocation.Builder request) {
+        try (Response response = request.get()) {
+            return readResponseKode(response);
+        } catch (KodeverkConsumerException e) {
+            throw e;
+        } catch (Exception e) {
+            String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "].";
+            throw new KodeverkConsumerException(msg, e);
+        }
+    }
+
+    private GetKodeverkKoderBetydningerResponse readResponseBetydning(Response r) {
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
             return readEntity(GetKodeverkKoderBetydningerResponse.class, r);
+        }
+    }
+
+    private GetKodeverkKoderResponse readResponseKode(Response r) {
+        if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
+            String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
+            throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
+        } else {
+            return readEntity(GetKodeverkKoderResponse.class, r);
         }
     }
 
