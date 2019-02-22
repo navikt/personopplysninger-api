@@ -77,6 +77,7 @@ public class KodeverkConsumer {
 
     private GetKodeverkKoderResponse hentLandkoder(Invocation.Builder request) {
         try (Response response = request.get()) {
+            log.warn("Koder " + response.toString());
             return readResponseKode(response);
         } catch (KodeverkConsumerException e) {
             throw e;
@@ -96,6 +97,7 @@ public class KodeverkConsumer {
     }
 
     private GetKodeverkKoderResponse readResponseKode(Response r) {
+        log.warn("KoderResponse " + r.toString());
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
@@ -109,10 +111,9 @@ public class KodeverkConsumer {
         try {
             log.warn("Respons string " + response.toString());
             log.warn("Respons " + responsklasse.getName());
-            log.warn("Respons Entity " + response.getEntity().toString());
             return response.readEntity(responsklasse);
         } catch (ProcessingException e) {
-            throw new KodeverkConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
+            throw new KodeverkConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + e.getStackTrace() + " " + responsklasse.getName(), e);
         } catch (IllegalStateException e) {
             throw new KodeverkConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
         } catch (Exception e) {
