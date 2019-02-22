@@ -1,4 +1,4 @@
-pring:
+spring:
 autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 main.banner-mode: "off"
 jersey:
