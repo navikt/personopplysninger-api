@@ -71,8 +71,9 @@ public class KodeverkConsumer {
 
     private <T> T readEntity(Class<T> responsklasse, Response response) {
         try {
-            log.warn("Respons " + response.toString());
+            log.warn("Respons string " + response.toString());
             log.warn("Respons " + responsklasse.getName());
+            log.warn("Respons Entity " + response.getEntity().toString());
             return response.readEntity(responsklasse);
         } catch (ProcessingException e) {
             throw new KodeverkConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
