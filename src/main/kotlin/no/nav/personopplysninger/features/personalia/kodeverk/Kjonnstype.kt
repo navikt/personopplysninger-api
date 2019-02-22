@@ -17,8 +17,5 @@ import no.nav.tps.person.Vergemaal
 
 
 data class Kjonnstype (
-
-
     val kjonn: kotlin.String? = null
-
 )
