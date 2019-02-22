@@ -1,8 +1,11 @@
 package no.nav.personopplysninger.features.personalia;
 
 import no.nav.log.MDCConstants;
+import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer;
 import no.nav.personopplysninger.features.personalia.exceptions.TpsProxyConsumerException;
 import no.nav.tps.person.Personinfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.ws.rs.ProcessingException;
@@ -14,6 +17,8 @@ import java.net.URI;
 import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 public class PersonConsumer {
+
+    private static final Logger log = LoggerFactory.getLogger(PersonConsumer.class);
 
     private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     private Client client;
@@ -66,6 +71,7 @@ public class PersonConsumer {
 
     private <T> T readEntity(Class<T> responsklasse, Response response) {
         try {
+            log.warn("Personinfo " + response.toString());
             return response.readEntity(responsklasse);
         } catch (ProcessingException e) {
             throw new TpsProxyConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
