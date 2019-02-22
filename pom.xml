@@ -93,6 +93,7 @@
                                 <sourceDir>${project.basedir}/src/main/java</sourceDir>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                                 <sourceDir>${project.build.directory}/generated-sources/swagger/person</sourceDir>
+                                <sourceDir>${project.build.directory}/generated-sources/swagger/kodeverk</sourceDir>
                             </sourceDirs>
                         </configuration>
                     </execution>
