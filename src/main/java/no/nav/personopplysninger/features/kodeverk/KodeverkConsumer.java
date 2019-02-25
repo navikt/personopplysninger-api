@@ -78,6 +78,7 @@ public class KodeverkConsumer {
     private GetKodeverkKoderResponse hentLandkoder(Invocation.Builder request) {
         try (Response response = request.get()) {
             log.warn("Koder " + response.toString());
+
             return readResponseKode(response);
         } catch (KodeverkConsumerException e) {
             throw e;
@@ -97,7 +98,7 @@ public class KodeverkConsumer {
     }
 
     private GetKodeverkKoderResponse readResponseKode(Response r) {
-        log.warn("KoderResponse " + r.toString());
+        log.warn("KoderResponsen " + r.toString() + " " + r.getStatus() + " " + r.getStatusInfo().getFamily() + " " + r.getLanguage());
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
