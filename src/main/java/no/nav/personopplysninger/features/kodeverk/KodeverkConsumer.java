@@ -1,10 +1,11 @@
 package no.nav.personopplysninger.features.kodeverk;
 
-import no.nav.kodeverk.GetKodeverkKoderResponse;
 import no.nav.log.MDCConstants;
 
+import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse;
+import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderResponse;
 import no.nav.personopplysninger.features.kodeverk.exceptions.KodeverkConsumerException;
-import no.nav.kodeverk.GetKodeverkKoderBetydningerResponse;
+
 import no.nav.tps.person.Kode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

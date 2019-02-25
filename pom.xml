@@ -56,14 +56,14 @@
                             </configOptions>
                         </configuration>
                     </execution>
-                    <execution>
+                    <!--execution>
                         <id>kodeverk</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
                             <inputSpec>${project.basedir}/src/main/resources/kodeverk/kodeverk-swagger.json</inputSpec>
-                            <language>kotlin-client</language>
+                            <language>java</language>
                             <generateApis>false</generateApis>
                             <modelPackage>no.nav.kodeverk</modelPackage>
                             <modelNameSuffix>Dto</modelNameSuffix>
@@ -74,7 +74,7 @@
                                 <sourceFolder>kodeverk</sourceFolder>
                             </configOptions>
                         </configuration>
-                    </execution>
+                    </execution-->
                 </executions>
             </plugin>
 
@@ -93,7 +93,6 @@
                                 <sourceDir>${project.basedir}/src/main/java</sourceDir>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                                 <sourceDir>${project.build.directory}/generated-sources/swagger/person</sourceDir>
-                                <sourceDir>${project.build.directory}/generated-sources/swagger/kodeverk</sourceDir>
                             </sourceDirs>
                         </configuration>
                     </execution>
@@ -212,6 +211,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
