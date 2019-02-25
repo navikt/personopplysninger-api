@@ -104,6 +104,7 @@ public class KodeverkConsumer {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
+            log.warn("Entity read " + readEntity(String.class, r));
             return readEntity(GetKodeverkKoderResponse.class, r);
         }
     }
