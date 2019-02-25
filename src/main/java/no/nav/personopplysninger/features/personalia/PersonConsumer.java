@@ -49,6 +49,7 @@ public class PersonConsumer {
 
     private Personinfo hentPersoninfo(Invocation.Builder request) {
         try (Response response = request.get()) {
+            log.warn("Personinfo " + response.toString());
             return readResponse(response);
         } catch (TpsProxyConsumerException e) {
             throw e;
