@@ -20,10 +20,9 @@ class PersonaliaService @Autowired constructor(
         val kjonn = inbound.kjonn
         val land = inbound.foedtILand
         log.warn("Kjonn er " + kjonn)
+        log.warn("Land er " + land)
         val kodeverklandkoder = kodeverkConsumer.hentLandKoder(land)
         log.warn("KodeverkLandkoder er " + kodeverklandkoder)
-       // val kodeverkkjonn = kodeverkConsumer.hentKjonn(kjonn)
-       // log.warn("KodeverkKjonn er " + kodeverkkjonn)
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }
 }

@@ -78,8 +78,6 @@ public class KodeverkConsumer {
 
     private GetKodeverkKoderResponse hentLandkoder(Invocation.Builder request) {
         try (Response response = request.get()) {
-            log.warn("Koder " + response.toString());
-
             return readResponseKode(response);
         } catch (KodeverkConsumerException e) {
             throw e;
@@ -99,8 +97,6 @@ public class KodeverkConsumer {
     }
 
     private GetKodeverkKoderResponse readResponseKode(Response r) {
-        log.warn("KoderResponsen " + r.toString() + " " + r.getStatus() + " " + r.getStatusInfo().getFamily() + " " + r.getLanguage());
-        log.warn("Response " + r.getHeaders().keySet() + " " + r.getHeaders().entrySet());
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
@@ -112,9 +108,6 @@ public class KodeverkConsumer {
 
     private <T> T readEntity(Class<T> responsklasse, Response response) {
         try {
-            log.warn("Respons string " + response.toString());
-
-            log.warn("Respons " + responsklasse.getName());
             return response.readEntity(responsklasse);
         } catch (ProcessingException e) {
             throw new KodeverkConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + e.getStackTrace() + " " + responsklasse.getName(), e);
