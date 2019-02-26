@@ -10,7 +10,7 @@ import java.util.Map;
 
 
 @ApiModel(description = "En betydning er en tidsbegrenset periode hvor en gitt kode har en reell betydning. For eksempel kunne koden \"OSLO\" hatt to betydninger: en fra 1048 til 1624, og en fra 1925. Dette er fordi Oslo ble omdøpt til Christiania i en periode.")
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Betydning {
 
     @ApiModelProperty(value = "Når denne betydningen trådte i kraft, på YYYY-MM-DD format.", required = true)

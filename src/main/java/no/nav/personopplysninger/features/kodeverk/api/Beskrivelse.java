@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "En beskrivelse er den tekstlige delen av betydningen til en kode, og den kan derfor komme på flere språk. For eksempel, landkoden \"NOR\" kan ha beskrivelsen \"Norge\" på norsk, men \"Norway\" på engelsk. Dersom man ber om å få beskrivelsene på et språk som ikke finnes, så vil bokmålsversjonen brukes isteden.")
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Beskrivelse {
 
     @ApiModelProperty(value = "En kort versjon av beskrivelsen, og passer derfor godt til fremvisning i GUI-elementer.", required = true)

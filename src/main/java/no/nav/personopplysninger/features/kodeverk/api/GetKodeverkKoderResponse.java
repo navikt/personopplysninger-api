@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApiModel(description = "Responsen fra GET /api/v1/kodeverk/{kodeverksnavn}/koder.")
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GetKodeverkKoderResponse {
 
     @ApiModelProperty(value = "En liste med alle de eksisterende kodene som tilhører kodeverket.")

@@ -10,7 +10,7 @@ import java.util.Map;
 
 
 @ApiModel(description = "Responsen fra GET /api/v1/kodeverk/{kodeverksnavn}/koder/betydninger.")
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GetKodeverkKoderBetydningerResponse {
 
     @ApiModelProperty(value = "Et map med alle eksisterende koder for kodeverket og alle tilhørende betydninger som passer søkekriteriene.")
