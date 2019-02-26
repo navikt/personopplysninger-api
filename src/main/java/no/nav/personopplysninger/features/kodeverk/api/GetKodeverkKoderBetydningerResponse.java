@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.kodeverk.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -9,13 +10,17 @@ import java.util.Map;
 
 
 @ApiModel(description = "Responsen fra GET /api/v1/kodeverk/{kodeverksnavn}/koder/betydninger.")
+@JsonIgnoreProperties
 public class GetKodeverkKoderBetydningerResponse {
 
-    @ApiModelProperty(value = "Et map med alle eksisterende koder for kodeverket og alle tilhørende betydninger som passer søkekriteriene.", required = true)
+    @ApiModelProperty(value = "Et map med alle eksisterende koder for kodeverket og alle tilhørende betydninger som passer søkekriteriene.")
     private Map<String, List<Betydning>> betydninger;
 
     public GetKodeverkKoderBetydningerResponse(Map<String, List<Betydning>> betydninger) {
         setBetydninger(betydninger);
+    }
+
+    public GetKodeverkKoderBetydningerResponse() {
     }
 
     public void setBetydninger(Map<String, List<Betydning>> betydninger) {
