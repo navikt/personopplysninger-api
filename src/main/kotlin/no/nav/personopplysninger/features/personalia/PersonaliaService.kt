@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderResponse
 import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAdresser
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import org.slf4j.LoggerFactory
@@ -16,13 +17,10 @@ class PersonaliaService @Autowired constructor(
     private val log = LoggerFactory.getLogger(PersonaliaService::class.java)
 
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
-        val inbound = personConsumer.hentPersonInfo(fodselsnr)
-        val kjonn = inbound.kjonn
-        val land = inbound.foedtILand
-        log.warn("Kjonn er " + kjonn)
-        log.warn("Land er " + land)
-        val kodeverklandkoder = kodeverkConsumer.hentLandKoder(land)
-        log.warn("KodeverkLandkoder er " + kodeverklandkoder)
+        var inbound = personConsumer.hentPersonInfo(fodselsnr)
+        val hentetKjonn = kodeverkConsumer.hentKjonn(inbound.kjonn).betydninger.getValue(inbound.kjonn)
+        log.warn("hentetKjonn " + hentetKjonn);
+        val land = kodeverkConsumer.hentLandKoder(inbound.foedtILand)
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }
 }

@@ -14,6 +14,10 @@ public class GetKodeverkResponse {
     @ApiModelProperty(value = "En liste med navnene på alle eksisterende kodeverk.")
     private List<String> kodeverksnavn;
 
+    public List<String> getKodeverksnavn() {
+        return kodeverksnavn;
+    }
+
     public GetKodeverkResponse() {
     }
 

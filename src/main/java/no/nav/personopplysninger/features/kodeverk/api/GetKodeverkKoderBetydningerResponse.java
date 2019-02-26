@@ -16,8 +16,8 @@ public class GetKodeverkKoderBetydningerResponse {
     @ApiModelProperty(value = "Et map med alle eksisterende koder for kodeverket og alle tilhørende betydninger som passer søkekriteriene.")
     private Map<String, List<Betydning>> betydninger;
 
-    public GetKodeverkKoderBetydningerResponse(Map<String, List<Betydning>> betydninger) {
-        setBetydninger(betydninger);
+    public Map<String, List<Betydning>> getBetydninger() {
+        return betydninger;
     }
 
     public GetKodeverkKoderBetydningerResponse() {

@@ -17,6 +17,10 @@ public class GetKodeverkKoderResponse {
     public GetKodeverkKoderResponse() {
     }
 
+    public List<String> getKoder() {
+        return koder;
+    }
+
     public GetKodeverkKoderResponse(List<String> koder) {
         this.koder.addAll(koder);
     }
