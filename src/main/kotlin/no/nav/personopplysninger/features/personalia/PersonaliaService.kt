@@ -31,7 +31,7 @@ class PersonaliaService @Autowired constructor(
         val test = (hentet.betydninger.get("M"))
         log.warn("testbetydning " + test.isNullOrEmpty());
         val test2 = (hentet.betydninger.get(inbound.kjonn))
-        val test3 = hentet.betydninger.getValue("M").get(0)
+        val test3 = hentet.betydninger.getValue("M").size
         log.warn("testbetydning3 " + test3)
         val test4 = hentet.betydninger.getValue("M")
         log.warn("testbetydning4 " + test4)
