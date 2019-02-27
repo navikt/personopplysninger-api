@@ -92,6 +92,8 @@ public class KodeverkConsumer {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
+            String test = readEntity(String.class, r);
+            log.warn("Kodeverkstring Betydning " + test);
             return readEntity(GetKodeverkKoderBetydningerResponse.class, r);
         }
     }
@@ -101,8 +103,7 @@ public class KodeverkConsumer {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
-            String test = readEntity(String.class, r);
-            log.warn("Kodeverkstring " + test);
+
             return readEntity(GetKodeverkKoderResponse.class, r);
         }
     }
