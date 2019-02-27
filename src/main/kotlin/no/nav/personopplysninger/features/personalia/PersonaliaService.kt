@@ -31,7 +31,11 @@ class PersonaliaService @Autowired constructor(
         val test = (hentet.betydninger.get("M"))
         log.warn("testbetydning " + test.isNullOrEmpty());
         val test2 = (hentet.betydninger.get(inbound.kjonn))
-        log.warn("testbetydning2 " + test2.left());
+        val test3 = hentet.betydninger.getValue("M")
+        log.warn("testbetydning3 " + test3)
+        val test4 = hentet.betydninger.getValue(inbound.kjonn)
+
+        log.warn("testbetydning4 " + test4)
       //  log.warn("hentetKjonn7 " + hentetKjonn.getValue(inbound.kjonn))
         val land = kodeverkConsumer.hentLandKoder(inbound.foedtILand)
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
