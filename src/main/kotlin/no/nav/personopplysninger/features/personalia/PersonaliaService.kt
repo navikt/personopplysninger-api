@@ -1,11 +1,8 @@
 package no.nav.personopplysninger.features.personalia
 
-import arrow.core.left
-import arrow.core.rightIfNotNull
 import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.features.kodeverk.api.Betydning
-import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
-import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderResponse
+import no.nav.personopplysninger.features.kodeverk.api.Beskrivelse
+
 import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAdresser
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import org.slf4j.LoggerFactory
@@ -24,8 +21,9 @@ class PersonaliaService @Autowired constructor(
         var inbound = personConsumer.hentPersonInfo(fodselsnr)
         val land = kodeverkConsumer.hentLandKoder(inbound.foedtILand)
         val hentet = kodeverkConsumer.hentKjonn(inbound.kjonn)
-        var test5 = hentet.betydninger.getValue(inbound.kjonn).get(0).beskrivelser.get("nb").toString()
-        log.warn("testx" + test5);
+        var test5 = hentet.betydninger.getValue(inbound.kjonn)[0].beskrivelser
+        val term = test5[inbound.kjonn]?.term
+        log.warn("term " + term);
     //    var test7 = test6.toString()
      //   log.warn("test7" + test7);
       //  log.warn("hentetKjonn7 " + hentetKjonn.getValue(inbound.kjonn))
