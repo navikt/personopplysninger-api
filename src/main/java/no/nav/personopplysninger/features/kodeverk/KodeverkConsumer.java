@@ -1,11 +1,9 @@
 package no.nav.personopplysninger.features.kodeverk;
 
 import no.nav.log.MDCConstants;
-
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse;
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderResponse;
 import no.nav.personopplysninger.features.kodeverk.exceptions.KodeverkConsumerException;
-
 import no.nav.tps.person.Kode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,17 +25,12 @@ public class KodeverkConsumer {
     private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     private Client client;
     private URI endpoint;
-    private static final String spraak = "nb";
-    private WebTarget webtarget;
-
-
 
     public KodeverkConsumer(Client client, URI endpoint) {
         this.client = client;
         this.endpoint = endpoint;
     }
-
-
+    
     public GetKodeverkKoderBetydningerResponse hentKjonn(String kode) {
         Invocation.Builder request = buildRequest(kode);
         return hentKjonn(request);
@@ -49,10 +42,9 @@ public class KodeverkConsumer {
     }
 
     private Invocation.Builder buildRequest(String kode) {
-        final WebTarget target = client.target(endpoint);
-        target.queryParam("spraak", spraak);
-        return target
+        return client.target(endpoint)
                 .path("v1/kodeverk/Kjønnstyper/koder/betydninger")
+                .queryParam("spraak", "nb")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
@@ -63,10 +55,10 @@ public class KodeverkConsumer {
     private Invocation.Builder buildRequest(Kode kode) {
         return client.target(endpoint)
                 .path("v1/kodeverk/Landkoder/koder/betydninger")
+                .queryParam("spraak", "nb")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
-
                 .header("Nav-Personident", kode);
     }
 
