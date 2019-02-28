@@ -23,12 +23,11 @@ class PersonaliaService @Autowired constructor(
         val hentet = kodeverkConsumer.hentKjonn(inbound.kjonn)
         var test5 = hentet.betydninger.getValue(inbound.kjonn)[0].beskrivelser
         var test6 = hentet.betydninger.getValue(inbound.kjonn)[0].beskrivelser.size
-        log.warn("test6 " + test6)
-        log.warn("aa" + test5.values)
+
         val term = test5.getValue(inbound.kjonn)?.term
-        log.warn("term " + term);
+
         val tekst = test5.getValue(inbound.kjonn)?.tekst
-        log.warn("tekst " + tekst)
+     
     //    var test7 = test6.toString()
      //   log.warn("test7" + test7);
       //  log.warn("hentetKjonn7 " + hentetKjonn.getValue(inbound.kjonn))
