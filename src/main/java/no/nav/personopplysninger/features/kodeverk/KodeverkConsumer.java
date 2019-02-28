@@ -46,26 +46,23 @@ public class KodeverkConsumer {
         return hentLandkoder(request);
     }
 
-
     private Invocation.Builder buildRequest(String kode) {
         return client.target(endpoint)
-                .path("v1/kodeverk/Kjønnstyper/koder/betydninger")
+                .path("v1/kodeverk/Kjønnstyper/koder/betydninger?spraak=" + spraak)
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Personident", kode)
-                .property("spraak", spraak);
+                .header("Nav-Personident", kode);
 
     }
 
     private Invocation.Builder buildRequest(Kode kode) {
         return client.target(endpoint)
-                .path("v1/kodeverk/Landkoder/koder/betydninger")
+                .path("v1/kodeverk/Landkoder/koder/betydninger?spraak=" + spraak)
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Personident", kode)
-                .property("spraak", spraak);
+                .header("Nav-Personident", kode);
     }
 
 
