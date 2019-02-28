@@ -24,7 +24,7 @@ class PersonaliaService @Autowired constructor(
         var inbound = personConsumer.hentPersonInfo(fodselsnr)
         val land = kodeverkConsumer.hentLandKoder(inbound.foedtILand)
         val hentet = kodeverkConsumer.hentKjonn(inbound.kjonn)
-        var test5 = hentet.betydninger.getValue("M").get(0).beskrivelser.get("nb")
+        var test5 = hentet.betydninger.getValue(inbound.kjonn).get(0).beskrivelser.get("nb").toString()
         log.warn("testx" + test5);
     //    var test7 = test6.toString()
      //   log.warn("test7" + test7);
