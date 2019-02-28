@@ -30,7 +30,7 @@ public class KodeverkConsumer {
         this.client = client;
         this.endpoint = endpoint;
     }
-    
+
     public GetKodeverkKoderBetydningerResponse hentKjonn(String kode) {
         Invocation.Builder request = buildRequest(kode);
         return hentKjonn(request);
@@ -90,8 +90,6 @@ public class KodeverkConsumer {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
-            String test = readEntity(String.class, r);
-            log.warn("testbetydninger " + test);
             return readEntity(GetKodeverkKoderBetydningerResponse.class, r);
         }
     }
