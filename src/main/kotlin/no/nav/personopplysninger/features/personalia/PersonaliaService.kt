@@ -36,6 +36,8 @@ class PersonaliaService @Autowired constructor(
         log.warn("testbetydning3 " + test3)
         val test4 = hentet.betydninger.getValue("M").get(0).beskrivelser.size
         log.warn("testbeskr " + test4)
+        var test5 = hentet.betydninger.getValue("M").get(0).beskrivelser.values
+        log.warn("testbeskr5" + test5)
       //  log.warn("hentetKjonn7 " + hentetKjonn.getValue(inbound.kjonn))
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }

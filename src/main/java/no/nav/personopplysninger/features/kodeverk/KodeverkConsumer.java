@@ -26,6 +26,7 @@ public class KodeverkConsumer {
     private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     private Client client;
     private URI endpoint;
+    private static final String spraak = "nb";
 
 
 
@@ -52,7 +53,8 @@ public class KodeverkConsumer {
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Personident", kode);
+                .header("Nav-Personident", kode)
+                .header("spraak", spraak);
     }
 
     private Invocation.Builder buildRequest(Kode kode) {
@@ -61,7 +63,8 @@ public class KodeverkConsumer {
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Personident", kode);
+                .header("Nav-Personident", kode)
+                .header("spraak", spraak);
     }
 
 
@@ -92,8 +95,6 @@ public class KodeverkConsumer {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
-            String test = readEntity(String.class, r);
-            log.warn("Kodeverkstring Betydning " + test);
             return readEntity(GetKodeverkKoderBetydningerResponse.class, r);
         }
     }
@@ -103,8 +104,6 @@ public class KodeverkConsumer {
             String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
-            String test = readEntity(String.class, r);
-            log.warn("Kodeverkstring Kode " + test);
             return readEntity(GetKodeverkKoderResponse.class, r);
         }
     }
