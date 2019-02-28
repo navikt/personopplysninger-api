@@ -54,7 +54,8 @@ public class KodeverkConsumer {
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header("Nav-Personident", kode)
-                .header("spraak", spraak);
+                .property("spraak", spraak);
+
     }
 
     private Invocation.Builder buildRequest(Kode kode) {
@@ -64,7 +65,7 @@ public class KodeverkConsumer {
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header("Nav-Personident", kode)
-                .header("spraak", spraak);
+                .property("spraak", spraak);
     }
 
 
