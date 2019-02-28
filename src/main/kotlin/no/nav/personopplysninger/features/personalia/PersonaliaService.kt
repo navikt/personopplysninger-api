@@ -25,8 +25,8 @@ class PersonaliaService @Autowired constructor(
         val land = kodeverkConsumer.hentLandKoder(inbound.foedtILand)
         val hentet = kodeverkConsumer.hentKjonn(inbound.kjonn)
         var test5 = hentet.betydninger.getValue("M").get(0).beskrivelser
-        log.warn("testbeskr5" + test5.getValue("tekst"))
-        log.warn("testbeskr6" + test5.getValue("term"))
+        log.warn("testbeskr5" + test5.get("tekst"))
+        log.warn("testbeskr6" + test5.get("term"))
       //  log.warn("hentetKjonn7 " + hentetKjonn.getValue(inbound.kjonn))
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }
