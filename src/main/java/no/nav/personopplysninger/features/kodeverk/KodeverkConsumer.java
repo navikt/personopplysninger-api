@@ -14,6 +14,7 @@ import org.slf4j.MDC;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
@@ -27,6 +28,7 @@ public class KodeverkConsumer {
     private Client client;
     private URI endpoint;
     private static final String spraak = "nb";
+    private WebTarget webtarget;
 
 
 
@@ -47,8 +49,10 @@ public class KodeverkConsumer {
     }
 
     private Invocation.Builder buildRequest(String kode) {
-        return client.target(endpoint)
-                .path("v1/kodeverk/Kjønnstyper/koder/betydninger?spraak=" + spraak)
+        final WebTarget target = client.target(endpoint);
+        target.queryParam("spraak", spraak);
+        return target
+                .path("v1/kodeverk/Kjønnstyper/koder/betydninger")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
@@ -58,10 +62,11 @@ public class KodeverkConsumer {
 
     private Invocation.Builder buildRequest(Kode kode) {
         return client.target(endpoint)
-                .path("v1/kodeverk/Landkoder/koder/betydninger?spraak=" + spraak)
+                .path("v1/kodeverk/Landkoder/koder/betydninger")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
+
                 .header("Nav-Personident", kode);
     }
 
