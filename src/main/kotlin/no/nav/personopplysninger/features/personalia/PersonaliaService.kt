@@ -22,7 +22,7 @@ class PersonaliaService @Autowired constructor(
         val land = kodeverkConsumer.hentLandKoder(inbound.foedtILand)
         val hentet = kodeverkConsumer.hentKjonn(inbound.kjonn)
         var test5 = hentet.betydninger.getValue(inbound.kjonn)[0].beskrivelser
-        val term = test5[inbound.kjonn]?.term
+        val term = test5.get("M")?.term
         log.warn("term " + term);
     //    var test7 = test6.toString()
      //   log.warn("test7" + test7);
