@@ -32,16 +32,46 @@ public class KodeverkConsumer {
     }
 
     public GetKodeverkKoderBetydningerResponse hentKjonn(String kode) {
-        Invocation.Builder request = buildRequest(kode);
-        return hentKjonn(request);
+        Invocation.Builder request = buildKjonnstyperRequest(kode);
+        return hentKodeverkBetydning(request);
     }
 
-    public GetKodeverkKoderResponse hentLandKoder(Kode land) {
-        Invocation.Builder request = buildRequest(land);
-        return hentLandkoder(request);
+    public GetKodeverkKoderBetydningerResponse hentKommuner(String kode) {
+        Invocation.Builder request = buildKommuneRequest(kode);
+        return hentKodeverkBetydning(request);
     }
 
-    private Invocation.Builder buildRequest(String kode) {
+    public GetKodeverkKoderBetydningerResponse hentLandKoder(String kode) {
+        Invocation.Builder request = buildLandkoderRequest(kode);
+        return hentKodeverkBetydning(request);
+    }
+
+    public GetKodeverkKoderBetydningerResponse hentPersonstatus(String kode) {
+        Invocation.Builder request = buildPersonstatusRequest(kode);
+        return hentKodeverkBetydning(request);
+    }
+
+    public GetKodeverkKoderBetydningerResponse hentPostnummer(String kode) {
+        Invocation.Builder request = buildPostnummerRequest(kode);
+        return hentKodeverkBetydning(request);
+    }
+
+    public GetKodeverkKoderBetydningerResponse hentSivilstand(String kode) {
+        Invocation.Builder request = buildSivilstandRequest(kode);
+        return hentKodeverkBetydning(request);
+    }
+
+    public GetKodeverkKoderBetydningerResponse hentSpraak(String kode) {
+        Invocation.Builder request = buildSpraakRequest(kode);
+        return hentKodeverkBetydning(request);
+    }
+
+    public GetKodeverkKoderBetydningerResponse hentStatsborgerskap(String kode) {
+        Invocation.Builder request = buildStatsborgerskapRequest(kode);
+        return hentKodeverkBetydning(request);
+    }
+
+    private Invocation.Builder buildKjonnstyperRequest(String kode) {
         return client.target(endpoint)
                 .path("v1/kodeverk/Kjønnstyper/koder/betydninger")
                 .queryParam("spraak", "nb")
@@ -52,7 +82,17 @@ public class KodeverkConsumer {
 
     }
 
-    private Invocation.Builder buildRequest(Kode kode) {
+    private Invocation.Builder buildKommuneRequest(String kode) {
+        return client.target(endpoint)
+                .path("v1/kodeverk/Kommune/koder/betydninger")
+                .queryParam("spraak", "nb")
+                .request()
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .header("Nav-Personident", kode);
+    }
+
+    private Invocation.Builder buildLandkoderRequest(String kode) {
         return client.target(endpoint)
                 .path("v1/kodeverk/Landkoder/koder/betydninger")
                 .queryParam("spraak", "nb")
@@ -62,21 +102,61 @@ public class KodeverkConsumer {
                 .header("Nav-Personident", kode);
     }
 
-
-    private GetKodeverkKoderBetydningerResponse hentKjonn(Invocation.Builder request) {
-        try (Response response = request.get()) {
-            return readResponseBetydning(response);
-        } catch (KodeverkConsumerException e) {
-            throw e;
-        } catch (Exception e) {
-            String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "].";
-            throw new KodeverkConsumerException(msg, e);
-        }
+    private Invocation.Builder buildPersonstatusRequest(String kode) {
+        return client.target(endpoint)
+                .path("v1/kodeverk/Postnummer/koder/betydninger")
+                .queryParam("spraak", "nb")
+                .request()
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .header("Nav-Personident", kode);
     }
 
-    private GetKodeverkKoderResponse hentLandkoder(Invocation.Builder request) {
+
+    private Invocation.Builder buildPostnummerRequest(String kode) {
+        return client.target(endpoint)
+                .path("v1/kodeverk/Personstatuser/koder/betydninger")
+                .queryParam("spraak", "nb")
+                .request()
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .header("Nav-Personident", kode);
+    }
+
+    private Invocation.Builder buildSivilstandRequest(String kode) {
+        return client.target(endpoint)
+                .path("v1/kodeverk/Sivilstander/koder/betydninger")
+                .queryParam("spraak", "nb")
+                .request()
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .header("Nav-Personident", kode);
+    }
+
+    private Invocation.Builder buildSpraakRequest(String kode) {
+        return client.target(endpoint)
+                .path("v1/kodeverk/Språk/koder/betydninger")
+                .queryParam("spraak", "nb")
+                .request()
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .header("Nav-Personident", kode);
+    }
+
+    private Invocation.Builder buildStatsborgerskapRequest(String kode) {
+        return client.target(endpoint)
+                .path("v1/kodeverk/StatsborgerskapFreg/koder/betydninger")
+                .queryParam("spraak", "nb")
+                .request()
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .header("Nav-Personident", kode);
+    }
+
+
+    private GetKodeverkKoderBetydningerResponse hentKodeverkBetydning(Invocation.Builder request) {
         try (Response response = request.get()) {
-            return readResponseKode(response);
+            return readResponseBetydning(response);
         } catch (KodeverkConsumerException e) {
             throw e;
         } catch (Exception e) {
@@ -93,16 +173,6 @@ public class KodeverkConsumer {
             return readEntity(GetKodeverkKoderBetydningerResponse.class, r);
         }
     }
-
-    private GetKodeverkKoderResponse readResponseKode(Response r) {
-        if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
-            String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
-            throw new KodeverkConsumerException(msg + " - " + readEntity(String.class, r));
-        } else {
-            return readEntity(GetKodeverkKoderResponse.class, r);
-        }
-    }
-
 
     private <T> T readEntity(Class<T> responsklasse, Response response) {
         try {

@@ -27,7 +27,6 @@ object PersoninfoTransformer {
                 kontonr = inbound.kontonummer?.nummer,
                 tlfnr = inbound.telefon?.let { TelefoninfoTransformer.toOutbound(it) },
                 spraak = inbound.spraak?.kode?.verdi?.let { Spraak.dekode(it) },
-                epostadr = "TODO",
                 personstatus = inbound.status?.kode?.verdi?.let { Personstatus.dekode(it) },
                 statsborgerskap = inbound.statsborgerskap?.kode?.verdi?.let { StatsborgerskapFreg.dekode(it) },
                 foedested = foedested(inbound.foedtIKommune?.verdi?.let  { Kommune.kommunenavn(it)  }, inbound.foedtILand),

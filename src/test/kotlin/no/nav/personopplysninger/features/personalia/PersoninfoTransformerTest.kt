@@ -29,7 +29,7 @@ class PersoninfoTransformerTest {
         assertEquals(inbound.kontonummer!!.nummer!!, actual.kontonr!!)
         assertTlfnr(inbound.telefon!!, actual.tlfnr!!)
         assertEquals("Nynorsk", actual.spraak!!)
-        assertEquals("TODO", actual.epostadr)
+        assertEquals(null, actual.epostadr)
         assertEquals("Fødselsregistrert", actual.personstatus)
         assertEquals("SØR-KOREA", actual.statsborgerskap)
         assertFoedested(inbound.foedtIKommune?.verdi?.let { Kommune.kommunenavn(it) }, "NORGE", actual.foedested!!)
