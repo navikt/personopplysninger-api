@@ -32,7 +32,7 @@ class PersonaliaService @Autowired constructor(
         val spraak = kodeverkConsumer.hentSpraak(inbound.spraak?.kode?.verdi)
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
 
-        var personkjonn = kjonn.betydninger.getValue(inbound.kjonn)[0].beskrivelser
+        var personkjonn = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser
         var personkommune = kommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0].beskrivelser
         var personland = land.betydninger.getValue(inbound.foedtILand?.verdi)[0].beskrivelser
         var personstatus = status.betydninger.getValue(inbound.status?.kode?.verdi)[0].beskrivelser
