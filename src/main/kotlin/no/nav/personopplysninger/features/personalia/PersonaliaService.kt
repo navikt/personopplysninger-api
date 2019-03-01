@@ -15,6 +15,8 @@ class PersonaliaService @Autowired constructor(
         private var kodeverkConsumer: KodeverkConsumer
 ) {
 
+    private val spraak = "nb";
+
     private val log = LoggerFactory.getLogger(PersonaliaService::class.java)
 
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
@@ -22,10 +24,8 @@ class PersonaliaService @Autowired constructor(
         val land = kodeverkConsumer.hentLandKoder(inbound.foedtILand)
         val hentet = kodeverkConsumer.hentKjonn(inbound.kjonn)
         var test5 = hentet.betydninger.getValue(inbound.kjonn)[0].beskrivelser
-        var test6 = hentet.betydninger.getValue(inbound.kjonn)[0].beskrivelser.size
-
-        val term =  test5.getValue("nb").term
-        val tekst =  test5.getValue("nb").tekst
+        val term =  test5.getValue(spraak).term
+        val tekst =  test5.getValue(spraak).tekst
         log.warn ("kodeverkresult " + term + " " + tekst)
 
     //    var test7 = test6.toString()
