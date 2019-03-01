@@ -24,6 +24,8 @@ class PersonaliaService @Autowired constructor(
         val kjonn = kodeverkConsumer.hentKjonn(inbound.kjonn)
        // val kommune = kodeverkConsumer.hentKommuner(inbound.foedtIKommune.toString())
         val land = kodeverkConsumer.hentLandKoder((inbound.foedtILand).toString())
+        log.warn("kodeverkland " + land.betydninger.size);
+        log.warn("kodeverkland " + inbound.foedtILand.toString());
         val status = kodeverkConsumer.hentPersonstatus(inbound.status.toString())
         //val postnummer = kodeverkConsumer.hentPostnummer(
         val sivilstand = kodeverkConsumer.hentSivilstand(inbound.sivilstand.toString())
