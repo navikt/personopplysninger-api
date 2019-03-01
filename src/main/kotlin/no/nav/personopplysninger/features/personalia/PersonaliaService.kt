@@ -24,19 +24,13 @@ class PersonaliaService @Autowired constructor(
         val kjonn = kodeverkConsumer.hentKjonn(inbound.kjonn)
         val kommune = kodeverkConsumer.hentKommuner(inbound.foedtIKommune?.verdi)
         val land = kodeverkConsumer.hentLandKoder((inbound.foedtILand?.verdi))
-        log.warn("kodeverkland " + land.betydninger.size)
-        log.warn("kodeverkland " + inbound.foedtILand?.verdi)
         val status = kodeverkConsumer.hentPersonstatus(inbound.status?.kode?.verdi)
         val postnummer = kodeverkConsumer.hentPostnummer(inbound.adresseinfo?.postadresse?.postnummer)
         val sivilstand = kodeverkConsumer.hentSivilstand(inbound.sivilstand?.kode?.verdi)
-        log.warn("kodeverksivilstand " + sivilstand.betydninger.size)
-        log.warn("kodeverkstatus " + status.betydninger.keys)
         val spraak = kodeverkConsumer.hentSpraak(inbound.spraak?.kode?.verdi)
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
-
         var personkjonn = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser
         var personkommune = kommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0].beskrivelser
-
         var personland = land.betydninger.getValue(inbound.foedtILand?.verdi)[0].beskrivelser
         val personpostnummer = postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0].beskrivelser
         var personstatus = status.betydninger.getValue(inbound.status?.kode?.verdi)[0].beskrivelser
