@@ -30,7 +30,7 @@ class PersonaliaService @Autowired constructor(
         //val postnummer = kodeverkConsumer.hentPostnummer(
         val sivilstand = kodeverkConsumer.hentSivilstand(inbound.sivilstand?.kode?.verdi)
         log.warn("kodeverksivilstand " + sivilstand.betydninger.size)
-        log.warn("kodeverksivilstand " + sivilstand.betydninger.keys)
+        log.warn("kodeverkstatus " + status.betydninger.keys)
         val spraak = kodeverkConsumer.hentSpraak(inbound.spraak?.kode?.verdi)
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
 
