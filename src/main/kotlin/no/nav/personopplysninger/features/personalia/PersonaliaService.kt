@@ -23,7 +23,7 @@ class PersonaliaService @Autowired constructor(
         var inbound = personConsumer.hentPersonInfo(fodselsnr)
         val kjonn = kodeverkConsumer.hentKjonn(inbound.kjonn)
        // val kommune = kodeverkConsumer.hentKommuner(inbound.foedtIKommune.toString())
-        val land = kodeverkConsumer.hentLandKoder((inbound.foedtILand).toString())
+        val land = kodeverkConsumer.hentLandKoder((inbound.foedtILand?.verdi))
         log.warn("kodeverkland " + land.betydninger.size);
         log.warn("kodeverkland " + inbound.foedtILand.toString());
         val status = kodeverkConsumer.hentPersonstatus(inbound.status.toString())
@@ -34,7 +34,7 @@ class PersonaliaService @Autowired constructor(
 
         var personkjonn = kjonn.betydninger.getValue(inbound.kjonn)[0].beskrivelser
     //    var personkommune = kommune.betydninger.getValue(inbound.foedtIKommune.toString())[0].beskrivelser
-        var personland = land.betydninger.getValue(inbound.foedtILand.toString())[0].beskrivelser
+        var personland = land.betydninger.getValue(inbound.foedtILand?.verdi)[0].beskrivelser
         var personstatus = status.betydninger.getValue(inbound.kjonn)[0].beskrivelser
         var personsivilstand = sivilstand.betydninger.getValue(inbound.kjonn)[0].beskrivelser
         var personspraak = spraak.betydninger.getValue(inbound.kjonn)[0].beskrivelser
