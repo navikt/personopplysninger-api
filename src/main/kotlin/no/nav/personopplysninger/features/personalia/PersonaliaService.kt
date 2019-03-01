@@ -41,7 +41,7 @@ class PersonaliaService @Autowired constructor(
         var personsivilstand = sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0].beskrivelser
         var personspraak = spraak.betydninger.getValue(inbound.spraak?.kode?.verdi)[0].beskrivelser
         val personstatsborgerskap = statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0].beskrivelser
-        val kjonnterm = personkjonn.getValue(kodeverkspraak).term
+        val kjonnterm = personkjonn?.getValue(kodeverkspraak)?.term
         val kommuneterm = personkommune.getValue(kodeverkspraak).term
         val landterm = personland.getValue(kodeverkspraak).term
         val statusterm = personstatus.getValue(kodeverkspraak).term
