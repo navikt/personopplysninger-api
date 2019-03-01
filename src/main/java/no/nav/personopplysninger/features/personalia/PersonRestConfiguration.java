@@ -42,5 +42,4 @@ public class PersonRestConfiguration {
                 .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword))
                 .build();
     }
-
 }
