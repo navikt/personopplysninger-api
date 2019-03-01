@@ -98,7 +98,7 @@ public class KodeverkConsumer {
     private Invocation.Builder buildPersonstatusRequest(String kode) {
         return getBuilder(kode, "v1/kodeverk/Personstatuser/koder/betydninger");
     }
-    
+
     private Invocation.Builder buildPostnummerRequest(String kode) {
         return getBuilder(kode, "v1/kodeverk/Postnummer/koder/betydninger");
     }

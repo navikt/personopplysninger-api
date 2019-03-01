@@ -27,7 +27,7 @@ class PersonaliaService @Autowired constructor(
         log.warn("kodeverkland " + land.betydninger.size)
         log.warn("kodeverkland " + inbound.foedtILand?.verdi)
         val status = kodeverkConsumer.hentPersonstatus(inbound.status?.kode?.verdi)
-        //val postnummer = kodeverkConsumer.hentPostnummer(
+        val postnummer = kodeverkConsumer.hentPostnummer(inbound.adresseinfo?.postadresse?.postnummer)
         val sivilstand = kodeverkConsumer.hentSivilstand(inbound.sivilstand?.kode?.verdi)
         log.warn("kodeverksivilstand " + sivilstand.betydninger.size)
         log.warn("kodeverkstatus " + status.betydninger.keys)
@@ -36,7 +36,9 @@ class PersonaliaService @Autowired constructor(
 
         var personkjonn = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser
         var personkommune = kommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0].beskrivelser
+
         var personland = land.betydninger.getValue(inbound.foedtILand?.verdi)[0].beskrivelser
+        val personpostnummer = postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0].beskrivelser
         var personstatus = status.betydninger.getValue(inbound.status?.kode?.verdi)[0].beskrivelser
         var personsivilstand = sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0].beskrivelser
         var personspraak = spraak.betydninger.getValue(inbound.spraak?.kode?.verdi)[0].beskrivelser
@@ -44,11 +46,12 @@ class PersonaliaService @Autowired constructor(
         val kjonnterm = personkjonn?.getValue(kodeverkspraak)?.term
         val kommuneterm = personkommune.getValue(kodeverkspraak).term
         val landterm = personland.getValue(kodeverkspraak).term
+        val postnummerterm = personpostnummer.getValue(kodeverkspraak).term
         val statusterm = personstatus.getValue(kodeverkspraak).term
         val sivilstandterm = personsivilstand.getValue(kodeverkspraak).term
         val spraakterm = personspraak.getValue(kodeverkspraak).term
         val statsborgerskapterm = personstatsborgerskap.getValue(kodeverkspraak).term
-        log.warn("kodeverkresult " + kjonnterm + " " + " " + landterm + " " + kommuneterm + " " + statusterm + " " + sivilstandterm + " " + spraakterm + " " + statsborgerskapterm)
+        log.warn("kodeverkresult " + kjonnterm + " " + " " + landterm + " " + kommuneterm + " " + statusterm + " " + sivilstandterm + " " + spraakterm + " " + statsborgerskapterm+ " " + postnummerterm)
 
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }
