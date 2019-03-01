@@ -71,86 +71,49 @@ public class KodeverkConsumer {
         return hentKodeverkBetydning(request);
     }
 
-    private Invocation.Builder buildKjonnstyperRequest(String kode) {
+    private Invocation.Builder getBuilder(String kode, String s) {
         return client.target(endpoint)
-                .path("v1/kodeverk/Kjønnstyper/koder/betydninger")
+                .path(s)
                 .queryParam("spraak", "nb")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header("Nav-Personident", kode);
+    }
+
+
+    private Invocation.Builder buildKjonnstyperRequest(String kode) {
+        return getBuilder(kode, "v1/kodeverk/Kjønnstyper/koder/betydninger");
 
     }
 
     private Invocation.Builder buildKommuneRequest(String kode) {
-        return client.target(endpoint)
-                .path("v1/kodeverk/Kommune/koder/betydninger")
-                .queryParam("spraak", "nb")
-                .request()
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Personident", kode);
+        return getBuilder(kode, "v1/kodeverk/Kommuner/koder/betydninger");
     }
 
     private Invocation.Builder buildLandkoderRequest(String kode) {
-        return client.target(endpoint)
-                .path("v1/kodeverk/Landkoder/koder/betydninger")
-                .queryParam("spraak", "nb")
-                .request()
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Personident", kode);
+        return getBuilder(kode, "v1/kodeverk/Landkoder/koder/betydninger");
     }
 
     private Invocation.Builder buildPersonstatusRequest(String kode) {
-        return client.target(endpoint)
-                .path("v1/kodeverk/Postnummer/koder/betydninger")
-                .queryParam("spraak", "nb")
-                .request()
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Personident", kode);
+        return getBuilder(kode, "v1/kodeverk/Postnummer/koder/betydninger");
     }
 
 
     private Invocation.Builder buildPostnummerRequest(String kode) {
-        return client.target(endpoint)
-                .path("v1/kodeverk/Personstatuser/koder/betydninger")
-                .queryParam("spraak", "nb")
-                .request()
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Personident", kode);
+        return getBuilder(kode, "v1/kodeverk/Personstatuser/koder/betydninger");
     }
 
     private Invocation.Builder buildSivilstandRequest(String kode) {
-        return client.target(endpoint)
-                .path("v1/kodeverk/Sivilstander/koder/betydninger")
-                .queryParam("spraak", "nb")
-                .request()
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Personident", kode);
+        return getBuilder(kode, "v1/kodeverk/Sivilstander/koder/betydninger");
     }
 
     private Invocation.Builder buildSpraakRequest(String kode) {
-        return client.target(endpoint)
-                .path("v1/kodeverk/Språk/koder/betydninger")
-                .queryParam("spraak", "nb")
-                .request()
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Personident", kode);
+        return getBuilder(kode, "v1/kodeverk/Språk/koder/betydninger");
     }
 
     private Invocation.Builder buildStatsborgerskapRequest(String kode) {
-        return client.target(endpoint)
-                .path("v1/kodeverk/StatsborgerskapFreg/koder/betydninger")
-                .queryParam("spraak", "nb")
-                .request()
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("Nav-Personident", kode);
+        return getBuilder(kode, "v1/kodeverk/StatsborgerskapFreg/koder/betydninger");
     }
 
 

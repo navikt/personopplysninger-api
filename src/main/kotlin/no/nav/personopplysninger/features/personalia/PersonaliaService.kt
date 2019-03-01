@@ -46,9 +46,6 @@ class PersonaliaService @Autowired constructor(
         val statsborgerskapterm = personstatsborgerskap.getValue(kodeverkspraak).term
         log.warn("kodeverkresult " + kjonnterm + " " + kommuneterm + " " + landterm + " " + statusterm + " " + sivilstandterm + " " + spraakterm + " " + statsborgerskapterm)
 
-        //    var test7 = test6.toString()
-        //   log.warn("test7" + test7);
-        //  log.warn("hentetKjonn7 " + hentetKjonn.getValue(inbound.kjonn))
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }
 }
