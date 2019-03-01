@@ -22,31 +22,31 @@ class PersonaliaService @Autowired constructor(
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
         var inbound = personConsumer.hentPersonInfo(fodselsnr)
         val kjonn = kodeverkConsumer.hentKjonn(inbound.kjonn)
-       // val kommune = kodeverkConsumer.hentKommuner(inbound.foedtIKommune.toString())
+        val kommune = kodeverkConsumer.hentKommuner(inbound.foedtIKommune?.verdi)
         val land = kodeverkConsumer.hentLandKoder((inbound.foedtILand?.verdi))
-        log.warn("kodeverkland " + land.betydninger.size);
-        log.warn("kodeverkland " + inbound.foedtILand.toString());
-        val status = kodeverkConsumer.hentPersonstatus(inbound.status.toString())
+        log.warn("kodeverkland " + land.betydninger.size)
+        log.warn("kodeverkland " + inbound.foedtILand?.verdi)
+        val status = kodeverkConsumer.hentPersonstatus(inbound.status?.kode?.verdi)
         //val postnummer = kodeverkConsumer.hentPostnummer(
-        val sivilstand = kodeverkConsumer.hentSivilstand(inbound.sivilstand.toString())
-        val spraak = kodeverkConsumer.hentSpraak(inbound.spraak.toString())
-        val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap.toString())
+        val sivilstand = kodeverkConsumer.hentSivilstand(inbound.sivilstand?.kode?.verdi)
+        val spraak = kodeverkConsumer.hentSpraak(inbound.spraak?.kode?.verdi)
+        val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
 
         var personkjonn = kjonn.betydninger.getValue(inbound.kjonn)[0].beskrivelser
-    //    var personkommune = kommune.betydninger.getValue(inbound.foedtIKommune.toString())[0].beskrivelser
+        var personkommune = kommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0].beskrivelser
         var personland = land.betydninger.getValue(inbound.foedtILand?.verdi)[0].beskrivelser
-        var personstatus = status.betydninger.getValue(inbound.kjonn)[0].beskrivelser
-        var personsivilstand = sivilstand.betydninger.getValue(inbound.kjonn)[0].beskrivelser
-        var personspraak = spraak.betydninger.getValue(inbound.kjonn)[0].beskrivelser
-        val personstatsborgerskap = statsborgerskap.betydninger.getValue(inbound.statsborgerskap.toString())[0].beskrivelser
+        var personstatus = status.betydninger.getValue(inbound.status?.kode?.verdi)[0].beskrivelser
+        var personsivilstand = sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0].beskrivelser
+        var personspraak = spraak.betydninger.getValue(inbound.spraak?.kode?.verdi)[0].beskrivelser
+        val personstatsborgerskap = statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0].beskrivelser
         val kjonnterm = personkjonn.getValue(kodeverkspraak).term
-    //    val kommuneterm = personkommune.getValue(kodeverkspraak).term
+        val kommuneterm = personkommune.getValue(kodeverkspraak).term
         val landterm = personland.getValue(kodeverkspraak).term
         val statusterm = personstatus.getValue(kodeverkspraak).term
         val sivilstandterm = personsivilstand.getValue(kodeverkspraak).term
         val spraakterm = personspraak.getValue(kodeverkspraak).term
         val statsborgerskapterm = personstatsborgerskap.getValue(kodeverkspraak).term
-        log.warn("kodeverkresult " + kjonnterm + " " + " " + landterm + " " + statusterm + " " + sivilstandterm + " " + spraakterm + " " + statsborgerskapterm)
+        log.warn("kodeverkresult " + kjonnterm + " " + " " + landterm + " " + kommuneterm + " " + statusterm + " " + sivilstandterm + " " + spraakterm + " " + statsborgerskapterm)
 
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }
