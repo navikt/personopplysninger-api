@@ -18,13 +18,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Configuration
-public class PersonRestConfiguration {
+public class PersonaliaRestConfiguration {
 
     @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME}")
     private String tpsProxyApiKeyUsername;
 
     @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD}")
     private String tpsProxyApiKeyPassword;
+
+    @Value("${PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_USERNAME}")
+    private String dkifApiKeyUsername;
+
+    @Value("${PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_PASSWORD}")
+    private String dkifApiKeyPassword;
 
     @Bean
     public PersonConsumer personConsumer(
@@ -34,12 +40,30 @@ public class PersonRestConfiguration {
     }
 
     @Bean
+    public KontaktinfoConsumer kontaktinformasjonConsumer(
+            @Named("dkifClient") Client client,
+            @Value("${DKIF_API_URL}") String kontaktinfoServiceUri) throws URISyntaxException {
+        return new KontaktinfoConsumer(client, new URI(kontaktinfoServiceUri));
+    }
+
+    @Bean
     public Client tpsProxyClient(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
+        return clientBuilder(clientObjectMapperResolver)
+                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword))
+                .build();
+    }
+
+    @Bean
+    public Client dkifClient(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
+        return clientBuilder(clientObjectMapperResolver)
+                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(dkifApiKeyUsername, dkifApiKeyPassword))
+                .build();
+    }
+
+    private ClientBuilder clientBuilder(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
         return ClientBuilder.newBuilder()
                 .register(OidcClientRequestFilter.class)
                 .register(clientObjectMapperResolver)
-                .register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO, LoggingFeature.Verbosity.HEADERS_ONLY, Integer.MAX_VALUE))
-                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword))
-                .build();
+                .register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO, LoggingFeature.Verbosity.HEADERS_ONLY, Integer.MAX_VALUE));
     }
 }
