@@ -39,7 +39,7 @@ class PersonaliaService @Autowired constructor(
         var personpostnummer = postnummer?.let {postnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser}
         var personstatus = status?.let {status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser}
         var personsivilstand = sivilstand?.let {sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0]?.beskrivelser}
-        var personspraak = spraak?.let {spraak?.betydninger.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser}
+        var personspraak = spraak?.let {spraak?.betydninger.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser} ?: "TEST"
         var personstatsborgerskap = statsborgerskap?.let {statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0]?.beskrivelser}
 
         val kjonnterm = personkjonn?.getValue(kodeverkspraak)?.term
@@ -48,7 +48,7 @@ class PersonaliaService @Autowired constructor(
         val postnummerterm = personpostnummer?.getValue(kodeverkspraak)?.term
         val statusterm = personstatus?.getValue(kodeverkspraak)?.term
         val sivilstandterm = personsivilstand?.getValue(kodeverkspraak)?.term
-        val spraakterm = personspraak?.let {personspraak?.getValue(kodeverkspraak)?.term} ?: ""
+       // val spraakterm = personspraak?.let {personspraak?.getValue(kodeverkspraak)?.term} ?: ""
         val statsborgerskapterm = personstatsborgerskap?.getValue(kodeverkspraak)?.term
 
         personaliaKodeverk.kjonnterm = kjonnterm
@@ -56,11 +56,11 @@ class PersonaliaService @Autowired constructor(
         personaliaKodeverk.landterm = landterm
         personaliaKodeverk.postnummerterm = postnummerterm
         personaliaKodeverk.sivilstandterm = sivilstandterm
-        personaliaKodeverk.spraakterm = spraakterm
+       // personaliaKodeverk.spraakterm = spraakterm
         personaliaKodeverk.stasborgerskapterm = statsborgerskapterm
         personaliaKodeverk.statusterm = statusterm
 
-        log.warn("kodeverkresult " + kjonnterm + " " + " " + landterm + " " + kommuneterm + " " + statusterm + " " + sivilstandterm + " " + spraakterm + " " + statsborgerskapterm+ " " + postnummerterm)
+        log.warn("kodeverkresult " + kjonnterm + " " + " " + landterm + " " + kommuneterm + " " + statusterm + " " + sivilstandterm + " " + statsborgerskapterm+ " " + postnummerterm)
 
         return PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
     }
