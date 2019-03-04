@@ -9,7 +9,7 @@ object BoadresseTransformer {
                 adressetillegg = inbound.adressetillegg,
                 bydel = inbound.bydel,
                 datoFraOgMed = inbound.datoFraOgMed,
-                kommune = inbound.kommune?.let { kodeverk.kommuneterm},
+                kommune = inbound.kommune?.let { kodeverk.bostedskommuneterm},
                 land = inbound.landkode?.let { kodeverk.landterm },
                 matrikkeladresse = inbound.matrikkeladresse?.let { MatrikkeladresseTransformer.toOutbound(it) },
                 postnummer = inbound.postnummer,

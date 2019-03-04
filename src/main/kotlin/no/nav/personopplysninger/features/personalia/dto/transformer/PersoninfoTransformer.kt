@@ -29,7 +29,7 @@ object PersoninfoTransformer {
                 spraak = inbound.spraak?.kode?.verdi?.let { kodeverk.spraakterm },
                 personstatus = inbound.status?.kode?.verdi?.let { kodeverk.statusterm },
                 statsborgerskap = inbound.statsborgerskap?.kode?.verdi?.let { kodeverk.stasborgerskapterm },
-                foedested = foedested(inbound.foedtIKommune?.verdi?.let  { kodeverk.kommuneterm  }, kodeverk.landterm),
+                foedested = foedested(inbound.foedtIKommune?.verdi?.let  { kodeverk.foedekommuneterm  }, kodeverk.landterm),
                 sivilstand = inbound.sivilstand?.kode?.verdi?.let { kodeverk.sivilstandterm },
                 kjoenn = inbound.kjonn?.let { kodeverk.kjonnterm }
         )

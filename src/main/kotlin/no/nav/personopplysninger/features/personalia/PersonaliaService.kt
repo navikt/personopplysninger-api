@@ -25,7 +25,8 @@ class PersonaliaService @Autowired constructor(
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
         var inbound = personConsumer.hentPersonInfo(fodselsnr)
         val kjonn = kodeverkConsumer.hentKjonn(inbound.kjonn)
-        val kommune = kodeverkConsumer.hentKommuner(inbound.foedtIKommune?.verdi)
+        val foedtkommune = kodeverkConsumer.hentKommuner(inbound.foedtIKommune?.verdi)
+        val bostedskommune = kodeverkConsumer.hentKommuner(inbound.adresseinfo?.boadresse?.kommune)
         val land = kodeverkConsumer.hentLandKoder((inbound.foedtILand?.verdi))
         val status = kodeverkConsumer.hentPersonstatus(inbound.status?.kode?.verdi)
         val postnummer = kodeverkConsumer.hentPostnummer(inbound.adresseinfo?.postadresse?.postnummer)
@@ -34,7 +35,8 @@ class PersonaliaService @Autowired constructor(
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
 
         var personkjonn = kjonn?.let {kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser }
-        var personkommune = kommune?.let {kommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser}
+        var personfoedtkommune = foedtkommune?.let {foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser}
+        var personbostedskommune = bostedskommune?.let {foedtkommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser}
         var personland = land?.let {land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser}
         var personpostnummer = postnummer?.let {postnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser}
         var personstatus = status?.let {status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser}
@@ -43,7 +45,8 @@ class PersonaliaService @Autowired constructor(
         var personstatsborgerskap = statsborgerskap?.let {statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0]?.beskrivelser}
 
         val kjonnterm = personkjonn?.getValue(kodeverkspraak)?.term
-        val kommuneterm = personkommune?.getValue(kodeverkspraak)?.term
+        val foedekommuneterm = personfoedtkommune?.getValue(kodeverkspraak)?.term
+        val bostedskommuneterm = personbostedskommune?.getValue(kodeverkspraak)?.term
         val landterm = personland?.getValue(kodeverkspraak)?.term
         val postnummerterm = personpostnummer?.getValue(kodeverkspraak)?.term
         val statusterm = personstatus?.getValue(kodeverkspraak)?.term
@@ -52,7 +55,8 @@ class PersonaliaService @Autowired constructor(
         val statsborgerskapterm = personstatsborgerskap?.getValue(kodeverkspraak)?.term
 
         personaliaKodeverk.kjonnterm = kjonnterm
-        personaliaKodeverk.kommuneterm = kommuneterm
+        personaliaKodeverk.foedekommuneterm = foedekommuneterm
+        personaliaKodeverk.bostedskommuneterm = bostedskommuneterm
         personaliaKodeverk.landterm = landterm
         personaliaKodeverk.postnummerterm = postnummerterm
         personaliaKodeverk.sivilstandterm = sivilstandterm
@@ -60,8 +64,7 @@ class PersonaliaService @Autowired constructor(
         personaliaKodeverk.stasborgerskapterm = statsborgerskapterm
         personaliaKodeverk.statusterm = statusterm
 
-        log.warn("Spraak " + spraak);
-        log.warn("kodeverkresult " + kjonnterm + " " + " " + landterm + " " + kommuneterm + " " + statusterm + " " + sivilstandterm + " " + statsborgerskapterm+ " " + postnummerterm)
+        log.warn("Spraakinbound " + inbound.spraak);
 
         return PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
     }

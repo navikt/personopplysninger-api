@@ -4,7 +4,8 @@ class PersonaliaKodeverk {
 
     var kjonnterm: String? = null
     var landterm: String? = null
-    var kommuneterm: String? = null
+    var foedekommuneterm: String? = null
+    var bostedskommuneterm: String? = null
     var statusterm: String? = null
     var sivilstandterm: String? = null
     var spraakterm: String? = null
