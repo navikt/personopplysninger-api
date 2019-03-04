@@ -30,14 +30,14 @@ class PersonaliaService @Autowired constructor(
         val spraak = kodeverkConsumer.hentSpraak(inbound.spraak?.kode?.verdi)
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
 
-        var personkjonn = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser
-        var personkommune = kommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser
-        var personland = land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser
-        var personpostnummer = postnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser
-        var personstatus = status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser
-        var personsivilstand = sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0]?.beskrivelser
-        var personspraak = spraak.betydninger.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser
-        var personstatsborgerskap = statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0]?.beskrivelser
+        var personkjonn = kjonn?.let {kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser }
+        var personkommune = kommune?.let {kommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser}
+        var personland = land?.let {land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser}
+        var personpostnummer = postnummer?.let {postnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser}
+        var personstatus = status?.let {status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser}
+        var personsivilstand = sivilstand?.let {sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0]?.beskrivelser}
+        var personspraak = spraak?.let {spraak.betydninger.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser}
+        var personstatsborgerskap = statsborgerskap?.let {statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0]?.beskrivelser}
 
         val kjonnterm = personkjonn?.getValue(kodeverkspraak)?.term
         val kommuneterm = personkommune?.getValue(kodeverkspraak)?.term
