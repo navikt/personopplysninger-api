@@ -39,7 +39,7 @@ class PersonaliaService @Autowired constructor(
         var personpostnummer = postnummer?.let {postnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser}
         var personstatus = status?.let {status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser}
         var personsivilstand = sivilstand?.let {sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0]?.beskrivelser}
-        var personspraak = spraak?.let {spraak.betydninger.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser}
+        var personspraak = spraak?.let {spraak?.betydninger.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser}
         var personstatsborgerskap = statsborgerskap?.let {statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0]?.beskrivelser}
 
         val kjonnterm = personkjonn?.getValue(kodeverkspraak)?.term
