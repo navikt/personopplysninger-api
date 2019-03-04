@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.dkif.kontaktinformasjon.DigitalKontaktinfoBolk
 import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAdresser
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service
 @Service
 class PersonaliaService @Autowired constructor(
         private var personConsumer: PersonConsumer,
+        private var kontaktinfoConsumer: KontaktinfoConsumer
         private var kodeverkConsumer: KodeverkConsumer
 ) {
 
@@ -112,5 +114,9 @@ class PersonaliaService @Autowired constructor(
 
     private fun getKjonnTerm(kjonn: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
         personaliaKodeverk.kjonnterm = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+    }
+
+    fun hentKontaktinformasjon(fodselsnr: Array<String>): DigitalKontaktinfoBolk {
+        return kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
     }
 }

@@ -1,11 +1,8 @@
 package no.nav.personopplysninger.features.personalia;
 
+import no.nav.dkif.kontaktinformasjon.DigitalKontaktinfoBolk;
 import no.nav.log.MDCConstants;
-import no.nav.personopplysninger.config.ApplicationConfig;
 import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException;
-import no.nav.tps.person.Personinfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.ws.rs.ProcessingException;
@@ -27,14 +24,14 @@ public class KontaktinfoConsumer {
         this.endpoint = endpoint;
     }
 
-    public Personinfo hentKontaktinfo(String[] fnr) {
+    public DigitalKontaktinfoBolk hentKontaktinformasjon(String[] fnr) {
         Invocation.Builder request = buildRequest(fnr);
-        return hentKontaktinfo(request);
+        return hentKontaktinformasjon(request);
     }
 
     private Invocation.Builder buildRequest(String[] fnr) {
         return client.target(endpoint)
-                .path("kontaktinformasjon")
+                .path("personer/kontaktinformasjon")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
@@ -42,7 +39,7 @@ public class KontaktinfoConsumer {
     }
 
 
-    private Personinfo hentKontaktinfo(Invocation.Builder request) {
+    private DigitalKontaktinfoBolk hentKontaktinformasjon(Invocation.Builder request) {
         try (Response response = request.get()) {
             return readResponse(response);
         } catch (Exception e) {
@@ -52,12 +49,12 @@ public class KontaktinfoConsumer {
     }
 
 
-    private Personinfo readResponse(Response r) {
+    private DigitalKontaktinfoBolk readResponse(Response r) {
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere REST-tjenesten DKIF. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new ConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
-            return readEntity(Personinfo.class, r);
+            return readEntity(DigitalKontaktinfoBolk.class, r);
         }
     }
 
