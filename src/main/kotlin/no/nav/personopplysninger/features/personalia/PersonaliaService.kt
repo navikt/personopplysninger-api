@@ -5,6 +5,7 @@ import no.nav.personopplysninger.features.kodeverk.api.Beskrivelse
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAdresser
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
+import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -15,9 +16,11 @@ class PersonaliaService @Autowired constructor(
         private var kodeverkConsumer: KodeverkConsumer
 ) {
 
-    private val kodeverkspraak = "nb";
+    private val kodeverkspraak = "nb"
 
     private val log = LoggerFactory.getLogger(PersonaliaService::class.java)
+
+    private var personaliaKodeverk = PersonaliaKodeverk()
 
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
         var inbound = personConsumer.hentPersonInfo(fodselsnr)
@@ -47,8 +50,18 @@ class PersonaliaService @Autowired constructor(
         val sivilstandterm = personsivilstand?.getValue(kodeverkspraak)?.term
         val spraakterm = personspraak?.getValue(kodeverkspraak)?.term
         val statsborgerskapterm = personstatsborgerskap?.getValue(kodeverkspraak)?.term
+
+        personaliaKodeverk.kjonnterm = kjonnterm
+        personaliaKodeverk.kommuneterm = kommuneterm
+        personaliaKodeverk.landterm = landterm
+        personaliaKodeverk.postnummerterm = postnummerterm
+        personaliaKodeverk.sivilstandterm = sivilstandterm
+        personaliaKodeverk.spraakterm = spraakterm
+        personaliaKodeverk.stasborgerskapterm = statsborgerskapterm
+        personaliaKodeverk.statusterm = statusterm
+
         log.warn("kodeverkresult " + kjonnterm + " " + " " + landterm + " " + kommuneterm + " " + statusterm + " " + sivilstandterm + " " + spraakterm + " " + statsborgerskapterm+ " " + postnummerterm)
 
-        return PersonaliaOgAdresserTransformer.toOutbound(inbound)
+        return PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
     }
 }

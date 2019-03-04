@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory
 object PersoninfoTransformer {
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    fun toOutbound(inbound: Personinfo): Personalia {
+    fun toOutbound(inbound: Personinfo, kodeverk: PersonaliaKodeverk): Personalia {
 
         fun fornavn(inbound: Navn): String? =
                 if (inbound.fornavn == null && inbound.mellomnavn == null) null
