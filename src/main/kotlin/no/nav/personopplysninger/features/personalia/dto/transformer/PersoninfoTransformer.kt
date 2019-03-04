@@ -26,7 +26,7 @@ object PersoninfoTransformer {
                 personident = inbound.ident?.let { Personident(it, inbound.identtype?.verdi) },
                 kontonr = inbound.kontonummer?.nummer,
                 tlfnr = inbound.telefon?.let { TelefoninfoTransformer.toOutbound(it) },
-                spraak = inbound.spraak?.kode?.verdi?.let { Spraak.dekode(it) },
+                spraak = inbound.spraak?.kode?.verdi?.let { kodeverk.spraakterm },
                 personstatus = inbound.status?.kode?.verdi?.let { kodeverk.statusterm },
                 statsborgerskap = inbound.statsborgerskap?.kode?.verdi?.let { kodeverk.stasborgerskapterm },
                 foedested = foedested(inbound.foedtIKommune?.verdi?.let  { kodeverk.kommuneterm  }, kodeverk.landterm),

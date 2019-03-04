@@ -9,15 +9,6 @@ object Postnummer {
 
     private val postnrTilPoststed: Map<String, String>
 
-    fun poststed(postnr: String): String {
-        try {
-            return postnrTilPoststed.getValue(postnr)
-        } catch (e: NoSuchElementException) {
-            log.warn("Hardkodet kopi av kodeverk for postnummer mangler gitt postnr [" + postnr + "]", e)
-            return "-"
-        }
-    }
-
     init {
         val m: MutableMap<String, String> = mutableMapOf()
         m.put("0001", "OSLO")

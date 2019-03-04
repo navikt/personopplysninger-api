@@ -208,17 +208,4 @@ enum class StatsborgerskapFreg(val beskrivelse: String) {
     ZMB("ZAMBIA"),
     ZWE("ZIMBABWE");
 
-    companion object {
-        private val log: Logger = LoggerFactory.getLogger(StatsborgerskapFreg::class.java)
-
-        fun dekode(kode: String): String {
-            try {
-                return StatsborgerskapFreg.valueOf(kode).beskrivelse
-            } catch (e: IllegalArgumentException) {
-                log.warn("Enum for kodeverk for statsborgerskap mangler gitt kode [" + kode + "]", e)
-                return "-"
-            }
-        }
-    }
-
 }

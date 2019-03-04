@@ -9,15 +9,6 @@ object Kommune {
 
     private val kommunenrTilKommunenavn: Map<String, String>
 
-    fun kommunenavn(kommunenr: String): String {
-        try {
-            return kommunenrTilKommunenavn.getValue(kommunenr)
-        } catch (e: NoSuchElementException) {
-            log.warn("Hardkodet kopi av kodeverk for kommunenenr mangler gitt kommunenr [" + kommunenr + "]", e)
-            return "-"
-        }
-    }
-
     init {
         val m: MutableMap<String, String> = mutableMapOf()
         m.put("0101", "Halden")

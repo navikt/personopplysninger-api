@@ -17,17 +17,4 @@ enum class Personstatus(val beskrivelse: String) {
     UTPE("Utgått person"),
     UTVA("Utvandret");
 
-    companion object {
-        private val log: Logger = LoggerFactory.getLogger(Personstatus::class.java)
-
-        fun dekode(kode: String): String {
-            try {
-                return Personstatus.valueOf(kode).beskrivelse
-            } catch (e: IllegalArgumentException) {
-                log.warn("Enum for kodeverk for personstatus mangler gitt kode [" + kode + "]", e)
-                return "-"
-            }
-        }
-    }
-
 }

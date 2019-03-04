@@ -21,7 +21,7 @@ class PostadresseTransformerTest {
         assertEquals(inbound.adresse2!!, actual.adresse2)
         assertEquals(inbound.adresse3!!, actual.adresse3)
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
-        assertEquals("NORGE", actual.land)
+        assertEquals(null, actual.land)
         assertEquals(null, actual.poststed)
     }
 

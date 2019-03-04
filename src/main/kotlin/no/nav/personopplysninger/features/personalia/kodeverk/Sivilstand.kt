@@ -18,17 +18,4 @@ enum class Sivilstand(val beskrivelse: String) {
     SKPA("Skilt partner"),
     UGIF("Ugift");
 
-    companion object {
-        private val log: Logger = LoggerFactory.getLogger(Sivilstand::class.java)
-
-        fun dekode(kode: String): String {
-            try {
-                return Sivilstand.valueOf(kode).beskrivelse
-            } catch (e: IllegalArgumentException) {
-                log.warn("Enum for kodeverk for sivilstand mangler gitt kode [" + kode + "]", e)
-                return "-"
-            }
-        }
-    }
-
 }

@@ -131,17 +131,4 @@ enum class Spraak(val beskrivelse: String) {
     ZA("Zhuang, Chuang"),
     ZH("Kinesisk");
 
-    companion object {
-        private val log: Logger = LoggerFactory.getLogger(Spraak::class.java)
-
-        fun dekode(kode: String): String {
-            try {
-                return Spraak.valueOf(kode).beskrivelse
-            } catch (e: IllegalArgumentException) {
-                log.warn("Enum for kodeverk for språk mangler gitt kode [" + kode + "]", e)
-                return "-"
-            }
-        }
-    }
-
 }

@@ -257,22 +257,4 @@ enum class Landkode(val beskrivelse: String) {
     ZMB("ZAMBIA"),
     ZWE("ZIMBABWE");
 
-    companion object {
-        private val log: Logger = LoggerFactory.getLogger(Landkode::class.java)
-        private val kodeForUkjent = Pair("???", "UOPPGITT/UKJENT")
-
-        fun dekode(kode: String): String {
-            if (kodeForUkjent.first.equals(kode)) {
-                return kodeForUkjent.second
-            } else {
-                try {
-                    return Landkode.valueOf(kode).beskrivelse
-                } catch (e: IllegalArgumentException) {
-                    log.warn("Enum for kodeverk for landkode mangler gitt kode [" + kode + "]", e)
-                    return "-"
-                }
-            }
-        }
-    }
-
 }
