@@ -60,6 +60,7 @@ class PersonaliaService @Autowired constructor(
         personaliaKodeverk.stasborgerskapterm = statsborgerskapterm
         personaliaKodeverk.statusterm = statusterm
 
+        log.warn("Spraak " + spraak);
         log.warn("kodeverkresult " + kjonnterm + " " + " " + landterm + " " + kommuneterm + " " + statusterm + " " + sivilstandterm + " " + statsborgerskapterm+ " " + postnummerterm)
 
         return PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)

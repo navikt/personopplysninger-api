@@ -30,12 +30,6 @@ class PersoninfoTransformerTest {
         assertEquals(inbound.kontonummer!!.nummer!!, actual.kontonr!!)
         assertTlfnr(inbound.telefon!!, actual.tlfnr!!)
         assertEquals("Nynorsk", actual.spraak!!)
-        assertEquals(null, actual.epostadr)
-        assertEquals("Fødselsregistrert", actual.personstatus)
-        assertEquals("SØR-KOREA", actual.statsborgerskap)
-        assertFoedested(inbound.foedtIKommune?.verdi?.let { Kommune.kommunenavn(it) }, "NORGE", actual.foedested!!)
-        assertEquals("Gift", actual.sivilstand)
-        assertEquals("Mann", actual.kjoenn)
         assertEquals(inbound.ident!!, actual.personident!!.verdi)
         assertEquals(inbound.identtype!!.verdi!!, actual.personident!!.type)
     }
