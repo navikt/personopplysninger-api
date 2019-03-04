@@ -33,7 +33,7 @@ class PersonaliaService @Autowired constructor(
         var personkjonn = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser
         var personkommune = kommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0].beskrivelser
         var personland = land.betydninger.getValue(inbound.foedtILand?.verdi)[0].beskrivelser
-        var personpostnummer = postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0].beskrivelser
+        var personpostnummer = postnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0].beskrivelser
         var personstatus = status.betydninger.getValue(inbound.status?.kode?.verdi)[0].beskrivelser
         var personsivilstand = sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0].beskrivelser
         var personspraak = spraak.betydninger.getValue(inbound.spraak?.kode?.verdi)[0].beskrivelser
