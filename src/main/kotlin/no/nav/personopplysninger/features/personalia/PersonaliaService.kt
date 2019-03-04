@@ -48,7 +48,7 @@ class PersonaliaService @Autowired constructor(
         val postnummerterm = personpostnummer?.getValue(kodeverkspraak)?.term
         val statusterm = personstatus?.getValue(kodeverkspraak)?.term
         val sivilstandterm = personsivilstand?.getValue(kodeverkspraak)?.term
-        val spraakterm = personspraak?.getValue(kodeverkspraak)?.term
+        val spraakterm = personspraak?.let {personspraak?.getValue(kodeverkspraak)?.term} ?: ""
         val statsborgerskapterm = personstatsborgerskap?.getValue(kodeverkspraak)?.term
 
         personaliaKodeverk.kjonnterm = kjonnterm
