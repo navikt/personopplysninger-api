@@ -31,7 +31,7 @@ public class KontaktinfoConsumer {
 
     private Invocation.Builder buildRequest(String[] fnr) {
         return client.target(endpoint)
-                .path("personer/kontaktinformasjon")
+                .path("v1/personer/kontaktinformasjon")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
