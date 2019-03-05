@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.features.personalia;
 
 import no.nav.log.MDCConstants;
-import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer;
 import no.nav.personopplysninger.features.personalia.exceptions.TpsProxyConsumerException;
 import no.nav.tps.person.Personinfo;
 import org.slf4j.Logger;
@@ -49,7 +48,6 @@ public class PersonConsumer {
 
     private Personinfo hentPersoninfo(Invocation.Builder request) {
         try (Response response = request.get()) {
-            log.warn("Personinfo " + response.toString());
             return readResponse(response);
         } catch (TpsProxyConsumerException e) {
             throw e;
@@ -72,7 +70,6 @@ public class PersonConsumer {
 
     private <T> T readEntity(Class<T> responsklasse, Response response) {
         try {
-            log.warn("Personinfo " + response.toString());
             return response.readEntity(responsklasse);
         } catch (ProcessingException e) {
             throw new TpsProxyConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + responsklasse.getName(), e);

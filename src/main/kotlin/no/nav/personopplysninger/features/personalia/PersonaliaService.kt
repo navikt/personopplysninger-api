@@ -18,8 +18,6 @@ class PersonaliaService @Autowired constructor(
 
     private val kodeverkspraak = "nb"
 
-    private val log = LoggerFactory.getLogger(PersonaliaService::class.java)
-
     private var personaliaKodeverk = PersonaliaKodeverk()
 
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
