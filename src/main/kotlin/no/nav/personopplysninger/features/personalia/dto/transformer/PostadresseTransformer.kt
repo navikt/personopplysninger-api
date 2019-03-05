@@ -1,9 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.Postadresse
-import no.nav.personopplysninger.features.personalia.kodeverk.Landkode
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import no.nav.personopplysninger.features.personalia.kodeverk.Postnummer
 
 
 object PostadresseTransformer {

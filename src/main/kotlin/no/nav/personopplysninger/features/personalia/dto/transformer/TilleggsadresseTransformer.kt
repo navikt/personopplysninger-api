@@ -2,7 +2,6 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tilleggsadresse
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import no.nav.personopplysninger.features.personalia.kodeverk.Postnummer
 
 object TilleggsadresseTransformer {
     fun toOutbound(inbound: no.nav.tps.person.Tilleggsadresse, kodeverk: PersonaliaKodeverk): Tilleggsadresse = Tilleggsadresse(
