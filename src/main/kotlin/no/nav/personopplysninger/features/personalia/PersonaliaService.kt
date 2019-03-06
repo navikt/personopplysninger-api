@@ -31,7 +31,7 @@ class PersonaliaService @Autowired constructor(
         val sivilstand = kodeverkConsumer.hentSivilstand(inbound.sivilstand?.kode?.verdi)
         val spraak = kodeverkConsumer.hentSpraak(inbound.spraak?.kode?.verdi)
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
-        log.warn("foedekommune " + foedtkommune + "land " + land + " " + bostedskommune)
+        log.warn("foedtIkommune " + inbound.foedtIKommune  + "land " + land + " " + bostedskommune)
         val personkjonn = kjonn?.let {kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser }
         val personfoedtkommune = foedtkommune?.let {foedtkommune.betydninger!!.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser}
         val personbostedskommune = bostedskommune?.let {bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser}
