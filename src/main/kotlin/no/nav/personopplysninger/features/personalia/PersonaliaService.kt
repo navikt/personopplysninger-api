@@ -17,7 +17,7 @@ class PersonaliaService @Autowired constructor(
 ) {
 
     private val kodeverkspraak = "nb"
-
+    private val log = LoggerFactory.getLogger(this::class.java)
     private var personaliaKodeverk = PersonaliaKodeverk()
 
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
@@ -31,16 +31,17 @@ class PersonaliaService @Autowired constructor(
         val sivilstand = kodeverkConsumer.hentSivilstand(inbound.sivilstand?.kode?.verdi)
         val spraak = kodeverkConsumer.hentSpraak(inbound.spraak?.kode?.verdi)
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
-
+        log.warn("foedekommune " + foedtkommune + "land " + land + " " + bostedskommune)
         val personkjonn = kjonn?.let {kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser }
-        val personfoedtkommune = foedtkommune?.let {foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser}
-        val personbostedskommune = bostedskommune?.let {foedtkommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser}
+        val personfoedtkommune = foedtkommune?.let {foedtkommune.betydninger!!.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser}
+        val personbostedskommune = bostedskommune?.let {bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser}
         val personland = land?.let {land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser}
         val personpostnummer = postnummer?.let {postnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser}
         val personstatus = status?.let {status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser}
         val personsivilstand = sivilstand?.let {sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0]?.beskrivelser}
-        val personspraak = inbound.spraak?.let {spraak?.betydninger!!.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser}
+        val personspraak = inbound.spraak?.let {spraak?.betydninger!!.getValue(inbound.spraak.kode?.verdi)[0]?.beskrivelser}
         val personstatsborgerskap = statsborgerskap?.let {statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0]?.beskrivelser}
+
 
         val kjonnterm = personkjonn?.getValue(kodeverkspraak)?.term
         val foedekommuneterm = personfoedtkommune?.getValue(kodeverkspraak)?.term
