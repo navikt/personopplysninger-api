@@ -39,7 +39,7 @@ class PersonaliaService @Autowired constructor(
         val personbostedskommune = bostedskommune?.let {bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser}
         val personland = land?.let {land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser}
         val personbostedsnummer = postbostedsnummer?.let {postnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser}
-        val personpostnummer = postnummer?.let {postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0]?.beskrivelser}
+        val personpostnummer = inbound.adresseinfo?.postadresse?.postnummer?.let {postnummer.betydninger.getValue(inbound.adresseinfo.postadresse.postnummer)[0]?.beskrivelser}
         val persontilleggpostnummer =posttilleggsnummer?.let {postnummer.betydninger.getValue(inbound.adresseinfo?.tilleggsadresse?.postnummer)[0]?.beskrivelser}
         val personstatus = status?.let {status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser}
         val personsivilstand = sivilstand?.let {sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0]?.beskrivelser}
