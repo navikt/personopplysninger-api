@@ -12,7 +12,7 @@ object TilleggsadresseTransformer {
             datoTilOgMed = inbound.datoTilOgMed,
             bydel = inbound.bydel,
             postnummer = inbound.postnummer,
-            poststed = inbound.postnummer?.let { kodeverk.postnummerterm },
+            poststed = inbound.postnummer?.let { kodeverk.bostedpostnummerterm },
             postboksnummer = inbound.postboksnummer,
             postboksanlegg = inbound.postboksanlegg,
             kommunenummer = inbound.kommunenummer,
