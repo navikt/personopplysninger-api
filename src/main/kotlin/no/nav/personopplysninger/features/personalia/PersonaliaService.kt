@@ -35,7 +35,7 @@ class PersonaliaService @Autowired constructor(
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
         log.error("foedIkommune " + inbound.foedtIKommune?.verdi  + "land " + land + " " + bostedskommune)
         val personkjonn = kjonn?.let {kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser }
-        val personfoedtkommune = inbound.foedtIKommune?.verdi.let {foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser}
+        val personfoedtkommune = inbound.foedtIKommune?.let {foedtkommune.betydninger.getValue(inbound.foedtIKommune.verdi)[0]?.beskrivelser}
         val personbostedskommune = bostedskommune?.let {bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser}
         val personland = land?.let {land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser}
         val personbostedsnummer = postbostedsnummer?.let {postnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser}
