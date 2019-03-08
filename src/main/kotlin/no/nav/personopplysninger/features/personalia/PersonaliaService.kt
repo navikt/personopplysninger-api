@@ -33,47 +33,17 @@ class PersonaliaService @Autowired constructor(
         val spraak = kodeverkConsumer.hentSpraak(inbound.spraak?.kode?.verdi)
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
 
-        log.error("foedIkommuneisNullOrBlank " + inbound.foedtIKommune?.verdi.isNullOrBlank())
-        log.error("foedIkommunevalue " + inbound.foedtIKommune?.verdi)
-        log.error("postnummervalue " + inbound.adresseinfo?.postadresse?.postnummer)
-        log.error("postnummerisNotNull " + !inbound.adresseinfo?.postadresse?.postnummer.isNullOrEmpty())
-
-        val personpostnummer = (!inbound.adresseinfo?.postadresse?.postnummer.isNullOrEmpty()).let {log.warn("postnummertestx " + inbound.adresseinfo?.postadresse?.postnummer.isNullOrEmpty())}
-
-        val personkjonn = (!inbound.kjonn.isNullOrBlank()).let {kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser}
-        val personfoedtkommune = (!inbound.foedtIKommune?.verdi.isNullOrBlank()).let {foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser}
-        val personbostedskommune = (!inbound.adresseinfo?.boadresse?.kommune.isNullOrBlank()).let {bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser}
-        val personland = (!inbound.foedtILand?.verdi.isNullOrBlank()).let {land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser}
-        val personbostedsnummer = (!inbound.adresseinfo?.boadresse?.postnummer.isNullOrBlank()).let {postbostedsnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser}
-        val persontilleggpostnummer = (!inbound.adresseinfo?.tilleggsadresse?.postnummer.isNullOrBlank()).let {posttilleggsnummer.betydninger.getValue(inbound.adresseinfo?.tilleggsadresse?.postnummer)[0]?.beskrivelser}
-        val personstatus = (!inbound.status?.kode?.verdi.isNullOrBlank()).let {status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser}
-        val personsivilstand = (!inbound.sivilstand?.kode?.verdi.isNullOrBlank()).let {sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0]?.beskrivelser}
-        val personspraak = (!inbound.spraak?.kode?.verdi.isNullOrBlank()).let {spraak?.betydninger!!.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser}
-        val personstatsborgerskap = (!inbound.statsborgerskap?.kode?.verdi.isNullOrBlank()).let {statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0]?.beskrivelser}
-
-        val kjonnterm = personkjonn?.getValue(kodeverkspraak)?.term
-        val foedekommuneterm = personfoedtkommune?.getValue(kodeverkspraak)?.term
-        val bostedskommuneterm = personbostedskommune?.getValue(kodeverkspraak)?.term
-        val landterm = personland?.getValue(kodeverkspraak)?.term
-        val postnummerterm =  personland?.getValue(kodeverkspraak)?.term
-        val bostedpostnummerterm = personbostedsnummer?.getValue(kodeverkspraak)?.term
-        val tilleggsadresseterm = persontilleggpostnummer?.getValue(kodeverkspraak)?.term
-        val statusterm = personstatus?.getValue(kodeverkspraak)?.term
-        val sivilstandterm = personsivilstand?.getValue(kodeverkspraak)?.term
-        val spraakterm = personspraak?.let {personspraak.getValue(kodeverkspraak)?.term}
-        val statsborgerskapterm = personstatsborgerskap?.getValue(kodeverkspraak)?.term
-
-        personaliaKodeverk.kjonnterm = kjonnterm
-        personaliaKodeverk.foedekommuneterm = foedekommuneterm
-        personaliaKodeverk.bostedskommuneterm = bostedskommuneterm
-        personaliaKodeverk.landterm = landterm
-        personaliaKodeverk.postnummerterm = postnummerterm
-        personaliaKodeverk.bostedpostnummerterm = bostedpostnummerterm
-        personaliaKodeverk.tilleggsadresseterm = tilleggsadresseterm
-        personaliaKodeverk.sivilstandterm = sivilstandterm
-        personaliaKodeverk.spraakterm = spraakterm
-        personaliaKodeverk.stasborgerskapterm = statsborgerskapterm
-        personaliaKodeverk.statusterm = statusterm
+        if (!inbound.kjonn.isNullOrEmpty()) { personaliaKodeverk.kjonnterm = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
+        if (!inbound.foedtILand?.verdi.isNullOrEmpty()) { personaliaKodeverk.landterm = land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
+        if (!inbound.foedtIKommune?.verdi.isNullOrEmpty())  { personaliaKodeverk.foedekommuneterm = foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
+        if (!inbound.adresseinfo?.boadresse?.kommune.isNullOrEmpty())  { personaliaKodeverk.bostedskommuneterm = bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
+        if (!inbound.adresseinfo?.boadresse?.postnummer.isNullOrEmpty())  { personaliaKodeverk.bostedpostnummerterm = postbostedsnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
+        if (!inbound.adresseinfo?.postadresse?.postnummer.isNullOrEmpty())  { personaliaKodeverk.postnummerterm = postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
+        if (!inbound.adresseinfo?.tilleggsadresse?.postnummer.isNullOrEmpty()) {personaliaKodeverk.tilleggsadresseterm = posttilleggsnummer.betydninger.getValue(inbound.adresseinfo?.tilleggsadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
+        if (!inbound.status?.kode?.verdi.isNullOrEmpty())  {  personaliaKodeverk.statusterm = status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
+        if (!inbound.sivilstand?.kode?.verdi.isNullOrEmpty())  { personaliaKodeverk.sivilstandterm = sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
+        if (!inbound.spraak?.kode?.verdi.isNullOrEmpty())  { personaliaKodeverk.spraakterm = spraak?.betydninger!!.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
+        if (!inbound.statsborgerskap?.kode?.verdi.isNullOrEmpty()) { personaliaKodeverk.stasborgerskapterm = statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
 
         return PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
     }
