@@ -35,16 +35,17 @@ class PersonaliaService @Autowired constructor(
         val spraak = kodeverkConsumer.hentSpraak(inbound.spraak?.kode?.verdi)
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
 
-        log.error("foedIkommune " + inbound.foedtIKommune?.verdi.isNullOrBlank())
-        log.error("foedIkommune " + inbound.foedtIKommune?.verdi)
-        log.error("postnummer " + inbound.adresseinfo?.postadresse?.postnummer.isNullOrBlank())
-        log.error("postnummer " + inbound.adresseinfo?.postadresse?.postnummer)
+        log.error("foedIkommuneisNullOrBlank " + inbound.foedtIKommune?.verdi.isNullOrBlank())
+        log.error("foedIkommunevalue " + inbound.foedtIKommune?.verdi)
+        log.error("postnummervalue " + inbound.adresseinfo?.postadresse?.postnummer)
+        log.error("postnummerisNull " + inbound.adresseinfo?.postadresse?.postnummer.isNullOrBlank())
+
 
         val personkjonn = (!inbound.kjonn.isNullOrBlank()).let {kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser }
         val personfoedtkommune = (!inbound.foedtIKommune?.verdi.isNullOrBlank()).let {foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser}
         val personbostedskommune = (!inbound.adresseinfo?.boadresse?.kommune.isNullOrBlank()).let {bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser}
         val personland = (!inbound.foedtILand?.verdi.isNullOrBlank()).let {land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser}
-        val personpostnummer = ((inbound.adresseinfo?.postadresse?.postnummer.isNullOrBlank())).let {log.warn(" ttest " + inbound.adresseinfo?.postadresse?.postnummer );postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0]?.beskrivelser}
+        val personpostnummer = (!inbound.adresseinfo?.postadresse?.postnummer.isNullOrBlank()).let {postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0]?.beskrivelser}
         val personbostedsnummer = (!inbound.adresseinfo?.boadresse?.postnummer.isNullOrBlank()).let {postbostedsnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser}
         val persontilleggpostnummer = (!inbound.adresseinfo?.tilleggsadresse?.postnummer.isNullOrBlank()).let {posttilleggsnummer.betydninger.getValue(inbound.adresseinfo?.tilleggsadresse?.postnummer)[0]?.beskrivelser}
         val personstatus = (!inbound.status?.kode?.verdi.isNullOrBlank()).let {status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser}
