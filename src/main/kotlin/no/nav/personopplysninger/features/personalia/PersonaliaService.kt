@@ -16,6 +16,7 @@ class PersonaliaService @Autowired constructor(
 ) {
 
     private val kodeverkspraak = "nb"
+    private val nullstring = "0000"
     private val log = LoggerFactory.getLogger(PersonaliaService::class.java)
     private var personaliaKodeverk = PersonaliaKodeverk()
 
@@ -35,7 +36,7 @@ class PersonaliaService @Autowired constructor(
 
         if (!inbound.kjonn.isNullOrEmpty()) { personaliaKodeverk.kjonnterm = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
         if (!inbound.foedtILand?.verdi.isNullOrEmpty()) { personaliaKodeverk.landterm = land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
-        if (!inbound.foedtIKommune?.verdi.isNullOrEmpty())  { personaliaKodeverk.foedekommuneterm = foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
+        if (!inbound.foedtIKommune?.verdi.isNullOrEmpty() && !nullstring.equals(inbound.foedtIKommune?.verdi))  { personaliaKodeverk.foedekommuneterm = foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
         if (!inbound.adresseinfo?.boadresse?.kommune.isNullOrEmpty())  { personaliaKodeverk.bostedskommuneterm = bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
         if (!inbound.adresseinfo?.boadresse?.postnummer.isNullOrEmpty())  { personaliaKodeverk.bostedpostnummerterm = postbostedsnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
         if (!inbound.adresseinfo?.postadresse?.postnummer.isNullOrEmpty())  { personaliaKodeverk.postnummerterm = postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term }
