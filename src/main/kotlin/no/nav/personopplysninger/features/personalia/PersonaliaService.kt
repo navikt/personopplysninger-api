@@ -45,7 +45,7 @@ class PersonaliaService @Autowired constructor(
         val personfoedtkommune = (!inbound.foedtIKommune?.verdi.isNullOrBlank()).let {foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser}
         val personbostedskommune = (!inbound.adresseinfo?.boadresse?.kommune.isNullOrBlank()).let {bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser}
         val personland = (!inbound.foedtILand?.verdi.isNullOrBlank()).let {land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser}
-        val personpostnummer = (!inbound.adresseinfo?.postadresse?.postnummer.isNullOrBlank()).let {postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0]?.beskrivelser}
+        val personpostnummer = (!inbound.adresseinfo?.postadresse?.postnummer.isNullOrBlank()).let {log.warn("postnummertest " +inbound.adresseinfo?.postadresse?.postnummer.isNullOrBlank() )}
         val personbostedsnummer = (!inbound.adresseinfo?.boadresse?.postnummer.isNullOrBlank()).let {postbostedsnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser}
         val persontilleggpostnummer = (!inbound.adresseinfo?.tilleggsadresse?.postnummer.isNullOrBlank()).let {posttilleggsnummer.betydninger.getValue(inbound.adresseinfo?.tilleggsadresse?.postnummer)[0]?.beskrivelser}
         val personstatus = (!inbound.status?.kode?.verdi.isNullOrBlank()).let {status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser}
@@ -57,7 +57,7 @@ class PersonaliaService @Autowired constructor(
         val foedekommuneterm = personfoedtkommune?.getValue(kodeverkspraak)?.term
         val bostedskommuneterm = personbostedskommune?.getValue(kodeverkspraak)?.term
         val landterm = personland?.getValue(kodeverkspraak)?.term
-        val postnummerterm = personpostnummer?.getValue(kodeverkspraak)?.term
+        val postnummerterm =  personland?.getValue(kodeverkspraak)?.term
         val bostedpostnummerterm = personbostedsnummer?.getValue(kodeverkspraak)?.term
         val tilleggsadresseterm = persontilleggpostnummer?.getValue(kodeverkspraak)?.term
         val statusterm = personstatus?.getValue(kodeverkspraak)?.term
