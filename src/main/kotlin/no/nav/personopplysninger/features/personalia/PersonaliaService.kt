@@ -37,6 +37,8 @@ class PersonaliaService @Autowired constructor(
 
         log.error("foedIkommune " + inbound.foedtIKommune?.verdi.isNullOrBlank())
         log.error("foedIkommune " + inbound.foedtIKommune?.verdi)
+        log.error("postnummer " + inbound.adresseinfo?.postadresse?.postnummer.isNullOrBlank())
+        log.error("postnummer " + inbound.adresseinfo?.postadresse?.postnummer)
         val personkjonn = (!inbound.kjonn.isNullOrBlank()).let {kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser }
         val personfoedtkommune = (inbound.foedtIKommune?.verdi.isNullOrBlank()).let {foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser}
         val personbostedskommune = (inbound.adresseinfo?.boadresse?.kommune.isNullOrBlank()).let {bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser}
