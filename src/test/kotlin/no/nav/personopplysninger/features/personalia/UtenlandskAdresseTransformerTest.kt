@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.UtenlandskAdresseTransformer
+import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -14,21 +15,21 @@ class UtenlandskAdresseTransformerTest {
     fun gittUtenlandskAdresse_skalFaaUtenlandskAdresse() {
         val inbound = UtenlandskAdresseObjectMother.utenlandskTestadresse()
 
-        val actual = UtenlandskAdresseTransformer.toOutbound(inbound)
+        val actual = UtenlandskAdresseTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertEquals(inbound.adresse1!!, actual.adresse1)
         assertEquals(inbound.adresse2!!, actual.adresse2)
         assertEquals(inbound.adresse3!!, actual.adresse3)
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
         assertEquals(inbound.datoTilOgMed!!, actual.datoTilOgMed)
-        assertEquals("KAPP VERDE", actual.land)
+        assertEquals(null, actual.land)
     }
 
     @Test
     fun gittNull_skalFaaNull() {
         val inbound = UtenlandskAdresseObjectMother.utenslandskAdresseNullObject()
 
-        val actual = UtenlandskAdresseTransformer.toOutbound(inbound)
+        val actual = UtenlandskAdresseTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertNull(actual.adresse1)
         assertNull(actual.adresse2)

@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.PostadresseTransformer
+import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -11,25 +12,24 @@ import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 class PostadresseTransformerTest {
 
     @Test
-    fun gitPostadresse_skalFaaPostadresse() {
+    fun gittPostadresse_skalFaaPostadresse() {
         val inbound = PostadresseObjectMother.testPostadresse()
 
-        val actual = PostadresseTransformer.toOutbound(inbound)
+        val actual = PostadresseTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertEquals(inbound.adresse1!!, actual.adresse1)
         assertEquals(inbound.adresse2!!, actual.adresse2)
         assertEquals(inbound.adresse3!!, actual.adresse3)
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
-        assertEquals("NORGE", actual.land)
-        assertEquals(inbound.postnummer!!, actual.postnummer)
-        assertEquals("VANG I VALDRES", actual.poststed)
+        assertEquals(null, actual.land)
+        assertEquals(null, actual.poststed)
     }
 
     @Test
     fun gittNull_skalFaaNull() {
         val inbound = PostadresseObjectMother.postadresseNullObject()
 
-        val actual = PostadresseTransformer.toOutbound(inbound)
+        val actual = PostadresseTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertNull(actual.adresse1)
         assertNull(actual.adresse2)
