@@ -27,14 +27,8 @@ class PersoninfoTransformerTest {
         assertEtternavn(inbound.navn!!, actual.etternavn!!)
         assertEquals(inbound.kontonummer!!.nummer!!, actual.kontonr!!)
         assertTlfnr(inbound.telefon!!, actual.tlfnr!!)
-        //   assertEquals("Nynorsk", actual.spraak!!)
         assertEquals(inbound.ident!!, actual.personident!!.verdi)
         assertEquals(inbound.identtype!!.verdi!!, actual.personident!!.type)
-    }
-
-    private fun assertFoedested(expectedKommune: String?, expectedLand: String, actualFoedested: String) {
-        val expected = expectedKommune + ", " + expectedLand
-        assertEquals(expected, actualFoedested, "Fødested skal ha formen '<kommunenavn>, <landnavn>' (uten fnutter)")
     }
 
     private fun assertTlfnr(expected: Telefoninfo, actual: Tlfnr) {
