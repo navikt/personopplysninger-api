@@ -1,7 +1,8 @@
 package no.nav.personopplysninger.features.personalia
 
-import no.nav.dkif.kontaktinformasjon.DigitalKontaktinfoBolk
+import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAdresser
+import no.nav.personopplysninger.features.personalia.dto.transformer.KontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -18,7 +19,8 @@ class PersonaliaService @Autowired constructor(
         return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }
 
-    fun hentKontaktinformasjon(fodselsnr: Array<String>): DigitalKontaktinfoBolk {
-        return kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
+    fun hentKontaktinformasjon(fodselsnr: Array<String>): Kontaktinformasjon {
+        val inbound = kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
+        return KontaktinformasjonTransformer.toOutbound(inbound)
     }
 }

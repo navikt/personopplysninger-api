@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response
 private const val claimsIssuer = "selvbetjening"
 
 @Component
+@Path("/")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
 class PersonaliaResource @Autowired constructor(private var personaliaService: PersonaliaService) {
 

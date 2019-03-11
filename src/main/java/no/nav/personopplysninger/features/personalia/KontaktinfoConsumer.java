@@ -33,7 +33,7 @@ public class KontaktinfoConsumer {
         return client.target(endpoint)
                 .path("v1/personer/kontaktinformasjon")
                 .request()
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CORRELATION_ID))
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header("Nav-Personidenter", fnr);
     }
