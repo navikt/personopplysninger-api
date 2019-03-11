@@ -3,7 +3,9 @@ package no.nav.personopplysninger.features.personalia
 import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.dkif.kontaktinformasjon.DigitalKontaktinfoBolk
+import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAdresser
+import no.nav.personopplysninger.features.personalia.dto.transformer.KontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.tps.person.Personinfo
@@ -116,7 +118,8 @@ class PersonaliaService @Autowired constructor(
         personaliaKodeverk.kjonnterm = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
     }
 
-    fun hentKontaktinformasjon(fodselsnr: Array<String>): DigitalKontaktinfoBolk {
-        return kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
+    fun hentKontaktinformasjon(fodselsnr: Array<String>): Kontaktinformasjon {
+        val inbound = kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
+        return KontaktinformasjonTransformer.toOutbound(inbound)
     }
 }
