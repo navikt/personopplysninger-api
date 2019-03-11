@@ -13,13 +13,13 @@ import javax.ws.rs.core.Response
 private const val claimsIssuer = "selvbetjening"
 
 @Component
-@Path("/personalia")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
 class PersonaliaResource @Autowired constructor(private var personaliaService: PersonaliaService) {
 
     @GET
+    @Path("/personalia")
     @Produces(MediaType.APPLICATION_JSON)
-    fun hentPersonalia(): Response {
+    fun hentPersoninfo(): Response {
         val fodselsnr = hentFnrFraToken()
         val personaliaOgAdresser = personaliaService.hentPersoninfo(fodselsnr)
         return Response
