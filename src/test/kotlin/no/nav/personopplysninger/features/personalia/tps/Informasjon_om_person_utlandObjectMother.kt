@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.personalia
+package no.nav.personopplysninger.features.personalia.tps
 
 import no.nav.tps.person.Informasjon_om_person_utland
 import no.nav.tps.person.Kode

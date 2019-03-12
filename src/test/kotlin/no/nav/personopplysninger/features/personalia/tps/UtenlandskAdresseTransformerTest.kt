@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.personalia
+package no.nav.personopplysninger.features.personalia.tps
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.UtenlandskAdresseTransformer
 import org.junit.jupiter.api.Assertions.assertNull

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.personalia
+package no.nav.personopplysninger.features.personalia.tps
 
 import no.nav.personopplysninger.features.personalia.kodeverk.Landkode
 import no.nav.tps.person.Boadresse
