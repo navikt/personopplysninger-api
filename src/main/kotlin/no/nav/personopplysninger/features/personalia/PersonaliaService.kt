@@ -121,10 +121,6 @@ class PersonaliaService @Autowired constructor(
 
     fun hentKontaktinformasjon(fodselsnr: String): Kontaktinformasjon {
         val inbound = kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
-        return KontaktinformasjonTransformer.toOutbound(inbound)
-    }
-
-    fun hentKontaktinformasjon2(fodselsnr: String): DigitalKontaktinfoBolk {
-        return kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
+        return KontaktinformasjonTransformer.toOutbound(inbound, fodselsnr)
     }
 }
