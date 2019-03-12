@@ -24,12 +24,12 @@ public class KontaktinfoConsumer {
         this.endpoint = endpoint;
     }
 
-    public DigitalKontaktinfoBolk hentKontaktinformasjon(String[] fnr) {
+    public DigitalKontaktinfoBolk hentKontaktinformasjon(String fnr) {
         Invocation.Builder request = buildRequest(fnr);
         return hentKontaktinformasjon(request);
     }
 
-    private Invocation.Builder buildRequest(String[] fnr) {
+    private Invocation.Builder buildRequest(String fnr) {
         return client.target(endpoint)
                 .path("v1/personer/kontaktinformasjon")
                 .request()
