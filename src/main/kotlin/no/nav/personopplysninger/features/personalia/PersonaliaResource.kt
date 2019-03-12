@@ -33,7 +33,7 @@ class PersonaliaResource @Autowired constructor(private var personaliaService: P
     @Produces(MediaType.APPLICATION_JSON)
     fun hentKontaktinformasjon(): Response {
         val fodselsnr = hentFnrFraToken()
-        val kontakinformasjon = personaliaService.hentKontaktinformasjon(arrayOf(fodselsnr))
+        val kontakinformasjon = personaliaService.hentKontaktinformasjon(fodselsnr)
         return Response
                 .ok(kontakinformasjon)
                 .build()
@@ -44,7 +44,7 @@ class PersonaliaResource @Autowired constructor(private var personaliaService: P
     @Produces(MediaType.APPLICATION_JSON)
     fun hentKontaktinformasjon2(): Response {
         val fodselsnr = hentFnrFraToken()
-        val kontakinformasjon = personaliaService.hentKontaktinformasjon2(arrayOf(fodselsnr))
+        val kontakinformasjon = personaliaService.hentKontaktinformasjon2(fodselsnr)
         return Response
                 .ok(kontakinformasjon)
                 .build()
