@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
+import no.nav.dkif.kontaktinformasjon.DigitalKontaktinfoBolk
 import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.dkif.kontaktinformasjon.DigitalKontaktinfoBolk
@@ -121,5 +122,9 @@ class PersonaliaService @Autowired constructor(
     fun hentKontaktinformasjon(fodselsnr: Array<String>): Kontaktinformasjon {
         val inbound = kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
         return KontaktinformasjonTransformer.toOutbound(inbound)
+    }
+
+    fun hentKontaktinformasjon2(fodselsnr: Array<String>): DigitalKontaktinfoBolk {
+        return kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
     }
 }

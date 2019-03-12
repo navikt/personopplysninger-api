@@ -39,6 +39,17 @@ class PersonaliaResource @Autowired constructor(private var personaliaService: P
                 .build()
     }
 
+    @GET
+    @Path("/kontaktinformasjon-test")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun hentKontaktinformasjon2(): Response {
+        val fodselsnr = hentFnrFraToken()
+        val kontakinformasjon = personaliaService.hentKontaktinformasjon2(arrayOf(fodselsnr))
+        return Response
+                .ok(kontakinformasjon)
+                .build()
+    }
+
 
     private fun hentFnrFraToken(): String {
         val context = OidcRequestContext.getHolder().oidcValidationContext
