@@ -83,7 +83,7 @@ class PersonaliaService @Autowired constructor(
     }
 
     private fun getTilleggsadresseTerm(posttilleggsnummer: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.tilleggsadresseterm = posttilleggsnummer.betydninger.getValue(inbound.adresseinfo?.tilleggsadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        personaliaKodeverk.tilleggsadressepostnummerterm = posttilleggsnummer.betydninger.getValue(inbound.adresseinfo?.tilleggsadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
     }
 
     private fun getStatusTerm(status: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
