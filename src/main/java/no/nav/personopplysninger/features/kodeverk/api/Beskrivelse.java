@@ -17,7 +17,4 @@ public class Beskrivelse {
         return term;
     }
 
-    public String getTekst() {
-        return tekst;
-    }
 }
