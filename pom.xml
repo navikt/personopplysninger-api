@@ -38,6 +38,7 @@
                 <version>${swagger-codegen-maven-plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>tps-swagger</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -51,7 +52,26 @@
                             <configOptions>
                                 <java8>true</java8>
                                 <useBeanValidation>false</useBeanValidation>
-                                <sourceFolder>person</sourceFolder>
+                                <sourceFolder>personalia</sourceFolder>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>dkif-swagger</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/dkif/kontaktinformasjon-swagger.json</inputSpec>
+                            <language>kotlin-client</language>
+                            <generateApis>false</generateApis>
+                            <modelPackage>no.nav.dkif.kontaktinformasjon</modelPackage>
+                            <modelNameSuffix>Dto</modelNameSuffix>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <configOptions>
+                                <java8>true</java8>
+                                <useBeanValidation>false</useBeanValidation>
+                                <sourceFolder>personalia</sourceFolder>
                             </configOptions>
                         </configuration>
                     </execution>
@@ -72,7 +92,7 @@
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/main/java</sourceDir>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
-                                <sourceDir>${project.build.directory}/generated-sources/swagger/person</sourceDir>
+                                <sourceDir>${project.build.directory}/generated-sources/swagger/personalia</sourceDir>
                             </sourceDirs>
                         </configuration>
                     </execution>
