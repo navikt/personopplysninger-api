@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.personalia.tps
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.Adresser
 import no.nav.personopplysninger.features.personalia.dto.transformer.AdresseinfoTransformer
+import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -15,7 +16,7 @@ class AdresseinfoTransformerTest {
     fun gittAdresse_skalFaaAdresse() {
         val inbound = AdresseinfoObjectMother.withValuesInAllFields
 
-        val actual: Adresser = AdresseinfoTransformer.toOutbound(inbound)
+        val actual: Adresser = AdresseinfoTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertNotNull(actual.boadresse)
         assertNotNull(actual.geografiskTilknytning)
@@ -29,7 +30,7 @@ class AdresseinfoTransformerTest {
     fun gittNull_skalFaaNull() {
         val inbound = AdresseinfoObjectMother.adresseinfoNullObject
 
-        val actual = AdresseinfoTransformer.toOutbound(inbound)
+        val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertNull(actual.boadresse)
         assertNull(actual.geografiskTilknytning)

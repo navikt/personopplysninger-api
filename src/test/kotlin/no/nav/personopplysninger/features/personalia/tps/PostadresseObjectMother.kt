@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.features.personalia.tps
 
-import no.nav.personopplysninger.features.personalia.kodeverk.Landkode
 import no.nav.tps.person.Postadresse
 
 object PostadresseObjectMother {
@@ -10,7 +9,7 @@ object PostadresseObjectMother {
                 adresse2 = "Adresselinje 2",
                 adresse3 = "adresselinje 3",
                 datoFraOgMed = "dummy dato",
-                land = Landkode.NOR.name,
+                land ="NOR",
                 postnummer = "2974"
         )
     }

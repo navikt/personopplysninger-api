@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.features.personalia.tps
 
-import no.nav.personopplysninger.features.personalia.kodeverk.Landkode
 import no.nav.tps.person.UtenlandskAdresse
 
 object UtenlandskAdresseObjectMother {
@@ -11,7 +10,7 @@ object UtenlandskAdresseObjectMother {
                 adresse3 = "adresselinje 3",
                 datoFraOgMed = "dummy dato",
                 datoTilOgMed = "dummy dato",
-                land = Landkode.CPV.name
+                land = "CPV"
         )
     }
 

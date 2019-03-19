@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia.tps
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.TilleggsadresseTransformer
+import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
@@ -14,7 +15,7 @@ class TilleggsadresseTransformerTest {
     fun gittTilleggsadresse_skalFaaBoTilleggsadresse() {
         val inbound = TilleggsadresseObjectMother.withValuesInAllFields
 
-        val actual = TilleggsadresseTransformer.toOutbound(inbound)
+        val actual = TilleggsadresseTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertEquals(inbound.adresse1!!, actual.adresse1)
         assertEquals(inbound.adresse2!!, actual.adresse2)
@@ -29,7 +30,7 @@ class TilleggsadresseTransformerTest {
         assertEquals(inbound.kommunenummer!!, actual.kommunenummer)
         assertEquals(inbound.postboksanlegg!!, actual.postboksanlegg)
         assertEquals(inbound.postnummer!!, actual.postnummer)
-        assertEquals("VANG I VALDRES", actual.poststed)
+        assertEquals(null, actual.poststed)
     }
 
 
@@ -37,7 +38,7 @@ class TilleggsadresseTransformerTest {
     fun gittNull_skalFaaNull() {
         val inbound = TilleggsadresseObjectMother.nullObject
 
-        val actual = TilleggsadresseTransformer.toOutbound(inbound)
+        val actual = TilleggsadresseTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertNull(actual.adresse1)
         assertNull(actual.adresse2)

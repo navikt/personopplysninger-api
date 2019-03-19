@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia.tps
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.BoadresseTransformer
+import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -14,17 +15,17 @@ class BoadresseTransformerTest {
     fun gittBoadresse_skalFaaBoadresse() {
         val inbound = BoadresseObjectMother.vardeveien7()
 
-        val actual = BoadresseTransformer.toOutbound(inbound)
+        val actual = BoadresseTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertEquals(inbound.adresse!!, actual.adresse)
         assertEquals(inbound.adressetillegg!!, actual.adressetillegg)
         assertEquals(inbound.bydel!!, actual.bydel)
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
-        assertEquals("Gjerstad", actual.kommune)
-        assertEquals("NORGE", actual.land)
+        assertEquals(null, actual.kommune)
+        assertEquals(null, actual.land)
         assertNotNull(actual.matrikkeladresse)
         assertEquals(inbound.postnummer!!, actual.postnummer)
-        Assertions.assertEquals("VANG I VALDRES", actual.poststed)
+        Assertions.assertEquals(null, actual.poststed)
         assertNotNull(actual.veiadresse)
     }
 
@@ -32,7 +33,7 @@ class BoadresseTransformerTest {
     fun gittNull_skalFaaNull() {
         val inbound = BoadresseObjectMother.boadresseNullObject()
 
-        val actual = BoadresseTransformer.toOutbound(inbound)
+        val actual = BoadresseTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertNull(actual.adresse)
         assertNull(actual.adressetillegg)
