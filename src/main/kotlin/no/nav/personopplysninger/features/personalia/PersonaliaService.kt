@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
+import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon
 import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
 
@@ -117,6 +118,16 @@ class PersonaliaService @Autowired constructor(
 
     private fun getKjonnTerm(kjonn: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
         personaliaKodeverk.kjonnterm = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+    }
+
+    fun hentKontaktinformasjon(fodselsnr: String): Kontaktinformasjon {
+        val inbound = kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
+        return KontaktinformasjonTransformer.toOutbound(inbound, fodselsnr)
+    }
+}
+
+        // TODO Are IN-702: Oppslag i kodeverkstjeneste
+        return PersonaliaOgAdresserTransformer.toOutbound(inbound)
     }
 
     fun hentKontaktinformasjon(fodselsnr: String): Kontaktinformasjon {
