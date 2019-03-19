@@ -10,11 +10,15 @@ public class Beskrivelse {
     @ApiModelProperty(value = "En kort versjon av beskrivelsen, og passer derfor godt til fremvisning i GUI-elementer.", required = true)
     private String term;
 
-    @ApiModelProperty(value = "En mer utfyllende versjon av beskrivelsen, og derfor passer denne verdien bedre som ledetekster der antall tegn ikke er et like stort problem. Ikke alle beskrivelser har en utfyllende versjon, og i de tilfellene vil kortversjonen gå igjen i dette feltet.")
+    @ApiModelProperty(value = "En mer utfyllende versjon av beskrivelsen, og derfor passer denne verdien bedre som ledetekster der antall tegn ikke er et like stort problem. Ikke alle beskrivelser har en utfyllende versjon, og i de tilfellene vil kortversjonen gå igjen i dette feltet.", required = true)
     private String tekst;
 
     public String getTerm() {
         return term;
+    }
+
+    public String getTekst() {
+        return tekst;
     }
 
 }
