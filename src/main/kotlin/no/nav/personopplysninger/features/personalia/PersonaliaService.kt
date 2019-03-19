@@ -37,85 +37,91 @@ class PersonaliaService @Autowired constructor(
         val spraak = kodeverkConsumer.hentSpraak(inbound.spraak?.kode?.verdi)
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
 
-        if (!inbound.kjonn.isNullOrEmpty()) {
-            getKjonnTerm(kjonn, inbound)
-        }
-        if (!inbound.foedtILand?.verdi.isNullOrEmpty()) {
-            getLandTerm(land, inbound)
-        }
-        if (!inbound.foedtIKommune?.verdi.isNullOrEmpty() && !nullstring.equals(inbound.foedtIKommune?.verdi)) {
-            getKommuneTerm(foedtkommune, inbound)
-        }
-        if (!inbound.adresseinfo?.boadresse?.kommune.isNullOrEmpty()) {
-            getBostedskommuneTerm(bostedskommune, inbound)
-        }
-        if (!inbound.adresseinfo?.boadresse?.postnummer.isNullOrEmpty()) {
-            getBostedpostnummerTerm(postbostedsnummer, inbound)
-        }
-        if (!inbound.adresseinfo?.postadresse?.postnummer.isNullOrEmpty()) {
-            getPostadressePostnummerTerm(postnummer, inbound)
-        }
-        if (!inbound.adresseinfo?.tilleggsadresse?.postnummer.isNullOrEmpty()) {
-            getTilleggsadresseTerm(posttilleggsnummer, inbound)
-        }
-        if (!inbound.status?.kode?.verdi.isNullOrEmpty()) {
-            getStatusTerm(status, inbound)
-        }
-        if (!inbound.sivilstand?.kode?.verdi.isNullOrEmpty()) {
-            getSivilstandTerm(sivilstand, inbound)
-        }
-        if (!inbound.spraak?.kode?.verdi.isNullOrEmpty()) {
-            getSpraakTerm(spraak, inbound)
-        }
-        if (!inbound.statsborgerskap?.kode?.verdi.isNullOrEmpty()) {
-            getStatsborgerskapTerm(statsborgerskap, inbound)
-        }
+
+        getTerms(kjonn, land, foedtkommune, bostedskommune, postbostedsnummer, postnummer, posttilleggsnummer, status, sivilstand, spraak, statsborgerskap, inbound)
 
         return PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
     }
 
+    private fun getTerms(kjonn: GetKodeverkKoderBetydningerResponse, land: GetKodeverkKoderBetydningerResponse, foedtkommune: GetKodeverkKoderBetydningerResponse, bostedskommune: GetKodeverkKoderBetydningerResponse, postbostedsnummer: GetKodeverkKoderBetydningerResponse, postnummer: GetKodeverkKoderBetydningerResponse, posttilleggsnummer: GetKodeverkKoderBetydningerResponse, status: GetKodeverkKoderBetydningerResponse, sivilstand: GetKodeverkKoderBetydningerResponse, spraak: GetKodeverkKoderBetydningerResponse, statsborgerskap: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
+        getKjonnTerm(kjonn, inbound)
+        getLandTerm(land, inbound)
+        getKommuneTerm(foedtkommune, inbound)
+        getBostedskommuneTerm(bostedskommune, inbound)
+        getBostedpostnummerTerm(postbostedsnummer, inbound)
+        getPostadressePostnummerTerm(postnummer, inbound)
+        getTilleggsadresseTerm(posttilleggsnummer, inbound)
+        getStatusTerm(status, inbound)
+        getSivilstandTerm(sivilstand, inbound)
+        getSpraakTerm(spraak, inbound)
+        getStatsborgerskapTerm(statsborgerskap, inbound)
+    }
+
     private fun getPostadressePostnummerTerm(postnummer: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.postnummerterm = postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        if (!inbound.adresseinfo?.postadresse?.postnummer.isNullOrEmpty()) {
+            personaliaKodeverk.postnummerterm = postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
     }
 
     private fun getBostedpostnummerTerm(postbostedsnummer: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.bostedpostnummerterm = postbostedsnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        if (!inbound.adresseinfo?.boadresse?.postnummer.isNullOrEmpty()) {
+            personaliaKodeverk.bostedpostnummerterm = postbostedsnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
     }
 
     private fun getBostedskommuneTerm(bostedskommune: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.bostedskommuneterm = bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        if (!inbound.adresseinfo?.boadresse?.kommune.isNullOrEmpty()) {
+            personaliaKodeverk.bostedskommuneterm = bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
     }
 
     private fun getTilleggsadresseTerm(posttilleggsnummer: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.tilleggsadressepostnummerterm = posttilleggsnummer.betydninger.getValue(inbound.adresseinfo?.tilleggsadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        if (!inbound.adresseinfo?.tilleggsadresse?.postnummer.isNullOrEmpty()) {
+            personaliaKodeverk.tilleggsadressepostnummerterm = posttilleggsnummer.betydninger.getValue(inbound.adresseinfo?.tilleggsadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
     }
 
     private fun getStatusTerm(status: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.statusterm = status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        if (!inbound.status?.kode?.verdi.isNullOrEmpty()) {
+            personaliaKodeverk.statusterm = status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
     }
 
     private fun getSivilstandTerm(sivilstand: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.sivilstandterm = sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        if (!inbound.sivilstand?.kode?.verdi.isNullOrEmpty()) {
+            personaliaKodeverk.sivilstandterm = sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
     }
 
     private fun getSpraakTerm(spraak: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.spraakterm = spraak?.betydninger!!.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        if (!inbound.spraak?.kode?.verdi.isNullOrEmpty()) {
+            personaliaKodeverk.spraakterm = spraak?.betydninger!!.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
     }
 
     private fun getStatsborgerskapTerm(statsborgerskap: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.stasborgerskapterm = statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        if (!inbound.statsborgerskap?.kode?.verdi.isNullOrEmpty()) {
+            personaliaKodeverk.stasborgerskapterm = statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
     }
 
     private fun getKommuneTerm(foedtkommune: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.foedekommuneterm = foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        if (!inbound.foedtIKommune?.verdi.isNullOrEmpty() && !nullstring.equals(inbound.foedtIKommune?.verdi)) {
+            personaliaKodeverk.foedekommuneterm = foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
     }
 
     private fun getLandTerm(land: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.landterm = land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        if (!inbound.foedtILand?.verdi.isNullOrEmpty()) {
+            personaliaKodeverk.landterm = land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
+
     }
 
     private fun getKjonnTerm(kjonn: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        personaliaKodeverk.kjonnterm = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        if (!inbound.kjonn.isNullOrEmpty()) {
+            personaliaKodeverk.kjonnterm = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
     }
 
     fun hentKontaktinformasjon(fodselsnr: String): Kontaktinformasjon {
