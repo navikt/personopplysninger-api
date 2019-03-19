@@ -5,8 +5,6 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersoninfoTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import no.nav.personopplysninger.features.personalia.kodeverk.Kommune
-import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.tps.person.Navn
 import no.nav.tps.person.Personinfo
 import no.nav.tps.person.Telefoninfo
