@@ -17,8 +17,6 @@ import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 public class KodeverkConsumer {
 
-    private static final Logger log = LoggerFactory.getLogger(KodeverkConsumer.class);
-
     private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     private Client client;
     private URI endpoint;

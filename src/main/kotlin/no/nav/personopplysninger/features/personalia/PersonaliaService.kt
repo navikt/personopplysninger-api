@@ -9,7 +9,6 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.Kontaktinfo
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.tps.person.Personinfo
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -23,8 +22,6 @@ class PersonaliaService @Autowired constructor(
     private val kodeverkspraak = "nb"
     private val nullstring = "0000"
     private var personaliaKodeverk = PersonaliaKodeverk()
-
-    private val log = LoggerFactory.getLogger(KodeverkConsumer::class.java)
 
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
         val inbound = personConsumer.hentPersonInfo(fodselsnr)
@@ -42,7 +39,7 @@ class PersonaliaService @Autowired constructor(
 
 
         getTerms(kjonn, land, foedtkommune, bostedskommune, postbostedsnummer, postnummer, posttilleggsnummer, status, sivilstand, spraak, statsborgerskap, inbound)
-        log.warn("Foedekommune " + inbound.foedtIKommune?.verdi)
+
         return PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
     }
 
