@@ -78,6 +78,16 @@ public class KodeverkConsumer {
                 .header("Nav-Personident", kode);
     }
 
+    private Invocation.Builder getBuilderMedUgyldigeVerdier(String kode, String s) {
+        return client.target(endpoint)
+                .path(s)
+                .queryParam("spraak", "nb")
+                .queryParam("ekskluderUgyldige", "false")
+                .request()
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .header("Nav-Personident", kode);
+    }
 
     private Invocation.Builder buildKjonnstyperRequest(String kode) {
         return getBuilder(kode, "v1/kodeverk/Kjønnstyper/koder/betydninger");
@@ -85,7 +95,7 @@ public class KodeverkConsumer {
     }
 
     private Invocation.Builder buildKommuneRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Kommuner/koder/betydninger");
+        return getBuilderMedUgyldigeVerdier(kode, "v1/kodeverk/Kommuner/koder/betydninger");
     }
 
     private Invocation.Builder buildLandkoderRequest(String kode) {
