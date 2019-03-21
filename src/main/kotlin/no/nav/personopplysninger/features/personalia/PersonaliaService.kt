@@ -42,7 +42,7 @@ class PersonaliaService @Autowired constructor(
 
 
         getTerms(kjonn, land, foedtkommune, bostedskommune, postbostedsnummer, postnummer, posttilleggsnummer, status, sivilstand, spraak, statsborgerskap, inbound)
-        log.warn("Foedekommune " + foedtkommune)
+        log.warn("Foedekommune " + inbound.foedtIKommune?.verdi)
         return PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
     }
 
