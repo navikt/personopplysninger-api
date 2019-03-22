@@ -20,7 +20,7 @@ public class KodeverkConsumer {
     private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     private Client client;
     private URI endpoint;
-    private static final String SPRAAK = "mb";
+    private static final String SPRAAK = "nb";
 
     public KodeverkConsumer(Client client, URI endpoint) {
         this.client = client;
