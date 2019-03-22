@@ -17,11 +17,10 @@ import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 public class KodeverkConsumer {
 
-    private static final Logger log = LoggerFactory.getLogger(KodeverkConsumer.class);
-
     private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     private Client client;
     private URI endpoint;
+    private static final String SPRAAK = "nb";
 
     public KodeverkConsumer(Client client, URI endpoint) {
         this.client = client;
@@ -68,10 +67,11 @@ public class KodeverkConsumer {
         return hentKodeverkBetydning(request);
     }
 
-    private Invocation.Builder getBuilder(String kode, String s) {
+    private Invocation.Builder getBuilder(String kode, String path, Boolean eksluderUgyldige) {
         return client.target(endpoint)
-                .path(s)
-                .queryParam("spraak", "nb")
+                .path(path)
+                .queryParam("spraak", SPRAAK)
+                .queryParam("ekskluderUgyldige", eksluderUgyldige)
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
@@ -79,37 +79,38 @@ public class KodeverkConsumer {
     }
 
 
+
     private Invocation.Builder buildKjonnstyperRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Kjønnstyper/koder/betydninger");
+        return getBuilder(kode, "v1/kodeverk/Kjønnstyper/koder/betydninger", true);
 
     }
 
     private Invocation.Builder buildKommuneRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Kommuner/koder/betydninger");
+        return getBuilder(kode, "v1/kodeverk/Kommuner/koder/betydninger", false);
     }
 
     private Invocation.Builder buildLandkoderRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Landkoder/koder/betydninger");
+        return getBuilder(kode, "v1/kodeverk/Landkoder/koder/betydninger", true);
     }
 
     private Invocation.Builder buildPersonstatusRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Personstatuser/koder/betydninger");
+        return getBuilder(kode, "v1/kodeverk/Personstatuser/koder/betydninger", true);
     }
 
     private Invocation.Builder buildPostnummerRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Postnummer/koder/betydninger");
+        return getBuilder(kode, "v1/kodeverk/Postnummer/koder/betydninger", true);
     }
 
     private Invocation.Builder buildSivilstandRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Sivilstander/koder/betydninger");
+        return getBuilder(kode, "v1/kodeverk/Sivilstander/koder/betydninger", true);
     }
 
     private Invocation.Builder buildSpraakRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Språk/koder/betydninger");
+        return getBuilder(kode, "v1/kodeverk/Språk/koder/betydninger", true);
     }
 
     private Invocation.Builder buildStatsborgerskapRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/StatsborgerskapFreg/koder/betydninger");
+        return getBuilder(kode, "v1/kodeverk/StatsborgerskapFreg/koder/betydninger", true);
     }
 
 
