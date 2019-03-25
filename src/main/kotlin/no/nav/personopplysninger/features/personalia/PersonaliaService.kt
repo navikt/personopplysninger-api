@@ -120,7 +120,7 @@ class PersonaliaService @Autowired constructor(
 
     private fun getUtenlandskAdresseTerm(land: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
         if (!inbound.adresseinfo?.utenlandskAdresse?.land.isNullOrEmpty()) {
-            personaliaKodeverk.utenlandsadresseterm = land.betydninger.getValue(inbound.adresseinfo?.utenlandskAdresse?.land)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            personaliaKodeverk.utenlandskadresseterm = land.betydninger.getValue(inbound.adresseinfo?.utenlandskAdresse?.land)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
         }
     }
 
