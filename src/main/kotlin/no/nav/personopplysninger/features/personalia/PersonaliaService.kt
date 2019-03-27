@@ -46,6 +46,7 @@ class PersonaliaService @Autowired constructor(
     private fun getTerms(kjonn: GetKodeverkKoderBetydningerResponse, land: GetKodeverkKoderBetydningerResponse, foedtkommune: GetKodeverkKoderBetydningerResponse, bostedskommune: GetKodeverkKoderBetydningerResponse, postbostedsnummer: GetKodeverkKoderBetydningerResponse, postnummer: GetKodeverkKoderBetydningerResponse, posttilleggsnummer: GetKodeverkKoderBetydningerResponse, status: GetKodeverkKoderBetydningerResponse, sivilstand: GetKodeverkKoderBetydningerResponse, spraak: GetKodeverkKoderBetydningerResponse, statsborgerskap: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
         getKjonnTerm(kjonn, inbound)
         getLandTerm(land, inbound)
+        getUtenlandskAdresseTerm(land, inbound)
         getKommuneTerm(foedtkommune, inbound)
         getBostedskommuneTerm(bostedskommune, inbound)
         getBostedpostnummerTerm(postbostedsnummer, inbound)
@@ -115,7 +116,12 @@ class PersonaliaService @Autowired constructor(
         if (!inbound.foedtILand?.verdi.isNullOrEmpty() && ! (land.betydninger.getValue(inbound.foedtILand?.verdi).isEmpty())) {
             personaliaKodeverk.landterm = land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
         }
+    }
 
+    private fun getUtenlandskAdresseTerm(land: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
+        if (!inbound.adresseinfo?.utenlandskAdresse?.land.isNullOrEmpty()) {
+            personaliaKodeverk.utenlandskadresseterm = land.betydninger.getValue(inbound.adresseinfo?.utenlandskAdresse?.land)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
     }
 
     private fun getKjonnTerm(kjonn: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
