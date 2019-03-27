@@ -14,6 +14,7 @@ class PersonaliaKodeverk {
     var bostedpostnummerterm: String? = null
     var tilleggsadresseterm: String? = null
     var tilleggsadressepostnummerterm: String? = null
+    var utenlandskadresseterm: String? = null
 
 }
 
