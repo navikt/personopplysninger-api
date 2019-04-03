@@ -56,6 +56,7 @@ class PersonaliaService @Autowired constructor(
         getSivilstandTerm(sivilstand, inbound)
         getSpraakTerm(spraak, inbound)
         getStatsborgerskapTerm(statsborgerskap, inbound)
+        getPostadresseLandTerm(land, inbound)
     }
 
     private fun getPostadressePostnummerTerm(postnummer: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
@@ -127,6 +128,12 @@ class PersonaliaService @Autowired constructor(
     private fun getKjonnTerm(kjonn: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
         if (!inbound.kjonn.isNullOrEmpty() && !(kjonn.betydninger.getValue(inbound.kjonn).isEmpty())) {
             personaliaKodeverk.kjonnterm = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        }
+    }
+
+    private fun getPostadresseLandTerm(land: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
+        if (!inbound.adresseinfo?.postadresse?.land.isNullOrEmpty()) {
+            personaliaKodeverk.postadresselandterm = land.betydninger.getValue(inbound.adresseinfo?.postadresse?.land)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
         }
     }
 
