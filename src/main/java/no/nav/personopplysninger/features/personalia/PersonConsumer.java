@@ -21,8 +21,6 @@ public class PersonConsumer {
     private Client client;
     private URI endpoint;
 
-    private Logger log = LoggerFactory.getLogger(PersonConsumer.class);
-
     public PersonConsumer(Client client, URI endpoint) {
         this.client = client;
         this.endpoint = endpoint;
