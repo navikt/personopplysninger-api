@@ -63,7 +63,6 @@ public class PersonaliaRestConfiguration {
     private ClientBuilder clientBuilder(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
         return ClientBuilder.newBuilder()
                 .register(OidcClientRequestFilter.class)
-                .register(clientObjectMapperResolver)
-                .register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO, LoggingFeature.Verbosity.HEADERS_ONLY, Integer.MAX_VALUE));
+                .register(clientObjectMapperResolver);
     }
 }
