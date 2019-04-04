@@ -68,6 +68,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.postnummerterm = postnummer.betydninger.getValue(inbound.adresseinfo?.postadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.postnummerterm = inbound.adresseinfo?.postadresse?.postnummer
             log.warn("Element not found in Postadressepostnummer: " + inbound.adresseinfo?.postadresse?.postnummer)
         }
 
@@ -79,6 +80,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.bostedpostnummerterm = postbostedsnummer.betydninger.getValue(inbound.adresseinfo?.boadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.bostedpostnummerterm = inbound.adresseinfo?.boadresse?.postnummer
             log.warn("Element not found in Boadressepostnummer: " + inbound.adresseinfo?.boadresse?.postnummer)
         }
 
@@ -90,6 +92,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.bostedskommuneterm = bostedskommune.betydninger.getValue(inbound.adresseinfo?.boadresse?.kommune)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.bostedskommuneterm = inbound.adresseinfo?.boadresse?.kommune
             log.warn("Element not found in Bostedskommune: " + inbound.adresseinfo?.boadresse?.kommune)
         }
 
@@ -101,6 +104,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.tilleggsadressepostnummerterm = posttilleggsnummer.betydninger.getValue(inbound.adresseinfo?.tilleggsadresse?.postnummer)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.tilleggsadressepostnummerterm = inbound.adresseinfo?.tilleggsadresse?.postnummer
             log.warn("Element not found in Tilleggsadresse: " + inbound.adresseinfo?.tilleggsadresse?.postnummer)
         }
 
@@ -112,6 +116,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.statusterm = status.betydninger.getValue(inbound.status?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.statusterm = inbound.status?.kode?.verdi
             log.warn("Element not found in Status: " + inbound.status?.kode?.verdi)
         }
 
@@ -123,6 +128,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.sivilstandterm = sivilstand.betydninger.getValue(inbound.sivilstand?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.sivilstandterm = inbound.adresseinfo?.postadresse?.postnummer
             log.warn("Element not found in Adressepostnummer: " + inbound.adresseinfo?.postadresse?.postnummer)
         }
 
@@ -134,6 +140,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.spraakterm = spraak?.betydninger!!.getValue(inbound.spraak?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.spraakterm = inbound.spraak?.kode?.verdi
             log.warn("Element not found in Spraak: " + inbound.spraak?.kode?.verdi)
         }
     }
@@ -144,6 +151,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.stasborgerskapterm = statsborgerskap.betydninger.getValue(inbound.statsborgerskap?.kode?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.stasborgerskapterm = inbound.statsborgerskap?.kode?.verdi
             log.warn("Element not found in Statsborgerskap: " + inbound.statsborgerskap?.kode?.verdi)
         }
     }
@@ -154,6 +162,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.foedekommuneterm = foedtkommune.betydninger.getValue(inbound.foedtIKommune?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.foedekommuneterm = inbound.foedtIKommune?.verdi
             log.warn("Element not found in Kommune: " + inbound.foedtIKommune?.verdi)
         }
 
@@ -165,6 +174,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.landterm = land.betydninger.getValue(inbound.foedtILand?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.landterm = inbound.foedtILand?.verdi
             log.warn("Element not found in Land: " + inbound.foedtILand?.verdi)
         }
 
@@ -177,6 +187,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.utenlandskadresseterm = land.betydninger.getValue(inbound.adresseinfo?.utenlandskAdresse?.land)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.utenlandskadresseterm = inbound.adresseinfo?.utenlandskAdresse?.land
             log.warn("Element not found in Utenlandskadresse: " + inbound.adresseinfo?.utenlandskAdresse?.land)
         }
 
@@ -188,6 +199,7 @@ class PersonaliaService @Autowired constructor(
                 personaliaKodeverk.kjonnterm = kjonn.betydninger.getValue(inbound.kjonn)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.kjonnterm = inbound.kjonn
             log.warn("Element not found in Kjonn: " + inbound.kjonn)
         }
 
