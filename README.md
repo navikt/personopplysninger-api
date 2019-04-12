@@ -18,7 +18,7 @@ For å bygge imaget, kjør `sh build.sh`. Se `sh build.sh --help` for alternativ
 
 # Henvendelser
 
-Spørsmål knyttet til koden eller prosjektet kan rettes mot https://github.com/orgs/navikt/teams/team-personbruker
+Spørsmål knyttet til koden eller prosjektet kan rettes mot https://github.com/orgs/navikt/teams/personbruker
 
 ## For NAV-ansatte
 
