@@ -39,6 +39,14 @@ fasitResources:
     resourceType: restservice
   - alias: personopplysninger-api-tps-proxy.api.v1.innsyn-apiKey
     resourceType: credential
+  - alias: aareg.api
+    resourceType: restservice
+  - alias: ereg.api
+    resourceType: restservice
+  - alias: srvPersonopplysningerAAreg
+    resourceType: credential
+  - alias: personopplysninger-api-aareg.api-apiKey
+    resourceType: credential
   - alias: kodeverk.rest-api
     resourceType: restservice
   - alias: personopplysninger-api-kodeverk.rest-api-apiKey
@@ -47,3 +55,11 @@ fasitResources:
     resourceType: credential
   - alias: dkif.api
     resourceType: restservice
+  - alias: personopplysninger-api-security-token-service-token-apiKey
+    resourceType: credential
+  - alias: security-token-service-token
+    resourceType: restservice
+  - alias: srvpersonopplysninger-api
+    resourceType: credential
+  - alias: srvsoknadsveiviser
+    resourceType: credential

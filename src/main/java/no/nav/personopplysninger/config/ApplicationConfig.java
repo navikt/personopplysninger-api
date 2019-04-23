@@ -1,16 +1,16 @@
 package no.nav.personopplysninger.config;
 
 import no.nav.log.LogFilter;
+import no.nav.personopplysninger.features.arbeidsforhold.ArbeidsforholdRestConfiguration;
 import no.nav.personopplysninger.features.kodeverk.KodeverkRestConfiguration;
+
 import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
-import no.nav.personopplysninger.features.kodeverk.KodeverkRestConfiguration;
-import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
-import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
-import no.nav.personopplysninger.features.kodeverk.KodeverkRestConfiguration;
-import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
+
+import no.nav.personopplysninger.features.sts.STSTokenRestConfiguration;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
+import org.apache.cxf.ws.security.sts.provider.SecurityTokenService;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,11 +33,13 @@ import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
-@ComponentScan({"no.nav.personopplysninger.features", "no.nav.personopplysninger.api"})
+@ComponentScan({"no.nav.personopplysninger.features", "no.nav.personopplysninger.api","no.nav.personopplysninger.features.arbeidsforhold"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 @Import({RestClientConfiguration.class,
+        ArbeidsforholdRestConfiguration.class,
         KodeverkRestConfiguration.class,
-        PersonaliaRestConfiguration.class
+        PersonaliaRestConfiguration.class,
+        STSTokenRestConfiguration.class
 })
 public class ApplicationConfig implements EnvironmentAware {
 

@@ -9,6 +9,7 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.Kontaktinfo
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.kodeverk.Personstatus
+import no.nav.personopplysninger.features.sts.STSConsumer
 import no.nav.tps.person.Personinfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -44,7 +45,9 @@ class PersonaliaService @Autowired constructor(
 
         getTerms(kjonn, land, foedtkommune, bostedskommune, postbostedsnummer, postnummer, posttilleggsnummer, status, sivilstand, spraak, statsborgerskap, inbound)
 
+
         return PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
+
     }
 
     private fun getTerms(kjonn: GetKodeverkKoderBetydningerResponse, land: GetKodeverkKoderBetydningerResponse, foedtkommune: GetKodeverkKoderBetydningerResponse, bostedskommune: GetKodeverkKoderBetydningerResponse, postbostedsnummer: GetKodeverkKoderBetydningerResponse, postnummer: GetKodeverkKoderBetydningerResponse, posttilleggsnummer: GetKodeverkKoderBetydningerResponse, status: GetKodeverkKoderBetydningerResponse, sivilstand: GetKodeverkKoderBetydningerResponse, spraak: GetKodeverkKoderBetydningerResponse, statsborgerskap: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {

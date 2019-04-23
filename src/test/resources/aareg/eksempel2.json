@@ -1,0 +1,101 @@
+[
+  {
+    "arbeidsforholdId": "konvertert_af709505-128e-45dc-a241-7e14180f787d",
+    "type": "ordinaertArbeidsforhold",
+    "sistBekreftet": "1989-05-31T00:00:00",
+    "ansettelsesPeriode": {
+      "periodeFra": "1988-10-03",
+      "periodeTil": "1989-05-31"
+    },
+    "utenlandsopphold": [],
+    "permisjonPermittering": []
+  },
+  {
+    "arbeidsforholdId": "konvertert_7f9b5d0a-53c8-4acd-a6d0-6858fcbd3f1a",
+    "type": "ordinaertArbeidsforhold",
+    "sistBekreftet": "2001-06-08T00:00:00",
+    "ansettelsesPeriode": {
+      "periodeFra": "1999-01-01",
+      "periodeTil": "2001-06-08"
+    },
+    "utenlandsopphold": [],
+    "permisjonPermittering": []
+  },
+  {
+    "arbeidsforholdId": "konvertert_382a28a6-1c05-4b2f-b109-0a3c06c7ccb7",
+    "type": "ordinaertArbeidsforhold",
+    "sistBekreftet": "2006-05-31T00:00:00",
+    "ansettelsesPeriode": {
+      "periodeFra": "2003-05-05",
+      "periodeTil": "2006-05-31"
+    },
+    "utenlandsopphold": [],
+    "permisjonPermittering": []
+  },
+  {
+    "arbeidsforholdId": "konvertert_6139b248-5bf7-4a54-9f02-30a8a2caf52d",
+    "type": "ordinaertArbeidsforhold",
+    "sistBekreftet": "1998-10-01T00:00:00",
+    "ansettelsesPeriode": {
+      "periodeFra": "1997-06-30",
+      "periodeTil": "1998-10-01"
+    },
+    "utenlandsopphold": [],
+    "permisjonPermittering": []
+  },
+  {
+    "arbeidsforholdId": "konvertert_fe82059e-303a-4d9d-a572-9b128ce5ffad",
+    "type": "ordinaertArbeidsforhold",
+    "sistBekreftet": "1990-07-02T00:00:00",
+    "ansettelsesPeriode": {
+      "periodeFra": "1989-08-29",
+      "periodeTil": "1990-07-02"
+    },
+    "utenlandsopphold": [],
+    "permisjonPermittering": []
+  },
+  {
+    "arbeidsforholdId": "konvertert_15a351cf-8f9d-4307-8020-760989c7a907",
+    "type": "ordinaertArbeidsforhold",
+    "sistBekreftet": "2010-06-30T00:00:00",
+    "ansettelsesPeriode": {
+      "periodeFra": "2006-06-01",
+      "periodeTil": "2010-06-30"
+    },
+    "utenlandsopphold": [],
+    "permisjonPermittering": []
+  },
+  {
+    "arbeidsforholdId": "konvertert_82678eca-dedf-479a-8ea1-77bdd551edab",
+    "type": "ordinaertArbeidsforhold",
+    "sistBekreftet": "2002-04-30T00:00:00",
+    "ansettelsesPeriode": {
+      "periodeFra": "2001-07-01",
+      "periodeTil": "2002-04-30"
+    },
+    "utenlandsopphold": [],
+    "permisjonPermittering": []
+  },
+  {
+    "arbeidsforholdId": "1162-20100701-1",
+    "type": "ordinaertArbeidsforhold",
+    "sistBekreftet": "2018-12-03T08:51:13",
+    "ansettelsesPeriode": {
+      "periodeFra": "2010-07-01",
+      "periodeTil": null
+    },
+    "utenlandsopphold": [],
+    "permisjonPermittering": []
+  },
+  {
+    "arbeidsforholdId": "konvertert_3ddff5b2-4035-415f-9aba-552cd44bc54d",
+    "type": "ordinaertArbeidsforhold",
+    "sistBekreftet": "2010-07-01T00:00:00",
+    "ansettelsesPeriode": {
+      "periodeFra": "2010-07-01",
+      "periodeTil": "2014-12-31"
+    },
+    "utenlandsopphold": [],
+    "permisjonPermittering": []
+  }
+]
