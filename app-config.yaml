@@ -47,3 +47,5 @@ fasitResources:
     resourceType: credential
   - alias: dkif.api
     resourceType: restservice
+  - alias: appdynamics
+    resourceType: applicationproperties
