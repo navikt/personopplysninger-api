@@ -18,7 +18,7 @@ For å bygge imaget, kjør `sh build.sh`. Se `sh build.sh --help` for alternativ
 Jenkins-bygg: https://ci.adeo.no/job/team_personbruker/job/personopplysninger-api/
 
 Man deployer de ulike branchene fra oversikten ved å klikke inn på branchen som skal deployes,
-og velge "Configure". I pipeline-scriptet litt ned på siden velger man ønsket miljø i miljo.
+og velge "Configure". I pipeline-scriptet litt ned på siden velger man ønsket miljø i "miljo".
 Dette må endres hver gang man deployer.
 
 
