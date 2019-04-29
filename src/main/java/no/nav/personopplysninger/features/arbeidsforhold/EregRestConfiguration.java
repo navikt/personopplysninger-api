@@ -33,10 +33,10 @@ public class EregRestConfiguration {
     private String arbeidsforholdApiPassword;
 
     @Bean
-    public ArbeidsforholdConsumer arbeidsforholdConsumer(
+    public EregConsumer eregConsumer(
             @Named("eregClient") Client client,
             @Value("${EREG_API_URL}") String eregServiceUri) throws URISyntaxException {
-        return new ArbeidsforholdConsumer(client, new URI(eregServiceUri));
+        return new EregConsumer(client, new URI(eregServiceUri));
     }
 
     @Bean
