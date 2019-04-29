@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,6 +28,7 @@ public class KodeverkRestConfiguration {
     private String kodeverkApiKeyPassword;
 
     @Bean
+    @Cacheable
     public KodeverkConsumer kodeverkConsumer(
             @Named("kodeverkClient") Client client,
             @Value("${KODEVERK_REST_API_URL}") String kodeServiceUri) throws URISyntaxException {
