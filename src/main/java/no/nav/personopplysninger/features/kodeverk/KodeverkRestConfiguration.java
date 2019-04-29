@@ -28,7 +28,6 @@ public class KodeverkRestConfiguration {
     private String kodeverkApiKeyPassword;
 
     @Bean
-    @Cacheable
     public KodeverkConsumer kodeverkConsumer(
             @Named("kodeverkClient") Client client,
             @Value("${KODEVERK_REST_API_URL}") String kodeServiceUri) throws URISyntaxException {
