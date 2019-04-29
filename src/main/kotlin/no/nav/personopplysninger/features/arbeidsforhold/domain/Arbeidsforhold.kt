@@ -18,6 +18,7 @@ data class Arbeidsforhold (
     val opplysningspliktig: OpplysningspliktigArbeidsgiver? = null,
     /* Permisjoner og/eller permitteringer */
     val permisjonPermitteringer: kotlin.Array<PermisjonPermittering>? = null,
+    val registrert: kotlin.String? = null,
     /* Tidspunkt for siste bekreftelse av arbeidsforhold, format (ISO-8601): yyyy-MM-dd'T'HH:mm[:ss[.SSSSSSSSS]] */
     val sistBekreftet: kotlin.String? = null,
     val sporingsinformasjon: Sporingsinformasjon? = null,
