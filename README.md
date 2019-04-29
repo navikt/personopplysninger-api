@@ -21,6 +21,7 @@ Man deployer de ulike branchene fra oversikten ved å klikke inn på branchen so
 og velge "Configure". I pipeline-scriptet litt ned på siden velger man ønsket miljø i "miljo".
 Dette må endres hver gang man deployer.
 
+Vi har applikasjonen i Q0, Q1, og T6.
 
 # Produksjonssetting
 
