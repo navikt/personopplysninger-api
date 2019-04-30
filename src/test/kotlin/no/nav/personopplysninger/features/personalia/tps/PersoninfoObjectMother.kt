@@ -51,7 +51,7 @@ object PersoninfoObjectMother {
                     type = dummyKode
             ),
             utenlandsinfoList = Informasjon_om_person_utlandObjectMother.arrayOfDummyValues,
-            utenlandskBank = UtenlandskBankObjectMother.dummyValues,
+            utenlandskBank = UtenlandskBankObjectMother.utenlandskTestbank(),
             vergemaalListe = VergemaalObjectMother.arrayOfDummyValues
     )
 }

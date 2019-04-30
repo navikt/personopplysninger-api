@@ -8,6 +8,7 @@ data class Personalia(
         val personident: Personident? = null,
         val kontonr: String? = null,
         val tlfnr: Tlfnr? = null,
+        val utenlandskbank : UtenlandskBankInfo? = null,
         val spraak: String? = null,
         val epostadr: String? = null,
         val personstatus: String? = null,
