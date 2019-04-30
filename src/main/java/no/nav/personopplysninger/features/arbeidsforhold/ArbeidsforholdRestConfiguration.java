@@ -20,12 +20,6 @@ import java.util.logging.Logger;
 @Configuration
 public class ArbeidsforholdRestConfiguration {
 
-    @Value("${SRVPERSONOPPLYSNINGERAAREG_USERNAME}")
-    private String arbeidsforholdUsername;
-
-    @Value("${SRVPERSONOPPLYSNINGERAAREG_PASSWORD}")
-    private String arbeidsforholdPassword;
-
     @Value("${PERSONOPPLYSNINGER-API-AAREG-API-APIKEY_USERNAME}")
     private String arbeidsforholdApiUsername;
 

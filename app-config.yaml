@@ -43,10 +43,8 @@ fasitResources:
     resourceType: restservice
   - alias: ereg.api
     resourceType: restservice
-  - alias: srvPersonopplysningerAAreg
-    resourceType: credential
   - alias: personopplysninger-api-aareg.api-apiKey
-    resourceType: credential
+    resourceType: credentialsrvPersonopplysningerAAreg
   - alias: kodeverk.rest-api
     resourceType: restservice
   - alias: personopplysninger-api-kodeverk.rest-api-apiKey
