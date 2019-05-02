@@ -5,12 +5,12 @@ import no.nav.personopplysninger.features.arbeidsforhold.dto.outbound.Arbeidsfor
 
 object ArbeidsforholdTransformer {
 
-    fun toOutbound(inbound: Arbeidsforhold) = ArbeidsforholdDto(
+    fun toOutbound(inbound: Arbeidsforhold, arbgivnavn: String?) = ArbeidsforholdDto(
 
             arbeidsforholdId = inbound.arbeidsforholdId,
             type = inbound.type,
             sistBekreftet = inbound.sistBekreftet,
-            arbeidsgiver = ArbeidsgiverTransformer.toOutbound(inbound.arbeidsgiver).orgnr,
+            arbeidsgiver = ArbeidsgiverTransformer.toOutbound(inbound.arbeidsgiver, arbgivnavn),
             ansettelsesPeriode = PeriodeTransformer.toOutboundfromAnsettelsesperiode(inbound.ansettelsesperiode),
             utenlandsopphold = UtenlandsoppholdTransformer.toOutboundArray(inbound.utenlandsopphold),
             permisjonPermittering = PermisjonPermitteringTransformer.toOutboundArray(inbound.permisjonPermitteringer)

@@ -7,10 +7,11 @@ import no.nav.personopplysninger.features.arbeidsforhold.dto.outbound.Arbeidsgiv
 
 object ArbeidsgiverTransformer {
 
-    fun toOutbound(inbound: Arbeidsgiver?) = ArbeidsgiverDto(
+    fun toOutbound(inbound: Arbeidsgiver?, arbgivnavn: String?) = ArbeidsgiverDto(
 
             type = inbound?.type,
-            orgnr = inbound?.organisasjonsnummer
+            orgnr = inbound?.organisasjonsnummer,
+            orgnavn = arbgivnavn
 
     )
 }

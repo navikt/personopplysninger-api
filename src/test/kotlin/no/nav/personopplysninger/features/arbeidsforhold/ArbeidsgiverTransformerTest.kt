@@ -17,7 +17,7 @@ class ArbeidsgiverTransformerTest
     fun skalFaArbeidsgiver() {
         val inbound: Arbeidsgiver = ArbeidsgiverObjectMother.withDummyValues
 
-        val actual: ArbeidsgiverDto = ArbeidsgiverTransformer.toOutbound(inbound)
+        val actual: ArbeidsgiverDto = ArbeidsgiverTransformer.toOutbound(inbound, "NAV")
         assertNotNull(actual)
         assertEquals(inbound.type.toString(), actual.type)
 

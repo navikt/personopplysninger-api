@@ -20,7 +20,7 @@ class ArbeidsforholdTransformerTest {
     @Test
     fun skalFaaArbeidsforhold() {
         val inbound: Arbeidsforhold = ArbeidsforholdObjectMother.withDummyValues
-        val actual: ArbeidsforholdDto = ArbeidsforholdTransformer.toOutbound(inbound)
+        val actual: ArbeidsforholdDto = ArbeidsforholdTransformer.toOutbound(inbound, "NAV")
         assertNotNull(actual)
         assertEquals(inbound.arbeidsforholdId, actual.arbeidsforholdId)
         assertEquals(inbound.ansettelsesperiode?.periode?.fom, actual.ansettelsesPeriode?.periodeFra)
