@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 #!/bin/bash
 if test -r "/opt/appdynamics/javaagent.jar";
 then
