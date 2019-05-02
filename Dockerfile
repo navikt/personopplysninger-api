@@ -1,4 +1,4 @@
-FROM navikt/java:8
+FROM navikt/java:8-appdynamics
 
 ADD ./VERSION /app/VERSION
 COPY ./target/personopplysninger-api.jar "/app/app.jar"
