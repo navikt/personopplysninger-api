@@ -55,11 +55,11 @@ fasitResources:
     resourceType: credential
   - alias: dkif.api
     resourceType: restservice
+  - alias: appdynamics
+    resourceType: applicationproperties
   - alias: personopplysninger-api-security-token-service-token-apiKey
     resourceType: credential
   - alias: security-token-service-token
     resourceType: restservice
   - alias: srvpersonopplysninger-api
-    resourceType: credential
-  - alias: srvsoknadsveiviser
     resourceType: credential

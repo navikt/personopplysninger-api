@@ -14,7 +14,7 @@ object UtenlandskAdresseObjectMother {
         )
     }
 
-    fun utenslandskAdresseNullObject(): UtenlandskAdresse {
+    fun utenlandskAdresseNullObject(): UtenlandskAdresse {
         return UtenlandskAdresse(
                 adresse1 = null,
                 adresse2 = null,
