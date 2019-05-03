@@ -20,6 +20,12 @@ import java.util.logging.Logger;
 @Configuration
 public class EregRestConfiguration {
 
+    @Value("${PERSONOPPLYSNINGER-API-EREG-API-APIKEY_USERNAME}")
+    private String eregApiUsername;
+
+    @Value("${PERSONOPPLYSNINGER-API-EREG-API-APIKEY_PASSWORD}")
+    private String eregApiPassword;
+
     @Bean
     public EregConsumer eregConsumer(
             @Named("eregClient") Client client,
@@ -33,6 +39,7 @@ public class EregRestConfiguration {
                 .register(clientObjectMapperResolver)
                 .register(OidcClientRequestFilter.class)
                 .register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO, LoggingFeature.Verbosity.HEADERS_ONLY, Integer.MAX_VALUE))
+                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(eregApiUsername, eregApiPassword))
                 .build();
         return c;
     }

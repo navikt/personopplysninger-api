@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.arbeidsforhold;
 
 import no.nav.log.MDCConstants;
+import no.nav.personopplysninger.features.arbeidsforhold.exceptions.EregConsumerException;
 import no.nav.personopplysninger.features.ereg.EregOrganisasjon;
 import no.nav.personopplysninger.features.arbeidsforhold.exceptions.ArbeidsforholdConsumerException;
 import org.slf4j.Logger;
@@ -49,18 +50,18 @@ public class EregConsumer {
     private EregOrganisasjon hentOrganisasjonsNavn(Invocation.Builder request) {
         try (Response response = request.get()) {
             return readResponse(response);
-        } catch (ArbeidsforholdConsumerException e) {
+        } catch (EregConsumerException e) {
             throw e;
         } catch (Exception e) {
             String msg = "Forsøkte å konsumere REST-tjenesten Enhetsregisteret. endpoint=[" + endpoint + "].";
-            throw new ArbeidsforholdConsumerException(msg, e);
+            throw new EregConsumerException(msg, e);
         }
     }
 
     private EregOrganisasjon readResponse(Response r) {
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere REST-tjenesten Enhetsregister. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
-            throw new ArbeidsforholdConsumerException(msg + " - " + readEntity(String.class, r));
+            throw new EregConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
             EregOrganisasjon orgnr = readEntity(EregOrganisasjon.class, r);
             return orgnr;
@@ -72,11 +73,11 @@ public class EregConsumer {
         try {
             return response.readEntity(responsklasse);
         } catch (ProcessingException e) {
-            throw new ArbeidsforholdConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
+            throw new EregConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
         } catch (IllegalStateException e) {
-            throw new ArbeidsforholdConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
+            throw new EregConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
         } catch (Exception e) {
-            throw new ArbeidsforholdConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.getName(), e);
+            throw new EregConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.getName(), e);
         }
     }
 
