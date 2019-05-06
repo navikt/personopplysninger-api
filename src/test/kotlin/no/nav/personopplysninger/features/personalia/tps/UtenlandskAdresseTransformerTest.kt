@@ -27,7 +27,7 @@ class UtenlandskAdresseTransformerTest {
 
     @Test
     fun gittNull_skalFaaNull() {
-        val inbound = UtenlandskAdresseObjectMother.utenslandskAdresseNullObject()
+        val inbound = UtenlandskAdresseObjectMother.utenlandskAdresseNullObject()
 
         val actual = UtenlandskAdresseTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 

@@ -71,6 +71,12 @@ public class KodeverkConsumer {
     }
 
     @Cacheable("kode")
+    public GetKodeverkKoderBetydningerResponse hentValuta(String kode) {
+        Invocation.Builder request = buildValutaRequest(kode);
+        return hentKodeverkBetydning(request);
+    }
+
+    @Cacheable("kode")
     public GetKodeverkKoderBetydningerResponse hentStatsborgerskap(String kode) {
         Invocation.Builder request = buildStatsborgerskapRequest(kode);
         return hentKodeverkBetydning(request);
@@ -115,6 +121,10 @@ public class KodeverkConsumer {
 
     private Invocation.Builder buildSpraakRequest(String kode) {
         return getBuilder(kode, "v1/kodeverk/Språk/koder/betydninger", true);
+    }
+
+    private Invocation.Builder buildValutaRequest(String kode) {
+        return getBuilder(kode, "v1/kodeverk/Valutaer/koder/betydninger", true);
     }
 
     private Invocation.Builder buildStatsborgerskapRequest(String kode) {

@@ -40,14 +40,14 @@ class PersonaliaService @Autowired constructor(
         val sivilstand = kodeverkConsumer.hentSivilstand(inbound.sivilstand?.kode?.verdi)
         val spraak = kodeverkConsumer.hentSpraak(inbound.spraak?.kode?.verdi)
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
+        val valuta = kodeverkConsumer.hentValuta(inbound.utenlandskBank?.valuta?.verdi)
 
-
-        getTerms(kjonn, land, foedtkommune, bostedskommune, postbostedsnummer, postnummer, posttilleggsnummer, status, sivilstand, spraak, statsborgerskap, inbound)
+        getTerms(kjonn, land, foedtkommune, bostedskommune, postbostedsnummer, postnummer, posttilleggsnummer, status, sivilstand, spraak, statsborgerskap, valuta, inbound)
 
         return PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
     }
 
-    private fun getTerms(kjonn: GetKodeverkKoderBetydningerResponse, land: GetKodeverkKoderBetydningerResponse, foedtkommune: GetKodeverkKoderBetydningerResponse, bostedskommune: GetKodeverkKoderBetydningerResponse, postbostedsnummer: GetKodeverkKoderBetydningerResponse, postnummer: GetKodeverkKoderBetydningerResponse, posttilleggsnummer: GetKodeverkKoderBetydningerResponse, status: GetKodeverkKoderBetydningerResponse, sivilstand: GetKodeverkKoderBetydningerResponse, spraak: GetKodeverkKoderBetydningerResponse, statsborgerskap: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
+    private fun getTerms(kjonn: GetKodeverkKoderBetydningerResponse, land: GetKodeverkKoderBetydningerResponse, foedtkommune: GetKodeverkKoderBetydningerResponse, bostedskommune: GetKodeverkKoderBetydningerResponse, postbostedsnummer: GetKodeverkKoderBetydningerResponse, postnummer: GetKodeverkKoderBetydningerResponse, posttilleggsnummer: GetKodeverkKoderBetydningerResponse, status: GetKodeverkKoderBetydningerResponse, sivilstand: GetKodeverkKoderBetydningerResponse, spraak: GetKodeverkKoderBetydningerResponse, statsborgerskap: GetKodeverkKoderBetydningerResponse, valuta: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
         getKjonnTerm(kjonn, inbound)
         getLandTerm(land, inbound)
         getUtenlandskAdresseTerm(land, inbound)
@@ -61,6 +61,8 @@ class PersonaliaService @Autowired constructor(
         getSpraakTerm(spraak, inbound)
         getStatsborgerskapTerm(statsborgerskap, inbound)
         getPostadresseLandTerm(land, inbound)
+        getUtenlandskBankLandTerm(land, inbound)
+        getUtenlandskBankValutaTerm(valuta, inbound)
     }
 
     private fun getPostadressePostnummerTerm(postnummer: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
@@ -207,11 +209,41 @@ class PersonaliaService @Autowired constructor(
     }
 
     private fun getPostadresseLandTerm(land: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-        if (!inbound.adresseinfo?.postadresse?.land.isNullOrEmpty()) {
-            personaliaKodeverk.postadresselandterm = land.betydninger.getValue(inbound.adresseinfo?.postadresse?.land)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+        try {
+            if (!inbound.adresseinfo?.postadresse?.land.isNullOrEmpty()) {
+                personaliaKodeverk.postadresselandterm = land.betydninger.getValue(inbound.adresseinfo?.postadresse?.land)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            }
+        } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.landterm = inbound.foedtILand?.verdi
+            log.warn("Element not found in Land: " + inbound.foedtILand?.verdi)
         }
     }
 
+
+    private fun getUtenlandskBankLandTerm(land: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
+        try {
+            if (!inbound.utenlandskBank?.land?.verdi.isNullOrEmpty() && !(land.betydninger.getValue(inbound.utenlandskBank?.land?.verdi).isEmpty())) {
+                personaliaKodeverk.utenlandskbanklandterm = land.betydninger.getValue(inbound.utenlandskBank?.land?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            }
+        } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.utenlandskbanklandterm = inbound.utenlandskBank?.land?.verdi
+            log.warn("Element not found in Land (Utenlandsk bank): " + inbound.utenlandskBank?.land?.verdi)
+        }
+
+    }
+
+
+    private fun getUtenlandskBankValutaTerm(valuta: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
+        try {
+            if (!inbound.utenlandskBank?.valuta?.verdi.isNullOrEmpty() && !(valuta.betydninger.getValue( inbound.utenlandskBank?.valuta?.verdi).isEmpty())) {
+                personaliaKodeverk.utenlandskbankvalutaterm = valuta.betydninger.getValue(inbound.utenlandskBank?.valuta?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            }
+        } catch (nse: NoSuchElementException) {
+            personaliaKodeverk.utenlandskbankvalutaterm = inbound.utenlandskBank?.valuta?.verdi
+            log.warn("Element not found in Valuta: " + inbound.utenlandskBank?.valuta?.verdi)
+        }
+
+    }
 
     fun hentKontaktinformasjon(fodselsnr: String): Kontaktinformasjon {
         val inbound = kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)

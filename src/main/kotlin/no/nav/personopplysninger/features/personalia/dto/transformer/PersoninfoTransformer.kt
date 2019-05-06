@@ -3,7 +3,6 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personident
 import no.nav.personopplysninger.features.personalia.kodeverk.*
-import no.nav.tps.person.Kode
 import no.nav.tps.person.Navn
 import no.nav.tps.person.Personinfo
 import org.slf4j.LoggerFactory
@@ -26,6 +25,7 @@ object PersoninfoTransformer {
                 personident = inbound.ident?.let { Personident(it, inbound.identtype?.verdi) },
                 kontonr = inbound.kontonummer?.nummer,
                 tlfnr = inbound.telefon?.let { TelefoninfoTransformer.toOutbound(it) },
+                utenlandskbank = inbound.utenlandskBank?.let { UtenlandskBankTransformer.toOutbound(it, kodeverk)},
                 spraak = inbound.spraak?.kode?.verdi?.let { kodeverk.spraakterm },
                 personstatus = inbound.status?.kode?.verdi?.let { kodeverk.statusterm },
                 statsborgerskap = inbound.statsborgerskap?.kode?.verdi?.let { kodeverk.stasborgerskapterm },
