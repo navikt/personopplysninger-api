@@ -119,6 +119,20 @@
         </plugins>
     </build>
 
+    <!--beans>
+        <cache:annotation-driven />
+
+        <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+            <property name="caches">
+                <set>
+                    <bean
+                            class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+                            name="addresses"/>
+                </set>
+            </property>
+        </bean>
+    </beans-->
+
     <dependencies>
         <dependency>
             <groupId>no.nav.security</groupId>
@@ -169,6 +183,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
