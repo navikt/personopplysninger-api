@@ -1,0 +1,113 @@
+{
+  "ident": "***********",
+  "identtype": {
+    "verdi": "FNR",
+    "kodeverk": "Personidenter"
+  },
+  "kjonn": "M",
+  "alder": 43,
+  "foedselsdato": "1975-10-29",
+  "foedtILand": {
+    "verdi": "NOR",
+    "kodeverk": "Landkoder"
+  },
+  "foedtIKommune": {
+    "verdi": "0230",
+    "kodeverk": "Kommuner"
+  },
+  "datoFraOgMed": "2002-05-22",
+  "kilde": "SKD",
+  "status": {
+    "datoFraOgMed": "2002-05-22",
+    "kilde": "SKD",
+    "kode": {
+      "verdi": "BOSA",
+      "kodeverk": "Personstatuser"
+    }
+  },
+  "navn": {
+    "datoFraOgMed": "2002-05-22",
+    "kilde": "SKD",
+    "forkortetNavn": "HARALDSEN HEIN",
+    "slektsnavn": "HARALDSEN",
+    "fornavn": "HEIN",
+    "mellomnavn": "",
+    "slektsnavnUgift": ""
+  },
+  "spraak": null,
+  "sivilstand": {
+    "datoFraOgMed": "",
+    "kilde": "SKD",
+    "kode": {
+      "verdi": "UGIF",
+      "kodeverk": "Sivilstander"
+    }
+  },
+  "statsborgerskap": {
+    "datoFraOgMed": "",
+    "kilde": "SKD",
+    "kode": {
+      "verdi": "NOR",
+      "kodeverk": "StatsborgerskapFreg"
+    }
+  },
+  "doedsdato": null,
+  "spesiellOpplysning": null,
+  "tiltak": null,
+  "egenansatt": {
+    "datoFraOgMed": null,
+    "kilde": null,
+    "erEgenansatt": false
+  },
+  "telefon": null,
+  "adresseinfo": {
+    "boadresse": {
+      "datoFraOgMed": "2019-01-21",
+      "kilde": "SKD",
+      "adresse": "VALHALLVEIEN 9",
+      "landkode": "NOR",
+      "kommune": "0301",
+      "postnummer": "0196",
+      "bydel": "030101",
+      "adressetillegg": null,
+      "veiadresse": {
+        "gatekode": "18064",
+        "husnummer": "9",
+        "bokstav": null,
+        "bolignummer": "H0101"
+      },
+      "matrikkeladresse": {
+        "gaardsnummer": null,
+        "bruksnummer": null,
+        "festenummer": null,
+        "undernummer": null
+      }
+    },
+    "postadresse": null,
+    "prioritertAdresse": null,
+    "geografiskTilknytning": {
+      "datoFraOgMed": "2019-01-21",
+      "kilde": "SKD",
+      "land": null,
+      "kommune": null,
+      "bydel": "030101"
+    },
+    "tilleggsadresse": null,
+    "utenlandskAdresse": null
+  },
+  "antallBarn": 0,
+  "antallLevendeBarnUnder18": 0,
+  "relasjonFinnes": false,
+  "foreldreansvar": null,
+  "oppholdstillatelse": null,
+  "kontonummer": {
+    "datoFraOgMed": "2010-04-28",
+    "kilde": "SKD",
+    "nummer": "***********"
+  },
+  "innvandringUtvandring": null,
+  "vergemaalListe": [],
+  "brukerbehovListe": [],
+  "utenlandsinfoList": [],
+  "utenlandskBank": null
+}
