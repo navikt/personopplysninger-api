@@ -12,6 +12,6 @@ object PostadresseTransformer {
             datoFraOgMed = inbound.datoFraOgMed,
             land = kodeverk.postadresselandterm,
             postnummer = inbound.postnummer,
-            poststed = inbound.postnummer?.let { kodeverk.postnummerterm}
+            poststed = inbound.postnummer?.let { kodeverk.postnummerterm} ?: run {" "}
     )
 }
