@@ -3,6 +3,8 @@ package no.nav.personopplysninger.features.personalia
 import no.nav.security.oidc.api.ProtectedWithClaims
 import no.nav.security.oidc.jaxrs.OidcRequestContext
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.CacheConfig
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.stereotype.Component
 import javax.ws.rs.GET
 import javax.ws.rs.Path
@@ -20,6 +22,7 @@ class PersonaliaResource @Autowired constructor(private var personaliaService: P
     @GET
     @Path("/personalia")
     @Produces(MediaType.APPLICATION_JSON)
+    @CacheEvict(allEntries = true)
     fun hentPersoninfo(): Response {
         val fodselsnr = hentFnrFraToken()
         val personaliaOgAdresser = personaliaService.hentPersoninfo(fodselsnr)
