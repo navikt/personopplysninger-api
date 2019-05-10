@@ -6,6 +6,7 @@ import no.nav.personopplysninger.features.kodeverk.exceptions.KodeverkConsumerEx
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
@@ -27,46 +28,55 @@ public class KodeverkConsumer {
         this.endpoint = endpoint;
     }
 
+    @Cacheable("kjonn")
     public GetKodeverkKoderBetydningerResponse hentKjonn(String kode) {
         Invocation.Builder request = buildKjonnstyperRequest(kode);
         return hentKodeverkBetydning(request);
     }
 
+    @Cacheable("kommune")
     public GetKodeverkKoderBetydningerResponse hentKommuner(String kode) {
         Invocation.Builder request = buildKommuneRequest(kode);
         return hentKodeverkBetydning(request);
     }
 
+    @Cacheable("land")
     public GetKodeverkKoderBetydningerResponse hentLandKoder(String kode) {
         Invocation.Builder request = buildLandkoderRequest(kode);
         return hentKodeverkBetydning(request);
     }
 
+    @Cacheable("status")
     public GetKodeverkKoderBetydningerResponse hentPersonstatus(String kode) {
         Invocation.Builder request = buildPersonstatusRequest(kode);
         return hentKodeverkBetydning(request);
     }
 
+    @Cacheable("postnr")
     public GetKodeverkKoderBetydningerResponse hentPostnummer(String kode) {
         Invocation.Builder request = buildPostnummerRequest(kode);
         return hentKodeverkBetydning(request);
     }
 
+    @Cacheable("sivilstand")
     public GetKodeverkKoderBetydningerResponse hentSivilstand(String kode) {
         Invocation.Builder request = buildSivilstandRequest(kode);
         return hentKodeverkBetydning(request);
     }
 
+    @Cacheable("spraak")
     public GetKodeverkKoderBetydningerResponse hentSpraak(String kode) {
         Invocation.Builder request = buildSpraakRequest(kode);
         return hentKodeverkBetydning(request);
     }
 
+    @Cacheable("valuta")
     public GetKodeverkKoderBetydningerResponse hentValuta(String kode) {
         Invocation.Builder request = buildValutaRequest(kode);
         return hentKodeverkBetydning(request);
     }
 
+    @Cacheable("statsborgerskap")
     public GetKodeverkKoderBetydningerResponse hentStatsborgerskap(String kode) {
         Invocation.Builder request = buildStatsborgerskapRequest(kode);
         return hentKodeverkBetydning(request);

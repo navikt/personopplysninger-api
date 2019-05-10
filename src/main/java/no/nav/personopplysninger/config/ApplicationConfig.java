@@ -3,11 +3,6 @@ package no.nav.personopplysninger.config;
 import no.nav.log.LogFilter;
 import no.nav.personopplysninger.features.kodeverk.KodeverkRestConfiguration;
 import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
-import no.nav.personopplysninger.features.kodeverk.KodeverkRestConfiguration;
-import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
-import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
-import no.nav.personopplysninger.features.kodeverk.KodeverkRestConfiguration;
-import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
@@ -19,6 +14,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -35,6 +31,7 @@ import java.util.EnumSet;
 @SpringBootConfiguration
 @ComponentScan({"no.nav.personopplysninger.features", "no.nav.personopplysninger.api"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
+@Cacheable
 @Import({RestClientConfiguration.class,
         KodeverkRestConfiguration.class,
         PersonaliaRestConfiguration.class
