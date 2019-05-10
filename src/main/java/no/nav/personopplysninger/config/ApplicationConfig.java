@@ -19,6 +19,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -35,6 +36,7 @@ import java.util.EnumSet;
 @SpringBootConfiguration
 @ComponentScan({"no.nav.personopplysninger.features", "no.nav.personopplysninger.api"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
+@EnableCaching
 @Import({RestClientConfiguration.class,
         KodeverkRestConfiguration.class,
         PersonaliaRestConfiguration.class
