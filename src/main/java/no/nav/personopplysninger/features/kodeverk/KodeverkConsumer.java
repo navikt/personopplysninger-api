@@ -1,24 +1,22 @@
 package no.nav.personopplysninger.features.kodeverk;
 
 import no.nav.log.MDCConstants;
+import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse;
 import no.nav.personopplysninger.features.kodeverk.exceptions.KodeverkConsumerException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.cache.annotation.Cacheable;
 
-import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
 import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
+import static no.nav.personopplysninger.features.ConsumerFactory.readEntity;
 
 public class KodeverkConsumer {
-
-    private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
+    
     private Client client;
     private URI endpoint;
     private static final String SPRAAK = "nb";
@@ -89,7 +87,7 @@ public class KodeverkConsumer {
                 .queryParam("ekskluderUgyldige", eksluderUgyldige)
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
                 .header("Nav-Personident", kode);
     }
 
@@ -153,15 +151,4 @@ public class KodeverkConsumer {
         }
     }
 
-    private <T> T readEntity(Class<T> responsklasse, Response response) {
-        try {
-            return response.readEntity(responsklasse);
-        } catch (ProcessingException e) {
-            throw new KodeverkConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + e.getStackTrace() + " " + responsklasse.getName(), e);
-        } catch (IllegalStateException e) {
-            throw new KodeverkConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
-        } catch (Exception e) {
-            throw new KodeverkConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.getName(), e);
-        }
-    }
 }
