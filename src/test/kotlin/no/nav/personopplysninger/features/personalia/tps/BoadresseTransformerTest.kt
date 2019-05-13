@@ -25,7 +25,7 @@ class BoadresseTransformerTest {
         assertEquals(null, actual.land)
         assertNotNull(actual.matrikkeladresse)
         assertEquals(inbound.postnummer!!, actual.postnummer)
-        Assertions.assertEquals(null, actual.poststed)
+        Assertions.assertEquals(" ", actual.poststed)
         assertNotNull(actual.veiadresse)
     }
 
@@ -43,7 +43,6 @@ class BoadresseTransformerTest {
         assertNull(actual.land)
         assertNull(actual.matrikkeladresse)
         assertNull(actual.postnummer)
-        assertNull(actual.poststed)
         assertNull(actual.veiadresse)
     }
 }
