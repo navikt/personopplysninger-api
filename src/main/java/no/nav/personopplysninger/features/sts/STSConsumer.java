@@ -1,5 +1,7 @@
 package no.nav.personopplysninger.features.sts;
 
+import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException;
+
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation;
@@ -41,8 +43,8 @@ public class STSConsumer {
             return readEntity(String.class, response);
         } catch (Exception e) {
             String msg = "Forsøkte å hente STSToken. endpoint=[" + endpoint + "].";
+            throw new ConsumerException(msg, e);
         }
-        return null;
     }
 
 
