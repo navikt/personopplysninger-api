@@ -7,7 +7,7 @@ object ArbeidsforholdTransformer {
 
     fun toOutbound(inbound: Arbeidsforhold, arbgivnavn: String?) = ArbeidsforholdDto(
 
-            arbeidsforholdId = inbound.arbeidsforholdId,
+            arbeidsforholdId = inbound.navArbeidsforholdId,
             type = inbound.type,
             sistBekreftet = inbound.sistBekreftet,
             arbeidsgiver = ArbeidsgiverTransformer.toOutbound(inbound.arbeidsgiver, arbgivnavn),
