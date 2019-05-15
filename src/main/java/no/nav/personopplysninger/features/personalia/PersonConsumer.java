@@ -1,11 +1,11 @@
 package no.nav.personopplysninger.features.personalia;
 
 import no.nav.log.MDCConstants;
+import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException;
 import no.nav.tps.person.Personinfo;
 import org.slf4j.MDC;
 
-import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.Response;
@@ -15,7 +15,6 @@ import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 public class PersonConsumer {
 
-    private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     private Client client;
     private URI endpoint;
 
@@ -37,7 +36,7 @@ public class PersonConsumer {
                 .path("person")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
+                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
                 .header("Nav-Personident", fnr);
     }
 
@@ -57,24 +56,10 @@ public class PersonConsumer {
     private Personinfo readResponse(Response r) {
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
-            throw new ConsumerException(msg + " - " + readEntity(String.class, r));
+            throw new ConsumerException(msg + " - " + ConsumerFactory.readEntity(String.class, r));
         } else {
-            return readEntity(Personinfo.class, r);
+            return ConsumerFactory.readEntity(Personinfo.class, r);
         }
     }
-
-
-    private <T> T readEntity(Class<T> responsklasse, Response response) {
-        try {
-            return response.readEntity(responsklasse);
-        } catch (ProcessingException e) {
-            throw new ConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
-        } catch (IllegalStateException e) {
-            throw new ConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
-        } catch (Exception e) {
-            throw new ConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.getName(), e);
-        }
-    }
-
 
 }
