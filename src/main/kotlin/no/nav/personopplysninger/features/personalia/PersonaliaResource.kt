@@ -9,10 +9,12 @@ import org.springframework.stereotype.Component
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.Produces
+import javax.ws.rs.core.CacheControl
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
 private const val claimsIssuer = "selvbetjening"
+private val cacheControl = CacheControl()
 
 @Component
 @Path("/")
@@ -22,12 +24,14 @@ class PersonaliaResource @Autowired constructor(private var personaliaService: P
     @GET
     @Path("/personalia")
     @Produces(MediaType.APPLICATION_JSON)
-    @CacheEvict(allEntries = true)
     fun hentPersoninfo(): Response {
+        cacheControl.setMustRevalidate(true)
+        cacheControl.setNoStore(true)
         val fodselsnr = hentFnrFraToken()
         val personaliaOgAdresser = personaliaService.hentPersoninfo(fodselsnr)
         return Response
                 .ok(personaliaOgAdresser)
+                .cacheControl(cacheControl)
                 .build()
     }
 
