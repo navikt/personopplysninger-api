@@ -3,10 +3,6 @@ package no.nav.personopplysninger.features.arbeidsforhold
 import no.nav.personopplysninger.features.arbeidsforhold.dto.outbound.AntallTimerForTimeloennetDto
 import no.nav.personopplysninger.features.arbeidsforhold.dto.transformer.AntallTimerForTimeloennetTransformer
 
-import no.nav.tps.person.Kode
-import no.nav.tps.person.Navn
-import no.nav.tps.person.Personinfo
-import no.nav.tps.person.Telefoninfo
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
