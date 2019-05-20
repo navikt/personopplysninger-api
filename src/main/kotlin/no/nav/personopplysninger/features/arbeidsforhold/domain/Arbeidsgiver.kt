@@ -4,6 +4,6 @@ data class Arbeidsgiver (
 
         val organisasjonsnummer: kotlin.String? = null,
         val type: kotlin.String? = null,
-        val offentlingIdent: kotlin.String? = null
+        val offentligIdent: kotlin.String? = null
 
 )
