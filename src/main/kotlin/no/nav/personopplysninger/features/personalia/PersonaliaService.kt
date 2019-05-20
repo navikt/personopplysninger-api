@@ -2,15 +2,15 @@ package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.features.norg2.Norg2Consumer
+import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskTilknytning
 import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAdresser
 import no.nav.personopplysninger.features.personalia.dto.transformer.KontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import no.nav.personopplysninger.features.personalia.kodeverk.Personstatus
 import no.nav.tps.person.Personinfo
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -19,7 +19,8 @@ import org.springframework.stereotype.Service
 class PersonaliaService @Autowired constructor(
         private var personConsumer: PersonConsumer,
         private var kontaktinfoConsumer: KontaktinfoConsumer,
-        private var kodeverkConsumer: KodeverkConsumer
+        private var kodeverkConsumer: KodeverkConsumer,
+        private var norg2Consumer: Norg2Consumer
 ) {
 
     private val kodeverkspraak = "nb"
@@ -42,9 +43,14 @@ class PersonaliaService @Autowired constructor(
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
         val valuta = kodeverkConsumer.hentValuta(inbound.utenlandskBank?.valuta?.verdi)
 
+        var personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
+        val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
+        val enhetsnr = norg2Consumer.hentEnhet(tilknytning)
+
         getTerms(kjonn, land, foedtkommune, bostedskommune, postbostedsnummer, postnummer, posttilleggsnummer, status, sivilstand, spraak, statsborgerskap, valuta, inbound)
 
-        return PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
+        personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhetsnr.enhetNr
+        return personaliaOgAdresser
     }
 
     private fun getTerms(kjonn: GetKodeverkKoderBetydningerResponse, land: GetKodeverkKoderBetydningerResponse, foedtkommune: GetKodeverkKoderBetydningerResponse, bostedskommune: GetKodeverkKoderBetydningerResponse, postbostedsnummer: GetKodeverkKoderBetydningerResponse, postnummer: GetKodeverkKoderBetydningerResponse, posttilleggsnummer: GetKodeverkKoderBetydningerResponse, status: GetKodeverkKoderBetydningerResponse, sivilstand: GetKodeverkKoderBetydningerResponse, spraak: GetKodeverkKoderBetydningerResponse, statsborgerskap: GetKodeverkKoderBetydningerResponse, valuta: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
@@ -235,7 +241,7 @@ class PersonaliaService @Autowired constructor(
 
     private fun getUtenlandskBankValutaTerm(valuta: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
         try {
-            if (!inbound.utenlandskBank?.valuta?.verdi.isNullOrEmpty() && !(valuta.betydninger.getValue( inbound.utenlandskBank?.valuta?.verdi).isEmpty())) {
+            if (!inbound.utenlandskBank?.valuta?.verdi.isNullOrEmpty() && !(valuta.betydninger.getValue(inbound.utenlandskBank?.valuta?.verdi).isEmpty())) {
                 personaliaKodeverk.utenlandskbankvalutaterm = valuta.betydninger.getValue(inbound.utenlandskBank?.valuta?.verdi)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             }
         } catch (nse: NoSuchElementException) {
@@ -248,6 +254,16 @@ class PersonaliaService @Autowired constructor(
     fun hentKontaktinformasjon(fodselsnr: String): Kontaktinformasjon {
         val inbound = kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
         return KontaktinformasjonTransformer.toOutbound(inbound, fodselsnr)
+    }
+
+    fun hentGeografiskTilknytning(inbound: GeografiskTilknytning?): String? {
+        if (inbound?.bydel != null) {
+            return inbound.bydel
+        }
+        else
+        {
+            return inbound?.kommune
+        }
     }
 }
 

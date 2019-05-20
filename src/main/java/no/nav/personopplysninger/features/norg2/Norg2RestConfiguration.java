@@ -17,10 +17,10 @@ import java.net.URISyntaxException;
 @Configuration
 public class Norg2RestConfiguration {
 
-    @Value("${PERSONOPPLYSNINGER-API-NORG2_REST-API-APIKEY_USERNAME}")
+    @Value("${PERSONOPPLYSNINGER-API-NORG2_API_V1-APIKEY_USERNAME}")
     private String norg2ApiKeyUsername;
 
-    @Value("${PERSONOPPLYSNINGER-API-NORG2_REST-API-APIKEY_PASSWORD}")
+    @Value("${PERSONOPPLYSNINGER-API-NORG2_API_V1-APIKEY_PASSWORD}")
     private String norg2ApiKeyPassword;
 
     @Bean
