@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.config;
 
+import no.nav.personopplysninger.features.personalia.ArbeidsforholdIdResource;
 import no.nav.personopplysninger.features.personalia.ArbeidsforholdResource;
 import no.nav.personopplysninger.features.personalia.PersonaliaResource;
 import no.nav.personopplysninger.features.status.StatusResource;
@@ -21,9 +22,9 @@ public class RestResourceConfiguration extends ResourceConfig {
 
     public RestResourceConfiguration() {
         register(JacksonFeature.class);
-        ResourceConfig register = register (StatusResource.class);
         register(PersonaliaResource.class);
         register(ArbeidsforholdResource.class);
+        register(ArbeidsforholdIdResource.class);
         register(CORSResponseFilter.class);
         register(OidcContainerRequestFilter.class);
         register(OidcResourceFilteringFeature.class);
