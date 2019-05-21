@@ -22,18 +22,25 @@ class ArbeidsforholdIdResource @Autowired constructor(private var arbeidsforhold
     @Produces(MediaType.APPLICATION_JSON)
     fun hentPersonalia(): Response {
         val fodselsnr = hentFnrFraToken()
-        val id = 0;
-        val fssToken = "";
-        //TODO hente id fra URL
+        val id = hentIdFraAttribute().toInt()
+        val fssToken = hentFssToken()
         val arbeidsforhold = arbeidsforholdIdService.hentEttArbeidsforholdmedId(fodselsnr, id, fssToken)
         return Response
                 .ok(arbeidsforhold)
                 .build()
     }
 
+    private fun hentFssToken(): String {
+        return arbeidsforholdIdService.hentFSSToken()
+    }
 
     private fun hentFnrFraToken(): String {
         val context = OidcRequestContext.getHolder().oidcValidationContext
         return context.getClaims(claimsIssuer).claimSet.subject
+    }
+
+    private fun hentIdFraAttribute(): String {
+        val id = OidcRequestContext.getHolder().getRequestAttribute("id")
+        return id.toString()
     }
 }
