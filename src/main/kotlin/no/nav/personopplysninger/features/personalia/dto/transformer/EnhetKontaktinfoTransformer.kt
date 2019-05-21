@@ -5,11 +5,18 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskEnhe
 
 
 object EnhetKontaktinfoTransformer {
-    fun toOutbound(inbound: Norg2EnhetKontaktinfo) : GeografiskEnhetKontaktInformasjon {
+    fun toOutbound(inbound: Norg2EnhetKontaktinfo) = GeografiskEnhetKontaktInformasjon (
+        gateadresse = inbound.publikumsmottak?.besoeksadresse?.gatenavn,
+        poststed = inbound.publikumsmottak?.besoeksadresse?.poststed,
+        aapningmandag = inbound.aapningstider?.dag,
+        aapningtirsdag = inbound.aapningstider?.dag,
+        appningonsdag = inbound.aapningstider?.dag,
+        aapningtorsdag = inbound.aapningstider?.dag,
+        aapningfredag = inbound.aapningstider?.dag,
+        andre = inbound.aapningstider?.dag,
+        tlfperson = inbound.publikumsmottak?.besoeksadresse?.gatenavn,
+        tlfpensjon = inbound.telefonnummer
 
-        return (
-
-        )
-    }
+    )
 
 }
