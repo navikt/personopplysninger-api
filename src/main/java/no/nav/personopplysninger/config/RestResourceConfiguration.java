@@ -22,6 +22,7 @@ public class RestResourceConfiguration extends ResourceConfig {
 
     public RestResourceConfiguration() {
         register(JacksonFeature.class);
+        register (StatusResource.class);
         register(PersonaliaResource.class);
         register(ArbeidsforholdResource.class);
         register(ArbeidsforholdIdResource.class);
