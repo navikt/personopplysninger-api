@@ -26,12 +26,12 @@ object PersoninfoTransformer {
                 kontonr = inbound.kontonummer?.nummer,
                 tlfnr = inbound.telefon?.let { TelefoninfoTransformer.toOutbound(it) },
                 utenlandskbank = inbound.utenlandskBank?.let { UtenlandskBankTransformer.toOutbound(it, kodeverk)},
-                spraak = inbound.spraak?.kode?.verdi?.let { kodeverk.spraakterm } ?: run {" "},
-                personstatus = inbound.status?.kode?.verdi?.let { kodeverk.statusterm }  ?: run {" "},
-                statsborgerskap = inbound.statsborgerskap?.kode?.verdi?.let { kodeverk.stasborgerskapterm }  ?: run {" "},
-                foedested = foedested(inbound.foedtIKommune?.verdi?.let  { kodeverk.foedekommuneterm  }, kodeverk.landterm) ?: run {" "},
-                sivilstand = inbound.sivilstand?.kode?.verdi?.let { kodeverk.sivilstandterm } ?: run {" "},
-                kjoenn = inbound.kjonn?.let { kodeverk.kjonnterm } ?: run {" "}
+                spraak = inbound.spraak?.kode?.verdi?.let { kodeverk.spraakterm } ?: run {null},
+                personstatus = inbound.status?.kode?.verdi?.let { kodeverk.statusterm }  ?: run {null},
+                statsborgerskap = inbound.statsborgerskap?.kode?.verdi?.let { kodeverk.stasborgerskapterm }  ?: run {null},
+                foedested = foedested(inbound.foedtIKommune?.verdi?.let  { kodeverk.foedekommuneterm  }, kodeverk.landterm) ?: run {null},
+                sivilstand = inbound.sivilstand?.kode?.verdi?.let { kodeverk.sivilstandterm } ?: run {null},
+                kjoenn = inbound.kjonn?.let { kodeverk.kjonnterm } ?: run {null}
         )
 
     }

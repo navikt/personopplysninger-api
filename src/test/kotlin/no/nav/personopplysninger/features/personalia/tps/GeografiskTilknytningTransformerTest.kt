@@ -21,7 +21,7 @@ class GeografiskTilknytningTransformerTest {
         assertEquals(inbound.bydel!!, actual.bydel)
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
         assertEquals(inbound.kommune!!, actual.kommune)
-        assertEquals("", actual.land)
+        assertEquals(null, actual.land)
     }
 
     @Test
@@ -30,6 +30,7 @@ class GeografiskTilknytningTransformerTest {
 
         val actual = GeografiskTilknytningTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
+        assertNull(actual.land)
         assertNull(actual.bydel)
         assertNull(actual.datoFraOgMed)
 
