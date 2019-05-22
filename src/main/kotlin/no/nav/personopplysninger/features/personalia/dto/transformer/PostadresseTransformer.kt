@@ -10,7 +10,7 @@ object PostadresseTransformer {
             adresse2 = inbound.adresse2,
             adresse3 = inbound.adresse3,
             datoFraOgMed = inbound.datoFraOgMed,
-            land = kodeverk.postadresselandterm,
+            land = kodeverk.postadresselandterm ?: run {" "},
             postnummer = inbound.postnummer,
             poststed = inbound.postnummer?.let { kodeverk.postnummerterm} ?: run {" "}
     )

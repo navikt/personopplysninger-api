@@ -16,8 +16,8 @@ object UtenlandskBankTransformer {
                 iban = inbound.iban,
                 kontonummer = inbound.kontonummer,
                 swiftkode = inbound.swiftkode,
-                land = inbound.land?.let { kodeverk.utenlandskbanklandterm },
-                valuta = inbound.valuta?.let { kodeverk.utenlandskbankvalutaterm }
+                land = inbound.land?.let { kodeverk.utenlandskbanklandterm } ?: run {" "},
+                valuta = inbound.valuta?.let { kodeverk.utenlandskbankvalutaterm } ?: run {" "}
         )
     }
 }
