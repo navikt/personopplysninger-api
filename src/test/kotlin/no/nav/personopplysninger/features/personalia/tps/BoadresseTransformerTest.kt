@@ -21,11 +21,11 @@ class BoadresseTransformerTest {
         assertEquals(inbound.adressetillegg!!, actual.adressetillegg)
         assertEquals(inbound.bydel!!, actual.bydel)
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
-        assertEquals(" ", actual.kommune)
-        assertEquals(" ", actual.land)
+        assertEquals("", actual.kommune)
+        assertEquals("", actual.land)
         assertNotNull(actual.matrikkeladresse)
         assertEquals(inbound.postnummer!!, actual.postnummer)
-        Assertions.assertEquals(" ", actual.poststed)
+        Assertions.assertEquals("", actual.poststed)
         assertNotNull(actual.veiadresse)
     }
 

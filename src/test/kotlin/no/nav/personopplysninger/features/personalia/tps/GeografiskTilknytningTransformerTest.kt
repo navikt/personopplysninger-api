@@ -21,7 +21,7 @@ class GeografiskTilknytningTransformerTest {
         assertEquals(inbound.bydel!!, actual.bydel)
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
         assertEquals(inbound.kommune!!, actual.kommune)
-        assertEquals(" ", actual.land)
+        assertEquals("", actual.land)
     }
 
     @Test
