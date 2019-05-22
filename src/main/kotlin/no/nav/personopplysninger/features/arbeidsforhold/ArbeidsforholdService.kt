@@ -30,8 +30,9 @@ class ArbeidsforholdService @Autowired constructor(
         val inbound = arbeidsforholdConsumer.hentArbeidsforholdmedFnr(fodselsnr, fssToken)
         var arbeidsforholdDtos = mutableListOf<ArbeidsforholdDto>()
         for (af in inbound) {
-            val arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
-            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
+            log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
+       //    val arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
+            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, ""))
         }
         return arbeidsforholdDtos
     }
@@ -40,8 +41,9 @@ class ArbeidsforholdService @Autowired constructor(
         val inbound = arbeidsforholdConsumer.hentArbeidsforholdmedId(fodselsnr, id, fssToken)
         var arbeidsforholdDtos = mutableListOf<ArbeidsforholdDto>()
         for (af in inbound) {
-            val arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
-            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
+            log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
+   //         val arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
+            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, ""))
         }
         return arbeidsforholdDtos
 
