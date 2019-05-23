@@ -40,6 +40,7 @@ class ArbeidsforholdService @Autowired constructor(
                 arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
             }
         }
+        log.warn("Arbeidsforhold antall " + arbeidsforholdDtos.size)
         return arbeidsforholdDtos
     }
 
