@@ -1,14 +1,18 @@
 package no.nav.personopplysninger.features.ereg
 
-data class EregOrganisasjon (
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-    /* Organisasjonsnavn fra Enhetsregisteret */
-    val redigertnavn: kotlin.String? = null,
-    /* Type: Organisasjon eller Person */
-    val navn: Type? = null
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class EregOrganisasjon(
+
+        /* Organisasjonsnavn fra Enhetsregisteret */
+        val redigertnavn: kotlin.String? = null,
+        val organisasjonsnummer: kotlin.String? = null,
+        /* Type: Organisasjon eller Person */
+        val navn: Type? = null
 ) {
 
-    enum class Type(val value: kotlin.String){
+    enum class Type(val value: kotlin.String) {
         redigertnavn("redigertnavn");
     }
 }
