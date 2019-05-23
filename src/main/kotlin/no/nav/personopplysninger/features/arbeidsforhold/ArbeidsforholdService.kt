@@ -31,12 +31,14 @@ class ArbeidsforholdService @Autowired constructor(
         val inbound = arbeidsforholdConsumer.hentArbeidsforholdmedFnr(fodselsnr, fssToken)
         var arbeidsforholdDtos = mutableListOf<ArbeidsforholdDto>()
         for (af in inbound) {
-            log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
-            var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
-            if (af.arbeidsgiver?.type.equals(organisasjon)) {
-                arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
+            if (af.innrapportertEtterAOrdningen == true) {
+                log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
+                var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
+                if (af.arbeidsgiver?.type.equals(organisasjon)) {
+                    arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
+                }
+                arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
             }
-            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
         }
         return arbeidsforholdDtos
     }
@@ -45,14 +47,15 @@ class ArbeidsforholdService @Autowired constructor(
         val inbound = arbeidsforholdConsumer.hentArbeidsforholdmedId(fodselsnr, id, fssToken)
         var arbeidsforholdDtos = mutableListOf<ArbeidsforholdDto>()
         for (af in inbound) {
-            log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
-            var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
-            if (af.arbeidsgiver?.type.equals(organisasjon)) {
-                arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
+            if (af.innrapportertEtterAOrdningen == true) {
+                log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
+                var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
+                if (af.arbeidsgiver?.type.equals(organisasjon)) {
+                    arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
+                }
+                arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
             }
-            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
         }
         return arbeidsforholdDtos
-
     }
 }
