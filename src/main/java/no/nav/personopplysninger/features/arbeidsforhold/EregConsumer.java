@@ -20,6 +20,7 @@ public class EregConsumer {
     private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     private Client client;
     private URI endpoint;
+    private final String REGELVERK = "A_ORDNINGEN";
     private static final Logger log = LoggerFactory.getLogger(EregConsumer.class);
 
 
@@ -38,6 +39,7 @@ public class EregConsumer {
 
         return client.target(endpoint)
                 .path("v1/organisasjon/" + orgnr)
+                .queryParam("regelverk", REGELVERK)
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID);

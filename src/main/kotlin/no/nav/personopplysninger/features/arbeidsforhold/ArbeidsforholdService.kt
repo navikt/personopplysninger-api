@@ -31,7 +31,6 @@ class ArbeidsforholdService @Autowired constructor(
         val inbound = arbeidsforholdConsumer.hentArbeidsforholdmedFnr(fodselsnr, fssToken)
         var arbeidsforholdDtos = mutableListOf<ArbeidsforholdDto>()
         for (af in inbound) {
-            if (af.innrapportertEtterAOrdningen == true) {
                 log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
                 var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
                 if (af.arbeidsgiver?.type.equals(organisasjon)) {
@@ -39,7 +38,6 @@ class ArbeidsforholdService @Autowired constructor(
                 }
                 log.warn("Eregoppslagnavn " + arbgivnavn)
                 arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
-            }
         }
         log.warn("Arbeidsforhold antall " + arbeidsforholdDtos.size)
         return arbeidsforholdDtos
@@ -49,14 +47,12 @@ class ArbeidsforholdService @Autowired constructor(
         val inbound = arbeidsforholdConsumer.hentArbeidsforholdmedId(fodselsnr, id, fssToken)
         var arbeidsforholdDtos = mutableListOf<ArbeidsforholdDto>()
         for (af in inbound) {
-            if (af.innrapportertEtterAOrdningen == true) {
                 log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
                 var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
                 if (af.arbeidsgiver?.type.equals(organisasjon)) {
                     arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).navn?.redigertnavn
                 }
                 arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
-            }
         }
         return arbeidsforholdDtos
     }
