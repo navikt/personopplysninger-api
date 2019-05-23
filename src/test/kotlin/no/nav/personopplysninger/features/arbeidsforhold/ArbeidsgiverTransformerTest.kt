@@ -14,9 +14,8 @@ import kotlin.test.assertNotNull
 class ArbeidsgiverTransformerTest
 
     @Test
-    fun skalFaArbeidsgiver() {
+    fun skalFaaArbeidsgiver() {
         val inbound: Arbeidsgiver = ArbeidsgiverObjectMother.withDummyValues
-
         val actual: ArbeidsgiverDto = ArbeidsgiverTransformer.toOutbound(inbound, "NAV")
         assertNotNull(actual)
         assertEquals(inbound.type.toString(), actual.type)

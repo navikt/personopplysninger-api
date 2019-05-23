@@ -35,8 +35,9 @@ class ArbeidsforholdService @Autowired constructor(
                 log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
                 var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
                 if (af.arbeidsgiver?.type.equals(organisasjon)) {
-                    arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
+                    arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).navn?.redigertnavn
                 }
+                log.warn("Eregoppslagnavn " + arbgivnavn)
                 arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
             }
         }
@@ -52,7 +53,7 @@ class ArbeidsforholdService @Autowired constructor(
                 log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
                 var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
                 if (af.arbeidsgiver?.type.equals(organisasjon)) {
-                    arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
+                    arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).navn?.redigertnavn
                 }
                 arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
             }

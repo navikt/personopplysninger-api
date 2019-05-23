@@ -3,8 +3,8 @@ package no.nav.personopplysninger.features.ereg
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class EregOrganisasjon(
+data class Navn(
 
-        val navn: Navn? = null
+        val redigertnavn: kotlin.String? = null
 
 )
