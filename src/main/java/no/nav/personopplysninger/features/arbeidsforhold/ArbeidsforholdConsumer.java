@@ -50,11 +50,11 @@ public class ArbeidsforholdConsumer {
 
         return client.target(endpoint)
                 .path("v1/arbeidstaker/arbeidsforhold")
+                .queryParam("regelverk", REGELVERK)
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header("Nav-Consumer-Token", BEARER.concat(fssToken))
-                .header("regelverk", REGELVERK)
                 .header("Nav-Personident", fnr);
 
     }
