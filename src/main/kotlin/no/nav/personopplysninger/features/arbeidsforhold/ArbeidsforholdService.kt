@@ -23,7 +23,6 @@ class ArbeidsforholdService @Autowired constructor(
     fun hentFSSToken(): String {
         val fssToken = stsConsumer.fssToken
         val strippedToken = fssToken.substring(tokenbodyindex, fssToken.length - tokenbodyend)
-        log.warn("TOKEN er" + strippedToken)
         return strippedToken
     }
 
@@ -31,29 +30,23 @@ class ArbeidsforholdService @Autowired constructor(
         val inbound = arbeidsforholdConsumer.hentArbeidsforholdmedFnr(fodselsnr, fssToken)
         var arbeidsforholdDtos = mutableListOf<ArbeidsforholdDto>()
         for (af in inbound) {
-                log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
-                var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
-                if (af.arbeidsgiver?.type.equals(organisasjon)) {
-                    arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).navn?.redigertnavn
-                }
-                log.warn("Eregoppslagnavn " + arbgivnavn)
-                arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
+            var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
+            if (af.arbeidsgiver?.type.equals(organisasjon)) {
+                arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).navn?.redigertnavn
+            }
+            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
         }
-        log.warn("Arbeidsforhold antall " + arbeidsforholdDtos.size)
         return arbeidsforholdDtos
     }
 
-    fun hentEttArbeidsforholdmedId(fodselsnr: String, id: Int, fssToken: String): List<ArbeidsforholdDto> {
-        val inbound = arbeidsforholdConsumer.hentArbeidsforholdmedId(fodselsnr, id, fssToken)
-        var arbeidsforholdDtos = mutableListOf<ArbeidsforholdDto>()
-        for (af in inbound) {
-                log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
-                var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
-                if (af.arbeidsgiver?.type.equals(organisasjon)) {
-                    arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).navn?.redigertnavn
-                }
-                arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
+    fun hentEttArbeidsforholdmedId(fodselsnr: String, id: Int, fssToken: String): ArbeidsforholdDto {
+        val arbeidsforhold = arbeidsforholdConsumer.hentArbeidsforholdmedId(fodselsnr, id, fssToken)
+        var arbeidsforholdDto: ArbeidsforholdDto
+        var arbgivnavn = arbeidsforhold.arbeidsgiver?.organisasjonsnummer
+        if (arbeidsforhold.arbeidsgiver?.type.equals(organisasjon)) {
+            arbgivnavn = eregConsumer.hentOrgnavn(arbeidsforhold.arbeidsgiver?.organisasjonsnummer).navn?.redigertnavn
         }
-        return arbeidsforholdDtos
+        arbeidsforholdDto = ArbeidsforholdTransformer.toOutbound(arbeidsforhold, arbgivnavn)
+        return arbeidsforholdDto
     }
 }

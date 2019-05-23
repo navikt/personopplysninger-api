@@ -40,7 +40,7 @@ public class ArbeidsforholdConsumer {
     }
 
 
-    public List<Arbeidsforhold> hentArbeidsforholdmedId(String fnr, int id, String fssToken) {
+    public Arbeidsforhold hentArbeidsforholdmedId(String fnr, int id, String fssToken) {
         Invocation.Builder request = buildForholdIdRequest(fnr, id, fssToken);
         return hentArbeidsforholdmedId(request);
     }
@@ -72,7 +72,7 @@ public class ArbeidsforholdConsumer {
 
     private List<Arbeidsforhold> hentArbeidsforholdmedFnr(Invocation.Builder request) {
         try (Response response = request.get()) {
-            return readResponse(response);
+            return readFnrResponse(response);
         } catch (ArbeidsforholdConsumerException e) {
             throw e;
         } catch (Exception e) {
@@ -81,9 +81,9 @@ public class ArbeidsforholdConsumer {
         }
     }
 
-    private List<Arbeidsforhold> hentArbeidsforholdmedId(Invocation.Builder request) {
+    private Arbeidsforhold hentArbeidsforholdmedId(Invocation.Builder request) {
         try (Response response = request.get()) {
-            return readResponse(response);
+            return readIdResponse(response);
         } catch (ArbeidsforholdConsumerException e) {
             throw e;
         } catch (Exception e) {
@@ -93,17 +93,25 @@ public class ArbeidsforholdConsumer {
     }
 
 
-    private List<Arbeidsforhold> readResponse(Response r) {
+    private List<Arbeidsforhold> readFnrResponse(Response r) {
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere REST-tjenesten Arbeidsforhold. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new ArbeidsforholdConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
             List arbeidsforholdList = r.readEntity(new GenericType<List<Arbeidsforhold>>(){});
-            log.warn("arbeidsforholdList.size() " + arbeidsforholdList.size());
             return arbeidsforholdList;
         }
     }
 
+    private Arbeidsforhold readIdResponse(Response r) {
+        if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
+            String msg = "Forsøkte å konsumere REST-tjenesten Arbeidsforhold. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
+            throw new ArbeidsforholdConsumerException(msg + " - " + readEntity(String.class, r));
+        } else {
+            Arbeidsforhold arbeidsforhold = r.readEntity(Arbeidsforhold.class);
+            return arbeidsforhold;
+        }
+    }
 
     private <T> T readEntity(Class<T> responsklasse, Response response) {
         try {
