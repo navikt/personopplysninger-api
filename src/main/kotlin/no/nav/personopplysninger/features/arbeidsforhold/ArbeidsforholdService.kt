@@ -18,6 +18,7 @@ class ArbeidsforholdService @Autowired constructor(
     private val log = LoggerFactory.getLogger(ArbeidsforholdService::class.java)
     private val tokenbodyindex = 17
     private val tokenbodyend = 42
+    private val organisasjon = "Organisasjon"
 
     fun hentFSSToken(): String {
         val fssToken = stsConsumer.fssToken
@@ -31,8 +32,11 @@ class ArbeidsforholdService @Autowired constructor(
         var arbeidsforholdDtos = mutableListOf<ArbeidsforholdDto>()
         for (af in inbound) {
             log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
-       //    val arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
-            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, ""))
+            var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
+            if (af.arbeidsgiver?.type.equals(organisasjon)) {
+                arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
+            }
+            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
         }
         return arbeidsforholdDtos
     }
@@ -42,8 +46,11 @@ class ArbeidsforholdService @Autowired constructor(
         var arbeidsforholdDtos = mutableListOf<ArbeidsforholdDto>()
         for (af in inbound) {
             log.warn("Eregoppslag " + af.arbeidsgiver?.organisasjonsnummer)
-   //         val arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
-            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, ""))
+            var arbgivnavn = af.arbeidsgiver?.organisasjonsnummer
+            if (af.arbeidsgiver?.type.equals(organisasjon)) {
+                arbgivnavn = eregConsumer.hentOrgnavn(af.arbeidsgiver?.organisasjonsnummer).redigertnavn
+            }
+            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(af, arbgivnavn))
         }
         return arbeidsforholdDtos
 
