@@ -9,11 +9,11 @@ object BoadresseTransformer {
             adressetillegg = inbound.adressetillegg,
             bydel = inbound.bydel,
             datoFraOgMed = inbound.datoFraOgMed,
-            kommune = inbound.kommune?.let { kodeverk.bostedskommuneterm} ?: run {null},
-            land = inbound.landkode?.let { kodeverk.landterm } ?: run {null},
+            kommune = inbound.kommune?.let { kodeverk.bostedskommuneterm} ?: run {""},
+            land = inbound.landkode?.let { kodeverk.landterm } ?: run {""},
             matrikkeladresse = inbound.matrikkeladresse?.let { MatrikkeladresseTransformer.toOutbound(it) },
             postnummer = inbound.postnummer,
-            poststed = inbound.postnummer?.let { kodeverk.bostedpostnummerterm } ?: run {null},
+            poststed = inbound.postnummer?.let { kodeverk.bostedpostnummerterm } ?: run {""},
             veiadresse = inbound.veiadresse?.let { VeiadresseTransformer.toOutbound(it) }
     )
 }

@@ -21,11 +21,11 @@ class BoadresseTransformerTest {
         assertEquals(inbound.adressetillegg!!, actual.adressetillegg)
         assertEquals(inbound.bydel!!, actual.bydel)
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
-        assertEquals(null, actual.kommune)
-        assertEquals(null, actual.land)
+        assertEquals("", actual.kommune)
+        assertEquals("", actual.land)
         assertNotNull(actual.matrikkeladresse)
         assertEquals(inbound.postnummer!!, actual.postnummer)
-        Assertions.assertEquals(null, actual.poststed)
+        Assertions.assertEquals("", actual.poststed)
         assertNotNull(actual.veiadresse)
     }
 
@@ -41,9 +41,6 @@ class BoadresseTransformerTest {
         assertNull(actual.datoFraOgMed)
         assertNull(actual.matrikkeladresse)
         assertNull(actual.postnummer)
-        assertNull(actual.poststed)
-        assertNull(actual.kommune)
-        assertNull(actual.land)
         assertNull(actual.veiadresse)
     }
 }
