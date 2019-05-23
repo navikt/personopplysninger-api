@@ -22,7 +22,7 @@ public class ArbeidsforholdConsumer {
 
     private static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     private static final String BEARER = "Bearer ";
-    private static final String REGELVERK = "FOER_A_ORDNINGEN";
+    private static final String REGELVERK = "A_ORDNINGEN";
     private Client client;
     private URI endpoint;
     private static final Logger log = LoggerFactory.getLogger(ArbeidsforholdConsumer.class);
