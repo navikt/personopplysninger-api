@@ -38,11 +38,10 @@ public class EregConsumer {
     private Invocation.Builder buildOrgnrRequest(String orgnr) {
 
         return client.target(endpoint)
-                .path("v1/organisasjon")
+                .path("v1/organisasjon/" + orgnr)
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
-                .header("orgnummer", orgnr);
+                .header("Nav-Consumer-Id", CONSUMER_ID);
 
     }
 
