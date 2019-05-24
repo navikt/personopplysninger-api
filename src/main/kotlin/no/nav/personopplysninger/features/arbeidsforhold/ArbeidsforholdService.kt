@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.arbeidsforhold
 
 import no.nav.personopplysninger.features.arbeidsforhold.dto.outbound.ArbeidsforholdDto
 import no.nav.personopplysninger.features.arbeidsforhold.dto.transformer.ArbeidsforholdTransformer
+import no.nav.personopplysninger.features.arbeidsforhold.dto.transformer.EnkeltArbeidsforholdTransformer
 import no.nav.personopplysninger.features.sts.STSConsumer
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -46,7 +47,7 @@ class ArbeidsforholdService @Autowired constructor(
         if (arbeidsforhold.arbeidsgiver?.type.equals(organisasjon)) {
             arbgivnavn = eregConsumer.hentOrgnavn(arbeidsforhold.arbeidsgiver?.organisasjonsnummer).navn?.redigertnavn
         }
-        arbeidsforholdDto = ArbeidsforholdTransformer.toOutbound(arbeidsforhold, arbgivnavn)
+        arbeidsforholdDto = EnkeltArbeidsforholdTransformer.toOutbound(arbeidsforhold, arbgivnavn)
         return arbeidsforholdDto
     }
 }
