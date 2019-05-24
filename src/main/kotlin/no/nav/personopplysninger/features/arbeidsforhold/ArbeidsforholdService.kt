@@ -10,6 +10,7 @@ import no.nav.personopplysninger.features.sts.STSConsumer
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.lang.Thread.sleep
 
 @Service
 class ArbeidsforholdService @Autowired constructor(
@@ -26,6 +27,7 @@ class ArbeidsforholdService @Autowired constructor(
 
     fun hentFSSToken(): String {
         val fssToken = stsConsumer.fssToken
+        sleep(1000)
         val strippedToken = fssToken.substring(tokenbodyindex, fssToken.length - tokenbodyend)
         return strippedToken
     }
