@@ -9,8 +9,8 @@ object ArbeidsavtaleObjectMother {
             arbeidstidsordning = "Fast",
             stillingsprosent = 100.0,
             yrke = "YRK",
-            sisteStillingsendring = "IFJOR",
-            sisteLoennsendring = "IFJOR"
+            sistStillingsendring = "IFJOR",
+            sistLoennsendring = "IFJOR"
 
     )
 

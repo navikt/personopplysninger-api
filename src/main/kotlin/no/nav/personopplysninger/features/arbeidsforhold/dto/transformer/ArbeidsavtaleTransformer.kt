@@ -12,8 +12,8 @@ object ArbeidsavtaleTransformer {
 
             antallTimerPrUke = inbound.antallTimerPrUke.toString(),
             arbeidstidsOrdning = inbound.arbeidstidsordning,
-            sisteStillingsEndring = inbound.sisteStillingsendring,
-            sisteLoennsEndring = inbound.sisteLoennsendring,
+            sisteStillingsEndring = inbound.sistStillingsendring,
+            sisteLoennsEndring = inbound.sistLoennsendring,
             yrke = inbound.yrke,
             gyldighetsperiode = PeriodeTransformer.toOutboundfromGyldighetsperiode(inbound.gyldighetsperiode)
     )
@@ -26,8 +26,8 @@ object ArbeidsavtaleTransformer {
             var avtaledto = ArbeidsavtaleDto(
                     antallTimerPrUke = arbeidsavtale.antallTimerPrUke.toString(),
                     arbeidstidsOrdning = arbeidsavtale.arbeidstidsordning,
-                    sisteStillingsEndring = arbeidsavtale.sisteStillingsendring,
-                    sisteLoennsEndring = arbeidsavtale.sisteLoennsendring,
+                    sisteStillingsEndring = arbeidsavtale.sistStillingsendring,
+                    sisteLoennsEndring = arbeidsavtale.sistLoennsendring,
                     yrke = arbeidsavtale.yrke,
                     gyldighetsperiode = PeriodeTransformer.toOutboundfromGyldighetsperiode(arbeidsavtale.gyldighetsperiode)
             )

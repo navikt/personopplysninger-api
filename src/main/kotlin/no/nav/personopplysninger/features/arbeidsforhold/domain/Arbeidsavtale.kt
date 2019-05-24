@@ -14,8 +14,8 @@ data class Arbeidsavtale (
     val beregnetStillingsprosent: kotlin.Double? = null,
     val bruksperiode: Bruksperiode? = null,
     val gyldighetsperiode: Gyldighetsperiode? = null,
-    val sisteLoennsendring: kotlin.String? = null,
-    val sisteStillingsendring: kotlin.String? = null,
+    val sistLoennsendring: kotlin.String? = null,
+    val sistStillingsendring: kotlin.String? = null,
     val sporingsinformasjon: Sporingsinformasjon? = null,
     /* Stillingsprosent */
     val stillingsprosent: kotlin.Double? = null,
