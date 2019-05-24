@@ -10,6 +10,10 @@ data class ArbeidsforholdDto (
         val utenlandsopphold: ArrayList<UtenlandsoppholdDto>? = null,
         val permisjonPermittering: ArrayList<PermisjonPermitteringDto>? = null,
         val arbeidsavtaler: ArrayList<ArbeidsavtaleDto>? = null,
-        val historikk: ArrayList<HistorikkDto>? = null,
-        val gyldigarbeidsavtale: ArbeidsavtaleDto? = null
+
+        val antallTimerPrUke: String? = null,
+        val arbeidstidsOrdning: String? = null,
+        val sisteStillingsEndring: String? = null,
+        val sisteLoennsEndring: String? = null,
+        val stillingsProsent: String? = null
 )

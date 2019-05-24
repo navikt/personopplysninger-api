@@ -6,25 +6,32 @@ import no.nav.personopplysninger.features.arbeidsforhold.dto.outbound.Arbeidsfor
 
 object EnkeltArbeidsforholdTransformer {
 
-    fun toOutbound(inbound: Arbeidsforhold, arbgivnavn: String?) = ArbeidsforholdDto(
+    fun toOutbound(inbound: Arbeidsforhold, arbgivnavn: String?): ArbeidsforholdDto {
 
-            arbeidsforholdId = inbound.navArbeidsforholdId,
-            type = inbound.type,
-            sistBekreftet = inbound.sistBekreftet,
-            arbeidsgiver = ArbeidsgiverTransformer.toOutbound(inbound.arbeidsgiver, arbgivnavn),
-            ansettelsesPeriode = PeriodeTransformer.toOutboundfromAnsettelsesperiode(inbound.ansettelsesperiode),
-            arbeidsavtaler = ArbeidsavtaleTransformer.toOutboundArray(inbound.arbeidsavtaler),
-            utenlandsopphold = UtenlandsoppholdTransformer.toOutboundArray(inbound.utenlandsopphold),
-            permisjonPermittering = PermisjonPermitteringTransformer.toOutboundArray(inbound.permisjonPermitteringer),
-            gyldigarbeidsavtale = gyldigArbeidsavtale(ArbeidsavtaleTransformer.toOutboundArray(inbound.arbeidsavtaler))
-    )
+        val gyldigarbeidsavtale = gyldigArbeidsavtale(ArbeidsavtaleTransformer.toOutboundArray(inbound.arbeidsavtaler))
+
+        return ArbeidsforholdDto(
+                arbeidsforholdId = inbound.navArbeidsforholdId,
+                type = inbound.type,
+                sistBekreftet = inbound.sistBekreftet,
+                arbeidsgiver = ArbeidsgiverTransformer.toOutbound(inbound.arbeidsgiver, arbgivnavn),
+                ansettelsesPeriode = PeriodeTransformer.toOutboundfromAnsettelsesperiode(inbound.ansettelsesperiode),
+                arbeidsavtaler = ArbeidsavtaleTransformer.toOutboundArray(inbound.arbeidsavtaler),
+                utenlandsopphold = UtenlandsoppholdTransformer.toOutboundArray(inbound.utenlandsopphold),
+                permisjonPermittering = PermisjonPermitteringTransformer.toOutboundArray(inbound.permisjonPermitteringer),
+                antallTimerPrUke = gyldigarbeidsavtale?.antallTimerPrUke,
+                stillingsProsent = gyldigarbeidsavtale?.stillingsProsent,
+                arbeidstidsOrdning = gyldigarbeidsavtale?.arbeidstidsOrdning,
+                sisteStillingsEndring = gyldigarbeidsavtale?.sisteStillingsEndring,
+                sisteLoennsEndring = gyldigarbeidsavtale?.sisteLoennsEndring
+        )
+    }
 
     fun gyldigArbeidsavtale(inbound: List<ArbeidsavtaleDto>): ArbeidsavtaleDto? {
         for (arbeidsavtale in inbound) {
-            if (arbeidsavtale.gyldighetsperiode?.periodeTil.equals("")) {
+            if (arbeidsavtale.gyldighetsperiode?.periodeTil == null) {
                 return arbeidsavtale
             }
-
         }
         return null
     }

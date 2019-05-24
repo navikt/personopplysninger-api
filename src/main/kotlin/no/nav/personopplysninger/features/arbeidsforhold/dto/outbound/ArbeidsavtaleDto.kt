@@ -4,8 +4,9 @@ data class ArbeidsavtaleDto (
 
         val antallTimerPrUke: String? = null,
         val arbeidstidsOrdning: String? = null,
-        val sistStillingsEndring : String? = null,
-        val sistLoennsEndring : String? = null,
+        val sisteStillingsEndring : String? = null,
+        val sisteLoennsEndring : String? = null,
         val yrke : String? = null,
-        val gyldighetsperiode: PeriodeDto? = null
+        val gyldighetsperiode: PeriodeDto? = null,
+        val stillingsProsent: String? = null
 )
