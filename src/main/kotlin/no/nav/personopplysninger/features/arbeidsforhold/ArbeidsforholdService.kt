@@ -37,12 +37,18 @@ class ArbeidsforholdService @Autowired constructor(
         var arbeidsforholdDtos = mutableListOf<ArbeidsforholdDto>()
         for (arbeidsforhold in inbound) {
             var arbgivnavn = arbeidsforhold.arbeidsgiver?.organisasjonsnummer
+            var opplarbgivnavn = arbeidsforhold.opplysningspliktig?.organisasjonsnummer
             if (arbeidsforhold.arbeidsgiver?.type.equals(organisasjon)) {
                 val organisasjon = eregConsumer.hentOrgnavn(arbeidsforhold.arbeidsgiver?.organisasjonsnummer)
                 val navn = organisasjon.navn
                 arbgivnavn = concatenateNavn(navn)
             }
-            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(arbeidsforhold, arbgivnavn))
+            if (arbeidsforhold.opplysningspliktig?.type.equals(organisasjon)) {
+                val organisasjon = eregConsumer.hentOrgnavn(arbeidsforhold.opplysningspliktig?.organisasjonsnummer)
+                val navn = organisasjon.navn
+                opplarbgivnavn = concatenateNavn(navn)
+            }
+            arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(arbeidsforhold, arbgivnavn, opplarbgivnavn))
         }
         return arbeidsforholdDtos
     }
@@ -51,12 +57,18 @@ class ArbeidsforholdService @Autowired constructor(
         val arbeidsforhold = arbeidsforholdConsumer.hentArbeidsforholdmedId(fodselsnr, id, fssToken)
         var arbeidsforholdDto: ArbeidsforholdDto
         var arbgivnavn = arbeidsforhold.arbeidsgiver?.organisasjonsnummer
+        var opplarbgivnavn = arbeidsforhold.opplysningspliktig?.organisasjonsnummer
         if (arbeidsforhold.arbeidsgiver?.type.equals(organisasjon)) {
             val organisasjon = eregConsumer.hentOrgnavn(arbeidsforhold.arbeidsgiver?.organisasjonsnummer)
             val navn = organisasjon.navn
             arbgivnavn = concatenateNavn(navn)
         }
-        arbeidsforholdDto = EnkeltArbeidsforholdTransformer.toOutbound(arbeidsforhold, arbgivnavn)
+        if (arbeidsforhold.opplysningspliktig?.type.equals(organisasjon)) {
+            val organisasjon = eregConsumer.hentOrgnavn(arbeidsforhold.opplysningspliktig?.organisasjonsnummer)
+            val navn = organisasjon.navn
+            opplarbgivnavn = concatenateNavn(navn)
+        }
+        arbeidsforholdDto = EnkeltArbeidsforholdTransformer.toOutbound(arbeidsforhold, arbgivnavn, opplarbgivnavn)
         return arbeidsforholdDto
     }
 

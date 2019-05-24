@@ -6,6 +6,7 @@ data class ArbeidsforholdDto (
         val type: String? = null,
         val sistBekreftet : String? = null,
         val arbeidsgiver : ArbeidsgiverDto? = null,
+        val opplysningspliktigarbeidsgiver : OpplysningspliktigArbeidsgiverDto? = null,
         val ansettelsesPeriode : PeriodeDto? = null,
         val utenlandsopphold: ArrayList<UtenlandsoppholdDto>? = null,
         val permisjonPermittering: ArrayList<PermisjonPermitteringDto>? = null,

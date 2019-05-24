@@ -6,7 +6,7 @@ import no.nav.personopplysninger.features.arbeidsforhold.dto.outbound.Arbeidsfor
 
 object EnkeltArbeidsforholdTransformer {
 
-    fun toOutbound(inbound: Arbeidsforhold, arbgivnavn: String?): ArbeidsforholdDto {
+    fun toOutbound(inbound: Arbeidsforhold, arbgivnavn: String?, opplarbgivnavn: String?): ArbeidsforholdDto {
 
         val gyldigarbeidsavtale = gyldigArbeidsavtale(ArbeidsavtaleTransformer.toOutboundArray(inbound.arbeidsavtaler))
 
@@ -15,6 +15,7 @@ object EnkeltArbeidsforholdTransformer {
                 type = inbound.type,
                 sistBekreftet = inbound.sistBekreftet,
                 arbeidsgiver = ArbeidsgiverTransformer.toOutbound(inbound.arbeidsgiver, arbgivnavn),
+                opplysningspliktigarbeidsgiver = OpplysningspliktigArbeidsgiverTransformer.toOutbound(inbound.opplysningspliktig, opplarbgivnavn),
                 ansettelsesPeriode = PeriodeTransformer.toOutboundfromAnsettelsesperiode(inbound.ansettelsesperiode),
                 arbeidsavtaler = ArbeidsavtaleTransformer.toOutboundArray(inbound.arbeidsavtaler),
                 utenlandsopphold = UtenlandsoppholdTransformer.toOutboundArray(inbound.utenlandsopphold),

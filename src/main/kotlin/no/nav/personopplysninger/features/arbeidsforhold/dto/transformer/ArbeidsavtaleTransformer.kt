@@ -1,10 +1,7 @@
 package no.nav.personopplysninger.features.arbeidsforhold.dto.transformer
 
 import no.nav.personopplysninger.features.arbeidsforhold.domain.Arbeidsavtale
-import no.nav.personopplysninger.features.arbeidsforhold.domain.PermisjonPermittering
 import no.nav.personopplysninger.features.arbeidsforhold.dto.outbound.ArbeidsavtaleDto
-
-import no.nav.personopplysninger.features.arbeidsforhold.dto.outbound.PermisjonPermitteringDto
 
 object ArbeidsavtaleTransformer {
 

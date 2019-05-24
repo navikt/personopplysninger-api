@@ -1,10 +1,10 @@
 package no.nav.personopplysninger.features.arbeidsforhold.dto.outbound
 
 
-data class ArbeidsgiverDto (
+data class OpplysningspliktigArbeidsgiverDto (
 
-        val orgnr: String? = null,
         val type: String? = null,
+        val orgnr: String? = null,
         val orgnavn : String? = null
 
 )
