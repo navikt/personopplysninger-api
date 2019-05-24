@@ -20,10 +20,10 @@ object EnkeltArbeidsforholdTransformer {
                 utenlandsopphold = UtenlandsoppholdTransformer.toOutboundArray(inbound.utenlandsopphold),
                 permisjonPermittering = PermisjonPermitteringTransformer.toOutboundArray(inbound.permisjonPermitteringer),
                 antallTimerPrUke = gyldigarbeidsavtale?.antallTimerPrUke,
-                stillingsProsent = gyldigarbeidsavtale?.stillingsProsent,
+                stillingsProsent = gyldigarbeidsavtale?.stillingsprosent,
                 arbeidstidsOrdning = gyldigarbeidsavtale?.arbeidstidsOrdning,
-                sisteStillingsEndring = gyldigarbeidsavtale?.sisteStillingsEndring,
-                sisteLoennsEndring = gyldigarbeidsavtale?.sisteLoennsEndring
+                sisteStillingsEndring = gyldigarbeidsavtale?.sisteStillingsendring,
+                sisteLoennsEndring = gyldigarbeidsavtale?.sisteLoennsendring
         )
     }
 
