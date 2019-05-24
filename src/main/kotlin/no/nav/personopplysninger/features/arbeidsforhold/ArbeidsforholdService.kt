@@ -74,9 +74,11 @@ class ArbeidsforholdService @Autowired constructor(
 
     private fun concatenateNavn(navn: Navn?) =
             navn?.navnelinje1.orEmpty() +
-                    navn?.navnelinje2?.isNotEmpty().let { navn?.navnelinje2 + " " } +
-                    navn?.navnelinje3?.isNotEmpty().let { navn?.navnelinje3 + " " } +
-                    navn?.navnelinje4?.isNotEmpty().let { navn?.navnelinje4 + " " } +
-                    navn?.navnelinje5?.isNotEmpty().let { navn?.navnelinje5 + " " }
+                    navn?.navnelinje2?.let {
+                        navn?.navnelinje2 +
+                                navn?.navnelinje3?.let { navn?.navnelinje3 } +
+                                navn?.navnelinje4?.let { navn?.navnelinje4 } +
+                                navn?.navnelinje5?.let { navn?.navnelinje5 }
+                    }
 
 }
