@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.arbeidsforhold.dto.transformer
 
 import no.nav.personopplysninger.features.arbeidsforhold.domain.Arbeidsforhold
+import no.nav.personopplysninger.features.arbeidsforhold.dto.outbound.ArbeidsavtaleDto
 import no.nav.personopplysninger.features.arbeidsforhold.dto.outbound.ArbeidsforholdDto
 
 object EnkeltArbeidsforholdTransformer {
@@ -14,8 +15,18 @@ object EnkeltArbeidsforholdTransformer {
             ansettelsesPeriode = PeriodeTransformer.toOutboundfromAnsettelsesperiode(inbound.ansettelsesperiode),
             arbeidsavtaler = ArbeidsavtaleTransformer.toOutboundArray(inbound.arbeidsavtaler),
             utenlandsopphold = UtenlandsoppholdTransformer.toOutboundArray(inbound.utenlandsopphold),
-            permisjonPermittering = PermisjonPermitteringTransformer.toOutboundArray(inbound.permisjonPermitteringer)
-
+            permisjonPermittering = PermisjonPermitteringTransformer.toOutboundArray(inbound.permisjonPermitteringer),
+            gyldigarbeidsavtale = gyldigArbeidsavtale(ArbeidsavtaleTransformer.toOutboundArray(inbound.arbeidsavtaler))
     )
+
+    fun gyldigArbeidsavtale(inbound: List<ArbeidsavtaleDto>): ArbeidsavtaleDto? {
+        for (arbeidsavtale in inbound) {
+            if (arbeidsavtale.gyldighetsperiode?.periodeTil.equals("")) {
+                return arbeidsavtale
+            }
+
+        }
+        return null
+    }
 
 }

@@ -9,5 +9,7 @@ data class ArbeidsforholdDto (
         val ansettelsesPeriode : PeriodeDto? = null,
         val utenlandsopphold: ArrayList<UtenlandsoppholdDto>? = null,
         val permisjonPermittering: ArrayList<PermisjonPermitteringDto>? = null,
-        val arbeidsavtaler: ArrayList<ArbeidsavtaleDto>? = null
+        val arbeidsavtaler: ArrayList<ArbeidsavtaleDto>? = null,
+        val historikk: ArrayList<HistorikkDto>? = null,
+        val gyldigarbeidsavtale: ArbeidsavtaleDto? = null
 )

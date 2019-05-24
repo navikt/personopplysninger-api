@@ -62,6 +62,7 @@ public class ArbeidsforholdConsumer {
     private Invocation.Builder buildForholdIdRequest(String fnr, int id, String fssToken) {
         return client.target(endpoint)
                 .path("v1/arbeidsforhold/" + id)
+                .queryParam("historikk", true)
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
