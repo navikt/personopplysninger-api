@@ -4,6 +4,7 @@ import no.nav.personopplysninger.features.arbeidsforhold.dto.outbound.Arbeidsfor
 import no.nav.personopplysninger.features.arbeidsforhold.dto.transformer.ArbeidsforholdTransformer
 import no.nav.personopplysninger.features.arbeidsforhold.dto.transformer.EnkeltArbeidsforholdTransformer
 import no.nav.personopplysninger.features.ereg.EregOrganisasjon
+import no.nav.personopplysninger.features.ereg.Navn
 import no.nav.personopplysninger.features.ereg.dto.outbound.Organisasjon
 import no.nav.personopplysninger.features.sts.STSConsumer
 import org.slf4j.LoggerFactory
@@ -37,7 +38,7 @@ class ArbeidsforholdService @Autowired constructor(
             if (arbeidsforhold.arbeidsgiver?.type.equals(organisasjon)) {
                 val organisasjon = eregConsumer.hentOrgnavn(arbeidsforhold.arbeidsgiver?.organisasjonsnummer)
                 val navn = organisasjon.navn
-                arbgivnavn = navn?.navnelinje1.orEmpty() + navn?.navnelinje2.orEmpty() + navn?.navnelinje3.orEmpty() + navn?.navnelinje4.orEmpty() + navn?.navnelinje5.orEmpty()
+                arbgivnavn = concatenateNavn(navn)
             }
             arbeidsforholdDtos.add(ArbeidsforholdTransformer.toOutbound(arbeidsforhold, arbgivnavn))
         }
@@ -51,9 +52,12 @@ class ArbeidsforholdService @Autowired constructor(
         if (arbeidsforhold.arbeidsgiver?.type.equals(organisasjon)) {
             val organisasjon = eregConsumer.hentOrgnavn(arbeidsforhold.arbeidsgiver?.organisasjonsnummer)
             val navn = organisasjon.navn
-            arbgivnavn = navn?.navnelinje1.orEmpty() + navn?.navnelinje2.orEmpty() + navn?.navnelinje3.orEmpty() + navn?.navnelinje4.orEmpty() + navn?.navnelinje5.orEmpty()
+            arbgivnavn = concatenateNavn(navn)
         }
         arbeidsforholdDto = EnkeltArbeidsforholdTransformer.toOutbound(arbeidsforhold, arbgivnavn)
         return arbeidsforholdDto
     }
+
+    private fun concatenateNavn(navn: Navn?) =
+            navn?.navnelinje1.orEmpty() + " " + navn?.navnelinje2.orEmpty() + " " + navn?.navnelinje3.orEmpty() + " " + navn?.navnelinje4.orEmpty() + " " + navn?.navnelinje5.orEmpty()
 }

@@ -22,8 +22,8 @@ class ArbeidsforholdIdResource @Autowired constructor(private var arbeidsforhold
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     fun hentPersonalia(@PathParam("id") id : String): Response {
-        val fodselsnr = hentFnrFraToken()
         val fssToken = hentFssToken()
+        val fodselsnr = hentFnrFraToken()
         val arbeidsforhold = arbeidsforholdIdService.hentEttArbeidsforholdmedId(fodselsnr, id.toInt(), fssToken)
         return Response
                 .ok(arbeidsforhold)
