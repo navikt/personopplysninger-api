@@ -79,7 +79,7 @@ class ArbeidsforholdService @Autowired constructor(
         if (!navn?.navnelinje3.isNullOrEmpty()) orgnavn += navn?.navnelinje3.orEmpty()
         if (!navn?.navnelinje4.isNullOrEmpty()) orgnavn += navn?.navnelinje4.orEmpty()
         if (!navn?.navnelinje5.isNullOrEmpty()) orgnavn += navn?.navnelinje5.orEmpty()
-        
+
         return orgnavn
     }
 
