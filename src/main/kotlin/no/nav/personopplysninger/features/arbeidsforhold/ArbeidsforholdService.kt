@@ -72,13 +72,15 @@ class ArbeidsforholdService @Autowired constructor(
         return arbeidsforholdDto
     }
 
-    private fun concatenateNavn(navn: Navn?) =
-            navn?.navnelinje1.orEmpty() +
-                    navn?.navnelinje2?.let {
-                        navn?.navnelinje2 +
-                                navn?.navnelinje3?.let { navn?.navnelinje3 } +
-                                navn?.navnelinje4?.let { navn?.navnelinje4 } +
-                                navn?.navnelinje5?.let { navn?.navnelinje5 }
-                    }
+    private fun concatenateNavn(navn: Navn?): String {
+        var orgnavn = ""
+        if (!navn?.navnelinje1.isNullOrEmpty()) orgnavn += navn?.navnelinje1.orEmpty()
+        if (!navn?.navnelinje2.isNullOrEmpty()) orgnavn += navn?.navnelinje2.orEmpty()
+        if (!navn?.navnelinje3.isNullOrEmpty()) orgnavn += navn?.navnelinje3.orEmpty()
+        if (!navn?.navnelinje4.isNullOrEmpty()) orgnavn += navn?.navnelinje4.orEmpty()
+        if (!navn?.navnelinje5.isNullOrEmpty()) orgnavn += navn?.navnelinje5.orEmpty()
+        
+        return orgnavn
+    }
 
 }
