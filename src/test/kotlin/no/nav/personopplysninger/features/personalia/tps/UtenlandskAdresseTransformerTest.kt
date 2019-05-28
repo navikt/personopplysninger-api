@@ -22,7 +22,7 @@ class UtenlandskAdresseTransformerTest {
         assertEquals(inbound.adresse3!!, actual.adresse3)
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
         assertEquals(inbound.datoTilOgMed!!, actual.datoTilOgMed)
-        assertEquals(null, actual.land)
+        assertEquals("", actual.land)
     }
 
     @Test
@@ -36,6 +36,5 @@ class UtenlandskAdresseTransformerTest {
         assertNull(actual.adresse3)
         assertNull(actual.datoFraOgMed)
         assertNull(actual.datoTilOgMed)
-        assertNull(actual.land)
     }
 }
