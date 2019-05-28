@@ -26,7 +26,7 @@ public class Norg2Consumer {
     }
 
     public Norg2Enhet hentEnhet(String geografisk) {
-        Invocation.Builder request = buildEnhetRequest(geografisk, "enhet/navkontor/");
+        Invocation.Builder request = buildEnhetRequest(geografisk, "enhet/");
         return hentEnhet(request);
     }
 
@@ -37,11 +37,11 @@ public class Norg2Consumer {
 
     private Invocation.Builder buildEnhetRequest(String geografisk, String path) {
         return client.target(endpoint)
-                .path(path)
+                .path(path + "/" + geografisk)
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
-                .header("geografisk", geografisk);
+                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID);
+
     }
 
     private Invocation.Builder buildKontaktinfoRequest(String enhetsnr, String path) {
