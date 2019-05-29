@@ -26,7 +26,7 @@ public class Norg2Consumer {
     }
 
     public Norg2Enhet hentEnhet(String geografisk) {
-        Invocation.Builder request = buildEnhetRequest(geografisk, "enhet");
+        Invocation.Builder request = buildEnhetRequest(geografisk, "enhet/navkontor");
         return hentEnhet(request);
     }
 
