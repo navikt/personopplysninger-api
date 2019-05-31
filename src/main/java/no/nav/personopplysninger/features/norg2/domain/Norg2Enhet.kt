@@ -1,6 +1,8 @@
 package no.nav.personopplysninger.features.norg2.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Norg2Enhet(
         val enhetId: kotlin.String? = null,
         val navn: kotlin.String? = null,
