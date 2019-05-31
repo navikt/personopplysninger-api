@@ -31,7 +31,7 @@ public class Norg2Consumer {
     }
 
     public Norg2EnhetKontaktinfo hentKontaktinfo(String enhetsnr) {
-        Invocation.Builder request = buildKontaktinfoRequest(enhetsnr, "enhet/kontaktinformasjon");
+        Invocation.Builder request = buildKontaktinfoRequest(enhetsnr, "enhet");
         return hentKontaktinfo(request);
     }
 
@@ -46,7 +46,7 @@ public class Norg2Consumer {
 
     private Invocation.Builder buildKontaktinfoRequest(String enhetsnr, String path) {
         return client.target(endpoint)
-                .path(path)
+                .path(path + "/" + enhetsnr + "/" + "kontaktinformasjon")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
