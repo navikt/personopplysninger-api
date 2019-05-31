@@ -15,7 +15,8 @@ data class Personalia(
         val statsborgerskap: String? = null,
         val foedested: String? = null,
         val sivilstand: String? = null,
-        val kjoenn: String? = null)
+        val kjoenn: String? = null
+)
 
 data class Adresser(
         val boadresse: Boadresse? = null,
