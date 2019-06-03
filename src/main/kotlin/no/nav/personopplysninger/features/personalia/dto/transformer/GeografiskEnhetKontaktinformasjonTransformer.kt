@@ -9,17 +9,15 @@ import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 object GeografiskEnhetKontaktinformasjonTransformer {
     fun toOutbound(inbound: Norg2EnhetKontaktinfo) = GeografiskEnhetKontaktInformasjon(
 
-            enhetsnavn = inbound.stedsbeskrivelse,
-            gateadresse = inbound.postadresse?.gatenavn,
-            poststed = inbound.postadresse?.poststed,
-            aapningmandag = inbound.aapningstider?.dag
-            /*aapningtirsdag: String? = null,
-            appningonsdag: String? = null,
-            aapningtorsdag: String? = null,
-            aapningfredag: String? = null,
-            andre: String? = null,
-            tlfperson: String? = null,
-            tlfpensjon: String? = null*/
+            gateadresse = inbound.publikumsmottak?.get(0)?.besoeksadresse?.gatenavn,
+            poststed = inbound.publikumsmottak?.get(0)?.besoeksadresse?.poststed,
+            aapningmandag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(0)),
+            aapningtirsdag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(1)),
+            appningonsdag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(2)),
+            aapningtorsdag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(3)),
+            aapningfredag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(5)),
+            tlfperson = inbound.publikumsmottak?.get(0)?.besoeksadresse?.gatenavn,
+            tlfpensjon = inbound.telefonnummer
     )
 
 }

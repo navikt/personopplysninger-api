@@ -11,8 +11,8 @@ data class Norg2EnhetKontaktinfo (
         val postadresse : Postadresse? = null,
         val besoeksadresse : Besoeksadresse? = null,
         val spesielleOpplysninger: kotlin.String? = null,
-        val publikumsmottak : Publikumsmottak? = null,
-        val aapningstider : Aapningstider? = null,
+        val publikumsmottak : List<Publikumsmottak>? = null,
+        val aapningstider : List<Aapningstider>? = null,
         val stedsbeskrivelse : kotlin.String? = null
 
 )
