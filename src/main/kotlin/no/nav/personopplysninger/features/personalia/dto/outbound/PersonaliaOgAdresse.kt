@@ -29,6 +29,6 @@ data class Adresser(
 )
 
 data class EnhetsKontaktInformasjon(
-        var enhetsKontaktInformasjon: GeografiskEnhetKontaktInformasjon? = null
+        var enhet: GeografiskEnhetKontaktInformasjon? = null
 
 )

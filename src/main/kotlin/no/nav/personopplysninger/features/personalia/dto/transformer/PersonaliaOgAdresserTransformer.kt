@@ -10,6 +10,6 @@ object PersonaliaOgAdresserTransformer {
     fun toOutbound(inbound: Personinfo, kodeverk: PersonaliaKodeverk) = PersonaliaOgAdresser(
             personalia = PersoninfoTransformer.toOutbound(inbound, kodeverk),
             adresser = inbound.adresseinfo?.let { AdresseinfoTransformer.toOutbound(it, kodeverk) },
-            enhetKontaktInformasjon = EnhetsKontaktInformasjon() 
+            enhetKontaktInformasjon = EnhetsKontaktInformasjon()
     )
 }

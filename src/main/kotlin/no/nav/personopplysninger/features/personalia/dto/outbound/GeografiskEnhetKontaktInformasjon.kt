@@ -6,10 +6,10 @@ data class GeografiskEnhetKontaktInformasjon (
         val poststed: String? = null,
         val aapningmandag: Aapningstid? = null,
         val aapningtirsdag: Aapningstid? = null,
-        val appningonsdag: Aapningstid? = null,
+        val aapningonsdag: Aapningstid? = null,
         val aapningtorsdag: Aapningstid? = null,
         val aapningfredag: Aapningstid? = null,
         val andre: String? = null,
         val tlfperson: String? = null,
-        val tlfpensjon: String? = null
+        val spesielleopplysninger: String? = null
 )
