@@ -11,11 +11,11 @@ object GeografiskEnhetKontaktinformasjonTransformer {
 
             gateadresse = inbound.publikumsmottak?.get(0)?.besoeksadresse?.gatenavn,
             poststed = inbound.publikumsmottak?.get(0)?.besoeksadresse?.poststed,
-            aapningmandag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(0)),
-            aapningtirsdag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(1)),
-            aapningonsdag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(2)),
-            aapningtorsdag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(3)),
-            aapningfredag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(4)),
+            aapningmandag = inbound.aapningstider?.let {AapningstidTransformer.toOutbound(inbound.aapningstider?.get(0))},
+            aapningtirsdag = inbound.aapningstider?.let {AapningstidTransformer.toOutbound(inbound.aapningstider?.get(1))},
+            aapningonsdag = inbound.aapningstider?.let {AapningstidTransformer.toOutbound(inbound.aapningstider?.get(2))},
+            aapningtorsdag = inbound.aapningstider?.let {AapningstidTransformer.toOutbound(inbound.aapningstider?.get(3))},
+            aapningfredag = inbound.aapningstider?.let {AapningstidTransformer.toOutbound(inbound.aapningstider?.get(4))},
             tlfperson = inbound.telefonnummer,
             spesielleopplysninger = inbound.spesielleOpplysninger
 

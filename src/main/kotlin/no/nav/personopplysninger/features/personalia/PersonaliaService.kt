@@ -52,7 +52,7 @@ class PersonaliaService @Autowired constructor(
 
         val enhet = norg2Consumer.hentEnhet(tilknytning)
 
-        personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhet.enhetNr
+        personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhet.navn
         personaliaOgAdresser?.enhetKontaktInformasjon?.enhet = hentEnhetKontaktinformasjon(enhet.enhetNr)
         return personaliaOgAdresser
     }

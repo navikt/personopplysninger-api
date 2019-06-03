@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.features.personalia.dto.outbound
 
 data class GeografiskEnhetKontaktInformasjon (
-        val enhetsnavn: String? = null,
         val gateadresse: String? = null,
         val poststed: String? = null,
         val aapningmandag: Aapningstid? = null,
