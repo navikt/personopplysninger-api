@@ -15,7 +15,7 @@ object GeografiskEnhetKontaktinformasjonTransformer {
             aapningtirsdag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(1)),
             appningonsdag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(2)),
             aapningtorsdag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(3)),
-            aapningfredag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(5)),
+            aapningfredag = AapningstidTransformer.toOutbound(inbound.aapningstider?.get(4)),
             tlfperson = inbound.publikumsmottak?.get(0)?.besoeksadresse?.gatenavn,
             tlfpensjon = inbound.telefonnummer
     )

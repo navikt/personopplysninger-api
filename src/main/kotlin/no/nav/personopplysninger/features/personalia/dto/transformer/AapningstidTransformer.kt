@@ -10,7 +10,7 @@ object AapningstidTransformer {
     fun toOutbound(inbound: Aapningstider?): Aapningstid {
 
         return Aapningstid(
-                
+
                 dag = inbound?.dag,
                 fra = inbound?.fra,
                 til = inbound?.til,
