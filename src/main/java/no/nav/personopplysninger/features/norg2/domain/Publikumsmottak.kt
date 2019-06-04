@@ -6,5 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 data class Publikumsmottak (
 
         val id : kotlin.String? = null,
-        val besoeksadresse : Besoeksadresse? = null
+        val besoeksadresse : Besoeksadresse? = null,
+        val aapningstider : List<Aapningstider>? = null
 )
