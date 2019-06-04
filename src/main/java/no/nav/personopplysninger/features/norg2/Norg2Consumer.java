@@ -1,11 +1,14 @@
 package no.nav.personopplysninger.features.norg2;
 
 import no.nav.log.MDCConstants;
+import no.nav.personopplysninger.config.ApplicationConfig;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.norg2.domain.Norg2Enhet;
 import no.nav.personopplysninger.features.norg2.domain.Norg2EnhetKontaktinfo;
 import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException;
 import no.nav.tps.person.Personinfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.ws.rs.client.Client;
@@ -19,6 +22,7 @@ public class Norg2Consumer {
     
     private Client client;
     private URI endpoint;
+    private static final Logger log = LoggerFactory.getLogger(Norg2Consumer.class);
 
     public Norg2Consumer(Client client, URI endpoint) {
         this.client = client;
@@ -81,6 +85,7 @@ public class Norg2Consumer {
             String msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new ConsumerException(msg + " - " + ConsumerFactory.readEntity(String.class, r));
         } else {
+            log.warn("Norg2 Response " + ConsumerFactory.readEntity(String.class, r));
             return ConsumerFactory.readEntity(Norg2Enhet.class, r);
         }
     }
