@@ -85,7 +85,6 @@ public class Norg2Consumer {
             String msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new ConsumerException(msg + " - " + ConsumerFactory.readEntity(String.class, r));
         } else {
-            log.warn("Norg2 Response " + ConsumerFactory.readEntity(String.class, r));
             return ConsumerFactory.readEntity(Norg2Enhet.class, r);
         }
     }
@@ -95,6 +94,7 @@ public class Norg2Consumer {
             String msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new ConsumerException(msg + " - " + ConsumerFactory.readEntity(String.class, r));
         } else {
+            log.warn("Norg2 Response " + ConsumerFactory.readEntity(String.class, r));
             return ConsumerFactory.readEntity(Norg2EnhetKontaktinfo.class, r);
         }
     }
