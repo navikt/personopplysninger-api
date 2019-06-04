@@ -9,11 +9,11 @@ object PublikumsmottakTransformer {
 
             gateadresse = inbound.orEmpty()[0].besoeksadresse?.gatenavn,
             poststed = inbound.orEmpty()[0].besoeksadresse?.poststed,
-            aapningmandag = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![0])},
-            aapningtirsdag = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![1])},
-            aapningonsdag = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![2])},
-            aapningtorsdag = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![3])},
-            aapningfredag = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![4])}
+            aapning1 = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![0])},
+            aapning2 = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![1])},
+            aapning3 = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![2])},
+            aapning4 = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![3])},
+            aapning5 = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![4])}
     )
 
 }
