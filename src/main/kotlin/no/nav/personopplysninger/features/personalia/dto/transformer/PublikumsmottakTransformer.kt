@@ -5,15 +5,32 @@ import no.nav.personopplysninger.features.norg2.domain.Publikumsmottak
 import no.nav.personopplysninger.features.personalia.dto.outbound.PublikumsmottakDto
 
 object PublikumsmottakTransformer {
-    fun toOutbound(inbound: List<Publikumsmottak>?) = PublikumsmottakDto(
 
-            gateadresse = inbound.orEmpty()[0].besoeksadresse?.gatenavn,
-            poststed = inbound.orEmpty()[0].besoeksadresse?.poststed,
-            aapning1 = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![0])},
-            aapning2 = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![1])},
-            aapning3 = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![2])},
-            aapning4 = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![3])},
-            aapning5 = inbound.orEmpty()[0].aapningstider?.let {AapningstidTransformer.toOutbound(inbound.orEmpty()[0].aapningstider!![4])}
-    )
+    val mandag = "Mandag"
+    val tirsdag = "Tirsdag"
+    val onsdag = "Omsdag"
+    val torsdag = "Torsdag"
+    val fredag = "Fredag"
 
+    fun toOutbound(inbound: List<Publikumsmottak>?) : ArrayList<PublikumsmottakDto>{
+
+        var mottaksliste = ArrayList<PublikumsmottakDto>(0)
+
+            for (mottak in inbound.orEmpty())
+            {
+               val publikumsmottak = PublikumsmottakDto()
+                publikumsmottak.gateadresse = mottak.besoeksadresse?.gatenavn
+                publikumsmottak.poststed = mottak.besoeksadresse?.poststed
+                publikumsmottak.aapningmandag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == mandag})
+                publikumsmottak.aapningtirsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == tirsdag})
+                publikumsmottak.aapningonsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == onsdag})
+                publikumsmottak.aapningtorsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == torsdag})
+                publikumsmottak.aapningfredag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == fredag})
+
+                mottaksliste.add(publikumsmottak)
+            }
+
+
+        return mottaksliste;
+    }
 }

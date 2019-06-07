@@ -25,7 +25,7 @@ data class Adresser(
         val postadresse: Postadresse? = null,
         val prioritertAdresse: String? = null,
         val tilleggsadresse: Tilleggsadresse? = null,
-        val utenlandskAdresse: UtenlandskAdresse? = null
+        val utenlandskAdresse: UtenlandskAdresseDto? = null
 )
 
 data class EnhetsKontaktInformasjon(
