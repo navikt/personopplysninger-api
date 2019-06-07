@@ -8,7 +8,7 @@ object PublikumsmottakTransformer {
 
     val mandag = "Mandag"
     val tirsdag = "Tirsdag"
-    val onsdag = "Omsdag"
+    val onsdag = "Onsdag"
     val torsdag = "Torsdag"
     val fredag = "Fredag"
 
