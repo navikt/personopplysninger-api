@@ -21,11 +21,11 @@ object PublikumsmottakTransformer {
                val publikumsmottak = PublikumsmottakDto()
                 publikumsmottak.gateadresse = mottak.besoeksadresse?.gatenavn
                 publikumsmottak.poststed = mottak.besoeksadresse?.poststed
-                publikumsmottak.aapningmandag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == mandag})
-                publikumsmottak.aapningtirsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == tirsdag})
-                publikumsmottak.aapningonsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == onsdag})
-                publikumsmottak.aapningtorsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == torsdag})
-                publikumsmottak.aapningfredag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == fredag})
+                publikumsmottak.aapningMandag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == mandag})
+                publikumsmottak.aapningTirsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == tirsdag})
+                publikumsmottak.aapningOnsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == onsdag})
+                publikumsmottak.aapningTorsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == torsdag})
+                publikumsmottak.aapningFredag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find {it.dag == fredag})
 
                 mottaksliste.add(publikumsmottak)
             }

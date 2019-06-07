@@ -4,10 +4,10 @@ data class PublikumsmottakDto (
 
         var gateadresse: String? = null,
         var poststed: String? = null,
-        var aapningmandag: Aapningstid? = null,
-        var aapningtirsdag: Aapningstid? = null,
-        var aapningonsdag: Aapningstid? = null,
-        var aapningtorsdag: Aapningstid? = null,
-        var aapningfredag: Aapningstid? = null
+        var aapningMandag: Aapningstid? = null,
+        var aapningTirsdag: Aapningstid? = null,
+        var aapningOnsdag: Aapningstid? = null,
+        var aapningTorsdag: Aapningstid? = null,
+        var aapningFredag: Aapningstid? = null
 
 )
