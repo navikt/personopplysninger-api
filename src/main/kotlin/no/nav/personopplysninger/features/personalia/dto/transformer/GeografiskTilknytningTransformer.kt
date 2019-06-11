@@ -9,7 +9,7 @@ object GeografiskTilknytningTransformer {
             bydel = inbound.bydel,
             datoFraOgMed = inbound.datoFraOgMed,
             kommune = inbound.kommune,
-            land = inbound.land?.let { kodeverk.landterm } ?: run {""}
+            land = inbound.land?.let { kodeverk.landterm } ?: run {" "}
     )
 
 }

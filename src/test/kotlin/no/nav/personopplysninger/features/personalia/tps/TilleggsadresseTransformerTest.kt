@@ -30,7 +30,7 @@ class TilleggsadresseTransformerTest {
         assertEquals(inbound.kommunenummer!!, actual.kommunenummer)
         assertEquals(inbound.postboksanlegg!!, actual.postboksanlegg)
         assertEquals(inbound.postnummer!!, actual.postnummer)
-        assertEquals("", actual.poststed)
+        assertEquals(" ", actual.poststed)
     }
 
 
