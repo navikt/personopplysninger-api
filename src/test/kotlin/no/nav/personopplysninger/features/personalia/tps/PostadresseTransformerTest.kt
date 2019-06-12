@@ -23,7 +23,7 @@ class PostadresseTransformerTest {
         assertEquals(inbound.adresse3!!, actual.adresse3)
         assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
         assertEquals(" ", actual.land)
-        assertEquals(" ", actual.poststed)
+        assertEquals("xx", actual.poststed)
     }
 
     @Test
