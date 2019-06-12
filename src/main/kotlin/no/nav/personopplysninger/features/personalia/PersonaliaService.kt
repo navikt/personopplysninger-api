@@ -48,6 +48,9 @@ class PersonaliaService @Autowired constructor(
     }
 
     private fun getTerms(kjonn: GetKodeverkKoderBetydningerResponse, land: GetKodeverkKoderBetydningerResponse, foedtkommune: GetKodeverkKoderBetydningerResponse, bostedskommune: GetKodeverkKoderBetydningerResponse, postbostedsnummer: GetKodeverkKoderBetydningerResponse, postnummer: GetKodeverkKoderBetydningerResponse, posttilleggsnummer: GetKodeverkKoderBetydningerResponse, status: GetKodeverkKoderBetydningerResponse, sivilstand: GetKodeverkKoderBetydningerResponse, spraak: GetKodeverkKoderBetydningerResponse, statsborgerskap: GetKodeverkKoderBetydningerResponse, valuta: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
+     
+        personaliaKodeverk.postnummerterm = null
+
         getKjonnTerm(kjonn, inbound.kjonn)
         getLandTerm(land, inbound.foedtILand?.verdi)
         getUtenlandskAdresseTerm(land, inbound.adresseinfo?.utenlandskAdresse?.land)
