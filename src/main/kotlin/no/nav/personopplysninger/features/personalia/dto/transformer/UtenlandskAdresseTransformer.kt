@@ -10,6 +10,6 @@ object UtenlandskAdresseTransformer {
             adresse3 = inbound.adresse3,
             datoFraOgMed = inbound.datoFraOgMed,
             datoTilOgMed = inbound.datoTilOgMed,
-            land = inbound.land?.let { kodeverk.utenlandskadresseterm } ?: run {" "}
+            land = inbound.land?.let { kodeverk.utenlandskadresseterm }
     )
 }
