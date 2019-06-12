@@ -48,8 +48,6 @@ class PersonaliaService @Autowired constructor(
     }
 
     private fun getTerms(kjonn: GetKodeverkKoderBetydningerResponse, land: GetKodeverkKoderBetydningerResponse, foedtkommune: GetKodeverkKoderBetydningerResponse, bostedskommune: GetKodeverkKoderBetydningerResponse, postbostedsnummer: GetKodeverkKoderBetydningerResponse, postnummer: GetKodeverkKoderBetydningerResponse, posttilleggsnummer: GetKodeverkKoderBetydningerResponse, status: GetKodeverkKoderBetydningerResponse, sivilstand: GetKodeverkKoderBetydningerResponse, spraak: GetKodeverkKoderBetydningerResponse, statsborgerskap: GetKodeverkKoderBetydningerResponse, valuta: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
-     
-        personaliaKodeverk.postnummerterm = null
 
         getKjonnTerm(kjonn, inbound.kjonn)
         getLandTerm(land, inbound.foedtILand?.verdi)
@@ -72,6 +70,10 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !postnummer.betydninger.getValue(inbound).isEmpty()) {
                 personaliaKodeverk.postnummerterm = postnummer.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            }
+            else
+            {
+                personaliaKodeverk.postnummerterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.postnummerterm = inbound
