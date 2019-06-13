@@ -11,7 +11,7 @@ import javax.ws.rs.core.CacheControl
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
-private const val claimsIssuer = "selvbetjening"
+public const val claimsIssuer = "selvbetjening"
 private val cacheControl = CacheControl()
 
 @Component
@@ -44,9 +44,11 @@ class PersonaliaResource @Autowired constructor(private var personaliaService: P
                 .build()
     }
 
-    private fun hentFnrFraToken(): String {
-        val context = OidcRequestContext.getHolder().oidcValidationContext
-        return context.getClaims(claimsIssuer).claimSet.subject
-    }
+     companion object {
+         fun hentFnrFraToken(): String {
+             val context = OidcRequestContext.getHolder().oidcValidationContext
+             return context.getClaims(claimsIssuer).claimSet.subject
+         }
+     }
 
 }

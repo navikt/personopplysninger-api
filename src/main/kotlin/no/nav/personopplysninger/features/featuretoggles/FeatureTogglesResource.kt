@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.features.featuretoggles
 
-import no.nav.personopplysninger.features.personalia.PersonaliaService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import no.nav.sbl.featuretoggle.unleash.UnleashService;
@@ -8,30 +7,41 @@ import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig;
 import javax.ws.rs.core.MediaType
 import javax.inject.Provider;
 import no.finn.unleash.UnleashContext;
+import no.nav.personopplysninger.features.personalia.PersonaliaResource
+import no.nav.personopplysninger.features.personalia.claimsIssuer
 import kotlin.collections.Map;
 import kotlin.collections.toMap;
 import javax.ws.rs.core.Response
 import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.UNLEASH_API_URL_PROPERTY_NAME
 import no.nav.sbl.util.EnvironmentUtils.getOptionalProperty
+import no.nav.security.oidc.api.ProtectedWithClaims
 import javax.servlet.http.HttpServletRequest
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
+import java.util.UUID
+import javax.servlet.http.Cookie
+import javax.servlet.http.HttpServletResponse
+
+
+private const val UNLEASH_COOKIE_NAME = "unleash-cookie";
 
 @Component
 @Path("/")
+@ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
 class FeatureTogglesResource @Autowired constructor() {
 
     @GET
     @Path("/feature-toggles")
     @Produces(MediaType.APPLICATION_JSON)
-    fun hentFeatureToggles( @Context request: HttpServletRequest, @QueryParam("feature") features : List<String>): Response {
+    fun hentFeatureToggles( @Context request: HttpServletRequest, @Context response: HttpServletResponse, @CookieParam(UNLEASH_COOKIE_NAME) cookieSessionId: String?, @QueryParam("feature") features : List<String>): Response {
 
-        System.out.println(features);
+        var fodselsnr = PersonaliaResource.hentFnrFraToken();
+        var sessionId = cookieSessionId ?: generateSessionId(response);
 
         var unleashService = unleashService(Provider { request });
         val unleashContext = UnleashContext.builder()
-                .userId("test")
-                .sessionId("test")
+                .userId(fodselsnr)
+                .sessionId(sessionId)
                 .remoteAddress(request.getRemoteAddr())
                 .build()
 
@@ -53,4 +63,15 @@ class FeatureTogglesResource @Autowired constructor() {
                 ByApplicationStrategy()
         )
     }
+
+    private fun generateSessionId(httpServletRequest: HttpServletResponse): String {
+        val uuid = UUID.randomUUID()
+        val sessionId = java.lang.Long.toHexString(uuid.mostSignificantBits) + java.lang.Long.toHexString(uuid.leastSignificantBits)
+        val cookie = Cookie(UNLEASH_COOKIE_NAME, sessionId)
+        cookie.setPath("/")
+        cookie.setMaxAge(-1)
+        httpServletRequest.addCookie(cookie)
+        return sessionId
+    }
+
 }
