@@ -29,20 +29,18 @@ private const val UNLEASH_COOKIE_NAME = "unleash-cookie";
 
 @Component
 @Path("/")
-@ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
 class FeatureTogglesResource @Autowired constructor() {
 
     @GET
     @Path("/feature-toggles")
     @Produces(MediaType.APPLICATION_JSON)
     fun hentFeatureToggles( @Context request: HttpServletRequest, @Context response: HttpServletResponse, @CookieParam(UNLEASH_COOKIE_NAME) cookieSessionId: String?, @QueryParam("feature") features : List<String>): Response {
-        try {
-            var fodselsnr = hentFnrFraToken();
+
             var sessionId = cookieSessionId ?: generateSessionId(response);
 
             var unleashService = unleashService(Provider { request });
             val unleashContext = UnleashContext.builder()
-                    .userId(fodselsnr)
+                    .userId("test")
                     .sessionId(sessionId)
                     .remoteAddress(request.getRemoteAddr())
                     .build()
@@ -54,22 +52,17 @@ class FeatureTogglesResource @Autowired constructor() {
             return Response
                     .ok(evaluation)
                     .build()
-        }
-        catch (error: IllegalStateException){
-            return Response
-                    .status(403)
-                    .build()
-        }
+
     }
 
     fun unleashService(httpServletRequestProvider: Provider<HttpServletRequest>): UnleashService {
         return UnleashService(UnleashServiceConfig.builder()
                 .applicationName(System.getenv("APPLICATION_NAME"))
-                .unleashApiUrl(getOptionalProperty(UNLEASH_API_URL_PROPERTY_NAME).orElse("https://unleash.nais.adeo.no/api/"))
+                .unleashApiUrl(getOptionalProperty(UNLEASH_API_URL_PROPERTY_NAME).orElse("https://unleashproxy.nais.oera.no/api/"))
                 .build(),
                 ByQueryParamStrategy(httpServletRequestProvider),
                 ByApplicationStrategy()
-        )
+        ) 
     }
 
     private fun generateSessionId(httpServletRequest: HttpServletResponse): String {
