@@ -7,9 +7,6 @@ import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig;
 import javax.ws.rs.core.MediaType
 import javax.inject.Provider;
 import no.finn.unleash.UnleashContext;
-import no.nav.personopplysninger.features.personalia.PersonaliaResource
-import no.nav.personopplysninger.features.personalia.cacheControl
-import no.nav.personopplysninger.features.personalia.claimsIssuer
 import kotlin.collections.Map;
 import kotlin.collections.toMap;
 import javax.ws.rs.core.Response
