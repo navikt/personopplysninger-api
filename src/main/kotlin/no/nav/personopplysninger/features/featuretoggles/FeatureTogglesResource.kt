@@ -7,6 +7,9 @@ import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig;
 import javax.ws.rs.core.MediaType
 import javax.inject.Provider;
 import no.finn.unleash.UnleashContext;
+import no.nav.personopplysninger.features.personalia.PersonaliaResource
+import no.nav.personopplysninger.features.personalia.cacheControl
+import no.nav.personopplysninger.features.personalia.claimsIssuer
 import kotlin.collections.Map;
 import kotlin.collections.toMap;
 import javax.ws.rs.core.Response
@@ -15,32 +18,32 @@ import no.nav.sbl.util.EnvironmentUtils.getOptionalProperty
 import no.nav.security.oidc.api.ProtectedWithClaims
 import no.nav.security.oidc.jaxrs.OidcRequestContext
 import java.lang.Error
-import java.lang.IllegalStateException
 import javax.servlet.http.HttpServletRequest
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
 import java.util.UUID
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletResponse
-import javax.ws.rs.core.CacheControl
 
 private const val claimsIssuer = "selvbetjening"
 private const val UNLEASH_COOKIE_NAME = "unleash-cookie";
 
 @Component
 @Path("/")
+@ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
 class FeatureTogglesResource @Autowired constructor() {
 
     @GET
     @Path("/feature-toggles")
     @Produces(MediaType.APPLICATION_JSON)
     fun hentFeatureToggles( @Context request: HttpServletRequest, @Context response: HttpServletResponse, @CookieParam(UNLEASH_COOKIE_NAME) cookieSessionId: String?, @QueryParam("feature") features : List<String>): Response {
-
+        try {
+            var fodselsnr = hentFnrFraToken();
             var sessionId = cookieSessionId ?: generateSessionId(response);
 
             var unleashService = unleashService(Provider { request });
             val unleashContext = UnleashContext.builder()
-                    .userId("test")
+                    .userId(fodselsnr)
                     .sessionId(sessionId)
                     .remoteAddress(request.getRemoteAddr())
                     .build()
@@ -52,7 +55,12 @@ class FeatureTogglesResource @Autowired constructor() {
             return Response
                     .ok(evaluation)
                     .build()
-
+        }
+        catch (error: IllegalStateException){
+            return Response
+                    .status(403)
+                    .build()
+        }
     }
 
     fun unleashService(httpServletRequestProvider: Provider<HttpServletRequest>): UnleashService {
@@ -62,7 +70,7 @@ class FeatureTogglesResource @Autowired constructor() {
                 .build(),
                 ByQueryParamStrategy(httpServletRequestProvider),
                 ByApplicationStrategy()
-        ) 
+        )
     }
 
     private fun generateSessionId(httpServletRequest: HttpServletResponse): String {
