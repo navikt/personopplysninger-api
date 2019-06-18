@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-
 import java.util.List;
 
 @ApiModel(description = "Responsen fra GET /api/v1/kodeverk.")

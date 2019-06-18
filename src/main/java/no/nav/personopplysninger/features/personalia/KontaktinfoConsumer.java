@@ -6,7 +6,6 @@ import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException;
 import org.slf4j.MDC;
 
-import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.Response;

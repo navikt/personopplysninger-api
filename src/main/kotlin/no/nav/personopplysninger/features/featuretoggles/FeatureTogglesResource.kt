@@ -1,26 +1,23 @@
 package no.nav.personopplysninger.features.featuretoggles
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
-import no.nav.sbl.featuretoggle.unleash.UnleashService;
-import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig;
-import javax.ws.rs.core.MediaType
-import javax.inject.Provider;
-import no.finn.unleash.UnleashContext;
-import kotlin.collections.Map;
-import kotlin.collections.toMap;
-import javax.ws.rs.core.Response
+import no.finn.unleash.UnleashContext
+import no.nav.sbl.featuretoggle.unleash.UnleashService
+import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig
 import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.UNLEASH_API_URL_PROPERTY_NAME
 import no.nav.sbl.util.EnvironmentUtils.getOptionalProperty
 import no.nav.security.oidc.api.ProtectedWithClaims
 import no.nav.security.oidc.jaxrs.OidcRequestContext
-import java.lang.Error
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
+import java.util.*
+import javax.inject.Provider
+import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 import javax.ws.rs.*
 import javax.ws.rs.core.Context
-import java.util.UUID
-import javax.servlet.http.Cookie
-import javax.servlet.http.HttpServletResponse
+import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.Response
 
 private const val claimsIssuer = "selvbetjening"
 private const val UNLEASH_COOKIE_NAME = "unleash-cookie";
