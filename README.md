@@ -23,6 +23,17 @@ Dette må endres hver gang man deployer.
 
 Vi har applikasjonen i Q0, Q1, og T6.
 
+# Deploy fra lokal kommandolinje
+
+Vi bruker scriptet på https://github.com/navikt/personbruker-felles for lokal deploy.
+
+Kommando: ../personbruker-felles/nais/deploy.sh all personopplysninger-api <applikasjon> <miljø>
+
+(Forutsetter at man står i rot-mappen for applikasjonen, og personbruker-felles ligger på samme
+nivå)
+
+Merk: Filen 15-appdynamics.sh må ha Unix-linjeskift for at deploy skal fungere OK lokalt.
+
 # Produksjonssetting
 
 Ønsket versjon må ligge i Q0, se steget over. Man kjører så release-jobben fra Jenkins, som deployer 
