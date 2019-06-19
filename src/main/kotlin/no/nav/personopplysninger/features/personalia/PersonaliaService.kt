@@ -58,6 +58,7 @@ class PersonaliaService @Autowired constructor(
     }
 
     private fun getTerms(kjonn: GetKodeverkKoderBetydningerResponse, land: GetKodeverkKoderBetydningerResponse, foedtkommune: GetKodeverkKoderBetydningerResponse, bostedskommune: GetKodeverkKoderBetydningerResponse, postbostedsnummer: GetKodeverkKoderBetydningerResponse, postnummer: GetKodeverkKoderBetydningerResponse, posttilleggsnummer: GetKodeverkKoderBetydningerResponse, status: GetKodeverkKoderBetydningerResponse, sivilstand: GetKodeverkKoderBetydningerResponse, spraak: GetKodeverkKoderBetydningerResponse, statsborgerskap: GetKodeverkKoderBetydningerResponse, valuta: GetKodeverkKoderBetydningerResponse, inbound: Personinfo) {
+
         getKjonnTerm(kjonn, inbound.kjonn)
         getLandTerm(land, inbound.foedtILand?.verdi)
         getUtenlandskAdresseTerm(land, inbound.adresseinfo?.utenlandskAdresse?.land)
@@ -79,6 +80,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !postnummer.betydninger.getValue(inbound).isEmpty()) {
                 personaliaKodeverk.postnummerterm = postnummer.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.postnummerterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.postnummerterm = inbound
@@ -91,6 +94,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !postbostedsnummer.betydninger.getValue(inbound).isEmpty()) {
                 personaliaKodeverk.bostedpostnummerterm = postbostedsnummer.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.bostedpostnummerterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.bostedpostnummerterm = inbound
@@ -103,6 +108,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !bostedskommune.betydninger.getValue(inbound).isEmpty()) {
                 personaliaKodeverk.bostedskommuneterm = bostedskommune.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.bostedskommuneterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.bostedskommuneterm = inbound
@@ -115,6 +122,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !posttilleggsnummer.betydninger.getValue(inbound).isEmpty()) {
                 personaliaKodeverk.tilleggsadressepostnummerterm = posttilleggsnummer.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.tilleggsadressepostnummerterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.tilleggsadressepostnummerterm = inbound
@@ -127,6 +136,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !status.betydninger.getValue(inbound).isEmpty()) {
                 personaliaKodeverk.statusterm = status.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.statusterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.statusterm = inbound
@@ -139,6 +150,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !sivilstand.betydninger.getValue(inbound).isEmpty()) {
                 personaliaKodeverk.sivilstandterm = sivilstand.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.sivilstandterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.sivilstandterm = inbound
@@ -151,6 +164,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !spraak?.betydninger!!.getValue(inbound).isEmpty()) {
                 personaliaKodeverk.spraakterm = spraak?.betydninger!!.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.spraakterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.spraakterm = inbound
@@ -162,6 +177,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !statsborgerskap.betydninger.getValue(inbound).isEmpty()) {
                 personaliaKodeverk.stasborgerskapterm = statsborgerskap.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.stasborgerskapterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.stasborgerskapterm = inbound
@@ -173,6 +190,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !nullstring.equals(inbound) && !foedtkommune.betydninger.getValue(inbound).isEmpty()) {
                 personaliaKodeverk.foedekommuneterm = foedtkommune.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.foedekommuneterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.foedekommuneterm = inbound
@@ -185,6 +204,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !(land.betydninger.getValue(inbound).isEmpty())) {
                 personaliaKodeverk.landterm = land.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.landterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.landterm = inbound
@@ -198,6 +219,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty()) {
                 personaliaKodeverk.utenlandskadresseterm = land.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.utenlandskadresseterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.utenlandskadresseterm = inbound
@@ -210,6 +233,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !(kjonn.betydninger.getValue(inbound).isEmpty())) {
                 personaliaKodeverk.kjonnterm = kjonn.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.kjonnterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.kjonnterm = inbound
@@ -222,6 +247,8 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty()) {
                 personaliaKodeverk.postadresselandterm = land.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.postadresselandterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.landterm = inbound
@@ -234,7 +261,10 @@ class PersonaliaService @Autowired constructor(
         try {
             if (!inbound.isNullOrEmpty() && !(land.betydninger.getValue(inbound).isEmpty())) {
                 personaliaKodeverk.utenlandskbanklandterm = land.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.utenlandskbanklandterm = ""
             }
+
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.utenlandskbanklandterm = inbound
             log.warn("Element not found in Land (Utenlandsk bank): " + inbound)
@@ -245,8 +275,10 @@ class PersonaliaService @Autowired constructor(
 
     private fun getUtenlandskBankValutaTerm(valuta: GetKodeverkKoderBetydningerResponse, inbound: String?) {
         try {
-            if (!inbound.isNullOrEmpty() && !(valuta.betydninger.getValue( inbound).isEmpty())) {
+            if (!inbound.isNullOrEmpty() && !(valuta.betydninger.getValue(inbound).isEmpty())) {
                 personaliaKodeverk.utenlandskbankvalutaterm = valuta.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            } else {
+                personaliaKodeverk.utenlandskbankvalutaterm = ""
             }
         } catch (nse: NoSuchElementException) {
             personaliaKodeverk.utenlandskbankvalutaterm = inbound

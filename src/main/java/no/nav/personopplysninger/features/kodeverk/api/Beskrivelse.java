@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.features.kodeverk.api;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

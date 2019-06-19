@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.config;
 
+import no.nav.personopplysninger.features.featuretoggles.FeatureTogglesResource;
 import no.nav.personopplysninger.features.personalia.PersonaliaResource;
 import no.nav.personopplysninger.features.status.StatusResource;
 import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
@@ -15,13 +16,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RestResourceConfiguration extends ResourceConfig {
-    private static final List<Class> WHITELISTED_CLASSES = Arrays.asList(WadlModelProcessor.OptionsHandler.class);
+    private static final List<Class> WHITELISTED_CLASSES = Arrays.asList(WadlModelProcessor.OptionsHandler.class, FeatureTogglesResource.class);
     private static final List<Class> WHITELISTED_PARENT_CLASSES = Arrays.asList(OptionsMethodProcessor.class);
 
     public RestResourceConfiguration() {
         register(JacksonFeature.class);
         ResourceConfig register = register (StatusResource.class);
         register(PersonaliaResource.class);
+        register(FeatureTogglesResource.class);
         register(CORSResponseFilter.class);
         //register(OidcContainerRequestFilter.class);
         register(OidcResourceFilteringFeature.class);
