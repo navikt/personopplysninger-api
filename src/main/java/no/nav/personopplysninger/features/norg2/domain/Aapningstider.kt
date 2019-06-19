@@ -10,5 +10,6 @@ data class Aapningstider (
         val dato : kotlin.String? = null,
         val stengt : kotlin.String? = null,
         val fra : kotlin.String? = null,
-        val til : kotlin.String? = null
+        val til : kotlin.String? = null,
+        val kommentar: kotlin.String? = null
 )

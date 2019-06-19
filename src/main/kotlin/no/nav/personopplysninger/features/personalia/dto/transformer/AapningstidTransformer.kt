@@ -11,7 +11,8 @@ object AapningstidTransformer {
                 dag = inbound?.dag,
                 fra = inbound?.fra,
                 til = inbound?.til,
-                stengt = inbound?.stengt
+                stengt = inbound?.stengt,
+                kommentar = inbound?.kommentar
         )
     }
 
