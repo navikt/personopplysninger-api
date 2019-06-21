@@ -152,8 +152,8 @@ class PersonaliaService @Autowired constructor(
 
     private fun getSpraakTerm(spraak: GetKodeverkKoderBetydningerResponse, inbound: String?) {
         try {
-            if (!inbound.isNullOrEmpty() && !spraak?.betydninger!!.getValue(inbound).isEmpty()) {
-                personaliaKodeverk.spraakterm = spraak?.betydninger!!.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+            if (!inbound.isNullOrEmpty() && !spraak.betydninger.getValue(inbound).isEmpty()) {
+                personaliaKodeverk.spraakterm = spraak.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
             } else {
                 personaliaKodeverk.spraakterm = ""
             }
