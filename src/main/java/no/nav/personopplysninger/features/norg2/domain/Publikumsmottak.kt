@@ -7,5 +7,6 @@ data class Publikumsmottak (
 
         val id : kotlin.String? = null,
         val besoeksadresse : Besoeksadresse? = null,
-        val aapningstider : List<Aapningstider>? = null
+        val aapningstider : List<Aapningstider>? = null,
+        val stedsbeskrivelse : String? = null
 )
