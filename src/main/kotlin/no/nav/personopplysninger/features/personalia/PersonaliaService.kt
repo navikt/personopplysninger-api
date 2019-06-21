@@ -45,11 +45,10 @@ class PersonaliaService @Autowired constructor(
         val statsborgerskap = kodeverkConsumer.hentStatsborgerskap(inbound.statsborgerskap?.kode?.verdi)
         val valuta = kodeverkConsumer.hentValuta(inbound.utenlandskBank?.valuta?.verdi)
 
-        var personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
-        val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
-
         getTerms(kjonn, land, foedtkommune, bostedskommune, postbostedsnummer, postnummer, posttilleggsnummer, status, sivilstand, spraak, statsborgerskap, valuta, inbound)
 
+        var personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
+        val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
         val enhet = norg2Consumer.hentEnhet(tilknytning)
 
         personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhet.navn
