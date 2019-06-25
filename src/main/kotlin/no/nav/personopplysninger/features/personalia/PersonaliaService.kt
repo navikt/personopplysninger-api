@@ -47,12 +47,13 @@ class PersonaliaService @Autowired constructor(
 
         getTerms(kjonn, land, foedtkommune, bostedskommune, postbostedsnummer, postnummer, posttilleggsnummer, status, sivilstand, spraak, statsborgerskap, valuta, inbound)
 
-        var personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
+        val personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
         val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
-        val enhet = norg2Consumer.hentEnhet(tilknytning)
-
-        personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhet.navn
-        personaliaOgAdresser?.enhetKontaktInformasjon?.enhet = hentEnhetKontaktinformasjon(enhet.enhetNr)
+        if (tilknytning != null) {
+            val enhet = norg2Consumer.hentEnhet(tilknytning)
+            personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhet.navn
+            personaliaOgAdresser?.enhetKontaktInformasjon?.enhet = hentEnhetKontaktinformasjon(enhet.enhetNr)
+        }
         return personaliaOgAdresser
     }
 
@@ -297,11 +298,10 @@ class PersonaliaService @Autowired constructor(
     }
 
     fun hentGeografiskTilknytning(inbound: GeografiskTilknytning?): String? {
+        log.warn("Bydel " + inbound?.bydel)
         if (inbound?.bydel != null) {
             return inbound.bydel
-        }
-        else
-        {
+        } else {
             return inbound?.kommune
         }
     }
