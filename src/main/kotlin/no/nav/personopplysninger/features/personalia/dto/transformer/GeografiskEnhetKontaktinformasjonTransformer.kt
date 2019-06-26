@@ -8,9 +8,10 @@ import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 
 object GeografiskEnhetKontaktinformasjonTransformer {
     fun toOutbound(inbound: Norg2EnhetKontaktinfo) = GeografiskEnhetKontaktInformasjon(
-    publikumsmottak = PublikumsmottakTransformer.toOutbound(inbound?.publikumsmottak),
-    tlfperson = inbound.telefonnummer,
-    spesielleopplysninger = inbound.spesielleOpplysninger
+            publikumsmottak = PublikumsmottakTransformer.toOutbound(inbound?.publikumsmottak),
+            tlfperson = inbound.telefonnummer,
+            spesielleopplysninger = inbound.spesielleOpplysninger,
+            postadresse = NavkontorPostadresseTransformer.toOutbound(inbound?.postadresse)
 
     )
 
