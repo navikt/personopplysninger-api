@@ -49,3 +49,7 @@ fasitResources:
     resourceType: restservice
   - alias: appdynamics
     resourceType: applicationproperties
+  - alias: norg2.api.v1
+    resourceType: restservice
+  - alias: personopplysninger-api-norg2.api.v1-apiKey
+    resourceType: credential
