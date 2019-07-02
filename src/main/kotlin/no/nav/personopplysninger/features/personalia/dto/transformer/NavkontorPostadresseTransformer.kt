@@ -8,6 +8,8 @@ object NavkontorPostadresseTransformer {
             type = inbound?.type,
             postnummer = inbound?.postnummer,
             poststed = inbound?.poststed,
+            postboksnummer = inbound?.postboksnummer,
+            postboksanlegg = inbound?.postboksanlegg,
             gatenavn = inbound?.gatenavn,
             husnummer = inbound?.husnummer,
             husbokstav = inbound?.husbokstav
