@@ -10,5 +10,6 @@ data class NavkontorPostadresse(
         val postboksanlegg : kotlin.String? = null,
         val gatenavn: kotlin.String? = null,
         val husnummer: kotlin.String? = null,
-        val husbokstav: kotlin.String? = null
+        val husbokstav: kotlin.String? = null,
+        val adresseTilleggsnavn: kotlin.String? = null
 )
