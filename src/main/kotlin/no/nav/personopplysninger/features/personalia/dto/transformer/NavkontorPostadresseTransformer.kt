@@ -12,6 +12,7 @@ object NavkontorPostadresseTransformer {
             postboksanlegg = inbound?.postboksanlegg,
             gatenavn = inbound?.gatenavn,
             husnummer = inbound?.husnummer,
-            husbokstav = inbound?.husbokstav
+            husbokstav = inbound?.husbokstav,
+            adresseTilleggsnavn = inbound?.adresseTilleggsnavn
     )
 }
