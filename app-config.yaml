@@ -4,7 +4,7 @@ team: "personbruker"
 name: personopplysninger-api
 image: docker.adeo.no:5000/personbruker/personopplysninger-api
 replicas:
-  min: 1
+  min: 2
   max: 4
   cpuThresholdPercentage: 50
 port: 8080
@@ -23,6 +23,9 @@ healthcheck:
 resources:
   limits:
     cpu: 3
+    memory: 768Mi
+  requests:
+    memory: 512Mi
 fasitResources:
   used:
   - alias: aad_b2c_clientid
