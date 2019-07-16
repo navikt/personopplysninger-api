@@ -1,0 +1,144 @@
+version: 2.1
+jobs:
+  build-react-app:
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - mvn-dependencies-{{ checksum "pom.xml" }}
+            - mvn-dependencies-
+      - run: mvn clean install
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: mvn-dependencies-{{ checksum "pom.xml" }}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - source/*
+
+  deploy-til-dev:
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+    steps:
+      - checkout
+      - sett-miljovariabler
+      - setup_remote_docker
+      - attach_workspace:
+          at: .
+      - run:
+          name: Bygger Docker image
+          command: docker build -t "$DOCKER_IMAGE_VERSIONED" .
+      - run:
+          name: Pusher Docker image
+          command: |
+            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+            docker push "$DOCKER_IMAGE_VERSIONED"
+      - run:
+          name: Deployer til dev
+          command: |
+            curl -i \
+                -X POST \
+                -d '{
+                     "ref": "'"$COMMIT_SHORT"'",
+                     "description": "Automated deployment request for personopplysninger from team personbruker",
+                     "environment": "dev-sbs",
+                     "required_contexts": [],
+                     "payload": {
+                       "version": [1, 0, 0],
+                       "team": "personbruker",
+                       "kubernetes": {
+                         "resources": ['"$(cat nais-dev.json | jq '.spec.image = "'$DOCKER_IMAGE_VERSIONED'"')"']
+                       }
+                     }
+                   }' \
+                -H "Accept: application/vnd.github.ant-man-preview+json" \
+                -u "$GH_USER":"$GH_TK" \
+                https://api.github.com/repos/navikt/personopplysninger/deployments
+
+  deploy-til-prod:
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+    steps:
+      - checkout
+      - sett-miljovariabler
+      - run:
+          name: Deployer til prod
+          command: |
+            curl -i \
+                -X POST \
+                -d '{
+                     "ref": "'"$COMMIT_SHORT"'",
+                     "description": "Automated deployment request for personopplysninger from team personbruker",
+                     "environment": "prod-sbs",
+                     "required_contexts": [],
+                     "payload": {
+                       "version": [1, 0, 0],
+                       "team": "personbruker",
+                       "kubernetes": {
+                         "resources": ['"$(cat nais-prod.json | jq '.spec.image = "'$DOCKER_IMAGE_VERSIONED'"')"']
+                       }
+                     }
+                   }' \
+                -H "Accept: application/vnd.github.ant-man-preview+json" \
+                -u "$GH_USER":"$GH_TK" \
+                https://api.github.com/repos/navikt/personopplysninger/deployments
+
+commands:
+  sett-miljovariabler:
+    steps:
+      - run:
+          name: Setter miljøvariable
+          command: |
+            echo 'export COMMIT_SHORT="$(git rev-parse --short HEAD)"' >> $BASH_ENV
+            echo 'export RELEASE_VERSION="$(git rev-list --count $CIRCLE_SHA1)"' >> $BASH_ENV
+            echo 'export BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"' >> $BASH_ENV
+            echo 'export BRANCH_PREFIX=`[ $BRANCH_NAME == "master" ] && echo "" || echo $BRANCH_NAME\_`' >> $BASH_ENV
+            echo 'export DOCKER_IMAGE_VERSIONED="$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$BRANCH_PREFIX$RELEASE_VERSION"' >> $BASH_ENV
+
+workflows:
+  bygg-og-deploy:
+    jobs:
+      - build-react-app:
+          filters:
+            tags:
+              only: /.*/
+      - bekreft-deploy-til-dev:
+          type: approval
+          requires:
+            - build-react-app
+          filters:
+            branches:
+              ignore: master
+      - deploy-til-dev:
+          name: manuell-deploy-til-dev
+          requires:
+            - bekreft-deploy-til-dev
+      - deploy-til-dev:
+          name: automatisk-deploy-til-dev
+          requires:
+            - build-react-app
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: master
+      - bekreft-deploy-til-prod:
+          type: approval
+          requires:
+            - automatisk-deploy-til-dev
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - deploy-til-prod:
+          requires:
+            - bekreft-deploy-til-prod
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
