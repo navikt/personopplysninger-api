@@ -27,12 +27,14 @@ Vi har applikasjonen i Q0, Q1, og T6.
 
 Vi bruker scriptet på https://github.com/navikt/personbruker-felles for lokal deploy.
 
-Kommando: ../personbruker-felles/nais/deploy.sh all personopplysninger-api <applikasjon> <miljø>
+Kommando: `../personbruker-felles/nais/deploy.sh all personopplysninger-api <versjon> <miljø>`
 
 (Forutsetter at man står i rot-mappen for applikasjonen, og personbruker-felles ligger på samme
 nivå)
 
 Merk: Filen 15-appdynamics.sh må ha Unix-linjeskift for at deploy skal fungere OK lokalt.
+
+For å endre til Unix-linjeskift i intelliJ: 1) åpne filen 2) dersom det står CRLF på statuslinja helt nederst, endre denne til LF.
 
 # Produksjonssetting
 
