@@ -2,18 +2,21 @@ version: 2.1
 jobs:
   build-react-app:
     docker:
-      - image: circleci/openjdk:8-jdk-browsers
+      - image: circleci/openjdk:8-jdk
     steps:
       - checkout
       - restore_cache:
           keys:
             - mvn-dependencies-{{ checksum "pom.xml" }}
             - mvn-dependencies-
-      - run: mvn clean install
+
+      - run: mvn dependency:go-offline
+
       - save_cache:
           paths:
             - ~/.m2
           key: mvn-dependencies-{{ checksum "pom.xml" }}
+
       - persist_to_workspace:
           root: .
           paths:
@@ -21,7 +24,7 @@ jobs:
 
   deploy-til-dev:
     docker:
-      - image: circleci/openjdk:8-jdk-browsers
+      - image: circleci/openjdk:8-jdk
     steps:
       - checkout
       - sett-miljovariabler
@@ -60,7 +63,7 @@ jobs:
 
   deploy-til-prod:
     docker:
-      - image: circleci/openjdk:8-jdk-browsers
+      - image: circleci/openjdk:8-jdk
     steps:
       - checkout
       - sett-miljovariabler
