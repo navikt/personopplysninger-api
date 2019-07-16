@@ -9,14 +9,16 @@ jobs:
           keys:
             - mvn-dependencies-{{ checksum "pom.xml" }}
             - mvn-dependencies-
-
-      - run: mvn dependency:go-offline
-
+      - run:
+          name: Installing dependencies
+          command: mvn dependency:go-offline
       - save_cache:
           paths:
             - ~/.m2
           key: mvn-dependencies-{{ checksum "pom.xml" }}
-
+      - run:
+          name: Building project
+          command: mvn package
       - persist_to_workspace:
           root: .
           paths:
