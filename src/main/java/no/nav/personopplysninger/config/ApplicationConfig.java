@@ -3,7 +3,7 @@ package no.nav.personopplysninger.config;
 import no.nav.log.LogFilter;
 import no.nav.personopplysninger.features.kodeverk.KodeverkRestConfiguration;
 import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
-import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
+import no.nav.security.oidc.configuration.MultiIssuerConfiguration;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -62,13 +62,13 @@ public class ApplicationConfig implements EnvironmentAware {
 
 
     @Bean
-    public MultiIssuerConfiguraton multiIssuerConfiguration(MultiIssuerProperties issuerProperties, OIDCResourceRetriever resourceRetriever) {
-        return new MultiIssuerConfiguraton(issuerProperties.getIssuer(), resourceRetriever);
+    public MultiIssuerConfiguration multiIssuerConfiguration(MultiIssuerProperties issuerProperties, OIDCResourceRetriever resourceRetriever) {
+        return new MultiIssuerConfiguration(issuerProperties.getIssuer(), resourceRetriever);
     }
 
 
     @Bean
-    public JaxrsOIDCTokenValidationFilter tokenValidationFilter(MultiIssuerConfiguraton config) {
+    public JaxrsOIDCTokenValidationFilter tokenValidationFilter(MultiIssuerConfiguration config) {
         return new JaxrsOIDCTokenValidationFilter(config);
     }
 

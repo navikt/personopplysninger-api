@@ -18,6 +18,7 @@ public class CORSResponseFilter implements ContainerResponseFilter {
             "https://personopplysninger-q4.nais.oera-q.local",
             "https://personopplysninger-q1.nais.oera-q.local",
             "https://personopplysninger-q0.nais.oera-q.local",
+            "https://personopplysninger-q.nav.no",
             "https://tjenester-t6.nav.no",
             "https://tjenester-q6.nav.no",
             "https://tjenester-q4.nav.no",
