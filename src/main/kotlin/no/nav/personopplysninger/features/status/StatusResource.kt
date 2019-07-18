@@ -11,11 +11,12 @@ import javax.ws.rs.Path
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = arrayOf("acr=Level4"))
 class StatusResource {
 
-    val isAlive: String
-        @GET
-        @Path("/status/isAlive")
-        @Unprotected
-        get() = "Ok"
+    @GET
+    @Path("isAlive")
+    @Unprotected
+    fun isAlive(): String {
+        return "Ok"
+    }
 
     @GET
     @Path("ping")
