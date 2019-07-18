@@ -51,6 +51,7 @@ class FeatureTogglesResource @Autowired constructor() {
                     .build()
         }
         catch (error: IllegalStateException){
+            error.printStackTrace();
             return Response
                     .status(403)
                     .build()
