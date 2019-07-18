@@ -34,6 +34,6 @@ logging:
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
-    discoveryurl: ${NAIS_APP_NAME}
+    discoveryurl: ${AAD_B2C_DISCOVERY_URL}
     acceptedaudience: ${AAD_B2C_CLIENTID_USERNAME}
     cookie_name: selvbetjening-idtoken
