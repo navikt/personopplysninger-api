@@ -1,4 +1,5 @@
 FROM openjdk:8-jdk-alpine
+RUN apk add --no-cache bash
 
 # Add a volume pointing to /tmp
 VOLUME /tmp
