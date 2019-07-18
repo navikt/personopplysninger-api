@@ -50,7 +50,7 @@ jobs:
                 -X POST \
                 -d '{
                      "ref": "'"$COMMIT_SHORT"'",
-                     "description": "Automated deployment request for personopplysninger from team personbruker",
+                     "description": "Automated deployment request for personopplysninger-api from team personbruker",
                      "environment": "dev-sbs",
                      "required_contexts": [],
                      "payload": {
@@ -63,7 +63,7 @@ jobs:
                    }' \
                 -H "Accept: application/vnd.github.ant-man-preview+json" \
                 -u "$GH_USER":"$GH_TK" \
-                https://api.github.com/repos/navikt/personopplysninger/deployments
+                https://api.github.com/repos/navikt/personopplysninger-api/deployments
 
   deploy-til-prod:
     docker:
@@ -78,7 +78,7 @@ jobs:
                 -X POST \
                 -d '{
                      "ref": "'"$COMMIT_SHORT"'",
-                     "description": "Automated deployment request for personopplysninger from team personbruker",
+                     "description": "Automated deployment request for personopplysninger-api from team personbruker",
                      "environment": "prod-sbs",
                      "required_contexts": [],
                      "payload": {
@@ -91,7 +91,7 @@ jobs:
                    }' \
                 -H "Accept: application/vnd.github.ant-man-preview+json" \
                 -u "$GH_USER":"$GH_TK" \
-                https://api.github.com/repos/navikt/personopplysninger/deployments
+                https://api.github.com/repos/navikt/personopplysninger-api/deployments
 
 commands:
   sett-miljovariabler:
