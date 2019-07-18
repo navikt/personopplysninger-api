@@ -17,10 +17,10 @@ import java.net.URISyntaxException;
 @Configuration
 public class PersonaliaRestConfiguration {
 
-    @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME}")
+    @Value("${PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_USERNAME}")
     private String tpsProxyApiKeyUsername;
 
-    @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD}")
+    @Value("${PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_PASSWORD}")
     private String tpsProxyApiKeyPassword;
 
     @Value("${PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_USERNAME}")

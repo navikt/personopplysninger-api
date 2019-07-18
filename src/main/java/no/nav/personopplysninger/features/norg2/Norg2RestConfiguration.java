@@ -20,10 +20,10 @@ import java.util.logging.Logger;
 @Configuration
 public class Norg2RestConfiguration {
 
-    @Value("${PERSONOPPLYSNINGER-API-NORG2_API_V1-APIKEY_USERNAME}")
+    @Value("${PERSONOPPLYSNINGER_API_NORG2_API_V1_APIKEY_USERNAME}")
     private String norg2ApiKeyUsername;
 
-    @Value("${PERSONOPPLYSNINGER-API-NORG2_API_V1-APIKEY_PASSWORD}")
+    @Value("${PERSONOPPLYSNINGER_API_NORG2_API_V1_APIKEY_PASSWORD}")
     private String norg2ApiKeyPassword;
 
     @Bean
