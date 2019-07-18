@@ -1,5 +1,4 @@
 FROM navikt/java:8
-RUN apk add --no-cache bash
 
 # Add a volume pointing to /tmp
 VOLUME /tmp
