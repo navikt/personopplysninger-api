@@ -17,11 +17,11 @@
       "https://www.nav.no/person/personopplysninger-api"
     ],
     "liveness": {
-      "path": "/person/personopplysninger-api/internal/isAlive",
+      "path": "/person/personopplysninger-api/internal/status/isAlive",
       "initialDelay": 10
     },
     "readiness": {
-      "path": "/person/personopplysninger-api/internal/isAlive",
+      "path": "/person/personopplysninger-api/internal/status/isAlive",
       "initialDelay": 10
     },
     "vault":{
