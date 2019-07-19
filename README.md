@@ -2,7 +2,8 @@
 
 # Personopplysninger-API
 
-Spring Boot backend som skal gi brukeren innsikt i informasjonen NAV har lagret.
+Spring Boot backend som skal gi brukeren innsikt i informasjonen NAV har lagret. <br>
+Applikasjonen har ingen avhengigheter til nexus og kan kjøres lokalt på laptop.
 
 
 ## Deployering
