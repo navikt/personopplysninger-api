@@ -11,12 +11,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
 @Import({ApplicationConfig.class})
 public class TestLauncher {
 
     public static void main(String... args) {
-        SpringApplication.run(ApplicationConfig.class, args);
+        setTestEnvironment();
+        ArrayList<String> argList = new ArrayList<>(Arrays.asList(args));
+        argList.add("--spring.profiles.active=dev");
+        SpringApplication.run(ApplicationConfig.class, argList.toArray(new String[0]));
     }
 
     /**
@@ -33,5 +39,24 @@ public class TestLauncher {
     @Primary
     public ResourceConfig testJerseyConfig() {
         return new TestRestResourceConfiguration();
+    }
+
+    private static void setTestEnvironment() {
+        System.setProperty("PERSONOPPLYSNINGER_API_KODEVERK_REST_API_APIKEY_USERNAME", "");
+        System.setProperty("PERSONOPPLYSNINGER_API_KODEVERK_REST_API_APIKEY_PASSWORD", "");
+        System.setProperty("PERSONOPPLYSNINGER_API_NORG2_API_V1_APIKEY_USERNAME", "");
+        System.setProperty("PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_USERNAME", "");
+        System.setProperty("PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_PASSWORD", "");
+        System.setProperty("PERSONOPPLYSNINGER_API_NORG2_API_V1_APIKEY_PASSWORD", "");
+        System.setProperty("PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_USERNAME", "");
+        System.setProperty("PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_PASSWORD", "");
+        System.setProperty("DKIF_API_URL", "");
+        System.setProperty("KODEVERK_REST_API_URL", "");
+        System.setProperty("NORG2_API_V1_URL", "");
+        System.setProperty("AAD_B2C_CLIENTID_USERNAME", "");
+        System.setProperty("AAD_B2C_CLIENTID_PASSWORD", "");
+        System.setProperty("TPS_PROXY_API_V1_INNSYN_URL", "");
+        System.setProperty("AAD_B2C_DISCOVERY_URL", "");
+        System.setProperty("FASIT_ENVIRONMENT_NAME", "");
     }
 }
