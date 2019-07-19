@@ -57,6 +57,6 @@ public class TestLauncher {
         System.setProperty("AAD_B2C_CLIENTID_PASSWORD", "");
         System.setProperty("TPS_PROXY_API_V1_INNSYN_URL", "");
         System.setProperty("AAD_B2C_DISCOVERY_URL", "");
-        System.setProperty("FASIT_ENVIRONMENT_NAME", "");;
+        System.setProperty("FASIT_ENVIRONMENT_NAME", "");
     }
 }
