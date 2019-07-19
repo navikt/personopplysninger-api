@@ -1,0 +1,51 @@
+{
+  "apiVersion": "nais.io/v1alpha1",
+  "kind": "Application",
+  "metadata": {
+    "name": "personopplysninger-api",
+    "namespace": "default",
+    "labels": {
+      "team": "personbruker"
+    }
+  },
+  "spec": {
+    "image": "navikt/personopplysninger-api:LATEST",
+    "team": "personbruker",
+    "port": 8080,
+    "ingresses": [
+      "https://personopplysninger-api.nais.oera.no/person/personopplysninger-api",
+      "https://www.nav.no/person/personopplysninger-api"
+    ],
+    "liveness": {
+      "path": "/person/personopplysninger-api/internal/isAlive",
+      "initialDelay": 10
+    },
+    "readiness": {
+      "path": "/person/personopplysninger-api/internal/isAlive",
+      "initialDelay": 10
+    },
+    "vault":{
+      "enabled": true
+    },
+    "replicas": {
+      "min": 2,
+      "max": 4
+    },
+    "webproxy": true,
+    "env": [
+      {
+        "name": "NODE_EXTRA_CA_CERTS",
+        "value": "/etc/ssl/ca-bundle.pem"
+      }
+    ],
+    "resources": {
+      "limits": {
+        "cpu": "3",
+        "memory": "768Mi"
+      },
+      "requests": {
+        "memory": "512Mi"
+      }
+    }
+  }
+}

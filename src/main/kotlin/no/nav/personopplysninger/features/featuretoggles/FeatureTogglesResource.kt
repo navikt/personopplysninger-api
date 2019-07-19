@@ -51,6 +51,7 @@ class FeatureTogglesResource @Autowired constructor() {
                     .build()
         }
         catch (error: IllegalStateException){
+            error.printStackTrace();
             return Response
                     .status(403)
                     .build()
@@ -59,7 +60,7 @@ class FeatureTogglesResource @Autowired constructor() {
 
     fun unleashService(httpServletRequestProvider: Provider<HttpServletRequest>): UnleashService {
         return UnleashService(UnleashServiceConfig.builder()
-                .applicationName(System.getenv("APPLICATION_NAME"))
+                .applicationName(System.getenv("NAIS_APP_NAME"))
                 .unleashApiUrl(getOptionalProperty(UNLEASH_API_URL_PROPERTY_NAME).orElse("https://unleashproxy.nais.oera.no/api/"))
                 .build(),
                 ByQueryParamStrategy(httpServletRequestProvider),

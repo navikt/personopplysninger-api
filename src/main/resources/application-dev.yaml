@@ -4,10 +4,12 @@ spring:
     application-path: /
     servlet:
       load-on-startup: 1
+
 server:
   port: 8080
   servlet:
     context-path: /person/personopplysninger-api
+
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
