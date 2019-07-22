@@ -100,7 +100,6 @@ commands:
             echo "export COMMIT_SHORT='$(git rev-parse --short HEAD)'" >> $BASH_ENV
             echo "export DOCKER_IMAGE_VERSIONED='$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH////-}'" >> $BASH_ENV
 
-
 workflows:
   bygg-og-deploy:
     jobs:
