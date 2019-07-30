@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.config;
 
+import io.prometheus.client.hotspot.DefaultExports;
 import no.nav.log.LogFilter;
 import no.nav.personopplysninger.features.kodeverk.KodeverkRestConfiguration;
 import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
@@ -35,6 +36,10 @@ import java.util.EnumSet;
         PersonaliaRestConfiguration.class
 })
 public class ApplicationConfig implements EnvironmentAware {
+
+    static {
+        DefaultExports.initialize();
+    }
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);
 

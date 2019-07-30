@@ -27,6 +27,7 @@
         <arrow.version>0.8.1</arrow.version>
         <swagger-codegen-maven-plugin.version>3.0.2</swagger-codegen-maven-plugin.version>
         <jackson-module-kotlin.version>2.9.8</jackson-module-kotlin.version>
+        <prometheus.version>0.6.0</prometheus.version>
     </properties>
 
     <build>
@@ -130,6 +131,16 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_common</artifactId>
+            <version>${prometheus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_hotspot</artifactId>
+            <version>${prometheus.version}</version>
+        </dependency>
         <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>oidc-jersey-support</artifactId>
