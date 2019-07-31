@@ -132,16 +132,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient_common</artifactId>
-            <version>${prometheus.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient_hotspot</artifactId>
-            <version>${prometheus.version}</version>
-        </dependency>
-        <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>oidc-jersey-support</artifactId>
             <version>0.2.18</version>

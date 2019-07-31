@@ -4,6 +4,7 @@ spring:
     application-path: /
     servlet:
       load-on-startup: 1
+    type: filter
 
 server:
   port: 8080
@@ -16,6 +17,17 @@ no.nav.security.oidc:
      discoveryurl: http://metadata
      accepted_audience: aud-localhost
      cookie_name: localhost-idtoken
+
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      base-path: "/internal/actuator"
+      exposure:
+        include: ["info", "health", "prometheus", "metrics"]
 
 TPS_PROXY_API_V1_INNSYN_URL: https://tps-proxy.nais.preprod.local/api/v1/innsyn/
 PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME: x-nav-apiKey
