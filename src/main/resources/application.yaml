@@ -5,8 +5,8 @@ spring:
     servlet:
       load-on-startup: 1
     type: filter
-  main:
-    banner-mode: off
+#  main:
+#    banner-mode: off
 
 metrics.web.server.auto-time-request: true
 server:
