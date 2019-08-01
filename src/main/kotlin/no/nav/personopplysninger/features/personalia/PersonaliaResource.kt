@@ -15,7 +15,7 @@ private const val claimsIssuer = "selvbetjening"
 private val cacheControl = CacheControl()
 
 @Component
-@Path("/")
+@Path("/api")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
 class PersonaliaResource @Autowired constructor(private var personaliaService: PersonaliaService) {
 
