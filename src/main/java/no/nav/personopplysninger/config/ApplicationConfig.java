@@ -13,7 +13,6 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +21,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.web.context.request.RequestContextListener;
-import org.springframework.web.filter.RequestContextFilter;
 
 import javax.servlet.DispatcherType;
 import java.net.MalformedURLException;
@@ -41,13 +39,6 @@ public class ApplicationConfig implements EnvironmentAware {
     private static final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);
 
     private Environment env;
-
-    @Bean
-    public RequestContextFilter requestContextFilter() {
-        OrderedRequestContextFilter filter = new OrderedRequestContextFilter();
-        filter.setOrder(-100001);
-        return filter;
-    }
 
 
     @Bean

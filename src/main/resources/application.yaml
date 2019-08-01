@@ -1,12 +1,9 @@
 spring:
   autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
   jersey:
-    application-path: /
+    application-path: /api
     servlet:
       load-on-startup: 1
-    type: filter
-    filter:
-      order: -100000
   main:
     banner-mode: "off"
 
