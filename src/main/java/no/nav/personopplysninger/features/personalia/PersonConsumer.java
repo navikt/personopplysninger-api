@@ -4,6 +4,8 @@ import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException;
 import no.nav.tps.person.Personinfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.ws.rs.client.Client;
@@ -14,6 +16,8 @@ import java.net.URI;
 import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 public class PersonConsumer {
+
+    private static final Logger log = LoggerFactory.getLogger(PersonConsumer.class);
 
     private Client client;
     private URI endpoint;
@@ -32,6 +36,7 @@ public class PersonConsumer {
 
 
     private Invocation.Builder buildRequest(String fnr) {
+        log.info("MDC.get(MDCConstants.MDC_CALL_ID)=" + MDC.get(MDCConstants.MDC_CALL_ID));
         return client.target(endpoint)
                 .path("person")
                 .request()
