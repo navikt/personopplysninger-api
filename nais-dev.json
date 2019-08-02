@@ -41,10 +41,10 @@
     "resources": {
       "limits": {
         "cpu": "3",
-        "memory": "768Mi"
+        "memory": "1500Mi"
       },
       "requests": {
-        "memory": "512Mi"
+        "memory": "1500Mi"
       }
     }
   }
