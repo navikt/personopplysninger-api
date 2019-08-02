@@ -45,7 +45,7 @@ public class ApplicationConfig implements EnvironmentAware {
     @Bean
     public RequestContextFilter requestContextFilter() {
         OrderedRequestContextFilter filter = new OrderedRequestContextFilter();
-        filter.setOrder(-100001);
+        filter.setOrder(Ordered.HIGHEST_PRECEDENCE + 1);
         return filter;
     }
 
