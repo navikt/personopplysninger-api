@@ -42,12 +42,12 @@ public class ApplicationConfig implements EnvironmentAware {
 
     private Environment env;
 
-//    @Bean
-//    public RequestContextFilter requestContextFilter() {
-//        OrderedRequestContextFilter filter = new OrderedRequestContextFilter();
-//        filter.setOrder(Ordered.HIGHEST_PRECEDENCE + 1);
-//        return filter;
-//    }
+    @Bean
+    public RequestContextFilter requestContextFilter() {
+        OrderedRequestContextFilter filter = new OrderedRequestContextFilter();
+        filter.setOrder(Ordered.HIGHEST_PRECEDENCE + 1);
+        return filter;
+    }
 
     @Bean
     ServletWebServerFactory servletWebServerFactory() {
@@ -109,7 +109,9 @@ public class ApplicationConfig implements EnvironmentAware {
         log.info("Registering LogFilter filter");
         final FilterRegistrationBean<LogFilter> filterRegistration = new FilterRegistrationBean<>();
         filterRegistration.setFilter(new LogFilter());
-        filterRegistration.setOrder(1);
+        //filterRegistration.setOrder(1);
+        filterRegistration.setOrder(-100001);
+
         return filterRegistration;
     }
 
