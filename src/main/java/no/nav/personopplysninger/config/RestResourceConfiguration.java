@@ -8,6 +8,8 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.wadl.processor.OptionsMethodProcessor;
 import org.glassfish.jersey.server.wadl.processor.WadlModelProcessor;
+import org.glassfish.jersey.servlet.ServletProperties;
+import org.springframework.context.annotation.Configuration;
 
 import javax.ws.rs.container.DynamicFeature;
 import javax.ws.rs.container.ResourceInfo;
@@ -15,6 +17,7 @@ import javax.ws.rs.core.FeatureContext;
 import java.util.Arrays;
 import java.util.List;
 
+@Configuration
 public class RestResourceConfiguration extends ResourceConfig {
     private static final List<Class> WHITELISTED_CLASSES = Arrays.asList(WadlModelProcessor.OptionsHandler.class, FeatureTogglesResource.class);
     private static final List<Class> WHITELISTED_PARENT_CLASSES = Arrays.asList(OptionsMethodProcessor.class);
@@ -27,6 +30,7 @@ public class RestResourceConfiguration extends ResourceConfig {
         register(CORSResponseFilter.class);
         //register(OidcContainerRequestFilter.class);
         register(OidcResourceFilteringFeature.class);
+        property(ServletProperties.FILTER_FORWARD_ON_404, true);
     }
 
     public static class OidcResourceFilteringFeature implements DynamicFeature {
