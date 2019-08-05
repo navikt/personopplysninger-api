@@ -11,7 +11,7 @@
                 <matcher>
                     <Name>isAlive</Name>
                     <!-- Filtrerer ut is-alive og Prometheus-innslag i infologgen -->
-                    <regex>/isAlive/g</regex>
+                    <regex>/\/internal/</regex>
                 </matcher>
 
                 <expression>isAlive.matches(formattedMessage)</expression>
