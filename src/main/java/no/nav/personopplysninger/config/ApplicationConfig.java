@@ -109,8 +109,10 @@ public class ApplicationConfig implements EnvironmentAware {
         log.info("Registering LogFilter filter");
         final FilterRegistrationBean<LogFilter> filterRegistration = new FilterRegistrationBean<>();
         filterRegistration.setFilter(new LogFilter());
-        filterRegistration.setOrder(-100001);
 
+        // Viktig at order settes til en lavere verdi enn hva jersey-filteret er konfigurert med i application-yaml
+        // slik at loggfilteret kjøres først. Årsaken til dette er avhengigheter til MDC i forretningskoden (uthenting av callId).
+        filterRegistration.setOrder(-100001);
         return filterRegistration;
     }
 
