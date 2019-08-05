@@ -45,11 +45,11 @@
       },
       "requests": {
         "memory": "1500Mi"
-      },
-      "prometheus": {
-        "enabled": true,
-        "path": "/person/personopplysninger-api/internal/actuator/prometheus"
       }
+    },
+    "prometheus": {
+      "enabled": true,
+      "path": "/person/personopplysninger-api/internal/actuator/prometheus"
     }
   }
 }
