@@ -4,9 +4,9 @@ spring:
     application-path: /
     servlet:
       load-on-startup: 1
-    #type: filter
-    #filter:
-    #  order: -100000
+    type: filter
+    filter:
+      order: -100000
 
 server:
   port: 8080

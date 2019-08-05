@@ -109,7 +109,6 @@ public class ApplicationConfig implements EnvironmentAware {
         log.info("Registering LogFilter filter");
         final FilterRegistrationBean<LogFilter> filterRegistration = new FilterRegistrationBean<>();
         filterRegistration.setFilter(new LogFilter());
-        //filterRegistration.setOrder(1);
         filterRegistration.setOrder(-100001);
 
         return filterRegistration;
