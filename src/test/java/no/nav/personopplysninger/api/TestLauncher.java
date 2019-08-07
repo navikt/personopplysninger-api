@@ -42,6 +42,10 @@ public class TestLauncher {
     }
 
     private static void setTestEnvironment() {
+        // Properties som brukes i logback-default-without-abac.xml
+        System.setProperty("APP_LOG_HOME", "target/log");
+        System.setProperty("contextName", "personopplysninger-api");
+
         System.setProperty("PERSONOPPLYSNINGER_API_KODEVERK_REST_API_APIKEY_USERNAME", "");
         System.setProperty("PERSONOPPLYSNINGER_API_KODEVERK_REST_API_APIKEY_PASSWORD", "");
         System.setProperty("PERSONOPPLYSNINGER_API_NORG2_API_V1_APIKEY_USERNAME", "");
