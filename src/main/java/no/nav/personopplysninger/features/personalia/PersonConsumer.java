@@ -36,7 +36,6 @@ public class PersonConsumer {
 
 
     private Invocation.Builder buildRequest(String fnr) {
-        log.info("MDC.get(MDCConstants.MDC_CALL_ID)=" + MDC.get(MDCConstants.MDC_CALL_ID));
         return client.target(endpoint)
                 .path("person")
                 .request()
