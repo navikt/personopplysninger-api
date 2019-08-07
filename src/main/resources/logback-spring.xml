@@ -5,16 +5,16 @@
     <include resource="logback-default-without-abac.xml"/>
 
     <!-- Spesiell håndtering av loggeren no.nav.log.LogFilter for å forhindre logging av isAlive-sjekker o.l. -->
-    <appender name="stdout_json_with_filter"  class="no.nav.log.MaskingAppender">
+    <appender name="stdout_json_with_filter" class="no.nav.log.MaskingAppender">
         <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
             <evaluator>
                 <matcher>
-                    <Name>isAlive</Name>
-                    <!-- Filtrerer ut is-alive og Prometheus-innslag i infologgen -->
-                    <regex>/\/internal/</regex>
+                    <Name>internal</Name>
+                    <!-- Filtrerer ut isAlive og Prometheus-innslag i infologgen -->
+                    <regex>status=200, method=GET, host=(.*), path=\/person\/personopplysninger-api\/internal(\/isAlive|\/actuator(.*))</regex>
                 </matcher>
 
-                <expression>isAlive.matches(formattedMessage)</expression>
+                <expression>internal.matches(formattedMessage)</expression>
             </evaluator>
             <OnMismatch>NEUTRAL</OnMismatch>
             <OnMatch>DENY</OnMatch>

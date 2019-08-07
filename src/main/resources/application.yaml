@@ -29,10 +29,7 @@ management:
 http.proxy: http://webproxy-nais.nav.no:8088
 
 logging:
-  level:
-    org.springframework: DEBUG
-    org.glassfish: DEBUG
-    no.nav: INFO
+  config: "classpath:logback-spring.xml"
 
 no.nav.security.oidc:
   issuers: selvbetjening
