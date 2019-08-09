@@ -140,18 +140,31 @@
   "definitions": {
     "DigitalKontaktinfo": {
       "type": "object",
+      "required": [
+        "kanVarsles",
+        "reservert"
+      ],
       "properties": {
         "epostadresse": {
           "type": "string"
         },
         "kanVarsles": {
-          "type": "boolean"
+          "type": "boolean",
+          "example": false,
+          "description": "Hvorvidt brukeren ikke har reservert seg for digital post, og han/hun kan varsles digitalt i henhold til eForvaltningsforskriftens §32",
+          "allowEmptyValue": false
         },
         "mobiltelefonnummer": {
           "type": "string"
         },
         "personident": {
           "type": "string"
+        },
+        "reservert": {
+          "type": "boolean",
+          "example": false,
+          "description": "Hvorvidt brukeren har reservert seg for digital post",
+          "allowEmptyValue": false
         },
         "sikkerDigitalPostkasse": {
           "$ref": "#/definitions/SikkerDigitalPostkasse"
