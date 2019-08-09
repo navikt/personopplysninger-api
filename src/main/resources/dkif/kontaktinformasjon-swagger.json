@@ -140,10 +140,6 @@
   "definitions": {
     "DigitalKontaktinfo": {
       "type": "object",
-      "required": [
-        "kanVarsles",
-        "reservert"
-      ],
       "properties": {
         "epostadresse": {
           "type": "string"
