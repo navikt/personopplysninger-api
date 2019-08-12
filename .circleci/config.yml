@@ -48,16 +48,16 @@ jobs:
           ingress1: https://$REPO_NAME.nais.oera-q.local/person/$REPO_NAME
           ingress2: https://www-q0.nav.no/person/$REPO_NAME
 
-    deploy-til-prod:
-      docker:
-        - image: navikt/deployment-cli:latest
-      steps:
-        - checkout
-        - sett-miljovariabler
-        - deploy:
-            til: prod-sbs
-            ingress1: https://$REPO_NAME.nais.oera.no/person/$REPO_NAME
-            ingress2: https://www.nav.no/person/$REPO_NAME
+  deploy-til-prod:
+    docker:
+      - image: navikt/deployment-cli:latest
+    steps:
+      - checkout
+      - sett-miljovariabler
+      - deploy:
+          til: prod-sbs
+          ingress1: https://$REPO_NAME.nais.oera.no/person/$REPO_NAME
+          ingress2: https://www.nav.no/person/$REPO_NAME
 
 commands:
   deploy:
