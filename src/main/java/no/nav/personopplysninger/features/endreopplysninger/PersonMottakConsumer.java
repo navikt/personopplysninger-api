@@ -46,7 +46,7 @@ public class PersonMottakConsumer {
     }
 
     private Invocation.Builder buildOppdaterTelefonnummerRequest(String fnr, String systemUserToken) {
-        return getBuilder(fnr, "api/v1/endring/telefonnummer", systemUserToken);
+        return getBuilder(fnr, "endring/telefonnummer", systemUserToken);
 
     }
 
