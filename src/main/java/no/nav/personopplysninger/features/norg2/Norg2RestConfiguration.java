@@ -25,7 +25,7 @@ public class Norg2RestConfiguration {
 
     @Bean
     public Norg2Consumer norg2Consumer(
-            @Named("personMottakClient") Client client,
+            @Named("norg2Client") Client client,
             @Value("${NORG2_API_V1_URL}") String norg2ServiceUri) throws URISyntaxException {
         return new Norg2Consumer(client, new URI(norg2ServiceUri));
     }
