@@ -4,7 +4,6 @@ import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.endreopplysninger.api.OppdaterTelefonnumerResponse;
 import no.nav.personopplysninger.features.endreopplysninger.domain.TelefonnummerDto;
-import no.nav.personopplysninger.features.kodeverk.exceptions.KodeverkConsumerException;
 import org.slf4j.MDC;
 
 import javax.ws.rs.client.Client;
@@ -32,7 +31,7 @@ public class PersonMottakConsumer {
     public OppdaterTelefonnumerResponse oppdaterTelefonnummer(String fnr, Integer nyttNummer, String systemUserToken) {
         TelefonnummerDto telefonnummerDto = new TelefonnummerDto("kilde", "+47", nyttNummer, "MOBIL");
         Invocation.Builder request = buildOppdaterTelefonnummerRequest(fnr, systemUserToken);
-        return hentKodeverkBetydning(request, telefonnummerDto);
+        return sendOppdateringTelefonnummer(request, telefonnummerDto);
     }
 
     private Invocation.Builder getBuilder(String fnr, String path, String systemUserToken) {
@@ -49,14 +48,13 @@ public class PersonMottakConsumer {
 
     }
 
-    private OppdaterTelefonnumerResponse hentKodeverkBetydning(Invocation.Builder request, TelefonnummerDto telefonnummerDto) {
+    private OppdaterTelefonnumerResponse sendOppdateringTelefonnummer(Invocation.Builder request, TelefonnummerDto telefonnummerDto) {
         try (Response response = request.post(Entity.entity(telefonnummerDto, MediaType.APPLICATION_JSON))) {
             return readResponseBetydning(response);
-        } catch (KodeverkConsumerException e) {
-            throw e;
-        } catch (Exception e) {
-            String msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "].";
-            throw new KodeverkConsumerException(msg, e);
+        }
+        catch (Exception e) {
+            String msg = "Forsøkte å oppdatere telefonnummer. endpoint=[" + endpoint + "].";
+            throw new ConsumerException(msg, e);
         }
     }
 
