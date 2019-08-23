@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.endreopplysninger;
 
 import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
+import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.endreopplysninger.api.OppdaterTelefonnumerResponse;
 import no.nav.personopplysninger.features.endreopplysninger.domain.TelefonnummerDto;
 import org.slf4j.MDC;
@@ -40,6 +41,7 @@ public class PersonMottakConsumer {
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Token", BEARER.concat(systemUserToken))
+                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
                 .header("Nav-Personident", fnr);
     }
 

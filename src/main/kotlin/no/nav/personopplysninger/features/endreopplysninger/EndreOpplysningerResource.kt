@@ -26,8 +26,8 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     @Produces(MediaType.APPLICATION_JSON)
     fun endreTelefonnummer(@PathParam("nummer") nummer: Int): Response {
         log.info("Nummer: ".plus(nummer))
-        endreOpplysningerService.endreTelefonnummer(hentFnrFraToken(), nummer)
-        return Response.ok().build()
+        val resp = endreOpplysningerService.endreTelefonnummer(hentFnrFraToken(), nummer)
+        return Response.ok(resp).build()
     }
 
     private fun hentFnrFraToken(): String {
