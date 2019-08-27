@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.api.OppdaterTelefonnumerResponse
 import no.nav.personopplysninger.features.sts.STSConsumer
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

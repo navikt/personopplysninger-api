@@ -3,7 +3,7 @@ package no.nav.personopplysninger.features.endreopplysninger;
 import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
-import no.nav.personopplysninger.features.endreopplysninger.api.OppdaterTelefonnumerResponse;
+import no.nav.personopplysninger.features.endreopplysninger.api.EndringsstatusResponse;
 import no.nav.personopplysninger.features.endreopplysninger.domain.TelefonnummerDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +79,7 @@ public class PersonMottakConsumer {
             String pollEndringUrl = r.getHeaderString(HttpHeaders.LOCATION);
             Response response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
             //log.info("Response= ".concat(readEntity(String.class, response)));
-            return readEntity(OppdaterTelefonnumerResponse.class, response).getEndringstype();
+            return readEntity(EndringsstatusResponse.class, response).getStatus().getStatusType();
         }
     }
 
