@@ -78,7 +78,7 @@ public class PersonMottakConsumer {
         } else {
             String pollEndringUrl = r.getHeaderString(HttpHeaders.LOCATION);
             Response response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-            log.info("Response= ".concat(response.getEntity().toString()));
+            log.info("Response= ".concat(readEntity(String.class, response)));
             return readEntity(OppdaterTelefonnumerResponse.class, response).getEndringstype();
         }
     }
