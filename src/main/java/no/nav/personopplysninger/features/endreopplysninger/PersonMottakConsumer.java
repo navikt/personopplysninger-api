@@ -93,7 +93,7 @@ public class PersonMottakConsumer {
                 response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
                 endring = readEntity(EndringDto.class, response);
             }
-            return endring.getInnmeldtEndring();
+            return endring.getEndringstype();
         }
     }
 
