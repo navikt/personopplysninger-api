@@ -131,6 +131,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-moxy</artifactId>
+            <version>2.15</version>
+        </dependency>
+        <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>oidc-jersey-support</artifactId>
             <version>0.2.18</version>

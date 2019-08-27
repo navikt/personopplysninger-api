@@ -5,6 +5,8 @@ import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.endreopplysninger.api.OppdaterTelefonnumerResponse;
 import no.nav.personopplysninger.features.endreopplysninger.domain.TelefonnummerDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.ws.rs.client.Client;
@@ -18,6 +20,8 @@ import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 import static no.nav.personopplysninger.features.ConsumerFactory.readEntity;
 
 public class PersonMottakConsumer {
+
+    private static final Logger log = LoggerFactory.getLogger(PersonMottakConsumer.class);
 
     private static final String BEARER = "Bearer ";
 
@@ -52,6 +56,7 @@ public class PersonMottakConsumer {
 
     private OppdaterTelefonnumerResponse sendOppdateringTelefonnummer(Invocation.Builder request, TelefonnummerDto telefonnummerDto) {
         try (Response response = request.post(Entity.entity(telefonnummerDto, MediaType.APPLICATION_JSON))) {
+            log.info("Mediatype: ".concat(response.getMediaType().toString()));
             return readResponseBetydning(response);
         }
         catch (Exception e) {
