@@ -78,8 +78,21 @@ public class PersonMottakConsumer {
         } else {
             String pollEndringUrl = r.getHeaderString(HttpHeaders.LOCATION);
             Response response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-            //log.info("Response= ".concat(readEntity(String.class, response)));
-            return readEntity(EndringsstatusResponse.class, response).getStatus().getStatusType();
+            EndringsstatusResponse endringsstatus = readEntity(EndringsstatusResponse.class, response);
+            boolean pending = "PENDING".equals(endringsstatus.getStatus().getStatusType());
+            int i = 0;
+            while (pending && i < 3) {
+                i++;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ie) {
+                    throw new ConsumerException("Fikk feil under polling på status", ie);
+                }
+                response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
+                endringsstatus = readEntity(EndringsstatusResponse.class, response);
+                pending = "PENDING".equals(endringsstatus.getStatus().getStatusType());
+            }
+            return endringsstatus.getStatus().getStatusType();
         }
     }
 
