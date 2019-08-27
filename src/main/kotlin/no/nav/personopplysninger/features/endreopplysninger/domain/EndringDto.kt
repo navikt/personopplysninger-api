@@ -11,7 +11,7 @@ data class EndringDto (
         val lineage: String?,
         val opplysningsId: String? = null,
         val opplysningstype: String?,
-        val opprettet: LocalDateTime?,
-        val sendt: Boolean?,
+       //val opprettet: LocalDateTime?,
+        //val sendt: Boolean?,
         val status: StatusDto
 )
