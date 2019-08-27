@@ -56,7 +56,7 @@ public class PersonMottakConsumer {
     }
 
     private Invocation.Builder buildPollEndringRequest(String url, String systemUserToken) {
-        return getBuilder(url, systemUserToken);
+        return getBuilder(url.replaceAll("/api/v1/", ""), systemUserToken);
     }
 
     private String sendOppdateringTelefonnummer(Invocation.Builder request, TelefonnummerDto telefonnummerDto, String systemUserToken) {
