@@ -12,6 +12,7 @@ import org.slf4j.MDC;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -57,6 +58,7 @@ public class PersonMottakConsumer {
     private OppdaterTelefonnumerResponse sendOppdateringTelefonnummer(Invocation.Builder request, TelefonnummerDto telefonnummerDto) {
         try (Response response = request.post(Entity.entity(telefonnummerDto, MediaType.APPLICATION_JSON))) {
             log.info("Mediatype: ".concat(response.getMediaType().toString()));
+            log.info("Location header: ".concat(response.getHeaderString(HttpHeaders.LOCATION)));
             return readResponseBetydning(response);
         }
         catch (Exception e) {
