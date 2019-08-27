@@ -34,32 +34,36 @@ public class PersonMottakConsumer {
         this.endpoint = endpoint;
     }
 
-    public OppdaterTelefonnumerResponse oppdaterTelefonnummer(String fnr, Integer nyttNummer, String systemUserToken) {
+    public String oppdaterTelefonnummer(String fnr, Integer nyttNummer, String systemUserToken) {
         TelefonnummerDto telefonnummerDto = new TelefonnummerDto("kilde", "+47", nyttNummer, "MOBIL");
         Invocation.Builder request = buildOppdaterTelefonnummerRequest(fnr, systemUserToken);
-        return sendOppdateringTelefonnummer(request, telefonnummerDto);
+        return sendOppdateringTelefonnummer(request, telefonnummerDto, systemUserToken);
     }
 
-    private Invocation.Builder getBuilder(String fnr, String path, String systemUserToken) {
+    private Invocation.Builder getBuilder(String path, String systemUserToken) {
         return client.target(endpoint)
                 .path(path)
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Token", BEARER.concat(systemUserToken))
-                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
+                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID);
+    }
+
+
+    private Invocation.Builder buildOppdaterTelefonnummerRequest(String fnr, String systemUserToken) {
+        return getBuilder("endring/telefonnummer", systemUserToken)
                 .header("Nav-Personident", fnr);
     }
 
-    private Invocation.Builder buildOppdaterTelefonnummerRequest(String fnr, String systemUserToken) {
-        return getBuilder(fnr, "endring/telefonnummer", systemUserToken);
-
+    private Invocation.Builder buildPollEndringRequest(String url, String systemUserToken) {
+        return getBuilder(url, systemUserToken);
     }
 
-    private OppdaterTelefonnumerResponse sendOppdateringTelefonnummer(Invocation.Builder request, TelefonnummerDto telefonnummerDto) {
+    private String sendOppdateringTelefonnummer(Invocation.Builder request, TelefonnummerDto telefonnummerDto, String systemUserToken) {
         try (Response response = request.post(Entity.entity(telefonnummerDto, MediaType.APPLICATION_JSON))) {
             log.info("Mediatype: ".concat(response.getMediaType().toString()));
             log.info("Location header: ".concat(response.getHeaderString(HttpHeaders.LOCATION)));
-            return readResponseBetydning(response);
+            return readResponseAndPollStatus(response, systemUserToken);
         }
         catch (Exception e) {
             String msg = "Forsøkte å oppdatere telefonnummer. endpoint=[" + endpoint + "].";
@@ -67,12 +71,14 @@ public class PersonMottakConsumer {
         }
     }
 
-    private OppdaterTelefonnumerResponse readResponseBetydning(Response r) {
+    private String readResponseAndPollStatus(Response r, String systemUserToken) {
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new ConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
-            return readEntity(OppdaterTelefonnumerResponse.class, r);
+            String pollEndringUrl = r.getHeaderString(HttpHeaders.LOCATION);
+            Response response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
+            return readEntity(OppdaterTelefonnumerResponse.class, response).getEndringstype();
         }
     }
 

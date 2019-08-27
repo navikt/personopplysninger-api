@@ -5,24 +5,19 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 
-@ApiModel(description = "Responsen fra POST /api/v1/endring/telefonnummer.")
+@ApiModel(description = "Responsen fra GET /api/v1/endring/{endringId}.")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OppdaterTelefonnumerResponse {
 
     @ApiModelProperty(value = "TODO")
-    private String statusCode;
+    private String endringstype;
 
-    @ApiModelProperty(value = "TODO")
-    private Integer statusCodeValue;
 
     public OppdaterTelefonnumerResponse() {
     }
 
-    public String getStatusCode() {
-        return statusCode;
+    public String getEndringstype() {
+        return endringstype;
     }
 
-    public Integer getStatusCodeValue() {
-        return statusCodeValue;
-    }
 }
