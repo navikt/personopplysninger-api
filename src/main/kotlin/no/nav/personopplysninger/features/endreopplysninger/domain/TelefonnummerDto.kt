@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class TelefonnummerDto (
-
-        val kilde : kotlin.String? = null,
+        val kilde : kotlin.String,
         val landskode : kotlin.String? = null,
-        val nummer : kotlin.Int? = null,
-        val type: kotlin.String? = null
+        val nummer : kotlin.Int,
+        val type: kotlin.String
 )

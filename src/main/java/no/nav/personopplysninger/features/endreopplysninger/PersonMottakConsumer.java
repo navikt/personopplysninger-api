@@ -3,7 +3,8 @@ package no.nav.personopplysninger.features.endreopplysninger;
 import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
-import no.nav.personopplysninger.features.endreopplysninger.api.EndringsstatusResponse;
+import no.nav.personopplysninger.features.endreopplysninger.api.Endring;
+import no.nav.personopplysninger.features.endreopplysninger.domain.EndringDto;
 import no.nav.personopplysninger.features.endreopplysninger.domain.TelefonnummerDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,8 @@ public class PersonMottakConsumer {
     private static final Logger log = LoggerFactory.getLogger(PersonMottakConsumer.class);
 
     private static final String BEARER = "Bearer ";
+    private static final Integer SLEEP_TIME_MS = 1000;
+    private static final Integer MAX_POLLS = 3;
 
     private Client client;
     private URI endpoint;
@@ -78,21 +81,19 @@ public class PersonMottakConsumer {
         } else {
             String pollEndringUrl = r.getHeaderString(HttpHeaders.LOCATION);
             Response response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-            EndringsstatusResponse endringsstatus = readEntity(EndringsstatusResponse.class, response);
-            boolean pending = "PENDING".equals(endringsstatus.getStatus().getStatusType());
+            EndringDto endring = readEntity(EndringDto.class, response);
             int i = 0;
-            while (pending && i < 3) {
+            while (endring.getStatus().isPending() && i < MAX_POLLS) {
                 i++;
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(SLEEP_TIME_MS);
                 } catch (InterruptedException ie) {
                     throw new ConsumerException("Fikk feil under polling på status", ie);
                 }
                 response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-                endringsstatus = readEntity(EndringsstatusResponse.class, response);
-                pending = "PENDING".equals(endringsstatus.getStatus().getStatusType());
+                endring = readEntity(EndringDto.class, response);
             }
-            return endringsstatus.getStatus().getStatusType();
+            return endring.getInnmeldtEndring();
         }
     }
 
