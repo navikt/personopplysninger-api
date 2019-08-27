@@ -13,5 +13,5 @@ data class EndringDto (
 //        val opplysningstype: String?,
        //val opprettet: LocalDateTime?,
         //val sendt: Boolean?,
-        val status: StatusDto
+        val status: StatusDto?
 )
