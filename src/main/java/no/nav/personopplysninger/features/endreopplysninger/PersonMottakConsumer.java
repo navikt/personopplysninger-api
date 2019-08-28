@@ -25,7 +25,7 @@ public class PersonMottakConsumer {
     private static final Logger log = LoggerFactory.getLogger(PersonMottakConsumer.class);
 
     private static final String BEARER = "Bearer ";
-    private static final Integer SLEEP_TIME_MS = 1000;
+    private static final Integer SLEEP_TIME_MS = 500;
     private static final Integer MAX_POLLS = 3;
 
     private Client client;
@@ -49,7 +49,6 @@ public class PersonMottakConsumer {
                 .header("Nav-Consumer-Token", BEARER.concat(systemUserToken))
                 .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID);
     }
-
 
     private Invocation.Builder buildOppdaterTelefonnummerRequest(String fnr, String systemUserToken) {
         return getBuilder("/api/v1/endring/telefonnummer", systemUserToken)
@@ -86,10 +85,9 @@ public class PersonMottakConsumer {
                 }
                 Response pollResponse = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
                 endring = readEntity(EndringTelefon.class, pollResponse);
-            } while (endring.isPending() && ++i < MAX_POLLS);
-            log.info("Antall polls for status: ".concat(String.valueOf(i + 1)));
+            } while (++i < MAX_POLLS && endring.isPending());
+            log.info("Antall polls for status: " + i);
             return endring;
         }
     }
-
 }

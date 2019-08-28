@@ -17,6 +17,8 @@ public class Telefonnummer {
 
     public Telefonnummer() {}
 
+    // Denne var nødvendig fordi verdien på feltet 'innmeldtEndring' (som kan representere et Telefonnummer) er
+    // wrappet med dobbeltfnutter.
     @JsonCreator
     public static Telefonnummer create(String json) throws JsonParseException, JsonMappingException, IOException {
         return (new ObjectMapper()).readValue(json, Telefonnummer.class);
