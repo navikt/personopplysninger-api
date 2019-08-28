@@ -11,6 +11,13 @@ public class Telefonnummer {
 
     public Telefonnummer() {}
 
+    public Telefonnummer(String kilde, String landskode, Integer nummer, String type) {
+        this.kilde = kilde;
+        this.landskode = landskode;
+        this.nummer = nummer;
+        this.type = type;
+    }
+
     public Telefonnummer(String landskode, Integer nummer, String type) {
         this.landskode = landskode;
         this.nummer = nummer;

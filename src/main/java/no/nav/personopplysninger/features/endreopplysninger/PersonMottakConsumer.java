@@ -3,7 +3,7 @@ package no.nav.personopplysninger.features.endreopplysninger;
 import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
-import no.nav.personopplysninger.features.endreopplysninger.domain.Endring;
+import no.nav.personopplysninger.features.endreopplysninger.domain.EndringTelefon;
 import no.nav.personopplysninger.features.endreopplysninger.domain.Telefonnummer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class PersonMottakConsumer {
         this.endpoint = endpoint;
     }
 
-    public Endring oppdaterTelefonnummer(String fnr, Telefonnummer telefonnummer, String systemUserToken) {
+    public EndringTelefon oppdaterTelefonnummer(String fnr, Telefonnummer telefonnummer, String systemUserToken) {
         Invocation.Builder request = buildOppdaterTelefonnummerRequest(fnr, systemUserToken);
         return sendOppdateringTelefonnummer(request, telefonnummer, systemUserToken);
     }
@@ -60,7 +60,7 @@ public class PersonMottakConsumer {
         return getBuilder(url, systemUserToken);
     }
 
-    private Endring sendOppdateringTelefonnummer(Invocation.Builder request, Telefonnummer telefonnummer, String systemUserToken) {
+    private EndringTelefon sendOppdateringTelefonnummer(Invocation.Builder request, Telefonnummer telefonnummer, String systemUserToken) {
         try (Response response = request.post(Entity.entity(telefonnummer, MediaType.APPLICATION_JSON))) {
             return readResponseAndPollStatus(response, systemUserToken);
         }
@@ -70,26 +70,23 @@ public class PersonMottakConsumer {
         }
     }
 
-    private Endring readResponseAndPollStatus(Response r, String systemUserToken) {
+    private EndringTelefon readResponseAndPollStatus(Response r, String systemUserToken) {
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
             throw new ConsumerException(msg + " - " + readEntity(String.class, r));
         } else {
             String pollEndringUrl = r.getHeaderString(HttpHeaders.LOCATION);
-            Response pollResponse = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-            Endring endring = readEntity(Endring.class, pollResponse);
+            EndringTelefon endring = null;
             int i = 0;
-
-            while (endring.isPending() && i < MAX_POLLS) {
-                i++;
+            do {
                 try {
                     Thread.sleep(SLEEP_TIME_MS);
                 } catch (InterruptedException ie) {
                     throw new ConsumerException("Fikk feil under polling på status", ie);
                 }
-                pollResponse = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-                endring = readEntity(Endring.class, pollResponse);
-            }
+                Response pollResponse = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
+                endring = readEntity(EndringTelefon.class, pollResponse);
+            } while (endring.isPending() && ++i < MAX_POLLS);
             log.info("Antall polls for status: ".concat(String.valueOf(i + 1)));
             return endring;
         }

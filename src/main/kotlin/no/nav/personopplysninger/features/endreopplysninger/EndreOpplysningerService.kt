@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.Endring
+import no.nav.personopplysninger.features.endreopplysninger.domain.EndringTelefon
 import no.nav.personopplysninger.features.endreopplysninger.domain.Telefonnummer
 import no.nav.personopplysninger.features.sts.STSConsumer
 import org.slf4j.LoggerFactory
@@ -15,7 +15,7 @@ class EndreOpplysningerService @Autowired constructor(
 
     private val log = LoggerFactory.getLogger(EndreOpplysningerService::class.java)
 
-    fun endreTelefonnummer(fnr: String, nummer: Int, landskode: String, type: String): Endring {
+    fun endreTelefonnummer(fnr: String, nummer: Int, landskode: String, type: String): EndringTelefon {
         val telefonnummer = Telefonnummer(landskode, nummer, type)
         return personMottakConsumer.oppdaterTelefonnummer(fnr, telefonnummer, getSystembrukerToken())
     }
