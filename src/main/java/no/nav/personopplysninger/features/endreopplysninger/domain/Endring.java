@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.endreopplysninger.api;
+package no.nav.personopplysninger.features.endreopplysninger.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
@@ -11,6 +11,10 @@ public class Endring {
     private String endringstype;
 
     private String ident;
+
+    private String lineage;
+
+    private String opplysningsId;
 
     private Status status;
 

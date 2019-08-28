@@ -3,9 +3,8 @@ package no.nav.personopplysninger.features.endreopplysninger;
 import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
-import no.nav.personopplysninger.features.endreopplysninger.api.Endring;
-import no.nav.personopplysninger.features.endreopplysninger.domain.EndringDto;
-import no.nav.personopplysninger.features.endreopplysninger.domain.TelefonnummerDto;
+import no.nav.personopplysninger.features.endreopplysninger.domain.Endring;
+import no.nav.personopplysninger.features.endreopplysninger.domain.Telefonnummer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -38,9 +37,9 @@ public class PersonMottakConsumer {
     }
 
     public String oppdaterTelefonnummer(String fnr, Integer nyttNummer, String systemUserToken) {
-        TelefonnummerDto telefonnummerDto = new TelefonnummerDto("kilde", "+47", nyttNummer, "MOBIL");
+        Telefonnummer telefonnummer = new Telefonnummer("kilde", "+47", nyttNummer, "MOBIL");
         Invocation.Builder request = buildOppdaterTelefonnummerRequest(fnr, systemUserToken);
-        return sendOppdateringTelefonnummer(request, telefonnummerDto, systemUserToken);
+        return sendOppdateringTelefonnummer(request, telefonnummer, systemUserToken);
     }
 
     private Invocation.Builder getBuilder(String path, String systemUserToken) {
@@ -62,10 +61,8 @@ public class PersonMottakConsumer {
         return getBuilder(url.replaceAll("/api/v1/", ""), systemUserToken);
     }
 
-    private String sendOppdateringTelefonnummer(Invocation.Builder request, TelefonnummerDto telefonnummerDto, String systemUserToken) {
-        try (Response response = request.post(Entity.entity(telefonnummerDto, MediaType.APPLICATION_JSON))) {
-            log.info("Mediatype: ".concat(response.getMediaType().toString()));
-            log.info("Location header: ".concat(response.getHeaderString(HttpHeaders.LOCATION)));
+    private String sendOppdateringTelefonnummer(Invocation.Builder request, Telefonnummer telefonnummer, String systemUserToken) {
+        try (Response response = request.post(Entity.entity(telefonnummer, MediaType.APPLICATION_JSON))) {
             return readResponseAndPollStatus(response, systemUserToken);
         }
         catch (Exception e) {
@@ -81,7 +78,6 @@ public class PersonMottakConsumer {
         } else {
             String pollEndringUrl = r.getHeaderString(HttpHeaders.LOCATION);
             Response response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-            //EndringDto endring = readEntity(EndringDto.class, response);
             Endring endring = readEntity(Endring.class, response);
             int i = 0;
             while (endring.isPending() && i < MAX_POLLS) {
@@ -92,7 +88,6 @@ public class PersonMottakConsumer {
                     throw new ConsumerException("Fikk feil under polling på status", ie);
                 }
                 response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-                //endring = readEntity(EndringDto.class, response);
                 endring = readEntity(Endring.class, response);
             }
             return endring.getEndringstype();
