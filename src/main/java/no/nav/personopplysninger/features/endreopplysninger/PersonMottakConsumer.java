@@ -81,9 +81,10 @@ public class PersonMottakConsumer {
         } else {
             String pollEndringUrl = r.getHeaderString(HttpHeaders.LOCATION);
             Response response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-            EndringDto endring = readEntity(EndringDto.class, response);
+            //EndringDto endring = readEntity(EndringDto.class, response);
+            Endring endring = readEntity(Endring.class, response);
             int i = 0;
-            while (endring.getStatus().isPending() && i < MAX_POLLS) {
+            while (endring.isPending() && i < MAX_POLLS) {
                 i++;
                 try {
                     Thread.sleep(SLEEP_TIME_MS);
@@ -91,7 +92,8 @@ public class PersonMottakConsumer {
                     throw new ConsumerException("Fikk feil under polling på status", ie);
                 }
                 response = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-                endring = readEntity(EndringDto.class, response);
+                //endring = readEntity(EndringDto.class, response);
+                endring = readEntity(Endring.class, response);
             }
             return endring.getEndringstype();
         }

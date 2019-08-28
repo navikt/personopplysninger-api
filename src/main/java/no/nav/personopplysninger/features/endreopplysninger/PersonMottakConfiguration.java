@@ -20,8 +20,6 @@ import java.net.URISyntaxException;
 @Configuration
 public class PersonMottakConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(PersonMottakConfiguration.class);
-
     @Value("${PERSONOPPLYSNINGER_API_PERSON_MOTTAK_API_V1_APIKEY_USERNAME}")
     private String personMottakApiKeyUsername;
 
@@ -37,9 +35,6 @@ public class PersonMottakConfiguration {
 
     @Bean
     public Client personMottakClient(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
-        for (Object o : clientObjectMapperResolver.getContext(ObjectMapper.class).getRegisteredModuleIds()) {
-            log.info("Registered module ".concat(o.toString()));
-        }
         return ClientBuilder.newBuilder()
                 .register(OidcClientRequestFilter.class)
                 .register(clientObjectMapperResolver)
