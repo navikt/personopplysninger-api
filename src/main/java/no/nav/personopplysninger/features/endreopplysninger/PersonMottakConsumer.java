@@ -79,6 +79,7 @@ public class PersonMottakConsumer {
             Response pollResponse = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
             Endring endring = readEntity(Endring.class, pollResponse);
             int i = 0;
+
             while (endring.isPending() && i < MAX_POLLS) {
                 i++;
                 try {
@@ -89,6 +90,7 @@ public class PersonMottakConsumer {
                 pollResponse = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
                 endring = readEntity(Endring.class, pollResponse);
             }
+            log.info("Antall polls for status: ".concat(String.valueOf(i + 1)));
             return endring;
         }
     }
