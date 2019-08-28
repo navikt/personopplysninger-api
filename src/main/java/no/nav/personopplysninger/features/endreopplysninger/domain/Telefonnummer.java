@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Telefonnummer {
-    private String kilde = "nav.no";
+    private String kilde = "BRUKER SELV";
     private String landskode = null;
     private Integer nummer;
     private String type;

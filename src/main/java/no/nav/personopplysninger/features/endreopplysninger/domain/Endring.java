@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 
@@ -30,6 +31,7 @@ public class Endring {
         return endringstype;
     }
 
+    @JsonIgnore
     public boolean isPending() {
         return "PENDING".equals(status.statusType);
     }
