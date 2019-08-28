@@ -29,7 +29,7 @@ public class PersonMottakConfiguration {
     @Bean
     public PersonMottakConsumer personMottakConsumer(
             @Named("personMottakClient") Client client,
-            @Value("${PERSON_MOTTAK_API_V1_URL}") String personMottakServiceUri) throws URISyntaxException {
+            @Value("${PERSON_MOTTAK_API_URL}") String personMottakServiceUri) throws URISyntaxException {
         return new PersonMottakConsumer(client, new URI(personMottakServiceUri));
     }
 

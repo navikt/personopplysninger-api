@@ -1,5 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
+import no.nav.personopplysninger.features.endreopplysninger.domain.Endring
+import no.nav.personopplysninger.features.endreopplysninger.domain.Telefonnummer
 import no.nav.personopplysninger.features.sts.STSConsumer
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,14 +15,9 @@ class EndreOpplysningerService @Autowired constructor(
 
     private val log = LoggerFactory.getLogger(EndreOpplysningerService::class.java)
 
-//    fun endreTelefonnummer(fnr: String, nummer: Int): OppdaterTelefonnumerResponse? {
-//        log.info("fnr= ".plus(fnr).plus(", sysbrukertoken= ".plus(getSystembrukerToken())))
-//        return personMottakConsumer.oppdaterTelefonnummer(fnr, nummer, getSystembrukerToken())
-//    }
-
-    fun endreTelefonnummer(fnr: String, nummer: Int): String {
-        log.info("fnr= ".plus(fnr).plus(", sysbrukertoken= ".plus(getSystembrukerToken())))
-        return personMottakConsumer.oppdaterTelefonnummer(fnr, nummer, getSystembrukerToken())
+    fun endreTelefonnummer(fnr: String, nummer: Int, landskode: String, type: String): Endring {
+        val telefonnummer = Telefonnummer(landskode, nummer, type)
+        return personMottakConsumer.oppdaterTelefonnummer(fnr, telefonnummer, getSystembrukerToken())
     }
 
         private fun getSystembrukerToken(): String? {

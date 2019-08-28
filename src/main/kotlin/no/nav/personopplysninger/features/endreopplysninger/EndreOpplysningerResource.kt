@@ -22,11 +22,13 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     private val log = LoggerFactory.getLogger(EndreOpplysningerResource::class.java)
 
     @GET
-    @Path("/endreTelefonnummer/{nummer}")
+    @Path("/endreTelefonnummer/{nummer}/{landskode}/{type}")
     @Produces(MediaType.APPLICATION_JSON)
-    fun endreTelefonnummer(@PathParam("nummer") nummer: Int): Response {
-        log.info("Nummer: ".plus(nummer))
-        val resp = endreOpplysningerService.endreTelefonnummer(hentFnrFraToken(), nummer)
+    fun endreTelefonnummer(
+            @PathParam("nummer") nummer: Int,
+            @PathParam("landskode") landskode: String,
+            @PathParam("type") type: String): Response {
+        val resp = endreOpplysningerService.endreTelefonnummer(hentFnrFraToken(), nummer, landskode, type)
         return Response.ok(resp).build()
     }
 
