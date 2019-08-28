@@ -1,6 +1,12 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Telefonnummer {
@@ -10,6 +16,11 @@ public class Telefonnummer {
     private String type;
 
     public Telefonnummer() {}
+
+    @JsonCreator
+    public static Telefonnummer create(String json) throws JsonParseException, JsonMappingException, IOException {
+        return (new ObjectMapper()).readValue(json, Telefonnummer.class);
+    }
 
     public Telefonnummer(String kilde, String landskode, Integer nummer, String type) {
         this.kilde = kilde;
