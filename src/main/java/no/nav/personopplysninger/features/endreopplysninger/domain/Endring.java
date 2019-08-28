@@ -19,6 +19,26 @@ public class Endring {
         return endringstype;
     }
 
+    public String getIdent() {
+        return ident;
+    }
+
+    public String getInnmeldtEndring() {
+        return innmeldtEndring;
+    }
+
+    public String getLineage() {
+        return lineage;
+    }
+
+    public String getOpplysningsId() {
+        return opplysningsId;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
     @JsonIgnore
     public boolean isPending() {
         return "PENDING".equals(status.statusType);
@@ -28,6 +48,14 @@ public class Endring {
     public class Status {
         private Integer endringId;
         private String statusType;
+
+        public Integer getEndringId() {
+            return endringId;
+        }
+
+        public String getStatusType() {
+            return statusType;
+        }
     }
 
 }
