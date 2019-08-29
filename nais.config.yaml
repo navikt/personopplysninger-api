@@ -10,16 +10,17 @@ spec:
   image: navikt/{{reponame}}:{{version}}
   team: {{team}}
   port: 8080
-  ingresses:
   {{#each ingresses }}
-    - {{ this }}
+     - {{ this }}
   {{/each}}
   liveness:
     path: {{baseurl}}/internal/isAlive
     initialDelay: 10
   readiness:
-    path: {{baseurl}}/internal/isReady
+    path: {{baseurl}}/internal/isAlive
     initialDelay: 10
+  vault:
+    enabled: true
   replicas:
     min: 2
     max: 4
@@ -27,6 +28,9 @@ spec:
   resources:
     limits:
       cpu: '3'
-      memory: 768Mi
+      memory: 1500Mi
     requests:
-      memory: 512Mi
+      memory: 1500Mi
+  prometheus:
+    enabled: true
+    path: {{baseurl}}/internal/actuator/prometheus
