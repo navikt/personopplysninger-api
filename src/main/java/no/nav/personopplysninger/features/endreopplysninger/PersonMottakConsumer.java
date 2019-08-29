@@ -25,7 +25,7 @@ public class PersonMottakConsumer {
     private static final Logger log = LoggerFactory.getLogger(PersonMottakConsumer.class);
 
     private static final String BEARER = "Bearer ";
-    private static final Integer SLEEP_TIME_MS = 500;
+    private static final Integer SLEEP_TIME_MS = 1000;
     private static final Integer MAX_POLLS = 3;
 
     private Client client;
