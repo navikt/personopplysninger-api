@@ -1,10 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.nav.personopplysninger.features.norg2.Norg2Consumer;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,5 +38,4 @@ public class PersonMottakConfiguration {
                 .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(personMottakApiKeyUsername, personMottakApiKeyPassword))
                 .build();
     }
-
 }
