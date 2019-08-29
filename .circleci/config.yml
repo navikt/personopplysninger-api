@@ -2,22 +2,27 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:11.7.0
+      - image: circleci/openjdk:8-jdk
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - mvn-dependencies-{{ checksum "pom.xml" }}
+            - mvn-dependencies-
       - run:
-          name: Installer npm pakker
-          command: |
-            npm ci
-            npm i @navikt/arbeidsforhold
+          name: Installing dependencies
+          command: mvn dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: mvn-dependencies-{{ checksum "pom.xml" }}
       - run:
-          name: Bygg React app
-          command: |
-            npm run build
+          name: Building project
+          command: mvn package
       - persist_to_workspace:
           root: .
           paths:
-            - build/*
+            - target/*
 
   deploy-til-dev:
     docker:
