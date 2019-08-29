@@ -2,27 +2,22 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/node:11.7.0
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - mvn-dependencies-{{ checksum "pom.xml" }}
-            - mvn-dependencies-
       - run:
-          name: Installing dependencies
-          command: mvn dependency:go-offline
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: mvn-dependencies-{{ checksum "pom.xml" }}
+          name: Installer npm pakker
+          command: |
+            npm ci
+            npm i @navikt/arbeidsforhold
       - run:
-          name: Building project
-          command: mvn package
+          name: Bygg React app
+          command: |
+            npm run build
       - persist_to_workspace:
           root: .
           paths:
-            - target/*
+            - build/*
 
   deploy-til-dev:
     docker:
@@ -45,8 +40,6 @@ jobs:
             docker push $IMAGE_NAME
       - deploy:
           til: dev-sbs
-          ingress1: https://$REPO_NAME.nais.oera-q.local
-          ingress2: https://www-q0.nav.no/person/$REPO_NAME
 
   deploy-til-prod:
     docker:
@@ -56,19 +49,32 @@ jobs:
       - sett-miljovariabler
       - deploy:
           til: prod-sbs
-          ingress1: https://$REPO_NAME.nais.oera.no
-          ingress2: https://www.nav.no/person/$REPO_NAME
 
 commands:
   deploy:
     parameters:
       til:
         type: string
-      ingress1:
-        type: string
-      ingress2:
-        type: string
     steps:
+      - run:
+          name: Definerer ingresser for dev-sbs
+          command: |
+            jq -n '{
+                "ingresses": [
+                  "'https://$REPO_NAME.nais.oera-q.local'",
+                  "'https://www-q1.nav.no/person/$REPO_NAME'",
+                  "'https://www-q0.nav.no/person/$REPO_NAME'"
+            ]}' | tee -a nais.dev-sbs.vars.json
+
+      - run:
+          name: Definerer ingresser for prod-sbs
+          command: |
+            jq -n '{
+                "ingresses": [
+                  "'https://$REPO_NAME.nais.oera.no'",
+                  "'https://www.nav.no/person/$REPO_NAME'"
+             ]}' | tee -a nais.prod-sbs.vars.json
+
       - run:
           name: Deployer til << parameters.til >>
           command: |
@@ -78,9 +84,8 @@ commands:
                 --resource=nais.config.yaml \
                 --cluster=<< parameters.til >> \
                 --repository=$CIRCLE_PROJECT_USERNAME/$REPO_NAME \
+                --vars=nais.<< parameters.til >>.vars.json \
                 --var baseurl=/person/$REPO_NAME \
-                --var ingress1=<< parameters.ingress1 >> \
-                --var ingress2=<< parameters.ingress2 >> \
                 --var reponame=$REPO_NAME \
                 --var version=$IMAGE_VERSION \
                 --key=gh_deploy_key.pem \
@@ -90,7 +95,7 @@ commands:
   sett-miljovariabler:
     steps:
       - run:
-          name:  Definerer git-referanse, versjonsnummer og repo-navn
+          name: Definerer git-referanse, versjonsnummer og repo-navn
           command: |
             echo "export COMMIT_SHORT='$(git rev-parse --short HEAD)'" >> $BASH_ENV
             echo "export IMAGE_VERSION='$CIRCLE_WORKFLOW_ID-${CIRCLE_BRANCH////-}$CIRCLE_TAG'" >> $BASH_ENV

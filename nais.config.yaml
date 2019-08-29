@@ -11,16 +11,15 @@ spec:
   team: {{team}}
   port: 8080
   ingresses:
-    - {{ingress1}}
-    - {{ingress2}}
+  {{#each ingresses }}
+    - {{ this }}
+  {{/each}}
   liveness:
     path: {{baseurl}}/internal/isAlive
     initialDelay: 10
   readiness:
-    path: {{baseurl}}/internal/isAlive
+    path: {{baseurl}}/internal/isReady
     initialDelay: 10
-  vault:
-    enabled: true
   replicas:
     min: 2
     max: 4
@@ -28,9 +27,6 @@ spec:
   resources:
     limits:
       cpu: '3'
-      memory: 1500Mi
+      memory: 768Mi
     requests:
-      memory: 1500Mi
-  prometheus:
-    enabled: true
-    path: {{baseurl}}/internal/actuator/prometheus
+      memory: 512Mi
