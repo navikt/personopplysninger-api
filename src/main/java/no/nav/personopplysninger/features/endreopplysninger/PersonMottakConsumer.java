@@ -36,9 +36,9 @@ public class PersonMottakConsumer {
         this.endpoint = endpoint;
     }
 
-    public EndringTelefon oppdaterTelefonnummer(String fnr, Telefonnummer telefonnummer, String systemUserToken) {
+    public EndringTelefon endreTelefonnummer(String fnr, Telefonnummer telefonnummer, String systemUserToken, String httpMethod) {
         Invocation.Builder request = buildOppdaterTelefonnummerRequest(fnr, systemUserToken);
-        return sendOppdateringTelefonnummer(request, telefonnummer, systemUserToken);
+        return sendEndringTelefonnummer(request, telefonnummer, systemUserToken, httpMethod);
     }
 
     private Invocation.Builder getBuilder(String path, String systemUserToken) {
@@ -59,22 +59,22 @@ public class PersonMottakConsumer {
         return getBuilder(url, systemUserToken);
     }
 
-    private EndringTelefon sendOppdateringTelefonnummer(Invocation.Builder request, Telefonnummer telefonnummer, String systemUserToken) {
-        try (Response response = request.post(Entity.entity(telefonnummer, MediaType.APPLICATION_JSON))) {
+    private EndringTelefon sendEndringTelefonnummer(Invocation.Builder request, Telefonnummer telefonnummer, String systemUserToken, String httpMethod) {
+        try (Response response = request.method(httpMethod, Entity.entity(telefonnummer, MediaType.APPLICATION_JSON))) {
             return readResponseAndPollStatus(response, systemUserToken);
         }
         catch (Exception e) {
-            String msg = "Forsøkte å oppdatere telefonnummer. endpoint=[" + endpoint + "].";
+            String msg = "Forsøkte å endre telefonnummer. endpoint=[" + endpoint + "].";
             throw new ConsumerException(msg, e);
         }
     }
 
-    private EndringTelefon readResponseAndPollStatus(Response r, String systemUserToken) {
-        if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
-            String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
-            throw new ConsumerException(msg + " - " + readEntity(String.class, r));
+    private EndringTelefon readResponseAndPollStatus(Response response, String systemUserToken) {
+        if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
+            String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.getStatus() + "].";
+            throw new ConsumerException(msg + " - " + readEntity(String.class, response));
         } else {
-            String pollEndringUrl = r.getHeaderString(HttpHeaders.LOCATION);
+            String pollEndringUrl = response.getHeaderString(HttpHeaders.LOCATION);
             EndringTelefon endring = null;
             int i = 0;
             do {

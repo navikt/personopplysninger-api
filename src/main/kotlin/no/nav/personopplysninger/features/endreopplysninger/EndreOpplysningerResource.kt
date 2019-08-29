@@ -5,10 +5,7 @@ import no.nav.security.oidc.jaxrs.OidcRequestContext
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import javax.ws.rs.GET
-import javax.ws.rs.Path
-import javax.ws.rs.PathParam
-import javax.ws.rs.Produces
+import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
@@ -28,7 +25,20 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
             @PathParam("nummer") nummer: Int,
             @PathParam("landskode") landskode: String,
             @PathParam("type") type: String): Response {
-        val resp = endreOpplysningerService.endreTelefonnummer(hentFnrFraToken(), nummer, landskode, type)
+        val resp = endreOpplysningerService.endreTelefonnummer(
+                hentFnrFraToken(), nummer, landskode, type, HttpMethod.POST)
+        return Response.ok(resp).build()
+    }
+
+    @GET
+    @Path("slettTelefonnummer/{nummer}/{landskode}/{type}")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun slettTelefonnummer(
+            @PathParam("nummer") nummer: Int,
+            @PathParam("landskode") landskode: String,
+            @PathParam("type") type: String): Response {
+        val resp = endreOpplysningerService.endreTelefonnummer(
+                hentFnrFraToken(), nummer, landskode, type, HttpMethod.PUT)
         return Response.ok(resp).build()
     }
 
