@@ -10,8 +10,9 @@ spec:
   image: navikt/{{reponame}}:{{version}}
   team: {{team}}
   port: 8080
+  ingresses:
   {{#each ingresses }}
-     - {{ this }}
+    - {{ this }}
   {{/each}}
   liveness:
     path: {{baseurl}}/internal/isAlive
