@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
+import no.nav.personopplysninger.features.endreopplysninger.domain.Telefonnummer
 import no.nav.security.oidc.api.ProtectedWithClaims
 import no.nav.security.oidc.jaxrs.OidcRequestContext
 import org.slf4j.LoggerFactory
@@ -18,27 +19,23 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
 
     private val log = LoggerFactory.getLogger(EndreOpplysningerResource::class.java)
 
-    @GET
-    @Path("/endreTelefonnummer/{nummer}/{landskode}/{type}")
+    @POST
+    @Path("/endreTelefonnummer")
     @Produces(MediaType.APPLICATION_JSON)
-    fun endreTelefonnummer(
-            @PathParam("nummer") nummer: Int,
-            @PathParam("landskode") landskode: String,
-            @PathParam("type") type: String): Response {
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreTelefonnummer(telefonnummer: Telefonnummer): Response {
         val resp = endreOpplysningerService.endreTelefonnummer(
-                hentFnrFraToken(), nummer, landskode, type, HttpMethod.POST)
+                hentFnrFraToken(), telefonnummer, HttpMethod.POST)
         return Response.ok(resp).build()
     }
 
-    @GET
-    @Path("slettTelefonnummer/{nummer}/{landskode}/{type}")
+    @POST
+    @Path("slettTelefonnummer")
     @Produces(MediaType.APPLICATION_JSON)
-    fun slettTelefonnummer(
-            @PathParam("nummer") nummer: Int,
-            @PathParam("landskode") landskode: String,
-            @PathParam("type") type: String): Response {
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun slettTelefonnummer(telefonnummer: Telefonnummer): Response {
         val resp = endreOpplysningerService.endreTelefonnummer(
-                hentFnrFraToken(), nummer, landskode, type, HttpMethod.PUT)
+                hentFnrFraToken(), telefonnummer, HttpMethod.PUT)
         return Response.ok(resp).build()
     }
 

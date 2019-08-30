@@ -15,8 +15,7 @@ class EndreOpplysningerService @Autowired constructor(
 
     private val log = LoggerFactory.getLogger(EndreOpplysningerService::class.java)
 
-    fun endreTelefonnummer(fnr: String, nummer: Int, landskode: String, type: String, httpMethod: String): EndringTelefon {
-        val telefonnummer = Telefonnummer(landskode, nummer, type)
+    fun endreTelefonnummer(fnr: String, telefonnummer: Telefonnummer, httpMethod: String): EndringTelefon {
         return personMottakConsumer.endreTelefonnummer(fnr, telefonnummer, getSystembrukerToken(), httpMethod)
     }
 
