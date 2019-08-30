@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals

@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.EndringTelefon
-import no.nav.personopplysninger.features.endreopplysninger.domain.Telefonnummer
+import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
+import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.sts.STSConsumer
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

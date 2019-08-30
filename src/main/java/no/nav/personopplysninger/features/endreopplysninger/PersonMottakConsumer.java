@@ -3,8 +3,9 @@ package no.nav.personopplysninger.features.endreopplysninger;
 import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
-import no.nav.personopplysninger.features.endreopplysninger.domain.EndringTelefon;
-import no.nav.personopplysninger.features.endreopplysninger.domain.Telefonnummer;
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer;
+import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon;
+import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -59,7 +60,8 @@ public class PersonMottakConsumer {
         return getBuilder(url, systemUserToken);
     }
 
-    private EndringTelefon sendEndringTelefonnummer(Invocation.Builder request, Telefonnummer telefonnummer, String systemUserToken, String httpMethod) {
+    private EndringTelefon sendEndringTelefonnummer(Invocation.Builder request, Object telefonnummer, String systemUserToken, String httpMethod) {
+        log.info("Object= ".concat(telefonnummer.getClass().getSimpleName()));
         try (Response response = request.method(httpMethod, Entity.entity(telefonnummer, MediaType.APPLICATION_JSON))) {
             return readResponseAndPollStatus(response, systemUserToken);
         }
@@ -68,6 +70,17 @@ public class PersonMottakConsumer {
             throw new ConsumerException(msg, e);
         }
     }
+
+    private EndringTelefon sendEndringKontonummer(Invocation.Builder request, Kontonummer kontonummer, String systemUserToken, String httpMethod) {
+        try (Response response = request.method(httpMethod, Entity.entity(kontonummer, MediaType.APPLICATION_JSON))) {
+            return readResponseAndPollStatus(response, systemUserToken);
+        }
+        catch (Exception e) {
+            String msg = "Forsøkte å endre kontonummer. endpoint=[" + endpoint + "].";
+            throw new ConsumerException(msg, e);
+        }
+    }
+
 
     private EndringTelefon readResponseAndPollStatus(Response response, String systemUserToken) {
         if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
