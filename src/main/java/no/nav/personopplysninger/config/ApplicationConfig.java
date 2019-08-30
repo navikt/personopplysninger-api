@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.config;
 
 import no.nav.log.LogFilter;
+import no.nav.personopplysninger.features.endreopplysninger.PersonMottakConfiguration;
 import no.nav.personopplysninger.features.kodeverk.KodeverkRestConfiguration;
 import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguration;
@@ -34,7 +35,8 @@ import java.util.EnumSet;
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 @Import({RestClientConfiguration.class,
         KodeverkRestConfiguration.class,
-        PersonaliaRestConfiguration.class
+        PersonaliaRestConfiguration.class,
+        PersonMottakConfiguration.class
 })
 public class ApplicationConfig implements EnvironmentAware {
 

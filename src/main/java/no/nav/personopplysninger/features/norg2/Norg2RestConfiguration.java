@@ -2,7 +2,6 @@ package no.nav.personopplysninger.features.norg2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
-import org.glassfish.jersey.logging.LoggingFeature;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +13,6 @@ import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.ext.ContextResolver;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Configuration
 public class Norg2RestConfiguration {

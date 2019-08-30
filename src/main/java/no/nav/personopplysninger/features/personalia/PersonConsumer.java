@@ -47,6 +47,7 @@ public class PersonConsumer {
 
     private Personinfo hentPersoninfo(Invocation.Builder request) {
         try (Response response = request.get()) {
+            log.info("MediaType: ".concat(response.getMediaType().toString()));
             return readResponse(response);
         } catch (ConsumerException e) {
             throw e;
