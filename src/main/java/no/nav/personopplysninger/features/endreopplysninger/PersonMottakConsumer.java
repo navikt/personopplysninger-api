@@ -4,6 +4,7 @@ import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring;
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon;
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -46,6 +48,11 @@ public class PersonMottakConsumer {
         return sendEndring(request, telefonnummer, systemUserToken, httpMethod, EndringTelefon.class);
     }
 
+    public EndringKontonummer endreKontonummer(String fnr, Kontonummer kontonummer, String systemUserToken) {
+        Invocation.Builder request = buildOppdaterTelefonnummerRequest(fnr, systemUserToken, URL_KONTONUMMER);
+        return sendEndring(request, kontonummer, systemUserToken, HttpMethod.POST, EndringKontonummer.class);
+    }
+
     private Invocation.Builder getBuilder(String path, String systemUserToken) {
         return client.target(endpoint)
                 .path(path)
@@ -75,25 +82,12 @@ public class PersonMottakConsumer {
         }
     }
 
-//    private EndringTelefon sendEndringKontonummer(Invocation.Builder request, Kontonummer kontonummer, String systemUserToken, String httpMethod) {
-//        try (Response response = request.method(httpMethod, Entity.entity(kontonummer, MediaType.APPLICATION_JSON))) {
-//            return readResponseAndPollStatus(response, systemUserToken, new EndringTelefon());
-//        }
-//        catch (Exception e) {
-//            String msg = "Forsøkte å endre kontonummer. endpoint=[" + endpoint + "].";
-//            throw new ConsumerException(msg, e);
-//        }
-//    }
-
-
     private <T extends Endring<T>> T readResponseAndPollStatus(Response response, String systemUserToken, Class<T> c) {
         if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.getStatus() + "].";
             throw new ConsumerException(msg + " - " + readEntity(String.class, response));
         } else {
             String pollEndringUrl = response.getHeaderString(HttpHeaders.LOCATION);
-            //EndringTelefon endring = null;
-            //T tt = t.getGenericClass().newInstance();
             T endring = null;
             int i = 0;
             do {
