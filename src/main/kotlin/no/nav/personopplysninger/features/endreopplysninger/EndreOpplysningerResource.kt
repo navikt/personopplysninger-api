@@ -40,13 +40,15 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
         return Response.ok(resp).build()
     }
 
-    @POST
+    @GET
     @Path("/endreKontonummer")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    fun endreKontonummer(kontonummer: Kontonummer): Response {
+    //@Consumes(MediaType.APPLICATION_JSON)
+    fun endreKontonummer(@PathParam("value") kontonummer: String): Response {
+        val kt: Kontonummer = Kontonummer()
+        kt.value = kontonummer
         val resp = endreOpplysningerService.endreKontonummer(
-                hentFnrFraToken(), kontonummer)
+                hentFnrFraToken(), kt)
         return Response.ok(resp).build()
     }
 
