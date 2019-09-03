@@ -40,7 +40,7 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
         return Response.ok(resp).build()
     }
 
-    @GET
+    @POST
     @Path("/endreKontonummer")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
