@@ -71,9 +71,8 @@ public class PersonMottakConsumer {
         return getBuilder(url, systemUserToken);
     }
 
-    private <T extends Endring<T>> T sendEndring(Invocation.Builder request, Object telefonnummer, String systemUserToken, String httpMethod, Class<T> c) {
-        log.info("Object= ".concat(telefonnummer.getClass().getSimpleName()));
-        try (Response response = request.method(httpMethod, Entity.entity(telefonnummer, MediaType.APPLICATION_JSON))) {
+    private <T extends Endring<T>> T sendEndring(Invocation.Builder request, Object entitetSomEndres, String systemUserToken, String httpMethod, Class<T> c) {
+        try (Response response = request.method(httpMethod, Entity.entity(entitetSomEndres, MediaType.APPLICATION_JSON))) {
             return readResponseAndPollStatus(response, systemUserToken, c);
         }
         catch (Exception e) {
