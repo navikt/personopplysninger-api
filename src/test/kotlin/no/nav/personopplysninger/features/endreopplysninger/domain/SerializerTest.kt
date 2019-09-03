@@ -3,9 +3,11 @@ package no.nav.personopplysninger.features.endreopplysninger.domain
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
+import no.nav.personopplysninger.features.kodeverk.api.RetningsnummerDTO
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SerializerTest {
@@ -45,5 +47,10 @@ class SerializerTest {
         val endring = ObjectMapper().readValue(json, EndringKontonummer::class.java)
         assertEquals("12345678910", endring.ident)
         assertEquals(2113, endring.status.endringId)
+    }
+    
+    @Test
+    fun testSerializationRetningsnummer() {
+        assertTrue { ObjectMapper().canSerialize(RetningsnummerDTO::class.java) }
     }
 }
