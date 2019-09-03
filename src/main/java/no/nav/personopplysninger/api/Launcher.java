@@ -37,7 +37,7 @@ public class Launcher {
                 new ConcurrentMapCache("sivilstand"),
                 new ConcurrentMapCache("valuta"),
                 new ConcurrentMapCache("spraak"),
-                new ConcurrentMapCache("valuta"),
+                new ConcurrentMapCache("statsborgerskap"),
                kodeverkCache
         ));
         return cacheManager;
