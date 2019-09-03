@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.endreopplysninger.domain;
+package no.nav.personopplysninger.features.endreopplysninger.domain.telefon;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

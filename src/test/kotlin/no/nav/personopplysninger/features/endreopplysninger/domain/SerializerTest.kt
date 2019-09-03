@@ -1,6 +1,8 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
+import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
@@ -9,7 +11,7 @@ import kotlin.test.assertEquals
 class SerializerTest {
 
     @Test
-    fun testSerialization() {
+    fun testSerializationTelefonnummer() {
         val json: String = "{\n" +
                 "  \"endringstype\": \"KORRIGER\",\n" +
                 "  \"ident\": 12345678910,\n" +
@@ -28,5 +30,20 @@ class SerializerTest {
         val endring = ObjectMapper().readValue(json, EndringTelefon::class.java)
         assertEquals("KORRIGER", endring.endringstype)
         assertEquals("BRUKER SELV", endring.innmeldtEndring.kilde)
+    }
+
+    @Test
+    fun testSerializationKontonummer() {
+        val json: String = "{" +
+                "\"endringstype\":\"OPPRETT\"," +
+                "\"ident\":\"12345678910\"," +
+                "\"lineage\":\"cdbd4444-f851-4adb-b22f-f8794825bb22\"," +
+                "\"opplysningsId\":null," +
+                "\"status\":{\"endringId\":2113,\"statusType\":\"DONE\"}," +
+                "\"innmeldtEndring\":{\"kilde\":\"BRUKER SELV\",\"utenlandskKontoInformasjon\":null," +
+                "\"value\":\"11112233333\"}}"
+        val endring = ObjectMapper().readValue(json, EndringKontonummer::class.java)
+        assertEquals("12345678910", endring.ident)
+        assertEquals(2113, endring.status.endringId)
     }
 }

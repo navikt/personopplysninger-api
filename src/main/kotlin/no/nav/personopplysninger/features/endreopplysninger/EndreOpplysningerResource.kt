@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.Telefonnummer
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
+import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.security.oidc.api.ProtectedWithClaims
 import no.nav.security.oidc.jaxrs.OidcRequestContext
 import org.slf4j.LoggerFactory
@@ -30,12 +31,22 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     }
 
     @POST
-    @Path("slettTelefonnummer")
+    @Path("/slettTelefonnummer")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     fun slettTelefonnummer(telefonnummer: Telefonnummer): Response {
         val resp = endreOpplysningerService.endreTelefonnummer(
                 hentFnrFraToken(), telefonnummer, HttpMethod.PUT)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreKontonummer")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreKontonummer(kontonummer: Kontonummer): Response {
+        val resp = endreOpplysningerService.endreKontonummer(
+                hentFnrFraToken(), kontonummer)
         return Response.ok(resp).build()
     }
 
