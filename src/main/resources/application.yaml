@@ -1,39 +1,39 @@
 spring:
-autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
-main.banner-mode: "off"
-jersey:
-  application-path: /
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  jersey:
+    application-path: /
+    servlet:
+      load-on-startup: 1
+    type: filter
+    filter:
+      order: -100000
+  main:
+    banner-mode: "off"
+
 metrics.web.server.auto-time-request: true
 server:
   servlet:
     context-path: /person/personopplysninger-api
 
 management:
-  endpoint:
-    health:
-      show-details: always
-    web:
-      exposure:
-        include: info, health, metrics, prometheus
-        base-path: "/internal"
-        path-mapping:
-          info: "isAlive"
   metrics:
     export:
       prometheus:
         enabled: true
+  endpoints:
+    web:
+      base-path: "/internal/actuator"
+      exposure:
+        include: ["info", "health", "prometheus", "metrics"]
 
 http.proxy: http://webproxy-nais.nav.no:8088
 
 logging:
-  level:
-    org.springframework: INFO
-    org.glassfish: INFO
-    no.nav: INFO
+  config: "classpath:logback-spring.xml"
 
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
-    discoveryurl: <Hentes fra fasit>
-    acceptedaudience: <Hentes fra fasit>
+    discoveryurl: ${AAD_B2C_DISCOVERY_URL}
+    acceptedaudience: ${AAD_B2C_CLIENTID_USERNAME}
     cookie_name: selvbetjening-idtoken

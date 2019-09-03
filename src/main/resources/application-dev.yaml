@@ -4,16 +4,35 @@ spring:
     application-path: /
     servlet:
       load-on-startup: 1
+    type: filter
+    filter:
+      order: -100000
+
 server:
   port: 8080
   servlet:
     context-path: /person/personopplysninger-api
+
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
      discoveryurl: http://metadata
      accepted_audience: aud-localhost
      cookie_name: localhost-idtoken
+
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      base-path: "/internal/actuator"
+      exposure:
+        include: ["info", "health", "prometheus", "metrics"]
+
+logging:
+  config: "classpath:logback-spring.xml"
 
 TPS_PROXY_API_V1_INNSYN_URL: https://tps-proxy.nais.preprod.local/api/v1/innsyn/
 PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME: x-nav-apiKey

@@ -2,7 +2,7 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personident
-import no.nav.personopplysninger.features.personalia.kodeverk.*
+import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.tps.person.Navn
 import no.nav.tps.person.Personinfo
 import org.slf4j.LoggerFactory

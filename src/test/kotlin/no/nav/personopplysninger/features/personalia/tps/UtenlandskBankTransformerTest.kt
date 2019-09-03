@@ -38,7 +38,5 @@ class UtenlandskBankTransformerTest {
         assertNull(actual.adresse3)
         assertNull(actual.bankkode)
         assertNull(actual.banknavn)
-        assertNull(actual.land)
-        assertNull(actual.valuta)
     }
 }

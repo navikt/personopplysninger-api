@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.outbound
 
 
-data class UtenlandskAdresse(
+data class UtenlandskAdresseDto(
 
         val adresse1: String? = null,
         val adresse2: String? = null,

@@ -2,7 +2,6 @@ package no.nav.personopplysninger.api;
 
 import no.nav.personopplysninger.config.ApplicationConfig;
 import org.springframework.boot.SpringApplication;
-
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.cache.CacheManager;

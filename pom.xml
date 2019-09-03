@@ -116,6 +116,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <reuseForks>true</reuseForks>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                </configuration>
+                <version>2.22.1</version>
+            </plugin>
         </plugins>
     </build>
 
@@ -123,18 +133,18 @@
         <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>oidc-jersey-support</artifactId>
-            <version>${oidc-support.version}</version>
+            <version>0.2.18</version>
         </dependency>
         <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>oidc-test-support</artifactId>
-            <version>${oidc-support.version}</version>
+            <version>0.2.18</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>rest</artifactId>
-            <version>${common-java-modules.version}</version>
+            <version>1.2019.07.11-12.31-0b875ec24c4e</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.vaadin.external.google</groupId>
@@ -262,9 +272,19 @@
             <version>${jackson-module-kotlin.version}</version>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>log</artifactId>
-            <version>${common-java-modules.version}</version>
+            <version>1.2019.07.11-12.31-0b875ec24c4e</version>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.common</groupId>
+            <artifactId>feature-toggle</artifactId>
+            <version>1.2019.07.11-12.31-0b875ec24c4e</version>
+        </dependency>
+        <dependency>
+            <groupId>no.finn.unleash</groupId>
+            <artifactId>unleash-client-java</artifactId>
+            <version>3.2.7</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>

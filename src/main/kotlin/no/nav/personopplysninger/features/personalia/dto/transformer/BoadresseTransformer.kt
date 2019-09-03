@@ -13,7 +13,7 @@ object BoadresseTransformer {
             land = inbound.landkode?.let { kodeverk.landterm },
             matrikkeladresse = inbound.matrikkeladresse?.let { MatrikkeladresseTransformer.toOutbound(it) },
             postnummer = inbound.postnummer,
-            poststed = inbound.postnummer?.let { kodeverk.bostedpostnummerterm } ?: run {" "},
+            poststed = inbound.postnummer?.let { kodeverk.bostedpostnummerterm },
             veiadresse = inbound.veiadresse?.let { VeiadresseTransformer.toOutbound(it) }
     )
 }

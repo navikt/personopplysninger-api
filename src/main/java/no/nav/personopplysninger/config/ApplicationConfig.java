@@ -1,9 +1,10 @@
 package no.nav.personopplysninger.config;
 
 import no.nav.log.LogFilter;
+import no.nav.personopplysninger.features.endreopplysninger.PersonMottakConfiguration;
 import no.nav.personopplysninger.features.kodeverk.KodeverkRestConfiguration;
 import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
-import no.nav.security.oidc.configuration.MultiIssuerConfiguraton;
+import no.nav.security.oidc.configuration.MultiIssuerConfiguration;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -13,6 +14,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.EnvironmentAware;
@@ -22,6 +24,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.web.context.request.RequestContextListener;
+import org.springframework.web.filter.RequestContextFilter;
 
 import javax.servlet.DispatcherType;
 import java.net.MalformedURLException;
@@ -34,7 +37,8 @@ import java.util.EnumSet;
 @Cacheable
 @Import({RestClientConfiguration.class,
         KodeverkRestConfiguration.class,
-        PersonaliaRestConfiguration.class
+        PersonaliaRestConfiguration.class,
+        PersonMottakConfiguration.class
 })
 public class ApplicationConfig implements EnvironmentAware {
 
@@ -42,6 +46,12 @@ public class ApplicationConfig implements EnvironmentAware {
 
     private Environment env;
 
+    @Bean
+    public RequestContextFilter requestContextFilter() {
+        OrderedRequestContextFilter filter = new OrderedRequestContextFilter();
+        filter.setOrder(Ordered.HIGHEST_PRECEDENCE + 1);
+        return filter;
+    }
 
     @Bean
     ServletWebServerFactory servletWebServerFactory() {
@@ -64,13 +74,13 @@ public class ApplicationConfig implements EnvironmentAware {
 
 
     @Bean
-    public MultiIssuerConfiguraton multiIssuerConfiguration(MultiIssuerProperties issuerProperties, OIDCResourceRetriever resourceRetriever) {
-        return new MultiIssuerConfiguraton(issuerProperties.getIssuer(), resourceRetriever);
+    public MultiIssuerConfiguration multiIssuerConfiguration(MultiIssuerProperties issuerProperties, OIDCResourceRetriever resourceRetriever) {
+        return new MultiIssuerConfiguration(issuerProperties.getIssuer(), resourceRetriever);
     }
 
 
     @Bean
-    public JaxrsOIDCTokenValidationFilter tokenValidationFilter(MultiIssuerConfiguraton config) {
+    public JaxrsOIDCTokenValidationFilter tokenValidationFilter(MultiIssuerConfiguration config) {
         return new JaxrsOIDCTokenValidationFilter(config);
     }
 
@@ -103,7 +113,10 @@ public class ApplicationConfig implements EnvironmentAware {
         log.info("Registering LogFilter filter");
         final FilterRegistrationBean<LogFilter> filterRegistration = new FilterRegistrationBean<>();
         filterRegistration.setFilter(new LogFilter());
-        filterRegistration.setOrder(1);
+
+        // Viktig at order settes til en lavere verdi enn hva jersey-filteret er konfigurert med i application-yaml
+        // slik at loggfilteret kjøres først. Årsaken til dette er avhengigheter til MDC i forretningskoden (uthenting av callId).
+        filterRegistration.setOrder(-100001);
         return filterRegistration;
     }
 

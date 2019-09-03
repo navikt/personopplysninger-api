@@ -1,7 +1,5 @@
 package no.nav.personopplysninger.features.personalia.dto.outbound
 
-import no.nav.tps.person.Kode
-
 
 data class UtenlandskBankInfo(
 

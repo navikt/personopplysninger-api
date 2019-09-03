@@ -8,6 +8,7 @@ object DigitalKontaktinfoObjectMother {
         kanVarsles = true,
         mobiltelefonnummer = "12345678",
         personident = "12345678",
-        sikkerDigitalPostkasse = SikkerDigitalPostkasseObjectMother.withAllValues
+        sikkerDigitalPostkasse = SikkerDigitalPostkasseObjectMother.withAllValues,
+        reservert = false
     )
 }

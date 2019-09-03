@@ -2,7 +2,6 @@ package no.nav.personopplysninger.features.personalia;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
-import org.glassfish.jersey.logging.LoggingFeature;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,16 +13,14 @@ import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.ext.ContextResolver;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Configuration
 public class PersonaliaRestConfiguration {
 
-    @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_USERNAME}")
+    @Value("${PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_USERNAME}")
     private String tpsProxyApiKeyUsername;
 
-    @Value("${PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD}")
+    @Value("${PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_PASSWORD}")
     private String tpsProxyApiKeyPassword;
 
     @Value("${PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_USERNAME}")

@@ -18,6 +18,7 @@ public class CORSResponseFilter implements ContainerResponseFilter {
             "https://personopplysninger-q4.nais.oera-q.local",
             "https://personopplysninger-q1.nais.oera-q.local",
             "https://personopplysninger-q0.nais.oera-q.local",
+            "https://personopplysninger-q.nav.no",
             "https://tjenester-t6.nav.no",
             "https://tjenester-q6.nav.no",
             "https://tjenester-q4.nav.no",
@@ -36,7 +37,7 @@ public class CORSResponseFilter implements ContainerResponseFilter {
         if (ALLOWED_ORIGINS.contains(origin)) {
             response.getHeaders().add("Access-Control-Allow-Origin", origin);
             response.getHeaders().add("Access-Control-Allow-Headers",
-                    "origin, content-type, accept, authorization");
+                    "origin, content-type, accept, authorization, callId");
             response.getHeaders().add("Access-Control-Allow-Credentials", "true");
             response.getHeaders().add("Access-Control-Allow-Methods",
                     "GET, POST, PUT, DELETE, OPTIONS, HEAD");

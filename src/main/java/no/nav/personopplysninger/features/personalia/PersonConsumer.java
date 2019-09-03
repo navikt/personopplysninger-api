@@ -4,6 +4,8 @@ import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException;
 import no.nav.tps.person.Personinfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.ws.rs.client.Client;
@@ -14,6 +16,8 @@ import java.net.URI;
 import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 public class PersonConsumer {
+
+    private static final Logger log = LoggerFactory.getLogger(PersonConsumer.class);
 
     private Client client;
     private URI endpoint;
@@ -43,6 +47,7 @@ public class PersonConsumer {
 
     private Personinfo hentPersoninfo(Invocation.Builder request) {
         try (Response response = request.get()) {
+            log.info("MediaType: ".concat(response.getMediaType().toString()));
             return readResponse(response);
         } catch (ConsumerException e) {
             throw e;
