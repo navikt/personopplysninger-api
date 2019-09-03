@@ -26,6 +26,12 @@ public class KodeverkConsumer {
         this.endpoint = endpoint;
     }
 
+    @Cacheable("retningsnummer")
+    public GetKodeverkKoderBetydningerResponse hentRetningsnummer() {
+        Invocation.Builder request = buildRetningsnummerRequest();
+        return hentKodeverkBetydning(request);
+    }
+
     @Cacheable("kjonn")
     public GetKodeverkKoderBetydningerResponse hentKjonn(String kode) {
         Invocation.Builder request = buildKjonnstyperRequest(kode);
@@ -91,11 +97,22 @@ public class KodeverkConsumer {
                 .header("Nav-Personident", kode);
     }
 
+    private Invocation.Builder getBuilder2(String path, Boolean eksluderUgyldige) {
+        return client.target(endpoint)
+                .path(path)
+                .queryParam("spraak", SPRAAK)
+                .queryParam("ekskluderUgyldige", eksluderUgyldige)
+                .request()
+                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID);
+    }
 
+    private Invocation.Builder buildRetningsnummerRequest() {
+        return getBuilder2("v1/kodeverk/Retningsnumre/koder/betydninger", true);
+    }
 
     private Invocation.Builder buildKjonnstyperRequest(String kode) {
         return getBuilder(kode, "v1/kodeverk/Kjønnstyper/koder/betydninger", true);
-
     }
 
     private Invocation.Builder buildKommuneRequest(String kode) {
@@ -129,7 +146,6 @@ public class KodeverkConsumer {
     private Invocation.Builder buildStatsborgerskapRequest(String kode) {
         return getBuilder(kode, "v1/kodeverk/StatsborgerskapFreg/koder/betydninger", true);
     }
-
 
     private GetKodeverkKoderBetydningerResponse hentKodeverkBetydning(Invocation.Builder request) {
         try (Response response = request.get()) {
