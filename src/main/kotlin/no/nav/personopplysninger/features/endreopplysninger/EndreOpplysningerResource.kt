@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Adresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.security.oidc.api.ProtectedWithClaims
@@ -47,6 +48,16 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     fun endreKontonummer(kontonummer: Kontonummer): Response {
         val resp = endreOpplysningerService.endreKontonummer(
                 hentFnrFraToken(), kontonummer)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreAdresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreAdresse(adresse: Adresse): Response {
+        val resp = endreOpplysningerService.endreAdresse(
+                hentFnrFraToken(), adresse)
         return Response.ok(resp).build()
     }
 
