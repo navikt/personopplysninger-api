@@ -3,9 +3,12 @@ package no.nav.personopplysninger.features.endreopplysninger.domain
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
+import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.features.kodeverk.api.RetningsnummerDTO
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SerializerTest {
@@ -45,5 +48,61 @@ class SerializerTest {
         val endring = ObjectMapper().readValue(json, EndringKontonummer::class.java)
         assertEquals("12345678910", endring.ident)
         assertEquals(2113, endring.status.endringId)
+    }
+
+    @Test
+    fun testSerializationRetningsnummer() {
+        assertTrue { ObjectMapper().canSerialize(RetningsnummerDTO::class.java) }
+    }
+
+    @Test
+    fun testRetningsnummerMapping() {
+        val json: String = "{\n" +
+                "\"betydninger\":\n" +
+                "\t{\n" +
+                "\t\"+51\": [\n" +
+                "\t\t{\n" +
+                "\t\t\"gyldigFra\":\"1900-01-01\",\n" +
+                "\t\t\"gyldigTil\":\"9999-12-31\",\n" +
+                "\t\t\"beskrivelser\":\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\"nb\":\n" +
+                "\t\t\t\t{\n" +
+                "\t\t\t\t\"term\":\"Peru\",\n" +
+                "\t\t\t\t\"tekst\":\"Peru\"\n" +
+                "\t\t\t\t}\n" +
+                "\t\t\t}\n" +
+                "\t\t}\n" +
+                "\t],\n" +
+                "\t\"+52\":[\n" +
+                "\t\t{\n" +
+                "\t\t\"gyldigFra\":\"1900-01-01\",\n" +
+                "\t\t\"gyldigTil\":\"9999-12-31\",\n" +
+                "\t\t\"beskrivelser\":\n" +
+                "\t\t\t{\n" +
+                "\t\t\t\"nb\":\n" +
+                "\t\t\t\t{\n" +
+                "\t\t\t\t\"term\":\"Mexico\",\n" +
+                "\t\t\t\t\"tekst\":\"Mexico\"\n" +
+                "\t\t\t\t}\n" +
+                "\t\t\t}\n" +
+                "\t\t}\n" +
+                "\t]\n" +
+                "\t}\n" +
+                "}"
+        val response: GetKodeverkKoderBetydningerResponse = ObjectMapper().readValue(json, GetKodeverkKoderBetydningerResponse::class.java)
+        assertEquals(2, response.betydninger.entries.size)
+        assertEquals("+51", response.betydninger.entries.first().key)
+        assertEquals("Peru", response.betydninger.entries.first().value.first().beskrivelser.entries.first().value.tekst)
+
+        val retningsnumre: Array<RetningsnummerDTO> = response.betydninger
+                .map { entry -> RetningsnummerDTO(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }
+                .sortedBy { it.land }
+                .toTypedArray()
+
+        assertEquals(2, retningsnumre.size)
+        assertEquals("+52", retningsnumre[0].retningsnummer)
+        assertEquals("Mexico", retningsnumre.get(0).land)
+        assertEquals("Peru", retningsnumre.get(1).land)
     }
 }

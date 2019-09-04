@@ -12,7 +12,7 @@ import java.io.IOException;
 public class Telefonnummer {
     private String kilde = "BRUKER SELV";
     private String landskode = null;
-    private Integer nummer;
+    private String nummer;
     private String type;
 
     public Telefonnummer() {}
@@ -24,14 +24,14 @@ public class Telefonnummer {
         return (new ObjectMapper()).readValue(json, Telefonnummer.class);
     }
 
-    public Telefonnummer(String kilde, String landskode, Integer nummer, String type) {
+    public Telefonnummer(String kilde, String landskode, String nummer, String type) {
         this.kilde = kilde;
         this.landskode = landskode;
         this.nummer = nummer;
         this.type = type;
     }
 
-    public Telefonnummer(String landskode, Integer nummer, String type) {
+    public Telefonnummer(String landskode, String nummer, String type) {
         this.landskode = landskode;
         this.nummer = nummer;
         this.type = type;
@@ -45,7 +45,7 @@ public class Telefonnummer {
         return landskode;
     }
 
-    public Integer getNummer() {
+    public String getNummer() {
         return nummer;
     }
 

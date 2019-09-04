@@ -16,6 +16,7 @@ import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,8 +32,9 @@ import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
-@ComponentScan({"no.nav.personopplysninger.features", "no.nav.personopplysninger.api"})
+@ComponentScan({"no.nav.personopplysninger.features", "no.nav.personopplysninger.api", "no.nav.personopplysninger.tasks"})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
+@Cacheable
 @Import({RestClientConfiguration.class,
         KodeverkRestConfiguration.class,
         PersonaliaRestConfiguration.class,
@@ -58,30 +60,25 @@ public class ApplicationConfig implements EnvironmentAware {
         return serverFactory;
     }
 
-
     @Bean
     public RequestContextListener requestContextListener() {
         return new RequestContextListener();
     }
-
 
     @Bean
     public ResourceConfig jerseyConfig() {
         return new RestResourceConfiguration();
     }
 
-
     @Bean
     public MultiIssuerConfiguration multiIssuerConfiguration(MultiIssuerProperties issuerProperties, OIDCResourceRetriever resourceRetriever) {
         return new MultiIssuerConfiguration(issuerProperties.getIssuer(), resourceRetriever);
     }
 
-
     @Bean
     public JaxrsOIDCTokenValidationFilter tokenValidationFilter(MultiIssuerConfiguration config) {
         return new JaxrsOIDCTokenValidationFilter(config);
     }
-
 
     @Bean
     public FilterRegistrationBean<JaxrsOIDCTokenValidationFilter> oidcTokenValidationFilterBean(JaxrsOIDCTokenValidationFilter validationFilter) {
@@ -96,7 +93,6 @@ public class ApplicationConfig implements EnvironmentAware {
         return filterRegistration;
     }
 
-
     @Bean
     public OIDCResourceRetriever oidcResourceRetriever() {
         OIDCResourceRetriever resourceRetriever = new OIDCResourceRetriever();
@@ -104,7 +100,6 @@ public class ApplicationConfig implements EnvironmentAware {
         resourceRetriever.setUsePlainTextForHttps(Boolean.parseBoolean(env.getProperty("https.plaintext", "false")));
         return resourceRetriever;
     }
-
 
     @Bean
     public FilterRegistrationBean<LogFilter> logFilter() {
@@ -117,7 +112,6 @@ public class ApplicationConfig implements EnvironmentAware {
         filterRegistration.setOrder(-100001);
         return filterRegistration;
     }
-
 
     private URL getConfiguredProxy() {
         String proxyParameterName = env.getProperty("http.proxy.parametername", "http.proxy");
@@ -136,15 +130,12 @@ public class ApplicationConfig implements EnvironmentAware {
         return proxy;
     }
 
-
     private boolean isProxyConfigAvailable(String proxyconfig) {
         return proxyconfig != null && proxyconfig.trim().length() > 0;
     }
-
 
     @Override
     public void setEnvironment(Environment env) {
         this.env = env;
     }
-
 }
