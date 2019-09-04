@@ -12,4 +12,12 @@ public class RetningsnummerDTO {
         this.retningsnummer = retningsnummer;
         this.land = land;
     }
+
+    public String getRetningsnummer() {
+        return retningsnummer;
+    }
+
+    public String getLand() {
+        return land;
+    }
 }

@@ -33,7 +33,7 @@ class PersonaliaService @Autowired constructor(
 
     fun hentRetningsnummer(): Array<RetningsnummerDTO> {
         return kodeverkConsumer.hentRetningsnummer().betydninger
-                .map { entry -> RetningsnummerDTO(entry.key, entry.value.first().beskrivelser.values.first().tekst) }
+                .map { entry -> RetningsnummerDTO(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }
                 .toTypedArray()
     }
 
