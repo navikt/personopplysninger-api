@@ -50,6 +50,14 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
         return Response.ok(resp).build()
     }
 
+    @GET
+    @Path("/retningsnumre")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun hentRetningsnummer(): Response {
+        val retningsnumre = endreOpplysningerService.hentRetningsnumre()
+        return Response.ok(retningsnumre).build()
+    }
+
     private fun hentFnrFraToken(): String {
         val context = OidcRequestContext.getHolder().oidcValidationContext
         return context.getClaims(claimsIssuer).claimSet.subject

@@ -27,7 +27,7 @@ public class KodeverkConsumer {
     }
 
     @Cacheable("retningsnummer")
-    public GetKodeverkKoderBetydningerResponse hentRetningsnummer() {
+    public GetKodeverkKoderBetydningerResponse hentRetningsnumre() {
         Invocation.Builder request = buildRetningsnummerRequest();
         return hentKodeverkBetydning(request);
     }

@@ -44,14 +44,6 @@ class PersonaliaResource @Autowired constructor(private var personaliaService: P
                 .build()
     }
 
-    @GET
-    @Path("/retningsnumre")
-    @Produces(MediaType.APPLICATION_JSON)
-    fun hentRetningsnummer(): Response {
-        val retningsnumre = personaliaService.hentRetningsnummer()
-        return Response.ok(retningsnumre).build()
-    }
-
     private fun hentFnrFraToken(): String {
         val context = OidcRequestContext.getHolder().oidcValidationContext
         return context.getClaims(claimsIssuer).claimSet.subject

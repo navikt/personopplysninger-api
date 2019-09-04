@@ -31,12 +31,6 @@ class PersonaliaService @Autowired constructor(
     private var personaliaKodeverk = PersonaliaKodeverk()
     private val log = LoggerFactory.getLogger(PersonaliaService::class.java)
 
-    fun hentRetningsnummer(): Array<RetningsnummerDTO> {
-        return kodeverkConsumer.hentRetningsnummer().betydninger
-                .map { entry -> RetningsnummerDTO(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }
-                .toTypedArray()
-    }
-
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
         val inbound = personConsumer.hentPersonInfo(fodselsnr)
         val kjonn = kodeverkConsumer.hentKjonn(inbound.kjonn)
