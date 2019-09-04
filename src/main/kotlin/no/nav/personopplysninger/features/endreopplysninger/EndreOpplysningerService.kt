@@ -31,6 +31,7 @@ class EndreOpplysningerService @Autowired constructor(
     fun hentRetningsnumre(): Array<RetningsnummerDTO> {
         return kodeverkConsumer.hentRetningsnumre().betydninger
                 .map { entry -> RetningsnummerDTO(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }
+                .sortedBy { it.land }
                 .toTypedArray()
     }
 

@@ -97,10 +97,12 @@ class SerializerTest {
 
         val retningsnumre: Array<RetningsnummerDTO> = response.betydninger
                 .map { entry -> RetningsnummerDTO(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }
+                .sortedBy { it.land }
                 .toTypedArray()
 
         assertEquals(2, retningsnumre.size)
-        assertEquals("+52", retningsnumre.get(1).retningsnummer)
-        assertEquals("Mexico", retningsnumre.get(1).land)
+        assertEquals("+52", retningsnumre[0].retningsnummer)
+        assertEquals("Mexico", retningsnumre.get(0).land)
+        assertEquals("Peru", retningsnumre.get(1).land)
     }
 }
