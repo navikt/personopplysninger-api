@@ -33,71 +33,60 @@ public class KodeverkConsumer {
     }
 
     @Cacheable("kjonn")
-    public GetKodeverkKoderBetydningerResponse hentKjonn(String kode) {
-        Invocation.Builder request = buildKjonnstyperRequest(kode);
+    public GetKodeverkKoderBetydningerResponse hentKjonn() {
+        Invocation.Builder request = buildKjonnstyperRequest();
         return hentKodeverkBetydning(request);
     }
 
     @Cacheable("kommune")
-    public GetKodeverkKoderBetydningerResponse hentKommuner(String kode) {
-        Invocation.Builder request = buildKommuneRequest(kode);
+    public GetKodeverkKoderBetydningerResponse hentKommuner() {
+        Invocation.Builder request = buildKommuneRequest();
         return hentKodeverkBetydning(request);
     }
 
     @Cacheable("land")
-    public GetKodeverkKoderBetydningerResponse hentLandKoder(String kode) {
-        Invocation.Builder request = buildLandkoderRequest(kode);
+    public GetKodeverkKoderBetydningerResponse hentLandKoder() {
+        Invocation.Builder request = buildLandkoderRequest();
         return hentKodeverkBetydning(request);
     }
 
     @Cacheable("status")
-    public GetKodeverkKoderBetydningerResponse hentPersonstatus(String kode) {
-        Invocation.Builder request = buildPersonstatusRequest(kode);
+    public GetKodeverkKoderBetydningerResponse hentPersonstatus() {
+        Invocation.Builder request = buildPersonstatusRequest();
         return hentKodeverkBetydning(request);
     }
 
     @Cacheable("postnr")
-    public GetKodeverkKoderBetydningerResponse hentPostnummer(String kode) {
-        Invocation.Builder request = buildPostnummerRequest(kode);
+    public GetKodeverkKoderBetydningerResponse hentPostnummer() {
+        Invocation.Builder request = buildPostnummerRequest();
         return hentKodeverkBetydning(request);
     }
 
     @Cacheable("sivilstand")
-    public GetKodeverkKoderBetydningerResponse hentSivilstand(String kode) {
-        Invocation.Builder request = buildSivilstandRequest(kode);
+    public GetKodeverkKoderBetydningerResponse hentSivilstand() {
+        Invocation.Builder request = buildSivilstandRequest();
         return hentKodeverkBetydning(request);
     }
 
     @Cacheable("spraak")
-    public GetKodeverkKoderBetydningerResponse hentSpraak(String kode) {
-        Invocation.Builder request = buildSpraakRequest(kode);
+    public GetKodeverkKoderBetydningerResponse hentSpraak() {
+        Invocation.Builder request = buildSpraakRequest();
         return hentKodeverkBetydning(request);
     }
 
     @Cacheable("valuta")
-    public GetKodeverkKoderBetydningerResponse hentValuta(String kode) {
-        Invocation.Builder request = buildValutaRequest(kode);
+    public GetKodeverkKoderBetydningerResponse hentValuta() {
+        Invocation.Builder request = buildValutaRequest();
         return hentKodeverkBetydning(request);
     }
 
     @Cacheable("statsborgerskap")
-    public GetKodeverkKoderBetydningerResponse hentStatsborgerskap(String kode) {
-        Invocation.Builder request = buildStatsborgerskapRequest(kode);
+    public GetKodeverkKoderBetydningerResponse hentStatsborgerskap() {
+        Invocation.Builder request = buildStatsborgerskapRequest();
         return hentKodeverkBetydning(request);
     }
 
-    private Invocation.Builder getBuilder(String kode, String path, Boolean eksluderUgyldige) {
-        return client.target(endpoint)
-                .path(path)
-                .queryParam("spraak", SPRAAK)
-                .queryParam("ekskluderUgyldige", eksluderUgyldige)
-                .request()
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
-                .header("Nav-Personident", kode);
-    }
-
-    private Invocation.Builder getBuilder2(String path, Boolean eksluderUgyldige) {
+    private Invocation.Builder getBuilder(String path, Boolean eksluderUgyldige) {
         return client.target(endpoint)
                 .path(path)
                 .queryParam("spraak", SPRAAK)
@@ -108,43 +97,43 @@ public class KodeverkConsumer {
     }
 
     private Invocation.Builder buildRetningsnummerRequest() {
-        return getBuilder2("v1/kodeverk/Retningsnumre/koder/betydninger", true);
+        return getBuilder("v1/kodeverk/Retningsnumre/koder/betydninger", true);
     }
 
-    private Invocation.Builder buildKjonnstyperRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Kjønnstyper/koder/betydninger", true);
+    private Invocation.Builder buildKjonnstyperRequest() {
+        return getBuilder("v1/kodeverk/Kjønnstyper/koder/betydninger", true);
     }
 
-    private Invocation.Builder buildKommuneRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Kommuner/koder/betydninger", false);
+    private Invocation.Builder buildKommuneRequest() {
+        return getBuilder("v1/kodeverk/Kommuner/koder/betydninger", false);
     }
 
-    private Invocation.Builder buildLandkoderRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Landkoder/koder/betydninger", false);
+    private Invocation.Builder buildLandkoderRequest() {
+        return getBuilder("v1/kodeverk/Landkoder/koder/betydninger", false);
     }
 
-    private Invocation.Builder buildPersonstatusRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Personstatuser/koder/betydninger", true);
+    private Invocation.Builder buildPersonstatusRequest() {
+        return getBuilder("v1/kodeverk/Personstatuser/koder/betydninger", true);
     }
 
-    private Invocation.Builder buildPostnummerRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Postnummer/koder/betydninger", true);
+    private Invocation.Builder buildPostnummerRequest() {
+        return getBuilder("v1/kodeverk/Postnummer/koder/betydninger", true);
     }
 
-    private Invocation.Builder buildSivilstandRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Sivilstander/koder/betydninger", true);
+    private Invocation.Builder buildSivilstandRequest() {
+        return getBuilder("v1/kodeverk/Sivilstander/koder/betydninger", true);
     }
 
-    private Invocation.Builder buildSpraakRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Språk/koder/betydninger", true);
+    private Invocation.Builder buildSpraakRequest() {
+        return getBuilder("v1/kodeverk/Språk/koder/betydninger", true);
     }
 
-    private Invocation.Builder buildValutaRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/Valutaer/koder/betydninger", true);
+    private Invocation.Builder buildValutaRequest() {
+        return getBuilder("v1/kodeverk/Valutaer/koder/betydninger", true);
     }
 
-    private Invocation.Builder buildStatsborgerskapRequest(String kode) {
-        return getBuilder(kode, "v1/kodeverk/StatsborgerskapFreg/koder/betydninger", true);
+    private Invocation.Builder buildStatsborgerskapRequest() {
+        return getBuilder("v1/kodeverk/StatsborgerskapFreg/koder/betydninger", true);
     }
 
     private GetKodeverkKoderBetydningerResponse hentKodeverkBetydning(Invocation.Builder request) {

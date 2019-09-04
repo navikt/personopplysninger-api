@@ -20,13 +20,13 @@ public class Launcher {
         SpringApplication.run(ApplicationConfig.class, args);
     }
 
-    @Bean
-    public ConcurrentMapCache kodeverkCache() {
-        return new ConcurrentMapCache("KodeverkCache");
-    }
+//    @Bean
+//    public ConcurrentMapCache kodeverkCache() {
+//        return new ConcurrentMapCache("KodeverkCache");
+//    }
 
     @Bean
-    public CacheManager cacheManager(ConcurrentMapCache kodeverkCache) {
+    public CacheManager cacheManager() {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
         cacheManager.setCaches(Arrays.asList(
                 new ConcurrentMapCache("kjonn"),
@@ -38,8 +38,7 @@ public class Launcher {
                 new ConcurrentMapCache("valuta"),
                 new ConcurrentMapCache("spraak"),
                 new ConcurrentMapCache("statsborgerskap"),
-                new ConcurrentMapCache("retningsnummer"),
-               kodeverkCache
+                new ConcurrentMapCache("retningsnummer")
         ));
         return cacheManager;
     }
