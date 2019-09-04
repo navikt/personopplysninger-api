@@ -15,8 +15,7 @@ public class EvictCacheTask {
     @Autowired
     private CacheManager cacheManager;
 
-    //@Scheduled(fixedRate = 6 * 60 * 60 * 1000)
-    @Scheduled(fixedRate = 10 * 1000)
+    @Scheduled(fixedRate = 6 * 60 * 60 * 1000)
     public void evictCache() {
         log.info("Evicting caches.");
         cacheManager.getCacheNames().stream().forEach(
