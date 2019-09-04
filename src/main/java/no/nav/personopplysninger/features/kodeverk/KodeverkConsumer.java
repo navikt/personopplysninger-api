@@ -28,62 +28,52 @@ public class KodeverkConsumer {
 
     @Cacheable("retningsnummer")
     public GetKodeverkKoderBetydningerResponse hentRetningsnumre() {
-        Invocation.Builder request = buildRetningsnummerRequest();
-        return hentKodeverkBetydning(request);
+        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Retningsnumre/koder/betydninger", true));
     }
 
     @Cacheable("kjonn")
     public GetKodeverkKoderBetydningerResponse hentKjonn() {
-        Invocation.Builder request = buildKjonnstyperRequest();
-        return hentKodeverkBetydning(request);
+        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Kjønnstyper/koder/betydninger", true));
     }
 
     @Cacheable("kommune")
     public GetKodeverkKoderBetydningerResponse hentKommuner() {
-        Invocation.Builder request = buildKommuneRequest();
-        return hentKodeverkBetydning(request);
+        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Kommuner/koder/betydninger", false));
     }
 
     @Cacheable("land")
     public GetKodeverkKoderBetydningerResponse hentLandKoder() {
-        Invocation.Builder request = buildLandkoderRequest();
-        return hentKodeverkBetydning(request);
+        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Landkoder/koder/betydninger", false));
     }
 
     @Cacheable("status")
     public GetKodeverkKoderBetydningerResponse hentPersonstatus() {
-        Invocation.Builder request = buildPersonstatusRequest();
-        return hentKodeverkBetydning(request);
+        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Personstatuser/koder/betydninger", true));
     }
 
     @Cacheable("postnr")
     public GetKodeverkKoderBetydningerResponse hentPostnummer() {
-        Invocation.Builder request = buildPostnummerRequest();
-        return hentKodeverkBetydning(request);
+        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Postnummer/koder/betydninger", true));
     }
 
     @Cacheable("sivilstand")
     public GetKodeverkKoderBetydningerResponse hentSivilstand() {
-        Invocation.Builder request = buildSivilstandRequest();
-        return hentKodeverkBetydning(request);
+        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Sivilstander/koder/betydninger", true));
     }
 
     @Cacheable("spraak")
     public GetKodeverkKoderBetydningerResponse hentSpraak() {
-        Invocation.Builder request = buildSpraakRequest();
-        return hentKodeverkBetydning(request);
+        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Språk/koder/betydninger", true));
     }
 
     @Cacheable("valuta")
     public GetKodeverkKoderBetydningerResponse hentValuta() {
-        Invocation.Builder request = buildValutaRequest();
-        return hentKodeverkBetydning(request);
+        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Valutaer/koder/betydninger", true));
     }
 
     @Cacheable("statsborgerskap")
     public GetKodeverkKoderBetydningerResponse hentStatsborgerskap() {
-        Invocation.Builder request = buildStatsborgerskapRequest();
-        return hentKodeverkBetydning(request);
+        return hentKodeverkBetydning(getBuilder("v1/kodeverk/StatsborgerskapFreg/koder/betydninger", true));
     }
 
     private Invocation.Builder getBuilder(String path, Boolean eksluderUgyldige) {
@@ -94,46 +84,6 @@ public class KodeverkConsumer {
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID);
-    }
-
-    private Invocation.Builder buildRetningsnummerRequest() {
-        return getBuilder("v1/kodeverk/Retningsnumre/koder/betydninger", true);
-    }
-
-    private Invocation.Builder buildKjonnstyperRequest() {
-        return getBuilder("v1/kodeverk/Kjønnstyper/koder/betydninger", true);
-    }
-
-    private Invocation.Builder buildKommuneRequest() {
-        return getBuilder("v1/kodeverk/Kommuner/koder/betydninger", false);
-    }
-
-    private Invocation.Builder buildLandkoderRequest() {
-        return getBuilder("v1/kodeverk/Landkoder/koder/betydninger", false);
-    }
-
-    private Invocation.Builder buildPersonstatusRequest() {
-        return getBuilder("v1/kodeverk/Personstatuser/koder/betydninger", true);
-    }
-
-    private Invocation.Builder buildPostnummerRequest() {
-        return getBuilder("v1/kodeverk/Postnummer/koder/betydninger", true);
-    }
-
-    private Invocation.Builder buildSivilstandRequest() {
-        return getBuilder("v1/kodeverk/Sivilstander/koder/betydninger", true);
-    }
-
-    private Invocation.Builder buildSpraakRequest() {
-        return getBuilder("v1/kodeverk/Språk/koder/betydninger", true);
-    }
-
-    private Invocation.Builder buildValutaRequest() {
-        return getBuilder("v1/kodeverk/Valutaer/koder/betydninger", true);
-    }
-
-    private Invocation.Builder buildStatsborgerskapRequest() {
-        return getBuilder("v1/kodeverk/StatsborgerskapFreg/koder/betydninger", true);
     }
 
     private GetKodeverkKoderBetydningerResponse hentKodeverkBetydning(Invocation.Builder request) {
@@ -155,5 +105,4 @@ public class KodeverkConsumer {
             return readEntity(GetKodeverkKoderBetydningerResponse.class, r);
         }
     }
-
 }

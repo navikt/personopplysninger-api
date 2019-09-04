@@ -9,21 +9,17 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Arrays;
 
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
 @EnableCaching
+@EnableScheduling
 public class Launcher {
-
     public static void main(String... args) {
         SpringApplication.run(ApplicationConfig.class, args);
     }
-
-//    @Bean
-//    public ConcurrentMapCache kodeverkCache() {
-//        return new ConcurrentMapCache("KodeverkCache");
-//    }
 
     @Bean
     public CacheManager cacheManager() {
@@ -42,5 +38,4 @@ public class Launcher {
         ));
         return cacheManager;
     }
-
 }
