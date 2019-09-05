@@ -4,17 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RetningsnummerDTO {
-    private String retningsnummer;
+    private String landskode;
     private String land;
 
-    public RetningsnummerDTO(String retningsnummer, String land) {
+    public RetningsnummerDTO(String landskode, String land) {
         RetningsnummerDTO[] dtos = new RetningsnummerDTO[10];
-        this.retningsnummer = retningsnummer;
+        this.landskode = landskode;
         this.land = land;
     }
 
-    public String getRetningsnummer() {
-        return retningsnummer;
+    public String getLandskode() {
+        return landskode;
     }
 
     public String getLand() {

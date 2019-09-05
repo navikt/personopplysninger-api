@@ -101,7 +101,7 @@ class SerializerTest {
                 .toTypedArray()
 
         assertEquals(2, retningsnumre.size)
-        assertEquals("+52", retningsnumre[0].retningsnummer)
+        assertEquals("+52", retningsnumre[0].landskode)
         assertEquals("Mexico", retningsnumre.get(0).land)
         assertEquals("Peru", retningsnumre.get(1).land)
     }
