@@ -6,6 +6,7 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Endri
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.features.kodeverk.api.KodeOgTekstDto
 import no.nav.personopplysninger.features.kodeverk.api.RetningsnummerDTO
 import no.nav.personopplysninger.features.sts.STSConsumer
 import org.slf4j.LoggerFactory
@@ -36,18 +37,18 @@ class EndreOpplysningerService @Autowired constructor(
                 .toTypedArray()
     }
 
-    fun hentLand(): Array<String> {
-        return toSortedStringArray(kodeverkConsumer.hentLandKoder())
+    fun hentLand(): Array<KodeOgTekstDto> {
+        return toSortedKodeOgTekstArray(kodeverkConsumer.hentLandKoder())
     }
 
-    fun hentValuta(): Array<String> {
-        return toSortedStringArray(kodeverkConsumer.hentValuta())
+    fun hentValuta(): Array<KodeOgTekstDto> {
+        return toSortedKodeOgTekstArray(kodeverkConsumer.hentValuta())
     }
 
-    private fun toSortedStringArray(koder: GetKodeverkKoderBetydningerResponse): Array<String> {
+    private fun toSortedKodeOgTekstArray(koder: GetKodeverkKoderBetydningerResponse): Array<KodeOgTekstDto> {
         return koder.betydninger
-                .map { entry -> entry.value.first().beskrivelser.entries.first().value.tekst }
-                .sortedBy { it }
+                .map { entry -> KodeOgTekstDto(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }
+                .sortedBy { it.tekst }
                 .toTypedArray()
     }
 
