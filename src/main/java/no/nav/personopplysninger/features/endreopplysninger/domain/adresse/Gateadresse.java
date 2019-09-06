@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Adresse {
+public class Gateadresse {
     private String kilde = "BRUKER SELV";
     private String bolignummer;
     private Integer gatekode;
@@ -23,8 +23,8 @@ public class Adresse {
     private String tilleggslinjeType;
 
     @JsonCreator
-    public static Adresse create(String json) throws JsonParseException, JsonMappingException, IOException {
-        return (new ObjectMapper()).readValue(json, Adresse.class);
+    public static Gateadresse create(String json) throws JsonParseException, JsonMappingException, IOException {
+        return (new ObjectMapper()).readValue(json, Gateadresse.class);
     }
 
     public String getKilde() {

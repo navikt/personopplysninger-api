@@ -4,8 +4,10 @@ import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring;
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Adresse;
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.EndringAdresse;
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.EndringPostboksadresse;
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Gateadresse;
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.EndringGateadresse;
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Postboksadresse;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon;
@@ -36,7 +38,8 @@ public class PersonMottakConsumer {
 
     private static final String URL_TELEFONNUMMER = "/api/v1/endring/telefonnummer";
     private static final String URL_KONTONUMMER = "/api/v1/endring/bankkonto";
-    private static final String URL_ADRESSE = "/api/v1/endring/kontaktadresse/norsk/gateadresse";
+    private static final String URL_GATEADRESSE = "/api/v1/endring/kontaktadresse/norsk/gateadresse";
+    private static final String URL_POSTBOKSADRESSE = "/api/v1/endring/kontaktadresse/norsk/postboksadresse";
 
     private Client client;
     private URI endpoint;
@@ -56,9 +59,14 @@ public class PersonMottakConsumer {
         return sendEndring(request, kontonummer, systemUserToken, HttpMethod.POST, EndringKontonummer.class);
     }
 
-    public EndringAdresse endreAdresse(String fnr, Adresse adresse, String systemUserToken) {
-        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_ADRESSE);
-        return sendEndring(request, adresse, systemUserToken, HttpMethod.POST, EndringAdresse.class);
+    public EndringGateadresse endreGateadresse(String fnr, Gateadresse gateadresse, String systemUserToken) {
+        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_GATEADRESSE);
+        return sendEndring(request, gateadresse, systemUserToken, HttpMethod.POST, EndringGateadresse.class);
+    }
+
+    public EndringPostboksadresse endrePostboksadresse(String fnr, Postboksadresse postboksadresse, String systemUserToken) {
+        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_POSTBOKSADRESSE);
+        return sendEndring(request, postboksadresse, systemUserToken, HttpMethod.POST, EndringPostboksadresse.class);
     }
 
     private Invocation.Builder getBuilder(String path, String systemUserToken) {

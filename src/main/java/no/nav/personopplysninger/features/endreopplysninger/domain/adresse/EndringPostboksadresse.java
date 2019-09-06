@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EndringAdresse extends Endring<EndringAdresse> {
-    private Adresse innmeldtEndring;
+public class EndringPostboksadresse extends Endring<EndringPostboksadresse> {
+    private Postboksadresse innmeldtEndring;
 
-    public Adresse getInnmeldtEndring() {
+    public Postboksadresse getInnmeldtEndring() {
         return innmeldtEndring;
     }
 }

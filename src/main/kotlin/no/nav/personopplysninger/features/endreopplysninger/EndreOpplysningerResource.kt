@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Adresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Gateadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Postboksadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.security.oidc.api.ProtectedWithClaims
@@ -52,12 +53,22 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     }
 
     @POST
-    @Path("/endreAdresse")
+    @Path("/endreGateadresse")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    fun endreAdresse(adresse: Adresse): Response {
-        val resp = endreOpplysningerService.endreAdresse(
-                hentFnrFraToken(), adresse)
+    fun endreGateadresse(gateadresse: Gateadresse): Response {
+        val resp = endreOpplysningerService.endreGateadresse(
+                hentFnrFraToken(), gateadresse)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endrePostboksadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endrePostboksadresse(postboksadresse: Postboksadresse): Response {
+        val resp = endreOpplysningerService.endrePostboksadresse(
+                hentFnrFraToken(), postboksadresse)
         return Response.ok(resp).build()
     }
 
