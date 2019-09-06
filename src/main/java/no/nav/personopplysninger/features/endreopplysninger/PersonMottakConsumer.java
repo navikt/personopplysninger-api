@@ -1,5 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
@@ -115,6 +117,13 @@ public class PersonMottakConsumer {
                 endring = readEntity(c, pollResponse);
             } while (++i < MAX_POLLS && endring.isPending());
             log.info("Antall polls for status: " + i);
+            if (!endring.isDoneDone()) {
+                String msg = "";
+                try {
+                    msg = new  ObjectMapper().writeValueAsString(endring);
+                } catch (JsonProcessingException jpe) {}
+                log.warn("Endring gav ikke status Done-Done. \n".concat(msg));
+            }
             return endring;
         }
     }
