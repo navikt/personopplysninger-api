@@ -7,6 +7,8 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.K
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.features.kodeverk.api.KodeOgTekstDto
 import no.nav.personopplysninger.features.kodeverk.api.RetningsnummerDTO
 import no.nav.personopplysninger.features.sts.STSConsumer
 import org.slf4j.LoggerFactory
@@ -38,6 +40,21 @@ class EndreOpplysningerService @Autowired constructor(
         return kodeverkConsumer.hentRetningsnumre().betydninger
                 .map { entry -> RetningsnummerDTO(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }
                 .sortedBy { it.land }
+                .toTypedArray()
+    }
+
+    fun hentLand(): Array<KodeOgTekstDto> {
+        return toSortedKodeOgTekstArray(kodeverkConsumer.hentLandKoder())
+    }
+
+    fun hentValuta(): Array<KodeOgTekstDto> {
+        return toSortedKodeOgTekstArray(kodeverkConsumer.hentValuta())
+    }
+
+    private fun toSortedKodeOgTekstArray(koder: GetKodeverkKoderBetydningerResponse): Array<KodeOgTekstDto> {
+        return koder.betydninger
+                .map { entry -> KodeOgTekstDto(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }
+                .sortedBy { it.tekst }
                 .toTypedArray()
     }
 

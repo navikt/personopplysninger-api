@@ -8,7 +8,6 @@ public class RetningsnummerDTO {
     private String land;
 
     public RetningsnummerDTO(String landskode, String land) {
-        RetningsnummerDTO[] dtos = new RetningsnummerDTO[10];
         this.landskode = landskode;
         this.land = land;
     }

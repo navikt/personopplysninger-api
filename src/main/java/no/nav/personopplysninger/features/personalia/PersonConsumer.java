@@ -4,8 +4,6 @@ import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException;
 import no.nav.tps.person.Personinfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.ws.rs.client.Client;
@@ -16,18 +14,13 @@ import java.net.URI;
 import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 public class PersonConsumer {
-
-    private static final Logger log = LoggerFactory.getLogger(PersonConsumer.class);
-
     private Client client;
     private URI endpoint;
-
 
     public PersonConsumer(Client client, URI endpoint) {
         this.client = client;
         this.endpoint = endpoint;
     }
-
 
     public Personinfo hentPersonInfo(String fnr) {
         Invocation.Builder request = buildRequest(fnr);
@@ -44,10 +37,8 @@ public class PersonConsumer {
                 .header("Nav-Personident", fnr);
     }
 
-
     private Personinfo hentPersoninfo(Invocation.Builder request) {
         try (Response response = request.get()) {
-            log.info("MediaType: ".concat(response.getMediaType().toString()));
             return readResponse(response);
         } catch (ConsumerException e) {
             throw e;
@@ -57,7 +48,6 @@ public class PersonConsumer {
         }
     }
 
-
     private Personinfo readResponse(Response r) {
         if (!SUCCESSFUL.equals(r.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[" + endpoint + "], HTTP response status=[" + r.getStatus() + "].";
@@ -66,5 +56,4 @@ public class PersonConsumer {
             return ConsumerFactory.readEntity(Personinfo.class, r);
         }
     }
-
 }
