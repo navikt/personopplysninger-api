@@ -58,6 +58,20 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
         return Response.ok(retningsnumre).build()
     }
 
+    @GET
+    @Path("/land")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun hentLand(): Response {
+        return Response.ok(endreOpplysningerService.hentLand()).build()
+    }
+
+    @GET
+    @Path("/valuta")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun hentValuta(): Response {
+        return Response.ok(endreOpplysningerService.hentValuta()).build()
+    }
+
     private fun hentFnrFraToken(): String {
         val context = OidcRequestContext.getHolder().oidcValidationContext
         return context.getClaims(claimsIssuer).claimSet.subject

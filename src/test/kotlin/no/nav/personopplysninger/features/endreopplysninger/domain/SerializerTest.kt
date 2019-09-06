@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
@@ -104,5 +105,12 @@ class SerializerTest {
         assertEquals("+52", retningsnumre[0].retningsnummer)
         assertEquals("Mexico", retningsnumre.get(0).land)
         assertEquals("Peru", retningsnumre.get(1).land)
+    }
+
+    @Test
+    fun testSerialize() {
+        val vals = arrayOf("Sverige", "Angola")
+        assertTrue { ObjectMapper().canSerialize(Array<String>::class.java) }
+        assertEquals("[\"Sverige\",\"Angola\"]", ObjectMapper().writeValueAsString(vals))
     }
 }

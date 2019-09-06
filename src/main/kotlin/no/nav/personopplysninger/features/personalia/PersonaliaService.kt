@@ -89,12 +89,7 @@ class PersonaliaService @Autowired constructor(
     }
 
     fun hentGeografiskTilknytning(inbound: GeografiskTilknytning?): String? {
-        log.warn("Bydel " + inbound?.bydel)
-        if (inbound?.bydel != null) {
-            return inbound.bydel
-        } else {
-            return inbound?.kommune
-        }
+        return inbound?.bydel ?: inbound?.kommune
     }
 }
 
