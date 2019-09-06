@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Status {
     private Integer endringId;
     private String statusType;
-    private SubStatus substatus;
+    private Substatus substatus;
 
     public Integer getEndringId() {
         return endringId;
@@ -16,7 +16,7 @@ public class Status {
         return statusType;
     }
 
-    public SubStatus getSubstatus() {
+    public Substatus getSubstatus() {
         return substatus;
     }
 }

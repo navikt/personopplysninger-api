@@ -27,8 +27,7 @@ class SerializerTest {
                 "  \"sendt\": false,\n" +
                 "  \"status\": {\n" +
                 "    \"endringId\": 65,\n" +
-                "    \"statusType\": \"PENDING\",\n" +
-                "    \"substatus\": \"Se modell for SubStatus for eksempel.\"\n" +
+                "    \"statusType\": \"PENDING\"\n" +
                 "  }\n" +
                 "}"
         val endring = ObjectMapper().readValue(json, EndringTelefon::class.java)
