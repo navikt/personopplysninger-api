@@ -47,12 +47,12 @@ public class Endring<T> {
 
     @JsonIgnore
     public boolean isPending() {
-        return "PENDING".equals(status.getStatusType()) || status.getSubStatus() == null || "PENDING".equals(status.getSubStatus().getStatus());
+        return "PENDING".equals(status.getStatusType()) || status.getSubstatus() == null || "PENDING".equals(status.getSubstatus().getStatus());
     }
 
     @JsonIgnore
     public boolean isDoneDone() {
-        return "DONE".equals(status.getStatusType()) && status.getSubStatus() != null  && "DONE".equals(status.getSubStatus().getStatus());
+        return "DONE".equals(status.getStatusType()) && status.getSubstatus() != null  && "DONE".equals(status.getSubstatus().getStatus());
     }
 
 }
