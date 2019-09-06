@@ -52,7 +52,7 @@ public class Endring<T> {
 
     @JsonIgnore
     public boolean isDoneDone() {
-        return "DONE".equals(status.getStatusType()) && "DONE".equals(status.getSubStatus().getStatus());
+        return "DONE".equals(status.getStatusType()) && status.getSubStatus() != null  && "DONE".equals(status.getSubStatus().getStatus());
     }
 
 }
