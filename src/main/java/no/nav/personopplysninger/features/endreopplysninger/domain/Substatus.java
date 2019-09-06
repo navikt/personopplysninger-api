@@ -16,11 +16,6 @@ public class Substatus {
     private String referanse;
     private String status;
 
-    @JsonCreator
-    public static Substatus create(String json) throws JsonParseException, JsonMappingException, IOException {
-        return (new ObjectMapper()).readValue(json, Substatus.class);
-    }
-
     public String getBeskrivelse() {
         return beskrivelse;
     }
