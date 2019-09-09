@@ -58,6 +58,10 @@ class EndreOpplysningerService @Autowired constructor(
         return toSortedKodeOgTekstArray(kodeverkConsumer.hentValuta())
     }
 
+    fun hentPostnummer(): Array<KodeOgTekstDto> {
+        return toSortedKodeOgTekstArray(kodeverkConsumer.hentPostnummer());
+    }
+
     private fun toSortedKodeOgTekstArray(koder: GetKodeverkKoderBetydningerResponse): Array<KodeOgTekstDto> {
         return koder.betydninger
                 .map { entry -> KodeOgTekstDto(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }

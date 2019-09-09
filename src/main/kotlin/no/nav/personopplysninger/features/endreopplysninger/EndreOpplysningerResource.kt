@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.EndringUtenlandsadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Gateadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Postboksadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Utenlandsadresse
@@ -104,6 +103,13 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     @Produces(MediaType.APPLICATION_JSON)
     fun hentValuta(): Response {
         return Response.ok(endreOpplysningerService.hentValuta()).build()
+    }
+
+    @GET
+    @Path("/postnummer")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun hentpostnummer(): Response {
+        return Response.ok(endreOpplysningerService.hentPostnummer()).build()
     }
 
     private fun hentFnrFraToken(): String {
