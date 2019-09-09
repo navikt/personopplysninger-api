@@ -6,10 +6,7 @@ import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring;
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.EndringPostboksadresse;
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Gateadresse;
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.EndringGateadresse;
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Postboksadresse;
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon;
@@ -42,6 +39,7 @@ public class PersonMottakConsumer {
     private static final String URL_KONTONUMMER = "/api/v1/endring/bankkonto";
     private static final String URL_GATEADRESSE = "/api/v1/endring/kontaktadresse/norsk/gateadresse";
     private static final String URL_POSTBOKSADRESSE = "/api/v1/endring/kontaktadresse/norsk/postboksadresse";
+    private static final String URL_UTENLANDSADRESSE = "/api/v1/endring/kontaktadresse/utenlandsk";
 
     private Client client;
     private URI endpoint;
@@ -69,6 +67,11 @@ public class PersonMottakConsumer {
     public EndringPostboksadresse endrePostboksadresse(String fnr, Postboksadresse postboksadresse, String systemUserToken) {
         Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_POSTBOKSADRESSE);
         return sendEndring(request, postboksadresse, systemUserToken, HttpMethod.POST, EndringPostboksadresse.class);
+    }
+
+    public EndringUtenlandsadresse endreUtenlandsadresse(String fnr, Utenlandsadresse utenlandsadresse, String systemUserToken) {
+        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_UTENLANDSADRESSE);
+        return sendEndring(request, utenlandsadresse, systemUserToken, HttpMethod.POST, EndringUtenlandsadresse.class);
     }
 
     private Invocation.Builder getBuilder(String path, String systemUserToken) {

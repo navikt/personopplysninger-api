@@ -1,7 +1,9 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.EndringUtenlandsadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Gateadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Postboksadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Utenlandsadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.security.oidc.api.ProtectedWithClaims
@@ -69,6 +71,16 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     fun endrePostboksadresse(postboksadresse: Postboksadresse): Response {
         val resp = endreOpplysningerService.endrePostboksadresse(
                 hentFnrFraToken(), postboksadresse)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreUtenlandsadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreUtenlandsadresse(utenlandsadresse: Utenlandsadresse): Response {
+        val resp = endreOpplysningerService.endreUtenlandsadresse(
+                hentFnrFraToken(), utenlandsadresse)
         return Response.ok(resp).build()
     }
 

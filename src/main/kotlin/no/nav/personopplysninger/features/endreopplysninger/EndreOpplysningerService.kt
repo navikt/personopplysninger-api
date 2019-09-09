@@ -1,9 +1,6 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Gateadresse
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.EndringGateadresse
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.EndringPostboksadresse
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Postboksadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
@@ -40,6 +37,10 @@ class EndreOpplysningerService @Autowired constructor(
 
     fun endrePostboksadresse(fnr: String, postboksadresse: Postboksadresse): EndringPostboksadresse {
         return personMottakConsumer.endrePostboksadresse(fnr, postboksadresse, getSystembrukerToken())
+    }
+
+    fun endreUtenlandsadresse(fnr: String, utenlandsadresse: Utenlandsadresse): EndringUtenlandsadresse {
+        return personMottakConsumer.endreUtenlandsadresse(fnr, utenlandsadresse, getSystembrukerToken())
     }
 
     fun hentRetningsnumre(): Array<RetningsnummerDTO> {
