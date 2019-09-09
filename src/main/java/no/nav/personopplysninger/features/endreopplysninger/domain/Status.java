@@ -2,11 +2,13 @@ package no.nav.personopplysninger.features.endreopplysninger.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Status {
     private Integer endringId;
     private String statusType;
-    private Substatus substatus;
+    private List<Substatus> substatus;
 
     public Integer getEndringId() {
         return endringId;
@@ -16,7 +18,7 @@ public class Status {
         return statusType;
     }
 
-    public Substatus getSubstatus() {
+    public List<Substatus> getSubstatus() {
         return substatus;
     }
 }

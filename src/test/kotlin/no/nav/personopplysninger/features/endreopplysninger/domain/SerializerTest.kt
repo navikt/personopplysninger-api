@@ -27,12 +27,36 @@ class SerializerTest {
                 "  \"sendt\": false,\n" +
                 "  \"status\": {\n" +
                 "    \"endringId\": 65,\n" +
-                "    \"statusType\": \"PENDING\"\n" +
+                "    \"statusType\": \"PENDING\",\n" +
+                "    \"substatus\": [\n" +
+                "      {\n" +
+                "        \"status\": \"IGNORED\",\n" +
+                "        \"kode\": null,\n" +
+                "        \"beskrivelse\": \"Er ikke gyldig Dnummer\",\n" +
+                "        \"referanse\": \"2fa7b57c-8a3b-4f40-b999-67fd848021f8\",\n" +
+                "        \"domene\": \"FREG\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"status\": \"IGNORED\",\n" +
+                "        \"kode\": null,\n" +
+                "        \"beskrivelse\": null,\n" +
+                "        \"referanse\": \"e23ef345-cb94-466b-a5db-bda7835adfa3\",\n" +
+                "        \"domene\": \"PDL\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"status\": \"ERROR\",\n" +
+                "        \"kode\": \"VALIDERINGSFEIL\",\n" +
+                "        \"beskrivelse\": \"Person ikke funnet i TPS\",\n" +
+                "        \"referanse\": \"b8a2619b-1e9e-4d67-9d16-3ec678791685\",\n" +
+                "        \"domene\": \"TPS\"\n" +
+                "      }\n" +
+                "    ]" +
                 "  }\n" +
                 "}"
         val endring = ObjectMapper().readValue(json, EndringTelefon::class.java)
         assertEquals("KORRIGER", endring.endringstype)
         assertEquals("BRUKER SELV", endring.innmeldtEndring.kilde)
+        assertEquals(3, endring.status.substatus.size)
     }
 
     @Test

@@ -1,12 +1,6 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Substatus {

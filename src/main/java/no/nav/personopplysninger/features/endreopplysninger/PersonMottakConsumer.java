@@ -114,8 +114,6 @@ public class PersonMottakConsumer {
                     throw new ConsumerException("Fikk feil under polling på status", ie);
                 }
                 Response pollResponse = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-                String resp = readEntity(String.class, pollResponse);
-                log.info("Response: ".concat(resp));
                 endring = readEntity(c, pollResponse);
             } while (++i < MAX_POLLS && endring.isPending());
             log.info("Antall polls for status: " + i);
