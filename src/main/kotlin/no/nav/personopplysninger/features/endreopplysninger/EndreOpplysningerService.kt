@@ -64,6 +64,7 @@ class EndreOpplysningerService @Autowired constructor(
 
     private fun toSortedKodeOgTekstArray(koder: GetKodeverkKoderBetydningerResponse): Array<KodeOgTekstDto> {
         return koder.betydninger
+                .filter { entry -> entry.value.isNotEmpty() }
                 .map { entry -> KodeOgTekstDto(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }
                 .sortedBy { it.tekst }
                 .toTypedArray()

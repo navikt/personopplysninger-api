@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
