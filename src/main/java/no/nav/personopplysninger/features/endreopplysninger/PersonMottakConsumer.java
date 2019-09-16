@@ -104,6 +104,7 @@ public class PersonMottakConsumer {
 
     private <T extends Endring<T>> T readResponseAndPollStatus(Response response, String systemUserToken, Class<T> c) {
         if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
+            log.info("response.getHeaderString(HttpHeaders.LOCATION)=".concat(response.getHeaderString(HttpHeaders.LOCATION)));
             String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.getStatus() + "].";
             throw new ConsumerException(msg + " - " + readEntity(String.class, response));
         } else {

@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.endreopplysninger.domain
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.features.kodeverk.api.RetningsnummerDTO
@@ -71,6 +72,12 @@ class SerializerTest {
         val endring = ObjectMapper().readValue(json, EndringKontonummer::class.java)
         assertEquals("12345678910", endring.ident)
         assertEquals(2113, endring.status.endringId)
+    }
+
+    @Test
+    fun testSerializationUtenlandskKontonummer() {
+        val json: String = "{ \"utenlandskKontoInformasjon\": {\"landkode\": \"SWE\", \"valuta\": \"EURO\", \"SWIFT\": \"1234\"},  \"value\": \"11112233333\"}"
+        val utenlandskKontonummer = ObjectMapper().readValue(json, Kontonummer::class.java)
     }
 
     @Test
