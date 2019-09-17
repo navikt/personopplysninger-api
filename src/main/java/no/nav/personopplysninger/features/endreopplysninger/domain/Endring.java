@@ -2,15 +2,18 @@ package no.nav.personopplysninger.features.endreopplysninger.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Endring<T> {
     private String endringstype;
     private String ident;
     private String lineage;
     private String opplysningsId;
     private Status status;
+    private String statusType = "OK";
     private ValidationError validationError;
 
     public String getEndringstype() {
@@ -33,11 +36,16 @@ public class Endring<T> {
         return status;
     }
 
+    public String getStatusType() {
+        return statusType;
+    }
+
     public ValidationError getValidationError() {
         return validationError;
     }
 
     public void setValidationError(ValidationError validationError) {
+        this.statusType = validationError != null ? "ERROR" : "OK";
         this.validationError = validationError;
     }
 
