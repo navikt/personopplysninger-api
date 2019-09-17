@@ -11,6 +11,7 @@ public class Endring<T> {
     private String lineage;
     private String opplysningsId;
     private Status status;
+    private ValidationError validationError;
 
     public String getEndringstype() {
         return endringstype;
@@ -32,32 +33,52 @@ public class Endring<T> {
         return status;
     }
 
-    @JsonIgnore
-    public boolean isPending() {
-        if ("PENDING".equals(status.getStatusType())) {
-            return true;
+    public ValidationError getValidationError() {
+        return validationError;
+    }
+
+    public void setValidationError(ValidationError validationError) {
+        this.validationError = validationError;
+    }
+
+    public void createValidationErrorIfTpsHasError() {
+        if (hasTpsError()) {
+            ValidationError validationError = new ValidationError();
+            validationError.setMessage(getTpsBeskrivelse());
+            setValidationError(validationError);
         }
-        boolean subtypePending = true;
-        for (Substatus substatus: status.getSubstatus()) {
-            if (!"PENDING".equals(substatus.getStatus())) {
-                subtypePending = false;
-            }
-        }
-        return subtypePending;
     }
 
     @JsonIgnore
-    public boolean isDoneDone() {
+    public boolean isPending() {
+        return "PENDING".equals(status.getStatusType());
+    }
+
+    @JsonIgnore
+    public boolean isDoneWithoutTpsError() {
         if (!"DONE".equals(status.getStatusType())) {
             return false;
         }
-        boolean subtypeDone = true;
-        for (Substatus substatus: status.getSubstatus()) {
-            if (!"DONE".equals(substatus.getStatus())) {
-                subtypeDone = false;
-            }
-        }
-        return subtypeDone;
+        return !hasTpsError();
     }
 
+    @JsonIgnore
+    private boolean hasTpsError() {
+        for (Substatus substatus: status.getSubstatus()) {
+            if ("TPS".equalsIgnoreCase(substatus.getDomene())) {
+                return "ERROR".equals(substatus.getStatus());
+            }
+        }
+        return false;
+    }
+
+    @JsonIgnore
+    private String getTpsBeskrivelse() {
+        for (Substatus substatus: status.getSubstatus()) {
+            if ("TPS".equalsIgnoreCase(substatus.getDomene())) {
+                return substatus.getBeskrivelse();
+            }
+        }
+        return null;
+    }
 }

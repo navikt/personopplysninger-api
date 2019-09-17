@@ -6,6 +6,7 @@ import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring;
+import no.nav.personopplysninger.features.endreopplysninger.domain.ValidationError;
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer;
@@ -30,6 +31,8 @@ import static no.nav.personopplysninger.features.ConsumerFactory.readEntity;
 public class PersonMottakConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(PersonMottakConsumer.class);
+
+    private static final int HTTP_CODE_422 = 422;
 
     private static final String BEARER = "Bearer ";
     private static final Integer SLEEP_TIME_MS = 1000;
@@ -103,8 +106,18 @@ public class PersonMottakConsumer {
     }
 
     private <T extends Endring<T>> T readResponseAndPollStatus(Response response, String systemUserToken, Class<T> c) {
-        if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
-            log.info("response.getHeaderString(HttpHeaders.LOCATION)=".concat(response.getHeaderString(HttpHeaders.LOCATION)));
+        if (response.getStatus() == HTTP_CODE_422) {
+            T endring = null;
+            try {
+                endring = c.newInstance();
+            } catch (Exception e) {
+                log.error("Fikk exception ved forsøk på å instansiere " + c.getName());
+                throw new RuntimeException(e);
+            }
+            endring.setValidationError(readEntity(ValidationError.class, response));
+            log.info("Fikk valideringsfeil");
+            return endring;
+        } else if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.getStatus() + "].";
             throw new ConsumerException(msg + " - " + readEntity(String.class, response));
         } else {
@@ -121,12 +134,14 @@ public class PersonMottakConsumer {
                 endring = readEntity(c, pollResponse);
             } while (++i < MAX_POLLS && endring.isPending());
             log.info("Antall polls for status: " + i);
-            if (!endring.isDoneDone()) {
-                String msg = "";
+
+            if (!endring.isDoneWithoutTpsError()) {
+                endring.createValidationErrorIfTpsHasError();
+                String json = "";
                 try {
-                    msg = new  ObjectMapper().writeValueAsString(endring);
+                    json = new  ObjectMapper().writeValueAsString(endring);
                 } catch (JsonProcessingException jpe) {}
-                log.warn("Endring gav ikke status Done-Done. \n".concat(msg));
+                log.warn("Endring var ikke Done og/eller hadde TPS error. \n".concat(json));
             }
             return endring;
         }

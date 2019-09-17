@@ -137,9 +137,18 @@ class SerializerTest {
     }
 
     @Test
-    fun testSerialize() {
-        val vals = arrayOf("Sverige", "Angola")
-        assertTrue { ObjectMapper().canSerialize(Array<String>::class.java) }
-        assertEquals("[\"Sverige\",\"Angola\"]", ObjectMapper().writeValueAsString(vals))
+    fun testSerializeValidationError() {
+        val json = "{\n" +
+                "  \"message\": \"Kontonummer feilet validering\",\n" +
+                "  \"details\": [\n" +
+                "    {\n" +
+                "      \"name\": \"kontonummer.utenlandskKontoInformasjon\",\n" +
+                "      \"message\": \"Swift (BIC) eller bankinformasjon må være populert\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}"
+        val validationError = ObjectMapper().readValue(json, ValidationError::class.java)
+        assertEquals("Kontonummer feilet validering", validationError.message)
+        assertEquals("kontonummer.utenlandskKontoInformasjon", validationError.details.first().name)
     }
 }
