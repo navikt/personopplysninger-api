@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.endreopplysninger
 
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Gateadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Postboksadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Stedsadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Utenlandsadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
@@ -60,6 +61,16 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     fun endreGateadresse(gateadresse: Gateadresse): Response {
         val resp = endreOpplysningerService.endreGateadresse(
                 hentFnrFraToken(), gateadresse)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreStedsadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreStedsadresse(stedsadresse: Stedsadresse): Response {
+        val resp = endreOpplysningerService.endreStedsadresse(
+                hentFnrFraToken(), stedsadresse)
         return Response.ok(resp).build()
     }
 

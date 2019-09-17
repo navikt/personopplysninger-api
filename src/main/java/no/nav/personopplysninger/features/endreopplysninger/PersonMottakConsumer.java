@@ -43,6 +43,7 @@ public class PersonMottakConsumer {
     private static final String URL_GATEADRESSE = "/api/v1/endring/kontaktadresse/norsk/gateadresse";
     private static final String URL_POSTBOKSADRESSE = "/api/v1/endring/kontaktadresse/norsk/postboksadresse";
     private static final String URL_UTENLANDSADRESSE = "/api/v1/endring/kontaktadresse/utenlandsk";
+    private static final String URL_STEDSADRESSE = "/api/v1/endring/kontaktadresse/norsk/stedsadresse";
 
     private Client client;
     private URI endpoint;
@@ -65,6 +66,11 @@ public class PersonMottakConsumer {
     public EndringGateadresse endreGateadresse(String fnr, Gateadresse gateadresse, String systemUserToken) {
         Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_GATEADRESSE);
         return sendEndring(request, gateadresse, systemUserToken, HttpMethod.POST, EndringGateadresse.class);
+    }
+
+    public EndringStedsadresse endreStedsadresse(String fnr, Stedsadresse stedsadresse, String systemUserToken) {
+        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_STEDSADRESSE);
+        return sendEndring(request, stedsadresse, systemUserToken, HttpMethod.POST, EndringStedsadresse.class);
     }
 
     public EndringPostboksadresse endrePostboksadresse(String fnr, Postboksadresse postboksadresse, String systemUserToken) {

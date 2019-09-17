@@ -35,6 +35,10 @@ class EndreOpplysningerService @Autowired constructor(
         return personMottakConsumer.endreGateadresse(fnr, gateadresse, getSystembrukerToken())
     }
 
+    fun endreStedsadresse(fnr: String, stedsadresse: Stedsadresse): EndringStedsadresse {
+        return personMottakConsumer.endreStedsadresse(fnr, stedsadresse, getSystembrukerToken())
+    }
+
     fun endrePostboksadresse(fnr: String, postboksadresse: Postboksadresse): EndringPostboksadresse {
         return personMottakConsumer.endrePostboksadresse(fnr, postboksadresse, getSystembrukerToken())
     }
