@@ -31,20 +31,20 @@ class EndreOpplysningerService @Autowired constructor(
         return personMottakConsumer.endreKontonummer(fnr, kontonummer, getSystembrukerToken())
     }
 
-    fun endreGateadresse(fnr: String, gateadresse: Gateadresse): EndringGateadresse {
-        return personMottakConsumer.endreGateadresse(fnr, gateadresse, getSystembrukerToken())
+    fun endreGateadresse(fnr: String, gateadresse: Gateadresse, httpMethod: String): EndringGateadresse {
+        return personMottakConsumer.endreGateadresse(fnr, gateadresse, getSystembrukerToken(), httpMethod)
     }
 
-    fun endreStedsadresse(fnr: String, stedsadresse: Stedsadresse): EndringStedsadresse {
-        return personMottakConsumer.endreStedsadresse(fnr, stedsadresse, getSystembrukerToken())
+    fun endreStedsadresse(fnr: String, stedsadresse: Stedsadresse, httpMethod: String): EndringStedsadresse {
+        return personMottakConsumer.endreStedsadresse(fnr, stedsadresse, getSystembrukerToken(), httpMethod)
     }
 
-    fun endrePostboksadresse(fnr: String, postboksadresse: Postboksadresse): EndringPostboksadresse {
-        return personMottakConsumer.endrePostboksadresse(fnr, postboksadresse, getSystembrukerToken())
+    fun endrePostboksadresse(fnr: String, postboksadresse: Postboksadresse, httpMethod: String): EndringPostboksadresse {
+        return personMottakConsumer.endrePostboksadresse(fnr, postboksadresse, getSystembrukerToken(), httpMethod)
     }
 
-    fun endreUtenlandsadresse(fnr: String, utenlandsadresse: Utenlandsadresse): EndringUtenlandsadresse {
-        return personMottakConsumer.endreUtenlandsadresse(fnr, utenlandsadresse, getSystembrukerToken())
+    fun endreUtenlandsadresse(fnr: String, utenlandsadresse: Utenlandsadresse, httpMethod: String): EndringUtenlandsadresse {
+        return personMottakConsumer.endreUtenlandsadresse(fnr, utenlandsadresse, getSystembrukerToken(), httpMethod)
     }
 
     fun hentRetningsnumre(): Array<RetningsnummerDTO> {

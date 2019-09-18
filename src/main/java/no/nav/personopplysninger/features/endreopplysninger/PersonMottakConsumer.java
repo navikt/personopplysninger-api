@@ -63,24 +63,24 @@ public class PersonMottakConsumer {
         return sendEndring(request, kontonummer, systemUserToken, HttpMethod.POST, EndringKontonummer.class);
     }
 
-    public EndringGateadresse endreGateadresse(String fnr, Gateadresse gateadresse, String systemUserToken) {
+    public EndringGateadresse endreGateadresse(String fnr, Gateadresse gateadresse, String systemUserToken, String httpMethod) {
         Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_GATEADRESSE);
-        return sendEndring(request, gateadresse, systemUserToken, HttpMethod.POST, EndringGateadresse.class);
+        return sendEndring(request, gateadresse, systemUserToken, httpMethod, EndringGateadresse.class);
     }
 
-    public EndringStedsadresse endreStedsadresse(String fnr, Stedsadresse stedsadresse, String systemUserToken) {
+    public EndringStedsadresse endreStedsadresse(String fnr, Stedsadresse stedsadresse, String systemUserToken, String httpMethod) {
         Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_STEDSADRESSE);
-        return sendEndring(request, stedsadresse, systemUserToken, HttpMethod.POST, EndringStedsadresse.class);
+        return sendEndring(request, stedsadresse, systemUserToken, httpMethod, EndringStedsadresse.class);
     }
 
-    public EndringPostboksadresse endrePostboksadresse(String fnr, Postboksadresse postboksadresse, String systemUserToken) {
+    public EndringPostboksadresse endrePostboksadresse(String fnr, Postboksadresse postboksadresse, String systemUserToken, String httpMethod) {
         Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_POSTBOKSADRESSE);
-        return sendEndring(request, postboksadresse, systemUserToken, HttpMethod.POST, EndringPostboksadresse.class);
+        return sendEndring(request, postboksadresse, systemUserToken, httpMethod, EndringPostboksadresse.class);
     }
 
-    public EndringUtenlandsadresse endreUtenlandsadresse(String fnr, Utenlandsadresse utenlandsadresse, String systemUserToken) {
+    public EndringUtenlandsadresse endreUtenlandsadresse(String fnr, Utenlandsadresse utenlandsadresse, String systemUserToken, String httpMethod) {
         Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_UTENLANDSADRESSE);
-        return sendEndring(request, utenlandsadresse, systemUserToken, HttpMethod.POST, EndringUtenlandsadresse.class);
+        return sendEndring(request, utenlandsadresse, systemUserToken, httpMethod, EndringUtenlandsadresse.class);
     }
 
     private Invocation.Builder getBuilder(String path, String systemUserToken) {
@@ -106,7 +106,7 @@ public class PersonMottakConsumer {
             return readResponseAndPollStatus(response, systemUserToken, c);
         }
         catch (Exception e) {
-            String msg = "Forsøkte å endre telefonnummer. endpoint=[" + endpoint + "].";
+            String msg = "Forsøkte å endre personopplysning. endpoint=[" + endpoint + "].";
             throw new ConsumerException(msg, e);
         }
     }
