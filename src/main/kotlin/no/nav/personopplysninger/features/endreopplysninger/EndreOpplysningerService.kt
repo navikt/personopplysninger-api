@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
@@ -30,6 +31,22 @@ class EndreOpplysningerService @Autowired constructor(
         return personMottakConsumer.endreKontonummer(fnr, kontonummer, getSystembrukerToken())
     }
 
+    fun endreGateadresse(fnr: String, gateadresse: Gateadresse, httpMethod: String): EndringGateadresse {
+        return personMottakConsumer.endreGateadresse(fnr, gateadresse, getSystembrukerToken(), httpMethod)
+    }
+
+    fun endreStedsadresse(fnr: String, stedsadresse: Stedsadresse, httpMethod: String): EndringStedsadresse {
+        return personMottakConsumer.endreStedsadresse(fnr, stedsadresse, getSystembrukerToken(), httpMethod)
+    }
+
+    fun endrePostboksadresse(fnr: String, postboksadresse: Postboksadresse, httpMethod: String): EndringPostboksadresse {
+        return personMottakConsumer.endrePostboksadresse(fnr, postboksadresse, getSystembrukerToken(), httpMethod)
+    }
+
+    fun endreUtenlandsadresse(fnr: String, utenlandsadresse: Utenlandsadresse, httpMethod: String): EndringUtenlandsadresse {
+        return personMottakConsumer.endreUtenlandsadresse(fnr, utenlandsadresse, getSystembrukerToken(), httpMethod)
+    }
+
     fun hentRetningsnumre(): Array<RetningsnummerDTO> {
         return kodeverkConsumer.hentRetningsnumre().betydninger
                 .map { entry -> RetningsnummerDTO(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }
@@ -45,8 +62,13 @@ class EndreOpplysningerService @Autowired constructor(
         return toSortedKodeOgTekstArray(kodeverkConsumer.hentValuta())
     }
 
+    fun hentPostnummer(): Array<KodeOgTekstDto> {
+        return toSortedKodeOgTekstArray(kodeverkConsumer.hentPostnummer());
+    }
+
     private fun toSortedKodeOgTekstArray(koder: GetKodeverkKoderBetydningerResponse): Array<KodeOgTekstDto> {
         return koder.betydninger
+                .filter { entry -> entry.value.isNotEmpty() }
                 .map { entry -> KodeOgTekstDto(entry.key, entry.value.first().beskrivelser.entries.first().value.tekst) }
                 .sortedBy { it.tekst }
                 .toTypedArray()

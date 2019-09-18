@@ -1,9 +1,13 @@
 package no.nav.personopplysninger.features.endreopplysninger;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring;
+import no.nav.personopplysninger.features.endreopplysninger.domain.ValidationError;
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon;
@@ -28,12 +32,18 @@ public class PersonMottakConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(PersonMottakConsumer.class);
 
+    private static final int HTTP_CODE_422 = 422;
+
     private static final String BEARER = "Bearer ";
     private static final Integer SLEEP_TIME_MS = 1000;
     private static final Integer MAX_POLLS = 3;
 
     private static final String URL_TELEFONNUMMER = "/api/v1/endring/telefonnummer";
     private static final String URL_KONTONUMMER = "/api/v1/endring/bankkonto";
+    private static final String URL_GATEADRESSE = "/api/v1/endring/kontaktadresse/norsk/gateadresse";
+    private static final String URL_POSTBOKSADRESSE = "/api/v1/endring/kontaktadresse/norsk/postboksadresse";
+    private static final String URL_UTENLANDSADRESSE = "/api/v1/endring/kontaktadresse/utenlandsk";
+    private static final String URL_STEDSADRESSE = "/api/v1/endring/kontaktadresse/norsk/stedsadresse";
 
     private Client client;
     private URI endpoint;
@@ -44,13 +54,33 @@ public class PersonMottakConsumer {
     }
 
     public EndringTelefon endreTelefonnummer(String fnr, Telefonnummer telefonnummer, String systemUserToken, String httpMethod) {
-        Invocation.Builder request = buildOppdaterTelefonnummerRequest(fnr, systemUserToken, URL_TELEFONNUMMER);
+        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_TELEFONNUMMER);
         return sendEndring(request, telefonnummer, systemUserToken, httpMethod, EndringTelefon.class);
     }
 
     public EndringKontonummer endreKontonummer(String fnr, Kontonummer kontonummer, String systemUserToken) {
-        Invocation.Builder request = buildOppdaterTelefonnummerRequest(fnr, systemUserToken, URL_KONTONUMMER);
+        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_KONTONUMMER);
         return sendEndring(request, kontonummer, systemUserToken, HttpMethod.POST, EndringKontonummer.class);
+    }
+
+    public EndringGateadresse endreGateadresse(String fnr, Gateadresse gateadresse, String systemUserToken, String httpMethod) {
+        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_GATEADRESSE);
+        return sendEndring(request, gateadresse, systemUserToken, httpMethod, EndringGateadresse.class);
+    }
+
+    public EndringStedsadresse endreStedsadresse(String fnr, Stedsadresse stedsadresse, String systemUserToken, String httpMethod) {
+        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_STEDSADRESSE);
+        return sendEndring(request, stedsadresse, systemUserToken, httpMethod, EndringStedsadresse.class);
+    }
+
+    public EndringPostboksadresse endrePostboksadresse(String fnr, Postboksadresse postboksadresse, String systemUserToken, String httpMethod) {
+        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_POSTBOKSADRESSE);
+        return sendEndring(request, postboksadresse, systemUserToken, httpMethod, EndringPostboksadresse.class);
+    }
+
+    public EndringUtenlandsadresse endreUtenlandsadresse(String fnr, Utenlandsadresse utenlandsadresse, String systemUserToken, String httpMethod) {
+        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_UTENLANDSADRESSE);
+        return sendEndring(request, utenlandsadresse, systemUserToken, httpMethod, EndringUtenlandsadresse.class);
     }
 
     private Invocation.Builder getBuilder(String path, String systemUserToken) {
@@ -62,7 +92,7 @@ public class PersonMottakConsumer {
                 .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID);
     }
 
-    private Invocation.Builder buildOppdaterTelefonnummerRequest(String fnr, String systemUserToken, String path) {
+    private Invocation.Builder buildEndreRequest(String fnr, String systemUserToken, String path) {
         return getBuilder(path, systemUserToken)
                 .header("Nav-Personident", fnr);
     }
@@ -76,13 +106,24 @@ public class PersonMottakConsumer {
             return readResponseAndPollStatus(response, systemUserToken, c);
         }
         catch (Exception e) {
-            String msg = "Forsøkte å endre telefonnummer. endpoint=[" + endpoint + "].";
+            String msg = "Forsøkte å endre personopplysning. endpoint=[" + endpoint + "].";
             throw new ConsumerException(msg, e);
         }
     }
 
     private <T extends Endring<T>> T readResponseAndPollStatus(Response response, String systemUserToken, Class<T> c) {
-        if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
+        if (response.getStatus() == HTTP_CODE_422) {
+            T endring = null;
+            try {
+                endring = c.newInstance();
+            } catch (Exception e) {
+                log.error("Fikk exception ved forsøk på å instansiere " + c.getName());
+                throw new RuntimeException(e);
+            }
+            endring.setValidationError(readEntity(ValidationError.class, response));
+            log.info("Fikk valideringsfeil");
+            return endring;
+        } else if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.getStatus() + "].";
             throw new ConsumerException(msg + " - " + readEntity(String.class, response));
         } else {
@@ -99,6 +140,15 @@ public class PersonMottakConsumer {
                 endring = readEntity(c, pollResponse);
             } while (++i < MAX_POLLS && endring.isPending());
             log.info("Antall polls for status: " + i);
+
+            if (!endring.isDoneWithoutTpsError()) {
+                endring.createValidationErrorIfTpsHasError();
+                String json = "";
+                try {
+                    json = new  ObjectMapper().writeValueAsString(endring);
+                } catch (JsonProcessingException jpe) {}
+                log.warn("Endring var ikke Done og/eller hadde TPS error. \n".concat(json));
+            }
             return endring;
         }
     }

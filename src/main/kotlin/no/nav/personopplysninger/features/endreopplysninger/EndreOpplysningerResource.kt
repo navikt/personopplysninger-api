@@ -1,5 +1,9 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Gateadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Postboksadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Stedsadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Utenlandsadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.security.oidc.api.ProtectedWithClaims
@@ -50,6 +54,86 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
         return Response.ok(resp).build()
     }
 
+    @POST
+    @Path("/endreGateadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreGateadresse(gateadresse: Gateadresse): Response {
+        val resp = endreOpplysningerService.endreGateadresse(
+                hentFnrFraToken(), gateadresse, HttpMethod.POST)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/slettGateadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun slettGateadresse(gateadresse: Gateadresse): Response {
+        val resp = endreOpplysningerService.endreGateadresse(
+                hentFnrFraToken(), gateadresse, HttpMethod.PUT)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreStedsadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreStedsadresse(stedsadresse: Stedsadresse): Response {
+        val resp = endreOpplysningerService.endreStedsadresse(
+                hentFnrFraToken(), stedsadresse, HttpMethod.POST)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/slettStedsadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun slettStedsadresse(stedsadresse: Stedsadresse): Response {
+        val resp = endreOpplysningerService.endreStedsadresse(
+                hentFnrFraToken(), stedsadresse, HttpMethod.PUT)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endrePostboksadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endrePostboksadresse(postboksadresse: Postboksadresse): Response {
+        val resp = endreOpplysningerService.endrePostboksadresse(
+                hentFnrFraToken(), postboksadresse, HttpMethod.POST)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/slettPostboksadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun slettPostboksadresse(postboksadresse: Postboksadresse): Response {
+        val resp = endreOpplysningerService.endrePostboksadresse(
+                hentFnrFraToken(), postboksadresse, HttpMethod.PUT)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreUtenlandsadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreUtenlandsadresse(utenlandsadresse: Utenlandsadresse): Response {
+        val resp = endreOpplysningerService.endreUtenlandsadresse(
+                hentFnrFraToken(), utenlandsadresse, HttpMethod.POST)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/slettUtenlandsadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun slettUtenlandsadresse(utenlandsadresse: Utenlandsadresse): Response {
+        val resp = endreOpplysningerService.endreUtenlandsadresse(
+                hentFnrFraToken(), utenlandsadresse, HttpMethod.PUT)
+        return Response.ok(resp).build()
+    }
+
     @GET
     @Path("/retningsnumre")
     @Produces(MediaType.APPLICATION_JSON)
@@ -70,6 +154,13 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     @Produces(MediaType.APPLICATION_JSON)
     fun hentValuta(): Response {
         return Response.ok(endreOpplysningerService.hentValuta()).build()
+    }
+
+    @GET
+    @Path("/postnummer")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun hentpostnummer(): Response {
+        return Response.ok(endreOpplysningerService.hentPostnummer()).build()
     }
 
     private fun hentFnrFraToken(): String {
