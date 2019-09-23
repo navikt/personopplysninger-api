@@ -40,12 +40,15 @@ public class Endring<T> {
         return statusType;
     }
 
+    public void setStatusType(String statusType) {
+        this.statusType = statusType;
+    }
+
     public ValidationError getValidationError() {
         return validationError;
     }
 
     public void setValidationError(ValidationError validationError) {
-        this.statusType = validationError != null ? "ERROR" : "OK";
         this.validationError = validationError;
     }
 
