@@ -8,7 +8,10 @@ object TelefoninfoTransformer {
 
         return Tlfnr(
                 jobb = inbound.jobb,
+                landkodeJobb = inbound.landkodeJobb,
                 mobil = inbound.mobil,
-                privat = inbound.privat)
+                landkodeMobil = inbound.landkodeMobil,
+                privat = inbound.privat,
+                landkodePrivat = inbound.landkodePrivat)
     }
 }
