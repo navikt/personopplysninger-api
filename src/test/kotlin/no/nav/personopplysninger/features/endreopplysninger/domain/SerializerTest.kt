@@ -147,7 +147,7 @@ class SerializerTest {
                 "    }\n" +
                 "  ]\n" +
                 "}"
-        val validationError = ObjectMapper().readValue(json, ValidationError::class.java)
+        val validationError = ObjectMapper().readValue(json, Error::class.java)
         assertEquals("Kontonummer feilet validering", validationError.message)
         assertEquals("kontonummer.utenlandskKontoInformasjon", validationError.details.first().name)
     }
