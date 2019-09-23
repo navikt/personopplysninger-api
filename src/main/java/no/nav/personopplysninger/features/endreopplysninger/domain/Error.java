@@ -1,13 +1,15 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ValidationError {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Error {
     private String message;
-    private List<ValidationDetail> details;
+    private List<ErrorDetail> details;
 
     public void setMessage(String message) {
         this.message = message;
@@ -17,7 +19,7 @@ public class ValidationError {
         return message;
     }
 
-    public List<ValidationDetail> getDetails() {
+    public List<ErrorDetail> getDetails() {
         return details;
     }
 }

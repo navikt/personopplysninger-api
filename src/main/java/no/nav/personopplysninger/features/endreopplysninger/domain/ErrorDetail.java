@@ -3,7 +3,7 @@ package no.nav.personopplysninger.features.endreopplysninger.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ValidationDetail {
+public class ErrorDetail {
     private String name;
     private String message;
 

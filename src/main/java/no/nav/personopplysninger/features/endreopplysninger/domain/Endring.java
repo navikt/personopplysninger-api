@@ -14,7 +14,7 @@ public class Endring<T> {
     private String opplysningsId;
     private Status status;
     private String statusType = "OK";
-    private ValidationError validationError;
+    private Error error;
 
     public String getEndringstype() {
         return endringstype;
@@ -40,20 +40,24 @@ public class Endring<T> {
         return statusType;
     }
 
-    public ValidationError getValidationError() {
-        return validationError;
+    public void setStatusType(String statusType) {
+        this.statusType = statusType;
     }
 
-    public void setValidationError(ValidationError validationError) {
-        this.statusType = validationError != null ? "ERROR" : "OK";
-        this.validationError = validationError;
+    public Error getError() {
+        return error;
+    }
+
+    public void setError(Error error) {
+        this.error = error;
     }
 
     public void createValidationErrorIfTpsHasError() {
         if (hasTpsError()) {
-            ValidationError validationError = new ValidationError();
+            Error validationError = new Error();
             validationError.setMessage(getTpsBeskrivelse());
-            setValidationError(validationError);
+            setStatusType("ERROR");
+            setError(validationError);
         }
     }
 

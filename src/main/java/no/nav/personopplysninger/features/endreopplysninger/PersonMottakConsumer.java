@@ -6,7 +6,7 @@ import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring;
-import no.nav.personopplysninger.features.endreopplysninger.domain.ValidationError;
+import no.nav.personopplysninger.features.endreopplysninger.domain.Error;
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer;
@@ -33,6 +33,7 @@ public class PersonMottakConsumer {
     private static final Logger log = LoggerFactory.getLogger(PersonMottakConsumer.class);
 
     private static final int HTTP_CODE_422 = 422;
+    private static final int HTTP_CODE_423 = 423;
 
     private static final String BEARER = "Bearer ";
     private static final Integer SLEEP_TIME_MS = 1000;
@@ -112,16 +113,15 @@ public class PersonMottakConsumer {
     }
 
     private <T extends Endring<T>> T readResponseAndPollStatus(Response response, String systemUserToken, Class<T> c) {
-        if (response.getStatus() == HTTP_CODE_422) {
-            T endring = null;
-            try {
-                endring = c.newInstance();
-            } catch (Exception e) {
-                log.error("Fikk exception ved forsøk på å instansiere " + c.getName());
-                throw new RuntimeException(e);
-            }
-            endring.setValidationError(readEntity(ValidationError.class, response));
-            log.info("Fikk valideringsfeil");
+        if (response.getStatus() == HTTP_CODE_423) {
+            T endring = getEndring(c, "PENDING");
+            endring.setError(readEntity(Error.class, response));
+            log.info("Oppdatering avvist pga status pending.");
+            return endring;
+        } else if (response.getStatus() == HTTP_CODE_422) {
+            T endring = getEndring(c, "ERROR");
+            endring.setError(readEntity(Error.class, response));
+            log.info("Fikk valideringsfeil.");
             return endring;
         } else if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.getStatus() + "].";
@@ -151,5 +151,17 @@ public class PersonMottakConsumer {
             }
             return endring;
         }
+    }
+
+    private <T extends Endring<T>> T getEndring(Class<T> c, String statusType) {
+        T endring = null;
+        try {
+            endring = c.newInstance();
+        } catch (Exception e) {
+            log.error("Fikk exception ved forsøk på å instansiere " + c.getName());
+            throw new RuntimeException(e);
+        }
+        endring.setStatusType(statusType);
+        return endring;
     }
 }
