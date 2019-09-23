@@ -6,7 +6,7 @@ import no.nav.log.MDCConstants;
 import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring;
-import no.nav.personopplysninger.features.endreopplysninger.domain.ValidationError;
+import no.nav.personopplysninger.features.endreopplysninger.domain.Error;
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer;
@@ -115,11 +115,12 @@ public class PersonMottakConsumer {
     private <T extends Endring<T>> T readResponseAndPollStatus(Response response, String systemUserToken, Class<T> c) {
         if (response.getStatus() == HTTP_CODE_423) {
             T endring = getEndring(c, "PENDING");
+            endring.setError(readEntity(Error.class, response));
             log.info("Oppdatering avvist pga status pending.");
             return endring;
         } else if (response.getStatus() == HTTP_CODE_422) {
             T endring = getEndring(c, "ERROR");
-            endring.setValidationError(readEntity(ValidationError.class, response));
+            endring.setError(readEntity(Error.class, response));
             log.info("Fikk valideringsfeil.");
             return endring;
         } else if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
