@@ -56,6 +56,7 @@ public class Endring<T> {
         if (hasTpsError()) {
             Error validationError = new Error();
             validationError.setMessage(getTpsBeskrivelse());
+            setStatusType("ERROR");
             setError(validationError);
         }
     }
