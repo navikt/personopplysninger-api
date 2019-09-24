@@ -247,7 +247,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "kilde": {
           "type": "string"
@@ -288,7 +288,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "kilde": {
           "type": "string"
@@ -303,7 +303,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "erEgenansatt": {
           "type": "boolean",
@@ -328,7 +328,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "kilde": {
           "type": "string"
@@ -353,7 +353,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "familienavnFodt": {
           "type": "string",
@@ -474,7 +474,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "kilde": {
           "type": "string"
@@ -492,7 +492,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "kilde": {
           "type": "string"
@@ -720,7 +720,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "kilde": {
           "type": "string"
@@ -751,7 +751,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "doedsdato": {
           "$ref": "#/definitions/Doedsdato"
@@ -816,6 +816,21 @@
         "jobbKilde": {
           "type": "string"
         },
+        "landkodeJobb": {
+          "type": "string",
+          "example": "+47",
+          "description": "Landkode jobb"
+        },
+        "landkodeMobil": {
+          "type": "string",
+          "example": "+47",
+          "description": "Landkode mobil"
+        },
+        "landkodePrivat": {
+          "type": "string",
+          "example": "+47",
+          "description": "Landkode privat"
+        },
         "mobil": {
           "type": "string",
           "example": 12348765,
@@ -876,7 +891,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "datoTilOgMed": {
           "type": "string",
@@ -927,7 +942,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "datoTil": {
           "type": "string",
@@ -965,7 +980,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "datoTilOgMed": {
           "type": "string",
@@ -1015,7 +1030,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "iban": {
           "type": "string",
@@ -1078,7 +1093,7 @@
         "datoFraOgMed": {
           "type": "string",
           "example": "2015-12-15",
-          "description": "Dato gyldig gyldig, format (ISO-8601): yyyy-MM-dd"
+          "description": "Dato gyldig, format (ISO-8601): yyyy-MM-dd"
         },
         "egenansatt": {
           "type": "boolean",
