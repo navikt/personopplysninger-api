@@ -6,6 +6,7 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.K
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.features.kodeverk.api.RetningsnummerDTO
+import no.nav.personopplysninger.features.personalia.dto.getJson
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
@@ -150,5 +151,6 @@ class SerializerTest {
         val validationError = ObjectMapper().readValue(json, Error::class.java)
         assertEquals("Kontonummer feilet validering", validationError.message)
         assertEquals("kontonummer.utenlandskKontoInformasjon", validationError.details.first().name)
+        assertTrue(getJson(validationError).contains("Swift (BIC) eller bankinformasjon må være populert"))
     }
 }
