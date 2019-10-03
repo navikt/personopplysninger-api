@@ -21,4 +21,14 @@ data class Tilleggsadresse(
         val postboksnummer: String? = null,
         val postnummer: String? = null,
         val poststed: String? = null
-)
+) {
+    fun getType(): String {
+        if (!postboksnummer.isNullOrEmpty()) {
+            return "POSTBOKSADRESSE"
+        } else if (husnummer.isNullOrEmpty() || husnummer.equals("0000")) {
+            return "STEDSADRESSE"
+        } else {
+            return "GATEADRESSE"
+        }
+    }
+}
