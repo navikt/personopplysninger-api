@@ -12,6 +12,7 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.E
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer;
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon;
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer;
+import no.nav.personopplysninger.features.personalia.dto.DtoUtilsKt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -121,7 +122,7 @@ public class PersonMottakConsumer {
         } else if (response.getStatus() == HTTP_CODE_422) {
             T endring = getEndring(c, "ERROR");
             endring.setError(readEntity(Error.class, response));
-            log.info("Fikk valideringsfeil.");
+            log.info("Fikk valideringsfeil: ".concat(DtoUtilsKt.getJson(endring.getError())));
             return endring;
         } else if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.getStatus() + "].";
