@@ -114,7 +114,7 @@ public class PersonMottakConsumer {
 
     private <T extends Endring<T>> T sendEndring(Invocation.Builder request, Object entitetSomEndres, String systemUserToken, String httpMethod, Class<T> c) {
         try (Response response = entitetSomEndres == null ?
-                request.method(httpMethod) :
+                request.method(httpMethod, Entity.text("")) :
                 request.method(httpMethod, Entity.entity(entitetSomEndres, MediaType.APPLICATION_JSON))) {
             return readResponseAndPollStatus(response, systemUserToken, c);
         }
