@@ -46,6 +46,8 @@ public class PersonMottakConsumer {
     private static final String URL_POSTBOKSADRESSE = "/api/v1/endring/kontaktadresse/norsk/postboksadresse";
     private static final String URL_UTENLANDSADRESSE = "/api/v1/endring/kontaktadresse/utenlandsk";
     private static final String URL_STEDSADRESSE = "/api/v1/endring/kontaktadresse/norsk/stedsadresse";
+    private static final String URL_OPPHOER_KONTAKTADRESSE_NORSK = "/api/v1/endring/kontaktadresse/norsk/opphoer";
+    private static final String URL_OPPHOER_KONTAKTADRESSE_UTENLANDSK = "/api/v1/endring/kontaktadresse/utenlandsk/opphoer";
 
     private Client client;
     private URI endpoint;
@@ -65,24 +67,31 @@ public class PersonMottakConsumer {
         return sendEndring(request, kontonummer, systemUserToken, HttpMethod.POST, EndringKontonummer.class);
     }
 
-    public EndringGateadresse endreGateadresse(String fnr, Gateadresse gateadresse, String systemUserToken, String httpMethod) {
+    public EndringGateadresse endreGateadresse(String fnr, Gateadresse gateadresse, String systemUserToken) {
         Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_GATEADRESSE);
-        return sendEndring(request, gateadresse, systemUserToken, httpMethod, EndringGateadresse.class);
+        return sendEndring(request, gateadresse, systemUserToken, HttpMethod.POST, EndringGateadresse.class);
     }
 
-    public EndringStedsadresse endreStedsadresse(String fnr, Stedsadresse stedsadresse, String systemUserToken, String httpMethod) {
+    public EndringStedsadresse endreStedsadresse(String fnr, Stedsadresse stedsadresse, String systemUserToken) {
         Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_STEDSADRESSE);
-        return sendEndring(request, stedsadresse, systemUserToken, httpMethod, EndringStedsadresse.class);
+        return sendEndring(request, stedsadresse, systemUserToken, HttpMethod.POST, EndringStedsadresse.class);
     }
 
-    public EndringPostboksadresse endrePostboksadresse(String fnr, Postboksadresse postboksadresse, String systemUserToken, String httpMethod) {
+    public EndringPostboksadresse endrePostboksadresse(String fnr, Postboksadresse postboksadresse, String systemUserToken) {
         Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_POSTBOKSADRESSE);
-        return sendEndring(request, postboksadresse, systemUserToken, httpMethod, EndringPostboksadresse.class);
+        return sendEndring(request, postboksadresse, systemUserToken, HttpMethod.POST, EndringPostboksadresse.class);
     }
 
-    public EndringUtenlandsadresse endreUtenlandsadresse(String fnr, Utenlandsadresse utenlandsadresse, String systemUserToken, String httpMethod) {
+    public EndringUtenlandsadresse endreUtenlandsadresse(String fnr, Utenlandsadresse utenlandsadresse, String systemUserToken) {
         Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, URL_UTENLANDSADRESSE);
-        return sendEndring(request, utenlandsadresse, systemUserToken, httpMethod, EndringUtenlandsadresse.class);
+        return sendEndring(request, utenlandsadresse, systemUserToken, HttpMethod.POST, EndringUtenlandsadresse.class);
+    }
+
+    public EndringOpphoerAdresse opphoerKontaktadresse(String fnr, KontaktadresseType kontaktadresseType, String systemUserToken) {
+        String url = kontaktadresseType == KontaktadresseType.NORSK ?
+                URL_OPPHOER_KONTAKTADRESSE_NORSK : URL_OPPHOER_KONTAKTADRESSE_UTENLANDSK;
+        Invocation.Builder request = buildEndreRequest(fnr, systemUserToken, url);
+        return sendEndring(request, null, systemUserToken, HttpMethod.PUT, EndringOpphoerAdresse.class);
     }
 
     private Invocation.Builder getBuilder(String path, String systemUserToken) {
@@ -104,7 +113,7 @@ public class PersonMottakConsumer {
     }
 
     private <T extends Endring<T>> T sendEndring(Invocation.Builder request, Object entitetSomEndres, String systemUserToken, String httpMethod, Class<T> c) {
-        try (Response response = request.method(httpMethod, Entity.entity(entitetSomEndres, MediaType.APPLICATION_JSON))) {
+        try (Response response = request.method(httpMethod, entitetSomEndres != null ? Entity.entity(entitetSomEndres, MediaType.APPLICATION_JSON) : null)) {
             return readResponseAndPollStatus(response, systemUserToken, c);
         }
         catch (Exception e) {
