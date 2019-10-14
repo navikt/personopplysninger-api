@@ -12,6 +12,7 @@ public class Endring<T> {
     private String ident;
     private String lineage;
     private String opplysningsId;
+    private String opplysningstype;
     private Status status;
     private String statusType = "OK";
     private Error error;
@@ -30,6 +31,10 @@ public class Endring<T> {
 
     public String getOpplysningsId() {
         return opplysningsId;
+    }
+
+    public String getOpplysningstype() {
+        return opplysningstype;
     }
 
     public Status getStatus() {
