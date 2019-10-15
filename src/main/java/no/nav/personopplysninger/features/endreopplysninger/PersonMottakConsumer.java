@@ -132,8 +132,8 @@ public class PersonMottakConsumer {
             return endring;
         } else if (response.getStatus() == HTTP_CODE_422) {
             T endring = getEndring(c, "ERROR");
-            endring.setError(readEntity(Error.class, response));
-            log.info("Fikk valideringsfeil: ".concat(DtoUtilsKt.getJson(endring.getError())));
+            endring.setErrorRawJson(readEntity(String.class, response));
+            log.info("Fikk valideringsfeil: ".concat(endring.getErrorRawJson()));
             return endring;
         } else if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.getStatus() + "].";

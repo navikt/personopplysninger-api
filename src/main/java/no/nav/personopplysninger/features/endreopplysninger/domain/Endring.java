@@ -16,6 +16,7 @@ public class Endring<T> {
     private Status status;
     private String statusType = "OK";
     private Error error;
+    private String errorRawJson;
 
     public String getEndringstype() {
         return endringstype;
@@ -55,6 +56,14 @@ public class Endring<T> {
 
     public void setError(Error error) {
         this.error = error;
+    }
+
+    public String getErrorRawJson() {
+        return errorRawJson;
+    }
+
+    public void setErrorRawJson(String errorRawJson) {
+        this.errorRawJson = errorRawJson;
     }
 
     public void createValidationErrorIfTpsHasError() {
