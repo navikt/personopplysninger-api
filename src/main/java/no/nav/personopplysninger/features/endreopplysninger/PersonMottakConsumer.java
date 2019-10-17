@@ -16,7 +16,6 @@ import no.nav.personopplysninger.features.personalia.dto.DtoUtilsKt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -132,8 +131,8 @@ public class PersonMottakConsumer {
             return endring;
         } else if (response.getStatus() == HTTP_CODE_422) {
             T endring = getEndring(c, "ERROR");
-            endring.setErrorRawJson(readEntity(String.class, response));
-            log.error("Fikk valideringsfeil: ".concat(endring.getErrorRawJson()));
+            endring.setError(readEntity(Error.class, response));
+            log.error("Fikk valideringsfeil: ".concat(DtoUtilsKt.getJson(endring.getError())));
             return endring;
         } else if (!SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
             String msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.getStatus() + "].";
@@ -157,7 +156,7 @@ public class PersonMottakConsumer {
                 endring.createValidationErrorIfTpsHasError();
                 String json = "";
                 try {
-                    json = new  ObjectMapper().writeValueAsString(endring);
+                    json = new ObjectMapper().writeValueAsString(endring);
                 } catch (JsonProcessingException jpe) {}
                 log.warn("Endring var ikke Done og/eller hadde TPS error. \n".concat(json));
             }

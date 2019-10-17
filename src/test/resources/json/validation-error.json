@@ -1,0 +1,18 @@
+{
+  "message": "Validering feilet",
+  "details": {
+    "objekt.feltnavn": [
+      "valideringsfeil 1",
+      "valideringsfeil 2",
+      "valideringsfeil 3"
+    ],
+    "norskGateadresse.postnummer": [
+      "Postnummer er påkrevd"
+    ],
+    "kontonummer.utenlandskKontoInformasjon.swift": [
+      "Swift sine fire første tegn må være alfanumeriske.",
+      "Swift sine femte og sjette tegn kan ikke inneholde tall.",
+      "Swift sitt syvende og åttende tegn må være alfanumeriske."
+    ]
+  }
+}
