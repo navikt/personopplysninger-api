@@ -1,0 +1,33 @@
+{
+  "betydninger":
+  {
+    "+51": [
+      {
+        "gyldigFra":"1900-01-01",
+        "gyldigTil":"9999-12-31",
+        "beskrivelser":
+        {
+          "nb":
+          {
+            "term":"Peru",
+            "tekst":"Peru"
+          }
+        }
+      }
+    ],
+    "+52":[
+      {
+        "gyldigFra":"1900-01-01",
+        "gyldigTil":"9999-12-31",
+        "beskrivelser":
+        {
+          "nb":
+          {
+            "term":"Mexico",
+            "tekst":"Mexico"
+          }
+        }
+      }
+    ]
+  }
+}
