@@ -9,6 +9,9 @@ public class ConsumerFactory {
 
     public static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     public static final String DEFAULT_APIKEY_USERNAME = "x-nav-apiKey";
+    public static final String HEADER_NAV_CONSUMER_ID = "Nav-Consumer-Id";
+    public static final String HEADER_NAV_CALL_ID = "Nav-Call-Id";
+    public static final String HEADER_NAV_PERSONIDENT_KEY = "Nav-Personident";
 
     public static <T> T readEntity(Class<T> responsklasse, Response response) {
         try {

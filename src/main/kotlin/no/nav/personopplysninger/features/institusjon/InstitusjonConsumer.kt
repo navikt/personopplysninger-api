@@ -2,9 +2,8 @@ package no.nav.personopplysninger.features.institusjon
 
 import no.nav.log.MDCConstants
 import no.nav.personopplysninger.features.ConsumerFactory
+import no.nav.personopplysninger.features.institusjon.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException
-import no.nav.tjenester.institusjonsopphold.api.v1.person.InnsynInstitusjonsopphold
-import no.nav.tjenester.institusjonsopphold.api.v1.person.constants.HttpRequestConstants
 import org.slf4j.MDC
 import java.net.URI
 import javax.ws.rs.client.Client
@@ -34,8 +33,8 @@ class InstitusjonConsumer constructor(
         return client.target(endpoint)
                 .path("v1/person/innsyn")
                 .request()
-                .header(HttpRequestConstants.HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
-                .header(HttpRequestConstants.HEADER_NAV_CONSUMER_ID, ConsumerFactory.CONSUMER_ID)
-                .header(HttpRequestConstants.HEADER_NAV_PERSONIDENT_KEY, fnr)
+                .header(ConsumerFactory.HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                .header(ConsumerFactory.HEADER_NAV_CONSUMER_ID, ConsumerFactory.CONSUMER_ID)
+                .header(ConsumerFactory.HEADER_NAV_PERSONIDENT_KEY, fnr)
     }
 }
