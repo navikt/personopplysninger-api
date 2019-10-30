@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,9 +18,6 @@ import java.net.URISyntaxException;
 @Configuration
 public class PersonMottakConfiguration {
 
-    @Value("${PERSONOPPLYSNINGER_API_PERSON_MOTTAK_API_V1_APIKEY_USERNAME}")
-    private String personMottakApiKeyUsername;
-
     @Value("${PERSONOPPLYSNINGER_API_PERSON_MOTTAK_API_V1_APIKEY_PASSWORD}")
     private String personMottakApiKeyPassword;
 
@@ -35,7 +33,8 @@ public class PersonMottakConfiguration {
         return ClientBuilder.newBuilder()
                 .register(OidcClientRequestFilter.class)
                 .register(clientObjectMapperResolver)
-                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(personMottakApiKeyUsername, personMottakApiKeyPassword))
+                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders()
+                        .putSingle(ConsumerFactory.DEFAULT_APIKEY_USERNAME, personMottakApiKeyPassword))
                 .build();
     }
 }
