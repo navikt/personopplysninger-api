@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,14 +18,8 @@ import java.net.URISyntaxException;
 @Configuration
 public class PersonaliaRestConfiguration {
 
-    @Value("${PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_USERNAME}")
-    private String tpsProxyApiKeyUsername;
-
     @Value("${PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_PASSWORD}")
     private String tpsProxyApiKeyPassword;
-
-    @Value("${PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_USERNAME}")
-    private String dkifApiKeyUsername;
 
     @Value("${PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_PASSWORD}")
     private String dkifApiKeyPassword;
@@ -46,14 +41,16 @@ public class PersonaliaRestConfiguration {
     @Bean
     public Client tpsProxyClient(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
         return clientBuilder(clientObjectMapperResolver)
-                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(tpsProxyApiKeyUsername, tpsProxyApiKeyPassword))
+                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders()
+                        .putSingle(ConsumerFactory.DEFAULT_APIKEY_USERNAME, tpsProxyApiKeyPassword))
                 .build();
     }
 
     @Bean
     public Client dkifClient(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
         return clientBuilder(clientObjectMapperResolver)
-                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(dkifApiKeyUsername, dkifApiKeyPassword))
+                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders()
+                        .putSingle(ConsumerFactory.DEFAULT_APIKEY_USERNAME, dkifApiKeyPassword))
                 .build();
     }
 

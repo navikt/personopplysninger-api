@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.sts;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.nav.personopplysninger.features.ConsumerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,9 +30,6 @@ public class STSTokenRestConfiguration {
     @Value("${SRVPERSONOPPLYSNINGER_API_PASSWORD}")
     private String STSPassword;
 
-    @Value("${PERSONOPPLYSNINGER_API_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_USERNAME}")
-    private String STSApiKeyUsername;
-
     @Value("${PERSONOPPLYSNINGER_API_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_PASSWORD}")
     private String STSApiKeyPassword;
 
@@ -55,10 +53,11 @@ public class STSTokenRestConfiguration {
     public Client STSClient(ContextResolver<ObjectMapper> clientObjectMapperResolver) {
         Client client =  ClientBuilder.newBuilder()
                 .register(clientObjectMapperResolver)
-                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().put(AUTHORIZATION, singletonList(getBasicAuthentication())))
-                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(STSApiKeyUsername, STSApiKeyPassword))
+                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders()
+                        .put(AUTHORIZATION, singletonList(getBasicAuthentication())))
+                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders()
+                        .putSingle(ConsumerFactory.DEFAULT_APIKEY_USERNAME, STSApiKeyPassword))
                 .build();
         return client;
     }
-
 }

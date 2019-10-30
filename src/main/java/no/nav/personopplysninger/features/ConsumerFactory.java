@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response;
 public class ConsumerFactory {
 
     public static final String CONSUMER_ID = "personbruker-personopplysninger-api";
+    public static final String DEFAULT_APIKEY_USERNAME = "x-nav-apiKey";
 
     public static <T> T readEntity(Class<T> responsklasse, Response response) {
         try {
