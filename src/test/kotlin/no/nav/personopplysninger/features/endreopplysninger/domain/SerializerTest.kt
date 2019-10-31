@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
+import no.nav.personopplysninger.features.institusjon.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.features.kodeverk.api.RetningsnummerDTO
 import org.junit.jupiter.api.Test
@@ -22,6 +23,13 @@ class SerializerTest {
         assertEquals("KORRIGER", endring.endringstype)
         assertEquals("BRUKER SELV", endring.innmeldtEndring.kilde)
         assertEquals(3, endring.status.substatus.size)
+    }
+
+    @Test
+    fun testSerializationInstitusjonsopphold() {
+        val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/inst2.json")).readText()
+        val institusjonsopphold = ObjectMapper().readValue(json, ArrayList<InnsynInstitusjonsopphold>()::class.java)
+        assertEquals(7, institusjonsopphold.size)
     }
 
     @Test

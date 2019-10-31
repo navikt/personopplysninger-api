@@ -15,14 +15,14 @@ class InstitusjonConsumer constructor(
         private val endpoint: URI
 )
 {
-    fun getInstitusjonsopphold(fnr: String): InnsynInstitusjonsopphold {
+    fun getInstitusjonsopphold(fnr: String): List<InnsynInstitusjonsopphold> {
         try {
             val response = getBuilder(fnr).get()
             if (!SUCCESSFUL.equals(response.statusInfo.family)) {
                 val msg = "Forsøkte å konsumere REST-tjenesten INST2. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
                 throw ConsumerException(msg.plus(ConsumerFactory.readEntity(String::class.java, response)))
             }
-            return ConsumerFactory.readEntity(InnsynInstitusjonsopphold::class.java, response)
+            return ConsumerFactory.readEntity(ArrayList<InnsynInstitusjonsopphold>()::class.java, response)
         } catch (e: Exception) {
             val msg = "Forsøkte å konsumere REST-tjenesten INST2. endpoint=[$endpoint]."
             throw ConsumerException(msg, e)

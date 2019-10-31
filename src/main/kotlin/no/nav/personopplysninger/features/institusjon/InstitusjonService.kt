@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 class InstitusjonService  @Autowired constructor(
     private var institusjonConsumer: InstitusjonConsumer
 ) {
-    fun hentInstitusjonsopphold(fnr: String): InnsynInstitusjonsopphold {
+    fun hentInstitusjonsopphold(fnr: String): List<InnsynInstitusjonsopphold> {
         return institusjonConsumer.getInstitusjonsopphold(fnr)
     }
 }
