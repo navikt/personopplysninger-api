@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.kodeverk;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,9 +18,6 @@ import java.net.URISyntaxException;
 @Configuration
 public class KodeverkRestConfiguration {
 
-    @Value("${PERSONOPPLYSNINGER_API_KODEVERK_REST_API_APIKEY_USERNAME}")
-    private String kodeverkApiKeyUsername;
-
     @Value("${PERSONOPPLYSNINGER_API_KODEVERK_REST_API_APIKEY_PASSWORD}")
     private String kodeverkApiKeyPassword;
 
@@ -35,7 +33,8 @@ public class KodeverkRestConfiguration {
         return ClientBuilder.newBuilder()
                 .register(OidcClientRequestFilter.class)
                 .register(clientObjectMapperResolver)
-                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders().putSingle(kodeverkApiKeyUsername,kodeverkApiKeyPassword))
+                .register((ClientRequestFilter) requestContext -> requestContext.getHeaders()
+                        .putSingle(ConsumerFactory.DEFAULT_APIKEY_USERNAME, kodeverkApiKeyPassword))
                 .build();
     }
 

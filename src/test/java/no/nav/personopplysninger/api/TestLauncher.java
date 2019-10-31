@@ -46,17 +46,11 @@ public class TestLauncher {
         System.setProperty("APP_LOG_HOME", "target/log");
         System.setProperty("contextName", "personopplysninger-api");
 
-        System.setProperty("PERSONOPPLYSNINGER_API_KODEVERK_REST_API_APIKEY_USERNAME", "");
         System.setProperty("PERSONOPPLYSNINGER_API_KODEVERK_REST_API_APIKEY_PASSWORD", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_NORG2_API_V1_APIKEY_USERNAME", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_USERNAME", "");
         System.setProperty("PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_PASSWORD", "");
         System.setProperty("PERSONOPPLYSNINGER_API_NORG2_API_V1_APIKEY_PASSWORD", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_USERNAME", "");
         System.setProperty("PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_PASSWORD", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_USERNAME", "");
         System.setProperty("PERSONOPPLYSNINGER_API_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_PASSWORD", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_PERSON_MOTTAK_API_V1_APIKEY_USERNAME", "");
         System.setProperty("PERSONOPPLYSNINGER_API_PERSON_MOTTAK_API_V1_APIKEY_PASSWORD", "");
         System.setProperty("PERSON_MOTTAK_API_URL", "");
         System.setProperty("DKIF_API_URL", "");
@@ -70,5 +64,7 @@ public class TestLauncher {
         System.setProperty("SRVPERSONOPPLYSNINGER_API_USERNAME", "");
         System.setProperty("SRVPERSONOPPLYSNINGER_API_PASSWORD", "");
         System.setProperty("SECURITY_TOKEN_SERVICE_TOKEN_URL", "");
+        System.setProperty("PERSONOPPLYSNINGER_API_INST2_REST_API_APIKEY_PASSWORD", "");
+        System.setProperty("INST2_API_URL", "");
     }
 }
