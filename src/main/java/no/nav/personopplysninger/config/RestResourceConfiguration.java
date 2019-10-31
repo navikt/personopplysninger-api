@@ -2,6 +2,7 @@ package no.nav.personopplysninger.config;
 
 import no.nav.personopplysninger.features.endreopplysninger.EndreOpplysningerResource;
 import no.nav.personopplysninger.features.featuretoggles.FeatureTogglesResource;
+import no.nav.personopplysninger.features.institusjon.InstitusjonResource;
 import no.nav.personopplysninger.features.personalia.PersonaliaResource;
 import no.nav.personopplysninger.features.status.StatusResource;
 import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
@@ -29,9 +30,9 @@ public class RestResourceConfiguration extends ResourceConfig {
         register(PersonaliaResource.class);
         register(FeatureTogglesResource.class);
         register(CORSResponseFilter.class);
-        //register(OidcContainerRequestFilter.class);
         register(OidcResourceFilteringFeature.class);
         register(EndreOpplysningerResource.class);
+        register(InstitusjonResource.class);
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
     }
 
