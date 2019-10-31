@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
+import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.institusjon.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.features.kodeverk.api.RetningsnummerDTO
+import no.nav.personopplysninger.features.personalia.dto.getJson
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.io.InputStreamReader
@@ -49,7 +51,7 @@ class SerializerTest {
 
     @Test
     fun testSerializationUtenlandskKontonummer() {
-        val json: String = "{ \"utenlandskKontoInformasjon\": {\"landkode\": \"SWE\", \"valuta\": \"EURO\", \"SWIFT\": \"1234\"},  \"value\": \"11112233333\"}"
+        val json: String = "{ \"@type\":\"KONTONUMMER\", \"utenlandskKontoInformasjon\": {\"landkode\": \"SWE\", \"valuta\": \"EURO\", \"SWIFT\": \"1234\"},  \"value\": \"11112233333\"}"
         val utenlandskKontonummer = ObjectMapper().readValue(json, Kontonummer::class.java)
     }
 
@@ -86,5 +88,12 @@ class SerializerTest {
         val feilForFelt = validationError.details.get("objekt.feltnavn")
         assertEquals(3, feilForFelt!!.size)
         assertEquals("valideringsfeil 1", feilForFelt!![0])
+    }
+
+    @Test
+    fun testSubType() {
+        val telefonnummer = Telefonnummer("+47", "11223344", "MOBIL")
+        val json = getJson(telefonnummer)
+        assertTrue(json.contains("@type"))
     }
 }

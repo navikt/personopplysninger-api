@@ -4,6 +4,8 @@ import no.nav.personopplysninger.features.personalia.exceptions.ConsumerExceptio
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConsumerFactory {
 
@@ -25,4 +27,15 @@ public class ConsumerFactory {
         }
     }
 
+    public static <T> List<T> readEntities(Class<T> responsklasse, Response response) {
+        try {
+            return response.readEntity(new ArrayList<T>().getClass());
+        } catch (ProcessingException e) {
+            throw new ConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
+        } catch (IllegalStateException e) {
+            throw new ConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
+        } catch (Exception e) {
+            throw new ConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.getName(), e);
+        }
+    }
 }

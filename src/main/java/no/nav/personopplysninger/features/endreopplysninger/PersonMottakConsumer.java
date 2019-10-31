@@ -16,6 +16,7 @@ import no.nav.personopplysninger.features.personalia.dto.DtoUtilsKt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -26,6 +27,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 
 import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
+import static no.nav.personopplysninger.features.ConsumerFactory.readEntities;
 import static no.nav.personopplysninger.features.ConsumerFactory.readEntity;
 
 public class PersonMottakConsumer {
@@ -148,7 +150,7 @@ public class PersonMottakConsumer {
                     throw new ConsumerException("Fikk feil under polling på status", ie);
                 }
                 Response pollResponse = buildPollEndringRequest(pollEndringUrl, systemUserToken).get();
-                endring = readEntity(c, pollResponse);
+                endring = readEntities(c, pollResponse).get(0);
             } while (++i < MAX_POLLS && endring.isPending());
             log.info("Antall polls for status: " + i);
 
