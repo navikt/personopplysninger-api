@@ -12,7 +12,7 @@ import java.io.IOException;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Gateadresse {
     @JsonProperty("@type")
-    private String subtype = "NORSK_KONTAKTADRESSE";
+    private String subtype = "NORSK_GATEADRESSE";
 
     private String kilde = "BRUKER SELV";
     private String bolignummer;
