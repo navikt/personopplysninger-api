@@ -1,0 +1,33 @@
+[ {
+  "status" : {
+    "endringId" : 3286,
+    "statusType" : "PENDING",
+    "substatus" : [ {
+      "status" : null,
+      "kode" : null,
+      "beskrivelse" : null,
+      "referanse" : "e1d21684-46fe-4b17-a35c-2be8b8dcbc6f",
+      "domene" : "PDL"
+    }, {
+      "status" : null,
+      "kode" : null,
+      "beskrivelse" : null,
+      "referanse" : "e1d21684-46fe-4b17-a35c-2be8b8dcbc6f",
+      "domene" : "TPS"
+    }, {
+      "status" : null,
+      "kode" : null,
+      "beskrivelse" : null,
+      "referanse" : "e1d21684-46fe-4b17-a35c-2be8b8dcbc6f",
+      "domene" : "FREG"
+    } ]
+  },
+  "ident" : "***********",
+  "endringstype" : "OPPRETT",
+  "opplysningstype" : "KONTONUMMER",
+  "opplysningsId" : null,
+  "opprettet" : "2019-10-31T16:07:37.592373",
+  "lineage" : "c25e3743-7951-4e53-a43c-52e14e1c3ab9",
+  "innmeldtEndring" : "{\n  \"@type\" : \"KONTONUMMER\",\n  \"value\" : \"1111\",\n  \"utenlandskKontoInformasjon\" : {\n    \"swift\" : null,\n    \"landkode\" : \"DZA\",\n    \"valuta\" : \"EUR\",\n    \"bank\" : {\n      \"navn\" : \"dfdf\",\n      \"kode\" : null,\n      \"adresseLinje1\" : \"\",\n      \"adresseLinje2\" : \"\",\n      \"adresseLinje3\" : \"\"\n    }\n  },\n  \"kilde\" : \"BRUKER SELV\"\n}",
+  "sendt" : false
+} ]

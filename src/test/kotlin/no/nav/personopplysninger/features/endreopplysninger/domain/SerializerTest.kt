@@ -1,6 +1,8 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain
 
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import no.nav.personopplysninger.features.ConsumerFactory.*
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
@@ -28,6 +30,16 @@ class SerializerTest {
     }
 
     @Test
+    fun testSerializationKontonummer() {
+        val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/endring-kontonummer.json")).readText()
+        val endringer: List<EndringKontonummer> = readEntities(EndringKontonummer::class.java, json)
+        val endring = endringer.get(0)
+        assertEquals("OPPRETT", endring.endringstype)
+        assertEquals("BRUKER SELV", endring.innmeldtEndring.kilde)
+        assertEquals(3, endring.status.substatus.size)
+    }
+
+    @Test
     fun testSerializationInstitusjonsopphold() {
         val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/inst2.json")).readText()
         val institusjonsopphold = ObjectMapper().readValue(json, ArrayList<InnsynInstitusjonsopphold>()::class.java)
@@ -35,7 +47,7 @@ class SerializerTest {
     }
 
     @Test
-    fun testSerializationKontonummer() {
+    fun testSerializationKontonummer2() {
         val json: String = "{" +
                 "\"endringstype\":\"OPPRETT\"," +
                 "\"ident\":\"12345678910\"," +
