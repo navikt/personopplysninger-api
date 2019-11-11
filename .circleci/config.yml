@@ -76,7 +76,7 @@ commands:
           command: |
             jq -n '{
                 "ingresses": [
-                  "'https://$REPO_NAME.nais.oera-q.local'",
+                  "'https://$REPO_NAME-<< parameters.namespace >>.nais.oera-q.local'",
                   "'https://www-<< parameters.namespace >>.nav.no/person/$REPO_NAME'"
             ]}' | tee -a nais.<< parameters.namespace >>.vars.json
 
