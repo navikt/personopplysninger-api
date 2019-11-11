@@ -45,6 +45,12 @@ jobs:
             docker push $IMAGE_NAME
       - deploy:
           cluster: dev-sbs
+          namespace: q6
+      - deploy:
+          cluster: dev-sbs
+          namespace: q1
+      - deploy:
+          cluster: dev-sbs
           namespace: q0
 
   deploy-til-prod:
