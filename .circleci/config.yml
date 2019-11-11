@@ -76,9 +76,7 @@ commands:
           command: |
             jq -n '{
                 "ingresses": [
-                  "'https://$REPO_NAME.nais.oera-q.local'",
-                  "'https://www-q1.nav.no/person/$REPO_NAME'",
-                  "'https://www-q0.nav.no/person/$REPO_NAME'"
+                  "'https://www-<< parameters.namespace >>.nav.no/person/$REPO_NAME'"
             ]}' | tee -a nais.dev-sbs.vars.json
 
       - run:
