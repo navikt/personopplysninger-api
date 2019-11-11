@@ -77,7 +77,7 @@ commands:
             jq -n '{
                 "ingresses": [
                   "'https://www-<< parameters.namespace >>.nav.no/person/$REPO_NAME'"
-            ]}' | tee -a nais.dev-sbs.vars.json
+            ]}' | tee -a nais.<< parameters.namespace >>.vars.json
 
       - run:
           name: Definerer ingresser for prod-sbs
@@ -97,7 +97,7 @@ commands:
                 --resource=.nais/config.yaml \
                 --cluster=<< parameters.cluster >> \
                 --repository=$CIRCLE_PROJECT_USERNAME/$REPO_NAME \
-                --vars=nais.<< parameters.cluster >>.vars.json \
+                --vars=nais.<< parameters.namespace >>.vars.json \
                 --var namespace=<< parameters.namespace >> \
                 --var baseurl=/person/$REPO_NAME \
                 --var reponame=$REPO_NAME \
