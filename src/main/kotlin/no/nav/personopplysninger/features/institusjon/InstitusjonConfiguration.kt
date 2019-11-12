@@ -6,13 +6,11 @@ import no.nav.security.oidc.jaxrs.OidcClientRequestFilter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.io.IOException
 import java.net.URI
 import java.net.URISyntaxException
 import javax.inject.Named
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.ClientBuilder
-import javax.ws.rs.client.ClientRequestContext
 import javax.ws.rs.client.ClientRequestFilter
 import javax.ws.rs.ext.ContextResolver
 
