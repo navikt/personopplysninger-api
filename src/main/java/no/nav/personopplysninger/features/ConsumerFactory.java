@@ -1,15 +1,11 @@
 package no.nav.personopplysninger.features;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import no.nav.personopplysninger.features.endreopplysninger.domain.Endring;
-import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer;
 import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConsumerFactory {
