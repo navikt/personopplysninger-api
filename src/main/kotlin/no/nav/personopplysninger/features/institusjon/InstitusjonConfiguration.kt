@@ -6,6 +6,7 @@ import no.nav.security.oidc.jaxrs.OidcClientRequestFilter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import java.io.IOException
 import java.net.URI
 import java.net.URISyntaxException
 import javax.inject.Named
@@ -32,13 +33,9 @@ open class InstitusjonConfiguration {
     @Bean
     open fun institusjonClient(clientObjectMapperResolver: ContextResolver<ObjectMapper>): Client {
         return clientBuilder(clientObjectMapperResolver)
-                .register({ requestContext: ClientRequestContext ->
-                    object: ClientRequestFilter {
-                        override fun filter(requestContext: ClientRequestContext?) {
-                            requestContext!!.getHeaders()
-                                    .putSingle(ConsumerFactory.DEFAULT_APIKEY_USERNAME, inst2ApiKeyPassword)
-                        }
-                    }
+                .register(ClientRequestFilter { requestContext ->
+                    requestContext.headers
+                            .putSingle(ConsumerFactory.DEFAULT_APIKEY_USERNAME, inst2ApiKeyPassword)
                 })
                 .build()
     }
