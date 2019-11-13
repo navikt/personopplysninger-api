@@ -78,8 +78,8 @@ class EndreOpplysningerService @Autowired constructor(
                 .toTypedArray()
     }
 
-    private fun getSystembrukerToken(): String? {
-        return stsConsumer.token?.access_token
+    private fun getSystembrukerToken(): String {
+        return stsConsumer.token.access_token
     }
 
 }
