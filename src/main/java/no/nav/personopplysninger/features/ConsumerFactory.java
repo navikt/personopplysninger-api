@@ -2,7 +2,6 @@ package no.nav.personopplysninger.features;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
