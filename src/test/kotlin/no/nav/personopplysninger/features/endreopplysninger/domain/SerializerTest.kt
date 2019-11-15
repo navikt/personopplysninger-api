@@ -1,8 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.personopplysninger.features.ConsumerFactory.*
+import no.nav.personopplysninger.features.ConsumerFactory.readEntities
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
@@ -25,7 +24,7 @@ class SerializerTest {
         val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/endring-telefonnummer.json")).readText()
         val endring = ObjectMapper().readValue(json, EndringTelefon::class.java)
         assertEquals("KORRIGER", endring.endringstype)
-        assertEquals("BRUKER SELV", endring.innmeldtEndring.kilde)
+        assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
         assertEquals(3, endring.status.substatus.size)
     }
 
@@ -35,7 +34,7 @@ class SerializerTest {
         val endringer: List<EndringKontonummer> = readEntities(EndringKontonummer::class.java, json)
         val endring = endringer.get(0)
         assertEquals("OPPRETT", endring.endringstype)
-        assertEquals("BRUKER SELV", endring.innmeldtEndring.kilde)
+        assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
         assertEquals(3, endring.status.substatus.size)
     }
 
@@ -96,8 +95,8 @@ class SerializerTest {
         val json = InputStreamReader(this.javaClass.getResourceAsStream("/json/validation-error.json")).readText()
         val validationError = ObjectMapper().readValue(json, Error::class.java)
         assertEquals("Validering feilet", validationError.message)
-        assertEquals(3, validationError.details.size)
-        val feilForFelt = validationError.details.get("objekt.feltnavn")
+        assertEquals(3, validationError.details!!.size)
+        val feilForFelt = validationError.details!!.get("objekt.feltnavn")
         assertEquals(3, feilForFelt!!.size)
         assertEquals("valideringsfeil 1", feilForFelt!![0])
     }
