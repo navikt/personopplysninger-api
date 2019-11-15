@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
-import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.features.norg2.Norg2Consumer
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskEnhetKontaktInformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskTilknytning
@@ -60,7 +60,7 @@ class PersonaliaService @Autowired constructor(
     private fun getKodeverksTerm(kodeverk: GetKodeverkKoderBetydningerResponse, inbound: String?, type: String): String? {
         try {
             if (!inbound.isNullOrEmpty() && !kodeverk.betydninger.getValue(inbound).isEmpty()) {
-                return kodeverk.betydninger.getValue(inbound)[0]?.beskrivelser?.getValue(kodeverkspraak)?.term
+                return kodeverk.betydninger.getValue(inbound)[0].beskrivelser.getValue(kodeverkspraak).term
             } else {
                 return ""
             }

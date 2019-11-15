@@ -5,11 +5,11 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.E
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
-import no.nav.personopplysninger.features.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
-import no.nav.personopplysninger.features.kodeverk.api.KodeOgTekstDto
-import no.nav.personopplysninger.features.kodeverk.api.RetningsnummerDTO
 import no.nav.personopplysninger.features.sts.STSConsumer
+import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.oppslag.kodeverk.api.KodeOgTekstDto
+import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
