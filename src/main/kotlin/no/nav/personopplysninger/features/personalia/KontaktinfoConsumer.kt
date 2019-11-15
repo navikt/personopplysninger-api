@@ -8,7 +8,6 @@ import org.slf4j.MDC
 
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
-import javax.ws.rs.core.Response
 import java.net.URI
 
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
@@ -31,8 +30,7 @@ class KontaktinfoConsumer(private val client: Client, private val endpoint: URI)
 
     private fun hentKontaktinformasjon(request: Invocation.Builder): DigitalKontaktinfoBolk {
         try {
-            request.get()
-                    .use { response -> return readResponse(response) }
+            return request.getResponse()
         } catch (e: Exception) {
             val msg = "Forsøkte å konsumere REST-tjenesten DKIF. endpoint=[$endpoint]."
             throw ConsumerException(msg, e)
@@ -40,12 +38,13 @@ class KontaktinfoConsumer(private val client: Client, private val endpoint: URI)
 
     }
 
-    private fun readResponse(r: Response): DigitalKontaktinfoBolk {
-        if (SUCCESSFUL != r.statusInfo.family) {
-            val msg = "Forsøkte å konsumere REST-tjenesten DKIF. endpoint=[" + endpoint + "], HTTP response status=[" + r.status + "]."
-            throw ConsumerException(msg + " - " + ConsumerFactory.readEntity(String::class.java, r))
+    private fun Invocation.Builder.getResponse(): DigitalKontaktinfoBolk {
+        val response = get()
+        if (SUCCESSFUL != response.statusInfo.family) {
+            val msg = "Forsøkte å konsumere REST-tjenesten DKIF. endpoint=[" + endpoint + "], HTTP response status=[" + response.status + "]."
+            throw ConsumerException(msg + " - " + ConsumerFactory.readEntity(String::class.java, response))
         } else {
-            return ConsumerFactory.readEntity(DigitalKontaktinfoBolk::class.java, r)
+            return ConsumerFactory.readEntity(DigitalKontaktinfoBolk::class.java, response)
         }
     }
 }
