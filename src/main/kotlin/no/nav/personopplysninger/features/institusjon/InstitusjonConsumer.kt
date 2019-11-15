@@ -3,7 +3,7 @@ package no.nav.personopplysninger.features.institusjon
 import no.nav.log.MDCConstants
 import no.nav.personopplysninger.features.ConsumerFactory
 import no.nav.personopplysninger.features.institusjon.dto.InnsynInstitusjonsopphold
-import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException
+import no.nav.personopplysninger.features.ConsumerException
 import org.slf4j.MDC
 import java.net.URI
 import javax.ws.rs.client.Client

@@ -1,12 +1,10 @@
 package no.nav.personopplysninger.features.norg2;
 
 import no.nav.log.MDCConstants;
-import no.nav.personopplysninger.config.ApplicationConfig;
+import no.nav.personopplysninger.features.ConsumerException;
 import no.nav.personopplysninger.features.ConsumerFactory;
 import no.nav.personopplysninger.features.norg2.domain.Norg2Enhet;
 import no.nav.personopplysninger.features.norg2.domain.Norg2EnhetKontaktinfo;
-import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException;
-import no.nav.tps.person.Personinfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
