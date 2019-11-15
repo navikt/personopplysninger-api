@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.log.MDCConstants
 import no.nav.personopplysninger.features.ConsumerException
@@ -26,7 +25,7 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
-class PersonMottakConsumer constructor(
+class PersonMottakConsumer (
         private val client: Client,
         private val endpoint: URI
 )  {
@@ -36,7 +35,7 @@ class PersonMottakConsumer constructor(
     private val HTTP_CODE_423 = 423
 
     private val BEARER = "Bearer "
-    private val SLEEP_TIME_MS = 1000
+    private val SLEEP_TIME_MS = 1000L
     private val MAX_POLLS = 3
 
     private val URL_TELEFONNUMMER = "/api/v1/endring/telefonnummer"
@@ -84,7 +83,7 @@ class PersonMottakConsumer constructor(
         else
             URL_OPPHOER_KONTAKTADRESSE_UTENLANDSK
         val request = buildEndreRequest(fnr, systemUserToken, url)
-        return sendEndring(request, null, systemUserToken, HttpMethod.PUT, EndringOpphoerAdresse::class.java)
+        return sendBlankEndring(request, systemUserToken, EndringOpphoerAdresse::class.java)
     }
 
     private fun getBuilder(path: String, systemUserToken: String): Invocation.Builder {
@@ -105,71 +104,78 @@ class PersonMottakConsumer constructor(
         return getBuilder(url, systemUserToken)
     }
 
-    private fun <T : Endring<T>> sendEndring(request: Invocation.Builder, entitetSomEndres: Any?, systemUserToken: String, httpMethod: String, c: Class<T>): T {
-        try {
-            (if (entitetSomEndres == null)
-                request.method(httpMethod, Entity.text(""))
-            else
-                request.method(httpMethod, Entity.entity(entitetSomEndres, MediaType.APPLICATION_JSON)))
-                    .use {response -> return readResponseAndPollStatus(response, systemUserToken, c) }
+    private fun <T : Endring<T>> sendEndring(request: Invocation.Builder, entitetSomEndres: Any, systemUserToken: String, httpMethod: String, c: Class<T>): T {
+        return try {
+            request.method(httpMethod, Entity.entity(entitetSomEndres, MediaType.APPLICATION_JSON))
+                .use {response -> readResponseAndPollStatus(response, systemUserToken, c) }
+        } catch (e: Exception) {
+            val msg = "Forsøkte å endre personopplysning. endpoint=[$endpoint]."
+            throw ConsumerException(msg, e)
+        }
+    }
+    private fun <T : Endring<T>> sendBlankEndring(request: Invocation.Builder, systemUserToken: String, c: Class<T>): T {
+        return try {
+            request.method(HttpMethod.PUT, Entity.text(""))
+                .use {response -> readResponseAndPollStatus(response, systemUserToken, c) }
         } catch (e: Exception) {
             val msg = "Forsøkte å endre personopplysning. endpoint=[$endpoint]."
             throw ConsumerException(msg, e)
         }
     }
 
-    private fun <T : Endring<T>> readResponseAndPollStatus(response: Response, systemUserToken: String, c: Class<T>): T {
-        if (response.status == HTTP_CODE_423) {
-            val endring = getEndring(c, "PENDING")
-            endring.error = readEntity<Error>(Error::class.java, response)
-            log.info("Oppdatering avvist pga status pending.")
-            return endring
-        } else if (response.status == HTTP_CODE_422) {
-            val endring = getEndring(c, "ERROR")
-            val err: Error =  readEntity<Error>(Error::class.java, response)
-            log.error("Fikk valideringsfeil: " + getJson(err))
-            endring.error = err
-            return endring
-        } else if (SUCCESSFUL != response.statusInfo.family) {
-            val msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.status + "]."
-            throw ConsumerException(msg + " - " + readEntity<String>(String::class.java, response))
-        } else {
-            val pollEndringUrl = response.getHeaderString(HttpHeaders.LOCATION)
-            var endring: T? = null
-            var i = 0
-            do {
-                try {
-                    Thread.sleep(SLEEP_TIME_MS.toLong())
-                } catch (ie: InterruptedException) {
-                    throw ConsumerException("Fikk feil under polling på status", ie)
+    private fun <T : Endring<T>> readResponseAndPollStatus(response: Response, systemUserToken: String, clazz: Class<T>): T {
+        return when {
+            response.status == HTTP_CODE_423 -> {
+                getEndring(clazz, "PENDING").apply {
+                    error = readEntity(Error::class.java, response)
+                    log.info("Oppdatering avvist pga status pending.")
                 }
-
-                val pollResponse = buildPollEndringRequest(pollEndringUrl, systemUserToken).get()
-                endring = readEntities<T>(c, pollResponse).get(0)
-            } while (++i < MAX_POLLS && endring!!.isPending)
-            log.info("Antall polls for status: $i")
-
-            if (!endring!!.isDoneWithoutTpsError) {
-                endring.createValidationErrorIfTpsHasError()
-                var json = ""
-                try {
-                    json = ObjectMapper().writeValueAsString(endring)
-                } catch (jpe: JsonProcessingException) {
+            } response.status == HTTP_CODE_422 -> {
+                getEndring(clazz, "ERROR").apply {
+                    error = readEntity(Error::class.java, response)
+                    log.error("Fikk valideringsfeil: " + getJson(this))
                 }
-
-                log.warn("Endring var ikke Done og/eller hadde TPS error. \n$json")
+            } SUCCESSFUL != response.statusInfo.family -> {
+                val msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.status + "]."
+                throw ConsumerException(msg + " - " + readEntity(String::class.java, response))
+            } else -> {
+                val pollEndringUrl = response.getHeaderString(HttpHeaders.LOCATION)
+                buildPollEndringRequest(pollEndringUrl, systemUserToken)
+                        .pollFor(clazz, SLEEP_TIME_MS, MAX_POLLS)
             }
-            return endring
         }
     }
 
-    private fun <T : Endring<T>> getEndring(c: Class<T>, statusType: String): T {
+    private fun <T : Endring<T>> Invocation.Builder.pollFor(clazz: Class<T>, pollInterval: Long, maxPolls: Int): T {
+        var endring: T
+        var i = 0
+        do {
+            try {
+                Thread.sleep(pollInterval)
+            } catch (ie: InterruptedException) {
+                throw ConsumerException("Fikk feil under polling på status", ie)
+            }
+
+            val pollResponse = get()
+            endring = readEntities(clazz, pollResponse).get(0)
+        } while (++i < maxPolls && endring.isPending)
+        log.info("Antall polls for status: $i")
+
+        if (!endring.isDoneWithoutTpsError) {
+            endring.createValidationErrorIfTpsHasError()
+            val json = runCatching {
+                ObjectMapper().writeValueAsString(endring)
+            }.getOrDefault("")
+            log.warn("Endring var ikke Done og/eller hadde TPS error. \n$json")
+        }
+        return endring
+    }
+
+    private fun <T : Endring<T>> getEndring(clazz: Class<T>, statusType: String): T {
         try {
-            val endring = c.newInstance()
-            endring.statusType = statusType
-            return endring
+            return clazz.newInstance().apply { this.statusType = statusType }
         } catch (e: Exception) {
-            log.error("Fikk exception ved forsøk på å instansiere " + c.name)
+            log.error("Fikk exception ved forsøk på å instansiere " + clazz.name)
             throw RuntimeException(e)
         }
     }
