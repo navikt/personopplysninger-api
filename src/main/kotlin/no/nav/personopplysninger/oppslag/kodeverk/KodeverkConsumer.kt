@@ -2,18 +2,15 @@ package no.nav.personopplysninger.oppslag.kodeverk
 
 import no.nav.log.MDCConstants
 import no.nav.personopplysninger.features.ConsumerFactory
+import no.nav.personopplysninger.features.ConsumerFactory.readEntity
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.kodeverk.exceptions.KodeverkConsumerException
 import org.slf4j.MDC
 import org.springframework.cache.annotation.Cacheable
-
+import java.net.URI
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
-import javax.ws.rs.core.Response
-import java.net.URI
-
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
-import no.nav.personopplysninger.features.ConsumerFactory.readEntity
 
 open class KodeverkConsumer constructor(
         private val client: Client,
@@ -81,8 +78,7 @@ open class KodeverkConsumer constructor(
 
     private fun hentKodeverkBetydning(request: Invocation.Builder): GetKodeverkKoderBetydningerResponse {
         try {
-            request.get()
-                    .use { response -> return readResponseBetydning(response) }
+            return request.getResponse()
         } catch (e: KodeverkConsumerException) {
             throw e
         } catch (e: Exception) {
@@ -91,12 +87,13 @@ open class KodeverkConsumer constructor(
         }
     }
 
-    private fun readResponseBetydning(r: Response): GetKodeverkKoderBetydningerResponse {
-        if (SUCCESSFUL != r.statusInfo.family) {
-            val msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + r.status + "]."
-            throw KodeverkConsumerException(msg + " - " + readEntity(String::class.java, r))
+    private fun Invocation.Builder.getResponse(): GetKodeverkKoderBetydningerResponse {
+        val response = get()
+        if (SUCCESSFUL != response.statusInfo.family) {
+            val msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + response.status + "]."
+            throw KodeverkConsumerException(msg + " - " + readEntity(String::class.java, response))
         } else {
-            return readEntity(GetKodeverkKoderBetydningerResponse::class.java, r)
+            return readEntity(GetKodeverkKoderBetydningerResponse::class.java, response)
         }
     }
 
