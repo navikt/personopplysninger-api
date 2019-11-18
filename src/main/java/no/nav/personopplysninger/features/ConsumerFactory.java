@@ -11,7 +11,6 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 public class ConsumerFactory {
-
     private static final Logger log = LoggerFactory.getLogger(ConsumerFactory.class);
 
     public static final String CONSUMER_ID = "personbruker-personopplysninger-api";
@@ -35,11 +34,9 @@ public class ConsumerFactory {
     public static <T> T readEntityAsString(Class<T> responsklasse, Response response) {
         String json = "";
         try {
-
-            //ObjectMapper mapper = new ObjectMapper();
             json = response.readEntity(String.class);
-            return new RestClientConfiguration().clientObjectMapperResolver().getContext(responsklasse).readValue(json, responsklasse);
-            //return mapper.readValue(json, responsklasse);
+            return new RestClientConfiguration()
+                    .clientObjectMapperResolver().getContext(responsklasse).readValue(json, responsklasse);
         } catch (Exception e) {
             log.error("Feilet med json:\n ".concat(json));
             throw new ConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.getName(), e);
