@@ -3,6 +3,7 @@ package no.nav.personopplysninger.oppslag.kodeverk
 import no.nav.log.MDCConstants
 import no.nav.personopplysninger.features.ConsumerFactory
 import no.nav.personopplysninger.features.ConsumerFactory.readEntity
+import no.nav.personopplysninger.features.ConsumerFactory.readEntityAsString
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.kodeverk.exceptions.KodeverkConsumerException
 import org.slf4j.MDC
@@ -93,7 +94,7 @@ open class KodeverkConsumer constructor(
             val msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + response.status + "]."
             throw KodeverkConsumerException(msg + " - " + readEntity(String::class.java, response))
         } else {
-            return readEntity(GetKodeverkKoderBetydningerResponse::class.java, response)
+            return readEntityAsString(GetKodeverkKoderBetydningerResponse::class.java, response)
         }
     }
 

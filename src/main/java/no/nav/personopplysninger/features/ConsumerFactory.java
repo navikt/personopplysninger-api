@@ -2,12 +2,16 @@ package no.nav.personopplysninger.features;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
 public class ConsumerFactory {
+
+    private static final Logger log = LoggerFactory.getLogger(ConsumerFactory.class);
 
     public static final String CONSUMER_ID = "personbruker-personopplysninger-api";
     public static final String DEFAULT_APIKEY_USERNAME = "x-nav-apiKey";
@@ -23,6 +27,18 @@ public class ConsumerFactory {
         } catch (IllegalStateException e) {
             throw new ConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: " + responsklasse.getName(), e);
         } catch (Exception e) {
+            throw new ConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.getName(), e);
+        }
+    }
+
+    public static <T> T readEntityAsString(Class<T> responsklasse, Response response) {
+        String json = "";
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            json = response.readEntity(String.class);
+            return mapper.readValue(json, responsklasse);
+        } catch (Exception e) {
+            log.error("Feilet med json:\n ".concat(json));
             throw new ConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.getName(), e);
         }
     }

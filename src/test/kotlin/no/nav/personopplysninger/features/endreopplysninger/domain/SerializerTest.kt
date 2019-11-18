@@ -110,6 +110,13 @@ class SerializerTest {
         assertTrue(json.contains("@type"))
     }
 
+    @Test
+    fun testKodeverk() {
+        val json = InputStreamReader(this.javaClass.getResourceAsStream("/json/kodeverk-kjonnstyper.json")).readText()
+        val kodeverk = readValue(json, GetKodeverkKoderBetydningerResponse::class.java)
+        assertEquals("Kvinne", kodeverk.betydninger.getValue("K")[0].beskrivelser.getValue("nb").term)
+    }
+
     private fun <T> readValue(json: String, t: Class<T>): T {
         return RestClientConfiguration().clientObjectMapperResolver().getContext(t).readValue(json, t)
     }
