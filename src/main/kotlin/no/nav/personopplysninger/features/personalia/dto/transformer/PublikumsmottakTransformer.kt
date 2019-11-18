@@ -1,12 +1,11 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
 
-import no.nav.personopplysninger.features.norg2.domain.Publikumsmottak
 import no.nav.personopplysninger.features.personalia.dto.outbound.Aapningstid
 import no.nav.personopplysninger.features.personalia.dto.outbound.PublikumsmottakDto
+import no.nav.personopplysninger.oppslag.norg2.domain.Publikumsmottak
 
 object PublikumsmottakTransformer {
-
     val mandag = "Mandag"
     val tirsdag = "Tirsdag"
     val onsdag = "Onsdag"
@@ -39,8 +38,6 @@ object PublikumsmottakTransformer {
             }
             mottaksliste.add(publikumsmottak)
         }
-
-
         return mottaksliste;
     }
 }

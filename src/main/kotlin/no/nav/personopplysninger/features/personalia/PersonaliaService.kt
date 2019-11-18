@@ -1,8 +1,5 @@
 package no.nav.personopplysninger.features.personalia
 
-import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
-import no.nav.personopplysninger.features.norg2.Norg2Consumer
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskEnhetKontaktInformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskTilknytning
 import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon
@@ -11,6 +8,9 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.GeografiskE
 import no.nav.personopplysninger.features.personalia.dto.transformer.KontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
+import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.oppslag.norg2.Norg2Consumer
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -83,7 +83,7 @@ class PersonaliaService @Autowired constructor(
         return KontaktinformasjonTransformer.toOutbound(inbound, fodselsnr)
     }
 
-    fun hentEnhetKontaktinformasjon(enhetsnr: String?): GeografiskEnhetKontaktInformasjon {
+    fun hentEnhetKontaktinformasjon(enhetsnr: String): GeografiskEnhetKontaktInformasjon {
         val inbound = norg2Consumer.hentKontaktinfo(enhetsnr)
         return GeografiskEnhetKontaktinformasjonTransformer.toOutbound(inbound)
     }
