@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+import no.nav.personopplysninger.config.RestClientConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,9 +35,11 @@ public class ConsumerFactory {
     public static <T> T readEntityAsString(Class<T> responsklasse, Response response) {
         String json = "";
         try {
-            ObjectMapper mapper = new ObjectMapper();
+
+            //ObjectMapper mapper = new ObjectMapper();
             json = response.readEntity(String.class);
-            return mapper.readValue(json, responsklasse);
+            return new RestClientConfiguration().clientObjectMapperResolver().getContext(responsklasse).readValue(json, responsklasse);
+            //return mapper.readValue(json, responsklasse);
         } catch (Exception e) {
             log.error("Feilet med json:\n ".concat(json));
             throw new ConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.getName(), e);
