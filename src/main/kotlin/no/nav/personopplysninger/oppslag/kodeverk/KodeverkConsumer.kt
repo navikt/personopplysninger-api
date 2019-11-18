@@ -95,7 +95,8 @@ open class KodeverkConsumer constructor(
             //throw KodeverkConsumerException(msg + " - " + readEntity(String::class.java, response))
             throw KodeverkConsumerException(msg)
         } else {
-            return readEntityAsString(GetKodeverkKoderBetydningerResponse::class.java, response)
+            //return readEntityAsString(GetKodeverkKoderBetydningerResponse::class.java, response)
+            return readEntity(GetKodeverkKoderBetydningerResponse::class.java, response)
         }
     }
 
