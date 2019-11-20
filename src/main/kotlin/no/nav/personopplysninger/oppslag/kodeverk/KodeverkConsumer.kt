@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.oppslag.kodeverk
 
 import no.nav.log.MDCConstants
+import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.features.ConsumerFactory
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.Kodeverk
@@ -90,10 +91,10 @@ open class KodeverkConsumer constructor(
     private fun Invocation.Builder.getResponse(): Kodeverk {
         val response = get()
         if (SUCCESSFUL != response.statusInfo.family) {
-            val msg = "Forsøkte å konsumere kodeverk. endpoint=[$endpoint], HTTP response status=[${response.status}]."
+            val msg = "Forsøkte å konsumere kodeverk. endpoint=[$endpoint], HTTP response status=[${response.status}], body=[${response.unmarshalBody<String>()}]."
             throw KodeverkConsumerException(msg)
         } else {
-            return response.readEntity(GetKodeverkKoderBetydningerResponse::class.java)
+            return response.unmarshalBody<GetKodeverkKoderBetydningerResponse>()
                     .let { Kodeverk.fromKoderBetydningerResponse(it) }
         }
     }

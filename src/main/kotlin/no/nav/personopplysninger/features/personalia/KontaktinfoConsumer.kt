@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.personalia
 
 import no.nav.dkif.kontaktinformasjon.DigitalKontaktinfoBolk
 import no.nav.log.MDCConstants
+import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.features.ConsumerException
 import no.nav.personopplysninger.features.ConsumerFactory
 import org.slf4j.MDC
@@ -41,10 +42,10 @@ class KontaktinfoConsumer(private val client: Client, private val endpoint: URI)
     private fun Invocation.Builder.getResponse(): DigitalKontaktinfoBolk {
         val response = get()
         if (SUCCESSFUL != response.statusInfo.family) {
-            val msg = "Forsøkte å konsumere REST-tjenesten DKIF. endpoint=[" + endpoint + "], HTTP response status=[" + response.status + "]."
-            throw ConsumerException(msg + " - " + ConsumerFactory.readEntity(String::class.java, response))
+            val msg = "Forsøkte å konsumere REST-tjenesten DKIF. endpoint=[$endpoint], HTTP response status=[${response.status}]. - "
+            throw ConsumerException(msg.plus(response.unmarshalBody()))
         } else {
-            return ConsumerFactory.readEntity(DigitalKontaktinfoBolk::class.java, response)
+            return response.unmarshalBody()
         }
     }
 }

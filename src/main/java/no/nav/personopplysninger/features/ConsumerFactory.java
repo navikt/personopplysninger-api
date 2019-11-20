@@ -2,7 +2,6 @@ package no.nav.personopplysninger.features;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import no.nav.personopplysninger.config.RestClientConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,27 +30,11 @@ public class ConsumerFactory {
         }
     }
 
-    public static <T> T readEntityAsString(Class<T> responsklasse, Response response) {
-        String json = "";
-        try {
-            json = response.readEntity(String.class);
-            return new RestClientConfiguration()
-                    .clientObjectMapperResolver().getContext(responsklasse).readValue(json, responsklasse);
-        } catch (Exception e) {
-            log.error("Feilet med json:\n ".concat(json));
-            throw new ConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.getName(), e);
-        }
-    }
-
     public static <T> List<T> readEntities(Class<T> responsklasse, Response response) {
-        return readEntities(responsklasse, response.readEntity(String.class));
-    }
-
-    public static <T> List<T> readEntities(Class<T> responsklasse, String json) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, responsklasse);
-            return mapper.readValue(json, type);
+            return mapper.readValue(response.readEntity(String.class), type);
         } catch (ProcessingException e) {
             throw new ConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: ", e);
         } catch (IllegalStateException e) {
@@ -60,5 +43,4 @@ public class ConsumerFactory {
             throw new ConsumerException("Uventet feil på responsobjektet. Responsklasse: ", e);
         }
     }
-
 }

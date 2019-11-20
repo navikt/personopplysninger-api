@@ -1,6 +1,9 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.tomakehurst.wiremock.WireMockServer
+import com.github.tomakehurst.wiremock.client.WireMock
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.features.ConsumerFactory.readEntities
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
@@ -14,6 +17,8 @@ import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.io.InputStreamReader
+import javax.ws.rs.client.ClientBuilder
+import javax.ws.rs.core.Response
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -32,11 +37,25 @@ class SerializerTest {
     @Test
     fun testSerializationKontonummer() {
         val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/endring-kontonummer.json")).readText()
-        val endringer: List<EndringKontonummer> = readEntities(EndringKontonummer::class.java, json)
-        val endring = endringer.get(0)
-        assertEquals("OPPRETT", endring.endringstype)
-        assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
-        assertEquals(3, endring.status.substatus.size)
+
+        val mockServer = WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
+        try {
+            mockServer.start()
+            WireMock.configureFor(mockServer.port())
+            WireMock.stubFor(WireMock.any(WireMock.urlPathEqualTo("/kodeverk")).willReturn(WireMock.okJson(json)))
+
+            val client = ClientBuilder.newBuilder()
+                    .register(RestClientConfiguration().clientObjectMapperResolver())
+                    .build()
+            val response: Response = client.target("http://localhost:8080").path("/kodeverk").request().get()
+            val endringer: List<EndringKontonummer> = readEntities(EndringKontonummer::class.java, response)
+            val endring = endringer.get(0)
+            assertEquals("OPPRETT", endring.endringstype)
+            assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
+            assertEquals(3, endring.status.substatus.size)
+        } finally {
+            mockServer.stop()
+        }
     }
 
     @Test

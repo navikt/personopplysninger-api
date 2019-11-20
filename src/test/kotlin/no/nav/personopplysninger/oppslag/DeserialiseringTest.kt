@@ -9,7 +9,6 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import no.nav.personopplysninger.config.RestClientConfiguration
-import no.nav.personopplysninger.features.ConsumerFactory
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import org.glassfish.jersey.client.ClientConfig
 import org.junit.jupiter.api.*
@@ -62,7 +61,12 @@ class DeserialiseringTest {
             response.readEntity(TestDataClass::class.java)
         }
 
-        val testDataClass = ConsumerFactory.readEntityAsString(TestDataClass::class.java, response)
+        val testDataClass = RestClientConfiguration()
+                .clientObjectMapperResolver()
+                .getContext(TestDataClass::class.java)
+                .readValue(
+                        response.readEntity(String::class.java),
+                        TestDataClass::class.java)
         assertEquals("foo bar", testDataClass.tekst)
     }
 

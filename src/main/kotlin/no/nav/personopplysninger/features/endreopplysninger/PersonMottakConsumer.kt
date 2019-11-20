@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.endreopplysninger
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.log.MDCConstants
+import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.features.ConsumerException
 import no.nav.personopplysninger.features.ConsumerFactory
 import no.nav.personopplysninger.features.ConsumerFactory.*
@@ -127,17 +128,18 @@ class PersonMottakConsumer (
         return when {
             response.status == HTTP_CODE_423 -> {
                 getEndring(clazz, "PENDING").apply {
-                    error = readEntity(Error::class.java, response)
+                    error = response.unmarshalBody()
                     log.info("Oppdatering avvist pga status pending.")
                 }
             } response.status == HTTP_CODE_422 -> {
                 getEndring(clazz, "ERROR").apply {
-                    error = readEntity(Error::class.java, response)
-                    log.error("Fikk valideringsfeil: " + getJson(this))
+                    error = response.unmarshalBody()
+                    log.error("Fikk valideringsfeil: ${getJson(this)}")
                 }
             } SUCCESSFUL != response.statusInfo.family -> {
-                val msg = "Forsøkte å konsumere person_mottak. endpoint=[" + endpoint + "], HTTP response status=[" + response.status + "]."
-                throw ConsumerException(msg + " - " + readEntity(String::class.java, response))
+                throw ConsumerException(
+                        "Forsøkte å konsumere person_mottak. endpoint=[$endpoint], HTTP response status=[${response.status}] - ${response.unmarshalBody<String>()}."
+                )
             } else -> {
                 val pollEndringUrl = response.getHeaderString(HttpHeaders.LOCATION)
                 buildPollEndringRequest(pollEndringUrl, systemUserToken)
@@ -175,7 +177,7 @@ class PersonMottakConsumer (
         try {
             return clazz.newInstance().apply { this.statusType = statusType }
         } catch (e: Exception) {
-            log.error("Fikk exception ved forsøk på å instansiere " + clazz.name)
+            log.error("Fikk exception ved forsøk på å instansiere ${clazz.name}")
             throw RuntimeException(e)
         }
     }
