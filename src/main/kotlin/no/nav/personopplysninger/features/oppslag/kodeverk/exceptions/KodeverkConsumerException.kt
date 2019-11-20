@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.oppslag.kodeverk.exceptions
+package no.nav.personopplysninger.features.oppslag.kodeverk.exceptions
 
 class KodeverkConsumerException : RuntimeException {
     constructor(msg: String, cause: Throwable) : super(msg, cause) {}

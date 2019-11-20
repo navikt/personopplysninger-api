@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.oppslag.kodeverk
+package no.nav.personopplysninger.features.oppslag.kodeverk
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.features.ConsumerFactory

@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
-import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.features.oppslag.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.features.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.features.norg2.Norg2Consumer
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskEnhetKontaktInformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskTilknytning

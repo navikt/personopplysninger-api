@@ -1,10 +1,9 @@
-package no.nav.personopplysninger.oppslag.kodeverk
+package no.nav.personopplysninger.features.oppslag.kodeverk
 
 import no.nav.log.MDCConstants
 import no.nav.personopplysninger.features.ConsumerFactory
-import no.nav.personopplysninger.features.ConsumerFactory.readEntityAsString
-import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
-import no.nav.personopplysninger.oppslag.kodeverk.exceptions.KodeverkConsumerException
+import no.nav.personopplysninger.features.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.features.oppslag.kodeverk.exceptions.KodeverkConsumerException
 import org.slf4j.MDC
 import org.springframework.cache.annotation.Cacheable
 import java.net.URI
@@ -82,18 +81,17 @@ open class KodeverkConsumer constructor(
         } catch (e: KodeverkConsumerException) {
             throw e
         } catch (e: Exception) {
-            val msg = "Forsøkte å konsumere kodeverk. endpoint=[$endpoint]."
-            throw KodeverkConsumerException(msg, e)
+            throw KodeverkConsumerException("Forsøkte å konsumere kodeverk. endpoint=[$endpoint].", e)
         }
     }
 
     private fun Invocation.Builder.getResponse(): GetKodeverkKoderBetydningerResponse {
         val response = get()
         if (SUCCESSFUL != response.statusInfo.family) {
-            val msg = "Forsøkte å konsumere kodeverk. endpoint=[" + endpoint + "], HTTP response status=[" + response.status + "]."
+            val msg = "Forsøkte å konsumere kodeverk. endpoint=[$endpoint], HTTP response status=[${response.status}]."
             throw KodeverkConsumerException(msg)
         } else {
-            return readEntityAsString(GetKodeverkKoderBetydningerResponse::class.java, response)
+            return response.readEntity(GetKodeverkKoderBetydningerResponse::class.java)
         }
     }
 
