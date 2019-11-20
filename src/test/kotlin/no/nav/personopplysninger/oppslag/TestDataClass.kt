@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.oppslag
+package no.nav.personopplysninger.oppslag
 
 import java.time.LocalDate
 

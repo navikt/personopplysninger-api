@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.oppslag
+package no.nav.personopplysninger.oppslag
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
@@ -10,7 +10,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.features.ConsumerFactory
-import no.nav.personopplysninger.features.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import org.glassfish.jersey.client.ClientConfig
 import org.junit.jupiter.api.*
 import java.io.InputStreamReader

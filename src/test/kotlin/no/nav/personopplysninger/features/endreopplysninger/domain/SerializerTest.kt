@@ -9,8 +9,8 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Endri
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.institusjon.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.personalia.dto.getJson
-import no.nav.personopplysninger.features.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
-import no.nav.personopplysninger.features.oppslag.kodeverk.api.RetningsnummerDTO
+import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.io.InputStreamReader
