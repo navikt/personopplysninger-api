@@ -1,18 +1,24 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.tomakehurst.wiremock.WireMockServer
+import com.github.tomakehurst.wiremock.client.WireMock
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration
+import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.features.ConsumerFactory.readEntities
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.institusjon.dto.InnsynInstitusjonsopphold
-import no.nav.personopplysninger.features.kodeverk.api.GetKodeverkKoderBetydningerResponse
-import no.nav.personopplysninger.features.kodeverk.api.RetningsnummerDTO
 import no.nav.personopplysninger.features.personalia.dto.getJson
+import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.io.InputStreamReader
+import javax.ws.rs.client.ClientBuilder
+import javax.ws.rs.core.Response
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -22,7 +28,7 @@ class SerializerTest {
     @Test
     fun testSerializationTelefonnummer() {
         val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/endring-telefonnummer.json")).readText()
-        val endring = ObjectMapper().readValue(json, EndringTelefon::class.java)
+        val endring = readValue(json, EndringTelefon::class.java)
         assertEquals("KORRIGER", endring.endringstype)
         assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
         assertEquals(3, endring.status.substatus.size)
@@ -31,17 +37,31 @@ class SerializerTest {
     @Test
     fun testSerializationKontonummer() {
         val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/endring-kontonummer.json")).readText()
-        val endringer: List<EndringKontonummer> = readEntities(EndringKontonummer::class.java, json)
-        val endring = endringer.get(0)
-        assertEquals("OPPRETT", endring.endringstype)
-        assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
-        assertEquals(3, endring.status.substatus.size)
+
+        val mockServer = WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
+        try {
+            mockServer.start()
+            WireMock.configureFor(mockServer.port())
+            WireMock.stubFor(WireMock.any(WireMock.urlPathEqualTo("/kodeverk")).willReturn(WireMock.okJson(json)))
+
+            val client = ClientBuilder.newBuilder()
+                    .register(RestClientConfiguration().clientObjectMapperResolver())
+                    .build()
+            val response: Response = client.target("http://localhost:8080").path("/kodeverk").request().get()
+            val endringer: List<EndringKontonummer> = readEntities(EndringKontonummer::class.java, response)
+            val endring = endringer.get(0)
+            assertEquals("OPPRETT", endring.endringstype)
+            assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
+            assertEquals(3, endring.status.substatus.size)
+        } finally {
+            mockServer.stop()
+        }
     }
 
     @Test
     fun testSerializationInstitusjonsopphold() {
         val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/inst2.json")).readText()
-        val institusjonsopphold = ObjectMapper().readValue(json, ArrayList<InnsynInstitusjonsopphold>()::class.java)
+        val institusjonsopphold = readValue(json, ArrayList<InnsynInstitusjonsopphold>()::class.java)
         assertEquals(7, institusjonsopphold.size)
     }
 
@@ -55,7 +75,7 @@ class SerializerTest {
                 "\"status\":{\"endringId\":2113,\"statusType\":\"DONE\"}," +
                 "\"innmeldtEndring\":{\"kilde\":\"BRUKER SELV\",\"utenlandskKontoInformasjon\":null," +
                 "\"value\":\"11112233333\"}}"
-        val endring = ObjectMapper().readValue(json, EndringKontonummer::class.java)
+        val endring = readValue(json, EndringKontonummer::class.java)
         assertEquals("12345678910", endring.ident)
         assertEquals(2113, endring.status.endringId)
     }
@@ -63,7 +83,8 @@ class SerializerTest {
     @Test
     fun testSerializationUtenlandskKontonummer() {
         val json: String = "{ \"@type\":\"KONTONUMMER\", \"utenlandskKontoInformasjon\": {\"landkode\": \"SWE\", \"valuta\": \"EURO\", \"SWIFT\": \"1234\"},  \"value\": \"11112233333\"}"
-        val utenlandskKontonummer = ObjectMapper().readValue(json, Kontonummer::class.java)
+        val utenlandskKontonummer = readValue(json, Kontonummer::class.java)
+        assertEquals("SWE", utenlandskKontonummer.utenlandskKontoInformasjon!!.landkode)
     }
 
     @Test
@@ -74,7 +95,7 @@ class SerializerTest {
     @Test
     fun testRetningsnummerMapping() {
         val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/retningsnumre.json")).readText()
-        val response: GetKodeverkKoderBetydningerResponse = ObjectMapper().readValue(json, GetKodeverkKoderBetydningerResponse::class.java)
+        val response: GetKodeverkKoderBetydningerResponse = readValue(json, GetKodeverkKoderBetydningerResponse::class.java)
         assertEquals(2, response.betydninger.entries.size)
         assertEquals("+51", response.betydninger.entries.first().key)
         assertEquals("Peru", response.betydninger.entries.first().value.first().beskrivelser.entries.first().value.tekst)
@@ -93,7 +114,7 @@ class SerializerTest {
     @Test
     fun testSerializeValidationError() {
         val json = InputStreamReader(this.javaClass.getResourceAsStream("/json/validation-error.json")).readText()
-        val validationError = ObjectMapper().readValue(json, Error::class.java)
+        val validationError = readValue(json, Error::class.java)
         assertEquals("Validering feilet", validationError.message)
         assertEquals(3, validationError.details!!.size)
         val feilForFelt = validationError.details!!.get("objekt.feltnavn")
@@ -106,5 +127,16 @@ class SerializerTest {
         val telefonnummer = Telefonnummer("+47", "11223344", "MOBIL")
         val json = getJson(telefonnummer)
         assertTrue(json.contains("@type"))
+    }
+
+    @Test
+    fun testKodeverk() {
+        val json = InputStreamReader(this.javaClass.getResourceAsStream("/json/kodeverk-kjonnstyper.json")).readText()
+        val kodeverk = readValue(json, GetKodeverkKoderBetydningerResponse::class.java)
+        assertEquals("Kvinne", kodeverk.betydninger.getValue("K")[0].beskrivelser.getValue("nb").term)
+    }
+
+    private fun <T> readValue(json: String, t: Class<T>): T {
+        return RestClientConfiguration().clientObjectMapperResolver().getContext(t).readValue(json, t)
     }
 }
