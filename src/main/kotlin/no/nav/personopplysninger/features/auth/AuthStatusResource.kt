@@ -16,6 +16,6 @@ class AuthStatusResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Unprotected
     fun isAuthenticatedWithOIDC(@Context request: HttpServletRequest): String {
-        return """{"authenticated":"${request.cookies?.any { cookie -> cookie.name.equals("selvbetjening-idtoken") }.toString().toLowerCase()}"}"""
+        return """{authenticated:${request.cookies?.any { cookie -> cookie.name.equals("selvbetjening-idtoken") }.toString().toLowerCase()}}"""
     }
 }
