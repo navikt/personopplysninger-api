@@ -9,7 +9,7 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.Kontaktinfo
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.oppslag.kodeverk.api.Kodeverk
 import no.nav.personopplysninger.oppslag.norg2.Norg2Consumer
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -57,10 +57,15 @@ class PersonaliaService @Autowired constructor(
         return personaliaOgAdresser
     }
 
-    private fun getKodeverksTerm(kodeverk: GetKodeverkKoderBetydningerResponse, inbound: String?, type: String): String? {
+    private fun getKodeverksTerm(kodeverk: Kodeverk, inbound: String?, type: String): String? {
         try {
-            if (!inbound.isNullOrEmpty() && !kodeverk.betydninger.getValue(inbound).isEmpty()) {
-                return kodeverk.betydninger.getValue(inbound)[0].beskrivelser.getValue(kodeverkspraak).term
+            if (!inbound.isNullOrEmpty() && !kodeverk.getBetydninger(inbound).isEmpty()) {
+                return kodeverk
+                        .getBetydninger(inbound)
+                        .first()
+                        .beskrivelser
+                        .getValue(kodeverkspraak)
+                        .term
             } else {
                 return ""
             }
@@ -70,7 +75,7 @@ class PersonaliaService @Autowired constructor(
         return inbound
     }
 
-    private fun getKommuneKodeverksTerm(kodeverk: GetKodeverkKoderBetydningerResponse, inbound: String?, type: String): String? {
+    private fun getKommuneKodeverksTerm(kodeverk: Kodeverk, inbound: String?, type: String): String? {
         if ("0000".equals(inbound)) {
             return ""
         } else {

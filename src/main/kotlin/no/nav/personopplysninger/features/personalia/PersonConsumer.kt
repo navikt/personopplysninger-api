@@ -3,6 +3,7 @@ package no.nav.personopplysninger.features.personalia
 import no.nav.log.MDCConstants
 import no.nav.personopplysninger.features.ConsumerException
 import no.nav.personopplysninger.features.ConsumerFactory
+import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.tps.person.Personinfo
 import org.slf4j.MDC
 
@@ -43,10 +44,10 @@ class PersonConsumer(private val client: Client, private val endpoint: URI) {
 
     private fun readResponse(r: Response): Personinfo {
         if (SUCCESSFUL != r.statusInfo.family) {
-            val msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[" + endpoint + "], HTTP response status=[" + r.status + "]."
-            throw ConsumerException(msg + " - " + ConsumerFactory.readEntity(String::class.java, r))
+            val msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[$endpoint], HTTP response status=[${r.status}]."
+            throw ConsumerException("$msg - ${r.unmarshalBody<String>()}")
         } else {
-            return ConsumerFactory.readEntity(Personinfo::class.java, r)
+            return r.unmarshalBody()
         }
     }
 }

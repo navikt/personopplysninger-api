@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.institusjon
 
 import no.nav.log.MDCConstants
+import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.features.ConsumerFactory
 import no.nav.personopplysninger.features.institusjon.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.ConsumerException
@@ -20,9 +21,9 @@ class InstitusjonConsumer constructor(
             val response = getBuilder(fnr).get()
             if (!SUCCESSFUL.equals(response.statusInfo.family)) {
                 val msg = "Forsøkte å konsumere REST-tjenesten INST2. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
-                throw ConsumerException(msg.plus(ConsumerFactory.readEntity(String::class.java, response)))
+                throw ConsumerException(msg.plus(response.unmarshalBody()))
             }
-            return ConsumerFactory.readEntity(ArrayList<InnsynInstitusjonsopphold>()::class.java, response)
+            return response.unmarshalBody()
         } catch (e: Exception) {
             val msg = "Forsøkte å konsumere REST-tjenesten INST2. endpoint=[$endpoint]."
             throw ConsumerException(msg, e)
