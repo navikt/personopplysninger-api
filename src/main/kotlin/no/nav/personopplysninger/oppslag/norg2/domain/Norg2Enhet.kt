@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 data class Norg2Enhet(
         val enhetId: String? = null,
         val navn: String? = null,
-        val enhetNr: String,
+        val enhetNr: String = "",
         val antallRessurser: String? = null,
         val status: String? = null,
         val orgNivaa: String? = null,
@@ -21,5 +21,4 @@ data class Norg2Enhet(
         val sosialeTjenester: String? = null,
         val kanalstrategi: String? = null,
         val orgNrTilKommunaltNavKontor: String? = null
-
 )
