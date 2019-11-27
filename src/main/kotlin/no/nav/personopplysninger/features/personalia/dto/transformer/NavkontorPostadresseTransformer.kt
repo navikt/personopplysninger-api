@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.features.norg2.domain.Postadresse
+import no.nav.personopplysninger.oppslag.norg2.domain.Postadresse
 import no.nav.personopplysninger.features.personalia.dto.outbound.NavkontorPostadresse
 
 object NavkontorPostadresseTransformer {
