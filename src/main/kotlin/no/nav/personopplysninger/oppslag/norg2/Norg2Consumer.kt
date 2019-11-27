@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.oppslag.norg2
 
 import no.nav.log.MDCConstants
+import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.features.ConsumerException
 import no.nav.personopplysninger.features.ConsumerFactory
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
@@ -43,8 +44,8 @@ class Norg2Consumer(private val client: Client, private val endpoint: URI) {
     private fun <T> Invocation.Builder.readResponse(clazz: Class<T>): T {
         val response = get()
         if (SUCCESSFUL != response.statusInfo.family) {
-            val msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[" + endpoint + "], HTTP response status=[" + response.status + "]."
-            throw ConsumerException(msg + " - " + ConsumerFactory.readEntity(String::class.java, response))
+            val msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[$endpoint], HTTP response status=[${response.status}]. - "
+            throw ConsumerException(msg.plus(response.unmarshalBody()))
         } else {
             return ConsumerFactory.readEntity(clazz, response)
         }
