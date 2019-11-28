@@ -32,14 +32,15 @@ import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
-@ComponentScan({"no.nav.personopplysninger.features", "no.nav.personopplysninger.api", "no.nav.personopplysninger.tasks"})
+@ComponentScan({
+        "no.nav.personopplysninger.features",
+        "no.nav.personopplysninger.api",
+        "no.nav.personopplysninger.oppslag",
+        "no.nav.personopplysninger.tasks"
+})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 @Cacheable
-@Import({RestClientConfiguration.class,
-        KodeverkRestConfiguration.class,
-        PersonaliaRestConfiguration.class,
-        PersonMottakConfiguration.class
-})
+@Import({RestClientConfiguration.class})
 public class ApplicationConfig implements EnvironmentAware {
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);

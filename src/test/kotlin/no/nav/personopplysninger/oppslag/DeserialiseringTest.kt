@@ -9,7 +9,9 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import no.nav.personopplysninger.config.RestClientConfiguration
+import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
 import org.glassfish.jersey.client.ClientConfig
 import org.junit.jupiter.api.*
 import java.io.InputStreamReader
@@ -24,6 +26,7 @@ class DeserialiseringTest {
     @BeforeAll
     fun setUpMockServer() {
         val kodeverkjson = InputStreamReader(this.javaClass.getResourceAsStream("/json/kodeverk-kjonnstyper.json")).readText()
+        val norg2EnhetJson = InputStreamReader(this.javaClass.getResourceAsStream("/json/norg2-enhet.json")).readText()
         val testklasseJson = """
                   {
         "dato": "1900-01-01",
@@ -33,6 +36,7 @@ class DeserialiseringTest {
         mockServer.start()
         configureFor(mockServer.port())
         stubFor(any(urlPathEqualTo("/kodeverk")).willReturn(okJson(kodeverkjson)))
+        stubFor(any(urlPathEqualTo("/norg2-enhet")).willReturn(okJson(norg2EnhetJson)))
         stubFor(any(urlPathEqualTo("/testklasse")).willReturn(okJson(testklasseJson)))
     }
 
@@ -96,6 +100,20 @@ class DeserialiseringTest {
             response.readEntity(TestDataClass::class.java)
         }
     }
+
+    @Test
+    fun deserialiseringNorg2() {
+        val client = ClientBuilder.newBuilder()
+                .register(RestClientConfiguration().clientObjectMapperResolver())
+                .build()
+        val response: Response = client.target("http://localhost:8080").path("/norg2-enhet").request().get()
+        val norg2Enhet: Norg2Enhet = response.unmarshalBody()
+        assertEquals("NAV Aremark", norg2Enhet.navn)
+        assertEquals("0118", norg2Enhet.enhetNr)
+        assertEquals("287", norg2Enhet.antallRessurser)
+    }
+
+
 
     companion object {
         val mockServer: WireMockServer = WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
