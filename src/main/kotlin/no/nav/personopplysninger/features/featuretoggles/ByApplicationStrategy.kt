@@ -9,9 +9,8 @@ import java.util.Optional.ofNullable
 
 class ByApplicationStrategy : Strategy {
 
-    override fun getName(): String {
-        return "byApplication"
-    }
+    override fun getName(): String = "byApplication"
+
 
     override fun isEnabled(parameters: Map<String, String>): Boolean {
         return ofNullable(parameters)
@@ -28,7 +27,6 @@ class ByApplicationStrategy : Strategy {
     }
 
     companion object {
-
         internal val APP_PARAMETER = "app"
     }
 

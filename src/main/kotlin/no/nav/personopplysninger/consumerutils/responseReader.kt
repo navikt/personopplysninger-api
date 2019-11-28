@@ -5,8 +5,8 @@ import javax.ws.rs.ProcessingException
 import javax.ws.rs.core.Response
 
 inline fun <reified T> Response.unmarshalBody(): T {
-    try {
-        return readEntity(T::class.java)
+    return try {
+        readEntity(T::class.java)
     } catch (e: ProcessingException) {
         throw ConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + T::class.simpleName, e)
     } catch (e: IllegalStateException) {
@@ -48,7 +48,7 @@ fun <T> Response.unmarshalList(responsklasse: Class<T>): List<T> {
     return try {
         ObjectMapper().run {
             val type = typeFactory.constructCollectionType(List::class.java, responsklasse)
-            return readValue(readEntity(String::class.java), type)
+            readValue(readEntity(String::class.java), type)
         }
     } catch (e: ProcessingException) {
         throw ConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: ", e)
