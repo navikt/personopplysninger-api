@@ -16,18 +16,6 @@ inline fun <reified T> Response.unmarshalBody(): T {
     }
 }
 
-fun <T> Response.unmarshalBody(responsklasse: Class<T>): T {
-    return try {
-        readEntity(responsklasse)
-    } catch (e: ProcessingException) {
-        throw ConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + responsklasse.name, e)
-    } catch (e: IllegalStateException) {
-        throw ConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: " + responsklasse.name, e)
-    } catch (e: Exception) {
-        throw ConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.name, e)
-    }
-}
-
 inline fun <reified T> Response.unmarshalList(): List<T> {
     return try {
         ObjectMapper().run {

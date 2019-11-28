@@ -11,23 +11,22 @@ class ByApplicationStrategy : Strategy {
 
     override fun getName(): String = "byApplication"
 
-
     override fun isEnabled(parameters: Map<String, String>): Boolean {
-        return ofNullable(parameters)
-                .map { p -> p[APP_PARAMETER] }
-                .map { appParameter -> appParameter!!.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray() }
-                .map { this.match(it) }
-                .orElse(false)
+            return getThisAppName().let { appName ->
+                parameters.getActiveAppNames().any { activeAppName ->
+                    activeAppName == appName
+                }
+            }
     }
 
-    private fun match(activeApplications: Array<String>): Boolean {
-        return EnvironmentUtils.getApplicationName()
-                .map { applicationName -> Arrays.stream(activeApplications).anyMatch{ applicationName == it } }
-                .orElse(false)
+    private fun getThisAppName(): String? {
+        return EnvironmentUtils.getApplicationName().orElse(null)
     }
 
-    companion object {
-        internal val APP_PARAMETER = "app"
+    private fun Map<String, String>.getActiveAppNames(): List<String> {
+        return get("app")
+                ?.split(",")
+                ?: emptyList()
     }
 
 }
