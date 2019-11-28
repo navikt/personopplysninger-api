@@ -1,9 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.log.MDCConstants
-import no.nav.personopplysninger.features.ConsumerException
-import no.nav.personopplysninger.features.ConsumerFactory
-import no.nav.personopplysninger.consumerutils.unmarshalBody
+import no.nav.personopplysninger.consumerutils.*
 import no.nav.tps.person.Personinfo
 import org.slf4j.MDC
 
@@ -26,7 +24,7 @@ class PersonConsumer(private val client: Client, private val endpoint: URI) {
                 .path("person")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
+                .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header("Nav-Personident", fnr)
     }
 

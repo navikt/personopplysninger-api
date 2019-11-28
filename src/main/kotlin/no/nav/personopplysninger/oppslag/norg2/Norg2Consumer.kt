@@ -1,9 +1,7 @@
 package no.nav.personopplysninger.oppslag.norg2
 
 import no.nav.log.MDCConstants
-import no.nav.personopplysninger.consumerutils.unmarshalBody
-import no.nav.personopplysninger.features.ConsumerException
-import no.nav.personopplysninger.features.ConsumerFactory
+import no.nav.personopplysninger.consumerutils.*
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2EnhetKontaktinfo
 import org.slf4j.MDC
@@ -29,7 +27,7 @@ class Norg2Consumer(private val client: Client, private val endpoint: URI) {
                 .path("$path/$geografisk")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
+                .header("Nav-Consumer-Id", CONSUMER_ID)
     }
 
     private fun buildKontaktinfoRequest(enhetsnr: String, path: String): Invocation.Builder {
@@ -37,7 +35,7 @@ class Norg2Consumer(private val client: Client, private val endpoint: URI) {
                 .path("$path/$enhetsnr/kontaktinformasjon")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
+                .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header("enhetsnr", enhetsnr)
     }
 
@@ -47,7 +45,7 @@ class Norg2Consumer(private val client: Client, private val endpoint: URI) {
             val msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[$endpoint], HTTP response status=[${response.status}]. - "
             throw ConsumerException(msg.plus(response.unmarshalBody()))
         } else {
-            return ConsumerFactory.readEntity(clazz, response)
+            return response.unmarshalBody(clazz)
         }
     }
 }

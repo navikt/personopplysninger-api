@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.consumerutils
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.personopplysninger.features.ConsumerException
 import javax.ws.rs.ProcessingException
 import javax.ws.rs.core.Response
 
@@ -17,11 +16,22 @@ inline fun <reified T> Response.unmarshalBody(): T {
     }
 }
 
+fun <T> Response.unmarshalBody(responsklasse: Class<T>): T {
+    return try {
+        readEntity(responsklasse)
+    } catch (e: ProcessingException) {
+        throw ConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + responsklasse.name, e)
+    } catch (e: IllegalStateException) {
+        throw ConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: " + responsklasse.name, e)
+    } catch (e: Exception) {
+        throw ConsumerException("Uventet feil på responsobjektet. Responsklasse: " + responsklasse.name, e)
+    }
+}
+
 inline fun <reified T> Response.unmarshalList(): List<T> {
     return try {
         ObjectMapper().run {
             val json = readEntity(String::class.java)
-
             val type = typeFactory.constructCollectionLikeType(List::class.java, T::class.java)
             readValue(json, type)
         }
@@ -33,3 +43,19 @@ inline fun <reified T> Response.unmarshalList(): List<T> {
         throw ConsumerException("Uventet feil på responsobjektet. Responsklasse: ", e);
     }
 }
+
+fun <T> Response.unmarshalList(responsklasse: Class<T>): List<T> {
+    return try {
+        ObjectMapper().run {
+            val type = typeFactory.constructCollectionType(List::class.java, responsklasse)
+            return readValue(readEntity(String::class.java), type)
+        }
+    } catch (e: ProcessingException) {
+        throw ConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: ", e)
+    } catch (e: IllegalStateException) {
+        throw ConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: ", e)
+    } catch (e: Exception) {
+        throw ConsumerException("Uventet feil på responsobjektet. Responsklasse: ", e)
+    }
+}
+

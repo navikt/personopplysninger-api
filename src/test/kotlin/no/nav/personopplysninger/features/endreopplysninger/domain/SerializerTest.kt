@@ -5,7 +5,7 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import no.nav.personopplysninger.config.RestClientConfiguration
-import no.nav.personopplysninger.features.ConsumerFactory.readEntities
+import no.nav.personopplysninger.consumerutils.unmarshalList
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
@@ -48,7 +48,7 @@ class SerializerTest {
                     .register(RestClientConfiguration().clientObjectMapperResolver())
                     .build()
             val response: Response = client.target("http://localhost:8080").path("/kodeverk").request().get()
-            val endringer: List<EndringKontonummer> = readEntities(EndringKontonummer::class.java, response)
+            val endringer: List<EndringKontonummer> = response.unmarshalList()
             val endring = endringer.get(0)
             assertEquals("OPPRETT", endring.endringstype)
             assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
