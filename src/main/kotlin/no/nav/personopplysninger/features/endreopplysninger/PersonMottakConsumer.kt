@@ -2,12 +2,8 @@ package no.nav.personopplysninger.features.endreopplysninger
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.log.MDCConstants
-import no.nav.personopplysninger.consumerutils.unmarshalBody
-import no.nav.personopplysninger.features.ConsumerException
-import no.nav.personopplysninger.features.ConsumerFactory
-import no.nav.personopplysninger.features.ConsumerFactory.*
+import no.nav.personopplysninger.consumerutils.*
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring
-import no.nav.personopplysninger.features.endreopplysninger.domain.Error
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
@@ -93,7 +89,7 @@ class PersonMottakConsumer (
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Token", BEARER + systemUserToken)
-                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
+                .header("Nav-Consumer-Id", CONSUMER_ID)
     }
 
     private fun buildEndreRequest(fnr: String, systemUserToken: String, path: String): Invocation.Builder {
@@ -159,7 +155,7 @@ class PersonMottakConsumer (
             }
 
             val pollResponse = get()
-            endring = readEntities(clazz, pollResponse).get(0)
+            endring = pollResponse.unmarshalList(clazz).get(0)
         } while (++i < maxPolls && endring.isPending)
         log.info("Antall polls for status: $i")
 
