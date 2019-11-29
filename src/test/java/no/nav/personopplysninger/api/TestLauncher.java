@@ -66,5 +66,7 @@ public class TestLauncher {
         System.setProperty("SECURITY_TOKEN_SERVICE_TOKEN_URL", "");
         System.setProperty("PERSONOPPLYSNINGER_API_INST2_REST_API_APIKEY_PASSWORD", "");
         System.setProperty("INST2_API_URL", "");
+        System.setProperty("PERSONOPPLYSNINGER_API_TPS_PROXY_API_APIKEY_PASSWORD", "");
+        System.setProperty("TPS_PROXY_API_V1_NAVN_URL", "");
     }
 }

@@ -7,4 +7,8 @@ data class Navn (
         val kortNavn: String? = null,
         val fornavn: String? = null,
         val etternavn: String? = null
-)
+) {
+    fun fulltNavn(): String {
+        return "$fornavn $etternavn"
+    }
+}
