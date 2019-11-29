@@ -2,9 +2,9 @@ package no.nav.personopplysninger.features.personalia
 
 import no.nav.dkif.kontaktinformasjon.DigitalKontaktinfoBolk
 import no.nav.log.MDCConstants
+import no.nav.personopplysninger.consumerutils.CONSUMER_ID
+import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody
-import no.nav.personopplysninger.features.ConsumerException
-import no.nav.personopplysninger.features.ConsumerFactory
 import org.slf4j.MDC
 
 import javax.ws.rs.client.Client
@@ -25,7 +25,7 @@ class KontaktinfoConsumer(private val client: Client, private val endpoint: URI)
                 .path("v1/personer/kontaktinformasjon")
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
+                .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header("Nav-Personidenter", fnr)
     }
 

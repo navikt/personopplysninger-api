@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.personopplysninger.features.ConsumerFactory
+import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -35,7 +35,7 @@ open class PersonMottakConfiguration {
                 .register(clientObjectMapperResolver)
                 .register(ClientRequestFilter { requestContext ->
                     requestContext.getHeaders()
-                            .putSingle(ConsumerFactory.DEFAULT_APIKEY_USERNAME, personMottakApiKeyPassword)
+                            .putSingle(DEFAULT_APIKEY_USERNAME, personMottakApiKeyPassword)
                 })
                 .build()
     }

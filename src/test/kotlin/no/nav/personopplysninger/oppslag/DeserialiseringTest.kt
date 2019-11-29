@@ -51,7 +51,7 @@ class DeserialiseringTest {
                 .register(RestClientConfiguration().clientObjectMapperResolver())
                 .build()
         val response: Response = client.target("http://localhost:8080").path("/kodeverk").request().get()
-        response.readEntity(GetKodeverkKoderBetydningerResponse::class.java)
+        response.unmarshalBody<GetKodeverkKoderBetydningerResponse>()
     }
 
     @Test
@@ -113,11 +113,7 @@ class DeserialiseringTest {
         assertEquals("287", norg2Enhet.antallRessurser)
     }
 
-
-
     companion object {
         val mockServer: WireMockServer = WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
     }
-
-
 }

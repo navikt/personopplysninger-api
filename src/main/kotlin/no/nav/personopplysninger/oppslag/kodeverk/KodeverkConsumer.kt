@@ -1,8 +1,7 @@
 package no.nav.personopplysninger.oppslag.kodeverk
 
 import no.nav.log.MDCConstants
-import no.nav.personopplysninger.consumerutils.unmarshalBody
-import no.nav.personopplysninger.features.ConsumerFactory
+import no.nav.personopplysninger.consumerutils.*
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.Kodeverk
 import no.nav.personopplysninger.oppslag.kodeverk.exceptions.KodeverkConsumerException
@@ -74,7 +73,7 @@ open class KodeverkConsumer constructor(
                 .queryParam("ekskluderUgyldige", eksluderUgyldige)
                 .request()
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", ConsumerFactory.CONSUMER_ID)
+                .header("Nav-Consumer-Id", CONSUMER_ID)
     }
 
     private fun hentKodeverkBetydning(request: Invocation.Builder): Kodeverk {
