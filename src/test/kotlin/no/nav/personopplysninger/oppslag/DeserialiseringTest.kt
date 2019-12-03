@@ -10,6 +10,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.consumerutils.unmarshalBody
+import no.nav.personopplysninger.features.auth.Navn
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
 import org.glassfish.jersey.client.ClientConfig
@@ -28,16 +29,24 @@ class DeserialiseringTest {
         val kodeverkjson = InputStreamReader(this.javaClass.getResourceAsStream("/json/kodeverk-kjonnstyper.json")).readText()
         val norg2EnhetJson = InputStreamReader(this.javaClass.getResourceAsStream("/json/norg2-enhet.json")).readText()
         val testklasseJson = """
-                  {
-        "dato": "1900-01-01",
-        "tekst": "foo bar"
-      }
+            {
+                "dato": "1900-01-01",
+                "tekst": "foo bar"
+            }
+        """.trimIndent()
+        val tpsNavn = """
+            {
+                "kortNavn": "AMIZIC VINAYAGUM-MASK",
+                "fornavn": "VINAYAGUM-MASK",
+                "etternavn": "AMIZIC"
+            }
         """.trimIndent()
         mockServer.start()
         configureFor(mockServer.port())
         stubFor(any(urlPathEqualTo("/kodeverk")).willReturn(okJson(kodeverkjson)))
         stubFor(any(urlPathEqualTo("/norg2-enhet")).willReturn(okJson(norg2EnhetJson)))
         stubFor(any(urlPathEqualTo("/testklasse")).willReturn(okJson(testklasseJson)))
+        stubFor(any(urlPathEqualTo("/tpsnavn")).willReturn(okJson(tpsNavn)))
     }
 
     @AfterAll
@@ -111,6 +120,16 @@ class DeserialiseringTest {
         assertEquals("NAV Aremark", norg2Enhet.navn)
         assertEquals("0118", norg2Enhet.enhetNr)
         assertEquals("287", norg2Enhet.antallRessurser)
+    }
+
+    @Test
+    fun deserialiserNavn() {
+        val client = ClientBuilder.newBuilder()
+                .register(RestClientConfiguration().clientObjectMapperResolver())
+                .build()
+        val response: Response = client.target("http://localhost:8080").path("/tpsnavn").request().get()
+        val navn: Navn = response.unmarshalBody()
+        assertEquals("VINAYAGUM-MASK", navn.fornavn)
     }
 
     companion object {
