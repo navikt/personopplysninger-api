@@ -44,7 +44,17 @@ jobs:
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker push $IMAGE_NAME
       - deploy:
-          til: dev-sbs
+          cluster: dev-sbs
+          namespace: q6
+      - deploy:
+          cluster: dev-sbs
+          namespace: q2
+      - deploy:
+          cluster: dev-sbs
+          namespace: q1
+      - deploy:
+          cluster: dev-sbs
+          namespace: q0
 
   deploy-til-prod:
     docker:
@@ -53,12 +63,15 @@ jobs:
       - checkout
       - sett-miljovariabler
       - deploy:
-          til: prod-sbs
+          cluster: prod-sbs
+          namespace: default
 
 commands:
   deploy:
     parameters:
-      til:
+      cluster:
+        type: string
+      namespace:
         type: string
     steps:
       - run:
@@ -66,12 +79,9 @@ commands:
           command: |
             jq -n '{
                 "ingresses": [
-                  "'https://$REPO_NAME.nais.oera-q.local'",
-                  "'https://www-q6.nav.no/person/$REPO_NAME'",
-                  "'https://www-q2.nav.no/person/$REPO_NAME'",
-                  "'https://www-q1.nav.no/person/$REPO_NAME'",
-                  "'https://www-q0.nav.no/person/$REPO_NAME'"
-            ]}' | tee -a nais.dev-sbs.vars.json
+                  "'https://$REPO_NAME-<< parameters.namespace >>.nais.oera-q.local'",
+                  "'https://www-<< parameters.namespace >>.nav.no/person/$REPO_NAME'"
+            ]}' | tee -a nais.<< parameters.namespace >>.vars.json
 
       - run:
           name: Definerer ingresser for prod-sbs
@@ -83,15 +93,16 @@ commands:
              ]}' | tee -a nais.prod-sbs.vars.json
 
       - run:
-          name: Deployer til << parameters.til >>
+          name: Deployer til << parameters.cluster >>, namespace << parameters.namespace >>
           command: |
             echo $GH_DEPLOY_KEY | base64 -d | dos2unix > gh_deploy_key.pem
             deployment-cli deploy create \
                 --team=personbruker \
-                --resource=nais.config.yaml \
-                --cluster=<< parameters.til >> \
+                --resource=.nais/config.yaml \
+                --cluster=<< parameters.cluster >> \
                 --repository=$CIRCLE_PROJECT_USERNAME/$REPO_NAME \
-                --vars=nais.<< parameters.til >>.vars.json \
+                --vars=nais.<< parameters.namespace >>.vars.json \
+                --var namespace=<< parameters.namespace >> \
                 --var baseurl=/person/$REPO_NAME \
                 --var reponame=$REPO_NAME \
                 --var version=$IMAGE_VERSION \
