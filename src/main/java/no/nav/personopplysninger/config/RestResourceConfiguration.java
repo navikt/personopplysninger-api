@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.config;
 
+import no.nav.personopplysninger.features.auth.AuthStatusResource;
 import no.nav.personopplysninger.features.endreopplysninger.EndreOpplysningerResource;
 import no.nav.personopplysninger.features.featuretoggles.FeatureTogglesResource;
 import no.nav.personopplysninger.features.institusjon.InstitusjonResource;
@@ -33,6 +34,7 @@ public class RestResourceConfiguration extends ResourceConfig {
         register(OidcResourceFilteringFeature.class);
         register(EndreOpplysningerResource.class);
         register(InstitusjonResource.class);
+        register(AuthStatusResource.class);
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
     }
 

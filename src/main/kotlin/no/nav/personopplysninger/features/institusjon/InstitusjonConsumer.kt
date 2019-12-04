@@ -1,9 +1,8 @@
 package no.nav.personopplysninger.features.institusjon
 
 import no.nav.log.MDCConstants
-import no.nav.personopplysninger.features.ConsumerFactory
+import no.nav.personopplysninger.consumerutils.*
 import no.nav.personopplysninger.features.institusjon.dto.InnsynInstitusjonsopphold
-import no.nav.personopplysninger.features.personalia.exceptions.ConsumerException
 import org.slf4j.MDC
 import java.net.URI
 import javax.ws.rs.client.Client
@@ -20,9 +19,9 @@ class InstitusjonConsumer constructor(
             val response = getBuilder(fnr).get()
             if (!SUCCESSFUL.equals(response.statusInfo.family)) {
                 val msg = "Forsøkte å konsumere REST-tjenesten INST2. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
-                throw ConsumerException(msg.plus(ConsumerFactory.readEntity(String::class.java, response)))
+                throw ConsumerException(msg.plus(response.unmarshalBody()))
             }
-            return ConsumerFactory.readEntity(ArrayList<InnsynInstitusjonsopphold>()::class.java, response)
+            return response.unmarshalBody()
         } catch (e: Exception) {
             val msg = "Forsøkte å konsumere REST-tjenesten INST2. endpoint=[$endpoint]."
             throw ConsumerException(msg, e)
@@ -33,8 +32,8 @@ class InstitusjonConsumer constructor(
         return client.target(endpoint)
                 .path("v1/person/innsyn")
                 .request()
-                .header(ConsumerFactory.HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
-                .header(ConsumerFactory.HEADER_NAV_CONSUMER_ID, ConsumerFactory.CONSUMER_ID)
-                .header(ConsumerFactory.HEADER_NAV_PERSONIDENT_KEY, fnr)
+                .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+                .header(HEADER_NAV_PERSONIDENT_KEY, fnr)
     }
 }

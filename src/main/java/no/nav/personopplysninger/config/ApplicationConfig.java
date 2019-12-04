@@ -2,8 +2,8 @@ package no.nav.personopplysninger.config;
 
 import no.nav.log.LogFilter;
 import no.nav.personopplysninger.features.endreopplysninger.PersonMottakConfiguration;
-import no.nav.personopplysninger.features.kodeverk.KodeverkRestConfiguration;
 import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
+import no.nav.personopplysninger.oppslag.kodeverk.KodeverkRestConfiguration;
 import no.nav.security.oidc.configuration.MultiIssuerConfiguration;
 import no.nav.security.oidc.configuration.OIDCResourceRetriever;
 import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
@@ -32,14 +32,15 @@ import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
-@ComponentScan({"no.nav.personopplysninger.features", "no.nav.personopplysninger.api", "no.nav.personopplysninger.tasks"})
+@ComponentScan({
+        "no.nav.personopplysninger.features",
+        "no.nav.personopplysninger.api",
+        "no.nav.personopplysninger.oppslag",
+        "no.nav.personopplysninger.tasks"
+})
 @EnableConfigurationProperties(MultiIssuerProperties.class)
 @Cacheable
-@Import({RestClientConfiguration.class,
-        KodeverkRestConfiguration.class,
-        PersonaliaRestConfiguration.class,
-        PersonMottakConfiguration.class
-})
+@Import({RestClientConfiguration.class})
 public class ApplicationConfig implements EnvironmentAware {
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);

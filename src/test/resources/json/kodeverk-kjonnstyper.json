@@ -1,0 +1,40 @@
+{
+  "betydninger": {
+    "U": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Ukjent",
+            "tekst": "Ukjent"
+          }
+        }
+      }
+    ],
+    "K": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Kvinne",
+            "tekst": "Kvinne"
+          }
+        }
+      }
+    ],
+    "M": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Mann",
+            "tekst": "Mann"
+          }
+        }
+      }
+    ]
+  }
+}
