@@ -48,6 +48,9 @@ jobs:
           namespace: q6
       - deploy:
           cluster: dev-sbs
+          namespace: q2
+      - deploy:
+          cluster: dev-sbs
           namespace: q1
       - deploy:
           cluster: dev-sbs
