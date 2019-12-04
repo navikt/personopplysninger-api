@@ -11,6 +11,9 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.features.auth.Navn
+import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
+import no.nav.personopplysninger.features.institusjon.domain.Institusjonstype
+import no.nav.personopplysninger.features.personalia.dto.getJson
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
 import org.glassfish.jersey.client.ClientConfig
@@ -20,6 +23,7 @@ import javax.ws.rs.ProcessingException
 import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.core.Response
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DeserialiseringTest {
@@ -41,12 +45,25 @@ class DeserialiseringTest {
                 "etternavn": "AMIZIC"
             }
         """.trimIndent()
+
+        val instJson = """
+            {
+                "organisasjonsnummer": "00974707330",
+                "institusjonsnavn": "SAGENEHJEMMET AS",
+                "institusjonstype": "FO",
+                "kategori": "F",
+                "startdato": "2019-11-30",
+                "faktiskSluttdato": "2019-11-30",
+                "registreringstidspunkt": "2019-10-29T14:12:48.113"
+            }
+        """.trimIndent()
         mockServer.start()
         configureFor(mockServer.port())
         stubFor(any(urlPathEqualTo("/kodeverk")).willReturn(okJson(kodeverkjson)))
         stubFor(any(urlPathEqualTo("/norg2-enhet")).willReturn(okJson(norg2EnhetJson)))
         stubFor(any(urlPathEqualTo("/testklasse")).willReturn(okJson(testklasseJson)))
         stubFor(any(urlPathEqualTo("/tpsnavn")).willReturn(okJson(tpsNavn)))
+        stubFor(any(urlPathEqualTo("/inst")).willReturn(okJson(instJson)))
     }
 
     @AfterAll
@@ -131,6 +148,19 @@ class DeserialiseringTest {
         val navn: Navn = response.unmarshalBody()
         assertEquals("VINAYAGUM-MASK", navn.fornavn)
     }
+
+    @Test
+    fun deserialiserInstitusjon() {
+        val client = ClientBuilder.newBuilder()
+                .register(RestClientConfiguration().clientObjectMapperResolver())
+                .build()
+        val response: Response = client.target("http://localhost:8080").path("/inst").request().get()
+        val inst: InnsynInstitusjonsopphold = response.unmarshalBody()
+        assertEquals(Institusjonstype.FO, inst.institusjonstype)
+        val json = getJson(inst)
+        assertTrue(json.contains("Fengsel"))
+    }
+
 
     companion object {
         val mockServer: WireMockServer = WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
