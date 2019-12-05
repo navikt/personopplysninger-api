@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class InnsynInstitusjonsopphold (
-        @JsonProperty("organisasjonsnummer") val organisasjonsnummer: String,
+        @JsonProperty("organisasjonsnummer") val organisasjonsnummer: String?,
         @JsonProperty("institusjonsnavn") val institusjonsnavn: String?,
         @JsonProperty("institusjonstype") @JsonSerialize(using = InstitusjonstypeSerializer::class) val institusjonstype: Institusjonstype,
         @JsonProperty("varighet") val varighet: String?,

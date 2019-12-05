@@ -10,6 +10,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.consumerutils.unmarshalBody
+import no.nav.personopplysninger.consumerutils.unmarshalList
 import no.nav.personopplysninger.features.auth.Navn
 import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.institusjon.domain.Institusjonstype
@@ -32,6 +33,7 @@ class DeserialiseringTest {
     fun setUpMockServer() {
         val kodeverkjson = InputStreamReader(this.javaClass.getResourceAsStream("/json/kodeverk-kjonnstyper.json")).readText()
         val norg2EnhetJson = InputStreamReader(this.javaClass.getResourceAsStream("/json/norg2-enhet.json")).readText()
+        val instListJson = InputStreamReader(this.javaClass.getResourceAsStream("/json/inst2.json")).readText()
         val testklasseJson = """
             {
                 "dato": "1900-01-01",
@@ -64,6 +66,7 @@ class DeserialiseringTest {
         stubFor(any(urlPathEqualTo("/testklasse")).willReturn(okJson(testklasseJson)))
         stubFor(any(urlPathEqualTo("/tpsnavn")).willReturn(okJson(tpsNavn)))
         stubFor(any(urlPathEqualTo("/inst")).willReturn(okJson(instJson)))
+        stubFor(any(urlPathEqualTo("/instlist")).willReturn(okJson(instListJson)))
     }
 
     @AfterAll
@@ -159,6 +162,10 @@ class DeserialiseringTest {
         assertEquals(Institusjonstype.FO, inst.institusjonstype)
         val json = getJson(inst)
         assertTrue(json.contains("Fengsel"))
+
+        val responseList: Response = client.target("http://localhost:8080").path("/instlist").request().get()
+        val instList = responseList.unmarshalList<InnsynInstitusjonsopphold>()
+        assertEquals(7, instList.size)
     }
 
 

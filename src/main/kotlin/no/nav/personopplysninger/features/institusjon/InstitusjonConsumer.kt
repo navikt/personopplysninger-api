@@ -21,7 +21,7 @@ class InstitusjonConsumer constructor(
                 val msg = "Forsøkte å konsumere REST-tjenesten INST2. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
                 throw ConsumerException(msg.plus(response.unmarshalBody()))
             }
-            return response.unmarshalBody()
+            return response.unmarshalList()
         } catch (e: Exception) {
             val msg = "Forsøkte å konsumere REST-tjenesten INST2. endpoint=[$endpoint]."
             throw ConsumerException(msg, e)
