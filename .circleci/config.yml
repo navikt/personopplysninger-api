@@ -81,7 +81,7 @@ commands:
                 "ingresses": [
                   "'https://$REPO_NAME-<< parameters.namespace >>.nais.oera-q.local'",
                   "'https://www-<< parameters.namespace >>.nav.no/person/$REPO_NAME'"
-            ]}' | tee -a nais.<< parameters.namespace >>.vars.json
+            ]}' | tee nais.dev-sbs.vars.json
 
       - run:
           name: Definerer ingresser for prod-sbs
@@ -90,7 +90,7 @@ commands:
                 "ingresses": [
                   "'https://$REPO_NAME.nais.oera.no'",
                   "'https://www.nav.no/person/$REPO_NAME'"
-             ]}' | tee -a nais.prod-sbs.vars.json
+             ]}' | tee nais.prod-sbs.vars.json
 
       - run:
           name: Deployer til << parameters.cluster >>, namespace << parameters.namespace >>
@@ -101,7 +101,7 @@ commands:
                 --resource=.nais/config.yaml \
                 --cluster=<< parameters.cluster >> \
                 --repository=$CIRCLE_PROJECT_USERNAME/$REPO_NAME \
-                --vars=nais.<< parameters.namespace >>.vars.json \
+                --vars=nais.<< parameters.cluster >>.vars.json \
                 --var namespace=<< parameters.namespace >> \
                 --var baseurl=/person/$REPO_NAME \
                 --var reponame=$REPO_NAME \
