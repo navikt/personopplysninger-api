@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  build:
+  build-app:
     docker:
       - image: circleci/openjdk:8-jdk
     steps:
@@ -154,7 +154,7 @@ commands:
 workflows:
   bygg-og-deploy:
     jobs:
-      - build:
+      - build-app:
           filters:
             tags:
               only: /.*/
@@ -162,26 +162,11 @@ workflows:
       - bekreft-deploy-til-dev:
           type: approval
           requires:
-            - build
-          filters:
-            branches:
-              ignore: master
+            - build-app
 
       - build-docker:
-          name: manuell-deploy-til-dev
           requires:
             - bekreft-deploy-til-dev
-
-      - build-docker:
-          name: automatisk-deploy-til-dev
-          requires:
-            - build
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              only: master
-
       - deploy-til-q6:
           requires:
             - build-docker
@@ -198,7 +183,7 @@ workflows:
       - bekreft-deploy-til-prod:
           type: approval
           requires:
-            - automatisk-deploy-til-dev
+            - build-docker
           filters:
             tags:
               only: /^v.*/
