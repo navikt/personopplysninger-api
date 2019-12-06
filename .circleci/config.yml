@@ -164,26 +164,36 @@ workflows:
           requires:
             - build-app
 
-      - build-docker:
+      - build-docker-dev:
           requires:
             - bekreft-deploy-til-dev
+
       - deploy-til-q6:
           requires:
-            - build-docker
+            - build-docker-dev
       - deploy-til-q2:
           requires:
-            - build-docker
+            - build-docker-dev
       - deploy-til-q1:
           requires:
-            - build-docker
+            - build-docker-dev
       - deploy-til-q0:
           requires:
-            - build-docker
+            - build-docker-dev
 
       - bekreft-deploy-til-prod:
           type: approval
           requires:
-            - build-docker
+            - build-app
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+      - build-docker-prod:
+          requires:
+            - bekreft-deploy-til-prod
           filters:
             tags:
               only: /^v.*/
@@ -192,7 +202,7 @@ workflows:
 
       - deploy-til-prod:
           requires:
-            - bekreft-deploy-til-prod
+            - build-docker-prod
           filters:
             tags:
               only: /^v.*/
