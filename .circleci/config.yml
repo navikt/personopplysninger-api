@@ -26,7 +26,7 @@ jobs:
 
   build-docker:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: navikt/deployment-cli:latest
     steps:
       - checkout
       - sett-miljovariabler
