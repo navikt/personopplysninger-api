@@ -10,7 +10,7 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.E
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
-import no.nav.personopplysninger.features.institusjon.dto.InnsynInstitusjonsopphold
+import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.personalia.dto.getJson
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
@@ -119,7 +119,7 @@ class SerializerTest {
         assertEquals(3, validationError.details!!.size)
         val feilForFelt = validationError.details!!.get("objekt.feltnavn")
         assertEquals(3, feilForFelt!!.size)
-        assertEquals("valideringsfeil 1", feilForFelt!![0])
+        assertEquals("valideringsfeil 1", feilForFelt[0])
     }
 
     @Test

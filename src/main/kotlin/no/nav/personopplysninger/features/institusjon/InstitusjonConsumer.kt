@@ -2,7 +2,7 @@ package no.nav.personopplysninger.features.institusjon
 
 import no.nav.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.*
-import no.nav.personopplysninger.features.institusjon.dto.InnsynInstitusjonsopphold
+import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import org.slf4j.MDC
 import java.net.URI
 import javax.ws.rs.client.Client
@@ -21,7 +21,7 @@ class InstitusjonConsumer constructor(
                 val msg = "Forsøkte å konsumere REST-tjenesten INST2. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
                 throw ConsumerException(msg.plus(response.unmarshalBody()))
             }
-            return response.unmarshalBody()
+            return response.unmarshalList()
         } catch (e: Exception) {
             val msg = "Forsøkte å konsumere REST-tjenesten INST2. endpoint=[$endpoint]."
             throw ConsumerException(msg, e)
