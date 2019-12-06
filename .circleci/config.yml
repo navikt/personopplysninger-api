@@ -190,7 +190,7 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              ignore: /.*/
+              only: master
 
       - build-docker:
           name: build-docker-prod
@@ -200,7 +200,7 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              ignore: /.*/
+              only: master
 
       - deploy-til-prod:
           requires:
@@ -209,4 +209,4 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              ignore: /.*/
+              only: master
