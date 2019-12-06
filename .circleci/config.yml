@@ -43,6 +43,8 @@ jobs:
             docker push $IMAGE_NAME
 
   deploy-til-q6:
+    docker:
+      - image: navikt/deployment-cli:latest
     steps:
       - checkout
       - sett-miljovariabler
@@ -51,6 +53,8 @@ jobs:
           namespace: q6
 
   deploy-til-q2:
+    docker:
+      - image: navikt/deployment-cli:latest
     steps:
       - checkout
       - sett-miljovariabler
@@ -59,6 +63,8 @@ jobs:
           namespace: q2
 
   deploy-til-q1:
+    docker:
+      - image: navikt/deployment-cli:latest
     steps:
       - checkout
       - sett-miljovariabler
@@ -67,6 +73,8 @@ jobs:
           namespace: q1
 
   deploy-til-q0:
+    docker:
+      - image: navikt/deployment-cli:latest
     steps:
       - checkout
       - sett-miljovariabler
@@ -75,6 +83,8 @@ jobs:
           namespace: q0
 
   deploy-til-prod:
+    docker:
+      - image: navikt/deployment-cli:latest
     steps:
       - checkout
       - sett-miljovariabler
