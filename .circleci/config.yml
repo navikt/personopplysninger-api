@@ -24,9 +24,7 @@ jobs:
           paths:
             - target/*
 
-  deploy-til-dev:
-    docker:
-      - image: navikt/deployment-cli:latest
+  build-docker:
     steps:
       - checkout
       - sett-miljovariabler
@@ -43,22 +41,40 @@ jobs:
           command: |
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker push $IMAGE_NAME
+
+  deploy-til-q6:
+    steps:
+      - checkout
+      - sett-miljovariabler
       - deploy:
           cluster: dev-sbs
           namespace: q6
+
+  deploy-til-q2:
+    steps:
+      - checkout
+      - sett-miljovariabler
       - deploy:
           cluster: dev-sbs
           namespace: q2
+
+  deploy-til-q1:
+    steps:
+      - checkout
+      - sett-miljovariabler
       - deploy:
           cluster: dev-sbs
           namespace: q1
+
+  deploy-til-q0:
+    steps:
+      - checkout
+      - sett-miljovariabler
       - deploy:
           cluster: dev-sbs
           namespace: q0
 
   deploy-til-prod:
-    docker:
-      - image: navikt/deployment-cli:latest
     steps:
       - checkout
       - sett-miljovariabler
@@ -130,6 +146,7 @@ workflows:
           filters:
             tags:
               only: /.*/
+
       - bekreft-deploy-til-dev:
           type: approval
           requires:
@@ -137,11 +154,13 @@ workflows:
           filters:
             branches:
               ignore: master
-      - deploy-til-dev:
+
+      - build-docker:
           name: manuell-deploy-til-dev
           requires:
             - bekreft-deploy-til-dev
-      - deploy-til-dev:
+
+      - build-docker:
           name: automatisk-deploy-til-dev
           requires:
             - build
@@ -150,6 +169,20 @@ workflows:
               only: /^v.*/
             branches:
               only: master
+
+      - deploy-til-q6:
+          requires:
+            - build-docker
+      - deploy-til-q2:
+          requires:
+            - build-docker
+      - deploy-til-q1:
+          requires:
+            - build-docker
+      - deploy-til-q0:
+          requires:
+            - build-docker
+
       - bekreft-deploy-til-prod:
           type: approval
           requires:
@@ -159,6 +192,7 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+
       - deploy-til-prod:
           requires:
             - bekreft-deploy-til-prod
