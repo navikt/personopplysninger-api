@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  build:
+  build-app:
     docker:
       - image: circleci/openjdk:8-jdk
     steps:
@@ -24,7 +24,7 @@ jobs:
           paths:
             - target/*
 
-  deploy-til-dev:
+  build-docker:
     docker:
       - image: navikt/deployment-cli:latest
     steps:
@@ -43,15 +43,43 @@ jobs:
           command: |
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker push $IMAGE_NAME
+
+  deploy-til-q6:
+    docker:
+      - image: navikt/deployment-cli:latest
+    steps:
+      - checkout
+      - sett-miljovariabler
       - deploy:
           cluster: dev-sbs
           namespace: q6
+
+  deploy-til-q2:
+    docker:
+      - image: navikt/deployment-cli:latest
+    steps:
+      - checkout
+      - sett-miljovariabler
       - deploy:
           cluster: dev-sbs
           namespace: q2
+
+  deploy-til-q1:
+    docker:
+      - image: navikt/deployment-cli:latest
+    steps:
+      - checkout
+      - sett-miljovariabler
       - deploy:
           cluster: dev-sbs
           namespace: q1
+
+  deploy-til-q0:
+    docker:
+      - image: navikt/deployment-cli:latest
+    steps:
+      - checkout
+      - sett-miljovariabler
       - deploy:
           cluster: dev-sbs
           namespace: q0
@@ -126,42 +154,57 @@ commands:
 workflows:
   bygg-og-deploy:
     jobs:
-      - build:
+      - build-app:
           filters:
             tags:
               only: /.*/
+
       - bekreft-deploy-til-dev:
           type: approval
           requires:
-            - build
-          filters:
-            branches:
-              ignore: master
-      - deploy-til-dev:
-          name: manuell-deploy-til-dev
+            - build-app
+
+      - build-docker:
+          name: build-docker-dev
           requires:
             - bekreft-deploy-til-dev
-      - deploy-til-dev:
-          name: automatisk-deploy-til-dev
+
+      - deploy-til-q6:
           requires:
-            - build
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              only: master
+            - build-docker-dev
+      - deploy-til-q2:
+          requires:
+            - build-docker-dev
+      - deploy-til-q1:
+          requires:
+            - build-docker-dev
+      - deploy-til-q0:
+          requires:
+            - build-docker-dev
+
       - bekreft-deploy-til-prod:
           type: approval
           requires:
-            - automatisk-deploy-til-dev
+            - build-app
           filters:
             tags:
               only: /^v.*/
             branches:
               ignore: /.*/
-      - deploy-til-prod:
+
+      - build-docker:
+          name: build-docker-prod
           requires:
             - bekreft-deploy-til-prod
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+      - deploy-til-prod:
+          requires:
+            - build-docker-prod
           filters:
             tags:
               only: /^v.*/
