@@ -123,7 +123,7 @@ class PersonMottakConsumer (
     private fun <T : Endring<T>> readResponseAndPollStatus(response: Response, systemUserToken: String, clazz: Class<T>): T {
         return when {
             response.status == HTTP_CODE_423 -> {
-                getEndring(clazz, "PENDING").apply {
+                getEndring(clazz, "REJECTED").apply {
                     error = response.unmarshalBody()
                     log.info("Oppdatering avvist pga status pending.")
                 }
