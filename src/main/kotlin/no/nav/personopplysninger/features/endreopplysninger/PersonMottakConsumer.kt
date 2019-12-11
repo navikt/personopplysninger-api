@@ -123,7 +123,7 @@ class PersonMottakConsumer (
     private fun <T : Endring<T>> readResponseAndPollStatus(response: Response, systemUserToken: String, clazz: Class<T>): T {
         return when {
             response.status == HTTP_CODE_423 -> {
-                getEndring(clazz, "PENDING").apply {
+                getEndring(clazz, "REJECTED").apply {
                     error = response.unmarshalBody()
                     log.info("Oppdatering avvist pga status pending.")
                 }
@@ -159,12 +159,12 @@ class PersonMottakConsumer (
         } while (++i < maxPolls && endring.isPending)
         log.info("Antall polls for status: $i")
 
-        if (!endring.isDoneWithoutTpsError) {
+        if (!endring.confirmedOk) {
             endring.createValidationErrorIfTpsHasError()
             val json = runCatching {
                 ObjectMapper().writeValueAsString(endring)
             }.getOrDefault("")
-            log.warn("Endring var ikke Done og/eller hadde TPS error. \n$json")
+            log.warn("${endring.errorMessage}\n$json")
         }
         return endring
     }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 open class Endring<T> {
@@ -17,15 +16,28 @@ open class Endring<T> {
     var statusType = "OK"
     var error: Error? = null
 
+    val confirmedOk: Boolean
+        @JsonIgnore
+        get() = "DONE" == status.statusType && !hasTpsError()
+
+    val errorMessage: String
+        @JsonIgnore
+        get() =
+            if (hasTpsError()) "TPS rapporterer feil på oppdatering."
+            else if (!isDone) "Endring har status $statusType"
+            else ""
+
     val isPending: Boolean
         @JsonIgnore
         get() = "PENDING" == status.statusType
 
-    val isDoneWithoutTpsError: Boolean
+    private val isDone: Boolean
         @JsonIgnore
-        get() = if ("DONE" != status.statusType) {
-            false
-        } else !hasTpsError()
+        get() = "DONE" == status.statusType
+
+    val hasTpsError: Boolean
+        @JsonIgnore
+        get() = hasTpsError()
 
     private val tpsBeskrivelse: String?
         @JsonIgnore
