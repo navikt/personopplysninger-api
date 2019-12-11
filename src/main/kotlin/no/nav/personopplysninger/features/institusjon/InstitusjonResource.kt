@@ -20,7 +20,7 @@ class InstitusjonResource @Autowired constructor(
 ) {
 
     @GET
-    @Path("/hentInstitusjonsopphold")
+    @Path("/institusjonsopphold")
     @Produces(MediaType.APPLICATION_JSON)
     fun hentInstitusjonsopphold(): Response {
         return Response

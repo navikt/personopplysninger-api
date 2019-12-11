@@ -20,7 +20,7 @@ class MedlResource @Autowired constructor(
 ) {
 
     @GET
-    @Path("/hentMedlemskap")
+    @Path("/medl")
     @Produces(MediaType.APPLICATION_JSON)
     fun hentMedlemskap(): Response {
         return Response
