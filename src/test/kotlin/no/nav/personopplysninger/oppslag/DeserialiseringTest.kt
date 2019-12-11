@@ -14,6 +14,7 @@ import no.nav.personopplysninger.consumerutils.unmarshalList
 import no.nav.personopplysninger.features.auth.Navn
 import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.institusjon.domain.Institusjonstype
+import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.personalia.dto.getJson
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
@@ -67,6 +68,7 @@ class DeserialiseringTest {
         stubFor(any(urlPathEqualTo("/tpsnavn")).willReturn(okJson(tpsNavn)))
         stubFor(any(urlPathEqualTo("/inst")).willReturn(okJson(instJson)))
         stubFor(any(urlPathEqualTo("/instlist")).willReturn(okJson(instListJson)))
+        stubFor(any(urlPathEqualTo("/medl")).willReturn(okJson(medlJson())))
     }
 
     @AfterAll
@@ -94,12 +96,7 @@ class DeserialiseringTest {
             response.readEntity(TestDataClass::class.java)
         }
 
-        val testDataClass = RestClientConfiguration()
-                .clientObjectMapperResolver()
-                .getContext(TestDataClass::class.java)
-                .readValue(
-                        response.readEntity(String::class.java),
-                        TestDataClass::class.java)
+        val testDataClass = response.get<TestDataClass>()
         assertEquals("foo bar", testDataClass.tekst)
     }
 
@@ -168,6 +165,37 @@ class DeserialiseringTest {
         assertEquals(7, instList.size)
     }
 
+    @Test
+    fun deserializingMedl() {
+        val client = ClientBuilder.newBuilder()
+                .register(RestClientConfiguration().clientObjectMapperResolver())
+                .build()
+        val response: Response = client.target("http://localhost:8080").path("/medl").request().get()
+        val medl = response.get<Medlemskapsunntak>()
+        assertEquals("Feilregistrert", medl.statusaarsak)
+    }
+
+    private inline fun <reified T> Response.get(): T {
+        return RestClientConfiguration()
+                .clientObjectMapperResolver()
+                .getContext(T::class.java)
+                .readValue(readEntity(String::class.java), T::class.java)
+    }
+
+    private fun medlJson() = """{
+            "unntakId": 3402759,
+            "ident": "11111111111",
+            "fraOgMed": "2010-01-01",
+            "tilOgMed": "2011-01-01",
+            "status": "AVST",
+            "statusaarsak": "Feilregistrert",
+            "dekning": "Full",
+            "helsedel": true,
+            "medlem": false,
+            "lovvalgsland": "GBR",
+            "lovvalg": "ENDL",
+            "grunnlag": "Storbrit_NIrland"
+        }""".trimIndent()
 
     companion object {
         val mockServer: WireMockServer = WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
