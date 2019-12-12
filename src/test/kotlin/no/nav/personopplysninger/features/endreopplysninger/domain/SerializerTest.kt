@@ -14,6 +14,8 @@ import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonso
 import no.nav.personopplysninger.features.personalia.dto.getJson
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
+import no.nav.personopplysninger.testutils.endringJson
+import no.nav.personopplysninger.testutils.utenlandskKontonummerJson
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.io.InputStreamReader
@@ -67,23 +69,14 @@ class SerializerTest {
 
     @Test
     fun testSerializationKontonummer2() {
-        val json: String = "{" +
-                "\"endringstype\":\"OPPRETT\"," +
-                "\"ident\":\"12345678910\"," +
-                "\"lineage\":\"cdbd4444-f851-4adb-b22f-f8794825bb22\"," +
-                "\"opplysningsId\":null," +
-                "\"status\":{\"endringId\":2113,\"statusType\":\"DONE\"}," +
-                "\"innmeldtEndring\":{\"kilde\":\"BRUKER SELV\",\"utenlandskKontoInformasjon\":null," +
-                "\"value\":\"11112233333\"}}"
-        val endring = readValue(json, EndringKontonummer::class.java)
+        val endring = readValue(endringJson(), EndringKontonummer::class.java)
         assertEquals("12345678910", endring.ident)
         assertEquals(2113, endring.status.endringId)
     }
 
     @Test
     fun testSerializationUtenlandskKontonummer() {
-        val json: String = "{ \"@type\":\"KONTONUMMER\", \"utenlandskKontoInformasjon\": {\"landkode\": \"SWE\", \"valuta\": \"EURO\", \"SWIFT\": \"1234\"},  \"value\": \"11112233333\"}"
-        val utenlandskKontonummer = readValue(json, Kontonummer::class.java)
+        val utenlandskKontonummer = readValue(utenlandskKontonummerJson(), Kontonummer::class.java)
         assertEquals("SWE", utenlandskKontonummer.utenlandskKontoInformasjon!!.landkode)
     }
 

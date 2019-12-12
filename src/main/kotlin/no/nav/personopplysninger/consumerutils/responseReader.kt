@@ -7,7 +7,11 @@ import javax.ws.rs.core.Response
 
 inline fun <reified T> Response.unmarshalBody(): T {
     return try {
-        readEntity(T::class.java)
+        jacksonObjectMapper()
+                .registerModule(JavaTimeModule())
+                .run {
+                    readValue(readEntity(String::class.java), T::class.java)
+                }
     } catch (e: ProcessingException) {
         throw ConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: " + T::class.simpleName, e)
     } catch (e: IllegalStateException) {
