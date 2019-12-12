@@ -5,12 +5,12 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.consumerutils.unmarshalBody
-import no.nav.personopplysninger.consumerutils.unmarshalList
 import no.nav.personopplysninger.features.auth.Navn
 import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.institusjon.domain.Institusjonstype
@@ -155,13 +155,13 @@ class DeserialiseringTest {
                 .register(RestClientConfiguration().clientObjectMapperResolver())
                 .build()
         val response: Response = client.target("http://localhost:8080").path("/inst").request().get()
-        val inst: InnsynInstitusjonsopphold = response.unmarshalBody()
+        val inst = response.get<InnsynInstitusjonsopphold>()
         assertEquals(Institusjonstype.FO, inst.institusjonstype)
         val json = getJson(inst)
         assertTrue(json.contains("Fengsel"))
 
         val responseList: Response = client.target("http://localhost:8080").path("/instlist").request().get()
-        val instList = responseList.unmarshalList<InnsynInstitusjonsopphold>()
+        val instList = responseList.getList<InnsynInstitusjonsopphold>()
         assertEquals(7, instList.size)
     }
 
@@ -173,6 +173,7 @@ class DeserialiseringTest {
         val response: Response = client.target("http://localhost:8080").path("/medl").request().get()
         val medl = response.get<Medlemskapsunntak>()
         assertEquals("Feilregistrert", medl.statusaarsak)
+        assertEquals("srvgosys", medl.sporingsinformasjon?.kilde)
     }
 
     private inline fun <reified T> Response.get(): T {
@@ -180,6 +181,15 @@ class DeserialiseringTest {
                 .clientObjectMapperResolver()
                 .getContext(T::class.java)
                 .readValue(readEntity(String::class.java), T::class.java)
+    }
+
+    private inline fun <reified T> Response.getList(): List<T> {
+        return jacksonObjectMapper()
+                .registerModule(JavaTimeModule())
+                .run {
+                    val type = typeFactory.constructCollectionType(List::class.java, T::class.java)
+                    readValue(readEntity(String::class.java), type)
+                }
     }
 
     private fun medlJson() = """{
@@ -194,7 +204,18 @@ class DeserialiseringTest {
             "medlem": false,
             "lovvalgsland": "GBR",
             "lovvalg": "ENDL",
-            "grunnlag": "Storbrit_NIrland"
+            "grunnlag": "Storbrit_NIrland",
+            "sporingsinformasjon": {
+                "versjon": 2,
+                "registrert": "2015-06-06",
+                "besluttet": "2015-06-06",
+                "kilde": "srvgosys",
+                "kildedokument": "Dokument",
+                "opprettet": "2015-06-06T16:18:08.000223",
+                "opprettetAv": "S113611",
+                "sistEndret": "2015-06-06T16:18:08.000223",
+                "sistEndretAv": "S113611"
+              }
         }""".trimIndent()
 
     companion object {
