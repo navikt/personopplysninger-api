@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.consumerutils
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import javax.ws.rs.ProcessingException
 import javax.ws.rs.core.Response
 
@@ -18,7 +18,7 @@ inline fun <reified T> Response.unmarshalBody(): T {
 
 inline fun <reified T> Response.unmarshalList(): List<T> {
     return try {
-        ObjectMapper().run {
+        jacksonObjectMapper().run {
             val json = readEntity(String::class.java)
             val type = typeFactory.constructCollectionLikeType(List::class.java, T::class.java)
             readValue(json, type)
@@ -34,7 +34,7 @@ inline fun <reified T> Response.unmarshalList(): List<T> {
 
 fun <T> Response.unmarshalList(responsklasse: Class<T>): List<T> {
     return try {
-        ObjectMapper().run {
+        jacksonObjectMapper().run {
             val type = typeFactory.constructCollectionType(List::class.java, responsklasse)
             readValue(readEntity(String::class.java), type)
         }
