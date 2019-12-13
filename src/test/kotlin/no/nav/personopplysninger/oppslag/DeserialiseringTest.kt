@@ -31,6 +31,7 @@ class DeserialiseringTest {
         val kodeverkjson = InputStreamReader(this.javaClass.getResourceAsStream("/json/kodeverk-kjonnstyper.json")).readText()
         val norg2EnhetJson = InputStreamReader(this.javaClass.getResourceAsStream("/json/norg2-enhet.json")).readText()
         val instListJson = InputStreamReader(this.javaClass.getResourceAsStream("/json/inst2.json")).readText()
+        val medlListJson = InputStreamReader(this.javaClass.getResourceAsStream("/json/medl-medlemskapsunntak.json")).readText()
 
         mockServer.start()
         configureFor(mockServer.port())
@@ -40,7 +41,7 @@ class DeserialiseringTest {
         stubFor(any(urlPathEqualTo("/tpsnavn")).willReturn(okJson(tpsNavnJson())))
         stubFor(any(urlPathEqualTo("/inst")).willReturn(okJson(instJson())))
         stubFor(any(urlPathEqualTo("/instlist")).willReturn(okJson(instListJson)))
-        stubFor(any(urlPathEqualTo("/medl")).willReturn(okJson(medlJson())))
+        stubFor(any(urlPathEqualTo("/medl")).willReturn(okJson(medlListJson)))
     }
 
     @AfterAll
@@ -116,9 +117,10 @@ class DeserialiseringTest {
                 .register(RestClientConfiguration().clientObjectMapperResolver())
                 .build()
         val response: Response = client.target("http://localhost:8080").path("/medl").request().get()
-        val medl = response.unmarshalBody<Medlemskapsunntak>()
-        assertEquals("Feilregistrert", medl.statusaarsak)
-        assertEquals("srvgosys", medl.sporingsinformasjon?.kilde)
+        val medlList = response.unmarshalList<Medlemskapsunntak>()
+        assertEquals(4, medlList.size)
+        val medl = medlList.get(1)
+        assertEquals("Avvist", medl.statusaarsak)
     }
 
     companion object {

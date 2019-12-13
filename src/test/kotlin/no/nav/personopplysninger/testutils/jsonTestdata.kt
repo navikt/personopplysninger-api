@@ -27,34 +27,6 @@ fun instJson() = """
             }
         """.trimIndent()
 
-fun medlJson() = """
-            {
-                "unntakId": 3402759,
-                "ident": "11111111111",
-                "fraOgMed": "2010-01-01",
-                "tilOgMed": "2011-01-01",
-                "status": "AVST",
-                "statusaarsak": "Feilregistrert",
-                "dekning": "Full",
-                "helsedel": true,
-                "medlem": false,
-                "lovvalgsland": "GBR",
-                "lovvalg": "ENDL",
-                "grunnlag": "Storbrit_NIrland",
-                "sporingsinformasjon": {
-                    "versjon": 2,
-                    "registrert": "2015-06-06",
-                    "besluttet": "2015-06-06",
-                    "kilde": "srvgosys",
-                    "kildedokument": "Dokument",
-                    "opprettet": "2015-06-06T16:18:08.000223",
-                    "opprettetAv": "S113611",
-                    "sistEndret": "2015-06-06T16:18:08.000223",
-                    "sistEndretAv": "S113611"
-                }
-            }
-        """.trimIndent()
-
 fun endringJson() = """
             {
                 "endringstype": "OPPRETT",
@@ -80,5 +52,4 @@ fun utenlandskKontonummerJson() = """
                 "value": "11112233333"
             }
         """.trimIndent()
-
 
