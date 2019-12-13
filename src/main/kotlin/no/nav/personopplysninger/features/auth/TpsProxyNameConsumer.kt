@@ -35,7 +35,7 @@ class TpsProxyNameConsumer(private val client: Client, private val endpoint: URI
                     .use { response -> return readResponse(response) }
         } catch (e: Exception) {
             log.error("Feil oppsto under oppslag på navn, returnerer 200 OK med tomt navn. Feilmelding: ${e.message}")
-            return Navn()
+            return Navn("", "", "")
         }
     }
 
