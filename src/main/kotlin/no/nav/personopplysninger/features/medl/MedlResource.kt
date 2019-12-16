@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.institusjon
+package no.nav.personopplysninger.features.medl
 
 import no.nav.security.oidc.api.ProtectedWithClaims
 import no.nav.security.oidc.jaxrs.OidcRequestContext
@@ -15,16 +15,16 @@ private const val claimsIssuer = "selvbetjening"
 @Component
 @Path("/")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
-class InstitusjonResource @Autowired constructor(
-        private val institusjonService: InstitusjonService
+class MedlResource @Autowired constructor(
+        private val medlService: MedlService
 ) {
 
     @GET
-    @Path("/institusjonsopphold")
+    @Path("/medl")
     @Produces(MediaType.APPLICATION_JSON)
-    fun hentInstitusjonsopphold(): Response {
+    fun hentMedlemskap(): Response {
         return Response
-                .ok(institusjonService.hentInstitusjonsopphold(hentFnrFraToken()))
+                .ok(medlService.hentMeldemskap(hentFnrFraToken()))
                 .build()
     }
 
