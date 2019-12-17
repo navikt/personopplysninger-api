@@ -34,7 +34,12 @@ public class Launcher {
                 new ConcurrentMapCache("valuta"),
                 new ConcurrentMapCache("spraak"),
                 new ConcurrentMapCache("statsborgerskap"),
-                new ConcurrentMapCache("retningsnummer")
+                new ConcurrentMapCache("retningsnummer"),
+                new ConcurrentMapCache("dekningmedl"),
+                new ConcurrentMapCache("grunnlagmedl"),
+                new ConcurrentMapCache("lovvalgmedl"),
+                new ConcurrentMapCache("periodestatusmedl"),
+                new ConcurrentMapCache("statusaarsakmedl")
         ));
         return cacheManager;
     }

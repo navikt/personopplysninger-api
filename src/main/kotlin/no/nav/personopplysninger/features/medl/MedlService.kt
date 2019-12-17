@@ -24,7 +24,7 @@ class MedlService @Autowired constructor(
                 medlem = false,
                 lovvalgsland = "STORBRITANNIA",
                 lovvalg = "Endelig",
-                grunnlag = "Avtale - Storbritannia og Nord-Irland",
+                grunnlag = "Storbrit_NIrland",
                 sporingsinformasjon = null,
                 studieinformasjon =null
         ))
@@ -40,7 +40,7 @@ class MedlService @Autowired constructor(
                 medlem = false,
                 lovvalgsland = "AFGHANISTAN",
                 lovvalg = "Endelig",
-                grunnlag = "Avtale - Australia",
+                grunnlag = "Australia",
                 sporingsinformasjon = null,
                 studieinformasjon =null
         ))
@@ -56,7 +56,7 @@ class MedlService @Autowired constructor(
                 medlem = true,
                 lovvalgsland = "NORGE",
                 lovvalg = "Endelig",
-                grunnlag = "Avtale - Storbritannia og Nord-Irland",
+                grunnlag = "Storbrit_NIrland",
                 sporingsinformasjon = null,
                 studieinformasjon =null
         ))
@@ -72,12 +72,14 @@ class MedlService @Autowired constructor(
                 medlem = true,
                 lovvalgsland = "NORGE",
                 lovvalg = "Foreløpig",
-                grunnlag = "Avtale - Storbritannia og Nord-Irland - 6.1",
+                grunnlag = "Storbrit_NIrland_6_1",
                 sporingsinformasjon = null,
                 studieinformasjon =null
         ))
+        val dekningKV = kodeverkConsumer.hentDekningMedl()
+
         list.map {
-            it.copy(dekning = kodeverkConsumer.hentDekningMedl().term(it.dekning))
+            it.copy(dekning = dekningKV.term(it.dekning))
         }
         return list
     }
