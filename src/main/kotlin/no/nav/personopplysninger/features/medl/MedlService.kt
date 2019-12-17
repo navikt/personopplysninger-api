@@ -77,9 +77,13 @@ class MedlService @Autowired constructor(
                 studieinformasjon =null
         ))
         val dekningKV = kodeverkConsumer.hentDekningMedl()
+        val grunnlagKV = kodeverkConsumer.hentGrunnlagMedl()
 
         return list.map {
-            it.copy(dekning = dekningKV.term(it.dekning))
+            it.copy(
+                    dekning = dekningKV.term(it.dekning),
+                    grunnlag = grunnlagKV.term(it.grunnlag)
+            )
         }
     }
 }
