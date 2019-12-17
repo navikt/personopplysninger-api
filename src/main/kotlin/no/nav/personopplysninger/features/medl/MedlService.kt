@@ -78,10 +78,9 @@ class MedlService @Autowired constructor(
         ))
         val dekningKV = kodeverkConsumer.hentDekningMedl()
 
-        list.map {
+        return list.map {
             it.copy(dekning = dekningKV.term(it.dekning))
         }
-        return list
     }
 }
 
