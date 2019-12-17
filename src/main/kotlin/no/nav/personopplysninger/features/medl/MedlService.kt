@@ -35,7 +35,7 @@ class MedlService @Autowired constructor(
                 tilOgMed = LocalDate.parse("2012-12-31"),
                 status = "Avvist",
                 statusaarsak = "Avvist",
-                dekning = "Folketrygdloven § 2-9, 1. ledd bokstav a",
+                dekning = "FTL_2-9_1_ledd_a",
                 helsedel = true,
                 medlem = false,
                 lovvalgsland = "AFGHANISTAN",
@@ -51,7 +51,7 @@ class MedlService @Autowired constructor(
                 tilOgMed = LocalDate.parse("2013-12-14"),
                 status = "Uavklart",
                 statusaarsak = "Feilregistrert",
-                dekning = "Folketrygdloven § 2-9, annet ledd, jfr. 1. ledd bokstav a",
+                dekning = "FTL_2-9_2_ld_jfr_1a",
                 helsedel = true,
                 medlem = true,
                 lovvalgsland = "NORGE",
@@ -67,7 +67,7 @@ class MedlService @Autowired constructor(
                 tilOgMed = LocalDate.parse("2013-10-10"),
                 status = "Avvist",
                 statusaarsak = "Feilregistrert",
-                dekning = "Folketrygdloven § 2-6",
+                dekning = "FTL_2-6",
                 helsedel = true,
                 medlem = true,
                 lovvalgsland = "NORGE",
@@ -76,6 +76,9 @@ class MedlService @Autowired constructor(
                 sporingsinformasjon = null,
                 studieinformasjon =null
         ))
+        list.map {
+            it.copy(dekning = kodeverkConsumer.hentDekningMedl().term(it.dekning))
+        }
         return list
     }
 }

@@ -16,7 +16,7 @@ class Kodeverk(
         return koderByNavn[kodeNavn]?.betydninger ?: emptyList()
     }
 
-    fun term(kode: String?): String? {
+    fun term(kode: String?): String {
         if (kode.isNullOrEmpty() || getBetydninger(kode).isEmpty()) {
             return ""
         }
