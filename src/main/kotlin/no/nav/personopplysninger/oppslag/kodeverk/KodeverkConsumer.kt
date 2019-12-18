@@ -18,55 +18,80 @@ open class KodeverkConsumer constructor(
 ) {
     @Cacheable("retningsnummer")
     open fun hentRetningsnumre(): Kodeverk {
-        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Retningsnumre/koder/betydninger", true))
+        return hentKodeverkBetydning("Retningsnumre", true)
     }
 
     @Cacheable("kjonn")
     open fun hentKjonn(): Kodeverk {
-        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Kjønnstyper/koder/betydninger", true))
+        return hentKodeverkBetydning("Kjønnstyper", true)
     }
 
     @Cacheable("kommune")
     open fun hentKommuner(): Kodeverk {
-        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Kommuner/koder/betydninger", false))
+        return hentKodeverkBetydning("Kommuner", false)
     }
 
     @Cacheable("land")
     open fun hentLandKoder(): Kodeverk {
-        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Landkoder/koder/betydninger", false))
+        return hentKodeverkBetydning("Landkoder", false)
     }
 
     @Cacheable("status")
     open fun hentPersonstatus(): Kodeverk {
-        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Personstatuser/koder/betydninger", true))
+        return hentKodeverkBetydning("Personstatuser", true)
     }
 
     @Cacheable("postnr")
     open fun hentPostnummer(): Kodeverk {
-        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Postnummer/koder/betydninger", true))
+        return hentKodeverkBetydning("Postnummer", true)
     }
 
     @Cacheable("sivilstand")
     open fun hentSivilstand(): Kodeverk {
-        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Sivilstander/koder/betydninger", true))
+        return hentKodeverkBetydning("Sivilstander", true)
     }
 
     @Cacheable("spraak")
     open fun hentSpraak(): Kodeverk {
-        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Språk/koder/betydninger", true))
+        return hentKodeverkBetydning("Språk", true)
     }
 
     @Cacheable("valuta")
     open fun hentValuta(): Kodeverk {
-        return hentKodeverkBetydning(getBuilder("v1/kodeverk/Valutaer/koder/betydninger", true))
+        return hentKodeverkBetydning("Valutaer", true)
     }
 
     @Cacheable("statsborgerskap")
     open fun hentStatsborgerskap(): Kodeverk {
-        return hentKodeverkBetydning(getBuilder("v1/kodeverk/StatsborgerskapFreg/koder/betydninger", true))
+        return hentKodeverkBetydning("StatsborgerskapFreg", true)
     }
 
-    private fun getBuilder(path: String, eksluderUgyldige: Boolean): Invocation.Builder {
+    @Cacheable("dekningmedl")
+    open fun hentDekningMedl(): Kodeverk {
+        return hentKodeverkBetydning("DekningMedl", true)
+    }
+
+    @Cacheable("grunnlagmedl")
+    open fun hentGrunnlagMedl(): Kodeverk {
+        return hentKodeverkBetydning("GrunnlagMedl", true)
+    }
+
+    @Cacheable("lovvalgmedl")
+    open fun hentLovvalgMedl(): Kodeverk {
+        return hentKodeverkBetydning("LovvalgMedl", true)
+    }
+
+    @Cacheable("periodestatusmedl")
+    open fun hentPeriodestatusMedl(): Kodeverk {
+        return hentKodeverkBetydning("PeriodestatusMedl", true)
+    }
+
+    @Cacheable("statusaarsakmedl")
+    open fun hentStatusaarsakMedl(): Kodeverk {
+        return hentKodeverkBetydning("StatusaarsakMedl", true)
+    }
+
+    private fun buildRequest(path: String, eksluderUgyldige: Boolean): Invocation.Builder {
         return client.target(endpoint)
                 .path(path)
                 .queryParam("spraak", "nb")
@@ -76,25 +101,20 @@ open class KodeverkConsumer constructor(
                 .header("Nav-Consumer-Id", CONSUMER_ID)
     }
 
-    private fun hentKodeverkBetydning(request: Invocation.Builder): Kodeverk {
+    private fun hentKodeverkBetydning(navn: String, eksluderUgyldige: Boolean): Kodeverk {
         try {
-            return request.getResponse()
+            val response = buildRequest("v1/kodeverk/$navn/koder/betydninger", eksluderUgyldige).get()
+            if (SUCCESSFUL != response.statusInfo.family) {
+                val msg = "Forsøkte å konsumere kodeverk. endpoint=[$endpoint], HTTP response status=[${response.status}], body=[${response.unmarshalBody<String>()}]."
+                throw KodeverkConsumerException(msg)
+            }
+            return response.unmarshalBody<GetKodeverkKoderBetydningerResponse>()
+                    .let { Kodeverk.fromKoderBetydningerResponse(navn, it) }
         } catch (e: KodeverkConsumerException) {
             throw e
         } catch (e: Exception) {
             val msg = "Forsøkte å konsumere kodeverk. endpoint=[$endpoint]."
             throw KodeverkConsumerException(msg, e)
-        }
-    }
-
-    private fun Invocation.Builder.getResponse(): Kodeverk {
-        val response = get()
-        if (SUCCESSFUL != response.statusInfo.family) {
-            val msg = "Forsøkte å konsumere kodeverk. endpoint=[$endpoint], HTTP response status=[${response.status}], body=[${response.unmarshalBody<String>()}]."
-            throw KodeverkConsumerException(msg)
-        } else {
-            return response.unmarshalBody<GetKodeverkKoderBetydningerResponse>()
-                    .let { Kodeverk.fromKoderBetydningerResponse(it) }
         }
     }
 }
