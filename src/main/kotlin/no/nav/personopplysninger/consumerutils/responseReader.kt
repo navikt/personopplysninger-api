@@ -18,6 +18,8 @@ inline fun <reified T> Response.unmarshalBody(): T {
         throw ConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: " + T::class.simpleName, e)
     } catch (e: Exception) {
         throw ConsumerException("Uventet feil på responsobjektet. Responsklasse: " + T::class.simpleName, e)
+    } finally {
+        close()
     }
 }
 
@@ -36,6 +38,8 @@ inline fun <reified T> Response.unmarshalList(): List<T> {
         throw ConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: ", e);
     } catch (e: Exception) {
         throw ConsumerException("Uventet feil på responsobjektet. Responsklasse: ", e);
+    } finally {
+        close()
     }
 }
 
@@ -53,6 +57,8 @@ fun <T> Response.unmarshalList(responsklasse: Class<T>): List<T> {
         throw ConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: ", e)
     } catch (e: Exception) {
         throw ConsumerException("Uventet feil på responsobjektet. Responsklasse: ", e)
+    } finally {
+        close()
     }
 }
 
