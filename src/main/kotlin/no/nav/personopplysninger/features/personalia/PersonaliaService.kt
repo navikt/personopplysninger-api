@@ -45,7 +45,7 @@ class PersonaliaService @Autowired constructor(
         val personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKV)
         val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
         if (tilknytning != null) {
-            val enhet: Norg2Enhet? = norg2Consumer.hentEnhet(tilknytning)
+            val enhet = norg2Consumer.hentEnhet(tilknytning)
             if(enhet != null){
                 personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhet.navn
                 personaliaOgAdresser.enhetKontaktInformasjon.enhet = hentEnhetKontaktinformasjon(enhet.enhetNr)
