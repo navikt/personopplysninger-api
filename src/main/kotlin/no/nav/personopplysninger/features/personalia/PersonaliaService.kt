@@ -10,6 +10,7 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaO
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.oppslag.norg2.Norg2Consumer
+import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -44,9 +45,11 @@ class PersonaliaService @Autowired constructor(
         val personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKV)
         val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
         if (tilknytning != null) {
-            val enhet = norg2Consumer.hentEnhet(tilknytning)
-            personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhet.navn
-            personaliaOgAdresser.enhetKontaktInformasjon.enhet = hentEnhetKontaktinformasjon(enhet.enhetNr)
+            val enhet: Norg2Enhet? = norg2Consumer.hentEnhet(tilknytning)
+            if(enhet != null){
+                personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhet.navn
+                personaliaOgAdresser.enhetKontaktInformasjon.enhet = hentEnhetKontaktinformasjon(enhet.enhetNr)
+            }
         }
         return personaliaOgAdresser
     }

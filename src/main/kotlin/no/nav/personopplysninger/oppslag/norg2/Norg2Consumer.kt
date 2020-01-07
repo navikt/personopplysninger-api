@@ -40,12 +40,19 @@ class Norg2Consumer(private val client: Client, private val endpoint: URI) {
     }
 
     private inline fun <reified T> Invocation.Builder.readResponse(): T {
-        val response = get()
-        if (SUCCESSFUL != response.statusInfo.family) {
-            val msg = "Forsøkte å konsumere REST-tjenesten TPS-proxy. endpoint=[$endpoint], HTTP response status=[${response.status}]. - "
-            throw ConsumerException(msg.plus(response.unmarshalBody()))
-        } else {
+        try {
+            val response = get()
+            if (SUCCESSFUL != response.statusInfo.family) {
+                val msg = "Forsøkte å konsumere norg2. endpoint=[$endpoint], HTTP response status=[${response.status}], body=[${response.unmarshalBody<String>()}]."
+                throw ConsumerException(msg)
+            }
             return response.unmarshalBody()
+        } catch (e: ConsumerException) {
+            throw e
+        } catch (e: Exception) {
+            val msg = "Forsøkte å konsumere norg2. endpoint=[$endpoint]."
+            throw ConsumerException(msg, e)
         }
+
     }
 }
