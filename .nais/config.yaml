@@ -20,12 +20,18 @@ spec:
   readiness:
     path: /person/personopplysninger-api/internal/isReady
     initialDelay: 10
+  vault:
+    enabled: true
   replicas:
     min: 2
-    max: 3
+    max: 4
+  webproxy: true
   resources:
     limits:
       cpu: '3'
-      memory: 768Mi
+      memory: 1500Mi
     requests:
-      memory: 512Mi
+      memory: 1500Mi
+  prometheus:
+    enabled: true
+    path: {{baseurl}}/internal/actuator/prometheus
