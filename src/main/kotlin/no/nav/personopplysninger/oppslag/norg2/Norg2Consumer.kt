@@ -17,7 +17,7 @@ class Norg2Consumer(private val client: Client, private val endpoint: URI) {
         try {
             return request.readResponse()
         }catch (e: ConsumerException) {
-            return null
+            throw e
         }
     }
 
