@@ -12,9 +12,13 @@ import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
 class Norg2Consumer(private val client: Client, private val endpoint: URI) {
 
-    fun hentEnhet(geografisk: String): Norg2Enhet {
+    fun hentEnhet(geografisk: String): Norg2Enhet? {
         val request = buildEnhetRequest(geografisk, "enhet/navkontor")
-        return request.readResponse()
+        try {
+            return request.readResponse()
+        }catch (e: ConsumerException) {
+            return null
+        }
     }
 
     fun hentKontaktinfo(enhetsnr: String): Norg2EnhetKontaktinfo {
@@ -40,19 +44,12 @@ class Norg2Consumer(private val client: Client, private val endpoint: URI) {
     }
 
     private inline fun <reified T> Invocation.Builder.readResponse(): T {
-        try {
-            val response = get()
-            if (SUCCESSFUL != response.statusInfo.family) {
-                val msg = "Forsøkte å konsumere norg2. endpoint=[$endpoint], HTTP response status=[${response.status}], body=[${response.unmarshalBody<String>()}]."
-                throw ConsumerException(msg)
-            }
+        val response = get()
+        if (SUCCESSFUL != response.statusInfo.family) {
+            val msg = "Forsøkte å konsumere REST-tjenesten Norg2. endpoint=[$endpoint], HTTP response status=[${response.status}]. - "
+            throw ConsumerException(msg.plus(response.unmarshalBody()))
+        } else {
             return response.unmarshalBody()
-        } catch (e: ConsumerException) {
-            throw e
-        } catch (e: Exception) {
-            val msg = "Forsøkte å konsumere norg2. endpoint=[$endpoint]."
-            throw ConsumerException(msg, e)
         }
-
     }
 }
