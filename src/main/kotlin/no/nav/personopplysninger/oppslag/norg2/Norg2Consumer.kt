@@ -28,7 +28,7 @@ class Norg2Consumer(private val client: Client, private val endpoint: URI) {
             return hentEnhet(geografisk)
         }
         catch (e: ConsumerException) {
-            logger.error("Forsøkte å konsumere REST-tjenesten Norg2 med geografisk tilknytning: ${geografisk}. Endpoint=[$endpoint]")
+            logger.error(e.toString())
             return null;
         }
     }
