@@ -111,7 +111,7 @@ open class KodeverkConsumer constructor(
             return response.unmarshalBody<GetKodeverkKoderBetydningerResponse>()
                     .let { Kodeverk.fromKoderBetydningerResponse(navn, it) }
         } catch (e: KodeverkConsumerException) {
-            throw e
+          throw e
         } catch (e: Exception) {
             val msg = "Forsøkte å konsumere kodeverk. endpoint=[$endpoint]."
             throw KodeverkConsumerException(msg, e)
