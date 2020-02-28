@@ -16,7 +16,6 @@ data class Personalia(
         val foedested: String? = null,
         val sivilstand: String? = null,
         val kjoenn: String? = null
-
 )
 
 data class Adresser(

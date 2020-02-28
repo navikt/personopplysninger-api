@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.endreopplysninger
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
+import no.nav.personopplysninger.oppslag.sts.STSConsumer
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -24,8 +25,9 @@ open class PersonMottakConfiguration {
     @Throws(URISyntaxException::class)
     open fun personMottakConsumer(
             @Named("personMottakClient") client: Client,
-            @Value("\${PERSON_MOTTAK_API_URL}") personMottakServiceUri: String): PersonMottakConsumer {
-        return PersonMottakConsumer(client, URI(personMottakServiceUri))
+            @Value("\${PERSON_MOTTAK_API_URL}") personMottakServiceUri: String,
+            stsConsumer: STSConsumer): PersonMottakConsumer {
+        return PersonMottakConsumer(client, URI(personMottakServiceUri), stsConsumer)
     }
 
     @Bean

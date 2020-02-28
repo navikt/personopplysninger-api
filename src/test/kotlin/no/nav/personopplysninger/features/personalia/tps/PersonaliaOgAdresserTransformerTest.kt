@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.personalia.tps
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
@@ -19,7 +20,9 @@ class PersonaliaOgAdresserTransformerTest {
     fun gittPersonaliaOgAdresser_skalFaaPersonaliaOgAdresser() {
         val inbound = PersoninfoObjectMother.withValuesInAllFields
 
-        val actual = PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
+        val pdlPersonInfo = PdlPersonInfo(telefonnummer = emptyList())
+
+        val actual = PersonaliaOgAdresserTransformer.toOutbound(inbound, pdlPersonInfo, personaliaKodeverk)
 
         assertNotNull(actual.personalia)
         assertNotNull(actual.adresser)
@@ -29,7 +32,9 @@ class PersonaliaOgAdresserTransformerTest {
     fun gittIngenAdresseinfio_skalIkkeFaaAdresser() {
         val inbound = PersoninfoObjectMother.withValuesInAllFields.copy(adresseinfo = null)
 
-        val actual = PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKodeverk)
+        val pdlPersonInfo = PdlPersonInfo(telefonnummer = emptyList())
+
+        val actual = PersonaliaOgAdresserTransformer.toOutbound(inbound, pdlPersonInfo, personaliaKodeverk)
 
         assertNotNull(actual.personalia)
         assertNull(actual.adresser)

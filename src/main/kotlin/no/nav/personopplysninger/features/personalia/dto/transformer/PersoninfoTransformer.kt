@@ -2,7 +2,10 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personident
+import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlTelefonnummer
 import no.nav.tps.person.Navn
 import no.nav.tps.person.Personinfo
 import org.slf4j.LoggerFactory
@@ -11,7 +14,7 @@ import org.slf4j.LoggerFactory
 object PersoninfoTransformer {
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    fun toOutbound(inbound: Personinfo, kodeverk: PersonaliaKodeverk): Personalia {
+    fun toOutbound(inbound: Personinfo, pdlPersonInfo: PdlPersonInfo, kodeverk: PersonaliaKodeverk): Personalia {
 
         fun fornavn(inbound: Navn): String? =
                 if (inbound.fornavn == null && inbound.mellomnavn == null) null
@@ -24,7 +27,7 @@ object PersoninfoTransformer {
                 etternavn = inbound.navn?.slektsnavn,
                 personident = inbound.ident?.let { Personident(it, inbound.identtype?.verdi) },
                 kontonr = inbound.kontonummer?.nummer,
-                tlfnr = inbound.telefon?.let { TelefoninfoTransformer.toOutbound(it) },
+                tlfnr = pdlPersonInfo.telefonnummer.toTlfnr(),
                 utenlandskbank = inbound.utenlandskBank?.let { UtenlandskBankTransformer.toOutbound(it, kodeverk)},
                 spraak = inbound.spraak?.kode?.verdi?.let { kodeverk.spraakterm },
                 personstatus = inbound.status?.kode?.verdi?.let { kodeverk.statusterm },
@@ -42,5 +45,15 @@ object PersoninfoTransformer {
         return if (names.isEmpty()) null else names.joinToString(", ")
     }
 
+    private fun List<PdlTelefonnummer>.toTlfnr(): Tlfnr {
+        val mobil = find { nummer -> nummer.prioritet == 1}
+        val hjem = find { nummer -> nummer.prioritet == 2}
 
+        return Tlfnr(
+                mobil = mobil?.nummer,
+                landkodeMobil = mobil?.landskode,
+                privat =  hjem?.nummer,
+                landkodePrivat = hjem?.landskode
+        )
+    }
 }

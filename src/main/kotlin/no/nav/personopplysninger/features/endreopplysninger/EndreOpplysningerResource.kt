@@ -1,10 +1,11 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Gateadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.KontaktadresseType.NORSK
+import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.KontaktadresseType.UTENLANDSK
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Postboksadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Stedsadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Utenlandsadresse
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.KontaktadresseType.*
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.security.oidc.api.ProtectedWithClaims
@@ -31,7 +32,7 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     @Consumes(MediaType.APPLICATION_JSON)
     fun endreTelefonnummer(telefonnummer: Telefonnummer): Response {
         val resp = endreOpplysningerService.endreTelefonnummer(
-                hentFnrFraToken(), telefonnummer, HttpMethod.POST)
+                hentFnrFraToken(), telefonnummer)
         return Response.ok(resp).build()
     }
 
@@ -40,8 +41,8 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     fun slettTelefonnummer(telefonnummer: Telefonnummer): Response {
-        val resp = endreOpplysningerService.endreTelefonnummer(
-                hentFnrFraToken(), telefonnummer, HttpMethod.PUT)
+        val resp = endreOpplysningerService.slettTelefonNummer(
+                hentFnrFraToken(), telefonnummer)
         return Response.ok(resp).build()
     }
 

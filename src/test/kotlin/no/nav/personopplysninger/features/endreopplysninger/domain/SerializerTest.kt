@@ -12,6 +12,7 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Endri
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.personalia.dto.getJson
+import no.nav.personopplysninger.features.personalia.pdl.createTelefonRequest
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
 import no.nav.personopplysninger.testutils.endringJson
@@ -32,7 +33,7 @@ class SerializerTest {
         val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/endring-telefonnummer.json")).readText()
         val endring = readValue(json, EndringTelefon::class.java)
         assertEquals("KORRIGER", endring.endringstype)
-        assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
+        assertEquals("BRUKER SELV", endring.innmeldtEndring.kilde)
         assertEquals(3, endring.status.substatus.size)
     }
 
@@ -86,6 +87,13 @@ class SerializerTest {
     }
 
     @Test
+    fun serializemebaby() {
+        ObjectMapper().writeValueAsString(createTelefonRequest("10108000398")).let{
+            val one = 1 + 1
+        }
+    }
+
+    @Test
     fun testRetningsnummerMapping() {
         val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/retningsnumre.json")).readText()
         val response: GetKodeverkKoderBetydningerResponse = readValue(json, GetKodeverkKoderBetydningerResponse::class.java)
@@ -117,7 +125,7 @@ class SerializerTest {
 
     @Test
     fun testSubType() {
-        val telefonnummer = Telefonnummer("+47", "11223344", "MOBIL")
+        val telefonnummer = Telefonnummer("+47", "11223344", 1)
         val json = getJson(telefonnummer)
         assertTrue(json.contains("@type"))
     }

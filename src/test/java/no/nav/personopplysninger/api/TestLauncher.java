@@ -50,10 +50,12 @@ public class TestLauncher {
         System.setProperty("PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_PASSWORD", "");
         System.setProperty("PERSONOPPLYSNINGER_API_NORG2_API_V1_APIKEY_PASSWORD", "");
         System.setProperty("PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_PASSWORD", "");
+        System.setProperty("PERSONOPPLYSNINGER_API_PDL_API_APIKEY_PASSWORD", "");
         System.setProperty("PERSONOPPLYSNINGER_API_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_PASSWORD", "");
         System.setProperty("PERSONOPPLYSNINGER_API_PERSON_MOTTAK_API_V1_APIKEY_PASSWORD", "");
         System.setProperty("PERSON_MOTTAK_API_URL", "");
         System.setProperty("DKIF_API_URL", "");
+        System.setProperty("PDL_API_URL", "");
         System.setProperty("KODEVERK_REST_API_URL", "");
         System.setProperty("NORG2_API_V1_URL", "");
         System.setProperty("AAD_B2C_CLIENTID_USERNAME", "");

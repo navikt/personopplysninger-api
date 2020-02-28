@@ -4,6 +4,4 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class EndringTelefon : Endring<EndringTelefon>() {
-    val innmeldtEndring: Telefonnummer? = null
-}
+class EndringTelefon(val innmeldtEndring: Telefonnummer) : Endring<EndringTelefon>()

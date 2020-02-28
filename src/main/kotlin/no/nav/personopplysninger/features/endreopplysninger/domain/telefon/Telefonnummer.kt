@@ -14,28 +14,28 @@ class Telefonnummer {
     @JsonProperty("@type")
     private val subtype = "TELEFONNUMMER"
 
-    var kilde = "BRUKER SELV"
+    val kilde = "BRUKER SELV"
     var landskode: String? = null
         private set
     var nummer: String? = null
         private set
-    var type: String? = null
+    var prioritet: Int = 1
         private set
 
     constructor() {}
 
-    constructor(kilde: String, landskode: String, nummer: String, type: String) {
-        this.kilde = kilde
+    constructor(landskode: String, nummer: String, prioritet: Int) {
         this.landskode = landskode
         this.nummer = nummer
-        this.type = type
+        this.prioritet = prioritet
     }
 
-    constructor(landskode: String, nummer: String, type: String) {
-        this.landskode = landskode
-        this.nummer = nummer
-        this.type = type
-    }
+    @JsonCreator
+    constructor(
+            @JsonProperty("type") type: String,
+            @JsonProperty("landskode") landskode: String,
+            @JsonProperty("nummer") nummer: String
+    ): this (landskode, nummer, convertLegacyNummerType(type))
 
     companion object {
 
@@ -46,6 +46,14 @@ class Telefonnummer {
         @Throws(JsonParseException::class, JsonMappingException::class, IOException::class)
         fun create(json: String): Telefonnummer {
             return ObjectMapper().readValue(json, Telefonnummer::class.java)
+        }
+
+        private fun convertLegacyNummerType(type: String): Int {
+            return when (type.toUpperCase()) {
+                "MOBIL" -> 1
+                "HJEM" -> 2
+                else -> -1
+            }
         }
     }
 }
