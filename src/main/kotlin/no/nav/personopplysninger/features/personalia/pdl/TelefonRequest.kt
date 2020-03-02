@@ -8,7 +8,7 @@ class TelefonRequest(override val variables: QueryVariables) : PDLRequest {
         get() = """
             query (${"$"}ident: ID!) {
                 hentPerson(ident: ${"$"}ident) {
-                    telefonnummer { landskode, nummer, prioritet }
+                    telefonnummer { landskode, nummer, prioritet, metadata { opplysningsId } }
                 } 
             }
         """.compactJson()

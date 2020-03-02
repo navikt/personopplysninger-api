@@ -45,7 +45,13 @@ class Telefonnummer {
         @JvmStatic
         @Throws(JsonParseException::class, JsonMappingException::class, IOException::class)
         fun create(json: String): Telefonnummer {
-            return ObjectMapper().readValue(json, Telefonnummer::class.java)
+            ObjectMapper().readValue(json, Map::class.java).let { properties ->
+                return Telefonnummer(
+                        landskode = properties["landskode"] as String,
+                        nummer = properties["nummer"] as String,
+                        prioritet = properties["prioritet"] as Int
+                )
+            }
         }
 
         private fun convertLegacyNummerType(type: String): Int {

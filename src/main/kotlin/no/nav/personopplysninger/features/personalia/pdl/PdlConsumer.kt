@@ -15,6 +15,9 @@ import javax.ws.rs.core.MediaType
 
 class PdlConsumer(private val client: Client, private val endpoint: URI, private val stsConsumer: STSConsumer) {
 
+    val RETT_PERSONOPPLYSNINGER = "RPO"
+    val GENERELL = "GEN"
+
     // Defer to getTelefonInfo until more information is fetched from PDL
     fun getPersonInfo(ident: String): PdlPersonInfo {
         return getTelefonInfo(ident)
@@ -38,6 +41,7 @@ class PdlConsumer(private val client: Client, private val endpoint: URI, private
                 .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 .header("Nav-Consumer-Id", CONSUMER_ID)
                 .header("Nav-Consumer-Token", "Bearer $systemToken")
+                .header("Tema", RETT_PERSONOPPLYSNINGER)
     }
 
     private val systemToken: String get() = stsConsumer.token.access_token
