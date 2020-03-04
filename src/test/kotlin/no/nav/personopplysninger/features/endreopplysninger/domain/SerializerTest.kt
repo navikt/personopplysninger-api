@@ -12,7 +12,6 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Endri
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.personalia.dto.getJson
-import no.nav.personopplysninger.features.personalia.pdl.createTelefonRequest
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
 import no.nav.personopplysninger.testutils.endringJson
@@ -84,13 +83,6 @@ class SerializerTest {
     @Test
     fun testSerializationRetningsnummer() {
         assertTrue { ObjectMapper().canSerialize(RetningsnummerDTO::class.java) }
-    }
-
-    @Test
-    fun serializemebaby() {
-        ObjectMapper().writeValueAsString(createTelefonRequest("10108000398")).let{
-            val one = 1 + 1
-        }
     }
 
     @Test

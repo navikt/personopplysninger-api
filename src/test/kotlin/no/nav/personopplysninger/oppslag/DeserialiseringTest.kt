@@ -65,7 +65,7 @@ class DeserialiseringTest {
     }
 
     @Test
-    fun deserializeMeBaby() {
+    fun canDeserializePdlResponse() {
         val json = """
             {
               "data": {
@@ -86,12 +86,14 @@ class DeserialiseringTest {
         """.trimIndent()
 
         val person: PdlResponse = jacksonObjectMapper().readValue(json)
-
-        person.toString()
+        val telefonnummer = person.data.hentPerson.telefonnummer.first()
+        assertEquals(telefonnummer.landskode, "+47")
+        assertEquals(telefonnummer.nummer, "22334455")
+        assertEquals(telefonnummer.prioritet, 1)
     }
 
     @Test
-    fun deserializeMeHunk() {
+    fun canDeserializeLegacyTelefonnummerFormat() {
         val json = """
             {
               "landskode": "+47",
@@ -102,7 +104,9 @@ class DeserialiseringTest {
 
         val telefonnummer: Telefonnummer = jacksonObjectMapper().readValue(json)
 
-        telefonnummer.toString()
+        assertEquals(telefonnummer.landskode, "+47")
+        assertEquals(telefonnummer.nummer, "22334455")
+        assertEquals(telefonnummer.prioritet, 1)
     }
 
     @Test
