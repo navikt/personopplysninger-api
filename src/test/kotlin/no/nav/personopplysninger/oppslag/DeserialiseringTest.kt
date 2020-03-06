@@ -110,6 +110,23 @@ class DeserialiseringTest {
     }
 
     @Test
+    fun canDeserializeTelefonnummerFormat() {
+        val json = """
+            {
+              "landskode": "+47",
+              "nummer": "22334455",
+              "prioritet": 1
+            }
+        """.trimIndent()
+
+        val telefonnummer: Telefonnummer = jacksonObjectMapper().readValue(json)
+
+        assertEquals(telefonnummer.landskode, "+47")
+        assertEquals(telefonnummer.nummer, "22334455")
+        assertEquals(telefonnummer.prioritet, 1)
+    }
+
+    @Test
     fun deserialiseringFeilerMedClientDersomDataClassManglerJsonAnnotering_WorkaroundFungerer() {
         val client = ClientBuilder.newBuilder()
                 .register(RestClientConfiguration().clientObjectMapperResolver())

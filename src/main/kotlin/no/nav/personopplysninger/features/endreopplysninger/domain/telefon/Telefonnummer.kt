@@ -31,11 +31,16 @@ class Telefonnummer {
     }
 
     @JsonCreator
-    constructor(
-            @JsonProperty("type") type: String,
-            @JsonProperty("landskode") landskode: String,
-            @JsonProperty("nummer") nummer: String
-    ): this (landskode, nummer, convertLegacyNummerType(type))
+    constructor(jsonProperties: Map<String, Any>) {
+        this.prioritet = if (jsonProperties.containsKey("type")) {
+            convertLegacyNummerType(jsonProperties["type"] as String)
+        } else {
+            jsonProperties["prioritet"] as Int
+        }
+
+        this.landskode = jsonProperties["landskode"] as String
+        this.nummer = jsonProperties["nummer"] as String
+    }
 
     companion object {
 

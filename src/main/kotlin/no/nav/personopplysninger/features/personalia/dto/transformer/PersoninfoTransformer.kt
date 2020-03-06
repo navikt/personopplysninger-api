@@ -44,16 +44,4 @@ object PersoninfoTransformer {
         val names = listOfNotNull(foedtIKommune, landnavn)
         return if (names.isEmpty()) null else names.joinToString(", ")
     }
-
-    private fun List<PdlTelefonnummer>.toTlfnr(): Tlfnr {
-        val mobil = find { nummer -> nummer.prioritet == 1}
-        val hjem = find { nummer -> nummer.prioritet == 2}
-
-        return Tlfnr(
-                mobil = mobil?.nummer,
-                landkodeMobil = mobil?.landskode,
-                privat =  hjem?.nummer,
-                landkodePrivat = hjem?.landskode
-        )
-    }
 }

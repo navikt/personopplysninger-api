@@ -34,8 +34,8 @@ class PersoninfoTransformerTest {
     }
 
     private fun assertTlfnr(expected: List<PdlTelefonnummer>, actual: Tlfnr) {
-        assertEquals(expected.find { it.prioritet == 1 }?.nummer, actual.mobil!!)
-        assertEquals(expected.find { it.prioritet == 2 }?.nummer, actual.privat!!)
+        assertEquals(expected.find { it.prioritet == 1 }?.nummer, actual.telefonHoved!!)
+        assertEquals(expected.find { it.prioritet == 2 }?.nummer, actual.telefonAlternativ!!)
     }
 
     private fun assertFornavn(inbound: Navn, actual: String) {
