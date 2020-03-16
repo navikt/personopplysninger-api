@@ -1,7 +1,7 @@
 {
   "endringstype": "KORRIGER",
   "ident": 12345678910,
-  "innmeldtEndring": "{\"landskode\":\"+47\",\"nummer\":\"123123133\",\"type\":\"HJEM\",\"kilde\":\"BRUKER SELV\"}",  "lineage": "12ab7a9c-6e5c-44da-12d3-0152ba44123",
+  "innmeldtEndring": "{\"landskode\":\"+47\",\"nummer\":\"123123133\",\"prioritet\":2,\"kilde\":\"BRUKER SELV\"}",  "lineage": "12ab7a9c-6e5c-44da-12d3-0152ba44123",
   "opplysningsId": "85dc7a9c-7e5c-41da-87c9-0320fb74165",
   "opplysningstype": "UTENLANDSKIDENTIFIKASJONSNUMMER",
   "opprettet": "2019-01-01 10:32",

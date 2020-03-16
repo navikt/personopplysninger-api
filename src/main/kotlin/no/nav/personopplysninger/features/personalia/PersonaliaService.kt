@@ -8,9 +8,10 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.GeografiskE
 import no.nav.personopplysninger.features.personalia.dto.transformer.KontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
+import no.nav.personopplysninger.features.personalia.pdl.PdlService
 import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.oppslag.norg2.Norg2Consumer
-import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
+import no.nav.tps.person.Personinfo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -19,30 +20,19 @@ class PersonaliaService @Autowired constructor(
         private var personConsumer: PersonConsumer,
         private var kontaktinfoConsumer: KontaktinfoConsumer,
         private var kodeverkConsumer: KodeverkConsumer,
-        private var norg2Consumer: Norg2Consumer
+        private var norg2Consumer: Norg2Consumer,
+        private var pdlService: PdlService
 ) {
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
-        val personaliaKV = PersonaliaKodeverk()
 
         val inbound = personConsumer.hentPersonInfo(fodselsnr)
 
-        personaliaKV.kjonnterm = kodeverkConsumer.hentKjonn().term(inbound.kjonn)
-        personaliaKV.landterm = kodeverkConsumer.hentLandKoder().term(inbound.foedtILand?.verdi)
-        personaliaKV.utenlandskadresseterm= kodeverkConsumer.hentLandKoder().term(inbound.adresseinfo?.utenlandskAdresse?.land)
-        personaliaKV.foedekommuneterm = getKommuneKodeverksTerm(inbound.foedtIKommune?.verdi)
-        personaliaKV.bostedskommuneterm = getKommuneKodeverksTerm(inbound.adresseinfo?.boadresse?.kommune)
-        personaliaKV.bostedpostnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.boadresse?.postnummer)
-        personaliaKV.postnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.postadresse?.postnummer)
-        personaliaKV.tilleggsadressepostnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.tilleggsadresse?.postnummer)
-        personaliaKV.statusterm = kodeverkConsumer.hentPersonstatus().term(inbound.status?.kode?.verdi)
-        personaliaKV.sivilstandterm = kodeverkConsumer.hentSivilstand().term(inbound.sivilstand?.kode?.verdi)
-        personaliaKV.spraakterm = kodeverkConsumer.hentSpraak().term(inbound.spraak?.kode?.verdi)
-        personaliaKV.stasborgerskapterm = kodeverkConsumer.hentStatsborgerskap().term(inbound.statsborgerskap?.kode?.verdi)
-        personaliaKV.postadresselandterm = kodeverkConsumer.hentLandKoder().term(inbound.adresseinfo?.postadresse?.land)
-        personaliaKV.utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inbound.utenlandskBank?.land?.verdi)
-        personaliaKV.utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inbound.utenlandskBank?.valuta?.verdi)
+        val personaliaKV = createPersonaliaKodeverk(inbound)
 
-        val personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, personaliaKV)
+        val pdlPersonInfo = pdlService.getPersonInfo(fodselsnr)
+
+        val personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, pdlPersonInfo, personaliaKV)
+
         val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
         if (tilknytning != null) {
             val enhet = norg2Consumer.hentEnhetDersomGyldig(tilknytning)
@@ -52,6 +42,27 @@ class PersonaliaService @Autowired constructor(
             }
         }
         return personaliaOgAdresser
+    }
+
+    private fun createPersonaliaKodeverk(inbound: Personinfo): PersonaliaKodeverk {
+
+        return PersonaliaKodeverk().apply {
+            kjonnterm = kodeverkConsumer.hentKjonn().term(inbound.kjonn)
+            landterm = kodeverkConsumer.hentLandKoder().term(inbound.foedtILand?.verdi)
+            utenlandskadresseterm = kodeverkConsumer.hentLandKoder().term(inbound.adresseinfo?.utenlandskAdresse?.land)
+            foedekommuneterm = getKommuneKodeverksTerm(inbound.foedtIKommune?.verdi)
+            bostedskommuneterm = getKommuneKodeverksTerm(inbound.adresseinfo?.boadresse?.kommune)
+            bostedpostnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.boadresse?.postnummer)
+            postnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.postadresse?.postnummer)
+            tilleggsadressepostnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.tilleggsadresse?.postnummer)
+            statusterm = kodeverkConsumer.hentPersonstatus().term(inbound.status?.kode?.verdi)
+            sivilstandterm = kodeverkConsumer.hentSivilstand().term(inbound.sivilstand?.kode?.verdi)
+            spraakterm = kodeverkConsumer.hentSpraak().term(inbound.spraak?.kode?.verdi)
+            stasborgerskapterm = kodeverkConsumer.hentStatsborgerskap().term(inbound.statsborgerskap?.kode?.verdi)
+            postadresselandterm = kodeverkConsumer.hentLandKoder().term(inbound.adresseinfo?.postadresse?.land)
+            utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inbound.utenlandskBank?.land?.verdi)
+            utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inbound.utenlandskBank?.valuta?.verdi)
+        }
     }
 
     private fun getKommuneKodeverksTerm(inbound: String?): String? {
