@@ -1,14 +1,11 @@
 package no.nav.personopplysninger.features.personalia.dto.outbound
 
 
-data class Tlfnr(
+data class Tlfnr (
         /* Telefonnummer jobb */
-        val jobb: String? = null,
-        val landkodeJobb: String? = null,
+        val telefonAlternativ: String? = null,
+        val landskodeAlternativ: String? = null,
         /* Telefonnummer mobil */
-        val mobil: String? = null,
-        val landkodeMobil: String? = null,
-        /* Telefonnummer privat */
-        val privat: String? = null,
-        val landkodePrivat: String? = null
+        val telefonHoved: String? = null,
+        val landskodeHoved: String? = null
 )

@@ -1,5 +1,7 @@
 package no.nav.personopplysninger.oppslag
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
@@ -7,14 +9,18 @@ import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.consumerutils.unmarshalList
 import no.nav.personopplysninger.features.auth.Navn
+import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.institusjon.domain.Institusjonstype
 import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.personalia.dto.getJson
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
 import no.nav.personopplysninger.testutils.TestDataClass
-import no.nav.personopplysninger.testutils.*
+import no.nav.personopplysninger.testutils.instJson
+import no.nav.personopplysninger.testutils.testklasseJson
+import no.nav.personopplysninger.testutils.tpsNavnJson
 import org.junit.jupiter.api.*
 import java.io.InputStreamReader
 import javax.ws.rs.ProcessingException
@@ -56,6 +62,68 @@ class DeserialiseringTest {
                 .build()
         val response: Response = client.target("http://localhost:8080").path("/kodeverk").request().get()
         response.unmarshalBody<GetKodeverkKoderBetydningerResponse>()
+    }
+
+    @Test
+    fun canDeserializePdlResponse() {
+        val json = """
+            {
+              "data": {
+                "hentPerson": {
+                  "telefonnummer": [
+                    {
+                      "landskode": "+47",
+                      "nummer": "22334455",
+                      "prioritet": 1,
+                      "metadata": {
+                        "opplysningsId": "b2cf4a5c-99e9-46e5-88d9-65d79aee3bb0"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+        """.trimIndent()
+
+        val person: PdlResponse = jacksonObjectMapper().readValue(json)
+        val telefonnummer = person.data.hentPerson.telefonnummer.first()
+        assertEquals(telefonnummer.landskode, "+47")
+        assertEquals(telefonnummer.nummer, "22334455")
+        assertEquals(telefonnummer.prioritet, 1)
+    }
+
+    @Test
+    fun canDeserializeLegacyTelefonnummerFormat() {
+        val json = """
+            {
+              "landskode": "+47",
+              "nummer": "22334455",
+              "type": "MOBIL"
+            }
+        """.trimIndent()
+
+        val telefonnummer: Telefonnummer = jacksonObjectMapper().readValue(json)
+
+        assertEquals(telefonnummer.landskode, "+47")
+        assertEquals(telefonnummer.nummer, "22334455")
+        assertEquals(telefonnummer.prioritet, 1)
+    }
+
+    @Test
+    fun canDeserializeTelefonnummerFormat() {
+        val json = """
+            {
+              "landskode": "+47",
+              "nummer": "22334455",
+              "prioritet": 1
+            }
+        """.trimIndent()
+
+        val telefonnummer: Telefonnummer = jacksonObjectMapper().readValue(json)
+
+        assertEquals(telefonnummer.landskode, "+47")
+        assertEquals(telefonnummer.nummer, "22334455")
+        assertEquals(telefonnummer.prioritet, 1)
     }
 
     @Test
