@@ -1,8 +1,7 @@
 package no.nav.personopplysninger.features.personalia.tps
 
-import no.nav.personopplysninger.features.personalia.dto.transformer.toTlfnr
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlTelefonnummer
+import no.nav.personopplysninger.features.personalia.dto.transformer.TelefoninfoTransformer
+import no.nav.tps.person.Telefoninfo
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
@@ -13,30 +12,26 @@ class TelefoninfoTransformerTest {
 
     @Test
     fun gittTelefoninfi_skalFaaTelefoninfo() {
-        val inbound = PdlPersonInfo(
-                telefonnummer = listOf(
-                        PdlTelefonnummer("+47", "99887767", 1, "123"),
-                        PdlTelefonnummer("+47", "22334455", 2, "123")
-                )
-        )
+        val inbound = Telefoninfo(jobb = "1234", landkodeJobb = "+47", mobil = "99887767", privat = "22334455")
 
-        val actual = inbound.telefonnummer.toTlfnr()
+        val actual = TelefoninfoTransformer.toOutbound(inbound)
 
-        assertEquals(inbound.telefonnummer.find { it.prioritet == 1 }?.nummer, actual.telefonHoved)
-        assertEquals(inbound.telefonnummer.find { it.prioritet == 1 }?.landskode, actual.landskodeHoved)
-        assertEquals(inbound.telefonnummer.find { it.prioritet == 2 }?.nummer, actual.telefonAlternativ)
-        assertEquals(inbound.telefonnummer.find { it.prioritet == 2 }?.landskode, actual.landskodeAlternativ)
+        assertEquals(inbound.jobb, actual.jobb)
+        assertEquals(inbound.mobil, actual.mobil)
+        assertEquals(inbound.privat, actual.privat)
+        assertEquals(inbound.landkodeJobb, actual.landkodeJobb)
+        assertNull(actual.landkodeMobil)
+        assertNull(actual.landkodePrivat)
     }
 
     @Test
     fun gittNull_skalFaaNull() {
-        val inbound = PdlPersonInfo(telefonnummer = emptyList())
+        val inbound = Telefoninfo(jobb = null, mobil = null, privat = null)
 
-        val actual = inbound.telefonnummer.toTlfnr()
+        val actual = TelefoninfoTransformer.toOutbound(inbound)
 
-        assertNull(actual.telefonHoved)
-        assertNull(actual.landskodeHoved)
-        assertNull(actual.telefonAlternativ)
-        assertNull(actual.landskodeAlternativ)
+        assertEquals(inbound.jobb, actual.jobb)
+        assertEquals(inbound.mobil, actual.mobil)
+        assertEquals(inbound.privat, actual.privat)
     }
 }

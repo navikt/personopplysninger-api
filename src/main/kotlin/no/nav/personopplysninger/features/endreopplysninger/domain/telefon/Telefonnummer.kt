@@ -14,32 +14,27 @@ class Telefonnummer {
     @JsonProperty("@type")
     private val subtype = "TELEFONNUMMER"
 
-    val kilde = "BRUKER SELV"
+    var kilde = "BRUKER SELV"
     var landskode: String? = null
         private set
     var nummer: String? = null
         private set
-    var prioritet: Int = 1
+    var type: String? = null
         private set
 
     constructor() {}
 
-    constructor(landskode: String, nummer: String, prioritet: Int) {
+    constructor(kilde: String, landskode: String, nummer: String, type: String) {
+        this.kilde = kilde
         this.landskode = landskode
         this.nummer = nummer
-        this.prioritet = prioritet
+        this.type = type
     }
 
-    @JsonCreator
-    constructor(jsonProperties: Map<String, Any>) {
-        this.prioritet = if (jsonProperties.containsKey("type")) {
-            convertLegacyNummerType(jsonProperties["type"] as String)
-        } else {
-            jsonProperties["prioritet"] as Int
-        }
-
-        this.landskode = jsonProperties["landskode"] as String
-        this.nummer = jsonProperties["nummer"] as String
+    constructor(landskode: String, nummer: String, type: String) {
+        this.landskode = landskode
+        this.nummer = nummer
+        this.type = type
     }
 
     companion object {
@@ -50,21 +45,7 @@ class Telefonnummer {
         @JvmStatic
         @Throws(JsonParseException::class, JsonMappingException::class, IOException::class)
         fun create(json: String): Telefonnummer {
-            ObjectMapper().readValue(json, Map::class.java).let { properties ->
-                return Telefonnummer(
-                        landskode = properties["landskode"] as String,
-                        nummer = properties["nummer"] as String,
-                        prioritet = properties["prioritet"] as Int
-                )
-            }
-        }
-
-        private fun convertLegacyNummerType(type: String): Int {
-            return when (type.toUpperCase()) {
-                "MOBIL" -> 1
-                "HJEM" -> 2
-                else -> -1
-            }
+            return ObjectMapper().readValue(json, Telefonnummer::class.java)
         }
     }
 }

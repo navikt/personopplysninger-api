@@ -32,7 +32,7 @@ class SerializerTest {
         val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/endring-telefonnummer.json")).readText()
         val endring = readValue(json, EndringTelefon::class.java)
         assertEquals("KORRIGER", endring.endringstype)
-        assertEquals("BRUKER SELV", endring.innmeldtEndring?.kilde)
+        assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
         assertEquals(3, endring.status.substatus.size)
     }
 
@@ -117,7 +117,7 @@ class SerializerTest {
 
     @Test
     fun testSubType() {
-        val telefonnummer = Telefonnummer("+47", "11223344", 1)
+        val telefonnummer = Telefonnummer("+47", "11223344", "MOBIL")
         val json = getJson(telefonnummer)
         assertTrue(json.contains("@type"))
     }
