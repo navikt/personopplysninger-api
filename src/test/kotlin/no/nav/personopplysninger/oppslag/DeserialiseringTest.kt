@@ -15,6 +15,8 @@ import no.nav.personopplysninger.features.institusjon.domain.Institusjonstype
 import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.personalia.dto.getJson
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlResponse
+import no.nav.personopplysninger.features.personalia.pdl.dto.error.PDLErrorType
+import no.nav.personopplysninger.features.personalia.pdl.dto.error.PdlErrorResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
 import no.nav.personopplysninger.testutils.TestDataClass
@@ -90,6 +92,39 @@ class DeserialiseringTest {
         assertEquals(telefonnummer.landskode, "+47")
         assertEquals(telefonnummer.nummer, "22334455")
         assertEquals(telefonnummer.prioritet, 1)
+    }
+
+    @Test
+    fun canDeserializePdlErrorResponse() {
+        val json = """
+            {
+              "errors": [
+                {
+                  "message": "Ikke autentisert",
+                  "locations": [
+                    {
+                      "line": 1,
+                      "column": 23
+                    }
+                  ],
+                  "path": [
+                    "person"
+                  ],
+                  "extensions": {
+                    "code": "unauthenticated",
+                    "classification": "ExecutionAborted"
+                  }
+                }
+              ],
+              "data": {
+                "person": null
+              }
+            }
+        """.trimIndent()
+
+        val pdlErrorResponse: PdlErrorResponse = jacksonObjectMapper().readValue(json)
+        val errorType: PDLErrorType = pdlErrorResponse.errors.first().errorType
+        assertEquals(errorType, PDLErrorType.NOT_AUTHENTICATED)
     }
 
     @Test
