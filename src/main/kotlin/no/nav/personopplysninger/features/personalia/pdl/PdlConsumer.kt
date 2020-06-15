@@ -65,6 +65,7 @@ class PdlConsumer(private val client: Client, private val endpoint: URI, private
     }
 
     private fun buildRequest(): Invocation.Builder {
+        log.warn("Nav-Consumer-Token: $systemToken")
         return client.target(endpoint)
                 .path("/graphql")
                 .request()
