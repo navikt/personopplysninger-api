@@ -9,8 +9,12 @@ import no.nav.personopplysninger.consumerutils.unmarshalList
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring
 import no.nav.personopplysninger.features.endreopplysninger.domain.Personopplysning
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndreKontaktadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndringKontaktadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
+import no.nav.personopplysninger.features.endreopplysninger.domain.opphoer.EndringOpphoerPersonopplysning
+import no.nav.personopplysninger.features.endreopplysninger.domain.opphoer.OpphoerPersonopplysning
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndreTelefon
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.personalia.dto.getJson
@@ -52,8 +56,7 @@ class PersonMottakConsumer (
     private val URL_ENDRINGER = "/api/v1/endringer"
 
     fun endreTelefonnummer(fnr: String, endreTelefon: EndreTelefon, systemUserToken: String): EndringTelefon {
-        val request = buildEndreRequest(fnr, systemUserToken, URL_ENDRINGER)
-        return sendPdlEndring(request, endreTelefon)
+        return sendPdlEndring(endreTelefon, fnr, systemUserToken, URL_ENDRINGER)
     }
 
     fun endreKontonummer(fnr: String, kontonummer: Kontonummer, systemUserToken: String): EndringKontonummer {
@@ -88,6 +91,19 @@ class PersonMottakConsumer (
             URL_OPPHOER_KONTAKTADRESSE_UTENLANDSK
         val request = buildEndreRequest(fnr, systemUserToken, url)
         return sendBlankEndring(request, systemUserToken, EndringOpphoerAdresse::class.java)
+    }
+
+    fun endreKontaktadresse(fnr: String,
+                            endreKontaktadresse: EndreKontaktadresse,
+                            systemUserToken: String): EndringKontaktadresse {
+
+        return sendPdlEndring(endreKontaktadresse, fnr, systemUserToken, URL_ENDRINGER)
+    }
+
+    fun slettPersonopplysning(fnr: String,
+                              opphoerPersonopplysning: OpphoerPersonopplysning,
+                              systemUserToken: String): EndringOpphoerPersonopplysning {
+        return sendPdlEndring(opphoerPersonopplysning, fnr, systemUserToken, URL_ENDRINGER)
     }
 
     private fun getBuilder(path: String, systemUserToken: String): Invocation.Builder {
@@ -128,8 +144,13 @@ class PersonMottakConsumer (
         }
     }
 
-    private inline fun <reified T, reified R : Endring<R>> sendPdlEndring(request: Invocation.Builder,
-                                                                          entitetSomEndres: Personopplysning<T>): R {
+    private inline fun <reified T, reified R : Endring<R>> sendPdlEndring(entitetSomEndres: Personopplysning<T>,
+                                                                          fnr: String,
+                                                                          systemUserToken: String,
+                                                                          path: String): R {
+
+        val request = buildEndreRequest(fnr, systemUserToken, path)
+
         return try {
             request.method(
                     HttpMethod.POST,

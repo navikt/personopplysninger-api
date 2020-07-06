@@ -5,5 +5,5 @@ data class PdlResponse(
 )
 
 data class PdlData (
-        val hentPerson: PdlPersonInfo
+        val person: PdlPersonInfo
 )

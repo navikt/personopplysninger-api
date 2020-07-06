@@ -16,6 +16,13 @@ open class Endring<T> {
     var statusType = "OK"
     var error: Error? = null
 
+    constructor()
+
+    protected constructor(error: Error): this() {
+        this.error = error
+        this.statusType = "ERROR"
+    }
+
     val confirmedOk: Boolean
         @JsonIgnore
         get() = "DONE" == status.statusType && !hasTpsError()

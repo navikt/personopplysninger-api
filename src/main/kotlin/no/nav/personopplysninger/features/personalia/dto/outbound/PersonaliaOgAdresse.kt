@@ -1,5 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.outbound
 
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.Kontaktadresse
+
 data class PersonaliaOgAdresser(val personalia: Personalia, val adresser: Adresser?, val enhetKontaktInformasjon: EnhetsKontaktInformasjon)
 
 data class Personalia(
@@ -23,7 +25,7 @@ data class Adresser(
         val geografiskTilknytning: GeografiskTilknytning? = null,
         val postadresse: Postadresse? = null,
         val prioritertAdresse: String? = null,
-        val tilleggsadresse: Tilleggsadresse? = null,
+        val kontaktadresse: Kontaktadresse? = null,
         val utenlandskAdresse: UtenlandskAdresseDto? = null
 )
 

@@ -3,6 +3,7 @@ package no.nav.personopplysninger.features.personalia.tps
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
 import no.nav.personopplysninger.features.personalia.pdl.pdlPersonInfoWithValues
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -31,7 +32,7 @@ class PersonaliaOgAdresserTransformerTest {
     fun gittIngenAdresseinfio_skalIkkeFaaAdresser() {
         val inbound = PersoninfoObjectMother.withValuesInAllFields.copy(adresseinfo = null)
 
-        val pdlPersonInfo = pdlPersonInfoWithValues
+        val pdlPersonInfo = PdlPersonInfo()
 
         val actual = PersonaliaOgAdresserTransformer.toOutbound(inbound, pdlPersonInfo, personaliaKodeverk)
 

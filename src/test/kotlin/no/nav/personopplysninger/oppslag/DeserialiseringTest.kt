@@ -71,7 +71,7 @@ class DeserialiseringTest {
         val json = """
             {
               "data": {
-                "hentPerson": {
+                "person": {
                   "telefonnummer": [
                     {
                       "landskode": "+47",
@@ -81,17 +81,63 @@ class DeserialiseringTest {
                         "opplysningsId": "b2cf4a5c-99e9-46e5-88d9-65d79aee3bb0"
                       }
                     }
+                  ],
+                  "kontaktadresse": [
+                    {
+                      "gyldigFraOgMed": "2020-03-24T00:00",
+                      "gyldigTilOgMed": null,
+                      "type": "Innland",
+                      "coAdressenavn": null,
+                      "postboksadresse": null,
+                      "vegadresse": null,
+                      "postadresseIFrittFormat": {
+                        "adresselinje1": "Linjeveien 1",
+                        "adresselinje2": "1234 LINJE",
+                        "adresselinje3": "Norge",
+                        "postnummer": null
+                      },
+                      "utenlandskAdresse": null,
+                      "utenlandskAdresseIFrittFormat": null,
+                      "folkeregistermetadata": {
+                        "ajourholdstidspunkt": null,
+                        "gyldighetstidspunkt": "2020-03-24T00:00",
+                        "opphoerstidspunkt": null,
+                        "kilde": "KILDE_DSF",
+                        "aarsak": null,
+                        "sekvens": null
+                      },
+                      "metadata": {
+                        "opplysningsId": "abcd1234-1234-abcd-1234-123456abcdef",
+                        "master": "Freg",
+                        "endringer": [
+                          {
+                            "type": "OPPRETT",
+                            "registrert": "2020-04-24T13:07:20",
+                            "registrertAv": "Folkeregisteret",
+                            "systemkilde": "FREG",
+                            "kilde": "KILDE_DSF"
+                          }
+                        ],
+                        "historisk": false
+                      }
+                    }
                   ]
                 }
               }
             }
         """.trimIndent()
 
-        val person: PdlResponse = jacksonObjectMapper().readValue(json)
-        val telefonnummer = person.data.hentPerson.telefonnummer.first()
+        val person: PdlResponse = RestClientConfiguration.applicationObjectMapper.readValue(json)
+        val telefonnummer = person.data.person.telefonnummer.first()
+        val kontaktadresse = person.data.person.kontaktadresse.first()
+
         assertEquals(telefonnummer.landskode, "+47")
         assertEquals(telefonnummer.nummer, "22334455")
         assertEquals(telefonnummer.prioritet, 1)
+
+        assertEquals(kontaktadresse.postadresseIFrittFormat?.adresselinje1, "Linjeveien 1")
+        assertEquals(kontaktadresse.postadresseIFrittFormat?.adresselinje2, "1234 LINJE")
+        assertEquals(kontaktadresse.postadresseIFrittFormat?.adresselinje3, "Norge")
     }
 
     @Test

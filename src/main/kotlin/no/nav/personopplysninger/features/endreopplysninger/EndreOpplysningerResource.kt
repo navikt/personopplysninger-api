@@ -8,6 +8,7 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Steds
 import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Utenlandsadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.*
 import no.nav.security.oidc.api.ProtectedWithClaims
 import no.nav.security.oidc.jaxrs.OidcRequestContext
 import org.slf4j.LoggerFactory
@@ -111,6 +112,42 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     @Consumes(MediaType.APPLICATION_JSON)
     fun opphoerUtenlandskKontaktadresse(): Response {
         val resp = endreOpplysningerService.opphoerAdresse(hentFnrFraToken(), UTENLANDSK)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreKontaktadresse/vegadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreKontaktadresseVegadresse(vegadresse: DownstreamVegadresse): Response {
+        val resp = endreOpplysningerService.endreKontaktadresseVegadresse(hentFnrFraToken(), vegadresse)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreKontaktadresse/postboksadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreKontaktadressePostboksadresse(postboksadresse: DownstreamPostboksadresse): Response {
+        val resp = endreOpplysningerService.endreKontaktadressePostboksadresse(hentFnrFraToken(), postboksadresse)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreKontaktadresse/utenlandskAdresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreKontaktadresseUtenlandskAdresse(utenlandskAdresse: DownstreamUtenlandskAdresse): Response {
+        val resp = endreOpplysningerService.endreKontaktadresseUtenlandskAdresse(hentFnrFraToken(), utenlandskAdresse)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/slettKontaktadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun slettKontaktadresse(): Response {
+        val resp = endreOpplysningerService.slettKontaktadresse(hentFnrFraToken())
         return Response.ok(resp).build()
     }
 
