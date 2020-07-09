@@ -48,7 +48,7 @@ class PersonaliaService @Autowired constructor(
     }
 
     private fun createPersonaliaKodeverk(inbound: Personinfo, inboundPdl: PdlPersonInfo): PersonaliaKodeverk {
-        val kontaktadresse = inboundPdl.kontaktadresse.first()
+        val kontaktadresse = inboundPdl.kontaktadresse.firstOrNull()
 
         return PersonaliaKodeverk().apply {
             kjonnterm = kodeverkConsumer.hentKjonn().term(inbound.kjonn)
@@ -66,8 +66,8 @@ class PersonaliaService @Autowired constructor(
             postadresselandterm = kodeverkConsumer.hentLandKoder().term(inbound.adresseinfo?.postadresse?.land)
             utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inbound.utenlandskBank?.land?.verdi)
             utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inbound.utenlandskBank?.valuta?.verdi)
-            kontaktadressePostSted = kodeverkConsumer.hentPostnummer().term(kontaktadresse.postnummer)
-            kontaktadresseLand = kodeverkConsumer.hentLandKoder().term(kontaktadresse.landkode)
+            kontaktadressePostSted = kodeverkConsumer.hentPostnummer().term(kontaktadresse?.postnummer)
+            kontaktadresseLand = kodeverkConsumer.hentLandKoder().term(kontaktadresse?.landkode)
         }
     }
 
