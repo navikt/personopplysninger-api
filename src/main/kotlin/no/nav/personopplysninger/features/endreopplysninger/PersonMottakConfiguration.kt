@@ -39,7 +39,7 @@ open class PersonMottakConfiguration {
                 .register(OidcClientRequestFilter::class.java)
                 .register(clientObjectMapperResolver)
                 .register(ClientRequestFilter { requestContext ->
-                    log.info(requestContext.entity.toString())
+                    clientObjectMapperResolver.getContext(requestContext.entityClass).writeValueAsString(requestContext.entity).let {log.info(it)}
                     requestContext.getHeaders()
                             .putSingle(DEFAULT_APIKEY_USERNAME, personMottakApiKeyPassword)
                 })
