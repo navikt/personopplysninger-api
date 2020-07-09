@@ -11,7 +11,7 @@ import java.time.LocalDate
 
 class Kontaktadresse (
         @JsonProperty("@type")
-        private val subType: String = "KONTAKTADRESSE",
+        val subtype: String = "KONTAKTADRESSE",
 
         val kilde: String = "BRUKER SELV",
 
