@@ -220,6 +220,8 @@ class DeserialiseringTest {
 
         assertEquals(response.ident, "12045678900")
         assertEquals(response.endringsmelding.adresse.typeAdresse, AdresseType.POSTBOKSADRESSE)
+
+        val stringy = RestClientConfiguration.applicationObjectMapper.writeValueAsString(response.asSingleEndring())
     }
 
     @Test
