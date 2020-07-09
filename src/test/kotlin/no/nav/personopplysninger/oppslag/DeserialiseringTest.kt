@@ -12,6 +12,7 @@ import no.nav.personopplysninger.features.auth.Navn
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.AdresseType
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndreKontaktadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndringKontaktadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.Postboksadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.institusjon.domain.Institusjonstype
@@ -219,7 +220,7 @@ class DeserialiseringTest {
         val response: EndreKontaktadresse = RestClientConfiguration.applicationObjectMapper.readValue(json)
 
         assertEquals(response.ident, "12045678900")
-        assertEquals(response.endringsmelding.adresse.typeAdresse, AdresseType.POSTBOKSADRESSE)
+        assertEquals((response.endringsmelding.adresse as Postboksadresse).typeAdresse, AdresseType.POSTBOKSADRESSE)
 
         val stringy = RestClientConfiguration.applicationObjectMapper.writeValueAsString(response.asSingleEndring())
     }

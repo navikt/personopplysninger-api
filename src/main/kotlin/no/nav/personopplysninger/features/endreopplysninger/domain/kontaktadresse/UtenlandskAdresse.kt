@@ -1,9 +1,12 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.AdresseType.UTENLANDSK_ADRESSE
 
 
 class UtenlandskAdresse(
+        @JsonProperty("@type")
+        val typeAdresse: AdresseType = UTENLANDSK_ADRESSE,
         val adressenavnNummer: String? = null,
         val bygningEtasjeLeilighet: String? = null,
         val postboksNummerNavn: String? = null,
@@ -11,4 +14,4 @@ class UtenlandskAdresse(
         val bySted: String? = null,
         val regionDistriktOmraade: String? = null,
         val landkode: String
-): Adresse(UTENLANDSK_ADRESSE)
+): Adresse()
