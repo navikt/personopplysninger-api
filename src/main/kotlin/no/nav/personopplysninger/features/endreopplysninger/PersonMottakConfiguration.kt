@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
 import no.nav.security.oidc.jaxrs.OidcClientRequestFilter
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -21,6 +22,8 @@ open class PersonMottakConfiguration {
     @Value("\${PERSONOPPLYSNINGER_API_PERSON_MOTTAK_API_V1_APIKEY_PASSWORD}")
     private val personMottakApiKeyPassword: String? = null
 
+    private val log = LoggerFactory.getLogger(PersonMottakConfiguration::class.java)
+
     @Bean
     @Throws(URISyntaxException::class)
     open fun personMottakConsumer(
@@ -36,6 +39,7 @@ open class PersonMottakConfiguration {
                 .register(OidcClientRequestFilter::class.java)
                 .register(clientObjectMapperResolver)
                 .register(ClientRequestFilter { requestContext ->
+                    log.info(requestContext.entity.toString())
                     requestContext.getHeaders()
                             .putSingle(DEFAULT_APIKEY_USERNAME, personMottakApiKeyPassword)
                 })
