@@ -10,11 +10,6 @@ import java.time.LocalDate
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 class Kontaktadresse (
-        @JsonProperty("@type")
-        val subtype: String = "KONTAKTADRESSE",
-
-        val kilde: String = "BRUKER SELV",
-
         val gyldigFraOgMed: LocalDate,
 
         val gyldigTilOgMed: LocalDate,
@@ -22,4 +17,9 @@ class Kontaktadresse (
         val coAdressenavn: String?,
 
         val adresse: Adresse
-)
+) {
+        @JsonProperty("@type")
+        private val subtype = "KONTAKTADRESSE"
+
+        val kilde = "BRUKER SELV"
+}
