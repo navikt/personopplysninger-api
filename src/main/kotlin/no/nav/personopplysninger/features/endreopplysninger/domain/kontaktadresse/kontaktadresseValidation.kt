@@ -7,6 +7,7 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.validation.Va
 import no.nav.personopplysninger.features.endreopplysninger.domain.validation.ValidationResult.Companion.invalidResult
 import no.nav.personopplysninger.features.endreopplysninger.domain.validation.ValidationResult.Companion.validResult
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.*
+import java.time.LocalDate
 
 fun validateVegadresse(vegadresse: DownstreamVegadresse): ValidationResult<DownstreamVegadresse, EndringKontaktadresse> {
 
@@ -34,6 +35,13 @@ fun validateVegadresse(vegadresse: DownstreamVegadresse): ValidationResult<Downs
     if (!isValidDate(vegadresse.gyldigTilOgMed)) {
         val error = Error().apply {
             message = "GyldigTilOgMed er ikke en gyldig dato."
+        }
+        return invalidResult(error)
+    }
+
+    if (dateIsMoreThanOneYearInTheFuture(vegadresse.gyldigTilOgMed!!)) {
+        val error = Error().apply {
+            message = "GyldigTilOgMed kan ikke være mer enn ett år frem i tid."
         }
         return invalidResult(error)
     }
@@ -71,6 +79,13 @@ fun validatePostboksAdresse(postboksadresse: DownstreamPostboksadresse): Validat
         return invalidResult(error)
     }
 
+    if (dateIsMoreThanOneYearInTheFuture(postboksadresse.gyldigTilOgMed!!)) {
+        val error = Error().apply {
+            message = "GyldigTilOgMed kan ikke være mer enn ett år frem i tid."
+        }
+        return invalidResult(error)
+    }
+
     return validResult(postboksadresse)
 }
 
@@ -97,5 +112,18 @@ fun validateUtenlandskAdresse(utenlandskAdresse: DownstreamUtenlandskAdresse): V
         return invalidResult(error)
     }
 
+    if (dateIsMoreThanOneYearInTheFuture(utenlandskAdresse.gyldigTilOgMed!!)) {
+        val error = Error().apply {
+            message = "GyldigTilOgMed kan ikke være mer enn ett år frem i tid."
+        }
+        return invalidResult(error)
+    }
+
     return validResult(utenlandskAdresse)
+}
+
+private fun dateIsMoreThanOneYearInTheFuture(dateString: String): Boolean {
+    val date = LocalDate.parse(dateString)
+
+    return date.isAfter(LocalDate.now().plusYears(1))
 }

@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.endreopplysninger
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.log.MDCConstants
+import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.consumerutils.CONSUMER_ID
 import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody
@@ -97,6 +98,8 @@ class PersonMottakConsumer (
                             endreKontaktadresse: EndreKontaktadresse,
                             systemUserToken: String): EndringKontaktadresse {
 
+        log.info(RestClientConfiguration.applicationObjectMapper.writeValueAsString(endreKontaktadresse))
+
         return sendPdlEndring(endreKontaktadresse, fnr, systemUserToken, URL_ENDRINGER)
     }
 
@@ -165,6 +168,7 @@ class PersonMottakConsumer (
     }
 
     private fun <T : Endring<T>> readResponseAndPollStatus(response: Response, systemUserToken: String, clazz: Class<T>): T {
+        log.info(response.readEntity(String::class.java))
         return when {
             response.status == HTTP_CODE_423 -> {
                 getEndring(clazz, "REJECTED").apply {
