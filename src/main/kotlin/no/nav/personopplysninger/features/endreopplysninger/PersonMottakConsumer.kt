@@ -165,6 +165,7 @@ class PersonMottakConsumer (
     }
 
     private fun <T : Endring<T>> readResponseAndPollStatus(response: Response, systemUserToken: String, clazz: Class<T>): T {
+        log.info(response.readEntity(String::class.java))
         return when {
             response.status == HTTP_CODE_423 -> {
                 getEndring(clazz, "REJECTED").apply {
