@@ -6,7 +6,7 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadress
 
 class UtenlandskAdresse(
         @JsonProperty("@type")
-        val typeAdresse: AdresseType = UTENLANDSK_ADRESSE,
+        val typeAdresse: String = UTENLANDSK_ADRESSE.name,
         val adressenavnNummer: String? = null,
         val bygningEtasjeLeilighet: String? = null,
         val postboksNummerNavn: String? = null,

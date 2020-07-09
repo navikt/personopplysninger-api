@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 class Vegadresse (
         @JsonProperty("@type")
-        val typeAdresse: AdresseType = AdresseType.VEGADRESSE,
+        val typeAdresse: String = AdresseType.VEGADRESSE.name,
         val matrikkelId: String? = null,
         val bruksenhetsnummer: String? = null,
         val adressenavn: String? = null,

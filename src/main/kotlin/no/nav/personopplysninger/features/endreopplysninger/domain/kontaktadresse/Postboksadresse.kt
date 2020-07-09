@@ -5,7 +5,7 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadress
 
 class Postboksadresse(
         @JsonProperty("@type")
-        val typeAdresse: AdresseType = POSTBOKSADRESSE,
+        val typeAdresse: String = POSTBOKSADRESSE.name,
         val postbokseier: String? = null,
         val postboks: String,
         val postnummer: String

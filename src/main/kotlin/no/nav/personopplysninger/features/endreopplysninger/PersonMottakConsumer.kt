@@ -154,10 +154,6 @@ class PersonMottakConsumer (
 
         val entity = Entity.entity(entitetSomEndres.asSingleEndring(), MediaType.APPLICATION_JSON)
 
-
-        log.info(entity.toString())
-
-
         return try {
             request.method(
                     HttpMethod.POST, entity
