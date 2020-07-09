@@ -154,10 +154,6 @@ class PersonMottakConsumer (
 
         val entity = Entity.entity(entitetSomEndres.asSingleEndring(), MediaType.APPLICATION_JSON)
 
-
-        log.info(entity.toString())
-
-
         return try {
             request.method(
                     HttpMethod.POST, entity
@@ -195,7 +191,6 @@ class PersonMottakConsumer (
     }
 
     private inline fun <reified T : Endring<T>> readResponseAndPollStatus(response: Response): T {
-        log.info(response.readEntity(String::class.java))
         return when {
             response.status == HTTP_CODE_423 -> {
                 getEndring<T>("REJECTED").apply {
