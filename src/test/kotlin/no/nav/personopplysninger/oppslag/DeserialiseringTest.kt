@@ -9,6 +9,9 @@ import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.consumerutils.unmarshalList
 import no.nav.personopplysninger.features.auth.Navn
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.AdresseType
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndreKontaktadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndringKontaktadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.institusjon.domain.Institusjonstype
@@ -188,6 +191,35 @@ class DeserialiseringTest {
         assertEquals(telefonnummer.landskode, "+47")
         assertEquals(telefonnummer.nummer, "22334455")
         assertEquals(telefonnummer.prioritet, 1)
+    }
+
+    @Test
+    fun canDeserializePMKontaktadresseResponse() {
+        val json = """
+        {
+          "ident": "12045678900",
+          "endringstype": "OPPRETT",
+          "opplysningstype": "KONTAKTADRESSE",
+          "endringsmelding": {
+            "@type": "KONTAKTADRESSE",
+            "gyldigFraOgMed": "2020-01-01",
+            "gyldigTilOgMed": "2020-07-01",
+            "coAdressenavn": "Grå Banan",
+            "kilde": "test",
+            "adresse": {
+              "@type": "POSTBOKSADRESSE",
+              "postbokseier": "Snill Tester",
+              "postboks": "Postboks 13",
+              "postnummer": "0001"
+            }
+          }
+        }
+        """.trimIndent()
+
+        val response: EndreKontaktadresse = RestClientConfiguration.applicationObjectMapper.readValue(json)
+
+        assertEquals(response.ident, "12045678900")
+        assertEquals(response.endringsmelding.adresse.typeAdresse, AdresseType.POSTBOKSADRESSE)
     }
 
     @Test

@@ -8,10 +8,10 @@ private const val OPPLYSNINGSTYPE = "KONTAKTADRESSE"
 
 class EndreKontaktadresse(
         ident: String,
-        endringsType: EndringsType,
-        endringsMelding: Kontaktadresse,
-        opplysningsId: String? = null)
-    : Personopplysning<Kontaktadresse>(ident, endringsType, OPPLYSNINGSTYPE, endringsMelding, opplysningsId)
+        endringstype: EndringsType,
+        endringsmelding: Kontaktadresse,
+        opplysningsid: String? = null)
+    : Personopplysning<Kontaktadresse>(ident, endringstype, OPPLYSNINGSTYPE, endringsmelding, opplysningsid)
 
 fun slettKontaktadressePayload(ident: String, opplysningsId: String) : OpphoerPersonopplysning {
     return OpphoerPersonopplysning(ident, OPPLYSNINGSTYPE, opplysningsId)
