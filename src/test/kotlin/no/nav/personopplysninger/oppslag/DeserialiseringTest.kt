@@ -220,7 +220,7 @@ class DeserialiseringTest {
         val response: EndreKontaktadresse = RestClientConfiguration.applicationObjectMapper.readValue(json)
 
         assertEquals(response.ident, "12045678900")
-        assertEquals((response.endringsmelding.adresse as Postboksadresse).typeAdresse, AdresseType.POSTBOKSADRESSE.name)
+        assertEquals((response.endringsmelding.adresse as Postboksadresse).typeAdresse, AdresseType.POSTBOKSADRESSE)
 
         val stringy = RestClientConfiguration.applicationObjectMapper.writeValueAsString(response.asSingleEndring())
     }
