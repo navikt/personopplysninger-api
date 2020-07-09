@@ -19,8 +19,8 @@ object PMKontaktAdresseTransformer {
         )
 
         return Kontaktadresse(
-                gyldigFraOgMed = LocalDate.parse(vegadresse.gyldigFraOgMed),
-                gyldigTilOgMed = LocalDate.parse(vegadresse.gyldigTilOgMed),
+                gyldigFraOgMed = vegadresse.gyldigFraOgMed!!,
+                gyldigTilOgMed = vegadresse.gyldigTilOgMed!!,
                 coAdressenavn = vegadresse.coAdressenavn,
                 adresse = adresse
         )
@@ -34,8 +34,8 @@ object PMKontaktAdresseTransformer {
         )
 
         return Kontaktadresse(
-                gyldigFraOgMed = LocalDate.parse(postboksadresse.gyldigFraOgMed),
-                gyldigTilOgMed = LocalDate.parse(postboksadresse.gyldigTilOgMed),
+                gyldigFraOgMed = postboksadresse.gyldigFraOgMed!!,
+                gyldigTilOgMed = postboksadresse.gyldigTilOgMed!!,
                 coAdressenavn = "",
                 adresse = adresse
         )
@@ -53,8 +53,8 @@ object PMKontaktAdresseTransformer {
         )
 
         return Kontaktadresse(
-                gyldigFraOgMed = LocalDate.parse(utenlandskAdresse.gyldigFraOgMed),
-                gyldigTilOgMed = LocalDate.parse(utenlandskAdresse.gyldigTilOgMed),
+                gyldigFraOgMed = utenlandskAdresse.gyldigFraOgMed!!,
+                gyldigTilOgMed = utenlandskAdresse.gyldigTilOgMed!!,
                 coAdressenavn = utenlandskAdresse.coAdressenavn,
                 adresse = adresse
         )
