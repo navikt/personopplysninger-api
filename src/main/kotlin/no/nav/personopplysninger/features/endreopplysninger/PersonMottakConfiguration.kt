@@ -22,8 +22,6 @@ open class PersonMottakConfiguration {
     @Value("\${PERSONOPPLYSNINGER_API_PERSON_MOTTAK_API_V1_APIKEY_PASSWORD}")
     private val personMottakApiKeyPassword: String? = null
 
-    private val log = LoggerFactory.getLogger(PersonMottakConfiguration::class.java)
-
     @Bean
     @Throws(URISyntaxException::class)
     open fun personMottakConsumer(
@@ -39,7 +37,6 @@ open class PersonMottakConfiguration {
                 .register(OidcClientRequestFilter::class.java)
                 .register(clientObjectMapperResolver)
                 .register(ClientRequestFilter { requestContext ->
-                    clientObjectMapperResolver.getContext(requestContext.entityClass).writeValueAsString(requestContext.entity).let {log.info(it)}
                     requestContext.getHeaders()
                             .putSingle(DEFAULT_APIKEY_USERNAME, personMottakApiKeyPassword)
                 })
