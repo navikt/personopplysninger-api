@@ -22,7 +22,7 @@ class Telefonnummer {
     var prioritet: Int = 1
         private set
 
-    constructor() {}
+    constructor()
 
     constructor(landskode: String, nummer: String, prioritet: Int) {
         this.landskode = landskode

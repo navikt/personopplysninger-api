@@ -19,8 +19,7 @@ object AdresseinfoTransformer {
                     prioritertAdresse = inbound?.prioritertAdresse?.let { it.kode?.verdi },
                     geografiskTilknytning = inbound?.geografiskTilknytning?.let { GeografiskTilknytningTransformer.toOutbound(it, kodeverk) },
                     kontaktadresse = kontaktadresse?.let { KontaktadresseTranformer.toOutbound(it, kodeverk) },
-                    postadresse = inbound?.postadresse?.let { PostadresseTransformer.toOutbound(it, kodeverk)},
-                    utenlandskAdresse = inbound?.utenlandskAdresse?.let { UtenlandskAdresseTransformer.toOutbound(it, kodeverk) }
+                    postadresse = inbound?.postadresse?.let { PostadresseTransformer.toOutbound(it, kodeverk)}
             )
         }
     }

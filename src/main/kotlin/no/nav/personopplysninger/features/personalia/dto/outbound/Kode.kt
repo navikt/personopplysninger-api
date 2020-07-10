@@ -21,5 +21,4 @@ data class Kode (
 
     val kodeverk: String? = null,
     val verdi: String? = null
-) {
-}
+)

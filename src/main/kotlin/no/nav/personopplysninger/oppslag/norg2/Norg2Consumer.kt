@@ -29,7 +29,7 @@ class Norg2Consumer(private val client: Client, private val endpoint: URI) {
         }
         catch (e: ConsumerException) {
             logger.error(e.toString())
-            return null;
+            return null
         }
     }
 

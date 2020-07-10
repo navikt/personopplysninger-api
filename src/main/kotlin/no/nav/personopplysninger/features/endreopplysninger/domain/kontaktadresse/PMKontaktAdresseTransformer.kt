@@ -3,8 +3,6 @@ package no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadres
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamPostboksadresse
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamUtenlandskAdresse
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamVegadresse
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontaktadresse
-import java.time.LocalDate
 
 object PMKontaktAdresseTransformer {
     fun fromDownstreamVegadresse(vegadresse: DownstreamVegadresse): Kontaktadresse {

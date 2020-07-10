@@ -2,14 +2,12 @@ package no.nav.personopplysninger.features.endreopplysninger
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.log.MDCConstants
-import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.consumerutils.CONSUMER_ID
 import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.consumerutils.unmarshalList
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring
 import no.nav.personopplysninger.features.endreopplysninger.domain.Personopplysning
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndreKontaktadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndringKontaktadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
@@ -47,12 +45,6 @@ class PersonMottakConsumer (
     private val MAX_POLLS = 3
 
     private val URL_KONTONUMMER = "/api/v1/endring/bankkonto"
-    private val URL_GATEADRESSE = "/api/v1/endring/kontaktadresse/norsk/gateadresse"
-    private val URL_POSTBOKSADRESSE = "/api/v1/endring/kontaktadresse/norsk/postboksadresse"
-    private val URL_UTENLANDSADRESSE = "/api/v1/endring/kontaktadresse/utenlandsk"
-    private val URL_STEDSADRESSE = "/api/v1/endring/kontaktadresse/norsk/stedsadresse"
-    private val URL_OPPHOER_KONTAKTADRESSE_NORSK = "/api/v1/endring/kontaktadresse/norsk/opphoer"
-    private val URL_OPPHOER_KONTAKTADRESSE_UTENLANDSK = "/api/v1/endring/kontaktadresse/utenlandsk/opphoer"
 
     private val URL_ENDRINGER = "/api/v1/endringer"
 
@@ -63,35 +55,6 @@ class PersonMottakConsumer (
     fun endreKontonummer(fnr: String, kontonummer: Kontonummer, systemUserToken: String): EndringKontonummer {
         val request = buildEndreRequest(fnr, systemUserToken, URL_KONTONUMMER)
         return sendEndring(request, kontonummer, systemUserToken, HttpMethod.POST, EndringKontonummer::class.java)
-    }
-
-    fun endreGateadresse(fnr: String, gateadresse: Gateadresse, systemUserToken: String): EndringGateadresse {
-        val request = buildEndreRequest(fnr, systemUserToken, URL_GATEADRESSE)
-        return sendEndring(request, gateadresse, systemUserToken, HttpMethod.POST, EndringGateadresse::class.java)
-    }
-
-    fun endreStedsadresse(fnr: String, stedsadresse: Stedsadresse, systemUserToken: String): EndringStedsadresse {
-        val request = buildEndreRequest(fnr, systemUserToken, URL_STEDSADRESSE)
-        return sendEndring(request, stedsadresse, systemUserToken, HttpMethod.POST, EndringStedsadresse::class.java)
-    }
-
-    fun endrePostboksadresse(fnr: String, postboksadresse: Postboksadresse, systemUserToken: String): EndringPostboksadresse {
-        val request = buildEndreRequest(fnr, systemUserToken, URL_POSTBOKSADRESSE)
-        return sendEndring(request, postboksadresse, systemUserToken, HttpMethod.POST, EndringPostboksadresse::class.java)
-    }
-
-    fun endreUtenlandsadresse(fnr: String, utenlandsadresse: Utenlandsadresse, systemUserToken: String): EndringUtenlandsadresse {
-        val request = buildEndreRequest(fnr, systemUserToken, URL_UTENLANDSADRESSE)
-        return sendEndring(request, utenlandsadresse, systemUserToken, HttpMethod.POST, EndringUtenlandsadresse::class.java)
-    }
-
-    fun opphoerKontaktadresse(fnr: String, kontaktadresseType: KontaktadresseType, systemUserToken: String): EndringOpphoerAdresse {
-        val url = if (kontaktadresseType == KontaktadresseType.NORSK)
-            URL_OPPHOER_KONTAKTADRESSE_NORSK
-        else
-            URL_OPPHOER_KONTAKTADRESSE_UTENLANDSK
-        val request = buildEndreRequest(fnr, systemUserToken, url)
-        return sendBlankEndring(request, systemUserToken, EndringOpphoerAdresse::class.java)
     }
 
     fun endreKontaktadresse(fnr: String,
