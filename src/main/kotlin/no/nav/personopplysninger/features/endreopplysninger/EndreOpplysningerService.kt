@@ -35,11 +35,11 @@ class EndreOpplysningerService (
         }
     }
 
-    fun slettTelefonNummer(fnr: String, telefonnummer: Telefonnummer): EndringOpphoerPersonopplysning {
+    fun slettTelefonNummer(fnr: String, telefonnummer: Telefonnummer): EndringTelefon {
         val opplysningsId = pdlService.getOpplysningsIdForTelefon(fnr, telefonnummer.landskode!!, telefonnummer.nummer!!)
                 ?: throw RuntimeException("Kan ikke slette nummer som ikke eksisterer: ${telefonnummer.landskode}, ${telefonnummer.nummer}")
 
-        return personMottakConsumer.slettPersonopplysning(fnr, slettNummerPayload(fnr, opplysningsId), systemToken)
+        return personMottakConsumer.slettPersonopplysning(fnr, slettNummerPayload(fnr, opplysningsId), systemToken, EndringTelefon::class.java)
     }
 
     fun endreKontonummer(fnr: String, kontonummer: Kontonummer): EndringKontonummer {
@@ -73,11 +73,11 @@ class EndreOpplysningerService (
         }.response
     }
 
-    fun slettKontaktadresse(fnr: String): EndringOpphoerPersonopplysning {
+    fun slettKontaktadresse(fnr: String): EndringKontaktadresse {
         val opplysningsId = pdlService.getOpplysningsIdForKontaktadresse(fnr)
                 ?: throw RuntimeException("Fant ingen kontaktadresser som kan slettes")
 
-        return personMottakConsumer.slettPersonopplysning(fnr, slettKontaktadressePayload(fnr, opplysningsId), systemToken)
+        return personMottakConsumer.slettPersonopplysning(fnr, slettKontaktadressePayload(fnr, opplysningsId), systemToken, EndringKontaktadresse::class.java)
     }
 
     fun hentRetningsnumre(): Array<RetningsnummerDTO> {
