@@ -21,7 +21,7 @@ object KontaktadresseTranformer {
     private fun transformFromVegadresse(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse {
         val inboundVegadresse = inbound.vegadresse!!
 
-        val vegadresse = Vegadresse(
+        return Vegadresse(
                 husnummer = inboundVegadresse.husnummer,
                 husbokstav = inboundVegadresse.husbokstav,
                 bruksenhetsnummer = inboundVegadresse.bruksenhetsnummer,
@@ -34,14 +34,12 @@ object KontaktadresseTranformer {
                 gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
                 coAdressenavn = inbound.coAdressenavn
         )
-
-        return Kontaktadresse.withVegadresse(vegadresse)
     }
 
     private fun transformFromPostadresseIFrittFormat(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse {
         val inboundPostadresseIFrittFormat = inbound.postadresseIFrittFormat!!
 
-        val postadresseIFrittFormat = PostAdresseIFrittFormat(
+        return PostAdresseIFrittFormat(
                 adresselinje1 = inboundPostadresseIFrittFormat.adresselinje1,
                 adresselinje2 = inboundPostadresseIFrittFormat.adresselinje2,
                 adresselinje3 = inboundPostadresseIFrittFormat.adresselinje3,
@@ -51,14 +49,12 @@ object KontaktadresseTranformer {
                 gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
                 coAdressenavn = inbound.coAdressenavn
         )
-
-        return Kontaktadresse.withPostadresseIFrittFormat(postadresseIFrittFormat)
     }
 
     private fun transformFromPostboksadresse(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse {
         val inboundPostboksadresse = inbound.postboksadresse!!
 
-        val postboksadresse = Postboksadresse(
+        return Postboksadresse(
                 postbokseier = inboundPostboksadresse.postbokseier,
                 postboks = inboundPostboksadresse.postboks,
                 postnummer = inboundPostboksadresse.postnummer,
@@ -66,14 +62,12 @@ object KontaktadresseTranformer {
                 gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
                 gyldigTilOgMed = inbound.gyldigTilOgMed.toString()
         )
-
-        return Kontaktadresse.withPostboksadresse(postboksadresse)
     }
 
     private fun transformFromUtenlandskAdresse(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse {
         val inboundUtenlandskAdresse = inbound.utenlandskAdresse!!
 
-        val utenlandskAdresse = UtenlandskAdresse(
+        return UtenlandskAdresse(
                 adressenavnNummer = inboundUtenlandskAdresse.adressenavnNummer,
                 bygningEtasjeLeilighet = inboundUtenlandskAdresse.bygningEtasjeLeilighet,
                 postboksNummerNavn = inboundUtenlandskAdresse.postboksNummerNavn,
@@ -86,14 +80,12 @@ object KontaktadresseTranformer {
                 gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
                 coAdressenavn = inbound.coAdressenavn
         )
-
-        return Kontaktadresse.withUtenlandskAdresse(utenlandskAdresse)
     }
 
     private fun transformFromUtenlandskAdresseIFrittFormat(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse {
         val inboundUtenlandskAdresseIFrittFormat = inbound.utenlandskAdresseIFrittFormat!!
 
-        val utenlandskAdressseIFrittFormat = UtenlandskAdresseIFrittFormat(
+        return UtenlandskAdresseIFrittFormat(
                 adresselinje1 = inboundUtenlandskAdresseIFrittFormat.adresselinje1,
                 adresselinje2 = inboundUtenlandskAdresseIFrittFormat.adresselinje2,
                 adresselinje3 = inboundUtenlandskAdresseIFrittFormat.adresselinje3,
@@ -105,7 +97,5 @@ object KontaktadresseTranformer {
                 gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
                 coAdressenavn = inbound.coAdressenavn
         )
-
-        return Kontaktadresse.withUtenlandskAdresseIFrittFormat(utenlandskAdressseIFrittFormat)
     }
  }
