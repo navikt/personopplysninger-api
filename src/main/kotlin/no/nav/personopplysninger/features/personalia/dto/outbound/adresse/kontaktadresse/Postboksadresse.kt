@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.personalia.dto.outbound.adresse.konta
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.KontaktadresseType.POSTBOKSADRESSE
 
 @JsonInclude(NON_NULL)
 data class Postboksadresse (
@@ -11,4 +12,6 @@ data class Postboksadresse (
         val poststed: String?,
         val gyldigFraOgMed: String?,
         val gyldigTilOgMed: String?
-)
+): Kontaktadresse {
+    override val type: KontaktadresseType get() = POSTBOKSADRESSE
+}
