@@ -64,10 +64,11 @@ class PersonMottakConsumer (
         return sendPdlEndring(endreKontaktadresse, fnr, systemUserToken, URL_ENDRINGER)
     }
 
-    fun slettPersonopplysning(fnr: String,
-                              opphoerPersonopplysning: OpphoerPersonopplysning,
-                              systemUserToken: String): EndringOpphoerPersonopplysning {
-        return sendPdlEndring(opphoerPersonopplysning, fnr, systemUserToken, URL_ENDRINGER)
+    fun <T: Endring<T>> slettPersonopplysning(fnr: String,
+                                              opphoerPersonopplysning: OpphoerPersonopplysning,
+                                              systemUserToken: String,
+                                              endringsType: Class<T>): T {
+        return sendPdlEndring(opphoerPersonopplysning, fnr, systemUserToken, URL_ENDRINGER, endringsType)
     }
 
     private fun getBuilder(path: String, systemUserToken: String): Invocation.Builder {
@@ -122,6 +123,28 @@ class PersonMottakConsumer (
                     HttpMethod.POST, entity
             ).use {
                 response -> readResponseAndPollStatus(response)
+            }
+        } catch (e: Exception) {
+            val msg = "Forsøkte å endre personopplysning. endpoint=[$endpoint]."
+            throw ConsumerException(msg, e)
+        }
+    }
+
+    private fun <T, R : Endring<R>> sendPdlEndring(entitetSomEndres: Personopplysning<T>,
+                                                                          fnr: String,
+                                                                          systemUserToken: String,
+                                                                          path: String,
+                                                                          endringType: Class<R>): R {
+
+        val request = buildEndreRequest(fnr, systemUserToken, path)
+
+        val entity = Entity.entity(entitetSomEndres.asSingleEndring(), MediaType.APPLICATION_JSON)
+
+        return try {
+            request.method(
+                    HttpMethod.POST, entity
+            ).use {
+                response -> readResponseAndPollStatus(response, systemUserToken, endringType)
             }
         } catch (e: Exception) {
             val msg = "Forsøkte å endre personopplysning. endpoint=[$endpoint]."
