@@ -1,14 +1,10 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Gateadresse
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.KontaktadresseType.NORSK
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.KontaktadresseType.UTENLANDSK
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Postboksadresse
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Stedsadresse
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Utenlandsadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
-import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.*
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamPostboksadresse
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamUtenlandskAdresse
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamVegadresse
 import no.nav.security.oidc.api.ProtectedWithClaims
 import no.nav.security.oidc.jaxrs.OidcRequestContext
 import org.slf4j.LoggerFactory
@@ -54,64 +50,6 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     fun endreKontonummer(kontonummer: Kontonummer): Response {
         val resp = endreOpplysningerService.endreKontonummer(
                 hentFnrFraToken(), kontonummer)
-        return Response.ok(resp).build()
-    }
-
-    @POST
-    @Path("/endreGateadresse")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    fun endreGateadresse(gateadresse: Gateadresse): Response {
-        val resp = endreOpplysningerService.endreGateadresse(
-                hentFnrFraToken(), gateadresse)
-        return Response.ok(resp).build()
-    }
-
-    @POST
-    @Path("/endreStedsadresse")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    fun endreStedsadresse(stedsadresse: Stedsadresse): Response {
-        val resp = endreOpplysningerService.endreStedsadresse(
-                hentFnrFraToken(), stedsadresse)
-        return Response.ok(resp).build()
-    }
-
-    @POST
-    @Path("/endrePostboksadresse")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    fun endrePostboksadresse(postboksadresse: Postboksadresse): Response {
-        val resp = endreOpplysningerService.endrePostboksadresse(
-                hentFnrFraToken(), postboksadresse)
-        return Response.ok(resp).build()
-    }
-
-    @POST
-    @Path("/endreUtenlandsadresse")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    fun endreUtenlandsadresse(utenlandsadresse: Utenlandsadresse): Response {
-        val resp = endreOpplysningerService.endreUtenlandsadresse(
-                hentFnrFraToken(), utenlandsadresse)
-        return Response.ok(resp).build()
-    }
-
-    @PUT
-    @Path("/opphoerNorskKontaktadresse")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    fun opphoerNorskKontaktadresse(): Response {
-        val resp = endreOpplysningerService.opphoerAdresse(hentFnrFraToken(), NORSK)
-        return Response.ok(resp).build()
-    }
-
-    @PUT
-    @Path("/opphoerUtenlandskKontaktadresse")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    fun opphoerUtenlandskKontaktadresse(): Response {
-        val resp = endreOpplysningerService.opphoerAdresse(hentFnrFraToken(), UTENLANDSK)
         return Response.ok(resp).build()
     }
 

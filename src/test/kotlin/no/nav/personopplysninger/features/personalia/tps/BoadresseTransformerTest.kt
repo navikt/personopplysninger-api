@@ -2,7 +2,6 @@ package no.nav.personopplysninger.features.personalia.tps
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.BoadresseTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance

@@ -4,7 +4,6 @@ import no.nav.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.CONSUMER_ID
 import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlData
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlResponse
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.createKontaktadresseRequest

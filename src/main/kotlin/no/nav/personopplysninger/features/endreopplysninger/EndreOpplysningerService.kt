@@ -1,7 +1,5 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.Postboksadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.*
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
@@ -19,7 +17,6 @@ import no.nav.personopplysninger.oppslag.kodeverk.api.KodeOgTekstDto
 import no.nav.personopplysninger.oppslag.kodeverk.api.Kodeverk
 import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
@@ -29,8 +26,6 @@ class EndreOpplysningerService (
         private var kodeverkConsumer: KodeverkConsumer,
         private var pdlService: PdlService
 ) {
-
-    private val log = LoggerFactory.getLogger(EndreOpplysningerService::class.java)
 
     fun endreTelefonnummer(fnr: String, telefonnummer: Telefonnummer): EndringTelefon {
         if (!setOf(1, 2).contains(telefonnummer.prioritet)) {
@@ -49,26 +44,6 @@ class EndreOpplysningerService (
 
     fun endreKontonummer(fnr: String, kontonummer: Kontonummer): EndringKontonummer {
         return personMottakConsumer.endreKontonummer(fnr, kontonummer, systemToken)
-    }
-
-    fun endreGateadresse(fnr: String, gateadresse: Gateadresse): EndringGateadresse {
-        return personMottakConsumer.endreGateadresse(fnr, gateadresse, systemToken)
-    }
-
-    fun endreStedsadresse(fnr: String, stedsadresse: Stedsadresse): EndringStedsadresse {
-        return personMottakConsumer.endreStedsadresse(fnr, stedsadresse, systemToken)
-    }
-
-    fun endrePostboksadresse(fnr: String, postboksadresse: Postboksadresse): EndringPostboksadresse {
-        return personMottakConsumer.endrePostboksadresse(fnr, postboksadresse, systemToken)
-    }
-
-    fun endreUtenlandsadresse(fnr: String, utenlandsadresse: Utenlandsadresse): EndringUtenlandsadresse {
-        return personMottakConsumer.endreUtenlandsadresse(fnr, utenlandsadresse, systemToken)
-    }
-
-    fun opphoerAdresse(fnr: String, kontaktadresseType: KontaktadresseType): EndringOpphoerAdresse {
-        return personMottakConsumer.opphoerKontaktadresse(fnr,  kontaktadresseType, systemToken)
     }
 
     fun endreKontaktadresseVegadresse(fnr: String, vegadresse: DownstreamVegadresse): EndringKontaktadresse {
@@ -121,7 +96,7 @@ class EndreOpplysningerService (
     }
 
     fun hentPostnummer(): Array<KodeOgTekstDto> {
-        return toSortedKodeOgTekstArray(kodeverkConsumer.hentPostnummer());
+        return toSortedKodeOgTekstArray(kodeverkConsumer.hentPostnummer())
     }
 
     private fun toSortedKodeOgTekstArray(kodeverk: Kodeverk): Array<KodeOgTekstDto> {

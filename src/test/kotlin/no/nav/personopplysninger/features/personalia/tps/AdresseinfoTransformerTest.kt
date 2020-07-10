@@ -26,7 +26,6 @@ class AdresseinfoTransformerTest {
         assertNotNull(actual.postadresse)
         assertNotNull(actual.prioritertAdresse)
         assertNotNull(actual.kontaktadresse)
-        assertNotNull(actual.utenlandskAdresse)
     }
 
     @Test
@@ -42,7 +41,6 @@ class AdresseinfoTransformerTest {
         assertNull(actual.postadresse)
         assertNull(actual.prioritertAdresse)
         assertNull(actual.kontaktadresse)
-        assertNull(actual.utenlandskAdresse)
     }
 
 }

@@ -25,8 +25,7 @@ data class Adresser(
         val geografiskTilknytning: GeografiskTilknytning? = null,
         val postadresse: Postadresse? = null,
         val prioritertAdresse: String? = null,
-        val kontaktadresse: Kontaktadresse? = null,
-        val utenlandskAdresse: UtenlandskAdresseDto? = null
+        val kontaktadresse: Kontaktadresse? = null
 )
 
 data class EnhetsKontaktInformasjon(
