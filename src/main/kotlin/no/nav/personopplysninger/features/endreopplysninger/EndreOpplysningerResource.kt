@@ -83,7 +83,6 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     @POST
     @Path("/slettKontaktadresse")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     fun slettKontaktadresse(): Response {
         val resp = endreOpplysningerService.slettKontaktadresse(hentFnrFraToken())
         return Response.ok(resp).build()
