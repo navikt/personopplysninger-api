@@ -60,7 +60,8 @@ object KontaktadresseTranformer {
                 postnummer = inboundPostboksadresse.postnummer,
                 poststed = kodeverk.kontaktadressePostSted,
                 gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
-                gyldigTilOgMed = inbound.gyldigTilOgMed.toString()
+                gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
+                coAdressenavn = inbound.coAdressenavn
         )
     }
 

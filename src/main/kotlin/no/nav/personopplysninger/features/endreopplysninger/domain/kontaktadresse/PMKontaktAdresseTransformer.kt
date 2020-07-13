@@ -34,7 +34,7 @@ object PMKontaktAdresseTransformer {
         return Kontaktadresse(
                 gyldigFraOgMed = postboksadresse.gyldigFraOgMed!!,
                 gyldigTilOgMed = postboksadresse.gyldigTilOgMed!!,
-                coAdressenavn = "",
+                coAdressenavn = postboksadresse.coAdressenavn,
                 adresse = adresse
         )
     }

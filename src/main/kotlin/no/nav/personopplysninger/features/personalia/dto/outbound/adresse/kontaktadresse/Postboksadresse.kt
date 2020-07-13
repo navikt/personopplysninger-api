@@ -11,7 +11,8 @@ data class Postboksadresse (
         val postnummer: String?,
         val poststed: String?,
         val gyldigFraOgMed: String?,
-        val gyldigTilOgMed: String?
+        val gyldigTilOgMed: String?,
+        val coAdressenavn: String?
 ): Kontaktadresse {
     override val type: KontaktadresseType get() = POSTBOKSADRESSE
 }
