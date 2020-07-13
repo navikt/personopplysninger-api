@@ -6,15 +6,15 @@ import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontakta
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util.PdlKontaktadresseMappingType.*
 
 val PdlKontaktadresse.mappingType: PdlKontaktadresseMappingType get() {
-    return if (type == Innland && vegadresse != null) {
+    return if (vegadresse != null) {
         INNLAND_VEGADRESSE
-    } else if (type == Innland && postadresseIFrittFormat != null) {
+    } else if (postadresseIFrittFormat != null) {
         INNLAND_FRIFORMADRESSE
-    } else if (type == Innland && postboksadresse != null) {
+    } else if (postboksadresse != null) {
         INNLAND_POSTBOKSADRESSE
-    } else if (type == Utland && utenlandskAdresse != null) {
+    } else if (utenlandskAdresse != null) {
         UTLAND_ADRESSE
-    } else if (type == Utland && utenlandskAdresseIFrittFormat != null) {
+    } else if (utenlandskAdresseIFrittFormat != null) {
         UTLAND_FRIFORMADRESSE
     } else {
         EMPTY
