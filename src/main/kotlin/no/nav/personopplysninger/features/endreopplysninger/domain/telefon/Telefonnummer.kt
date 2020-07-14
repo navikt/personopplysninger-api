@@ -19,12 +19,12 @@ class Telefonnummer {
         private set
     var nummer: String? = null
         private set
-    var prioritet: Int = 1
+    var prioritet: Int? = 1
         private set
 
     constructor()
 
-    constructor(landskode: String?, nummer: String?, prioritet: Int) {
+    constructor(landskode: String?, nummer: String?, prioritet: Int?) {
         this.landskode = landskode
         this.nummer = nummer
         this.prioritet = prioritet
@@ -54,7 +54,7 @@ class Telefonnummer {
                 return Telefonnummer(
                         landskode = properties["landskode"] as String?,
                         nummer = properties["nummer"] as String?,
-                        prioritet = properties["prioritet"] as Int
+                        prioritet = properties["prioritet"] as Int?
                 )
             }
         }
