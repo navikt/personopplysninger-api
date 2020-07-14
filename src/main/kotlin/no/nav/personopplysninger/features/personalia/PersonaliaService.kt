@@ -9,6 +9,9 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.Kontaktinfo
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.pdl.PdlService
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
+import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util.landkode
+import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util.postnummer
 import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.oppslag.norg2.Norg2Consumer
 import no.nav.tps.person.Personinfo
@@ -27,9 +30,9 @@ class PersonaliaService @Autowired constructor(
 
         val inbound = personConsumer.hentPersonInfo(fodselsnr)
 
-        val personaliaKV = createPersonaliaKodeverk(inbound)
-
         val pdlPersonInfo = pdlService.getPersonInfo(fodselsnr)
+
+        val personaliaKV = createPersonaliaKodeverk(inbound, pdlPersonInfo)
 
         val personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, pdlPersonInfo, personaliaKV)
 
@@ -44,7 +47,8 @@ class PersonaliaService @Autowired constructor(
         return personaliaOgAdresser
     }
 
-    private fun createPersonaliaKodeverk(inbound: Personinfo): PersonaliaKodeverk {
+    private fun createPersonaliaKodeverk(inbound: Personinfo, inboundPdl: PdlPersonInfo): PersonaliaKodeverk {
+        val kontaktadresse = inboundPdl.kontaktadresse.firstOrNull()
 
         return PersonaliaKodeverk().apply {
             kjonnterm = kodeverkConsumer.hentKjonn().term(inbound.kjonn)
@@ -62,6 +66,8 @@ class PersonaliaService @Autowired constructor(
             postadresselandterm = kodeverkConsumer.hentLandKoder().term(inbound.adresseinfo?.postadresse?.land)
             utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inbound.utenlandskBank?.land?.verdi)
             utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inbound.utenlandskBank?.valuta?.verdi)
+            kontaktadressePostSted = kodeverkConsumer.hentPostnummer().term(kontaktadresse?.postnummer)
+            kontaktadresseLand = kodeverkConsumer.hentLandKoder().term(kontaktadresse?.landkode)
         }
     }
 

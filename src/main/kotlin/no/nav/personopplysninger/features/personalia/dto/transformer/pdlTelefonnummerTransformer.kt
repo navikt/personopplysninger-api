@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlTelefonnummer
+import no.nav.personopplysninger.features.personalia.pdl.dto.telefon.PdlTelefonnummer
 
 fun List<PdlTelefonnummer>.toTlfnr(): Tlfnr {
     val hoved = find { nummer -> nummer.prioritet == 1}

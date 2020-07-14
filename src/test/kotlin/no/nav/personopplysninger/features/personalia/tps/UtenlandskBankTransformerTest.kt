@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.features.personalia.tps
 
-import no.nav.personopplysninger.features.personalia.dto.transformer.UtenlandskAdresseTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.UtenlandskBankTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import org.junit.jupiter.api.Assertions.assertNull

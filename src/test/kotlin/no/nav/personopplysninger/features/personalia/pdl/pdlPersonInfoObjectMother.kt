@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.pdl
 
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlTelefonnummer
+import no.nav.personopplysninger.features.personalia.pdl.dto.telefon.PdlTelefonnummer
 
 val pdlPersonInfoWithValues = PdlPersonInfo(
         telefonnummer = listOf(

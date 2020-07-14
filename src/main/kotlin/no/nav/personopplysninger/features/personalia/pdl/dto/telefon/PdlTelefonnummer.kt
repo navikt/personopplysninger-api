@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.personalia.pdl.dto
+package no.nav.personopplysninger.features.personalia.pdl.dto.telefon
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty

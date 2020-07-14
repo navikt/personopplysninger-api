@@ -3,13 +3,13 @@ package no.nav.personopplysninger.features.personalia.dto.outbound
 
 data class NavkontorPostadresse(
 
-        val type : kotlin.String? = null,
-        val postnummer : kotlin.String? = null,
-        val poststed : kotlin.String? = null,
-        val postboksnummer : kotlin.String? = null,
-        val postboksanlegg : kotlin.String? = null,
-        val gatenavn: kotlin.String? = null,
-        val husnummer: kotlin.String? = null,
-        val husbokstav: kotlin.String? = null,
-        val adresseTilleggsnavn: kotlin.String? = null
+        val type : String? = null,
+        val postnummer : String? = null,
+        val poststed : String? = null,
+        val postboksnummer : String? = null,
+        val postboksanlegg : String? = null,
+        val gatenavn: String? = null,
+        val husnummer: String? = null,
+        val husbokstav: String? = null,
+        val adresseTilleggsnavn: String? = null
 )

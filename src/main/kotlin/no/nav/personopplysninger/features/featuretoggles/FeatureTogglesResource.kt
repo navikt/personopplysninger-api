@@ -20,7 +20,7 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
 private const val claimsIssuer = "selvbetjening"
-private const val UNLEASH_COOKIE_NAME = "unleash-cookie";
+private const val UNLEASH_COOKIE_NAME = "unleash-cookie"
 
 @Component
 @Path("/")
@@ -32,10 +32,10 @@ class FeatureTogglesResource @Autowired constructor() {
     @Produces(MediaType.APPLICATION_JSON)
     fun hentFeatureToggles( @Context request: HttpServletRequest, @Context response: HttpServletResponse, @CookieParam(UNLEASH_COOKIE_NAME) cookieSessionId: String?, @QueryParam("feature") features : List<String>): Response {
         try {
-            var fodselsnr = hentFnrFraToken();
-            var sessionId = cookieSessionId ?: generateSessionId(response);
+            var fodselsnr = hentFnrFraToken()
+            var sessionId = cookieSessionId ?: generateSessionId(response)
 
-            var unleashService = unleashService(Provider { request });
+            var unleashService = unleashService(Provider { request })
             val unleashContext = UnleashContext.builder()
                     .userId(fodselsnr)
                     .sessionId(sessionId)
@@ -51,7 +51,7 @@ class FeatureTogglesResource @Autowired constructor() {
                     .build()
         }
         catch (error: IllegalStateException){
-            error.printStackTrace();
+            error.printStackTrace()
             return Response
                     .status(403)
                     .build()

@@ -12,8 +12,27 @@ class PdlService(val pdlConsumer: PdlConsumer) {
                 ?.opplysningsId
     }
 
+    fun getOpplysningsIdForKontaktadresse(ident: String): String? {
+        return pdlConsumer.getKontaktadresseInfo(ident)
+                .keepKontaktadressesWithPdlMasterOnly()
+                .kontaktadresse
+                .firstOrNull()
+                ?.metadata
+                ?.opplysningsId
+    }
+
 
     fun getPersonInfo(ident: String): PdlPersonInfo {
-        return pdlConsumer.getPersonInfo(ident)
+        return pdlConsumer.getPersonInfo(ident).keepKontaktadressesWithPdlMasterOnly()
+    }
+
+    private fun PdlPersonInfo.keepKontaktadressesWithPdlMasterOnly(): PdlPersonInfo {
+        val pdlMasterKontaktadresses = kontaktadresse
+                .filter { adresse -> adresse.metadata.master.equals("pdl", true) }
+
+        return PdlPersonInfo(
+                telefonnummer = this.telefonnummer,
+                kontaktadresse = pdlMasterKontaktadresses
+        )
     }
 }
