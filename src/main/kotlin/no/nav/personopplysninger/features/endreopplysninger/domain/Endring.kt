@@ -25,7 +25,7 @@ open class Endring<T> {
 
     val confirmedOk: Boolean
         @JsonIgnore
-        get() = "DONE" == status.statusType && !hasTpsError()
+        get() = ("DONE" == status.statusType && !hasTpsError()) || "OK" == status.statusType
 
     val errorMessage: String
         @JsonIgnore
