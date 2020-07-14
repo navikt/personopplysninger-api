@@ -24,7 +24,7 @@ class Telefonnummer {
 
     constructor()
 
-    constructor(landskode: String, nummer: String, prioritet: Int) {
+    constructor(landskode: String?, nummer: String?, prioritet: Int) {
         this.landskode = landskode
         this.nummer = nummer
         this.prioritet = prioritet
@@ -52,8 +52,8 @@ class Telefonnummer {
         fun create(json: String): Telefonnummer {
             ObjectMapper().readValue(json, Map::class.java).let { properties ->
                 return Telefonnummer(
-                        landskode = properties["landskode"] as String,
-                        nummer = properties["nummer"] as String,
+                        landskode = properties["landskode"] as String?,
+                        nummer = properties["nummer"] as String?,
                         prioritet = properties["prioritet"] as Int
                 )
             }
