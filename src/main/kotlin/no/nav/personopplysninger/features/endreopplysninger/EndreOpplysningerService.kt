@@ -1,19 +1,22 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.adresse.*
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.*
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
+import no.nav.personopplysninger.features.endreopplysninger.domain.opphoer.EndringOpphoerPersonopplysning
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.endreNummerPayload
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.slettNummerPayload
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamPostboksadresse
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamUtenlandskAdresse
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamVegadresse
 import no.nav.personopplysninger.features.personalia.pdl.PdlService
 import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.oppslag.kodeverk.api.KodeOgTekstDto
 import no.nav.personopplysninger.oppslag.kodeverk.api.Kodeverk
 import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
@@ -23,8 +26,6 @@ class EndreOpplysningerService (
         private var kodeverkConsumer: KodeverkConsumer,
         private var pdlService: PdlService
 ) {
-
-    private val log = LoggerFactory.getLogger(EndreOpplysningerService::class.java)
 
     fun endreTelefonnummer(fnr: String, telefonnummer: Telefonnummer): EndringTelefon {
         if (!setOf(1, 2).contains(telefonnummer.prioritet)) {
@@ -38,31 +39,45 @@ class EndreOpplysningerService (
         val opplysningsId = pdlService.getOpplysningsIdForTelefon(fnr, telefonnummer.landskode!!, telefonnummer.nummer!!)
                 ?: throw RuntimeException("Kan ikke slette nummer som ikke eksisterer: ${telefonnummer.landskode}, ${telefonnummer.nummer}")
 
-        return personMottakConsumer.endreTelefonnummer(fnr, slettNummerPayload(fnr, telefonnummer, opplysningsId), systemToken)
+        return personMottakConsumer.slettPersonopplysning(fnr, slettNummerPayload(fnr, opplysningsId), systemToken, EndringTelefon::class.java)
     }
 
     fun endreKontonummer(fnr: String, kontonummer: Kontonummer): EndringKontonummer {
         return personMottakConsumer.endreKontonummer(fnr, kontonummer, systemToken)
     }
 
-    fun endreGateadresse(fnr: String, gateadresse: Gateadresse): EndringGateadresse {
-        return personMottakConsumer.endreGateadresse(fnr, gateadresse, systemToken)
+    fun endreKontaktadresseVegadresse(fnr: String, vegadresse: DownstreamVegadresse): EndringKontaktadresse {
+        return validateVegadresse(vegadresse).ifValid {
+            val upstreamVegadresse = PMKontaktAdresseTransformer.fromDownstreamVegadresse(vegadresse)
+            personMottakConsumer.endreKontaktadresse(fnr, endreKontaktadressePayload(fnr, upstreamVegadresse), systemToken)
+        }.ifInvalid { error ->
+            EndringKontaktadresse.validationError(error)
+        }.response
     }
 
-    fun endreStedsadresse(fnr: String, stedsadresse: Stedsadresse): EndringStedsadresse {
-        return personMottakConsumer.endreStedsadresse(fnr, stedsadresse, systemToken)
+    fun endreKontaktadressePostboksadresse(fnr: String, postboksadresse: DownstreamPostboksadresse): EndringKontaktadresse {
+        return validatePostboksAdresse(postboksadresse).ifValid {
+            val upstreamVegadresse = PMKontaktAdresseTransformer.fromDownstreamPostboksadresse(postboksadresse)
+            personMottakConsumer.endreKontaktadresse(fnr, endreKontaktadressePayload(fnr, upstreamVegadresse), systemToken)
+        }.ifInvalid { error ->
+            EndringKontaktadresse.validationError(error)
+        }.response
     }
 
-    fun endrePostboksadresse(fnr: String, postboksadresse: Postboksadresse): EndringPostboksadresse {
-        return personMottakConsumer.endrePostboksadresse(fnr, postboksadresse, systemToken)
+    fun endreKontaktadresseUtenlandskAdresse(fnr: String, utenlandskAdresse: DownstreamUtenlandskAdresse): EndringKontaktadresse {
+        return validateUtenlandskAdresse(utenlandskAdresse).ifValid {
+            val upstreamVegadresse = PMKontaktAdresseTransformer.fromDownstreamutenlandskAdresse(utenlandskAdresse)
+            personMottakConsumer.endreKontaktadresse(fnr, endreKontaktadressePayload(fnr, upstreamVegadresse), systemToken)
+        }.ifInvalid { error ->
+            EndringKontaktadresse.validationError(error)
+        }.response
     }
 
-    fun endreUtenlandsadresse(fnr: String, utenlandsadresse: Utenlandsadresse): EndringUtenlandsadresse {
-        return personMottakConsumer.endreUtenlandsadresse(fnr, utenlandsadresse, systemToken)
-    }
+    fun slettKontaktadresse(fnr: String): EndringKontaktadresse {
+        val opplysningsId = pdlService.getOpplysningsIdForKontaktadresse(fnr)
+                ?: throw RuntimeException("Fant ingen kontaktadresser som kan slettes")
 
-    fun opphoerAdresse(fnr: String, kontaktadresseType: KontaktadresseType): EndringOpphoerAdresse {
-        return personMottakConsumer.opphoerKontaktadresse(fnr,  kontaktadresseType, systemToken)
+        return personMottakConsumer.slettPersonopplysning(fnr, slettKontaktadressePayload(fnr, opplysningsId), systemToken, EndringKontaktadresse::class.java)
     }
 
     fun hentRetningsnumre(): Array<RetningsnummerDTO> {
@@ -81,7 +96,7 @@ class EndreOpplysningerService (
     }
 
     fun hentPostnummer(): Array<KodeOgTekstDto> {
-        return toSortedKodeOgTekstArray(kodeverkConsumer.hentPostnummer());
+        return toSortedKodeOgTekstArray(kodeverkConsumer.hentPostnummer())
     }
 
     private fun toSortedKodeOgTekstArray(kodeverk: Kodeverk): Array<KodeOgTekstDto> {

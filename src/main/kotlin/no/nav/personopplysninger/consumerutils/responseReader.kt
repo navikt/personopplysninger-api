@@ -33,11 +33,11 @@ inline fun <reified T> Response.unmarshalList(): List<T> {
                     readValue(json, type)
                 }
     } catch (e: ProcessingException) {
-        throw ConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: ", e);
+        throw ConsumerException("Prosesseringsfeil på responsobjekt. Responsklasse: ", e)
     } catch (e: IllegalStateException) {
-        throw ConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: ", e);
+        throw ConsumerException("Ulovlig tilstand på responsobjekt. Responsklasse: ", e)
     } catch (e: Exception) {
-        throw ConsumerException("Uventet feil på responsobjektet. Responsklasse: ", e);
+        throw ConsumerException("Uventet feil på responsobjektet. Responsklasse: ", e)
     } finally {
         close()
     }

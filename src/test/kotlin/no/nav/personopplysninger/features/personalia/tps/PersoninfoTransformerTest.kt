@@ -5,7 +5,7 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersoninfoTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlTelefonnummer
+import no.nav.personopplysninger.features.personalia.pdl.dto.telefon.PdlTelefonnummer
 import no.nav.personopplysninger.features.personalia.pdl.pdlPersonInfoWithValues
 import no.nav.tps.person.Navn
 import no.nav.tps.person.Personinfo

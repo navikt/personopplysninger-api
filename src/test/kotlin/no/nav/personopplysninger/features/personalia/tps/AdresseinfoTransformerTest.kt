@@ -1,8 +1,9 @@
 package no.nav.personopplysninger.features.personalia.tps
 
-import no.nav.personopplysninger.features.personalia.dto.outbound.Adresser
 import no.nav.personopplysninger.features.personalia.dto.transformer.AdresseinfoTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
+import no.nav.personopplysninger.features.personalia.pdl.PdlKontaktadresseObjectMother
+import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontaktadresse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -16,28 +17,30 @@ class AdresseinfoTransformerTest {
     fun gittAdresse_skalFaaAdresse() {
         val inbound = AdresseinfoObjectMother.withValuesInAllFields
 
-        val actual: Adresser = AdresseinfoTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
+        val inboundPdl = listOf(PdlKontaktadresseObjectMother.dummyVegadresse())
+
+        val actual = AdresseinfoTransformer.toOutbound(inbound, inboundPdl, kodeverk = PersonaliaKodeverk())!!
 
         assertNotNull(actual.boadresse)
         assertNotNull(actual.geografiskTilknytning)
         assertNotNull(actual.postadresse)
         assertNotNull(actual.prioritertAdresse)
-        assertNotNull(actual.tilleggsadresse)
-        assertNotNull(actual.utenlandskAdresse)
+        assertNotNull(actual.kontaktadresse)
     }
 
     @Test
     fun gittNull_skalFaaNull() {
         val inbound = AdresseinfoObjectMother.adresseinfoNullObject
 
-        val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
+        val inboundPdl = emptyList<PdlKontaktadresse>()
+
+        val actual = AdresseinfoTransformer.toOutbound(inbound, inboundPdl, kodeverk = PersonaliaKodeverk())!!
 
         assertNull(actual.boadresse)
         assertNull(actual.geografiskTilknytning)
         assertNull(actual.postadresse)
         assertNull(actual.prioritertAdresse)
-        assertNull(actual.tilleggsadresse)
-        assertNull(actual.utenlandskAdresse)
+        assertNull(actual.kontaktadresse)
     }
 
 }
