@@ -10,7 +10,6 @@ import no.nav.security.oidc.jaxrs.OidcRequestContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.*
-import javax.inject.Provider
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -26,6 +25,7 @@ private const val UNLEASH_COOKIE_NAME = "unleash-cookie"
 @Path("/")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
 class FeatureTogglesResource @Autowired constructor() {
+    var unleashService = unleashService();
 
     @GET
     @Path("/feature-toggles")
@@ -35,7 +35,6 @@ class FeatureTogglesResource @Autowired constructor() {
             var fodselsnr = hentFnrFraToken()
             var sessionId = cookieSessionId ?: generateSessionId(response)
 
-            var unleashService = unleashService(Provider { request })
             val unleashContext = UnleashContext.builder()
                     .userId(fodselsnr)
                     .sessionId(sessionId)
@@ -58,12 +57,11 @@ class FeatureTogglesResource @Autowired constructor() {
         }
     }
 
-    fun unleashService(httpServletRequestProvider: Provider<HttpServletRequest>): UnleashService {
+    fun unleashService(): UnleashService {
         return UnleashService(UnleashServiceConfig.builder()
                 .applicationName(System.getenv("NAIS_APP_NAME"))
                 .unleashApiUrl(getOptionalProperty(UNLEASH_API_URL_PROPERTY_NAME).orElse("https://unleashproxy.nais.oera.no/api/"))
                 .build(),
-                ByQueryParamStrategy(httpServletRequestProvider),
                 ByApplicationStrategy()
         )
     }
