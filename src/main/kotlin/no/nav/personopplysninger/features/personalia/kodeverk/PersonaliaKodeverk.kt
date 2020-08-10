@@ -18,5 +18,7 @@ class PersonaliaKodeverk {
     var postadresselandterm : String? = null
     var utenlandskbanklandterm : String? = null
     var utenlandskbankvalutaterm : String? = null
+    var kontaktadressePostSted: String? = null
+    var kontaktadresseLand: String? = null
 }
 

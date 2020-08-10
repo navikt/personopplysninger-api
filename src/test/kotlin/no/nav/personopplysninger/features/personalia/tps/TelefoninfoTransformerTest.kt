@@ -2,7 +2,7 @@ package no.nav.personopplysninger.features.personalia.tps
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.toTlfnr
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlTelefonnummer
+import no.nav.personopplysninger.features.personalia.pdl.dto.telefon.PdlTelefonnummer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals

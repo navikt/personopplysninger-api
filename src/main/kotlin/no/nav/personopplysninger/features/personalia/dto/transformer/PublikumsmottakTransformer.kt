@@ -38,6 +38,6 @@ object PublikumsmottakTransformer {
             }
             mottaksliste.add(publikumsmottak)
         }
-        return mottaksliste;
+        return mottaksliste
     }
 }

@@ -12,12 +12,14 @@ import javax.ws.rs.ext.ContextResolver;
 @Configuration
 public class RestClientConfiguration {
 
+    public static final ObjectMapper applicationObjectMapper = new ObjectMapper()
+            .registerModule(new KotlinModule())
+            .registerModule(new JavaTimeModule())
+            .enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
     @Bean
     public ContextResolver<ObjectMapper> clientObjectMapperResolver() {
-        return type -> new ObjectMapper()
-                .registerModule(new KotlinModule())
-                .registerModule(new JavaTimeModule())
-                .enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        return type -> applicationObjectMapper;
     }
 
 }

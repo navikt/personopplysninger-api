@@ -3,6 +3,7 @@ package no.nav.personopplysninger.features.endreopplysninger.domain.telefon
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import no.nav.personopplysninger.features.endreopplysninger.domain.EndringsType
 import no.nav.personopplysninger.features.endreopplysninger.domain.Personopplysning
+import no.nav.personopplysninger.features.endreopplysninger.domain.opphoer.OpphoerPersonopplysning
 
 private const val OPPLYSNINGSTYPE = "TELEFONNUMMER"
 
@@ -14,8 +15,8 @@ class EndreTelefon(
         opplysningsId: String? = null)
     : Personopplysning<Telefonnummer>(ident, endringsType, OPPLYSNINGSTYPE, endringsMelding, opplysningsId)
 
-fun slettNummerPayload(ident: String, endringsMelding: Telefonnummer, opplysningsId: String) : EndreTelefon {
-    return EndreTelefon(ident, EndringsType.OPPHOER, endringsMelding, opplysningsId)
+fun slettNummerPayload(ident: String, opplysningsId: String) : OpphoerPersonopplysning {
+    return OpphoerPersonopplysning(ident, OPPLYSNINGSTYPE, opplysningsId)
 }
 
 fun endreNummerPayload(ident: String, endringsMelding: Telefonnummer): EndreTelefon {

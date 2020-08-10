@@ -22,7 +22,7 @@ enum class Personstatus(val beskrivelse: String) {
 
         fun dekode(kode: String): String {
             try {
-                return Personstatus.valueOf(kode).beskrivelse
+                return valueOf(kode).beskrivelse
             } catch (e: IllegalArgumentException) {
                 log.warn("Enum for kodeverk for personstatus mangler gitt kode [" + kode + "]", e)
                 return "-"

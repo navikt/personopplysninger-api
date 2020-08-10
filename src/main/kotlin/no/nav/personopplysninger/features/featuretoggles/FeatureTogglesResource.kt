@@ -10,7 +10,6 @@ import no.nav.security.oidc.jaxrs.OidcRequestContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.*
-import javax.inject.Provider
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -20,22 +19,22 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
 private const val claimsIssuer = "selvbetjening"
-private const val UNLEASH_COOKIE_NAME = "unleash-cookie";
+private const val UNLEASH_COOKIE_NAME = "unleash-cookie"
 
 @Component
 @Path("/")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
 class FeatureTogglesResource @Autowired constructor() {
+    var unleashService = unleashService();
 
     @GET
     @Path("/feature-toggles")
     @Produces(MediaType.APPLICATION_JSON)
     fun hentFeatureToggles( @Context request: HttpServletRequest, @Context response: HttpServletResponse, @CookieParam(UNLEASH_COOKIE_NAME) cookieSessionId: String?, @QueryParam("feature") features : List<String>): Response {
         try {
-            var fodselsnr = hentFnrFraToken();
-            var sessionId = cookieSessionId ?: generateSessionId(response);
+            var fodselsnr = hentFnrFraToken()
+            var sessionId = cookieSessionId ?: generateSessionId(response)
 
-            var unleashService = unleashService(Provider { request });
             val unleashContext = UnleashContext.builder()
                     .userId(fodselsnr)
                     .sessionId(sessionId)
@@ -51,19 +50,18 @@ class FeatureTogglesResource @Autowired constructor() {
                     .build()
         }
         catch (error: IllegalStateException){
-            error.printStackTrace();
+            error.printStackTrace()
             return Response
                     .status(403)
                     .build()
         }
     }
 
-    fun unleashService(httpServletRequestProvider: Provider<HttpServletRequest>): UnleashService {
+    fun unleashService(): UnleashService {
         return UnleashService(UnleashServiceConfig.builder()
                 .applicationName(System.getenv("NAIS_APP_NAME"))
                 .unleashApiUrl(getOptionalProperty(UNLEASH_API_URL_PROPERTY_NAME).orElse("https://unleashproxy.nais.oera.no/api/"))
                 .build(),
-                ByQueryParamStrategy(httpServletRequestProvider),
                 ByApplicationStrategy()
         )
     }
