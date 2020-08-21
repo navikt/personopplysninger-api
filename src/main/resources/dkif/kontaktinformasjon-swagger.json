@@ -1,226 +1,285 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "description": "REST-grensesnittet som er tilgjengelig for konsumering av andre applikasjoner og komponenter, for å hente personers digitale kontaktinformasjon.",
-    "title": "API versjon 1"
+  "swagger":"2.0",
+  "info":{
+    "description":"REST-grensesnittet som er tilgjengelig for konsumering av andre applikasjoner og komponenter, for å hente personers digitale kontaktinformasjon.",
+    "title":"API versjon 1"
   },
-  "host": "dkif.nais.preprod.local",
-  "basePath": "/",
-  "tags": [
+  "host":"dkif.nais.adeo.no",
+  "basePath":"/",
+  "tags":[
     {
-      "name": "Digital kontaktinformasjon",
-      "description": "Endepunkt for digital kontaktinformasjon"
+      "name":"Digital kontaktinformasjon",
+      "description":"Endepunkt for digital kontaktinformasjon"
+    },
+    {
+      "name":"Ping",
+      "description":"Endepunkt for pinging av applikasjonen"
     }
   ],
-  "paths": {
-    "/api/v1/personer/kontaktinformasjon": {
-      "get": {
-        "tags": [
-          "Digital kontaktinformasjon"
+  "paths":{
+    "/api/ping":{
+      "get":{
+        "tags":[
+          "Ping"
         ],
-        "summary": "digitalKontaktinformasjon",
-        "operationId": "digitalKontaktinformasjonUsingGET",
-        "produces": [
+        "summary":"Kalles for å verifisere at applikasjonen svarer",
+        "operationId":"getPingUsingGET",
+        "produces":[
           "*/*"
         ],
-        "parameters": [
+        "parameters":[
           {
-            "name": "Authorization",
-            "in": "header",
-            "description": "OIDC-token for autorisering av bruker som gjør kallet.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "Nav-Call-Id",
-            "in": "header",
-            "description": "En identifikator for denne kallrekken som kan brukes i debugging dersom en feil skulle oppstå.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "Nav-Consumer-Id",
-            "in": "header",
-            "description": "Navnet på servicebrukeren til applikasjonen som gjør kallet - for eksempel \"srvmedl2\".",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "Nav-Personidenter",
-            "in": "header",
-            "description": "Nav-Personidenter",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "csv"
-          },
-          {
-            "name": "inkluderSikkerDigitalPost",
-            "in": "query",
-            "description": "inkluderSikkerDigitalPost",
-            "required": false,
-            "type": "boolean",
-            "default": false
+            "name":"Nav-Consumer-Id",
+            "in":"header",
+            "description":"Navnet på servicebrukeren til applikasjonen som gjør kallet.",
+            "required":true,
+            "type":"string",
+            "x-example":"srvmedl2"
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/DigitalKontaktinfoBolk"
+        "responses":{
+          "200":{
+            "description":"OK",
+            "schema":{
+              "$ref":"#/definitions/GetPingResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
+          "401":{
+            "description":"Unauthorized"
           },
-          "403": {
-            "description": "Forbidden"
+          "403":{
+            "description":"Forbidden"
           },
-          "404": {
-            "description": "Not Found"
+          "404":{
+            "description":"Not Found"
           }
-        }
+        },
+        "deprecated":false
       }
     },
-    "/api/v1/printsertifikat": {
-      "get": {
-        "tags": [
+    "/api/v1/personer/kontaktinformasjon":{
+      "get":{
+        "tags":[
           "Digital kontaktinformasjon"
         ],
-        "summary": "printsertifikat",
-        "operationId": "printsertifikatUsingGET",
-        "produces": [
+        "summary":"digitalKontaktinformasjon",
+        "operationId":"digitalKontaktinformasjonUsingGET",
+        "produces":[
           "*/*"
         ],
-        "parameters": [
+        "parameters":[
           {
-            "name": "Authorization",
-            "in": "header",
-            "description": "OIDC-token for autorisering av bruker som gjør kallet.",
-            "required": true,
-            "type": "string"
+            "name":"Authorization",
+            "in":"header",
+            "description":"OIDC-token for autorisering av bruker som gjør kallet.",
+            "required":true,
+            "type":"string"
           },
           {
-            "name": "Nav-Call-Id",
-            "in": "header",
-            "description": "En identifikator for denne kallrekken som kan brukes i debugging dersom en feil skulle oppstå.",
-            "required": true,
-            "type": "string"
+            "name":"Nav-Call-Id",
+            "in":"header",
+            "description":"En identifikator for denne kallrekken som kan brukes i debugging dersom en feil skulle oppstå.",
+            "required":true,
+            "type":"string"
           },
           {
-            "name": "Nav-Consumer-Id",
-            "in": "header",
-            "description": "Navnet på servicebrukeren til applikasjonen som gjør kallet - for eksempel \"srvmedl2\".",
-            "required": true,
-            "type": "string"
+            "name":"Nav-Consumer-Id",
+            "in":"header",
+            "description":"Navnet på servicebrukeren til applikasjonen som gjør kallet - for eksempel \"srvmedl2\".",
+            "required":true,
+            "type":"string"
+          },
+          {
+            "name":"Nav-Personidenter",
+            "in":"header",
+            "description":"Nav-Personidenter",
+            "required":true,
+            "type":"array",
+            "items":{
+              "type":"string"
+            },
+            "collectionFormat":"multi"
+          },
+          {
+            "name":"inkluderSikkerDigitalPost",
+            "in":"query",
+            "description":"inkluderSikkerDigitalPost",
+            "required":false,
+            "type":"boolean",
+            "default":false
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Printsertifikat"
+        "responses":{
+          "200":{
+            "description":"OK",
+            "schema":{
+              "$ref":"#/definitions/DigitalKontaktinfoBolk"
             }
           },
-          "401": {
-            "description": "Unauthorized"
+          "401":{
+            "description":"Unauthorized"
           },
-          "403": {
-            "description": "Forbidden"
+          "403":{
+            "description":"Forbidden"
           },
-          "404": {
-            "description": "Not Found"
+          "404":{
+            "description":"Not Found"
           }
-        }
+        },
+        "deprecated":false
+      }
+    },
+    "/api/v1/printsertifikat":{
+      "get":{
+        "tags":[
+          "Digital kontaktinformasjon"
+        ],
+        "summary":"printsertifikat",
+        "operationId":"printsertifikatUsingGET",
+        "produces":[
+          "*/*"
+        ],
+        "parameters":[
+          {
+            "name":"Authorization",
+            "in":"header",
+            "description":"OIDC-token for autorisering av bruker som gjør kallet.",
+            "required":true,
+            "type":"string"
+          },
+          {
+            "name":"Nav-Call-Id",
+            "in":"header",
+            "description":"En identifikator for denne kallrekken som kan brukes i debugging dersom en feil skulle oppstå.",
+            "required":true,
+            "type":"string"
+          },
+          {
+            "name":"Nav-Consumer-Id",
+            "in":"header",
+            "description":"Navnet på servicebrukeren til applikasjonen som gjør kallet - for eksempel \"srvmedl2\".",
+            "required":true,
+            "type":"string"
+          }
+        ],
+        "responses":{
+          "200":{
+            "description":"OK",
+            "schema":{
+              "$ref":"#/definitions/Printsertifikat"
+            }
+          },
+          "401":{
+            "description":"Unauthorized"
+          },
+          "403":{
+            "description":"Forbidden"
+          },
+          "404":{
+            "description":"Not Found"
+          }
+        },
+        "deprecated":false
       }
     }
   },
-  "definitions": {
-    "DigitalKontaktinfo": {
-      "type": "object",
-      "properties": {
-        "epostadresse": {
-          "type": "string"
+  "definitions":{
+    "DigitalKontaktinfo":{
+      "type":"object",
+      "required":[
+        "kanVarsles",
+        "reservert"
+      ],
+      "properties":{
+        "epostadresse":{
+          "type":"string"
         },
-        "kanVarsles": {
-          "type": "boolean",
-          "example": false,
-          "description": "Hvorvidt brukeren ikke har reservert seg for digital post, og han/hun kan varsles digitalt i henhold til eForvaltningsforskriftens §32",
-          "allowEmptyValue": false
+        "kanVarsles":{
+          "type":"boolean",
+          "description":"Hvorvidt brukeren ikke har reservert seg for digital post, og han/hun kan varsles digitalt i henhold til eForvaltningsforskriftens §32"
         },
-        "mobiltelefonnummer": {
-          "type": "string"
+        "mobiltelefonnummer":{
+          "type":"string"
         },
-        "personident": {
-          "type": "string"
+        "personident":{
+          "type":"string"
         },
-        "reservert": {
-          "type": "boolean",
-          "example": false,
-          "description": "Hvorvidt brukeren har reservert seg for digital post",
-          "allowEmptyValue": false
+        "reservert":{
+          "type":"boolean",
+          "description":"Hvorvidt brukeren har reservert seg for digital post"
         },
-        "sikkerDigitalPostkasse": {
-          "$ref": "#/definitions/SikkerDigitalPostkasse"
+        "sikkerDigitalPostkasse":{
+          "$ref":"#/definitions/SikkerDigitalPostkasse"
+        },
+        "spraak":{
+          "type":"string",
+          "description":"Språk og målform"
         }
       },
-      "title": "DigitalKontaktinfo"
+      "title":"DigitalKontaktinfo"
     },
-    "DigitalKontaktinfoBolk": {
-      "type": "object",
-      "properties": {
-        "feil": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/Feil"
+    "DigitalKontaktinfoBolk":{
+      "type":"object",
+      "properties":{
+        "feil":{
+          "type":"object",
+          "additionalProperties":{
+            "$ref":"#/definitions/Feil"
           }
         },
-        "kontaktinfo": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/DigitalKontaktinfo"
+        "kontaktinfo":{
+          "type":"object",
+          "additionalProperties":{
+            "$ref":"#/definitions/DigitalKontaktinfo"
           }
         }
       },
-      "title": "DigitalKontaktinfoBolk"
+      "title":"DigitalKontaktinfoBolk"
     },
-    "Feil": {
-      "type": "object",
-      "properties": {
-        "melding": {
-          "type": "string"
+    "Feil":{
+      "type":"object",
+      "properties":{
+        "melding":{
+          "type":"string"
         }
       },
-      "title": "Feil"
+      "title":"Feil"
     },
-    "Printsertifikat": {
-      "type": "object",
-      "properties": {
-        "postkasseleverandoerAdresse": {
-          "type": "string"
-        },
-        "x509Sertifikat": {
-          "type": "string"
+    "GetPingResponse":{
+      "type":"object",
+      "properties":{
+        "response":{
+          "type":"string"
         }
       },
-      "title": "Printsertifikat"
+      "title":"GetPingResponse"
     },
-    "SikkerDigitalPostkasse": {
-      "type": "object",
-      "properties": {
-        "adresse": {
-          "type": "string"
+    "Printsertifikat":{
+      "type":"object",
+      "properties":{
+        "postkasseleverandoerAdresse":{
+          "type":"string"
         },
-        "leverandoerAdresse": {
-          "type": "string"
-        },
-        "leverandoerSertifikat": {
-          "type": "string"
+        "x509Sertifikat":{
+          "type":"string"
         }
       },
-      "title": "SikkerDigitalPostkasse"
+      "title":"Printsertifikat"
+    },
+    "SikkerDigitalPostkasse":{
+      "type":"object",
+      "properties":{
+        "adresse":{
+          "type":"string"
+        },
+        "leverandoerAdresse":{
+          "type":"string"
+        },
+        "leverandoerSertifikat":{
+          "type":"string"
+        }
+      },
+      "title":"SikkerDigitalPostkasse"
     }
   }
 }
