@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.status
 
-import no.nav.security.oidc.api.ProtectedWithClaims
-import no.nav.security.oidc.api.Unprotected
+import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.security.token.support.core.api.Unprotected
 import org.springframework.stereotype.Component
 import javax.ws.rs.GET
 import javax.ws.rs.Path

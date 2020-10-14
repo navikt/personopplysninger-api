@@ -2,8 +2,8 @@ package no.nav.personopplysninger.features.status;
 
 import com.nimbusds.jwt.SignedJWT;
 import no.nav.personopplysninger.api.TestLauncher;
-import no.nav.security.oidc.OIDCConstants;
-import no.nav.security.oidc.test.support.JwtTokenGenerator;
+import no.nav.security.token.support.core.JwtTokenConstants;
+import no.nav.security.token.support.test.JwtTokenGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +37,7 @@ public class StatusResourceTest {
         SignedJWT signedJWT = JwtTokenGenerator.createSignedJWT("12345678911");
         Response response = target.path("/internal/ping")
                 .request()
-                .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
+                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
                 .get();
 
         assertThat(response.getStatus(), is(equalTo(Response.Status.OK.getStatusCode())));

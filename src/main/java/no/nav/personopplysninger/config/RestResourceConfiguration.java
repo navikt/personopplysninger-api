@@ -7,7 +7,7 @@ import no.nav.personopplysninger.features.institusjon.InstitusjonResource;
 import no.nav.personopplysninger.features.medl.MedlResource;
 import no.nav.personopplysninger.features.personalia.PersonaliaResource;
 import no.nav.personopplysninger.features.status.StatusResource;
-import no.nav.security.oidc.jaxrs.OidcContainerRequestFilter;
+import no.nav.security.token.support.jaxrs.JwtTokenContainerRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.wadl.processor.OptionsMethodProcessor;
@@ -47,7 +47,7 @@ public class RestResourceConfiguration extends ResourceConfig {
                     WHITELISTED_PARENT_CLASSES.contains(resourceInfo.getResourceClass().getEnclosingClass())) {
                 return;
             }
-            context.register(OidcContainerRequestFilter.class);
+            context.register(JwtTokenContainerRequestFilter.class);
         }
     }
 }

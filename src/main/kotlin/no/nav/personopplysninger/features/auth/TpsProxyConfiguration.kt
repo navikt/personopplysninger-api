@@ -2,7 +2,7 @@ package no.nav.personopplysninger.features.auth
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
-import no.nav.security.oidc.jaxrs.OidcClientRequestFilter
+import no.nav.security.token.support.jaxrs.JwtTokenClientRequestFilter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -32,7 +32,7 @@ open class TpsProxyConfiguration {
     @Bean
     open fun tpsProxyNameClient(clientObjectMapperResolver: ContextResolver<ObjectMapper>): Client {
         return ClientBuilder.newBuilder()
-                .register(OidcClientRequestFilter::class.java)
+                .register(JwtTokenClientRequestFilter::class.java)
                 .register(clientObjectMapperResolver)
                 .register(ClientRequestFilter { requestContext ->
                     requestContext.getHeaders()

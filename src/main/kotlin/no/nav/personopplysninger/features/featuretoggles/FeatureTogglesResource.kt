@@ -5,8 +5,8 @@ import no.nav.sbl.featuretoggle.unleash.UnleashService
 import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig
 import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.UNLEASH_API_URL_PROPERTY_NAME
 import no.nav.sbl.util.EnvironmentUtils.getOptionalProperty
-import no.nav.security.oidc.api.ProtectedWithClaims
-import no.nav.security.oidc.jaxrs.OidcRequestContext
+import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.*
@@ -77,8 +77,7 @@ class FeatureTogglesResource @Autowired constructor() {
     }
 
     private fun hentFnrFraToken(): String {
-        val context = OidcRequestContext.getHolder().oidcValidationContext
-        return context.getClaims(claimsIssuer).claimSet.subject
+        val context = JaxrsTokenValidationContextHolder.getHolder()
+        return context.tokenValidationContext.getClaims(claimsIssuer).subject
     }
-
 }
