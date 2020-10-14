@@ -291,18 +291,6 @@ class DeserialiseringTest {
         assertEquals(7, instList.size)
     }
 
-    @Test
-    fun deserializingMedl() {
-        val client = ClientBuilder.newBuilder()
-                .register(RestClientConfiguration().clientObjectMapperResolver())
-                .build()
-        val response: Response = client.target("http://localhost:8080").path("/medl").request().get()
-        val medlList = response.unmarshalList<Medlemskapsunntak>()
-        assertEquals(4, medlList.size)
-        val medl = medlList.get(1)
-        assertEquals("Avvist", medl.statusaarsak)
-    }
-
     companion object {
         val mockServer: WireMockServer = WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
     }
