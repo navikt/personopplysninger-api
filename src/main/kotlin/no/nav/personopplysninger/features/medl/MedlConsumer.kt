@@ -16,14 +16,14 @@ class MedlConsumer constructor(
         private val stsConsumer: STSConsumer
 )
 {
-    fun hentMedlemskap(fnr: String): List<Medlemskapsunntak> {
+    fun hentMedlemskap(fnr: String): Medlemskapsunntak {
         try {
             val response = getBuilder(fnr).get()
             if (!SUCCESSFUL.equals(response.statusInfo.family)) {
                 val msg = "Forsøkte å konsumere REST-tjenesten medl. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
                 throw ConsumerException(msg.plus(response.unmarshalBody()))
             }
-            return response.unmarshalList()
+            return response.unmarshalBody()
         } catch (e: Exception) {
             val msg = "Forsøkte å konsumere REST-tjenesten medl. endpoint=[$endpoint]."
             throw ConsumerException(msg, e)

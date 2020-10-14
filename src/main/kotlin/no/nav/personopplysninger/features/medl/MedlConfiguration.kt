@@ -32,7 +32,7 @@ open class MedlConfiguration {
 
     @Bean
     open fun medlClient(clientObjectMapperResolver: ContextResolver<ObjectMapper>): Client {
-        return clientBuilder(clientObjectMapperResolver)
+        return clientBuildegr(clientObjectMapperResolver)
                 .register(ClientRequestFilter { requestContext ->
                     requestContext.headers
                             .putSingle(DEFAULT_APIKEY_USERNAME, medlApiKeyPassword)

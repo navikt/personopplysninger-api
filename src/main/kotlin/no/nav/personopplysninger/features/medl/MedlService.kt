@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 class MedlService @Autowired constructor(
         private var medlConsumer: MedlConsumer
 ) {
-    fun hentMeldemskap(fnr: String): List<Medlemskapsunntak> {
+    fun hentMeldemskap(fnr: String): Medlemskapsunntak {
         return medlConsumer.hentMedlemskap(fnr);
     }
 }
