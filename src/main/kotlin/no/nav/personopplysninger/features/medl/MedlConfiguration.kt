@@ -3,7 +3,7 @@ package no.nav.personopplysninger.features.medl
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
-import no.nav.security.oidc.jaxrs.OidcClientRequestFilter
+import no.nav.security.token.support.jaxrs.JwtTokenClientRequestFilter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -42,7 +42,7 @@ open class MedlConfiguration {
 
     private fun clientBuilder(clientObjectMapperResolver: ContextResolver<ObjectMapper>): ClientBuilder {
         return ClientBuilder.newBuilder()
-                .register(OidcClientRequestFilter::class.java)
+                .register(JwtTokenClientRequestFilter::class.java)
                 .register(clientObjectMapperResolver)
     }
 }
