@@ -5,8 +5,8 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telef
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamPostboksadresse
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamUtenlandskAdresse
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamVegadresse
-import no.nav.security.oidc.api.ProtectedWithClaims
-import no.nav.security.oidc.jaxrs.OidcRequestContext
+import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -118,7 +118,7 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     }
 
     private fun hentFnrFraToken(): String {
-        val context = OidcRequestContext.getHolder().oidcValidationContext
-        return context.getClaims(claimsIssuer).claimSet.subject
+        val context = JaxrsTokenValidationContextHolder.getHolder()
+        return context.tokenValidationContext.getClaims(claimsIssuer).subject
     }
 }

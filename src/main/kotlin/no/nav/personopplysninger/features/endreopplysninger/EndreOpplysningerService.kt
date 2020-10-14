@@ -3,7 +3,6 @@ package no.nav.personopplysninger.features.endreopplysninger
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.*
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
-import no.nav.personopplysninger.features.endreopplysninger.domain.opphoer.EndringOpphoerPersonopplysning
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.endreNummerPayload
