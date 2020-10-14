@@ -16,8 +16,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <common-java-modules.version>2018.10.02.19.54</common-java-modules.version>
-        <commons-logging.version>1.1</commons-logging.version>
+        <commons-logging.version>1.2</commons-logging.version>
         <jersey-test-framework.version>2.26</jersey-test-framework.version>
         <kotlin-logging.version>1.5.4</kotlin-logging.version>
         <logstash-logback-encoder.version>4.10</logstash-logback-encoder.version>
@@ -229,12 +228,6 @@
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>${commons-logging.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.logstash.logback</groupId>
@@ -298,13 +291,6 @@
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock</artifactId>
             <version>2.25.0</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- needed by Wiremock -->
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
             <scope>test</scope>
         </dependency>
         <!-- API, java.xml.bind module -->
