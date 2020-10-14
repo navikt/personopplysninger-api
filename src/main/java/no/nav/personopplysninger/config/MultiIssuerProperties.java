@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.config;
 
-import no.nav.security.oidc.configuration.IssuerProperties;
+import no.nav.security.token.support.core.configuration.IssuerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
