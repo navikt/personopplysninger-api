@@ -1,8 +1,7 @@
 package no.nav.personopplysninger.api;
 
 import no.nav.personopplysninger.config.ApplicationConfig;
-import no.nav.security.oidc.configuration.OIDCResourceRetriever;
-import no.nav.security.oidc.test.support.FileResourceRetriever;
+import no.nav.security.token.support.test.FileResourceRetriever;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,7 +30,7 @@ public class TestLauncher {
      */
     @Bean
     @Primary
-    OIDCResourceRetriever overrideOidcResourceRetriever(){
+    FileResourceRetriever overrideOidcResourceRetriever(){
         return new FileResourceRetriever("/metadata.json", "/jwkset.json");
     }
 

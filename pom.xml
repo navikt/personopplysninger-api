@@ -145,6 +145,11 @@
             <version>${oidc-support.version}</version>
         </dependency>
         <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>token-validation-test-support</artifactId>
+            <version>${oidc-support.version}</version>
+        </dependency>
+        <dependency>
             <groupId>no.nav.common</groupId>
             <artifactId>rest</artifactId>
             <version>1.2019.07.11-12.31-0b875ec24c4e</version>
