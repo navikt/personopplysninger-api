@@ -24,10 +24,10 @@ open class MedlConfiguration {
     @Bean
     @Throws(URISyntaxException::class)
     open fun medlConsumer(
-            @Named("institusjonClient") client: Client,
-            @Value("\${MEDL2_API_URL}") institusjonUri: String,
+            @Named("medlClient") client: Client,
+            @Value("\${MEDL2_API_URL}") medlUri: String,
             stsConsumer: STSConsumer): MedlConsumer{
-        return MedlConsumer(client, URI(institusjonUri), stsConsumer)
+        return MedlConsumer(client, URI(medlUri), stsConsumer)
     }
 
     @Bean
