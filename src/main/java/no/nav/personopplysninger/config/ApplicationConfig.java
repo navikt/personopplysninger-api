@@ -4,9 +4,9 @@ import no.nav.log.LogFilter;
 import no.nav.personopplysninger.features.endreopplysninger.PersonMottakConfiguration;
 import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
 import no.nav.personopplysninger.oppslag.kodeverk.KodeverkRestConfiguration;
-import no.nav.security.oidc.configuration.MultiIssuerConfiguration;
-import no.nav.security.oidc.configuration.OIDCResourceRetriever;
-import no.nav.security.oidc.jaxrs.servlet.JaxrsOIDCTokenValidationFilter;
+import no.nav.security.token.support.core.configuration.MultiIssuerConfiguration;
+import no.nav.security.token.support.core.configuration.ProxyAwareResourceRetriever;
+import no.nav.security.token.support.jaxrs.servlet.JaxrsJwtTokenValidationFilter;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,9 @@ import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.RequestContextFilter;
 
 import javax.servlet.DispatcherType;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.Proxy;
 import java.net.URL;
 import java.util.EnumSet;
 
@@ -72,19 +74,19 @@ public class ApplicationConfig implements EnvironmentAware {
     }
 
     @Bean
-    public MultiIssuerConfiguration multiIssuerConfiguration(MultiIssuerProperties issuerProperties, OIDCResourceRetriever resourceRetriever) {
+    public MultiIssuerConfiguration multiIssuerConfiguration(MultiIssuerProperties issuerProperties, ProxyAwareResourceRetriever resourceRetriever) {
         return new MultiIssuerConfiguration(issuerProperties.getIssuer(), resourceRetriever);
     }
 
     @Bean
-    public JaxrsOIDCTokenValidationFilter tokenValidationFilter(MultiIssuerConfiguration config) {
-        return new JaxrsOIDCTokenValidationFilter(config);
+    public JaxrsJwtTokenValidationFilter tokenValidationFilter(MultiIssuerConfiguration config) {
+        return new JaxrsJwtTokenValidationFilter(config);
     }
 
     @Bean
-    public FilterRegistrationBean<JaxrsOIDCTokenValidationFilter> oidcTokenValidationFilterBean(JaxrsOIDCTokenValidationFilter validationFilter) {
+    public FilterRegistrationBean<JaxrsJwtTokenValidationFilter> oidcTokenValidationFilterBean(JaxrsJwtTokenValidationFilter validationFilter) {
         log.info("Registering validation filter");
-        final FilterRegistrationBean<JaxrsOIDCTokenValidationFilter> filterRegistration = new FilterRegistrationBean<>();
+        final FilterRegistrationBean<JaxrsJwtTokenValidationFilter> filterRegistration = new FilterRegistrationBean<>();
         filterRegistration.setFilter(validationFilter);
         filterRegistration.setMatchAfter(false);
         filterRegistration
@@ -95,10 +97,11 @@ public class ApplicationConfig implements EnvironmentAware {
     }
 
     @Bean
-    public OIDCResourceRetriever oidcResourceRetriever() {
-        OIDCResourceRetriever resourceRetriever = new OIDCResourceRetriever();
-        resourceRetriever.setProxyUrl(getConfiguredProxy());
-        resourceRetriever.setUsePlainTextForHttps(Boolean.parseBoolean(env.getProperty("https.plaintext", "false")));
+    public ProxyAwareResourceRetriever oidcResourceRetriever() {
+        URL proxyUrl = getConfiguredProxy();
+        ProxyAwareResourceRetriever resourceRetriever = new ProxyAwareResourceRetriever();
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyUrl.getHost(), proxyUrl.getPort()));
+        resourceRetriever.setProxy(proxy);
         return resourceRetriever;
     }
 
