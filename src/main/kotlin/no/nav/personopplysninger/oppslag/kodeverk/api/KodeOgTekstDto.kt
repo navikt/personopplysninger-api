@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class KodeOgTekstDto(
         val kode: String,
-        val tekst: String
+        val tekst: String?
 ){
     companion object {
         fun fromKode(kode: Kode): KodeOgTekstDto {
             val enkeltBeskrivelse = kode.betydninger.first().beskrivelser.values.first().tekst
-            return KodeOgTekstDto(kode.navn, enkeltBeskrivelse)
+            return g(kode.navn, enkeltBeskrivelse)
         }
     }
 }
