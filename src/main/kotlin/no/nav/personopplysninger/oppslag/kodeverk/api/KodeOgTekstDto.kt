@@ -10,7 +10,7 @@ data class KodeOgTekstDto(
     companion object {
         fun fromKode(kode: Kode): KodeOgTekstDto {
             val enkeltBeskrivelse = kode.betydninger.first().beskrivelser.values.first().tekst
-            return g(kode.navn, enkeltBeskrivelse)
+            return KodeOgTekstDto(kode.navn, enkeltBeskrivelse)
         }
     }
 }
