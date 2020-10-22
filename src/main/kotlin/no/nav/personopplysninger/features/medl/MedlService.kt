@@ -21,6 +21,10 @@ class MedlService @Autowired constructor(
                     hjemmel = kodeverkConsumer.hentGrunnlagMedl().term(periode.hjemmel)
                     lovvalgsland = kodeverkConsumer.hentLandKoder().term(periode.lovvalgsland)
                     trygdedekning = kodeverkConsumer.hentDekningMedl().term(periode.trygdedekning)
+                    studieinformasjon = periode.studieinformasjon?.apply {
+                         statsborgerland = kodeverkConsumer.hentLandKoder().term(periode.studieinformasjon?.statsborgerland)
+                         studieland = kodeverkConsumer.hentLandKoder().term(periode.studieinformasjon?.studieland)
+                    }
                 };
             };
         }

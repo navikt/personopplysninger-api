@@ -10,7 +10,7 @@ data class Medlemskapsperiode (
         val kilde: String,
         var lovvalgsland: String?,
         val medlem: Boolean,
-        val studieinformasjon: Studieinformasjon?,
+        var studieinformasjon: Studieinformasjon?,
         val tilOgMed: LocalDate?,
         var trygdedekning: String?
 )
