@@ -19,7 +19,7 @@ class MedlService @Autowired constructor(
             perioder = inbound.perioder.map { periode ->
                 periode.apply {
                     hjemmel = "HJEMMEL_TEST"
-                    trygdedekning = "DEKNING_TEST"
+                    trygdedekning = kodeverkConsumer.hentDekningMedl().term(periode.trygdedekning)
                 };
             };
         }
