@@ -6,11 +6,11 @@ import java.time.LocalDate
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Medlemskapsperiode (
         val fraOgMed: LocalDate,
-        val hjemmel: String,
+        var hjemmel: String,
         val kilde: String,
         val lovvalgsland: String?,
         val medlem: Boolean,
         val studieinformasjon: Studieinformasjon?,
         val tilOgMed: LocalDate?,
-        val trygdedekning: String?
+        var trygdedekning: String?
 )
