@@ -27,7 +27,7 @@ class Kodeverk(
                     .getValue("nb")
                     .term
         } catch (nse: NoSuchElementException) {
-            log.warn("Oppslag på kodeverkstype $navn gav ingen treff for verdi $kode")
+            log.warn("Oppslag på kodeverkstype $navn gav ingen term-treff for verdi $kode")
         }
         return kode
     }
@@ -43,7 +43,7 @@ class Kodeverk(
                     .getValue("nb")
                     .tekst ?: term(kode)
         } catch (nse: NoSuchElementException) {
-            log.warn("Oppslag på kodeverkstype $navn gav ingen treff for verdi $kode")
+            log.warn("Oppslag på kodeverkstype $navn gav ingen tekst-treff for verdi $kode")
         }
         return kode
     }
