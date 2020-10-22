@@ -8,7 +8,7 @@ data class Medlemskapsperiode (
         val fraOgMed: LocalDate,
         var hjemmel: String,
         val kilde: String,
-        val lovvalgsland: String?,
+        var lovvalgsland: String?,
         val medlem: Boolean,
         val studieinformasjon: Studieinformasjon?,
         val tilOgMed: LocalDate?,

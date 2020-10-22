@@ -19,6 +19,7 @@ class MedlService @Autowired constructor(
             perioder = inbound.perioder.map { periode ->
                 periode.apply {
                     hjemmel = kodeverkConsumer.hentGrunnlagMedl().term(periode.hjemmel)
+                    lovvalgsland = kodeverkConsumer.hentLandKoder().term(periode.lovvalgsland)
                     trygdedekning = kodeverkConsumer.hentDekningMedl().term(periode.trygdedekning)
                 };
             };
