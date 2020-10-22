@@ -32,6 +32,22 @@ class Kodeverk(
         return kode
     }
 
+    fun tekst(kode: String?): String {
+        if (kode.isNullOrEmpty() || getBetydninger(kode).isEmpty()) {
+            return ""
+        }
+        try {
+            return getBetydninger(kode)
+                    .first()
+                    .beskrivelser
+                    .getValue("nb")
+                    .tekst ?: term(kode)
+        } catch (nse: NoSuchElementException) {
+            log.warn("Oppslag på kodeverkstype $navn gav ingen treff for verdi $kode")
+        }
+        return kode
+    }
+
     companion object {
         fun fromKoderBetydningerResponse(navn: String, response: GetKodeverkKoderBetydningerResponse): Kodeverk {
             return response.betydninger

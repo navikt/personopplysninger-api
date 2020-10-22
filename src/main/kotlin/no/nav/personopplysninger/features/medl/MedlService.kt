@@ -18,9 +18,9 @@ class MedlService @Autowired constructor(
         val perioderMedKodeverk = inbound.apply {
             perioder = inbound.perioder.map { periode ->
                 periode.apply {
-                    hjemmel = kodeverkConsumer.hentGrunnlagMedl().term(periode.hjemmel)
+                    hjemmel = kodeverkConsumer.hentGrunnlagMedl().tekst(periode.hjemmel)
+                    trygdedekning = kodeverkConsumer.hentDekningMedl().tekst(periode.trygdedekning)
                     lovvalgsland = kodeverkConsumer.hentLandKoder().term(periode.lovvalgsland)
-                    trygdedekning = kodeverkConsumer.hentDekningMedl().term(periode.trygdedekning)
                     studieinformasjon = periode.studieinformasjon?.apply {
                          statsborgerland = kodeverkConsumer.hentLandKoder().term(periode.studieinformasjon?.statsborgerland)
                          studieland = kodeverkConsumer.hentLandKoder().term(periode.studieinformasjon?.studieland)
