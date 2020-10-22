@@ -10,7 +10,7 @@ class MedlService @Autowired constructor(
         private var kodeverkConsumer: KodeverkConsumer
 ) {
     fun hentMeldemskap(fnr: String): Medlemskapsunntak {
-        var perioder = medlConsumer.hentMedlemskap(fnr);
+        val perioder = medlConsumer.hentMedlemskap(fnr);
         return hentMedlemskapKodeverk(perioder);
     }
 
