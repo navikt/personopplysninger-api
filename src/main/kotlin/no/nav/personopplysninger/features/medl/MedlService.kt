@@ -18,7 +18,7 @@ class MedlService @Autowired constructor(
         val perioderMedKodeverk = inbound.apply {
             perioder = inbound.perioder.map { periode ->
                 periode.apply {
-                    hjemmel = "HJEMMEL_TEST"
+                    hjemmel = kodeverkConsumer.hentGrunnlagMedl().term(periode.hjemmel)
                     trygdedekning = kodeverkConsumer.hentDekningMedl().term(periode.trygdedekning)
                 };
             };
