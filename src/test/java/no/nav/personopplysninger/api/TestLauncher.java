@@ -57,10 +57,9 @@ public class TestLauncher {
         System.setProperty("PDL_API_URL", "");
         System.setProperty("KODEVERK_REST_API_URL", "");
         System.setProperty("NORG2_API_V1_URL", "");
-        System.setProperty("AAD_B2C_CLIENTID_USERNAME", "");
-        System.setProperty("AAD_B2C_CLIENTID_PASSWORD", "");
         System.setProperty("TPS_PROXY_API_V1_INNSYN_URL", "");
-        System.setProperty("AAD_B2C_DISCOVERY_URL", "");
+        System.setProperty("LOGINSERVICE_IDPORTEN_DISCOVERY_URL", "");
+        System.setProperty("LOGINSERVICE_IDPORTEN_AUDIENCE", "");
         System.setProperty("SRVPERSONOPPLYSNINGER_API_USERNAME", "");
         System.setProperty("SRVPERSONOPPLYSNINGER_API_PASSWORD", "");
         System.setProperty("SECURITY_TOKEN_SERVICE_TOKEN_URL", "");
