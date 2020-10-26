@@ -22,9 +22,6 @@ spec:
     initialDelay: 10
   vault:
     enabled: true
-  spec:
-    envFrom:
-      - configmap: loginservice-idporten
   replicas:
     min: 2
     max: 4
@@ -35,6 +32,8 @@ spec:
       memory: 1500Mi
     requests:
       memory: 1500Mi
+  envFrom:
+      - configmap: loginservice-idporten
   prometheus:
     enabled: true
     path: /person/personopplysninger-api/internal/actuator/prometheus
