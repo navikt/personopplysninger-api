@@ -2,26 +2,28 @@
 
 # Personopplysninger-API
 
-Spring Boot backend som skal gi brukeren innsikt i informasjonen NAV har lagret. <br>
-Applikasjonen har ingen avhengigheter til nexus og kan kjøres lokalt på laptop.
-
+Spring Boot backend som skal gi brukeren innsikt i informasjonen NAV har lagret. 
 
 ## Deployering
 
-Applikasjonen bygges automatisk til dev / https://www-q0.nav.no/person/personopplysninger-api ved merge til master eller ved manuell godkjenning i [CircleCI](https://circleci.com/gh/navikt/workflows/personopplysninger-api). <br><br>
-For å lansere applikasjonen til produksjon / https://www.nav.no/person/personopplysninger-api, knytt en commit til en [Git tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging):
-
+Q6:
 ```
-git tag -a vX.X.X -m "Din melding"
+git tag -a vX.X.X-dev
+```
+
+Q1, Q2, Q6:
+```
+git tag -a vX.X.X-test
+```
+Q0, prod:
+```
+git tag -a vX.X.X-prod
 ```
 
 Push den nye versjonen til GitHub og merge til master.
-
 ```
-git push --tags
+git push && git push --tags
 ```
-
-Godkjenn produksjonssettingen i [CircleCI](https://circleci.com/gh/navikt/workflows/personopplysninger-api).
 
 ## Lokalt Kjøring
 
