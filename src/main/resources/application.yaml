@@ -34,6 +34,6 @@ logging:
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
-    discoveryurl: ${AAD_B2C_DISCOVERY_URL}
-    acceptedaudience: ${AAD_B2C_CLIENTID_USERNAME}
+    discoveryurl: ${LOGINSERVICE_IDPORTEN_DISCOVERY_URL}
+    acceptedaudience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
     cookie_name: selvbetjening-idtoken
