@@ -32,6 +32,8 @@ spec:
       memory: 1500Mi
     requests:
       memory: 1500Mi
+  envFrom:
+      - configmap: loginservice-idporten
   prometheus:
     enabled: true
     path: /person/personopplysninger-api/internal/actuator/prometheus
