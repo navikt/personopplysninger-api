@@ -27,7 +27,23 @@ class Kodeverk(
                     .getValue("nb")
                     .term
         } catch (nse: NoSuchElementException) {
-            log.warn("Oppslag på kodeverkstype $navn gav ingen treff for verdi $kode")
+            log.warn("Oppslag på kodeverkstype $navn gav ingen term-treff for verdi $kode")
+        }
+        return kode
+    }
+
+    fun tekst(kode: String?): String {
+        if (kode.isNullOrEmpty() || getBetydninger(kode).isEmpty()) {
+            return ""
+        }
+        try {
+            return getBetydninger(kode)
+                    .first()
+                    .beskrivelser
+                    .getValue("nb")
+                    .tekst ?: term(kode)
+        } catch (nse: NoSuchElementException) {
+            log.warn("Oppslag på kodeverkstype $navn gav ingen tekst-treff for verdi $kode")
         }
         return kode
     }
