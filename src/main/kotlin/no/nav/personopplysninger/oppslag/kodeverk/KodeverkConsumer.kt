@@ -76,21 +76,6 @@ open class KodeverkConsumer constructor(
         return hentKodeverkBetydning("GrunnlagMedl", true)
     }
 
-    @Cacheable("lovvalgmedl")
-    open fun hentLovvalgMedl(): Kodeverk {
-        return hentKodeverkBetydning("LovvalgMedl", true)
-    }
-
-    @Cacheable("periodestatusmedl")
-    open fun hentPeriodestatusMedl(): Kodeverk {
-        return hentKodeverkBetydning("PeriodestatusMedl", true)
-    }
-
-    @Cacheable("statusaarsakmedl")
-    open fun hentStatusaarsakMedl(): Kodeverk {
-        return hentKodeverkBetydning("StatusaarsakMedl", true)
-    }
-
     private fun buildRequest(path: String, eksluderUgyldige: Boolean): Invocation.Builder {
         return client.target(endpoint)
                 .path(path)
