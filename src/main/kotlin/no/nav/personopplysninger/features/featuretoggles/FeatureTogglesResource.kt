@@ -60,7 +60,7 @@ class FeatureTogglesResource @Autowired constructor() {
     fun unleashService(): UnleashService {
         return UnleashService(UnleashServiceConfig.builder()
                 .applicationName(System.getenv("NAIS_APP_NAME"))
-                .unleashApiUrl(getOptionalProperty(UNLEASH_API_URL_PROPERTY_NAME).orElse("https://unleashproxy.nais.oera.no/api/"))
+                .unleashApiUrl(getOptionalProperty(UNLEASH_API_URL_PROPERTY_NAME).orElse("https://unleash.nais.io/api/"))
                 .build(),
                 ByApplicationStrategy()
         )
