@@ -33,7 +33,7 @@ open class KodeverkConsumer constructor(
 
     @Cacheable("land")
     open fun hentLandKoder(): Kodeverk {
-        return hentKodeverkBetydning("Landkoder", false)
+        return hentKodeverkBetydning("Landkoder", true)
     }
 
     @Cacheable("status")
