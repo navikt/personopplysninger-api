@@ -15,5 +15,6 @@ data class InnsynInstitusjonsopphold (
         val startdato: LocalDate,
         val faktiskSluttdato: LocalDate?,
         val forventetSluttdato: LocalDate?,
+        val fiktivSluttdato: Boolean?,
         val registreringstidspunkt: LocalDateTime
 )
