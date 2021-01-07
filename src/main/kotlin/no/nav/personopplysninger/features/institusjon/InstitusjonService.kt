@@ -10,8 +10,6 @@ class InstitusjonService  @Autowired constructor(
     private var institusjonConsumer: InstitusjonConsumer
 ) {
     fun hentInstitusjonsopphold(fnr: String): List<InnsynInstitusjonsopphold> {
-        return institusjonConsumer.getInstitusjonsopphold(fnr).filter {
-            it.institusjonstype != Institusjonstype.FO
-        }
+        return institusjonConsumer.getInstitusjonsopphold(fnr)
     }
 }
