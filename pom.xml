@@ -152,7 +152,7 @@
         <dependency>
             <groupId>no.nav.common</groupId>
             <artifactId>rest</artifactId>
-            <version>1.2019.07.11-12.31-0b875ec24c4e</version>
+            <version>1.2020.11.16_14.52-3f16e0d8c867</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.vaadin.external.google</groupId>
