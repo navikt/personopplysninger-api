@@ -281,7 +281,7 @@
         <dependency>
             <groupId>no.nav.common</groupId>
             <artifactId>feature-toggle</artifactId>
-            <version>1.2019.11.28-16.07-69bf339eebe8</version>
+            <version>1.2020.11.16_14.52-3f16e0d8c867</version>
         </dependency>
         <dependency>
             <groupId>no.finn.unleash</groupId>
