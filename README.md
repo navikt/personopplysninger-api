@@ -6,12 +6,12 @@ Spring Boot backend som skal gi brukeren innsikt i informasjonen NAV har lagret.
 
 ## Deployering
 
-dev:
+Dev:
 ```
 git tag -a vX.X.X-dev
 ```
 
-prod:
+Prod:
 ```
 git tag -a vX.X.X-prod
 ```
