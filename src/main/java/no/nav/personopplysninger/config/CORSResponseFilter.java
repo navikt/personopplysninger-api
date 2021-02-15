@@ -29,6 +29,7 @@ public class CORSResponseFilter implements ContainerResponseFilter {
             "https://www-q6.nav.no",
             "https://www-q1.nav.no",
             "https://www-q0.nav.no",
+            "https://www.dev.nav.no",
             "https://www.nav.no"
     );
 
