@@ -45,6 +45,9 @@ curl --insecure --user srvpersonopplysnin:PASSORD "https://security-token-servic
 
 * PASSORD slås opp i vault.
 
+## Blokkdiagram
+
+![Blokkdiagram](./diagrams/block-diagram.png)
 
 ## Logging
 
