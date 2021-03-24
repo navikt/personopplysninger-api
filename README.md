@@ -47,7 +47,7 @@ curl --insecure --user srvpersonopplysnin:PASSORD "https://security-token-servic
 
 ## Blokkdiagram
 
-![Blokkdiagram](./diagrams/block-diagram.png)
+![Blokkdiagram](./diagrams/block-diagram.svg)
 
 ## Logging
 
