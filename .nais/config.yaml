@@ -37,3 +37,11 @@ spec:
   prometheus:
     enabled: true
     path: /person/personopplysninger-api/internal/actuator/prometheus
+  tokenx:
+    enabled: true
+  accessPolicy:
+    inbound:
+      rules:
+        - application: medlemskap-oppslag
+          namespace: medlemskap
+          cluster: dev-gcp
