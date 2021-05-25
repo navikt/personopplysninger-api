@@ -328,7 +328,7 @@
             <version>2.3.2</version>
         </dependency>
 
-        <!-- Ktor -->
+        <!-- Ktor todo fjerne alt ubrukt - bør være omtrent alt -->
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor</artifactId>

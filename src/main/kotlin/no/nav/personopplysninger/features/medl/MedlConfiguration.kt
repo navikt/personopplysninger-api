@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.medl
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
+import no.nav.personopplysninger.features.tokenx.TokenDingsService
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
 import no.nav.security.token.support.jaxrs.JwtTokenClientRequestFilter
 import org.springframework.beans.factory.annotation.Value
@@ -26,8 +27,9 @@ open class MedlConfiguration {
     open fun medlConsumer(
             @Named("medlClient") client: Client,
             @Value("\${MEDL2_API_URL}") medlUri: String,
-            stsConsumer: STSConsumer): MedlConsumer{
-        return MedlConsumer(client, URI(medlUri), stsConsumer)
+            stsConsumer: STSConsumer,
+            tokenDingsService: TokenDingsService): MedlConsumer {
+        return MedlConsumer(client, URI(medlUri), stsConsumer, tokenDingsService)
     }
 
     @Bean
