@@ -61,4 +61,3 @@ class TokenXConsumer constructor(
     private val systemToken: TokenDto get() = stsConsumer.token
 //    private val systemToken: TokenDto get() = stsConsumer.token.access_token
 }
-
