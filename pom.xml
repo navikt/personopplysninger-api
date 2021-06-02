@@ -24,7 +24,7 @@
         <kotlin.version>1.4.10</kotlin.version>
         <swagger-annotations.version>1.5.21</swagger-annotations.version>
         <arrow.version>0.8.1</arrow.version>
-        <swagger-codegen-maven-plugin.version>3.0.2</swagger-codegen-maven-plugin.version>
+        <swagger-codegen-maven-plugin.version>3.0.25</swagger-codegen-maven-plugin.version>
         <jackson-module-kotlin.version>2.9.8</jackson-module-kotlin.version>
         <ktor-version>1.4.1</ktor-version>
         <konfig-version>1.6.10.0</konfig-version>
@@ -35,6 +35,7 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <!-- todo fjerne unødvendige herifra også -->
         <repository>
             <id>kotlin ktor</id>
             <url>https://dl.bintray.com/kotlin/ktor</url>
