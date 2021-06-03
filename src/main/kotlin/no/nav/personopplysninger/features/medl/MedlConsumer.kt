@@ -3,7 +3,7 @@ package no.nav.personopplysninger.features.medl
 import no.nav.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.*
 import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
-import no.nav.personopplysninger.features.tokenx.TokenDingsService
+import no.nav.personopplysninger.features.tokendings.TokenDingsService
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
 import org.slf4j.MDC
 import java.net.URI
@@ -20,8 +20,10 @@ class MedlConsumer constructor(
 {
     fun hentMedlemskap(fnr: String): Medlemskapsunntak {
         try {
-            val tokenx = tokenDingsService.exchangeToken()
-            val response = getBuilder(fnr, tokenx.accessToken).get()
+            val targetApp = "dev-gcp:medlemskap:medlemskap-oppslag"
+            val tokendingsToken = tokenDingsService.exchangeToken(systemToken, targetApp)
+
+            val response = getBuilder(fnr, tokendingsToken.accessToken).get()
 
             if (!SUCCESSFUL.equals(response.statusInfo.family)) {
                 val msg = "Forsøkte å konsumere REST-tjenesten medl. endpoint=[$endpoint], HTTP response status=[${response.status}]. "

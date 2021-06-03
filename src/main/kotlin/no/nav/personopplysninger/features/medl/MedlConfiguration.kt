@@ -2,7 +2,7 @@ package no.nav.personopplysninger.features.medl
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
-import no.nav.personopplysninger.features.tokenx.TokenDingsService
+import no.nav.personopplysninger.features.tokendings.TokenDingsService
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
 import no.nav.security.token.support.jaxrs.JwtTokenClientRequestFilter
 import org.springframework.beans.factory.annotation.Value

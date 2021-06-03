@@ -1,19 +1,20 @@
-package no.nav.personopplysninger.features.tokenx
+package no.nav.personopplysninger.features.tokendings.metadata
 
 import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody
+import no.nav.personopplysninger.features.tokendings.domain.TokendingsMetaConfiguration
 import java.net.URI
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
 import javax.ws.rs.core.Response
 
 
-class OAuthMetadataConsumer constructor(
+class TokendingsMetadataConsumer constructor(
     private val client: Client,
     private val endpoint: URI
 ) {
 
-    fun hentMetadata(): OauthServerConfigurationMetadata {
+    fun hentMetadata(): TokendingsMetaConfiguration {
         try {
             val response = getBuilder().get()
             if (Response.Status.Family.SUCCESSFUL != response.statusInfo.family) {
@@ -30,7 +31,6 @@ class OAuthMetadataConsumer constructor(
 
     private fun getBuilder(): Invocation.Builder {
         return client.target(endpoint)
-            .path(".well-known/oauth-authorization-server")
             .request()
     }
 }
