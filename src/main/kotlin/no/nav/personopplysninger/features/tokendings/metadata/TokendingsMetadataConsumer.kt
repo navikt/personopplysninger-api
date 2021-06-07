@@ -18,13 +18,13 @@ class TokendingsMetadataConsumer constructor(
         try {
             val response = getBuilder().get()
             if (Response.Status.Family.SUCCESSFUL != response.statusInfo.family) {
-                val msg = "Forsøkte å konsumere REST-tjenesten tokendings. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
+                val msg = "Forsøkte å konsumere REST-tjenesten tokendings metadata. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
                 throw ConsumerException(msg.plus(response.unmarshalBody()))
             }
 
             return response.unmarshalBody()
         } catch (e: Exception) {
-            val msg = "Forsøkte å konsumere REST-tjenesten tokendings. endpoint=[$endpoint]."
+            val msg = "Forsøkte å konsumere REST-tjenesten tokendings metadata. endpoint=[$endpoint]."
             throw ConsumerException(msg, e)
         }
     }

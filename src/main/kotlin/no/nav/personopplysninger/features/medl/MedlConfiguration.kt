@@ -19,7 +19,7 @@ import javax.ws.rs.ext.ContextResolver
 @Configuration
 open class MedlConfiguration {
 
-    @Value("\${PERSONOPPLYSNINGER_API_MEDL2_REST_API_APIKEY_PASSWORD}")
+    @Value("\${PERSONOPPLYSNINGER_API_MEDL2_REST_API_APIKEY_PASSWORD2}")
     private val medlApiKeyPassword: String? = null
 
     @Bean
@@ -27,9 +27,9 @@ open class MedlConfiguration {
     open fun medlConsumer(
             @Named("medlClient") client: Client,
             @Value("\${MEDL2_API_URL}") medlUri: String,
-            stsConsumer: STSConsumer,
+            @Value("\${MEDL2_API_URL2}") medl2Uri: String,
             tokenDingsService: TokenDingsService): MedlConsumer {
-        return MedlConsumer(client, URI(medlUri), stsConsumer, tokenDingsService)
+        return MedlConsumer(client, URI(medl2Uri), tokenDingsService)
     }
 
     @Bean

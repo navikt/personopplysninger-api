@@ -42,6 +42,6 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: medlemskap-oppslag
-          namespace: medlemskap
-          cluster: dev-gcp
+        - application: medlemskap-medl-api
+          namespace: team-rocket
+          cluster: dev-fss
