@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.tokendings
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import no.nav.personopplysninger.features.tokendings.metadata.TokendingsMetadataConsumer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.net.URI
@@ -11,14 +12,17 @@ import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.ext.ContextResolver
 
 @Configuration
-open class TokendingsConfiguration {
+open class TokendingsConfiguration(
+    private val tokendingsMetadataConsumer: TokendingsMetadataConsumer
+) {
 
     @Bean
     @Throws(URISyntaxException::class)
     open fun tokendingsConsumer(
         @Named("tokendingsTokenClient") client: Client
     ): TokendingsConsumer {
-        return TokendingsConsumer(client, URI(TokendingsContext().wellKnownUrl))
+        val endpoint = tokendingsMetadataConsumer.hentMetadata().tokenEndpoint
+        return TokendingsConsumer(client, URI(endpoint))
     }
 
     @Bean
