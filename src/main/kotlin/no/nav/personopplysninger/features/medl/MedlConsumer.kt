@@ -20,7 +20,7 @@ class MedlConsumer constructor(
 {
     fun hentMedlemskap(fnr: String): Medlemskapsunntak {
         try {
-            val targetApp = "dev-gcp:medlemskap:medlemskap-oppslag"
+            val targetApp = "dev-gcp:medlemskap:medlemskap-oppslag" // todo lag miljøvariabel
             val tokendingsToken = tokenDingsService.exchangeToken(systemToken, targetApp)
 
             val response = getBuilder(fnr, tokendingsToken.accessToken).get()
@@ -37,7 +37,8 @@ class MedlConsumer constructor(
     }
 
     private fun getBuilder(fnr: String, accessToken: String): Invocation.Builder {
-        return client.target(endpoint)
+        val endpointDev = "https://medlemskap-medl-api.dev.intern.nav.no" // todo lag miljøvariabel
+        return client.target(endpointDev)
                 .path("v1/innsyn/person")
                 .request()
                 .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
