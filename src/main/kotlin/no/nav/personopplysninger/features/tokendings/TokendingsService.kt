@@ -24,7 +24,6 @@ class TokenDingsService(
 ) {
     private val config: TokendingsContext = TokendingsContext()
     private val rsaKey = RSAKey.parse(config.privateJwk)
-    private val log = LoggerFactory.getLogger(TokenDingsService::class.java)
 
     fun clientAssertion(clientId: String, audience: String, rsaKey: RSAKey): String {
         val now = Date.from(Instant.now())
@@ -43,7 +42,6 @@ class TokenDingsService(
 
     fun exchangeToken(token: String, targetApp: String): TokendingsToken {
         val metadata = metadataConsumer.hentMetadata()
-        log.info("Token: $token") // todo fjern
         val jwt = clientAssertion(config.clientId, metadata.tokenEndpoint, rsaKey)
 
         return tokendingsConsumer.exchangeToken(token, jwt, targetApp)
