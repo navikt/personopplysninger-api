@@ -27,14 +27,10 @@ class TokenDingsService(
     private val log = LoggerFactory.getLogger(TokenDingsService::class.java)
 
     fun clientAssertion(clientId: String, audience: String, rsaKey: RSAKey): String {
-        log.info("Issuer: $clientId")
-        log.info("Audience: $audience")
         val now = Date.from(Instant.now())
         return JWTClaimsSet.Builder()
-//            .issuer(clientId)
-//            .subject(clientId)
-            .issuer("dev-sbs:personbruker:personopplysninger-api")
-            .subject("dev-sbs:personbruker:personopplysninger-api")
+            .issuer(clientId)
+            .subject(clientId)
             .audience(audience)
             .issueTime(now)
             .expirationTime(Date.from(Instant.now().plusSeconds(60)))
@@ -47,6 +43,7 @@ class TokenDingsService(
 
     fun exchangeToken(token: String, targetApp: String): TokendingsToken {
         val metadata = metadataConsumer.hentMetadata()
+        log.info("Token: $token") // todo fjern
         val jwt = clientAssertion(config.clientId, metadata.tokenEndpoint, rsaKey)
 
         return tokendingsConsumer.exchangeToken(token, jwt, targetApp)

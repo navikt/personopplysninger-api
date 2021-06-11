@@ -5,7 +5,7 @@ import kotlinx.coroutines.runBlocking
 import no.nav.personopplysninger.features.tokendings.domain.TokendingsMetaConfiguration
 
 // todo dynamisk audience
-private const val audience = "dev-sbs:default:personopplysninger-api"
+private const val audience = "dev-sbs:personbruker:personopplysninger-api"
 private val config: Configuration =
     ConfigurationProperties.systemProperties() overriding EnvironmentVariables()
 
