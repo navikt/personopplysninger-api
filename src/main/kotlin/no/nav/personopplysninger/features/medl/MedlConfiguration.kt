@@ -19,7 +19,7 @@ import javax.ws.rs.ext.ContextResolver
 @Configuration
 open class MedlConfiguration {
 
-    @Value("\${PERSONOPPLYSNINGER_API_MEDL2_REST_API_APIKEY_PASSWORD}")
+    @Value("\${PERSONOPPLYSNINGER_API_MEDL2_REST_API_APIKEY_PASSWORD2}")
     private val medlApiKeyPassword: String? = null
 
     @Bean
