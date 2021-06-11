@@ -6,6 +6,8 @@ import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import java.net.URI
 import javax.ws.rs.client.Client
@@ -19,6 +21,8 @@ class MedlConsumer constructor(
         private val tokenDingsService: TokenDingsService
 )
 {
+    var logger: Logger = LoggerFactory.getLogger(javaClass)
+
     fun hentMedlemskap(fnr: String): Medlemskapsunntak {
         try {
 
@@ -27,6 +31,7 @@ class MedlConsumer constructor(
             val tokendingsToken = tokenDingsService.exchangeToken(getToken(), targetApp)
 
             val response = getBuilder(fnr, tokendingsToken.accessToken).get()
+            logger.info(response.toString())
 
             if (!SUCCESSFUL.equals(response.statusInfo.family)) {
                 val msg = "Forsøkte å konsumere REST-tjenesten medl. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
