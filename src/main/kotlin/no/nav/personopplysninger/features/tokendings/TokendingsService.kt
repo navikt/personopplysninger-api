@@ -7,8 +7,10 @@ import com.nimbusds.jose.crypto.RSASSASigner
 import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
+import no.nav.personopplysninger.features.endreopplysninger.PersonMottakConsumer
 import no.nav.personopplysninger.features.tokendings.domain.TokendingsToken
 import no.nav.personopplysninger.features.tokendings.metadata.TokendingsMetadataConsumer
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.util.*
@@ -20,9 +22,12 @@ class TokenDingsService(
 ) {
     private val config: TokendingsContext = TokendingsContext()
     private val rsaKey = RSAKey.parse(config.privateJwk)
+    private val log = LoggerFactory.getLogger(TokenDingsService::class.java)
 
     fun clientAssertion(clientId: String, audience: String, rsaKey: RSAKey): String {
         val now = Date.from(Instant.now())
+        log.debug("Client assertion issuer: $clientId")
+        log.debug("Client assertion aud: $audience")
         return JWTClaimsSet.Builder()
             .issuer(clientId)
             .subject(clientId)
