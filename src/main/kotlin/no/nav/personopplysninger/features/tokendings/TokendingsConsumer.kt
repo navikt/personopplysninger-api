@@ -28,13 +28,13 @@ class TokendingsConsumer constructor(
         try {
             val response = buildRequest().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE))
             if (Response.Status.Family.SUCCESSFUL != response.statusInfo.family) {
-                val msg = "Forsøkte å konsumere REST-tjenesten tokendings. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
+                val msg = "Forsøkte å konsumere REST-tjenesten tokendings token. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
                 throw ConsumerException(msg.plus(response.unmarshalBody()))
             }
 
             return response.unmarshalBody()
         } catch (e: Exception) {
-            val msg = "Forsøkte å konsumere REST-tjenesten tokendings. endpoint=[$endpoint]."
+            val msg = "Forsøkte å konsumere REST-tjenesten tokendings token. endpoint=[$endpoint]."
             throw ConsumerException(msg, e)
         }
     }
