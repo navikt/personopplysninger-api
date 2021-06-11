@@ -40,9 +40,9 @@ class MedlConsumer constructor(
     }
 
     private fun getBuilder(fnr: String, accessToken: String): Invocation.Builder {
-//        val endpointDev = "https://medlemskap-medl-api.dev.intern.nav.no" // todo lag miljøvariabel
+//        val endpointDev = "https://medlemskap-medl-api.dev.intern.nav.no/" // todo lag miljøvariabel
         return client.target(endpoint)
-                .path("v1/innsyn/person")
+                .path("api/v1/innsyn/person")
                 .request()
                 .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
                 .header(HEADER_NAV_CONSUMER_TOKEN, "Bearer $accessToken")
