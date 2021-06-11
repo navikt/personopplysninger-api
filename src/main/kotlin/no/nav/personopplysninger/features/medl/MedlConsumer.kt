@@ -29,9 +29,9 @@ class MedlConsumer constructor(
             val targetApp = "dev-fss:team-rocket:medlemskap-medl-api" // todo lag miljøvariabel
 //            val tokendingsToken = tokenDingsService.exchangeToken(systemToken, targetApp)
             val tokendingsToken = tokenDingsService.exchangeToken(getToken(), targetApp)
-
+            logger.info("Requestbearer: $tokendingsToken")
             val response = getBuilder(fnr, tokendingsToken.accessToken).get()
-            logger.info(response.toString())
+            logger.info("Response from medl:  $response")
 
             if (!SUCCESSFUL.equals(response.statusInfo.family)) {
                 val msg = "Forsøkte å konsumere REST-tjenesten medl. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
