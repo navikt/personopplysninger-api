@@ -5,6 +5,7 @@ import no.nav.personopplysninger.consumerutils.*
 import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
+import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.slf4j.MDC
 import java.net.URI
 import javax.ws.rs.client.Client
@@ -22,7 +23,8 @@ class MedlConsumer constructor(
         try {
 
             val targetApp = "dev-fss:team-rocket:medlemskap-medl-api" // todo lag miljøvariabel
-            val tokendingsToken = tokenDingsService.exchangeToken(systemToken, targetApp)
+//            val tokendingsToken = tokenDingsService.exchangeToken(systemToken, targetApp)
+            val tokendingsToken = tokenDingsService.exchangeToken(getToken(), targetApp)
 
             val response = getBuilder(fnr, tokendingsToken.accessToken).get()
 
@@ -49,4 +51,11 @@ class MedlConsumer constructor(
     }
 
     private val systemToken: String get() = stsConsumer.token.access_token
+
+    private fun getToken(): String {
+        val claimsIssuer = "selvbetjening"
+        val context = JaxrsTokenValidationContextHolder.getHolder()
+        return context.tokenValidationContext.getJwtToken(claimsIssuer).tokenAsString
+    }
+
 }
