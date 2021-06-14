@@ -44,7 +44,6 @@ open class MedlConfiguration {
 
     private fun clientBuilder(clientObjectMapperResolver: ContextResolver<ObjectMapper>): ClientBuilder {
         return ClientBuilder.newBuilder()
-                .register(JwtTokenClientRequestFilter::class.java)
                 .register(clientObjectMapperResolver)
     }
 }
