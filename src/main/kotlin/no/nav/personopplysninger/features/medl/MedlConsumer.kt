@@ -5,12 +5,14 @@ import no.nav.personopplysninger.consumerutils.*
 import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
+import org.eclipse.jetty.http.HttpHeader
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import java.net.URI
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
+import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
 class MedlConsumer constructor(
@@ -26,8 +28,11 @@ class MedlConsumer constructor(
             val targetApp = "dev-fss:team-rocket:medlemskap-medl-api" // todo lag miljøvariabel
             val tokendingsToken = tokenDingsService.exchangeToken(getToken(), targetApp)
             // todo fjern logging
-            logger.info("Requestbearer: $tokendingsToken")
-            val response = getBuilder(fnr, tokendingsToken.accessToken).get()
+            logger.info("Requestbearer: ${tokendingsToken.accessToken}")
+            getBuilder(fnr, tokendingsToken.accessToken)
+            val request = getBuilder(fnr, tokendingsToken.accessToken)
+            logger.info(request.toString())
+            val response = request.get()
             logger.info("Response from medl:  $response")
 
             if (!SUCCESSFUL.equals(response.statusInfo.family)) {
@@ -49,7 +54,7 @@ class MedlConsumer constructor(
                 .header(HEADER_NAV_CONSUMER_TOKEN, "Bearer $accessToken")
                 .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 .header(HEADER_NAV_PERSONIDENT_KEY, fnr)
-//                .header(HttpHeader.ACCEPT.asString(), MediaType.APPLICATION_JSON)
+                .header(HttpHeader.ACCEPT.asString(), MediaType.APPLICATION_JSON)
     }
 
     private fun getToken(): String {
