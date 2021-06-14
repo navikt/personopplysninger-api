@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.medl
 
+import com.sun.research.ws.wadl.HTTPMethods
 import no.nav.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.*
 import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
@@ -10,6 +11,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import java.net.URI
+import java.net.http.HttpHeaders
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
@@ -45,8 +47,8 @@ class MedlConsumer constructor(
     }
 
     private fun getBuilder(fnr: String, accessToken: String): Invocation.Builder {
-//        val endpointDev = "https://medlemskap-medl-api.dev.intern.nav.no/" // todo lag miljøvariabel
-        return client.target(endpoint)
+        val endpointDev = "https://medlemskap-medl-api.dev.intern.nav.no/" // todo lag miljøvariabel
+        return client.target(endpointDev)
                 .path("api/v1/innsyn/person")
                 .request()
                 .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
@@ -54,8 +56,6 @@ class MedlConsumer constructor(
                 .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 .header(HEADER_NAV_PERSONIDENT_KEY, fnr)
     }
-
-    private val systemToken: String get() = stsConsumer.token.access_token
 
     private fun getToken(): String {
         val claimsIssuer = "selvbetjening"
