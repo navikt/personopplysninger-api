@@ -46,11 +46,12 @@ class MedlConsumer constructor(
 
     private fun getBuilder(fnr: String, accessToken: String): Invocation.Builder {
         logger.info("Endpoint: $endpoint")
+        logger.info("Usen token (shud be tok2): $accessToken")
         return client.target(endpoint)
                 .path("api/v1/innsyn/person")
                 .request()
                 .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
-                .header(HEADER_NAV_CONSUMER_TOKEN, "Bearer $accessToken")
+//                .header(HEADER_NAV_CONSUMER_TOKEN, "Bearer $accessToken")
                 .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 .header(HEADER_NAV_PERSONIDENT_KEY, fnr)
                 .header(HttpHeader.ACCEPT.asString(), MediaType.APPLICATION_JSON)
