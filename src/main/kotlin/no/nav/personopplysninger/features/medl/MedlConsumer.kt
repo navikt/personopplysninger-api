@@ -31,7 +31,6 @@ class MedlConsumer constructor(
             logger.info("Requestbearer: ${tokendingsToken.accessToken}")
             getBuilder(fnr, tokendingsToken.accessToken)
             val request = getBuilder(fnr, tokendingsToken.accessToken)
-            logger.info(request.toString())
             val response = request.get()
             logger.info("Response from medl:  $response")
 
@@ -47,6 +46,7 @@ class MedlConsumer constructor(
     }
 
     private fun getBuilder(fnr: String, accessToken: String): Invocation.Builder {
+        logger.info("Endpoint: $endpoint")
         return client.target(endpoint)
                 .path("api/v1/innsyn/person")
                 .request()

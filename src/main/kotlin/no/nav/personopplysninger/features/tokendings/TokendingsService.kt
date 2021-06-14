@@ -25,7 +25,7 @@ class TokenDingsService(
     private val config: TokendingsContext = TokendingsContext()
     private val rsaKey = RSAKey.parse(config.privateJwk)
 
-    fun clientAssertion(clientId: String, audience: String, rsaKey: RSAKey): String {
+    private fun clientAssertion(clientId: String, audience: String, rsaKey: RSAKey): String {
         val now = Date.from(Instant.now())
         return JWTClaimsSet.Builder()
             .issuer(clientId)
