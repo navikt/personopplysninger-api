@@ -26,12 +26,11 @@ class MedlConsumer constructor(
     fun hentMedlemskap(fnr: String): Medlemskapsunntak {
         try {
             val targetApp = "dev-fss:team-rocket:medlemskap-medl-api" // todo lag miljøvariabel
+            logger.info("tok1: ${getToken()}")
             val tokendingsToken = tokenDingsService.exchangeToken(getToken(), targetApp)
-            // todo fjern logging
-            logger.info("Requestbearer: ${tokendingsToken.accessToken}")
             getBuilder(fnr, tokendingsToken.accessToken)
-            val request = getBuilder(fnr, tokendingsToken.accessToken)
-            val response = request.get()
+            logger.info("tok2: ${tokendingsToken.accessToken}")
+            val response = getBuilder(fnr, tokendingsToken.accessToken).get()
             logger.info("Response from medl:  $response")
 
             if (!SUCCESSFUL.equals(response.statusInfo.family)) {
@@ -55,6 +54,7 @@ class MedlConsumer constructor(
                 .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 .header(HEADER_NAV_PERSONIDENT_KEY, fnr)
                 .header(HttpHeader.ACCEPT.asString(), MediaType.APPLICATION_JSON)
+                .header(HttpHeader.AUTHORIZATION.asString(), "Bearer $accessToken")
     }
 
     private fun getToken(): String {
