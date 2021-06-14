@@ -28,9 +28,8 @@ open class MedlConfiguration {
             @Named("medlClient") client: Client,
             @Value("\${MEDL2_API_URL}") medlUri: String,
             @Value("\${MEDL2_API_URL2}") medl2Uri: String,
-            stsConsumer: STSConsumer,
             tokenDingsService: TokenDingsService): MedlConsumer {
-        return MedlConsumer(client, URI(medl2Uri), stsConsumer, tokenDingsService)
+        return MedlConsumer(client, URI("https://medlemskap-medl-api.dev.intern.nav.no/"), tokenDingsService)
     }
 
     @Bean

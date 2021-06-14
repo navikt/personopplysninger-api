@@ -1,17 +1,14 @@
 package no.nav.personopplysninger.features.medl
 
-import com.sun.research.ws.wadl.HTTPMethods
 import no.nav.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.*
 import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
-import no.nav.personopplysninger.oppslag.sts.STSConsumer
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import java.net.URI
-import java.net.http.HttpHeaders
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
@@ -19,7 +16,6 @@ import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 class MedlConsumer constructor(
         private val client: Client,
         private val endpoint: URI,
-        private val stsConsumer: STSConsumer,
         private val tokenDingsService: TokenDingsService
 )
 {
@@ -27,10 +23,9 @@ class MedlConsumer constructor(
 
     fun hentMedlemskap(fnr: String): Medlemskapsunntak {
         try {
-
             val targetApp = "dev-fss:team-rocket:medlemskap-medl-api" // todo lag miljøvariabel
-//            val tokendingsToken = tokenDingsService.exchangeToken(systemToken, targetApp)
             val tokendingsToken = tokenDingsService.exchangeToken(getToken(), targetApp)
+            // todo fjern logging
             logger.info("Requestbearer: $tokendingsToken")
             val response = getBuilder(fnr, tokendingsToken.accessToken).get()
             logger.info("Response from medl:  $response")
@@ -47,14 +42,14 @@ class MedlConsumer constructor(
     }
 
     private fun getBuilder(fnr: String, accessToken: String): Invocation.Builder {
-        val endpointDev = "https://medlemskap-medl-api.dev.intern.nav.no/" // todo lag miljøvariabel
-        return client.target(endpointDev)
+        return client.target(endpoint)
                 .path("api/v1/innsyn/person")
                 .request()
                 .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
                 .header(HEADER_NAV_CONSUMER_TOKEN, "Bearer $accessToken")
                 .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 .header(HEADER_NAV_PERSONIDENT_KEY, fnr)
+//                .header(HttpHeader.ACCEPT.asString(), MediaType.APPLICATION_JSON)
     }
 
     private fun getToken(): String {
