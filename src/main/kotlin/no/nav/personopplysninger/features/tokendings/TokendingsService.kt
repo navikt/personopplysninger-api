@@ -40,7 +40,7 @@ class TokenDingsService(
             .serialize()
     }
 
-    fun exchangeToken(token: String, targetApp: String): TokendingsToken {
+    fun exchangeToken(token: String, targetApp: String?): TokendingsToken {
         val metadata = metadataConsumer.hentMetadata()
         val jwt = clientAssertion(config.clientId, metadata.tokenEndpoint, rsaKey)
 

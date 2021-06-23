@@ -39,9 +39,3 @@ spec:
     path: /person/personopplysninger-api/internal/actuator/prometheus
   tokenx:
     enabled: true
-  accessPolicy:
-    inbound:
-      rules:
-        - application: medlemskap-medl-api
-          namespace: team-rocket
-          cluster: dev-fss

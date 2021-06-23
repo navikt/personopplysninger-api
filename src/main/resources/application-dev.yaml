@@ -41,3 +41,5 @@ PERSONOPPLYSNINGER-API-TPS-PROXY_API_V1_INNSYN-APIKEY_PASSWORD: personopplysning
 kodeverk:rest-api_URL: https://api-gw-q0.oera.no/kodeverk/api/
 personopplysninger-api-kodeverk.rest-api-apiKey_username: x-nav-apiKey
 personopplysninger-api-kodeverk.rest-api-apiKey_password: personopplysninger-api+a678d06e23fa47a6b516956ab8a3424b
+
+MEDL_CONSUMER_TARGET_APP: "dev-fss:team-rocket:medlemskap-medl-api"

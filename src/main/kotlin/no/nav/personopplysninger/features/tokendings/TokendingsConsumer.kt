@@ -16,7 +16,7 @@ class TokendingsConsumer constructor(
     private val endpoint: URI
 )   {
 
-    fun exchangeToken(subjectToken: String, clientAssertion: String, audience: String): TokendingsToken {
+    fun exchangeToken(subjectToken: String, clientAssertion: String, audience: String?): TokendingsToken {
         val form = Form()
             .param("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer")
             .param("client_assertion", clientAssertion)

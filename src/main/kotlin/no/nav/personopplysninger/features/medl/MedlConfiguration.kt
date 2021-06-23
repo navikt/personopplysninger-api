@@ -3,8 +3,6 @@ package no.nav.personopplysninger.features.medl
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
-import no.nav.personopplysninger.oppslag.sts.STSConsumer
-import no.nav.security.token.support.jaxrs.JwtTokenClientRequestFilter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,17 +17,19 @@ import javax.ws.rs.ext.ContextResolver
 @Configuration
 open class MedlConfiguration {
 
-    @Value("\${PERSONOPPLYSNINGER_API_MEDL2_REST_API_APIKEY_PASSWORD2}")
+    @Value("\${PERSONOPPLYSNINGER_API_MEDLEMSKAP_MEDL_API_APIKEY_PASSWORD}")
     private val medlApiKeyPassword: String? = null
+
+    @Value("\${MEDL_CONSUMER_TARGET_APP}")
+    private val targetApp: String? = null
 
     @Bean
     @Throws(URISyntaxException::class)
     open fun medlConsumer(
             @Named("medlClient") client: Client,
-            @Value("\${MEDL2_API_URL}") medlUri: String,
-            @Value("\${MEDL2_API_URL2}") medl2Uri: String,
+            @Value("\${MEDLEMSKAP_MEDL_API_URL}") medlUri: String,
             tokenDingsService: TokenDingsService): MedlConsumer {
-        return MedlConsumer(client, URI(medl2Uri), tokenDingsService)
+        return MedlConsumer(client, URI(medlUri), tokenDingsService, targetApp)
     }
 
     @Bean
