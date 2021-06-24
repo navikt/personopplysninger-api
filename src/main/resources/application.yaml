@@ -37,5 +37,3 @@ no.nav.security.oidc:
     discoveryurl: ${LOGINSERVICE_IDPORTEN_DISCOVERY_URL}
     acceptedaudience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
     cookie_name: selvbetjening-idtoken
-
-MEDL_CONSUMER_TARGET_APP: "prod-fss:team-rocket:medlemskap-medl-api"
