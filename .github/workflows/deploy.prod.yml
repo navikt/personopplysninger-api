@@ -37,7 +37,7 @@ jobs:
       - name: Generate nais variables
         run: |
           cat > .nais/vars.yaml <<EOF
-          namespace: default
+          namespace: personbruker
           ingresses:
             - https://personopplysninger-api.nais.oera.no
             - https://www.nav.no/person/personopplysninger-api
