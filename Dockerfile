@@ -1,6 +1,6 @@
 FROM navikt/java:11-appdynamics
 
-RUN chown -R 1069 /app
+RUN chown -R 1069 /
 
 COPY target/personopplysninger-api.jar app.jar
 ENV APPD_ENABLED=true
