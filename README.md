@@ -4,22 +4,13 @@
 
 Spring Boot backend som skal gi brukeren innsikt i informasjonen NAV har lagret. 
 
-## Deployering
+## Deploy til dev-miljø
 
-Dev:
-```
-git tag -a vX.X.X-dev
-```
+[Deploy-to-dev](https://github.com/navikt/personopplysninger-api/actions/workflows/deploy.dev.yml) -> Run workflow -> Velg branch -> Run workflow
 
-Prod:
-```
-git tag -a vX.X.X-prod
-```
+## Prodsetting
 
-Push den nye versjonen til GitHub og merge til master.
-```
-git push && git push --tags
-```
+Publiser en ny release på master for å starte deploy til prod
 
 ## Lokalt Kjøring
 
