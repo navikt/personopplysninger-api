@@ -20,7 +20,7 @@ class AuthStatusResource  @Autowired constructor(private var pdlConsumer: PdlCon
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    fun getNamePdl(): Map<String, String> {
+    fun getName(): Map<String, String> {
         val navn = pdlConsumer.getNavn(fnr).navn.firstOrNull()
         val fulltNavn = listOf(navn?.fornavn, navn?.mellomnavn, navn?.etternavn).filter { !isEmpty(it) }
             .joinToString(separator = " ")
