@@ -16,22 +16,12 @@ private const val claimsIssuer = "selvbetjening"
 @Component
 @Path("name")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = arrayOf("acr=Level4"))
-class AuthStatusResource  @Autowired constructor(
-        private var tpsProxyNameConsumer: TpsProxyNameConsumer,
-        private var pdlConsumer: PdlConsumer
-) {
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    fun getName(): String {
-        val navn = tpsProxyNameConsumer.hentNavn(fnr)
-        return """{"name":"${navn.fulltNavn()}"}"""
-    }
+class AuthStatusResource  @Autowired constructor(private var pdlConsumer: PdlConsumer) {
 
     @GET
-    @Path("/pdl")
     @Produces(MediaType.APPLICATION_JSON)
     fun getNamePdl(): Map<String, String> {
-        val navn = pdlConsumer.getNavn(/*fnr*/"10108000398").navn.firstOrNull()
+        val navn = pdlConsumer.getNavn(fnr).navn.firstOrNull()
         val fulltNavn = listOf(navn?.fornavn, navn?.mellomnavn, navn?.etternavn).filter { !isEmpty(it) }
             .joinToString(separator = " ")
         return mapOf("name" to fulltNavn)

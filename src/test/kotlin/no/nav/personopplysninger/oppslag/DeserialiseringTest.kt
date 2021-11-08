@@ -8,7 +8,6 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import no.nav.personopplysninger.config.RestClientConfiguration
 import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.consumerutils.unmarshalList
-import no.nav.personopplysninger.features.auth.Navn
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndreKontaktadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.Postboksadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
@@ -263,16 +262,6 @@ class DeserialiseringTest {
         assertEquals("NAV Aremark", norg2Enhet.navn)
         assertEquals("0118", norg2Enhet.enhetNr)
         assertEquals("287", norg2Enhet.antallRessurser)
-    }
-
-    @Test
-    fun deserialiserNavn() {
-        val client = ClientBuilder.newBuilder()
-                .register(RestClientConfiguration().clientObjectMapperResolver())
-                .build()
-        val response: Response = client.target("http://localhost:8080").path("/tpsnavn").request().get()
-        val navn: Navn = response.unmarshalBody()
-        assertEquals("VINAYAGUM-MASK", navn.fornavn)
     }
 
     @Test
