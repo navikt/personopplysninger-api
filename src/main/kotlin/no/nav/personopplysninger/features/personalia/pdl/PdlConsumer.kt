@@ -10,6 +10,7 @@ import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.createKonta
 import no.nav.personopplysninger.features.personalia.pdl.dto.createPersonInfoRequest
 import no.nav.personopplysninger.features.personalia.pdl.dto.error.PDLErrorType
 import no.nav.personopplysninger.features.personalia.pdl.dto.error.PdlErrorResponse
+import no.nav.personopplysninger.features.personalia.pdl.dto.navn.createNavnRequest
 import no.nav.personopplysninger.features.personalia.pdl.dto.telefon.createTelefonRequest
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
 import org.slf4j.LoggerFactory
@@ -39,6 +40,10 @@ class PdlConsumer(private val client: Client, private val endpoint: URI, private
 
     fun getTelefonInfo(ident: String): PdlPersonInfo {
         return postPersonQuery(createTelefonRequest(ident))
+    }
+
+    fun getNavn(ident: String): PdlPersonInfo {
+        return postPersonQuery(createNavnRequest(ident))
     }
 
     private fun postPersonQuery(request: PDLRequest): PdlPersonInfo {

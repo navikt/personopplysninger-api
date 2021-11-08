@@ -1,9 +1,11 @@
 package no.nav.personopplysninger.features.auth
 
+import no.nav.personopplysninger.features.personalia.pdl.PdlConsumer
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.springframework.util.StringUtils.isEmpty
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.Produces
@@ -15,13 +17,24 @@ private const val claimsIssuer = "selvbetjening"
 @Path("name")
 @ProtectedWithClaims(issuer = "selvbetjening", claimMap = arrayOf("acr=Level4"))
 class AuthStatusResource  @Autowired constructor(
-        private var tpsProxyNameConsumer: TpsProxyNameConsumer
+        private var tpsProxyNameConsumer: TpsProxyNameConsumer,
+        private var pdlConsumer: PdlConsumer
 ) {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     fun getName(): String {
         val navn = tpsProxyNameConsumer.hentNavn(fnr)
         return """{"name":"${navn.fulltNavn()}"}"""
+    }
+
+    @GET
+    @Path("/pdl")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun getNamePdl(): Map<String, String> {
+        val navn = pdlConsumer.getNavn(/*fnr*/"10108000398").navn.firstOrNull()
+        val fulltNavn = listOf(navn?.fornavn, navn?.mellomnavn, navn?.etternavn).filter { !isEmpty(it) }
+            .joinToString(separator = " ")
+        return mapOf("name" to fulltNavn)
     }
 
     private inline val fnr: String get() {
