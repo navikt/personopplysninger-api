@@ -1,6 +1,4 @@
-package no.nav.personopplysninger.features.personalia.pdl
-
-import no.nav.personopplysninger.features.personalia.pdl.dto.QueryVariables
+package no.nav.personopplysninger.features.personalia.pdl.request
 
 interface PDLRequest {
     val variables: QueryVariables

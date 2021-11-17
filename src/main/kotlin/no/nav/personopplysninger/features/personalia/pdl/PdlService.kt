@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia.pdl
 
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPerson
 import org.springframework.stereotype.Service
 
 @Service
@@ -22,15 +22,15 @@ class PdlService(val pdlConsumer: PdlConsumer) {
     }
 
 
-    fun getPersonInfo(ident: String): PdlPersonInfo {
+    fun getPersonInfo(ident: String): PdlPerson {
         return pdlConsumer.getPersonInfo(ident).keepKontaktadressesWithPdlMasterOnly()
     }
 
-    private fun PdlPersonInfo.keepKontaktadressesWithPdlMasterOnly(): PdlPersonInfo {
+    private fun PdlPerson.keepKontaktadressesWithPdlMasterOnly(): PdlPerson {
         val pdlMasterKontaktadresses = kontaktadresse
                 .filter { adresse -> adresse.metadata.master.equals("pdl", true) }
 
-        return PdlPersonInfo(
+        return PdlPerson(
                 telefonnummer = this.telefonnummer,
                 kontaktadresse = pdlMasterKontaktadresses
         )

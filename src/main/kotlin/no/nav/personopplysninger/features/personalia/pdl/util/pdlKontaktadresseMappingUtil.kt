@@ -1,9 +1,7 @@
-package no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util
+package no.nav.personopplysninger.features.personalia.pdl.util
 
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontaktadresse
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontaktadressetype.Innland
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontaktadressetype.Utland
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util.PdlKontaktadresseMappingType.*
+import no.nav.personopplysninger.features.personalia.pdl.util.PdlKontaktadresseMappingType.*
 
 val PdlKontaktadresse.mappingType: PdlKontaktadresseMappingType get() {
     return if (vegadresse != null) {

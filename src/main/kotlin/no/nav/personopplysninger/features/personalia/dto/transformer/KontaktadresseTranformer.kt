@@ -3,8 +3,8 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.*
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontaktadresse
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util.PdlKontaktadresseMappingType.*
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util.mappingType
+import no.nav.personopplysninger.features.personalia.pdl.util.PdlKontaktadresseMappingType.*
+import no.nav.personopplysninger.features.personalia.pdl.util.mappingType
 
 object KontaktadresseTranformer {
     fun toOutbound(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse {

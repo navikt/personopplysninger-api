@@ -1,8 +1,4 @@
-package no.nav.personopplysninger.features.personalia.pdl.dto.navn
-
-import no.nav.personopplysninger.features.personalia.pdl.PDLRequest
-import no.nav.personopplysninger.features.personalia.pdl.compactJson
-import no.nav.personopplysninger.features.personalia.pdl.dto.QueryVariables
+package no.nav.personopplysninger.features.personalia.pdl.request
 
 class NavnRequest(override val variables: QueryVariables) : PDLRequest {
 
@@ -15,8 +11,6 @@ class NavnRequest(override val variables: QueryVariables) : PDLRequest {
             }
         """.compactJson()
 }
-
-const val navnQueryPart = "navn {fornavn, mellomnavn, etternavn}"
 
 fun createNavnRequest(ident: String): NavnRequest {
     return NavnRequest(QueryVariables(ident))

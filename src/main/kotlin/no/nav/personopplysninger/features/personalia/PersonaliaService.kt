@@ -9,9 +9,9 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.Kontaktinfo
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.pdl.PdlService
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util.landkode
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util.postnummer
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPerson
+import no.nav.personopplysninger.features.personalia.pdl.util.landkode
+import no.nav.personopplysninger.features.personalia.pdl.util.postnummer
 import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.oppslag.norg2.Norg2Consumer
 import no.nav.tps.person.Personinfo
@@ -47,7 +47,7 @@ class PersonaliaService @Autowired constructor(
         return personaliaOgAdresser
     }
 
-    private fun createPersonaliaKodeverk(inbound: Personinfo, inboundPdl: PdlPersonInfo): PersonaliaKodeverk {
+    private fun createPersonaliaKodeverk(inbound: Personinfo, inboundPdl: PdlPerson): PersonaliaKodeverk {
         val kontaktadresse = inboundPdl.kontaktadresse.firstOrNull()
 
         return PersonaliaKodeverk().apply {

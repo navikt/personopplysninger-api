@@ -13,7 +13,6 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadress
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.institusjon.domain.Institusjonstype
-import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.personalia.dto.getJson
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlResponse
 import no.nav.personopplysninger.features.personalia.pdl.dto.error.PDLErrorType
@@ -129,8 +128,8 @@ class DeserialiseringTest {
         """.trimIndent()
 
         val person: PdlResponse = RestClientConfiguration.applicationObjectMapper.readValue(json)
-        val telefonnummer = person.data.person.telefonnummer.first()
-        val kontaktadresse = person.data.person.kontaktadresse.first()
+        val telefonnummer = person.data.person!!.telefonnummer.first()
+        val kontaktadresse = person.data.person!!.kontaktadresse.first()
 
         assertEquals(telefonnummer.landskode, "+47")
         assertEquals(telefonnummer.nummer, "22334455")

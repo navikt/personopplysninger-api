@@ -24,7 +24,6 @@ class AdresseinfoTransformerTest {
         assertNotNull(actual.boadresse)
         assertNotNull(actual.geografiskTilknytning)
         assertNotNull(actual.postadresse)
-        assertNotNull(actual.prioritertAdresse)
         assertNotNull(actual.kontaktadresse)
     }
 
@@ -39,7 +38,6 @@ class AdresseinfoTransformerTest {
         assertNull(actual.boadresse)
         assertNull(actual.geografiskTilknytning)
         assertNull(actual.postadresse)
-        assertNull(actual.prioritertAdresse)
         assertNull(actual.kontaktadresse)
     }
 

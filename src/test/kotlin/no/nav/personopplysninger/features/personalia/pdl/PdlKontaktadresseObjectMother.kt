@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.features.personalia.pdl
 
-import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.PostAdresseIFrittFormat
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.*
 import no.nav.personopplysninger.features.personalia.pdl.dto.common.PdlMetadata
 import java.time.LocalDateTime
@@ -15,6 +14,7 @@ object PdlKontaktadresseObjectMother {
                 bruksenhetsnummer = "dummy bruksenhetsnummer",
                 adressenavn = "dummy adressenavn",
                 kommunenummer = "dummy kommunenummer",
+                bydelsnummer = "dummy bydelsnummer",
                 tilleggsnavn = "dummy tilleggsnavn",
                 postnummer = "dummy postnummer",
                 koordinater = dummyKoordinater()

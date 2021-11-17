@@ -5,8 +5,8 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersoninfoTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import no.nav.personopplysninger.features.personalia.pdl.dto.telefon.PdlTelefonnummer
-import no.nav.personopplysninger.features.personalia.pdl.pdlPersonInfoWithValues
+import no.nav.personopplysninger.features.personalia.pdl.dto.personalia.PdlTelefonnummer
+import no.nav.personopplysninger.features.personalia.pdl.pdlPersonWithValues
 import no.nav.tps.person.Navn
 import no.nav.tps.person.Personinfo
 import org.junit.jupiter.api.Test
@@ -22,7 +22,7 @@ class PersoninfoTransformerTest {
     fun gittPersonalia_skalFaaPersonalia() {
         val inbound: Personinfo = PersoninfoObjectMother.withValuesInAllFields
         val kodeverk = PersonaliaKodeverk()
-        val pdlPersoninfo = pdlPersonInfoWithValues
+        val pdlPersoninfo = pdlPersonWithValues
         val actual: Personalia = PersoninfoTransformer.toOutbound(inbound, pdlPersoninfo, kodeverk)
 
         assertFornavn(inbound.navn!!, actual.fornavn!!)

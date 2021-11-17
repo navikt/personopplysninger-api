@@ -1,8 +1,8 @@
 package no.nav.personopplysninger.features.personalia.tps
 
 import no.nav.personopplysninger.features.personalia.dto.transformer.toTlfnr
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
-import no.nav.personopplysninger.features.personalia.pdl.dto.telefon.PdlTelefonnummer
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPerson
+import no.nav.personopplysninger.features.personalia.pdl.dto.personalia.PdlTelefonnummer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
@@ -13,7 +13,7 @@ class TelefoninfoTransformerTest {
 
     @Test
     fun gittTelefoninfi_skalFaaTelefoninfo() {
-        val inbound = PdlPersonInfo(
+        val inbound = PdlPerson(
                 telefonnummer = listOf(
                         PdlTelefonnummer("+47", "99887767", 1, "123"),
                         PdlTelefonnummer("+47", "22334455", 2, "123")
@@ -30,7 +30,7 @@ class TelefoninfoTransformerTest {
 
     @Test
     fun gittNull_skalFaaNull() {
-        val inbound = PdlPersonInfo(telefonnummer = emptyList())
+        val inbound = PdlPerson(telefonnummer = emptyList())
 
         val actual = inbound.telefonnummer.toTlfnr()
 

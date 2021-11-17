@@ -8,7 +8,6 @@ object AdresseinfoObjectMother {
             postadresse = PostadresseObjectMother.testPostadresse(),
             utenlandskAdresse = UtenlandskAdresseObjectMother.utenlandskTestadresse(),
             geografiskTilknytning = GeografiskTilknytningObjectMother.withValuesInAllFields,
-            prioritertAdresse = KodeMedDatoOgKildeObjectMother.dummyValues.copy(kilde = "kilde for Adresseinfo.prioritertAdresse")
     )
 
     val adresseinfoNullObject = Adresseinfo(
@@ -16,7 +15,6 @@ object AdresseinfoObjectMother {
             postadresse = null,
             utenlandskAdresse = null,
             geografiskTilknytning = null,
-            prioritertAdresse = null,
             tilleggsadresse = null
     )
 

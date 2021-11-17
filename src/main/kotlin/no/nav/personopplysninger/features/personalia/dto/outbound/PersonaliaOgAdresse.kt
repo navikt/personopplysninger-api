@@ -11,8 +11,6 @@ data class Personalia(
         val kontonr: String? = null,
         val tlfnr: Tlfnr? = null,
         val utenlandskbank : UtenlandskBankInfo? = null,
-        val spraak: String? = null,
-        val epostadr: String? = null,
         val personstatus: String? = null,
         val statsborgerskap: String? = null,
         val foedested: String? = null,
@@ -24,7 +22,6 @@ data class Adresser(
         val boadresse: Boadresse? = null,
         val geografiskTilknytning: GeografiskTilknytning? = null,
         val postadresse: Postadresse? = null,
-        val prioritertAdresse: String? = null,
         val kontaktadresse: Kontaktadresse? = null
 )
 
