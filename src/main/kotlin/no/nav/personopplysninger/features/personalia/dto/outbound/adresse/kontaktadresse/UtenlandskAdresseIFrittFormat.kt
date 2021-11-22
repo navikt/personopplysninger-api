@@ -12,7 +12,8 @@ data class UtenlandskAdresseIFrittFormat (
         val land: String?,
         val gyldigFraOgMed: String?,
         val gyldigTilOgMed: String?,
-        val coAdressenavn: String?
+        val coAdressenavn: String?,
+        override val kilde: String
 ): Kontaktadresse {
     override val type: KontaktadresseType get() = UTENLANDSK_ADRESSE_I_FRITT_FORMAT
 }
