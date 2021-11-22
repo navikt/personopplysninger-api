@@ -8,7 +8,7 @@ class PersonInfoRequest(override val variables: QueryVariables) : PDLRequest {
                 person: hentPerson(ident: ${"$"}ident) {
                     $navnQueryPart,
                     $telefonQueryPart,
-                    $folkeregisterpersonstatusQueryPart,
+                    $folkeregisteridentifikatorQueryPart,
                     $statsborgerskapQueryPart,
                     $foedselQueryPart,
                     $sivilstandQueryPart,
@@ -18,11 +18,8 @@ class PersonInfoRequest(override val variables: QueryVariables) : PDLRequest {
                     $kontaktadresseQueryPart,
                     $oppholdsadresseQueryPart,
                 }, 
-                geografiskTilknytning: hentGeografiskTilknytning(ident: "10108000398") {
+                geografiskTilknytning: hentGeografiskTilknytning(ident: ${"$"}ident) {
                     $geografiskTilknytningQueryPart
-                },
-                identer: hentIdenter(ident: "10108000398", grupper: [AKTORID, FOLKEREGISTERIDENT, NPID]) {
-                    $identerQueryPart
                 },
             }
         """.compactJson()

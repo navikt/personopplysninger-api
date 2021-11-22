@@ -1,7 +1,8 @@
 package no.nav.personopplysninger.oppslag.kodeverk
 
 import no.nav.log.MDCConstants
-import no.nav.personopplysninger.consumerutils.*
+import no.nav.personopplysninger.consumerutils.CONSUMER_ID
+import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.Kodeverk
 import no.nav.personopplysninger.oppslag.kodeverk.exceptions.KodeverkConsumerException
@@ -34,11 +35,6 @@ open class KodeverkConsumer constructor(
     @Cacheable("land")
     open fun hentLandKoder(): Kodeverk {
         return hentKodeverkBetydning("Landkoder", true)
-    }
-
-    @Cacheable("status")
-    open fun hentPersonstatus(): Kodeverk {
-        return hentKodeverkBetydning("Personstatuser", true)
     }
 
     @Cacheable("postnr")

@@ -3,7 +3,7 @@ package no.nav.personopplysninger.features.personalia.pdl.request
 
 const val navnQueryPart = "navn {fornavn, mellomnavn, etternavn}"
 const val telefonQueryPart = "telefonnummer { landskode, nummer, prioritet, metadata { opplysningsId } }"
-const val folkeregisterpersonstatusQueryPart = "folkeregisterpersonstatus{status}"
+const val folkeregisteridentifikatorQueryPart = "folkeregisteridentifikator{identifikasjonsnummer, status, type}"
 const val statsborgerskapQueryPart = "statsborgerskap{land}"
 const val foedselQueryPart = "foedsel{foedested, foedekommune, foedeland}"
 const val sivilstandQueryPart = "sivilstand{type, gyldigFraOgMed}"
@@ -114,5 +114,4 @@ const val oppholdsadresseQueryPart = """
       oppholdAnnetSted
     }
 """
-const val geografiskTilknytningQueryPart = "gtType, gtKommune, gtBydel, gtLand, regel"
-const val identerQueryPart = "identer{ident, gruppe, historisk}"
+const val geografiskTilknytningQueryPart = "gtKommune, gtBydel, gtLand"

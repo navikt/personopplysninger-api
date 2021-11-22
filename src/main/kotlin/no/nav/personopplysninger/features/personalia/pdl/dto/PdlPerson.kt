@@ -9,7 +9,7 @@ import no.nav.personopplysninger.features.personalia.pdl.dto.personalia.*
 data class PdlPerson(
     val navn: List<PdlNavn> = emptyList(),
     val telefonnummer: List<PdlTelefonnummer> = emptyList(),
-    val folkeregisterpersonstatus: List<PdlFolkeregisterpersonstatus> = emptyList(),
+    val folkeregisteridentifikator: List<PdlFolkeregisteridentifikator> = emptyList(),
     val statsborgerskap: List<PdlStatsborgerskap> = emptyList(),
     val foedsel: List<PdlFoedsel> = emptyList(),
     val sivilstand: List<PdlSivilstand> = emptyList(),

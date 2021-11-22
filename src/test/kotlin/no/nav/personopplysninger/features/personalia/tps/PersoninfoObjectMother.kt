@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia.tps
 
-import no.nav.personopplysninger.features.personalia.kodeverk.*
+import no.nav.personopplysninger.features.personalia.kodeverk.Sivilstand
 import no.nav.tps.person.*
 
 object PersoninfoObjectMother {
@@ -42,7 +42,6 @@ object PersoninfoObjectMother {
             spesiellOpplysning = KodeMedDatoOgKildeObjectMother.dummyValues,
             spraak = KodeMedDatoOgKildeObjectMother.dummyValues.copy(kode = Kode("Språk", null)),
             statsborgerskap = KodeMedDatoOgKildeObjectMother.dummyValues.copy(kode = Kode("StatsborgerskapFreg", "KOR")),
-            status = KodeMedDatoOgKildeObjectMother.medKode(Personstatus.FØDR.name),
             telefon = TelefoninfoObjectMother.dummyValues,
             tiltak = Tiltak(
                     datoFraOgMed = dummyDato,

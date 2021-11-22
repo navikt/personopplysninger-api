@@ -4,6 +4,7 @@ import no.nav.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.CONSUMER_ID
 import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlData
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPerson
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlResponse
 import no.nav.personopplysninger.features.personalia.pdl.dto.error.PDLErrorType
@@ -26,31 +27,30 @@ class PdlConsumer(private val client: Client, private val endpoint: URI, private
 
     val log = LoggerFactory.getLogger(PdlConsumer::class.java)
 
-    // Defer to getTelefonInfo until more information is fetched from PDL
-    fun getPersonInfo(ident: String): PdlPerson {
+    fun getPersonInfo(ident: String): PdlData {
         return postPersonQuery(createPersonInfoRequest(ident))
     }
 
     fun getKontaktadresseInfo(ident: String): PdlPerson {
-        return postPersonQuery(createKontaktadresseRequest(ident))
+        return postPersonQuery(createKontaktadresseRequest(ident)).person!!
     }
 
     fun getTelefonInfo(ident: String): PdlPerson {
-        return postPersonQuery(createTelefonRequest(ident))
+        return postPersonQuery(createTelefonRequest(ident)).person!!
     }
 
     fun getNavn(ident: String): PdlPerson {
-        return postPersonQuery(createNavnRequest(ident))
+        return postPersonQuery(createNavnRequest(ident)).person!!
     }
 
-    private fun postPersonQuery(request: PDLRequest): PdlPerson {
+    private fun postPersonQuery(request: PDLRequest): PdlData {
         var response: Response? = null
         return try {
             response = buildRequest()
                     .post(Entity.entity(request, MediaType.APPLICATION_JSON))
 
             val responseObject: PdlResponse = response.unmarshalBody()
-            responseObject.data.person!!
+            responseObject.data
         } catch (e: ConsumerException) {
             logErrorResponse(response, e)
             emptyData
@@ -83,7 +83,7 @@ class PdlConsumer(private val client: Client, private val endpoint: URI, private
                 .header("Tema", RETT_PERSONOPPLYSNINGER)
     }
 
-    private val emptyData: PdlPerson get() = PdlPerson()
+    private val emptyData: PdlData get() = PdlData(null, null)
 
     private val systemToken: String get() = stsConsumer.token.access_token
 }

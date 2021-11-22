@@ -4,12 +4,12 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontak
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.KontaktadresseType.*
 import no.nav.personopplysninger.features.personalia.pdl.PdlKontaktadresseObjectMother
 import no.nav.personopplysninger.features.personalia.tps.PersonaliaKodeverkObjectMother
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class KontaktadresseTranformerTest {
+class KontaktadresseTransformerTest {
 
     @Test
     fun canTransformVegdresse() {
@@ -17,7 +17,7 @@ class KontaktadresseTranformerTest {
 
         val personaliaKodeverk = PersonaliaKodeverkObjectMother.dummyStedOgLandKode()
 
-        val actual = KontaktadresseTranformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
 
         assertEquals(actual.type, VEGADRESSE)
 
@@ -42,7 +42,7 @@ class KontaktadresseTranformerTest {
 
         val personaliaKodeverk = PersonaliaKodeverkObjectMother.dummyStedOgLandKode()
 
-        val actual = KontaktadresseTranformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
 
         assertEquals(actual.type, POSTADRESSE_I_FRITT_FORMAT)
 
@@ -64,7 +64,7 @@ class KontaktadresseTranformerTest {
 
         val personaliaKodeverk = PersonaliaKodeverkObjectMother.dummyStedOgLandKode()
 
-        val actual = KontaktadresseTranformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
 
         assertEquals(actual.type, POSTBOKSADRESSE)
 
@@ -85,7 +85,7 @@ class KontaktadresseTranformerTest {
 
         val personaliaKodeverk = PersonaliaKodeverkObjectMother.dummyStedOgLandKode()
 
-        val actual = KontaktadresseTranformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
 
         assertEquals(actual.type, UTENLANDSK_ADRESSE)
 
@@ -110,7 +110,7 @@ class KontaktadresseTranformerTest {
 
         val personaliaKodeverk = PersonaliaKodeverkObjectMother.dummyStedOgLandKode()
 
-        val actual = KontaktadresseTranformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
 
         assertEquals(actual.type, UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
 

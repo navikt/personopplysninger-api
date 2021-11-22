@@ -8,11 +8,8 @@ import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.consumerutils.unmarshalList
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring
 import no.nav.personopplysninger.features.endreopplysninger.domain.Personopplysning
-import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndreKontaktadresse
-import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndringKontaktadresse
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
-import no.nav.personopplysninger.features.endreopplysninger.domain.opphoer.EndringOpphoerPersonopplysning
 import no.nav.personopplysninger.features.endreopplysninger.domain.opphoer.OpphoerPersonopplysning
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndreTelefon
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
@@ -55,13 +52,6 @@ class PersonMottakConsumer (
     fun endreKontonummer(fnr: String, kontonummer: Kontonummer, systemUserToken: String): EndringKontonummer {
         val request = buildEndreRequest(fnr, systemUserToken, URL_KONTONUMMER)
         return sendEndring(request, kontonummer, systemUserToken, HttpMethod.POST, EndringKontonummer::class.java)
-    }
-
-    fun endreKontaktadresse(fnr: String,
-                            endreKontaktadresse: EndreKontaktadresse,
-                            systemUserToken: String): EndringKontaktadresse {
-
-        return sendPdlEndring(endreKontaktadresse, fnr, systemUserToken, URL_ENDRINGER)
     }
 
     fun <T: Endring<T>> slettPersonopplysning(fnr: String,
