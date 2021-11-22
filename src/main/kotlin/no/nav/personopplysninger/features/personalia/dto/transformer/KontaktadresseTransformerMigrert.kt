@@ -13,6 +13,7 @@ object KontaktadresseTransformerMigrert {
             gyldigFraOgMed = inbound.gyldigFraOgMed,
             gyldigTilOgMed = inbound.gyldigTilOgMed,
             coAdressenavn = inbound.coAdressenavn,
+            kilde = inbound.metadata.master,
             adresse = transformAdresse(inbound, kodeverk)
         )
     }

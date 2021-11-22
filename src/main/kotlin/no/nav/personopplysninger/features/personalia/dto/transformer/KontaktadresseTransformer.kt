@@ -32,7 +32,8 @@ object KontaktadresseTransformer {
             poststed = kodeverk.kontaktadressePostSted,
             gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
             gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
-            coAdressenavn = inbound.coAdressenavn
+            coAdressenavn = inbound.coAdressenavn,
+            kilde = inbound.metadata.master
         )
     }
 
@@ -50,7 +51,8 @@ object KontaktadresseTransformer {
             poststed = kodeverk.kontaktadressePostSted,
             gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
             gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
-            coAdressenavn = inbound.coAdressenavn
+            coAdressenavn = inbound.coAdressenavn,
+            kilde = inbound.metadata.master
         )
     }
 
@@ -64,7 +66,8 @@ object KontaktadresseTransformer {
             poststed = kodeverk.kontaktadressePostSted,
             gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
             gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
-            coAdressenavn = inbound.coAdressenavn
+            coAdressenavn = inbound.coAdressenavn,
+            kilde = inbound.metadata.master
         )
     }
 
@@ -85,7 +88,8 @@ object KontaktadresseTransformer {
             land = kodeverk.kontaktadresseLand,
             gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
             gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
-            coAdressenavn = inbound.coAdressenavn
+            coAdressenavn = inbound.coAdressenavn,
+            kilde = inbound.metadata.master
         )
     }
 
@@ -105,7 +109,8 @@ object KontaktadresseTransformer {
             land = kodeverk.kontaktadresseLand,
             gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
             gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
-            coAdressenavn = inbound.coAdressenavn
+            coAdressenavn = inbound.coAdressenavn,
+            kilde = inbound.metadata.master
         )
     }
 }
