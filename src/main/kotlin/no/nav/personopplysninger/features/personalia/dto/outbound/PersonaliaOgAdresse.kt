@@ -7,8 +7,6 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.Opphol
 
 data class PersonaliaOgAdresser(val personalia: Personalia, val adresser: Adresser?, val enhetKontaktInformasjon: EnhetsKontaktInformasjon)
 
-data class PersonaliaOgAdresserMigrert(val personalia: Personalia, val adresser: AdresserMigrert?, val enhetKontaktInformasjon: EnhetsKontaktInformasjon)
-
 data class Personalia(
         val fornavn: String? = null,
         val etternavn: String? = null,
@@ -23,13 +21,6 @@ data class Personalia(
 )
 
 data class Adresser(
-        val boadresse: Boadresse? = null,
-        val geografiskTilknytning: GeografiskTilknytning? = null,
-        val postadresse: Postadresse? = null,
-        val kontaktadresse: no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.Kontaktadresse? = null,
-)
-
-data class AdresserMigrert(
         val geografiskTilknytning: GeografiskTilknytning? = null,
         val kontaktadresse: Kontaktadresse? = null,
         val bostedsadresse: Bostedsadresse? = null,
