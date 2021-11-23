@@ -2,8 +2,8 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.*
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.KontaktadresseType.*
-import no.nav.personopplysninger.features.personalia.pdl.PdlKontaktadresseObjectMother
-import no.nav.personopplysninger.features.personalia.tps.PersonaliaKodeverkObjectMother
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.PdlKontaktadresseObjectMother
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.PersonaliaKodeverkObjectMother
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
