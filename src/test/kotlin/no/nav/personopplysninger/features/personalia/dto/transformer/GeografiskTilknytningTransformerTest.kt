@@ -1,7 +1,8 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.GeografiskTilknytningObjectMother
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyGeografiskTilknytning
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlGeografiskTilknytning
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
@@ -13,24 +14,25 @@ class GeografiskTilknytningTransformerTest {
 
     @Test
     fun gittGeografiskTilknytning_skalFaaGeografiskTilknytning() {
-        val inbound = GeografiskTilknytningObjectMother.withValuesInAllFields
+        val land = "land"
+        val inbound = createDummyGeografiskTilknytning()
+        val kodeverk = PersonaliaKodeverk().apply { gtLandterm = land }
 
-        val actual = GeografiskTilknytningTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
+        val actual = GeografiskTilknytningTransformer.toOutbound(inbound, kodeverk)
 
-        assertEquals(inbound.bydel!!, actual.bydel)
-        assertEquals(inbound.datoFraOgMed!!, actual.datoFraOgMed)
-        assertEquals(inbound.kommune!!, actual.kommune)
-
+        assertEquals(inbound.gtBydel!!, actual.bydel)
+        assertEquals(inbound.gtKommune!!, actual.kommune)
+        assertEquals(land, actual.land)
     }
 
     @Test
     fun gittNull_skalFaaNull() {
-        val inbound = GeografiskTilknytningObjectMother.nullObject
+        val inbound = PdlGeografiskTilknytning(null, null, null)
 
         val actual = GeografiskTilknytningTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertNull(actual.bydel)
-        assertNull(actual.datoFraOgMed)
-        assertNull(null, actual.land)
+        assertNull(actual.kommune)
+        assertNull(actual.land)
     }
 }

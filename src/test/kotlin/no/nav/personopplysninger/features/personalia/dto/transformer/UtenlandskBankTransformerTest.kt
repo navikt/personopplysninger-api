@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.UtenlandskBankObjectMother
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyUtenlandskBank
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createUtenlandskBankNullObject
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -13,7 +14,7 @@ class UtenlandskBankTransformerTest {
 
     @Test
     fun gittUtenlandskBank_skalFaaUtenlandskBank() {
-        val inbound = UtenlandskBankObjectMother.utenlandskTestbank()
+        val inbound = createDummyUtenlandskBank()
 
         val actual = UtenlandskBankTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
@@ -28,7 +29,7 @@ class UtenlandskBankTransformerTest {
 
     @Test
     fun gittNull_skalFaaNull() {
-        val inbound = UtenlandskBankObjectMother.utenlandskBankNullObject()
+        val inbound = createUtenlandskBankNullObject()
 
         val actual = UtenlandskBankTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 

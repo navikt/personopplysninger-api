@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.DigitalKontaktinfoBolkObjectMother
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyDigitalKontaktinfoBolkMedFeil
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyDigitalKontaktinfoBolkMedKontaktinfo
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
@@ -11,7 +12,7 @@ class KontaktinformasjonTransformerTest {
 
     @Test
     fun gittKontaktinformasjon_skalFaaKontaktinformasjon() {
-        val inbound = DigitalKontaktinfoBolkObjectMother.medKontaktinfo
+        val inbound = createDummyDigitalKontaktinfoBolkMedKontaktinfo()
 
         val actual = KontaktinformasjonTransformer.toOutbound(inbound, "12345678")
 
@@ -22,7 +23,7 @@ class KontaktinformasjonTransformerTest {
 
     @Test
     fun gittFeil_skalFaaNull() {
-        val inbound = DigitalKontaktinfoBolkObjectMother.medFeil
+        val inbound = createDummyDigitalKontaktinfoBolkMedFeil()
 
         val actual = KontaktinformasjonTransformer.toOutbound(inbound, "12345678")
 

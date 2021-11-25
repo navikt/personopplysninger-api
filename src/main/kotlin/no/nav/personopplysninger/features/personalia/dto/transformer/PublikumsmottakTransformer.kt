@@ -14,11 +14,11 @@ object PublikumsmottakTransformer {
 
     fun toOutbound(inbound: List<Publikumsmottak>?): ArrayList<PublikumsmottakDto> {
 
-        var mottaksliste = ArrayList<PublikumsmottakDto>(0)
+        val mottaksliste = ArrayList<PublikumsmottakDto>(0)
 
         for (mottak in inbound.orEmpty()) {
             val publikumsmottak = PublikumsmottakDto()
-            var aapningstidsliste = ArrayList<Aapningstid>(0)
+            val aapningstidsliste = ArrayList<Aapningstid>(0)
             publikumsmottak.gateadresse = mottak.besoeksadresse?.gatenavn
             publikumsmottak.poststed = mottak.besoeksadresse?.poststed
             publikumsmottak.husnummer = mottak.besoeksadresse?.husnummer
@@ -32,7 +32,7 @@ object PublikumsmottakTransformer {
             publikumsmottak.aapningFredag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == fredag })
             for (aapningstider in mottak.aapningstider.orEmpty()) {
                 if (aapningstider.dag != mandag && aapningstider.dag != tirsdag && aapningstider.dag != onsdag && aapningstider.dag != torsdag && aapningstider.dag != fredag) {
-                    var aapningstid = AapningstidTransformer.toOutbound(aapningstider)
+                    val aapningstid = AapningstidTransformer.toOutbound(aapningstider)
                     aapningstidsliste.add(aapningstid)
                 }
             }

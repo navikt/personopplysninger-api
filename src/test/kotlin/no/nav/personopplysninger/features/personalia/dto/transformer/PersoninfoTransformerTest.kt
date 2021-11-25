@@ -3,34 +3,45 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
-import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.PersoninfoObjectMother
-import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.pdlPersonWithValues
+import no.nav.personopplysninger.features.personalia.dto.outbound.UtenlandskBankInfo
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPerson
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonInfo
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.pdl.dto.personalia.PdlTelefonnummer
-import no.nav.tps.person.Navn
 import no.nav.tps.person.Personinfo
+import no.nav.tps.person.UtenlandskBank
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 @TestInstance(PER_CLASS)
 class PersoninfoTransformerTest {
 
     @Test
     fun gittPersonalia_skalFaaPersonalia() {
-        val inbound: Personinfo = PersoninfoObjectMother.withValuesInAllFields
-        val kodeverk = PersonaliaKodeverk()
-        val pdlPersoninfo = pdlPersonWithValues
-        val actual: Personalia = PersoninfoTransformer.toOutbound(inbound, pdlPersoninfo, kodeverk)
+        val tpsPerson: Personinfo = createDummyPersonInfo()
+        val kodeverk = createDummyPersonaliaKodeverk()
+        val pdlPerson = createDummyPerson()
+        val actual: Personalia = PersoninfoTransformer.toOutbound(tpsPerson, pdlPerson, kodeverk)
 
-        assertFornavn(inbound.navn!!, actual.fornavn!!)
-        assertEtternavn(inbound.navn!!, actual.etternavn!!)
-        assertEquals(inbound.kontonummer!!.nummer!!, actual.kontonr!!)
-        assertTlfnr(pdlPersoninfo.telefonnummer, actual.tlfnr!!)
-        assertEquals(inbound.ident!!, actual.personident!!.verdi)
-        assertEquals(inbound.identtype!!.verdi!!, actual.personident!!.type)
+        val pdlNavn = pdlPerson.navn.first()
+        val pdlFolkeregisteridentifikator = pdlPerson.folkeregisteridentifikator.first()
+        val pdlSivilstand = pdlPerson.sivilstand.first().type.beskrivelse
+        val pdlKjoenn = pdlPerson.kjoenn.first().kjoenn?.beskrivelse
+
+        assertEquals(pdlNavn.let { "${it.fornavn} ${it.mellomnavn}" }, actual.fornavn!!)
+        assertEquals(pdlNavn.etternavn, actual.etternavn!!)
+        assertEquals(pdlFolkeregisteridentifikator.identifikasjonsnummer, actual.personident!!.verdi)
+        assertEquals(pdlFolkeregisteridentifikator.type, actual.personident!!.type)
+        assertEquals(tpsPerson.kontonummer!!.nummer!!, actual.kontonr!!)
+        assertTlfnr(pdlPerson.telefonnummer, actual.tlfnr!!)
+        assertUtenlandskBank(tpsPerson.utenlandskBank!!, actual.utenlandskbank!!, kodeverk)
+        assertEquals(kodeverk.statsborgerskapterm, actual.statsborgerskap)
+        assertEquals("${kodeverk.foedekommuneterm}, ${kodeverk.landterm}", actual.foedested)
+        assertEquals(pdlSivilstand, actual.sivilstand)
+        assertEquals(pdlKjoenn, actual.kjoenn)
     }
 
     private fun assertTlfnr(expected: List<PdlTelefonnummer>, actual: Tlfnr) {
@@ -38,12 +49,20 @@ class PersoninfoTransformerTest {
         assertEquals(expected.find { it.prioritet == 2 }?.nummer, actual.telefonAlternativ!!)
     }
 
-    private fun assertFornavn(inbound: Navn, actual: String) {
-        assertTrue(actual.startsWith(inbound.fornavn!!))
-        assertTrue(actual.contains(inbound.mellomnavn!!))
-    }
-
-    private fun assertEtternavn(inbound: Navn, actual: String) {
-        assertEquals(inbound.slektsnavn!!, actual)
+    private fun assertUtenlandskBank(
+        inbound: UtenlandskBank,
+        outbound: UtenlandskBankInfo,
+        kodeverk: PersonaliaKodeverk
+    ) {
+        assertEquals(inbound.adresse1, outbound.adresse1)
+        assertEquals(inbound.adresse2, outbound.adresse2)
+        assertEquals(inbound.adresse3, outbound.adresse3)
+        assertEquals(inbound.bankkode, outbound.bankkode)
+        assertEquals(inbound.banknavn, outbound.banknavn)
+        assertEquals(inbound.iban, outbound.iban)
+        assertEquals(inbound.kontonummer, outbound.kontonummer)
+        assertEquals(kodeverk.utenlandskbanklandterm, outbound.land)
+        assertEquals(inbound.swiftkode, outbound.swiftkode)
+        assertEquals(kodeverk.utenlandskbankvalutaterm, outbound.valuta)
     }
 }
