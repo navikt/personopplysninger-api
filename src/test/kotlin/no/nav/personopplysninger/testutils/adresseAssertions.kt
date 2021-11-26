@@ -71,3 +71,14 @@ fun assertUtenlandskAdresseIFrittFormatEquals(
     assertEquals(utenlandskAdresseIFrittFormat.land, land)
 }
 
+fun assertMatrikkeladresseEquals(matrikkeladresse: Matrikkeladresse, poststed: String, inbound: PdlMatrikkeladresse) {
+    assertEquals(matrikkeladresse.bruksenhetsnummer, inbound.bruksenhetsnummer)
+    assertEquals(matrikkeladresse.tilleggsnavn, inbound.tilleggsnavn)
+    assertEquals(matrikkeladresse.postnummer, inbound.postnummer)
+    assertEquals(matrikkeladresse.poststed, poststed)
+    assertEquals(matrikkeladresse.kommunenummer, inbound.kommunenummer)
+}
+
+fun assertUkjentbostedEquals(ukjentbosted: Ukjentbosted, inbound: PdlUkjentbosted) {
+    assertEquals(ukjentbosted.bostedskommune, inbound.bostedskommune)
+}

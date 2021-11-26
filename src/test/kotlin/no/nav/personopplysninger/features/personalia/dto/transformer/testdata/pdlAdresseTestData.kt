@@ -60,7 +60,22 @@ fun createDummyUtenlandskAdresseIFrittFormat(): PdlUtenlandskAdresseIFrittFormat
     )
 }
 
-private fun createDummyMetadata() = PdlMetadata(
+fun createDummyMatrikkeladresse(): PdlMatrikkeladresse {
+    return PdlMatrikkeladresse(
+        bruksenhetsnummer = "dummy bruksenhetsnummer",
+        tilleggsnavn = "dummy tilleggsnavn",
+        postnummer = "dummy postnummer",
+        kommunenummer = "dummy kommunenummer",
+    )
+}
+
+fun createDummyUkjentbosted(): PdlUkjentbosted {
+    return PdlUkjentbosted(
+        bostedskommune = "dummy bostedskommune",
+    )
+}
+
+fun createDummyMetadata() = PdlMetadata(
     opplysningsId = "",
     master = "pdl",
     endringer = emptyList(),

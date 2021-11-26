@@ -6,7 +6,6 @@ import no.nav.personopplysninger.features.personalia.pdl.dto.PdlData
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlGeografiskTilknytning
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPerson
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.*
-import no.nav.personopplysninger.features.personalia.pdl.dto.common.PdlMetadata
 import no.nav.personopplysninger.features.personalia.pdl.dto.personalia.*
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -56,35 +55,35 @@ fun createDummyPerson(): PdlPerson {
         kjoenn = listOf(
             PdlKjoenn(PdlKjoennType.KVINNE)
         ),
-        bostedsadresse = listOf(createDummyBostedsadresse()),
-        deltBosted = listOf(createDummyDeltBosted()),
+        bostedsadresse = listOf(createDummyBostedsadresse(MATRIKKELADRESSE)),
+        deltBosted = listOf(createDummyDeltBosted(VEGADRESSE)),
         kontaktadresse = listOf(createDummyKontaktadresse(VEGADRESSE)),
-        oppholdsadresse = listOf(createDummyOppholdsadresse())
+        oppholdsadresse = listOf(createDummyOppholdsadresse(UTENLANDSK_ADRESSE))
     )
 }
 
-fun createDummyBostedsadresse(): PdlBostedsadresse {
+fun createDummyBostedsadresse(adresseType: AdresseType): PdlBostedsadresse {
     return PdlBostedsadresse(
         LocalDate.now().minusDays(1000),
         LocalDateTime.now().minusDays(1000),
         LocalDateTime.now().plusDays(1000),
         "coAdressenavn",
-        null,
-        null,
-        null,
-        PdlUkjentbosted("bostedskommune"),
+        if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
+        if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        if(adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
     )
 }
 
-fun createDummyDeltBosted(): PdlDeltBosted {
+fun createDummyDeltBosted(adresseType: AdresseType): PdlDeltBosted {
     return PdlDeltBosted(
         LocalDate.now().minusDays(1000),
         LocalDate.now().plusDays(1000),
         "coAdressenavn",
-        null,
-        null,
-        null,
-        PdlUkjentbosted("bostedskommune"),
+        if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
+        if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        if(adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
     )
 }
 
@@ -100,18 +99,18 @@ fun createDummyKontaktadresse(adresseType: AdresseType): PdlKontaktadresse {
         if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
         if(adresseType == UTENLANDSK_ADRESSE_I_FRITT_FORMAT) createDummyUtenlandskAdresseIFrittFormat() else null,
         null,
-        PdlMetadata("opplysningsId", "Pdl", emptyList(), false)
+        createDummyMetadata()
     )
 }
 
-fun createDummyOppholdsadresse(): PdlOppholdsadresse {
+fun createDummyOppholdsadresse(adresseType: AdresseType): PdlOppholdsadresse {
     return PdlOppholdsadresse(
         LocalDateTime.now().minusDays(1000),
         LocalDateTime.now().plusDays(1000),
         "coAdressenavn",
-        null,
-        createDummyVegadresse(),
-        null,
+        if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
         null,
     )
 }
