@@ -51,23 +51,25 @@ class PersonaliaService @Autowired constructor(
         val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning!!
 
         val kontaktadresse = pdlPerson.kontaktadresse.firstOrNull()
+        val bostedsadresse = pdlPerson.kontaktadresse.firstOrNull()
+        val deltBosted = pdlPerson.kontaktadresse.firstOrNull()
+        val oppholdsadresse = pdlPerson.kontaktadresse.firstOrNull()
 
         return PersonaliaKodeverk().apply {
             landterm = kodeverkConsumer.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
             gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning.gtLand)
-            utenlandskadresseterm = kodeverkConsumer.hentLandKoder().term(inbound.adresseinfo?.utenlandskAdresse?.land)
             foedekommuneterm = getKommuneKodeverksTerm(pdlPerson.foedsel.firstOrNull()?.foedekommune)
-            bostedskommuneterm = getKommuneKodeverksTerm(inbound.adresseinfo?.boadresse?.kommune)
-            bostedpostnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.boadresse?.postnummer)
-            postnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.postadresse?.postnummer)
-            tilleggsadressepostnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.tilleggsadresse?.postnummer)
-            spraakterm = kodeverkConsumer.hentSpraak().term(inbound.spraak?.kode?.verdi)
             statsborgerskapterm = kodeverkConsumer.hentStatsborgerskap().term(pdlPerson.statsborgerskap.firstOrNull()?.land)
-            postadresselandterm = kodeverkConsumer.hentLandKoder().term(inbound.adresseinfo?.postadresse?.land)
             utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inbound.utenlandskBank?.land?.verdi)
             utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inbound.utenlandskBank?.valuta?.verdi)
             kontaktadressePostSted = kodeverkConsumer.hentPostnummer().term(kontaktadresse?.postnummer)
             kontaktadresseLand = kodeverkConsumer.hentLandKoder().term(kontaktadresse?.landkode)
+            bostedsadressePostSted = kodeverkConsumer.hentPostnummer().term(bostedsadresse?.postnummer)
+            bostedsadresseLand = kodeverkConsumer.hentLandKoder().term(bostedsadresse?.landkode)
+            deltBostedPostSted = kodeverkConsumer.hentPostnummer().term(deltBosted?.postnummer)
+            deltBostedLand = kodeverkConsumer.hentLandKoder().term(deltBosted?.landkode)
+            oppholdsadressePostSted = kodeverkConsumer.hentPostnummer().term(oppholdsadresse?.postnummer)
+            oppholdsadresseLand = kodeverkConsumer.hentLandKoder().term(oppholdsadresse?.landkode)
         }
     }
 
