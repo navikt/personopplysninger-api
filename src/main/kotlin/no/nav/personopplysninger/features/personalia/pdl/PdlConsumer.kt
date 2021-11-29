@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia.pdl
 
-import no.nav.log.MDCConstants
+import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.CONSUMER_ID
 import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody
@@ -12,6 +12,7 @@ import no.nav.personopplysninger.features.personalia.pdl.dto.error.PDLErrorType
 import no.nav.personopplysninger.features.personalia.pdl.dto.error.PdlErrorResponse
 import no.nav.personopplysninger.features.personalia.pdl.dto.telefon.createTelefonRequest
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import java.net.URI
@@ -23,10 +24,9 @@ import javax.ws.rs.core.Response
 
 class PdlConsumer(private val client: Client, private val endpoint: URI, private val stsConsumer: STSConsumer) {
 
-    val RETT_PERSONOPPLYSNINGER = "RPO"
-    val GENERELL = "GEN"
+    private val RETT_PERSONOPPLYSNINGER = "RPO"
 
-    val log = LoggerFactory.getLogger(PdlConsumer::class.java)
+    val log: Logger = LoggerFactory.getLogger(PdlConsumer::class.java)
 
     // Defer to getTelefonInfo until more information is fetched from PDL
     fun getPersonInfo(ident: String): PdlPersonInfo {
@@ -58,9 +58,8 @@ class PdlConsumer(private val client: Client, private val endpoint: URI, private
     private fun logErrorResponse(response: Response?, exception: ConsumerException) {
         if (response != null) {
             val errorResponse: PdlErrorResponse = response.unmarshalBody()
-            val firstError = errorResponse.errors.first().errorType
 
-            when (firstError) {
+            when (errorResponse.errors.first().errorType) {
                 PDLErrorType.NOT_FOUND -> log.warn("Fant ikke bruker i PDL.")
                 PDLErrorType.NOT_AUTHENTICATED -> log.warn("Autentiseringsfeil mot PDL. Feil i brukertoken eller systemtoken.")
                 PDLErrorType.ABAC_ERROR -> log.warn("Systembruker har ikke tilgang til opplysning")

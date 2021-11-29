@@ -7,12 +7,8 @@ import com.nimbusds.jose.crypto.RSASSASigner
 import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
-import mu.withLoggingContext
-import no.nav.personopplysninger.features.endreopplysninger.PersonMottakConsumer
 import no.nav.personopplysninger.features.tokendings.domain.TokendingsToken
 import no.nav.personopplysninger.features.tokendings.metadata.TokendingsMetadataConsumer
-import no.nav.personopplysninger.tasks.EvickCacheTask
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.util.*

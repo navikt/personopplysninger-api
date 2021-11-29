@@ -14,7 +14,6 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadress
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.features.institusjon.domain.Institusjonstype
-import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.personalia.dto.getJson
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlResponse
 import no.nav.personopplysninger.features.personalia.pdl.dto.error.PDLErrorType

@@ -13,15 +13,4 @@ object UtenlandskAdresseObjectMother {
                 land = "CPV"
         )
     }
-
-    fun utenlandskAdresseNullObject(): UtenlandskAdresse {
-        return UtenlandskAdresse(
-                adresse1 = null,
-                adresse2 = null,
-                adresse3 = null,
-                datoFraOgMed = null,
-                datoTilOgMed = null,
-                land = null
-        )
-    }
 }

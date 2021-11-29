@@ -8,7 +8,7 @@ import javax.ws.rs.Path
 
 @Component
 @Path("internal")
-@ProtectedWithClaims(issuer = "selvbetjening", claimMap = arrayOf("acr=Level4"))
+@ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
 class StatusResource {
 
     @GET

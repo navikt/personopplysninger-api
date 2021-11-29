@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.oppslag.norg2
 
-import no.nav.log.MDCConstants
+import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.CONSUMER_ID
 import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody
@@ -16,21 +16,20 @@ import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
 class Norg2Consumer(private val client: Client, private val endpoint: URI) {
 
-    var logger: Logger = LoggerFactory.getLogger(javaClass)
-
-    fun hentEnhet(geografisk: String): Norg2Enhet? {
-        val request = buildEnhetRequest(geografisk, "enhet/navkontor")
-        return request.readResponse()
-    }
+    private var logger: Logger = LoggerFactory.getLogger(javaClass)
 
     fun hentEnhetDersomGyldig(geografisk: String): Norg2Enhet? {
-        try{
-            return hentEnhet(geografisk)
-        }
-        catch (e: ConsumerException) {
+        return try{
+            hentEnhet(geografisk)
+        } catch (e: ConsumerException) {
             logger.error(e.toString())
-            return null
+            null
         }
+    }
+
+    private fun hentEnhet(geografisk: String): Norg2Enhet? {
+        val request = buildEnhetRequest(geografisk, "enhet/navkontor")
+        return request.readResponse()
     }
 
     fun hentKontaktinfo(enhetsnr: String): Norg2EnhetKontaktinfo {

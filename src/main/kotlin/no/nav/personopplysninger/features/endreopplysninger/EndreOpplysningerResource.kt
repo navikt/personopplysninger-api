@@ -7,7 +7,6 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontak
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamVegadresse
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import javax.ws.rs.*
@@ -20,8 +19,6 @@ private const val claimsIssuer = "selvbetjening"
 @Path("/")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
 class EndreOpplysningerResource @Autowired constructor(private var endreOpplysningerService: EndreOpplysningerService) {
-
-    private val log = LoggerFactory.getLogger(EndreOpplysningerResource::class.java)
 
     @POST
     @Path("/endreTelefonnummer")

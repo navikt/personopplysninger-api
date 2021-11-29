@@ -1,8 +1,6 @@
 package no.nav.personopplysninger.features.tokendings
 
 import com.natpryce.konfig.*
-import kotlinx.coroutines.runBlocking
-import no.nav.personopplysninger.features.tokendings.domain.TokendingsMetaConfiguration
 
 private val config: Configuration =
     ConfigurationProperties.systemProperties() overriding EnvironmentVariables()

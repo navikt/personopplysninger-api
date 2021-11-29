@@ -2,7 +2,7 @@ package no.nav.personopplysninger.features.endreopplysninger.domain.validation
 
 import no.nav.personopplysninger.features.endreopplysninger.domain.Error
 
-class ValidationResult<T, R>  private constructor (val result: T?, val error: Error?) {
+class ValidationResult<T, R>  private constructor (private val result: T?, val error: Error?) {
 
     private var responseObj: R? = null
 

@@ -9,10 +9,10 @@ class Kodeverk(
     private val log = LoggerFactory.getLogger(Kodeverk::class.java)
 
     private val koderByNavn: Map<String, Kode> by lazy {
-        koder.map { it.navn to it}.toMap()
+        koder.associateBy { it.navn }
     }
 
-    fun getBetydninger(kodeNavn: String): List<Betydning> {
+    private fun getBetydninger(kodeNavn: String): List<Betydning> {
         return koderByNavn[kodeNavn]?.betydninger ?: emptyList()
     }
 

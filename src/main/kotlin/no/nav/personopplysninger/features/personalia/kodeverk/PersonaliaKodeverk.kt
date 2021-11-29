@@ -12,7 +12,6 @@ class PersonaliaKodeverk {
     var stasborgerskapterm: String? = null
     var postnummerterm: String? = null
     var bostedpostnummerterm: String? = null
-    var tilleggsadresseterm: String? = null
     var tilleggsadressepostnummerterm: String? = null
     var utenlandskadresseterm: String? = null
     var postadresselandterm : String? = null

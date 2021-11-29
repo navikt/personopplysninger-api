@@ -10,11 +10,11 @@ class MedlService @Autowired constructor(
         private var kodeverkConsumer: KodeverkConsumer
 ) {
     fun hentMeldemskap(fnr: String): Medlemskapsunntak {
-        val perioder = medlConsumer.hentMedlemskap(fnr);
-        return hentMedlemskapKodeverk(perioder);
+        val perioder = medlConsumer.hentMedlemskap(fnr)
+        return hentMedlemskapKodeverk(perioder)
     }
 
-    fun hentMedlemskapKodeverk(inbound: Medlemskapsunntak): Medlemskapsunntak {
+    private fun hentMedlemskapKodeverk(inbound: Medlemskapsunntak): Medlemskapsunntak {
         val perioderMedKodeverk = inbound.apply {
             perioder = inbound.perioder.map { periode ->
                 periode.apply {
@@ -25,8 +25,8 @@ class MedlService @Autowired constructor(
                          statsborgerland = kodeverkConsumer.hentLandKoder().term(periode.studieinformasjon?.statsborgerland)
                          studieland = kodeverkConsumer.hentLandKoder().term(periode.studieinformasjon?.studieland)
                     }
-                };
-            };
+                }
+            }
         }
         return perioderMedKodeverk
     }

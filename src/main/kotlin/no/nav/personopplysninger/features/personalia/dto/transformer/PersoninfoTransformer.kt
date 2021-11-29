@@ -6,11 +6,9 @@ import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
 import no.nav.tps.person.Navn
 import no.nav.tps.person.Personinfo
-import org.slf4j.LoggerFactory
 
 
 object PersoninfoTransformer {
-    private val log = LoggerFactory.getLogger(this::class.java)
 
     fun toOutbound(inbound: Personinfo, pdlPersonInfo: PdlPersonInfo, kodeverk: PersonaliaKodeverk): Personalia {
 
@@ -38,8 +36,7 @@ object PersoninfoTransformer {
     }
 
     private fun foedested(foedtIKommune: String?, foedtILand: String?): String? {
-        val landnavn: String? = foedtILand?.let { it }
-        val names = listOfNotNull(foedtIKommune, landnavn)
+        val names = listOfNotNull(foedtIKommune, foedtILand)
         return if (names.isEmpty()) null else names.joinToString(", ")
     }
 }
