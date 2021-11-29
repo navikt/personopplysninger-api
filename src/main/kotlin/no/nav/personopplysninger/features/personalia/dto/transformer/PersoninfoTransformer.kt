@@ -27,15 +27,14 @@ object PersoninfoTransformer {
             tlfnr = pdlPerson.telefonnummer.toTlfnr(),
             utenlandskbank = tpsPerson.utenlandskBank?.let { UtenlandskBankTransformer.toOutbound(it, kodeverk) },
             statsborgerskap = kodeverk.statsborgerskapterm,
-            foedested = foedested(kodeverk.foedekommuneterm, kodeverk.landterm),
+            foedested = foedested(kodeverk.foedekommuneterm, kodeverk.foedelandterm),
             sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.beskrivelse, //todo: bruk siste sivilstatus
             kjoenn = pdlPerson.kjoenn.firstOrNull()?.kjoenn?.beskrivelse,
         )
     }
 
     private fun foedested(foedtIKommune: String?, foedtILand: String?): String? {
-        val landnavn: String? = foedtILand
-        val names = listOfNotNull(foedtIKommune, landnavn)
+        val names = listOfNotNull(foedtIKommune, foedtILand)
         return if (names.isEmpty()) null else names.joinToString(", ")
     }
 }

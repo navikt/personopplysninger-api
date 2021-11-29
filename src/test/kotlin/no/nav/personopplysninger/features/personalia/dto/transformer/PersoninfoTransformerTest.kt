@@ -39,7 +39,7 @@ class PersoninfoTransformerTest {
         assertTlfnr(pdlPerson.telefonnummer, actual.tlfnr!!)
         assertUtenlandskBank(tpsPerson.utenlandskBank!!, actual.utenlandskbank!!, kodeverk)
         assertEquals(kodeverk.statsborgerskapterm, actual.statsborgerskap)
-        assertEquals("${kodeverk.foedekommuneterm}, ${kodeverk.landterm}", actual.foedested)
+        assertEquals("${kodeverk.foedekommuneterm}, ${kodeverk.foedelandterm}", actual.foedested)
         assertEquals(pdlSivilstand, actual.sivilstand)
         assertEquals(pdlKjoenn, actual.kjoenn)
     }

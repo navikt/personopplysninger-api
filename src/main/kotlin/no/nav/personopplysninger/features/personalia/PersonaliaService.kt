@@ -56,9 +56,9 @@ class PersonaliaService @Autowired constructor(
         val oppholdsadresse = pdlPerson.kontaktadresse.firstOrNull()
 
         return PersonaliaKodeverk().apply {
-            landterm = kodeverkConsumer.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
-            gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning.gtLand)
             foedekommuneterm = getKommuneKodeverksTerm(pdlPerson.foedsel.firstOrNull()?.foedekommune)
+            foedelandterm = kodeverkConsumer.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
+            gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning.gtLand)
             statsborgerskapterm = kodeverkConsumer.hentStatsborgerskap().term(pdlPerson.statsborgerskap.firstOrNull()?.land)
             utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inbound.utenlandskBank?.land?.verdi)
             utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inbound.utenlandskBank?.valuta?.verdi)

@@ -2,7 +2,7 @@ package no.nav.personopplysninger.features.personalia.kodeverk
 
 class PersonaliaKodeverk {
 
-    var landterm: String? = null
+    var foedelandterm: String? = null
     var gtLandterm: String? = null
     var foedekommuneterm: String? = null
     var statsborgerskapterm: String? = null

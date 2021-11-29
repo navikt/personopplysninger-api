@@ -4,9 +4,9 @@ import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 
 fun createDummyPersonaliaKodeverk(): PersonaliaKodeverk {
     return PersonaliaKodeverk().apply {
-        landterm = "landterm"
-        gtLandterm = "gtLandterm"
         foedekommuneterm = "foedekommuneterm"
+        foedelandterm = "foedelandterm"
+        gtLandterm = "gtLandterm"
         statsborgerskapterm = "stasborgerskapterm"
         utenlandskbanklandterm = "utenlandskbanklandterm"
         utenlandskbankvalutaterm = "utenlandskbankvalutaterm"
