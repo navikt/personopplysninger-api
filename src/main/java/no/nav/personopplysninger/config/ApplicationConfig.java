@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.config;
 
-import no.nav.log.LogFilter;
+import no.nav.common.log.LogFilter;
 import no.nav.security.token.support.core.configuration.MultiIssuerConfiguration;
 import no.nav.security.token.support.core.configuration.ProxyAwareResourceRetriever;
 import no.nav.security.token.support.jaxrs.servlet.JaxrsJwtTokenValidationFilter;
@@ -29,6 +29,8 @@ import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URL;
 import java.util.EnumSet;
+
+import static no.nav.common.utils.EnvironmentUtils.getApplicationName;
 
 @SpringBootConfiguration
 @ComponentScan({
@@ -106,7 +108,7 @@ public class ApplicationConfig implements EnvironmentAware {
     public FilterRegistrationBean<LogFilter> logFilter() {
         log.info("Registering LogFilter filter");
         final FilterRegistrationBean<LogFilter> filterRegistration = new FilterRegistrationBean<>();
-        filterRegistration.setFilter(new LogFilter());
+        filterRegistration.setFilter(new LogFilter(getApplicationName().orElse("")));
 
         // Viktig at order settes til en lavere verdi enn hva jersey-filteret er konfigurert med i application-yaml
         // slik at loggfilteret kjøres først. Årsaken til dette er avhengigheter til MDC i forretningskoden (uthenting av callId).

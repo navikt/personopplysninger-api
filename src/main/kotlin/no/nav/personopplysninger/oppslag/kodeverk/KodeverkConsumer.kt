@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.oppslag.kodeverk
 
-import no.nav.log.MDCConstants
+import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.CONSUMER_ID
 import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse

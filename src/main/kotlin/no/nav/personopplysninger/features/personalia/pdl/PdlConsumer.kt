@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia.pdl
 
-import no.nav.log.MDCConstants
+import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.CONSUMER_ID
 import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody
@@ -23,7 +23,6 @@ import javax.ws.rs.core.Response
 class PdlConsumer(private val client: Client, private val endpoint: URI, private val stsConsumer: STSConsumer) {
 
     val RETT_PERSONOPPLYSNINGER = "RPO"
-    val GENERELL = "GEN"
 
     val log = LoggerFactory.getLogger(PdlConsumer::class.java)
 

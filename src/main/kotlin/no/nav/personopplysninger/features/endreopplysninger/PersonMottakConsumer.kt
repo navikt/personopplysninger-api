@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.log.MDCConstants
+import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.CONSUMER_ID
 import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody
