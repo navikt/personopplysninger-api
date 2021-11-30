@@ -277,7 +277,7 @@
         <dependency>
             <groupId>no.nav.common</groupId>
             <artifactId>log</artifactId>
-            <version>2.2021.11.15_14.58-d7a174cfb6a8</version>
+            <version>1.2019.07.11-12.31-0b875ec24c4e</version>
         </dependency>
         <dependency>
             <groupId>no.nav.common</groupId>

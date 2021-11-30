@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.institusjon
 
-import no.nav.common.log.MDCConstants
+import no.nav.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.*
 import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
 import org.slf4j.MDC
