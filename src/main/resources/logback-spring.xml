@@ -24,7 +24,9 @@
         </appender>
     </appender>
 
-    <logger name="no.nav.log.LogFilter" additivity="false">
+    <appender name="metrics" class="io.prometheus.client.logback.InstrumentedAppender"/>
+
+    <logger name="no.nav.common.log.LogFilter" additivity="false">
         <!-- nais+local -->
         <appender-ref ref="stdout_json_with_filter"/>
         <appender-ref ref="metrics"/>
