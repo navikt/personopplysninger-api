@@ -74,10 +74,10 @@ class PersonaliaService @Autowired constructor(
     }
 
     private fun getKommuneKodeverksTerm(inbound: String?): String? {
-        if ("0000".equals(inbound)) {
-            return ""
+        return if ("0000" == inbound) {
+            ""
         } else {
-            return kodeverkConsumer.hentKommuner().term(inbound)
+            kodeverkConsumer.hentKommuner().term(inbound)
         }
     }
 
@@ -86,12 +86,12 @@ class PersonaliaService @Autowired constructor(
         return KontaktinformasjonTransformer.toOutbound(inbound, fodselsnr)
     }
 
-    fun hentEnhetKontaktinformasjon(enhetsnr: String): GeografiskEnhetKontaktInformasjon {
+    private fun hentEnhetKontaktinformasjon(enhetsnr: String): GeografiskEnhetKontaktInformasjon {
         val inbound = norg2Consumer.hentKontaktinfo(enhetsnr)
         return GeografiskEnhetKontaktinformasjonTransformer.toOutbound(inbound)
     }
 
-    fun hentGeografiskTilknytning(inbound: GeografiskTilknytning?): String? {
+    private fun hentGeografiskTilknytning(inbound: GeografiskTilknytning?): String? {
         return inbound?.bydel ?: inbound?.kommune
     }
 }

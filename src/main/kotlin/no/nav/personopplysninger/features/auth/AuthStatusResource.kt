@@ -15,7 +15,7 @@ private const val claimsIssuer = "selvbetjening"
 
 @Component
 @Path("name")
-@ProtectedWithClaims(issuer = "selvbetjening", claimMap = arrayOf("acr=Level4"))
+@ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
 class AuthStatusResource  @Autowired constructor(private var pdlConsumer: PdlConsumer) {
 
     @GET

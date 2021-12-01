@@ -6,11 +6,11 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.Publikumsmotta
 import no.nav.personopplysninger.oppslag.norg2.domain.Publikumsmottak
 
 object PublikumsmottakTransformer {
-    val mandag = "Mandag"
-    val tirsdag = "Tirsdag"
-    val onsdag = "Onsdag"
-    val torsdag = "Torsdag"
-    val fredag = "Fredag"
+    private const val mandag = "Mandag"
+    private const val tirsdag = "Tirsdag"
+    private const val onsdag = "Onsdag"
+    private const val torsdag = "Torsdag"
+    private const val fredag = "Fredag"
 
     fun toOutbound(inbound: List<Publikumsmottak>?): ArrayList<PublikumsmottakDto> {
 

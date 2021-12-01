@@ -51,7 +51,7 @@ class SerializerTest {
                     .build()
             val response: Response = client.target("http://localhost:8080").path("/kodeverk").request().get()
             val endringer: List<EndringKontonummer> = response.unmarshalList()
-            val endring = endringer.get(0)
+            val endring = endringer[0]
             assertEquals("OPPRETT", endring.endringstype)
             assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
             assertEquals(3, endring.status.substatus.size)
@@ -100,8 +100,8 @@ class SerializerTest {
 
         assertEquals(2, retningsnumre.size)
         assertEquals("+52", retningsnumre[0].landskode)
-        assertEquals("Mexico", retningsnumre.get(0).land)
-        assertEquals("Peru", retningsnumre.get(1).land)
+        assertEquals("Mexico", retningsnumre[0].land)
+        assertEquals("Peru", retningsnumre[1].land)
     }
 
     @Test
@@ -110,7 +110,7 @@ class SerializerTest {
         val validationError = readValue(json, Error::class.java)
         assertEquals("Validering feilet", validationError.message)
         assertEquals(3, validationError.details!!.size)
-        val feilForFelt = validationError.details!!.get("objekt.feltnavn")
+        val feilForFelt = validationError.details!!["objekt.feltnavn"]
         assertEquals(3, feilForFelt!!.size)
         assertEquals("valideringsfeil 1", feilForFelt[0])
     }

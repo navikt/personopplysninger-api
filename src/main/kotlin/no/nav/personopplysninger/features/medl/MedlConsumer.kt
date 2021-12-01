@@ -26,7 +26,7 @@ class MedlConsumer constructor(
             getBuilder(fnr, tokendingsToken.accessToken)
             val response = getBuilder(fnr, tokendingsToken.accessToken).get()
 
-            if (!SUCCESSFUL.equals(response.statusInfo.family)) {
+            if (SUCCESSFUL != response.statusInfo.family) {
                 val msg = "Forsøkte å konsumere REST-tjenesten medl. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
                 throw ConsumerException(msg.plus(response.unmarshalBody()))
             }

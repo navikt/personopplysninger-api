@@ -89,16 +89,6 @@ class PersonMottakConsumer (
         }
     }
 
-    private fun <T : Endring<T>> sendBlankEndring(request: Invocation.Builder, systemUserToken: String, c: Class<T>): T {
-        return try {
-            request.method(HttpMethod.PUT, Entity.text(""))
-                .use {response -> readResponseAndPollStatus(response, systemUserToken, c) }
-        } catch (e: Exception) {
-            val msg = "Forsøkte å endre personopplysning. endpoint=[$endpoint]."
-            throw ConsumerException(msg, e)
-        }
-    }
-
     private inline fun <reified T, reified R : Endring<R>> sendPdlEndring(entitetSomEndres: Personopplysning<T>,
                                                                           fnr: String,
                                                                           systemUserToken: String,
@@ -201,7 +191,7 @@ class PersonMottakConsumer (
             }
 
             val pollResponse = get()
-            endring = pollResponse.unmarshalList(clazz).get(0)
+            endring = pollResponse.unmarshalList(clazz)[0]
         } while (++i < maxPolls && endring.isPending)
         log.info("Antall polls for status: $i")
 
@@ -226,7 +216,7 @@ class PersonMottakConsumer (
             }
 
             val pollResponse = get()
-            endring = pollResponse.unmarshalList<T>().get(0)
+            endring = pollResponse.unmarshalList<T>()[0]
         } while (++i < maxPolls && endring.isPending)
         log.info("Antall polls for status: $i")
 
