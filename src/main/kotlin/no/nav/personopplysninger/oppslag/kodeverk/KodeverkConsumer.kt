@@ -22,11 +22,6 @@ open class KodeverkConsumer constructor(
         return hentKodeverkBetydning("Retningsnumre", true)
     }
 
-    @Cacheable("kjonn")
-    open fun hentKjonn(): Kodeverk {
-        return hentKodeverkBetydning("Kjønnstyper", true)
-    }
-
     @Cacheable("kommune")
     open fun hentKommuner(): Kodeverk {
         return hentKodeverkBetydning("Kommuner", false)
@@ -40,16 +35,6 @@ open class KodeverkConsumer constructor(
     @Cacheable("postnr")
     open fun hentPostnummer(): Kodeverk {
         return hentKodeverkBetydning("Postnummer", true)
-    }
-
-    @Cacheable("sivilstand")
-    open fun hentSivilstand(): Kodeverk {
-        return hentKodeverkBetydning("Sivilstander", true)
-    }
-
-    @Cacheable("spraak")
-    open fun hentSpraak(): Kodeverk {
-        return hentKodeverkBetydning("Språk", true)
     }
 
     @Cacheable("valuta")

@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.medl
 
-import no.nav.common.log.MDCConstants
+import no.nav.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.*
 import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.tokendings.TokenDingsService

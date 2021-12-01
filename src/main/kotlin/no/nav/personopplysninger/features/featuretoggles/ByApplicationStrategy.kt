@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.featuretoggles
 
 import no.finn.unleash.strategy.Strategy
-import no.nav.common.utils.EnvironmentUtils
+import no.nav.sbl.util.EnvironmentUtils
 
 class ByApplicationStrategy : Strategy {
 

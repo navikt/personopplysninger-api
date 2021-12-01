@@ -1,10 +1,10 @@
 package no.nav.personopplysninger.features.featuretoggles
 
 import no.finn.unleash.UnleashContext
-import no.nav.common.utils.EnvironmentUtils.getOptionalProperty
 import no.nav.sbl.featuretoggle.unleash.UnleashService
 import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig
 import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.UNLEASH_API_URL_PROPERTY_NAME
+import no.nav.sbl.util.EnvironmentUtils.getOptionalProperty
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Autowired

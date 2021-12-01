@@ -73,7 +73,7 @@ class PersonaliaService @Autowired constructor(
         }
     }
 
-    private fun getKommuneKodeverksTerm(inbound: String?): String? {
+    private fun getKommuneKodeverksTerm(inbound: String?): String {
         return if ("0000" == inbound) {
             ""
         } else {
