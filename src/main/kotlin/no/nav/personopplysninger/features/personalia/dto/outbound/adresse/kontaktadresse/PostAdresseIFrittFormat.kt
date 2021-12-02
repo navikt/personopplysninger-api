@@ -11,7 +11,7 @@ data class PostAdresseIFrittFormat (
         val gyldigFraOgMed: String?,
         val gyldigTilOgMed: String?,
         val coAdressenavn: String?,
-        override val kilde: String
+        override val kilde: String?
 ): Kontaktadresse {
     override val type: KontaktadresseType get() = POSTADRESSE_I_FRITT_FORMAT
 }

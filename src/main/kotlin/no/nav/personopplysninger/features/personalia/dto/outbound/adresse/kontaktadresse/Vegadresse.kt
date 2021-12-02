@@ -17,7 +17,7 @@ data class Vegadresse (
         val gyldigFraOgMed: String?,
         val gyldigTilOgMed: String?,
         val coAdressenavn: String?,
-        override val kilde: String
+        override val kilde: String?
 ): Kontaktadresse {
     override val type: KontaktadresseType get() = VEGADRESSE
 }
