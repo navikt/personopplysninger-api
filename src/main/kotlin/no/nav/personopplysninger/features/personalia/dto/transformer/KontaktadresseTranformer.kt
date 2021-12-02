@@ -22,32 +22,37 @@ object KontaktadresseTranformer {
         val inboundVegadresse = inbound.vegadresse!!
 
         return Vegadresse(
-                husnummer = inboundVegadresse.husnummer,
-                husbokstav = inboundVegadresse.husbokstav,
-                bruksenhetsnummer = inboundVegadresse.bruksenhetsnummer,
-                adressenavn = inboundVegadresse.adressenavn,
-                kommunenummer = inboundVegadresse.kommunenummer,
-                tilleggsnavn = inboundVegadresse.tilleggsnavn,
-                postnummer = inboundVegadresse.postnummer,
-                poststed = kodeverk.kontaktadressePostSted,
-                gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
-                gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
-                coAdressenavn = inbound.coAdressenavn
+            husnummer = inboundVegadresse.husnummer,
+            husbokstav = inboundVegadresse.husbokstav,
+            bruksenhetsnummer = inboundVegadresse.bruksenhetsnummer,
+            adressenavn = inboundVegadresse.adressenavn,
+            kommunenummer = inboundVegadresse.kommunenummer,
+            tilleggsnavn = inboundVegadresse.tilleggsnavn,
+            postnummer = inboundVegadresse.postnummer,
+            poststed = kodeverk.kontaktadressePostSted,
+            gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
+            gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
+            coAdressenavn = inbound.coAdressenavn,
+            kilde = inbound.metadata.master.lowercase()
         )
     }
 
-    private fun transformFromPostadresseIFrittFormat(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse {
+    private fun transformFromPostadresseIFrittFormat(
+        inbound: PdlKontaktadresse,
+        kodeverk: PersonaliaKodeverk
+    ): Kontaktadresse {
         val inboundPostadresseIFrittFormat = inbound.postadresseIFrittFormat!!
 
         return PostAdresseIFrittFormat(
-                adresselinje1 = inboundPostadresseIFrittFormat.adresselinje1,
-                adresselinje2 = inboundPostadresseIFrittFormat.adresselinje2,
-                adresselinje3 = inboundPostadresseIFrittFormat.adresselinje3,
-                postnummer = inboundPostadresseIFrittFormat.postnummer,
-                poststed = kodeverk.kontaktadressePostSted,
-                gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
-                gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
-                coAdressenavn = inbound.coAdressenavn
+            adresselinje1 = inboundPostadresseIFrittFormat.adresselinje1,
+            adresselinje2 = inboundPostadresseIFrittFormat.adresselinje2,
+            adresselinje3 = inboundPostadresseIFrittFormat.adresselinje3,
+            postnummer = inboundPostadresseIFrittFormat.postnummer,
+            poststed = kodeverk.kontaktadressePostSted,
+            gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
+            gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
+            coAdressenavn = inbound.coAdressenavn,
+            kilde = inbound.metadata.master.lowercase()
         )
     }
 
@@ -55,48 +60,57 @@ object KontaktadresseTranformer {
         val inboundPostboksadresse = inbound.postboksadresse!!
 
         return Postboksadresse(
-                postbokseier = inboundPostboksadresse.postbokseier,
-                postboks = inboundPostboksadresse.postboks,
-                postnummer = inboundPostboksadresse.postnummer,
-                poststed = kodeverk.kontaktadressePostSted,
-                gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
-                gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
-                coAdressenavn = inbound.coAdressenavn
+            postbokseier = inboundPostboksadresse.postbokseier,
+            postboks = inboundPostboksadresse.postboks,
+            postnummer = inboundPostboksadresse.postnummer,
+            poststed = kodeverk.kontaktadressePostSted,
+            gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
+            gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
+            coAdressenavn = inbound.coAdressenavn,
+            kilde = inbound.metadata.master.lowercase()
         )
     }
 
-    private fun transformFromUtenlandskAdresse(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse {
+    private fun transformFromUtenlandskAdresse(
+        inbound: PdlKontaktadresse,
+        kodeverk: PersonaliaKodeverk
+    ): Kontaktadresse {
         val inboundUtenlandskAdresse = inbound.utenlandskAdresse!!
 
         return UtenlandskAdresse(
-                adressenavnNummer = inboundUtenlandskAdresse.adressenavnNummer,
-                bygningEtasjeLeilighet = inboundUtenlandskAdresse.bygningEtasjeLeilighet,
-                postboksNummerNavn = inboundUtenlandskAdresse.postboksNummerNavn,
-                postkode = inboundUtenlandskAdresse.postkode,
-                bySted = inboundUtenlandskAdresse.bySted,
-                regionDistriktOmraade = inboundUtenlandskAdresse.regionDistriktOmraade,
-                landkode = inboundUtenlandskAdresse.landkode,
-                land = kodeverk.kontaktadresseLand,
-                gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
-                gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
-                coAdressenavn = inbound.coAdressenavn
+            adressenavnNummer = inboundUtenlandskAdresse.adressenavnNummer,
+            bygningEtasjeLeilighet = inboundUtenlandskAdresse.bygningEtasjeLeilighet,
+            postboksNummerNavn = inboundUtenlandskAdresse.postboksNummerNavn,
+            postkode = inboundUtenlandskAdresse.postkode,
+            bySted = inboundUtenlandskAdresse.bySted,
+            regionDistriktOmraade = inboundUtenlandskAdresse.regionDistriktOmraade,
+            landkode = inboundUtenlandskAdresse.landkode,
+            land = kodeverk.kontaktadresseLand,
+            gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
+            gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
+            coAdressenavn = inbound.coAdressenavn,
+            kilde = inbound.metadata.master.lowercase()
         )
     }
 
-    private fun transformFromUtenlandskAdresseIFrittFormat(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse {
+    private fun transformFromUtenlandskAdresseIFrittFormat(
+        inbound: PdlKontaktadresse,
+        kodeverk: PersonaliaKodeverk
+    ): Kontaktadresse {
         val inboundUtenlandskAdresseIFrittFormat = inbound.utenlandskAdresseIFrittFormat!!
 
         return UtenlandskAdresseIFrittFormat(
-                adresselinje1 = inboundUtenlandskAdresseIFrittFormat.adresselinje1,
-                adresselinje2 = inboundUtenlandskAdresseIFrittFormat.adresselinje2,
-                adresselinje3 = inboundUtenlandskAdresseIFrittFormat.adresselinje3,
-                postkode = inboundUtenlandskAdresseIFrittFormat.postkode,
-                byEllerStedsnavn = inboundUtenlandskAdresseIFrittFormat.byEllerStedsnavn,
-                landkode = inboundUtenlandskAdresseIFrittFormat.landkode,
-                land = kodeverk.kontaktadresseLand,
-                gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
-                gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
-                coAdressenavn = inbound.coAdressenavn
+            adresselinje1 = inboundUtenlandskAdresseIFrittFormat.adresselinje1,
+            adresselinje2 = inboundUtenlandskAdresseIFrittFormat.adresselinje2,
+            adresselinje3 = inboundUtenlandskAdresseIFrittFormat.adresselinje3,
+            postkode = inboundUtenlandskAdresseIFrittFormat.postkode,
+            byEllerStedsnavn = inboundUtenlandskAdresseIFrittFormat.byEllerStedsnavn,
+            landkode = inboundUtenlandskAdresseIFrittFormat.landkode,
+            land = kodeverk.kontaktadresseLand,
+            gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
+            gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
+            coAdressenavn = inbound.coAdressenavn,
+            kilde = inbound.metadata.master.lowercase()
         )
     }
- }
+}

@@ -4,7 +4,7 @@ import no.nav.tps.person.Informasjon_om_person_utland
 import no.nav.tps.person.Kode
 
 object Informasjon_om_person_utlandObjectMother {
-    val dummyValues = Informasjon_om_person_utland(
+    private val dummyValues = Informasjon_om_person_utland(
             datoFraOgMed = dummyDato,
             kilde = dummyKilde,
             familienavnFodt = "dummy familienavn født",

@@ -1,15 +1,15 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.log.MDCConstants
-import no.nav.personopplysninger.consumerutils.*
+import no.nav.personopplysninger.consumerutils.CONSUMER_ID
+import no.nav.personopplysninger.consumerutils.ConsumerException
+import no.nav.personopplysninger.consumerutils.unmarshalBody
 import no.nav.tps.person.Personinfo
 import org.slf4j.MDC
-
+import java.net.URI
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
 import javax.ws.rs.core.Response
-import java.net.URI
-
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
 class PersonConsumer(private val client: Client, private val endpoint: URI) {

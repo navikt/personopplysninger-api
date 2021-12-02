@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.features.personalia.pdl
 
-import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.PostAdresseIFrittFormat
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.*
 import no.nav.personopplysninger.features.personalia.pdl.dto.common.PdlMetadata
 import java.time.LocalDateTime

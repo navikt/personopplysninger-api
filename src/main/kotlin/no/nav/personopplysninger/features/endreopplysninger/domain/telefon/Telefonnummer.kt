@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.ObjectMapper
 
 import java.io.IOException
+import java.util.*
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Telefonnummer {
@@ -60,7 +61,7 @@ class Telefonnummer {
         }
 
         private fun convertLegacyNummerType(type: String): Int {
-            return when (type.toUpperCase()) {
+            return when (type.uppercase(Locale.getDefault())) {
                 "MOBIL" -> 1
                 "HJEM" -> 2
                 else -> -1

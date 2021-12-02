@@ -1,9 +1,6 @@
 package no.nav.personopplysninger.config;
 
 import no.nav.log.LogFilter;
-import no.nav.personopplysninger.features.endreopplysninger.PersonMottakConfiguration;
-import no.nav.personopplysninger.features.personalia.PersonaliaRestConfiguration;
-import no.nav.personopplysninger.oppslag.kodeverk.KodeverkRestConfiguration;
 import no.nav.security.token.support.core.configuration.MultiIssuerConfiguration;
 import no.nav.security.token.support.core.configuration.ProxyAwareResourceRetriever;
 import no.nav.security.token.support.jaxrs.servlet.JaxrsJwtTokenValidationFilter;

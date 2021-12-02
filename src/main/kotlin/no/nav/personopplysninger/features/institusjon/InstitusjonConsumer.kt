@@ -17,7 +17,7 @@ class InstitusjonConsumer constructor(
     fun getInstitusjonsopphold(fnr: String): List<InnsynInstitusjonsopphold> {
         try {
             val response = getBuilder(fnr).get()
-            if (!SUCCESSFUL.equals(response.statusInfo.family)) {
+            if (SUCCESSFUL != response.statusInfo.family) {
                 val msg = "Forsøkte å konsumere REST-tjenesten INST2. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
                 throw ConsumerException(msg.plus(response.unmarshalBody()))
             }

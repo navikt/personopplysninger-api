@@ -53,10 +53,10 @@ open class STSTokenRestConfiguration {
         return ClientBuilder.newBuilder()
                 .register(clientObjectMapperResolver)
                 .register(ClientRequestFilter { requestContext ->
-                    requestContext.getHeaders().put(AUTHORIZATION, listOf<Any>(basicAuthentication))
+                    requestContext.headers[AUTHORIZATION] = listOf<Any>(basicAuthentication)
                 })
                 .register(ClientRequestFilter { requestContext ->
-                    requestContext.getHeaders().putSingle(DEFAULT_APIKEY_USERNAME, STSApiKeyPassword)
+                    requestContext.headers.putSingle(DEFAULT_APIKEY_USERNAME, STSApiKeyPassword)
                 })
                 .build()
     }

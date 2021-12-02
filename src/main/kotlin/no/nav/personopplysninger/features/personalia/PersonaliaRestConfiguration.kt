@@ -48,7 +48,7 @@ open class PersonaliaRestConfiguration {
     open fun tpsProxyClient(clientObjectMapperResolver: ContextResolver<ObjectMapper>): Client {
         return clientBuilder(clientObjectMapperResolver)
                 .register(ClientRequestFilter { requestContext ->
-                    requestContext.getHeaders()
+                    requestContext.headers
                             .putSingle(DEFAULT_APIKEY_USERNAME, tpsProxyApiKeyPassword)
                 })
                 .build()
@@ -66,7 +66,7 @@ open class PersonaliaRestConfiguration {
     open fun pdlCLient(clientObjectMapperResolver: ContextResolver<ObjectMapper>): Client {
         return clientBuilder(clientObjectMapperResolver)
                 .register(ClientRequestFilter { requestContext ->
-                    requestContext.getHeaders()
+                    requestContext.headers
                             .putSingle(DEFAULT_APIKEY_USERNAME, pdlApiKeyPassword)
                 })
                 .build()
@@ -76,7 +76,7 @@ open class PersonaliaRestConfiguration {
     open fun dkifClient(clientObjectMapperResolver: ContextResolver<ObjectMapper>): Client {
         return clientBuilder(clientObjectMapperResolver)
                 .register(ClientRequestFilter { requestContext ->
-                    requestContext.getHeaders()
+                    requestContext.headers
                             .putSingle(DEFAULT_APIKEY_USERNAME, dkifApiKeyPassword)
                 })
                 .build()

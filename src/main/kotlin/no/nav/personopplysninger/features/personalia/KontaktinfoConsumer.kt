@@ -6,11 +6,9 @@ import no.nav.personopplysninger.consumerutils.CONSUMER_ID
 import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody
 import org.slf4j.MDC
-
+import java.net.URI
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
-import java.net.URI
-
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
 class KontaktinfoConsumer(private val client: Client, private val endpoint: URI) {

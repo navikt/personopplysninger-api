@@ -36,7 +36,7 @@ open class PersonMottakConfiguration {
                 .register(JwtTokenClientRequestFilter::class.java)
                 .register(clientObjectMapperResolver)
                 .register(ClientRequestFilter { requestContext ->
-                    requestContext.getHeaders()
+                    requestContext.headers
                             .putSingle(DEFAULT_APIKEY_USERNAME, personMottakApiKeyPassword)
                 })
                 .build()

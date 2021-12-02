@@ -4,7 +4,7 @@ import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
 import org.springframework.stereotype.Service
 
 @Service
-class PdlService(val pdlConsumer: PdlConsumer) {
+class PdlService(private val pdlConsumer: PdlConsumer) {
 
     fun getOpplysningsIdForTelefon(ident: String, landskode: String, telefonnummer: String): String? {
         return pdlConsumer.getTelefonInfo(ident).telefonnummer
@@ -23,7 +23,7 @@ class PdlService(val pdlConsumer: PdlConsumer) {
 
 
     fun getPersonInfo(ident: String): PdlPersonInfo {
-        return pdlConsumer.getPersonInfo(ident).keepKontaktadressesWithPdlMasterOnly()
+        return pdlConsumer.getPersonInfo(ident)
     }
 
     private fun PdlPersonInfo.keepKontaktadressesWithPdlMasterOnly(): PdlPersonInfo {

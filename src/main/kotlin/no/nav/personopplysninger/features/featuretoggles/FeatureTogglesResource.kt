@@ -25,25 +25,25 @@ private const val UNLEASH_COOKIE_NAME = "unleash-cookie"
 @Path("/")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
 class FeatureTogglesResource @Autowired constructor() {
-    var unleashService = unleashService();
+    private var unleashService = unleashService()
 
     @GET
     @Path("/feature-toggles")
     @Produces(MediaType.APPLICATION_JSON)
     fun hentFeatureToggles( @Context request: HttpServletRequest, @Context response: HttpServletResponse, @CookieParam(UNLEASH_COOKIE_NAME) cookieSessionId: String?, @QueryParam("feature") features : List<String>): Response {
         try {
-            var fodselsnr = hentFnrFraToken()
-            var sessionId = cookieSessionId ?: generateSessionId(response)
+            val fodselsnr = hentFnrFraToken()
+            val sessionId = cookieSessionId ?: generateSessionId(response)
 
             val unleashContext = UnleashContext.builder()
                     .userId(fodselsnr)
                     .sessionId(sessionId)
-                    .remoteAddress(request.getRemoteAddr())
+                    .remoteAddress(request.remoteAddr)
                     .build()
 
-            val evaluation: Map<String, Boolean> = features.map{
-                feature -> feature to unleashService.isEnabled(feature, unleashContext)
-            }.toMap()
+            val evaluation: Map<String, Boolean> = features.associateWith { feature ->
+                unleashService.isEnabled(feature, unleashContext)
+            }
 
             return Response
                     .ok(evaluation)
@@ -57,7 +57,7 @@ class FeatureTogglesResource @Autowired constructor() {
         }
     }
 
-    fun unleashService(): UnleashService {
+    private fun unleashService(): UnleashService {
         return UnleashService(UnleashServiceConfig.builder()
                 .applicationName(System.getenv("NAIS_APP_NAME"))
                 .unleashApiUrl(getOptionalProperty(UNLEASH_API_URL_PROPERTY_NAME).orElse("https://unleash.nais.io/api/"))
@@ -70,8 +70,8 @@ class FeatureTogglesResource @Autowired constructor() {
         val uuid = UUID.randomUUID()
         val sessionId = java.lang.Long.toHexString(uuid.mostSignificantBits) + java.lang.Long.toHexString(uuid.leastSignificantBits)
         val cookie = Cookie(UNLEASH_COOKIE_NAME, sessionId)
-        cookie.setPath("/")
-        cookie.setMaxAge(-1)
+        cookie.path = "/"
+        cookie.maxAge = -1
         httpServletRequest.addCookie(cookie)
         return sessionId
     }

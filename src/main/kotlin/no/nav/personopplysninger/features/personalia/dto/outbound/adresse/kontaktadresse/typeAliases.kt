@@ -1,8 +1,5 @@
 package no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse
 
-typealias DownstreamKontaktadresse = Kontaktadresse
 typealias DownstreamVegadresse = Vegadresse
 typealias DownstreamPostboksadresse = Postboksadresse
-typealias DownstreamPostAdresseIFrittFormat = PostAdresseIFrittFormat
 typealias DownstreamUtenlandskAdresse = UtenlandskAdresse
-typealias DownstreamUtenlandskAdresseIFrittFormat = UtenlandskAdresseIFrittFormat

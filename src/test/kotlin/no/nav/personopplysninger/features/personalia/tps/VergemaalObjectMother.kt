@@ -3,7 +3,7 @@ package no.nav.personopplysninger.features.personalia.tps
 import no.nav.tps.person.Vergemaal
 
 object VergemaalObjectMother {
-    val dummyValues = Vergemaal(
+    private val dummyValues = Vergemaal(
             datoFraOgMed = dummyDato,
             kilde = dummyKilde,
             type = dummyKode,

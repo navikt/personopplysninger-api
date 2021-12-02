@@ -6,8 +6,6 @@ import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.eclipse.jetty.http.HttpHeader
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import java.net.URI
 import javax.ws.rs.client.Client
@@ -22,15 +20,13 @@ class MedlConsumer constructor(
         private val targetApp: String?
 )
 {
-    var logger: Logger = LoggerFactory.getLogger(javaClass)
-
     fun hentMedlemskap(fnr: String): Medlemskapsunntak {
         try {
             val tokendingsToken = tokenDingsService.exchangeToken(getToken(), targetApp)
             getBuilder(fnr, tokendingsToken.accessToken)
             val response = getBuilder(fnr, tokendingsToken.accessToken).get()
 
-            if (!SUCCESSFUL.equals(response.statusInfo.family)) {
+            if (SUCCESSFUL != response.statusInfo.family) {
                 val msg = "Forsøkte å konsumere REST-tjenesten medl. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
                 throw ConsumerException(msg.plus(response.unmarshalBody()))
             }

@@ -23,8 +23,8 @@ class PersonaliaResource @Autowired constructor(private var personaliaService: P
     @Path("/personalia")
     @Produces(MediaType.APPLICATION_JSON)
     fun hentPersoninfo(): Response {
-        cacheControl.setMustRevalidate(true)
-        cacheControl.setNoStore(true)
+        cacheControl.isMustRevalidate = true
+        cacheControl.isNoStore = true
         val fodselsnr = hentFnrFraToken()
         val personaliaOgAdresser = personaliaService.hentPersoninfo(fodselsnr)
         return Response

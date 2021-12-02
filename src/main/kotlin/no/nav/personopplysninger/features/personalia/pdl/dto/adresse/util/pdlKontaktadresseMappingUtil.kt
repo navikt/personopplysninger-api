@@ -1,8 +1,6 @@
 package no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util
 
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontaktadresse
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontaktadressetype.Innland
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontaktadressetype.Utland
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util.PdlKontaktadresseMappingType.*
 
 val PdlKontaktadresse.mappingType: PdlKontaktadresseMappingType get() {
