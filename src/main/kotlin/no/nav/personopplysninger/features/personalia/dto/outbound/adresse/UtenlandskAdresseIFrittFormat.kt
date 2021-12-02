@@ -11,6 +11,7 @@ data class UtenlandskAdresseIFrittFormat (
         val byEllerStedsnavn: String?,
         val landkode: String,
         val land: String?,
-): Adresse {
-    override val type: AdresseType get() = UTENLANDSK_ADRESSE_I_FRITT_FORMAT
+        override val kilde: String?
+): Kontaktadresse {
+    override val type: KontaktadresseType get() = UTENLANDSK_ADRESSE_I_FRITT_FORMAT
 }

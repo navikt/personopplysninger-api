@@ -14,6 +14,7 @@ data class UtenlandskAdresse (
         val regionDistriktOmraade: String?,
         val landkode: String,
         val land: String?,
-): Adresse {
-    override val type: AdresseType get() = UTENLANDSK_ADRESSE
+        override val kilde: String?
+): Kontaktadresse {
+    override val type: KontaktadresseType get() = UTENLANDSK_ADRESSE
 }

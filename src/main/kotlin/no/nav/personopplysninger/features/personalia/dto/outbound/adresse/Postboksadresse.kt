@@ -10,6 +10,7 @@ data class Postboksadresse (
         val postboks: String,
         val postnummer: String?,
         val poststed: String?,
-): Adresse {
-    override val type: AdresseType get() = POSTBOKSADRESSE
+        override val kilde: String?
+): Kontaktadresse {
+    override val type: KontaktadresseType get() = POSTBOKSADRESSE
 }

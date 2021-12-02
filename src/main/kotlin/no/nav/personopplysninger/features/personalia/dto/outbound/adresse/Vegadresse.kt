@@ -14,7 +14,8 @@ data class Vegadresse (
         val tilleggsnavn: String?,
         val postnummer: String?,
         val poststed: String?
-): Adresse {
-    override val type: AdresseType get() = VEGADRESSE
+        override val kilde: String?
+): Kontaktadresse {
+    override val type: KontaktadresseType get() = VEGADRESSE
 }
 
