@@ -23,7 +23,7 @@ class PdlService(private val pdlConsumer: PdlConsumer) {
 
 
     fun getPersonInfo(ident: String): PdlPersonInfo {
-        return pdlConsumer.getPersonInfo(ident)
+        return pdlConsumer.getPersonInfo(ident).keepKontaktadressesWithPdlMasterOnly()
     }
 
     private fun PdlPersonInfo.keepKontaktadressesWithPdlMasterOnly(): PdlPersonInfo {
