@@ -33,7 +33,7 @@ object KontaktadresseTranformer {
             gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
             gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
             coAdressenavn = inbound.coAdressenavn,
-            kilde = inbound.metadata.master
+            kilde = inbound.metadata.master.lowercase()
         )
     }
 
@@ -52,7 +52,7 @@ object KontaktadresseTranformer {
             gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
             gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
             coAdressenavn = inbound.coAdressenavn,
-            kilde = inbound.metadata.master
+            kilde = inbound.metadata.master.lowercase()
         )
     }
 
@@ -67,7 +67,7 @@ object KontaktadresseTranformer {
             gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
             gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
             coAdressenavn = inbound.coAdressenavn,
-            kilde = inbound.metadata.master
+            kilde = inbound.metadata.master.lowercase()
         )
     }
 
@@ -89,7 +89,7 @@ object KontaktadresseTranformer {
             gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
             gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
             coAdressenavn = inbound.coAdressenavn,
-            kilde = inbound.metadata.master
+            kilde = inbound.metadata.master.lowercase()
         )
     }
 
@@ -110,7 +110,7 @@ object KontaktadresseTranformer {
             gyldigFraOgMed = inbound.gyldigFraOgMed.toString(),
             gyldigTilOgMed = inbound.gyldigTilOgMed.toString(),
             coAdressenavn = inbound.coAdressenavn,
-            kilde = inbound.metadata.master
+            kilde = inbound.metadata.master.lowercase()
         )
     }
 }
