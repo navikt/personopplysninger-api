@@ -18,4 +18,9 @@ data class PdlPerson(
     val deltBosted: List<PdlDeltBosted> = emptyList(),
     val kontaktadresse: List<PdlKontaktadresse> = emptyList(),
     val oppholdsadresse: List<PdlOppholdsadresse> = emptyList(),
-)
+) {
+    fun getKontaktadresseWithPdlMaster(): PdlKontaktadresse? {
+        return kontaktadresse.filter { adresse -> adresse.metadata.master.equals("pdl", true) }
+            .firstOrNull()
+    }
+}

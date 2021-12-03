@@ -9,7 +9,7 @@ object AdresseinfoTransformer {
 
     fun toOutbound(pdlData: PdlData, kodeverk: PersonaliaKodeverk): Adresser {
 
-        val kontaktadresse = pdlData.person?.kontaktadresse?.firstOrNull()
+        val kontaktadresse = pdlData.person?.getKontaktadresseWithPdlMaster()
         val bostedsadresse = pdlData.person?.bostedsadresse?.firstOrNull()
         val oppholdsadresse = pdlData.person?.oppholdsadresse?.firstOrNull()
         val deltBosted = pdlData.person?.deltBosted?.firstOrNull()
