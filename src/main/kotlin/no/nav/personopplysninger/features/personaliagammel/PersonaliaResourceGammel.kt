@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.personalia
+package no.nav.personopplysninger.features.personaliagammel
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
@@ -15,9 +15,9 @@ private const val claimsIssuer = "selvbetjening"
 private val cacheControl = CacheControl()
 
 @Component
-@Path("migrert")
+@Path("/")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
-class PersonaliaResource @Autowired constructor(private var personaliaService: PersonaliaService) {
+class PersonaliaResourceGammel @Autowired constructor(private var personaliaService: PersonaliaServiceGammel) {
 
     @GET
     @Path("/personalia")
