@@ -36,7 +36,7 @@ object PersoninfoTransformer {
     }
 
     private fun foedested(foedtIKommune: String?, foedtILand: String?): String? {
-        val names = listOfNotNull(foedtIKommune, foedtILand).filter { it.isNotEmpty() }
+        val names = listOfNotNull(foedtIKommune, foedtILand)
         return if (names.isEmpty()) null else names.joinToString(", ")
     }
 }
