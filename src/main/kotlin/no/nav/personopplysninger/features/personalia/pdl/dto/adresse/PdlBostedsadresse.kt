@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.personalia.pdl.dto.adresse
 
+import no.nav.personopplysninger.features.personalia.pdl.dto.common.PdlMetadata
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -12,6 +13,7 @@ data class PdlBostedsadresse(
     val matrikkeladresse: PdlMatrikkeladresse?,
     val utenlandskAdresse: PdlUtenlandskAdresse?,
     val ukjentBosted: PdlUkjentbosted?,
+    val metadata: PdlMetadata
 ) {
     val mappingType: AdresseMappingType
         get() {

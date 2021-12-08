@@ -6,5 +6,6 @@ data class DeltBosted(
     val startdatoForKontrakt: LocalDate?,
     val sluttdatoForKontrakt: LocalDate?,
     val coAdressenavn: String?,
+    val kilde: String?,
     val adresse: Adresse
 )

@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.features.personalia.pdl.dto.adresse
 
+import no.nav.personopplysninger.features.personalia.pdl.dto.common.PdlMetadata
 import java.time.LocalDateTime
 
 data class PdlOppholdsadresse(
@@ -10,6 +11,7 @@ data class PdlOppholdsadresse(
     val vegadresse: PdlVegadresse?,
     val matrikkeladresse: PdlMatrikkeladresse?,
     val oppholdAnnetSted: String?,
+    val metadata: PdlMetadata
 ) {
     val mappingType: AdresseMappingType
         get() {

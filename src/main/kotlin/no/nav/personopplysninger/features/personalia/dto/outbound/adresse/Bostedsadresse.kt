@@ -8,5 +8,6 @@ data class Bostedsadresse(
     val gyldigFraOgMed: LocalDateTime?,
     val gyldigTilOgMed: LocalDateTime?,
     val coAdressenavn: String?,
+    val kilde: String?,
     val adresse: Adresse
 )
