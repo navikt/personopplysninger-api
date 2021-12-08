@@ -25,6 +25,7 @@ class KontaktadresseTransformerTest {
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual.adresse.type, VEGADRESSE)
+        assertEquals(actual.kilde, inbound.metadata.master)
 
         val vegadresse = actual.adresse as Vegadresse
 
@@ -43,6 +44,7 @@ class KontaktadresseTransformerTest {
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual.adresse.type, POSTADRESSE_I_FRITT_FORMAT)
+        assertEquals(actual.kilde, inbound.metadata.master)
 
         val postAdresseIFrittFormat = actual.adresse as PostAdresseIFrittFormat
 
@@ -65,6 +67,7 @@ class KontaktadresseTransformerTest {
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual.adresse.type, POSTBOKSADRESSE)
+        assertEquals(actual.kilde, inbound.metadata.master)
 
         val postboksadresse = actual.adresse as Postboksadresse
 
@@ -87,6 +90,7 @@ class KontaktadresseTransformerTest {
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual.adresse.type, UTENLANDSK_ADRESSE)
+        assertEquals(actual.kilde, inbound.metadata.master)
 
         val utenlandskAdresse = actual.adresse as UtenlandskAdresse
 
@@ -110,6 +114,7 @@ class KontaktadresseTransformerTest {
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual.adresse.type, UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
+        assertEquals(actual.kilde, inbound.metadata.master)
 
         val utenlandskAdresseIFrittFormat = actual.adresse as UtenlandskAdresseIFrittFormat
 
