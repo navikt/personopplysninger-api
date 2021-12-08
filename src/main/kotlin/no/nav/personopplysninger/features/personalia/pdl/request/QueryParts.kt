@@ -18,6 +18,18 @@ const val bostedsadresseQueryPart = """
       matrikkeladresse{bruksenhetsnummer, tilleggsnavn, postnummer, kommunenummer},
       utenlandskAdresse{adressenavnNummer, bygningEtasjeLeilighet, postboksNummerNavn, postkode, bySted, regionDistriktOmraade, landkode},
       ukjentBosted{bostedskommune}
+      metadata {
+        opplysningsId
+        master
+        endringer {
+          type
+          registrert
+          registrertAv
+          systemkilde
+          kilde
+        }
+        historisk
+      }
     }
 """
 const val deltbostedQueryPart = """
@@ -29,6 +41,18 @@ const val deltbostedQueryPart = """
       matrikkeladresse{bruksenhetsnummer, tilleggsnavn, postnummer, kommunenummer},
       utenlandskAdresse{adressenavnNummer, bygningEtasjeLeilighet, postboksNummerNavn, postkode, bySted, regionDistriktOmraade, landkode},
       ukjentBosted{bostedskommune}
+      metadata {
+        opplysningsId
+        master
+        endringer {
+          type
+          registrert
+          registrertAv
+          systemkilde
+          kilde
+        }
+        historisk
+      }
     }
 """
 const val kontaktadresseQueryPart = """ 
@@ -112,6 +136,18 @@ const val oppholdsadresseQueryPart = """
       vegadresse {husnummer, husbokstav, bruksenhetsnummer, adressenavn, kommunenummer, bydelsnummer, tilleggsnavn, postnummer},
       matrikkeladresse{bruksenhetsnummer, tilleggsnavn, postnummer, kommunenummer},
       oppholdAnnetSted
+      metadata {
+        opplysningsId
+        master
+        endringer {
+          type
+          registrert
+          registrertAv
+          systemkilde
+          kilde
+        }
+        historisk
+      }
     }
 """
 const val geografiskTilknytningQueryPart = "gtKommune, gtBydel, gtLand"
