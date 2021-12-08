@@ -72,6 +72,7 @@ fun createDummyBostedsadresse(adresseType: AdresseType): PdlBostedsadresse {
         if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
         if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
         if(adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
+        createDummyMetadata()
     )
 }
 
@@ -84,6 +85,7 @@ fun createDummyDeltBosted(adresseType: AdresseType): PdlDeltBosted {
         if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
         if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
         if(adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
+        createDummyMetadata()
     )
 }
 
@@ -112,6 +114,7 @@ fun createDummyOppholdsadresse(adresseType: AdresseType): PdlOppholdsadresse {
         if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
         if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
         null,
+        createDummyMetadata()
     )
 }
 

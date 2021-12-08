@@ -32,6 +32,7 @@ class BostedsadresseTransformerTest {
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual.adresse.type, VEGADRESSE)
+        assertEquals(actual.kilde, inbound.metadata.master)
 
         val vegadresse = actual.adresse as Vegadresse
 
@@ -51,6 +52,7 @@ class BostedsadresseTransformerTest {
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual.adresse.type, MATRIKKELADRESSE)
+        assertEquals(actual.kilde, inbound.metadata.master)
 
         val matrikkeladresse = actual.adresse as Matrikkeladresse
 
@@ -71,6 +73,7 @@ class BostedsadresseTransformerTest {
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual.adresse.type, UTENLANDSK_ADRESSE)
+        assertEquals(actual.kilde, inbound.metadata.master)
 
         val utenlandskAdresse = actual.adresse as UtenlandskAdresse
 
@@ -90,6 +93,7 @@ class BostedsadresseTransformerTest {
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual.adresse.type, UKJENTBOSTED)
+        assertEquals(actual.kilde, inbound.metadata.master)
 
         val ukjentbosted = actual.adresse as Ukjentbosted
 
