@@ -4,12 +4,13 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.*
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.*
 import org.junit.jupiter.api.Assertions.assertEquals
 
-fun assertVegadresseEquals(vegadresse: Vegadresse, poststed: String, inbound: PdlVegadresse) {
+fun assertVegadresseEquals(vegadresse: Vegadresse, poststed: String, kommune: String, inbound: PdlVegadresse) {
     assertEquals(vegadresse.husnummer, inbound.husnummer)
     assertEquals(vegadresse.husbokstav, inbound.husbokstav)
     assertEquals(vegadresse.bruksenhetsnummer, inbound.bruksenhetsnummer)
     assertEquals(vegadresse.adressenavn, inbound.adressenavn)
     assertEquals(vegadresse.kommunenummer, inbound.kommunenummer)
+    assertEquals(vegadresse.kommune, kommune)
     assertEquals(vegadresse.tilleggsnavn, inbound.tilleggsnavn)
     assertEquals(vegadresse.postnummer, inbound.postnummer)
     assertEquals(vegadresse.poststed, poststed)
@@ -71,14 +72,20 @@ fun assertUtenlandskAdresseIFrittFormatEquals(
     assertEquals(utenlandskAdresseIFrittFormat.land, land)
 }
 
-fun assertMatrikkeladresseEquals(matrikkeladresse: Matrikkeladresse, poststed: String, inbound: PdlMatrikkeladresse) {
+fun assertMatrikkeladresseEquals(
+    matrikkeladresse: Matrikkeladresse,
+    poststed: String,
+    kommune: String,
+    inbound: PdlMatrikkeladresse
+) {
     assertEquals(matrikkeladresse.bruksenhetsnummer, inbound.bruksenhetsnummer)
     assertEquals(matrikkeladresse.tilleggsnavn, inbound.tilleggsnavn)
     assertEquals(matrikkeladresse.postnummer, inbound.postnummer)
     assertEquals(matrikkeladresse.poststed, poststed)
     assertEquals(matrikkeladresse.kommunenummer, inbound.kommunenummer)
+    assertEquals(matrikkeladresse.kommune, kommune)
 }
 
-fun assertUkjentbostedEquals(ukjentbosted: Ukjentbosted, inbound: PdlUkjentbosted) {
-    assertEquals(ukjentbosted.bostedskommune, inbound.bostedskommune)
+fun assertUkjentbostedEquals(ukjentbosted: Ukjentbosted, kommune: String) {
+    assertEquals(ukjentbosted.bostedskommune, kommune)
 }

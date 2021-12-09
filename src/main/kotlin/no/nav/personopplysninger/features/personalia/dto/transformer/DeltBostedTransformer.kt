@@ -20,10 +20,18 @@ object DeltBostedTransformer {
 
     private fun transformAdresse(inbound: PdlDeltBosted, kodeverk: PersonaliaKodeverk): Adresse {
         return when (inbound.mappingType) {
-            INNLAND_VEGADRESSE -> transformVegadresse(inbound.vegadresse!!, kodeverk.deltBostedPostSted)
-            MATRIKKELADRESSE -> transformMatrikkeladresse(inbound.matrikkeladresse!!, kodeverk.deltBostedPostSted)
+            INNLAND_VEGADRESSE -> transformVegadresse(
+                inbound.vegadresse!!,
+                kodeverk.deltBostedPostSted,
+                kodeverk.deltBostedKommune
+            )
+            MATRIKKELADRESSE -> transformMatrikkeladresse(
+                inbound.matrikkeladresse!!,
+                kodeverk.deltBostedPostSted,
+                kodeverk.deltBostedKommune
+            )
             UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse!!, kodeverk.deltBostedLand)
-            UKJENT_BOSTED -> transformUkjentBosted(inbound.ukjentBosted!!)
+            UKJENT_BOSTED -> transformUkjentBosted(kodeverk.deltBostedKommune)
             else -> throw IllegalStateException("Prøvde å transformere ugyldig PdlDeltBosted-objekt.")
         }
     }

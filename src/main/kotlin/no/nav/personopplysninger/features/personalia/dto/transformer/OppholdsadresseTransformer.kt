@@ -21,8 +21,16 @@ object OppholdsadresseTransformer {
 
     private fun transformAdresse(inbound: PdlOppholdsadresse, kodeverk: PersonaliaKodeverk): Adresse {
         return when (inbound.mappingType) {
-            INNLAND_VEGADRESSE -> transformVegadresse(inbound.vegadresse!!, kodeverk.oppholdsadressePostSted)
-            MATRIKKELADRESSE -> transformMatrikkeladresse(inbound.matrikkeladresse!!, kodeverk.oppholdsadressePostSted)
+            INNLAND_VEGADRESSE -> transformVegadresse(
+                inbound.vegadresse!!,
+                kodeverk.oppholdsadressePostSted,
+                kodeverk.oppholdsadresseKommune
+            )
+            MATRIKKELADRESSE -> transformMatrikkeladresse(
+                inbound.matrikkeladresse!!,
+                kodeverk.oppholdsadressePostSted,
+                kodeverk.oppholdsadresseKommune
+            )
             UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse!!, kodeverk.oppholdsadresseLand)
             else -> throw IllegalStateException("Prøvde å transformere ugyldig PdlOppholdsadresse-objekt.")
         }

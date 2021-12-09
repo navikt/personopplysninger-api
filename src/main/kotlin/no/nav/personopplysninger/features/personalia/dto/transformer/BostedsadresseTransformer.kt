@@ -21,10 +21,18 @@ object BostedsadresseTransformer {
 
     private fun transformAdresse(inbound: PdlBostedsadresse, kodeverk: PersonaliaKodeverk): Adresse {
         return when (inbound.mappingType) {
-            INNLAND_VEGADRESSE -> transformVegadresse(inbound.vegadresse!!, kodeverk.bostedsadressePostSted)
-            MATRIKKELADRESSE -> transformMatrikkeladresse(inbound.matrikkeladresse!!, kodeverk.bostedsadressePostSted)
+            INNLAND_VEGADRESSE -> transformVegadresse(
+                inbound.vegadresse!!,
+                kodeverk.bostedsadressePostSted,
+                kodeverk.bostedsadresseKommune
+            )
+            MATRIKKELADRESSE -> transformMatrikkeladresse(
+                inbound.matrikkeladresse!!,
+                kodeverk.bostedsadressePostSted,
+                kodeverk.bostedsadresseKommune
+            )
             UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse!!, kodeverk.bostedsadresseLand)
-            UKJENT_BOSTED -> transformUkjentBosted(inbound.ukjentBosted!!)
+            UKJENT_BOSTED -> transformUkjentBosted(kodeverk.bostedsadresseKommune)
             else -> throw IllegalStateException("Prøvde å transformere ugyldig PdlBostedsadresse-objekt.")
         }
     }
