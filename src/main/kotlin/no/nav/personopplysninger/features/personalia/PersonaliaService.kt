@@ -51,9 +51,9 @@ class PersonaliaService @Autowired constructor(
         val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning!!
 
         val kontaktadresse = pdlPerson.kontaktadresse.firstOrNull()
-        val bostedsadresse = pdlPerson.kontaktadresse.firstOrNull()
-        val deltBosted = pdlPerson.kontaktadresse.firstOrNull()
-        val oppholdsadresse = pdlPerson.kontaktadresse.firstOrNull()
+        val bostedsadresse = pdlPerson.bostedsadresse.firstOrNull()
+        val deltBosted = pdlPerson.deltBosted.firstOrNull()
+        val oppholdsadresse = pdlPerson.oppholdsadresse.firstOrNull()
 
         return PersonaliaKodeverk().apply {
             foedekommuneterm = getKommuneKodeverksTerm(pdlPerson.foedsel.firstOrNull()?.foedekommune)
