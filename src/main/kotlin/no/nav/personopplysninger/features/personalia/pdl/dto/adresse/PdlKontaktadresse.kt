@@ -50,6 +50,13 @@ data class PdlKontaktadresse(
                 AdresseMappingType.UTLAND_FRIFORMADRESSE -> utenlandskAdresseIFrittFormat!!.landkode
                 else -> null
             }
+        }
 
+    val kommunenummer: String?
+        get() {
+            return when (mappingType) {
+                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse!!.kommunenummer
+                else -> null
+            }
         }
 }

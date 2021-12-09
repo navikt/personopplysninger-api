@@ -36,7 +36,12 @@ class BostedsadresseTransformerTest {
 
         val vegadresse = actual.adresse as Vegadresse
 
-        assertVegadresseEquals(vegadresse, personaliaKodeverk.bostedsadressePostSted!!, inbound.vegadresse!!)
+        assertVegadresseEquals(
+            vegadresse,
+            personaliaKodeverk.bostedsadressePostSted!!,
+            personaliaKodeverk.bostedsadresseKommune!!,
+            inbound.vegadresse!!
+        )
     }
 
     @Test
@@ -56,7 +61,12 @@ class BostedsadresseTransformerTest {
 
         val matrikkeladresse = actual.adresse as Matrikkeladresse
 
-        assertMatrikkeladresseEquals(matrikkeladresse, personaliaKodeverk.bostedsadressePostSted!!, inbound.matrikkeladresse!!)
+        assertMatrikkeladresseEquals(
+            matrikkeladresse,
+            personaliaKodeverk.bostedsadressePostSted!!,
+            personaliaKodeverk.bostedsadresseKommune!!,
+            inbound.matrikkeladresse!!
+        )
 
     }
 
@@ -77,7 +87,11 @@ class BostedsadresseTransformerTest {
 
         val utenlandskAdresse = actual.adresse as UtenlandskAdresse
 
-        assertUtenlandskAdresseEquals(utenlandskAdresse, personaliaKodeverk.bostedsadresseLand!!, inbound.utenlandskAdresse!!)
+        assertUtenlandskAdresseEquals(
+            utenlandskAdresse,
+            personaliaKodeverk.bostedsadresseLand!!,
+            inbound.utenlandskAdresse!!
+        )
     }
 
     @Test
@@ -97,7 +111,7 @@ class BostedsadresseTransformerTest {
 
         val ukjentbosted = actual.adresse as Ukjentbosted
 
-        assertUkjentbostedEquals(ukjentbosted, inbound.ukjentBosted!!)
+        assertUkjentbostedEquals(ukjentbosted, personaliaKodeverk.bostedsadresseKommune!!)
     }
 
     @Test

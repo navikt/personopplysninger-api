@@ -3,13 +3,14 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.*
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.*
 
-fun transformVegadresse(inbound: PdlVegadresse, poststed: String?): Vegadresse {
+fun transformVegadresse(inbound: PdlVegadresse, poststed: String?, kommune: String?): Vegadresse {
     return Vegadresse(
         husnummer = inbound.husnummer,
         husbokstav = inbound.husbokstav,
         bruksenhetsnummer = inbound.bruksenhetsnummer,
         adressenavn = inbound.adressenavn,
         kommunenummer = inbound.kommunenummer,
+        kommune = kommune,
         tilleggsnavn = inbound.tilleggsnavn,
         postnummer = inbound.postnummer,
         poststed = poststed,
@@ -71,7 +72,8 @@ fun transformUtenlandskAdresseIFrittFormat(
 
 fun transformMatrikkeladresse(
     inbound: PdlMatrikkeladresse,
-    poststed: String?
+    poststed: String?,
+    kommune: String?
 ): Matrikkeladresse {
     return Matrikkeladresse(
         bruksenhetsnummer = inbound.bruksenhetsnummer,
@@ -79,13 +81,14 @@ fun transformMatrikkeladresse(
         postnummer = inbound.postnummer,
         poststed = poststed,
         kommunenummer = inbound.kommunenummer,
+        kommune = kommune,
     )
 }
 
 fun transformUkjentBosted(
-    inbound: PdlUkjentbosted,
+    kommune: String?
 ): Ukjentbosted {
     return Ukjentbosted(
-        bostedskommune = inbound.bostedskommune,
+        bostedskommune = kommune,
     )
 }

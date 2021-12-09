@@ -45,6 +45,15 @@ data class PdlBostedsadresse(
                 AdresseMappingType.UTLAND_ADRESSE -> utenlandskAdresse!!.landkode
                 else -> null
             }
+        }
 
+    val kommunenummer: String?
+        get() {
+            return when (mappingType) {
+                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse!!.kommunenummer
+                AdresseMappingType.MATRIKKELADRESSE -> matrikkeladresse!!.kommunenummer
+                AdresseMappingType.UKJENT_BOSTED -> ukjentBosted!!.bostedskommune
+                else -> null
+            }
         }
 }

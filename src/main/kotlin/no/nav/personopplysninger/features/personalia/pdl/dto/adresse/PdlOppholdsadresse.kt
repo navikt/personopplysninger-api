@@ -41,6 +41,14 @@ data class PdlOppholdsadresse(
                 AdresseMappingType.UTLAND_ADRESSE -> utenlandskAdresse!!.landkode
                 else -> null
             }
+        }
 
+    val kommunenummer: String?
+        get() {
+            return when (mappingType) {
+                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse!!.kommunenummer
+                AdresseMappingType.MATRIKKELADRESSE -> matrikkeladresse!!.kommunenummer
+                else -> null
+            }
         }
 }

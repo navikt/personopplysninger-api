@@ -34,7 +34,12 @@ class OppholdsadresseTransformerTest {
 
         val vegadresse = actual.adresse as Vegadresse
 
-        assertVegadresseEquals(vegadresse, personaliaKodeverk.oppholdsadressePostSted!!, inbound.vegadresse!!)
+        assertVegadresseEquals(
+            vegadresse,
+            personaliaKodeverk.oppholdsadressePostSted!!,
+            personaliaKodeverk.oppholdsadresseKommune!!,
+            inbound.vegadresse!!
+        )
     }
 
     @Test
@@ -57,9 +62,9 @@ class OppholdsadresseTransformerTest {
         assertMatrikkeladresseEquals(
             matrikkeladresse,
             personaliaKodeverk.oppholdsadressePostSted!!,
+            personaliaKodeverk.oppholdsadresseKommune!!,
             inbound.matrikkeladresse!!
         )
-
     }
 
     @Test

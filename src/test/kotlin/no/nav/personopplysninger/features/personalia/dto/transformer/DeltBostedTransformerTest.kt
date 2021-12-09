@@ -35,7 +35,12 @@ class DeltBostedTransformerTest {
 
         val vegadresse = actual.adresse as Vegadresse
 
-        assertVegadresseEquals(vegadresse, personaliaKodeverk.deltBostedPostSted!!, inbound.vegadresse!!)
+        assertVegadresseEquals(
+            vegadresse,
+            personaliaKodeverk.deltBostedPostSted!!,
+            personaliaKodeverk.deltBostedKommune!!,
+            inbound.vegadresse!!
+        )
     }
 
     @Test
@@ -57,6 +62,7 @@ class DeltBostedTransformerTest {
         assertMatrikkeladresseEquals(
             matrikkeladresse,
             personaliaKodeverk.deltBostedPostSted!!,
+            personaliaKodeverk.deltBostedKommune!!,
             inbound.matrikkeladresse!!
         )
 
@@ -101,7 +107,7 @@ class DeltBostedTransformerTest {
 
         val ukjentbosted = actual.adresse as Ukjentbosted
 
-        assertUkjentbostedEquals(ukjentbosted, inbound.ukjentBosted!!)
+        assertUkjentbostedEquals(ukjentbosted, personaliaKodeverk.deltBostedKommune!!)
     }
 
     @Test

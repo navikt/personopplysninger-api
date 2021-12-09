@@ -12,11 +12,15 @@ fun createDummyPersonaliaKodeverk(): PersonaliaKodeverk {
         utenlandskbankvalutaterm = "utenlandskbankvalutaterm"
         kontaktadressePostSted = "kontaktadressePostSted"
         kontaktadresseLand = "kontaktadresseLand"
+        kontaktadresseKommune = "kontaktadresseKommune"
         bostedsadressePostSted = "bostedsadressePostSted"
         bostedsadresseLand = "bostedsadresseLand"
+        bostedsadresseKommune = "bostedsadresseKommune"
         deltBostedPostSted = "deltBostedPostSted"
         deltBostedLand = "deltBostedLand"
+        deltBostedKommune = "deltBostedKommune"
         oppholdsadressePostSted = "oppholdsadressePostSted"
         oppholdsadresseLand = "oppholdsadresseLand"
+        oppholdsadresseKommune = "oppholdsadresseKommune"
     }
 }

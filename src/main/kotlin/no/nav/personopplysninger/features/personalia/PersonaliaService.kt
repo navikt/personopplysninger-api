@@ -64,12 +64,16 @@ class PersonaliaService @Autowired constructor(
             utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inbound.utenlandskBank?.valuta?.verdi)
             kontaktadressePostSted = kodeverkConsumer.hentPostnummer().term(kontaktadresse?.postnummer)
             kontaktadresseLand = kodeverkConsumer.hentLandKoder().term(kontaktadresse?.landkode)
+            kontaktadresseKommune = getKommuneKodeverksTerm(kontaktadresse?.kommunenummer)
             bostedsadressePostSted = kodeverkConsumer.hentPostnummer().term(bostedsadresse?.postnummer)
             bostedsadresseLand = kodeverkConsumer.hentLandKoder().term(bostedsadresse?.landkode)
+            bostedsadresseKommune = getKommuneKodeverksTerm(bostedsadresse?.kommunenummer)
             deltBostedPostSted = kodeverkConsumer.hentPostnummer().term(deltBosted?.postnummer)
             deltBostedLand = kodeverkConsumer.hentLandKoder().term(deltBosted?.landkode)
+            deltBostedKommune = getKommuneKodeverksTerm(deltBosted?.kommunenummer)
             oppholdsadressePostSted = kodeverkConsumer.hentPostnummer().term(oppholdsadresse?.postnummer)
             oppholdsadresseLand = kodeverkConsumer.hentLandKoder().term(oppholdsadresse?.landkode)
+            oppholdsadresseKommune = getKommuneKodeverksTerm(oppholdsadresse?.kommunenummer)
         }
     }
 

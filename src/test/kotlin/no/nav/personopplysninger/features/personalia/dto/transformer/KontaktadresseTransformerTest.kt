@@ -29,7 +29,12 @@ class KontaktadresseTransformerTest {
 
         val vegadresse = actual.adresse as Vegadresse
 
-        assertVegadresseEquals(vegadresse, personaliaKodeverk.kontaktadressePostSted!!, inbound.vegadresse!!)
+        assertVegadresseEquals(
+            vegadresse,
+            personaliaKodeverk.kontaktadressePostSted!!,
+            personaliaKodeverk.kontaktadresseKommune!!,
+            inbound.vegadresse!!
+        )
     }
 
     @Test
