@@ -13,7 +13,7 @@ object DeltBostedTransformer {
             startdatoForKontrakt = inbound.startdatoForKontrakt,
             sluttdatoForKontrakt = inbound.sluttdatoForKontrakt,
             coAdressenavn = inbound.coAdressenavn,
-            kilde = inbound.metadata.master,
+            kilde = inbound.metadata.master.lowercase(),
             adresse = transformAdresse(inbound, kodeverk)
         )
     }
