@@ -2,7 +2,6 @@ package no.nav.personopplysninger.config;
 
 import no.nav.personopplysninger.features.auth.AuthStatusResource;
 import no.nav.personopplysninger.features.endreopplysninger.EndreOpplysningerResource;
-import no.nav.personopplysninger.features.featuretoggles.FeatureTogglesResource;
 import no.nav.personopplysninger.features.institusjon.InstitusjonResource;
 import no.nav.personopplysninger.features.medl.MedlResource;
 import no.nav.personopplysninger.features.personalia.PersonaliaResource;
@@ -24,14 +23,13 @@ import java.util.List;
 
 @Configuration
 public class RestResourceConfiguration extends ResourceConfig {
-    private static final List<Class> WHITELISTED_CLASSES = Arrays.asList(WadlModelProcessor.OptionsHandler.class, FeatureTogglesResource.class);
+    private static final List<Class> WHITELISTED_CLASSES = Arrays.asList(WadlModelProcessor.OptionsHandler.class);
     private static final List<Class> WHITELISTED_PARENT_CLASSES = Collections.singletonList(OptionsMethodProcessor.class);
 
     public RestResourceConfiguration() {
         register(JacksonFeature.class);
         register(StatusResource.class);
         register(PersonaliaResource.class);
-        register(FeatureTogglesResource.class);
         register(CORSResponseFilter.class);
         register(OidcResourceFilteringFeature.class);
         register(EndreOpplysningerResource.class);

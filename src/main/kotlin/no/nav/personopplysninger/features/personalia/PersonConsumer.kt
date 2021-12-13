@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
-import no.nav.log.MDCConstants
+import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.consumerutils.CONSUMER_ID
 import no.nav.personopplysninger.consumerutils.ConsumerException
 import no.nav.personopplysninger.consumerutils.unmarshalBody

@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
-    <!-- Logger used for tests that don't requre spring boot -->
-
-    <!-- override spring base logging pattern -->
-    <property name="CONSOLE_LOG_PATTERN"
-              value="%d [%-5level] [%thread] %logger{5} %replace(- [%X{consumerId}, %X{callId}, %X{userId}] ){'- \[, , \] ',''}- %m%n"/>
-
-    <logger name="org.springframework" level="INFO"/>
-    <logger name="org.glassfish" level="INFO"/>
-    <logger name="org.glassfish.jersey.logging.LoggingFeature" level="DEBUG"/>
-    <logger name="com.fasterxml" level="INFO"/>
-    <logger name="org.hibernate" level="INFO"/>
-
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-
-    <root level="INFO"> <!--endre level til DEBUG ved behov-->
-    </root>
-
 </configuration>

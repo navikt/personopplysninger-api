@@ -20,7 +20,6 @@ data class PdlPerson(
     val oppholdsadresse: List<PdlOppholdsadresse> = emptyList(),
 ) {
     fun getKontaktadresseWithPdlMaster(): PdlKontaktadresse? {
-        return kontaktadresse.filter { adresse -> adresse.metadata.master.equals("pdl", true) }
-            .firstOrNull()
+        return kontaktadresse.firstOrNull { adresse -> adresse.metadata.master.equals("pdl", true) }
     }
 }

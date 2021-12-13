@@ -19,13 +19,14 @@ import no.nav.personopplysninger.features.personalia.pdl.dto.error.PDLErrorType
 import no.nav.personopplysninger.features.personalia.pdl.dto.error.PdlErrorResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
-import no.nav.personopplysninger.testutils.TestDataClass
 import no.nav.personopplysninger.testutils.instJson
 import no.nav.personopplysninger.testutils.testklasseJson
 import no.nav.personopplysninger.testutils.tpsNavnJson
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.io.InputStreamReader
-import javax.ws.rs.ProcessingException
 import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.core.Response
 import kotlin.test.assertEquals
@@ -234,21 +235,6 @@ class DeserialiseringTest {
         assertEquals(telefonnummer.landskode, "+47")
         assertEquals(telefonnummer.nummer, "22334455")
         assertEquals(telefonnummer.prioritet, 1)
-    }
-
-    @Test
-    fun deserialiseringFeilerMedClientDersomDataClassManglerJsonAnnotering_WorkaroundFungerer() {
-        val client = ClientBuilder.newBuilder()
-                .register(RestClientConfiguration().clientObjectMapperResolver())
-                .build()
-        val response: Response = client.target("http://localhost:8080").path("/testklasse").request().get()
-        response.bufferEntity()
-        assertThrows<ProcessingException> {
-            response.readEntity(TestDataClass::class.java)
-        }
-
-        val testDataClass = response.unmarshalBody<TestDataClass>()
-        assertEquals("foo bar", testDataClass.tekst)
     }
 
     @Test

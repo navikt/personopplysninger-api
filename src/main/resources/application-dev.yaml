@@ -32,4 +32,4 @@ management:
         include: ["info", "health", "prometheus", "metrics"]
 
 logging:
-  config: "classpath:logback-spring.xml"
+  config: "classpath:logback-test.xml"
