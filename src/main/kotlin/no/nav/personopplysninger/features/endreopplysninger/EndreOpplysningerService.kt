@@ -1,15 +1,13 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.*
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndringKontaktadresse
+import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.slettKontaktadressePayload
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.endreNummerPayload
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.slettNummerPayload
-import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamPostboksadresse
-import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamUtenlandskAdresse
-import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.kontaktadresse.DownstreamVegadresse
 import no.nav.personopplysninger.features.personalia.pdl.PdlService
 import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.oppslag.kodeverk.api.KodeOgTekstDto
@@ -43,33 +41,6 @@ class EndreOpplysningerService (
 
     fun endreKontonummer(fnr: String, kontonummer: Kontonummer): EndringKontonummer {
         return personMottakConsumer.endreKontonummer(fnr, kontonummer, systemToken)
-    }
-
-    fun endreKontaktadresseVegadresse(fnr: String, vegadresse: DownstreamVegadresse): EndringKontaktadresse {
-        return validateVegadresse(vegadresse).ifValid {
-            val upstreamVegadresse = PMKontaktAdresseTransformer.fromDownstreamVegadresse(vegadresse)
-            personMottakConsumer.endreKontaktadresse(fnr, endreKontaktadressePayload(fnr, upstreamVegadresse), systemToken)
-        }.ifInvalid { error ->
-            EndringKontaktadresse.validationError(error)
-        }.response
-    }
-
-    fun endreKontaktadressePostboksadresse(fnr: String, postboksadresse: DownstreamPostboksadresse): EndringKontaktadresse {
-        return validatePostboksAdresse(postboksadresse).ifValid {
-            val upstreamVegadresse = PMKontaktAdresseTransformer.fromDownstreamPostboksadresse(postboksadresse)
-            personMottakConsumer.endreKontaktadresse(fnr, endreKontaktadressePayload(fnr, upstreamVegadresse), systemToken)
-        }.ifInvalid { error ->
-            EndringKontaktadresse.validationError(error)
-        }.response
-    }
-
-    fun endreKontaktadresseUtenlandskAdresse(fnr: String, utenlandskAdresse: DownstreamUtenlandskAdresse): EndringKontaktadresse {
-        return validateUtenlandskAdresse(utenlandskAdresse).ifValid {
-            val upstreamVegadresse = PMKontaktAdresseTransformer.fromDownstreamutenlandskAdresse(utenlandskAdresse)
-            personMottakConsumer.endreKontaktadresse(fnr, endreKontaktadressePayload(fnr, upstreamVegadresse), systemToken)
-        }.ifInvalid { error ->
-            EndringKontaktadresse.validationError(error)
-        }.response
     }
 
     fun slettKontaktadresse(fnr: String): EndringKontaktadresse {

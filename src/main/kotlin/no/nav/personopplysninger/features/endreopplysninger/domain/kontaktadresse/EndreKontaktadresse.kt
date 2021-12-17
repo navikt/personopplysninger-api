@@ -16,7 +16,3 @@ class EndreKontaktadresse(
 fun slettKontaktadressePayload(ident: String, opplysningsId: String) : OpphoerPersonopplysning {
     return OpphoerPersonopplysning(ident, OPPLYSNINGSTYPE, opplysningsId)
 }
-
-fun endreKontaktadressePayload(ident: String, endringsMelding: Kontaktadresse): EndreKontaktadresse {
-    return EndreKontaktadresse(ident, EndringsType.OPPRETT, endringsMelding)
-}

@@ -9,9 +9,7 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.Kontaktinfo
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.pdl.PdlService
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPersonInfo
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util.landkode
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.util.postnummer
+import no.nav.personopplysninger.features.personalia.pdl.dto.PdlData
 import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.oppslag.norg2.Norg2Consumer
 import no.nav.tps.person.Personinfo
@@ -26,6 +24,7 @@ class PersonaliaService @Autowired constructor(
         private var norg2Consumer: Norg2Consumer,
         private var pdlService: PdlService
 ) {
+
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
 
         val inbound = personConsumer.hentPersonInfo(fodselsnr)
@@ -47,31 +46,38 @@ class PersonaliaService @Autowired constructor(
         return personaliaOgAdresser
     }
 
-    private fun createPersonaliaKodeverk(inbound: Personinfo, inboundPdl: PdlPersonInfo): PersonaliaKodeverk {
-        val kontaktadresse = inboundPdl.kontaktadresse.firstOrNull()
+    private fun createPersonaliaKodeverk(inbound: Personinfo, inboundPdl: PdlData): PersonaliaKodeverk {
+        val pdlPerson = inboundPdl.person!!
+        val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning!!
+
+        val kontaktadresse = pdlPerson.kontaktadresse.firstOrNull()
+        val bostedsadresse = pdlPerson.bostedsadresse.firstOrNull()
+        val deltBosted = pdlPerson.deltBosted.firstOrNull()
+        val oppholdsadresse = pdlPerson.oppholdsadresse.firstOrNull()
 
         return PersonaliaKodeverk().apply {
-            kjonnterm = kodeverkConsumer.hentKjonn().term(inbound.kjonn)
-            landterm = kodeverkConsumer.hentLandKoder().term(inbound.foedtILand?.verdi)
-            utenlandskadresseterm = kodeverkConsumer.hentLandKoder().term(inbound.adresseinfo?.utenlandskAdresse?.land)
-            foedekommuneterm = getKommuneKodeverksTerm(inbound.foedtIKommune?.verdi)
-            bostedskommuneterm = getKommuneKodeverksTerm(inbound.adresseinfo?.boadresse?.kommune)
-            bostedpostnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.boadresse?.postnummer)
-            postnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.postadresse?.postnummer)
-            tilleggsadressepostnummerterm = kodeverkConsumer.hentPostnummer().term(inbound.adresseinfo?.tilleggsadresse?.postnummer)
-            statusterm = kodeverkConsumer.hentPersonstatus().term(inbound.status?.kode?.verdi)
-            sivilstandterm = kodeverkConsumer.hentSivilstand().term(inbound.sivilstand?.kode?.verdi)
-            spraakterm = kodeverkConsumer.hentSpraak().term(inbound.spraak?.kode?.verdi)
-            stasborgerskapterm = kodeverkConsumer.hentStatsborgerskap().term(inbound.statsborgerskap?.kode?.verdi)
-            postadresselandterm = kodeverkConsumer.hentLandKoder().term(inbound.adresseinfo?.postadresse?.land)
+            foedekommuneterm = getKommuneKodeverksTerm(pdlPerson.foedsel.firstOrNull()?.foedekommune)
+            foedelandterm = kodeverkConsumer.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
+            gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning.gtLand)
+            statsborgerskapterm = kodeverkConsumer.hentStatsborgerskap().term(pdlPerson.statsborgerskap.firstOrNull()?.land)
             utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inbound.utenlandskBank?.land?.verdi)
             utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inbound.utenlandskBank?.valuta?.verdi)
             kontaktadressePostSted = kodeverkConsumer.hentPostnummer().term(kontaktadresse?.postnummer)
             kontaktadresseLand = kodeverkConsumer.hentLandKoder().term(kontaktadresse?.landkode)
+            kontaktadresseKommune = getKommuneKodeverksTerm(kontaktadresse?.kommunenummer)
+            bostedsadressePostSted = kodeverkConsumer.hentPostnummer().term(bostedsadresse?.postnummer)
+            bostedsadresseLand = kodeverkConsumer.hentLandKoder().term(bostedsadresse?.landkode)
+            bostedsadresseKommune = getKommuneKodeverksTerm(bostedsadresse?.kommunenummer)
+            deltBostedPostSted = kodeverkConsumer.hentPostnummer().term(deltBosted?.postnummer)
+            deltBostedLand = kodeverkConsumer.hentLandKoder().term(deltBosted?.landkode)
+            deltBostedKommune = getKommuneKodeverksTerm(deltBosted?.kommunenummer)
+            oppholdsadressePostSted = kodeverkConsumer.hentPostnummer().term(oppholdsadresse?.postnummer)
+            oppholdsadresseLand = kodeverkConsumer.hentLandKoder().term(oppholdsadresse?.landkode)
+            oppholdsadresseKommune = getKommuneKodeverksTerm(oppholdsadresse?.kommunenummer)
         }
     }
 
-    private fun getKommuneKodeverksTerm(inbound: String?): String? {
+    private fun getKommuneKodeverksTerm(inbound: String?): String {
         return if ("0000" == inbound) {
             ""
         } else {

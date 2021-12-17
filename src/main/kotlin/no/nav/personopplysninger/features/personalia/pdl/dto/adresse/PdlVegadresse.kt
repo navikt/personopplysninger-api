@@ -7,6 +7,7 @@ data class PdlVegadresse(
         val bruksenhetsnummer: String?,
         val adressenavn: String?,
         val kommunenummer: String?,
+        val bydelsnummer: String?,
         val tilleggsnavn: String?,
         val postnummer: String?,
         val koordinater: PdlKoordinater?
