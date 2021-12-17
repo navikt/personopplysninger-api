@@ -17,11 +17,11 @@ class AdresseinfoTransformerTest {
 
         val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
-        assertEquals(1, actual.kontaktadresse.size)
         assertNotNull(actual.geografiskTilknytning)
         assertNotNull(actual.deltBosted)
         assertNotNull(actual.oppholdsadresse)
-        assertNotNull(actual.kontaktadresse)
+        assertNotNull(actual.kontaktadresser)
+        assertEquals(1, actual.kontaktadresser.size)
     }
 
     @Test
@@ -30,7 +30,7 @@ class AdresseinfoTransformerTest {
 
         val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
-        assertTrue(actual.kontaktadresse.isEmpty())
+        assertTrue(actual.kontaktadresser.isEmpty())
         assertNull(actual.geografiskTilknytning)
         assertNull(actual.deltBosted)
         assertNull(actual.oppholdsadresse)
