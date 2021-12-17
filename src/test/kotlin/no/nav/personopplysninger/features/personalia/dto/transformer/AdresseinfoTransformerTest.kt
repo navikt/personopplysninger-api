@@ -3,8 +3,7 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPdlData
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPdlDataWithoutAdresser
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
@@ -18,11 +17,11 @@ class AdresseinfoTransformerTest {
 
         val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
-        assertNotNull(actual.kontaktadresse)
         assertNotNull(actual.geografiskTilknytning)
         assertNotNull(actual.deltBosted)
         assertNotNull(actual.oppholdsadresse)
-        assertNotNull(actual.kontaktadresse)
+        assertNotNull(actual.kontaktadresser)
+        assertEquals(1, actual.kontaktadresser.size)
     }
 
     @Test
@@ -31,11 +30,10 @@ class AdresseinfoTransformerTest {
 
         val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
-        assertNull(actual.kontaktadresse)
+        assertTrue(actual.kontaktadresser.isEmpty())
         assertNull(actual.geografiskTilknytning)
         assertNull(actual.deltBosted)
         assertNull(actual.oppholdsadresse)
-        assertNull(actual.kontaktadresse)
     }
 
 }
