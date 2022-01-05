@@ -2,7 +2,6 @@ package no.nav.personopplysninger.api;
 
 import no.nav.personopplysninger.config.ApplicationConfig;
 import no.nav.security.token.support.test.FileResourceRetriever;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
@@ -10,18 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-@SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
+@SpringBootApplication(exclude = {ErrorMvcAutoConfiguration.class})
 @Import({ApplicationConfig.class})
 public class TestLauncher {
 
     public static void main(String... args) {
-        setTestEnvironment();
-        ArrayList<String> argList = new ArrayList<>(Arrays.asList(args));
-        argList.add("--spring.profiles.active=dev");
-        SpringApplication.run(ApplicationConfig.class, argList.toArray(new String[0]));
+        SpringApplication app = new SpringApplication(ApplicationConfig.class);
+        app.run(args);
     }
 
     /**
@@ -32,40 +26,5 @@ public class TestLauncher {
     @Primary
     FileResourceRetriever overrideOidcResourceRetriever(){
         return new FileResourceRetriever("/metadata.json", "/jwkset.json");
-    }
-
-    @Bean
-    @Primary
-    public ResourceConfig testJerseyConfig() {
-        return new TestRestResourceConfiguration();
-    }
-
-    private static void setTestEnvironment() {
-        // Properties som brukes i logback-default-without-abac.xml
-        System.setProperty("APP_LOG_HOME", "target/log");
-        System.setProperty("contextName", "personopplysninger-api");
-
-        System.setProperty("PERSONOPPLYSNINGER_API_KODEVERK_REST_API_APIKEY_PASSWORD", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_PASSWORD", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_NORG2_API_V1_APIKEY_PASSWORD", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_PASSWORD", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_PDL_API_APIKEY_PASSWORD", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_PASSWORD", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_PERSON_MOTTAK_API_V1_APIKEY_PASSWORD", "");
-        System.setProperty("PERSON_MOTTAK_API_URL", "");
-        System.setProperty("DKIF_API_URL", "");
-        System.setProperty("PDL_API_URL", "");
-        System.setProperty("KODEVERK_REST_API_URL", "");
-        System.setProperty("NORG2_API_V1_URL", "");
-        System.setProperty("TPS_PROXY_API_V1_INNSYN_URL", "");
-        System.setProperty("LOGINSERVICE_IDPORTEN_DISCOVERY_URL", "");
-        System.setProperty("LOGINSERVICE_IDPORTEN_AUDIENCE", "");
-        System.setProperty("SRVPERSONOPPLYSNINGER_API_USERNAME", "");
-        System.setProperty("SRVPERSONOPPLYSNINGER_API_PASSWORD", "");
-        System.setProperty("SECURITY_TOKEN_SERVICE_TOKEN_URL", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_INST2_REST_API_APIKEY_PASSWORD", "");
-        System.setProperty("INST2_API_URL", "");
-        System.setProperty("PERSONOPPLYSNINGER_API_TPS_PROXY_API_APIKEY_PASSWORD", "");
-        System.setProperty("TPS_PROXY_API_V1_NAVN_URL", "");
     }
 }
