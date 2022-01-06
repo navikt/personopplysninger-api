@@ -1,22 +1,23 @@
 package no.nav.personopplysninger.integrationtests;
 
-import com.nimbusds.jwt.SignedJWT;
 import no.nav.security.token.support.core.JwtTokenConstants;
+import no.nav.security.token.support.spring.test.EnableMockOAuth2Server;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.server.LocalServerPort;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-import static no.nav.security.token.support.test.JwtTokenGenerator.createSignedJWT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 
+@EnableMockOAuth2Server
 public class StatusResourceTest extends AbstractIntegrationTest {
 
-    @Value("${local.server.port}")
+    @LocalServerPort
     private int port;
 
     @Value("${server.servlet.context-path:}")
@@ -26,10 +27,10 @@ public class StatusResourceTest extends AbstractIntegrationTest {
     public void skalGi200MedGyldigToken() {
 
         WebTarget target = ClientBuilder.newClient().target("http://localhost:" + port + contextPath);
-        SignedJWT signedJWT = createSignedJWT("12345678911");
+        String token = createToken("12345678911");
         Response response = target.path("/internal/ping")
                 .request()
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer " + signedJWT.serialize())
+                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer " + token)
                 .get();
 
         assertThat(response.getStatus(), is(equalTo(Response.Status.OK.getStatusCode())));

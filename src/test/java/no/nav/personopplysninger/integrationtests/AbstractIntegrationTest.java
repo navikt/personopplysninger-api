@@ -2,11 +2,18 @@ package no.nav.personopplysninger.integrationtests;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import no.nav.personopplysninger.api.TestLauncher;
+import no.nav.security.mock.oauth2.MockOAuth2Server;
+import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback;
 import org.junit.jupiter.api.BeforeAll;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.List;
+import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static java.lang.String.format;
@@ -16,6 +23,15 @@ import static org.springframework.util.SocketUtils.findAvailableTcpPort;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {TestLauncher.class})
 @AutoConfigureWireMock(port = 0)
 public abstract class AbstractIntegrationTest {
+
+    private static final String CLIENT_ID = "clientId";
+    private static final String ISSUER = "selvbetjening";
+
+    @Value("${LOGINSERVICE_IDPORTEN_AUDIENCE}")
+    String audience;
+
+    @Autowired
+    private MockOAuth2Server oAuth2Server;
 
     // TokenX needs to run on its own wiremock server, as it is used in application config which is run before
     // the autoconfigured wiremock server is started.
@@ -55,5 +71,24 @@ public abstract class AbstractIntegrationTest {
         System.setProperty("token.x.well.known.url", format("http://localhost:%s/tokenx", tokenxMockServer.port()));
         System.setProperty("token.x.client.id", "dev-sbs:personbruker:personopplysninger-api");
         System.setProperty("token.x.private.jwk", "{\"use\":\"sig\",\"kty\":\"RSA\",\"kid\":\"xxx\",\"n\":\"xxx\",\"e\":\"AQAB\",\"d\":\"xxx\",\"p\":\"xxx\",\"q\":\"xxx\",\"dp\":\"xxx\",\"dq\":\"xxx\",\"qi\":\"xxx\"}");
+    }
+
+    protected String createToken(String subject, String level){
+
+        return oAuth2Server.issueToken(
+                ISSUER,
+                CLIENT_ID,
+                new DefaultOAuth2TokenCallback(
+                        ISSUER,
+                        subject,
+                        List.of(audience),
+                        Map.of("acr", level),
+                        3600
+                )
+        ).serialize();
+    }
+
+    protected String createToken(String subject){
+        return createToken(subject, "Level4");
     }
 }
