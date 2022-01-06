@@ -4,6 +4,7 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import no.nav.personopplysninger.api.TestLauncher;
 import no.nav.security.mock.oauth2.MockOAuth2Server;
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback;
+import no.nav.security.token.support.spring.test.EnableMockOAuth2Server;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,7 @@ import static org.springframework.util.SocketUtils.findAvailableTcpPort;
 @ActiveProfiles({"itest", "dev"})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {TestLauncher.class})
 @AutoConfigureWireMock(port = 0)
+@EnableMockOAuth2Server
 public abstract class AbstractIntegrationTest {
 
     private static final String CLIENT_ID = "clientId";

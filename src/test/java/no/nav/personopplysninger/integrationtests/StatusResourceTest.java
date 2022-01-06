@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.integrationtests;
 
 import no.nav.security.token.support.core.JwtTokenConstants;
-import no.nav.security.token.support.spring.test.EnableMockOAuth2Server;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -14,7 +13,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 
-@EnableMockOAuth2Server
 public class StatusResourceTest extends AbstractIntegrationTest {
 
     @LocalServerPort
