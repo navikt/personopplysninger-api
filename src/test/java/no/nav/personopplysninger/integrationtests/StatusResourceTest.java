@@ -9,10 +9,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 
-public class StatusResourceTest extends AbstractIntegrationTest {
+class StatusResourceTest extends AbstractIntegrationTest {
 
     @Test
-    public void skalGi200MedGyldigToken() {
+    void skalGi200MedGyldigToken() {
         String token = createToken("12345678911");
         Response response = createWebTarget().path("/internal/ping")
                 .request()
@@ -23,7 +23,7 @@ public class StatusResourceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void skalGi401UtenToken() {
+    void skalGi401UtenToken() {
         Response response = createWebTarget().path("/internal/ping")
                 .request()
                 .get();
@@ -32,7 +32,7 @@ public class StatusResourceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void optionsSkalGi200UtenHeaders() {
+    void optionsSkalGi200UtenHeaders() {
         Response response = createWebTarget().path("/internal/ping")
                 .request()
                 .options();
@@ -41,7 +41,7 @@ public class StatusResourceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void optionsSkalGi200WithFirefoxDefaultAcceptHeader() {
+    void optionsSkalGi200WithFirefoxDefaultAcceptHeader() {
         Response response = createWebTarget().path("/internal/ping")
                 .request()
                 .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
@@ -51,7 +51,7 @@ public class StatusResourceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void optionsSkalGi200WithChromeDefaultAcceptHeader() {
+    void optionsSkalGi200WithChromeDefaultAcceptHeader() {
         Response response = createWebTarget().path("/internal/ping")
                 .request()
                 .header("Accept", "*/*")
