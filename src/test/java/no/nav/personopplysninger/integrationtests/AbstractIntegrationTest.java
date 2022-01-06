@@ -9,10 +9,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +34,12 @@ public abstract class AbstractIntegrationTest {
 
     @Value("${LOGINSERVICE_IDPORTEN_AUDIENCE}")
     String audience;
+
+    @Value("${server.servlet.context-path:}")
+    protected String contextPath;
+
+    @LocalServerPort
+    protected int port;
 
     @Autowired
     private MockOAuth2Server oAuth2Server;
@@ -73,6 +82,11 @@ public abstract class AbstractIntegrationTest {
         System.setProperty("token.x.well.known.url", format("http://localhost:%s/tokenx", tokenxMockServer.port()));
         System.setProperty("token.x.client.id", "dev-sbs:personbruker:personopplysninger-api");
         System.setProperty("token.x.private.jwk", "{\"use\":\"sig\",\"kty\":\"RSA\",\"kid\":\"xxx\",\"n\":\"xxx\",\"e\":\"AQAB\",\"d\":\"xxx\",\"p\":\"xxx\",\"q\":\"xxx\",\"dp\":\"xxx\",\"dq\":\"xxx\",\"qi\":\"xxx\"}");
+    }
+
+    protected WebTarget createWebTarget() {
+        String localhost = "http://localhost:" + port + contextPath;
+        return ClientBuilder.newClient().target(localhost);
     }
 
     protected String createToken(String subject, String level){
