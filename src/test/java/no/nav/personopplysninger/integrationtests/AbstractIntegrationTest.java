@@ -9,13 +9,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
 import java.util.List;
 import java.util.Map;
 
@@ -32,14 +32,13 @@ public abstract class AbstractIntegrationTest {
     private static final String CLIENT_ID = "clientId";
     private static final String ISSUER = "selvbetjening";
 
+    protected static final String IDENT = "10108000398";
+
     @Value("${LOGINSERVICE_IDPORTEN_AUDIENCE}")
     String audience;
 
-    @Value("${server.servlet.context-path:}")
-    protected String contextPath;
-
-    @LocalServerPort
-    protected int port;
+    @Autowired
+    protected TestRestTemplate restTemplate;
 
     @Autowired
     private MockOAuth2Server oAuth2Server;
@@ -49,7 +48,7 @@ public abstract class AbstractIntegrationTest {
     static WireMockServer tokenxMockServer = new WireMockServer(findAvailableTcpPort());
 
     @BeforeAll
-    static void setup() {
+    static void commonSetup() {
         mockTokenX();
         mockAppName();
     }
@@ -84,12 +83,22 @@ public abstract class AbstractIntegrationTest {
         System.setProperty("token.x.private.jwk", "{\"use\":\"sig\",\"kty\":\"RSA\",\"kid\":\"xxx\",\"n\":\"xxx\",\"e\":\"AQAB\",\"d\":\"xxx\",\"p\":\"xxx\",\"q\":\"xxx\",\"dp\":\"xxx\",\"dq\":\"xxx\",\"qi\":\"xxx\"}");
     }
 
-    protected WebTarget createWebTarget() {
-        String localhost = "http://localhost:" + port + contextPath;
-        return ClientBuilder.newClient().target(localhost);
+    protected HttpEntity<HttpHeaders> createEntityWithHeaders(Map<String, String> headerMap) {
+        HttpHeaders headers = new HttpHeaders();
+        headerMap.forEach(headers::add);
+        return new HttpEntity<>(headers);
     }
 
-    protected String createToken(String subject, String level){
+    protected HttpEntity<HttpHeaders> createEntityWithAuthHeader(String subject) {
+        return createEntityWithHeaders(Map.of(HttpHeaders.AUTHORIZATION, "Bearer " + createToken(subject)));
+    }
+
+    protected HttpEntity<HttpHeaders> createEntityWithoutHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        return new HttpEntity<>(headers);
+    }
+
+    private String createToken(String subject){
 
         return oAuth2Server.issueToken(
                 ISSUER,
@@ -98,13 +107,9 @@ public abstract class AbstractIntegrationTest {
                         ISSUER,
                         subject,
                         List.of(audience),
-                        Map.of("acr", level),
+                        Map.of("acr", "Level4"),
                         3600
                 )
         ).serialize();
-    }
-
-    protected String createToken(String subject){
-        return createToken(subject, "Level4");
     }
 }

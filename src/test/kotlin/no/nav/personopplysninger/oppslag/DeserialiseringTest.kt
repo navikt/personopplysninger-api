@@ -26,7 +26,6 @@ import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import java.io.InputStreamReader
 import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.core.Response
 import kotlin.test.assertEquals
@@ -37,20 +36,15 @@ class DeserialiseringTest {
 
     @BeforeAll
     fun setUpMockServer() {
-        val kodeverkjson = InputStreamReader(this.javaClass.getResourceAsStream("/json/kodeverk-kjonnstyper.json")).readText()
-        val norg2EnhetJson = InputStreamReader(this.javaClass.getResourceAsStream("/json/norg2-enhet.json")).readText()
-        val instListJson = InputStreamReader(this.javaClass.getResourceAsStream("/json/inst2.json")).readText()
-        val medlListJson = InputStreamReader(this.javaClass.getResourceAsStream("/json/medl-medlemskapsunntak.json")).readText()
-
         mockServer.start()
         configureFor(mockServer.port())
-        stubFor(any(urlPathEqualTo("/kodeverk")).willReturn(okJson(kodeverkjson)))
-        stubFor(any(urlPathEqualTo("/norg2-enhet")).willReturn(okJson(norg2EnhetJson)))
+        stubFor(any(urlPathEqualTo("/kodeverk")).willReturn(aResponse().withBodyFile("kodeverk-kjonnstyper.json")))
+        stubFor(any(urlPathEqualTo("/norg2-enhet")).willReturn(aResponse().withBodyFile("norg2-enhet.json")))
         stubFor(any(urlPathEqualTo("/testklasse")).willReturn(okJson(testklasseJson())))
         stubFor(any(urlPathEqualTo("/tpsnavn")).willReturn(okJson(tpsNavnJson())))
         stubFor(any(urlPathEqualTo("/inst")).willReturn(okJson(instJson())))
-        stubFor(any(urlPathEqualTo("/instlist")).willReturn(okJson(instListJson)))
-        stubFor(any(urlPathEqualTo("/medl")).willReturn(okJson(medlListJson)))
+        stubFor(any(urlPathEqualTo("/instlist")).willReturn(aResponse().withBodyFile("inst2.json")))
+        stubFor(any(urlPathEqualTo("/medl")).willReturn(aResponse().withBodyFile("medl-medlemskapsunntak.json")))
     }
 
     @AfterAll

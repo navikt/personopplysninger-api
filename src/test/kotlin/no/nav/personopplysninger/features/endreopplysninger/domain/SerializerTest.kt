@@ -29,7 +29,7 @@ class SerializerTest {
 
     @Test
     fun testSerializationTelefonnummer() {
-        val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/endring-telefonnummer.json")).readText()
+        val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/__files/endring-telefonnummer.json")).readText()
         val endring = readValue(json, EndringTelefon::class.java)
         assertEquals("KORRIGER", endring.endringstype)
         assertEquals("BRUKER SELV", endring.innmeldtEndring?.kilde)
@@ -38,7 +38,7 @@ class SerializerTest {
 
     @Test
     fun testSerializationKontonummer() {
-        val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/endring-kontonummer.json")).readText()
+        val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/__files/endring-kontonummer.json")).readText()
 
         val mockServer = WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
         try {
@@ -62,7 +62,7 @@ class SerializerTest {
 
     @Test
     fun testSerializationInstitusjonsopphold() {
-        val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/inst2.json")).readText()
+        val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/__files/inst2.json")).readText()
         val institusjonsopphold = readValue(json, ArrayList<InnsynInstitusjonsopphold>()::class.java)
         assertEquals(7, institusjonsopphold.size)
     }
@@ -87,7 +87,7 @@ class SerializerTest {
 
     @Test
     fun testRetningsnummerMapping() {
-        val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/json/retningsnumre.json")).readText()
+        val json: String = InputStreamReader(this.javaClass.getResourceAsStream("/__files/retningsnumre.json")).readText()
         val response: GetKodeverkKoderBetydningerResponse = readValue(json, GetKodeverkKoderBetydningerResponse::class.java)
         assertEquals(2, response.betydninger.entries.size)
         assertEquals("+51", response.betydninger.entries.first().key)
@@ -106,7 +106,7 @@ class SerializerTest {
 
     @Test
     fun testSerializeValidationError() {
-        val json = InputStreamReader(this.javaClass.getResourceAsStream("/json/validation-error.json")).readText()
+        val json = InputStreamReader(this.javaClass.getResourceAsStream("/__files/validation-error.json")).readText()
         val validationError = readValue(json, Error::class.java)
         assertEquals("Validering feilet", validationError.message)
         assertEquals(3, validationError.details!!.size)
@@ -124,7 +124,7 @@ class SerializerTest {
 
     @Test
     fun testKodeverk() {
-        val json = InputStreamReader(this.javaClass.getResourceAsStream("/json/kodeverk-kjonnstyper.json")).readText()
+        val json = InputStreamReader(this.javaClass.getResourceAsStream("/__files/kodeverk-kjonnstyper.json")).readText()
         val kodeverk = readValue(json, GetKodeverkKoderBetydningerResponse::class.java)
         assertEquals("Kvinne", kodeverk.betydninger.getValue("K")[0].beskrivelser.getValue("nb").term)
     }
