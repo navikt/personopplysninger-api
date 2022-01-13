@@ -1,9 +1,9 @@
 package no.nav.personopplysninger.features.personalia
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
 import no.nav.personopplysninger.features.personalia.pdl.PdlConsumer
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
+import no.nav.personopplysninger.util.DEFAULT_APIKEY_USERNAME
 import no.nav.security.token.support.jaxrs.JwtTokenClientRequestFilter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean

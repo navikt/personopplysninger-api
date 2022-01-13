@@ -1,10 +1,13 @@
 package no.nav.personopplysninger.oppslag.sts
 
-import no.nav.personopplysninger.consumerutils.ConsumerException
-import no.nav.personopplysninger.consumerutils.unmarshalBody
+import com.fasterxml.jackson.module.kotlin.readValue
+import no.nav.personopplysninger.util.ConsumerException
+import no.nav.personopplysninger.util.JsonDeserialize
+import no.nav.personopplysninger.util.consumerErrorMessage
 import java.net.URI
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
+import javax.ws.rs.core.Response
 
 class STSConsumer(private val client: Client, private val endpoint: URI) {
 
@@ -16,10 +19,10 @@ class STSConsumer(private val client: Client, private val endpoint: URI) {
 
     private fun getBuilder(path: String): Invocation.Builder {
         return client.target(endpoint)
-                .path(path)
-                .queryParam("grant_type", "client_credentials")
-                .queryParam("scope", "openid")
-                .request()
+            .path(path)
+            .queryParam("grant_type", "client_credentials")
+            .queryParam("scope", "openid")
+            .request()
     }
 
     private fun buildSTSRequest(): Invocation.Builder {
@@ -27,11 +30,12 @@ class STSConsumer(private val client: Client, private val endpoint: URI) {
     }
 
     private fun getToken(request: Invocation.Builder): TokenDto {
-        try {
-            request.get().use { response -> return response.unmarshalBody() }
-        } catch (e: Exception) {
-            val msg = "Forsøkte å hente STSToken. endpoint=[$endpoint]."
-            throw ConsumerException(msg, e)
+        request.get().use { response ->
+            val responseBody = response.readEntity(String::class.java)
+            if (Response.Status.Family.SUCCESSFUL != response.statusInfo.family) {
+                throw ConsumerException(consumerErrorMessage(endpoint, response.status, responseBody))
+            }
+            return JsonDeserialize.objectMapper.readValue(responseBody)
         }
     }
 }

@@ -1,0 +1,64 @@
+{
+  "betydninger": {
+    "USA_5_9": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Avtale - USA - 5.9",
+            "tekst": "Trygdeavtale USA"
+          }
+        }
+      }
+    ],
+    "FO_1408_14b_4": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "EØS 1408/71 - 14b.4",
+            "tekst": "EØS-forordning 1408/1971"
+          }
+        }
+      }
+    ],
+    "FO_1408_14b_2": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "EØS 1408/71 - 14b.2",
+            "tekst": "EØS-forordning 1408/1971"
+          }
+        }
+      }
+    ],
+    "Tyrkia": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Avtale - Tyrkia",
+            "tekst": "Trygdeavtale Tyrkia"
+          }
+        }
+      }
+    ],
+    "FO_1408_14b_1": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "EØS 1408/71 - 14b.1",
+            "tekst": "EØS-forordning 1408/1971"
+          }
+        }
+      }
+    ]
+  }
+}

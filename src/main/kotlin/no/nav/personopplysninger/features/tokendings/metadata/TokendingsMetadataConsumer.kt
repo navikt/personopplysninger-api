@@ -1,8 +1,10 @@
 package no.nav.personopplysninger.features.tokendings.metadata
 
-import no.nav.personopplysninger.consumerutils.ConsumerException
-import no.nav.personopplysninger.consumerutils.unmarshalBody
+import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.personopplysninger.features.tokendings.domain.TokendingsMetaConfiguration
+import no.nav.personopplysninger.util.ConsumerException
+import no.nav.personopplysninger.util.JsonDeserialize
+import no.nav.personopplysninger.util.consumerErrorMessage
 import java.net.URI
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
@@ -15,17 +17,12 @@ class TokendingsMetadataConsumer constructor(
 ) {
 
     fun hentMetadata(): TokendingsMetaConfiguration {
-        try {
-            val response = getBuilder().get()
+        getBuilder().get().use { response ->
+            val responseBody = response.readEntity(String::class.java)
             if (Response.Status.Family.SUCCESSFUL != response.statusInfo.family) {
-                val msg = "Forsøkte å konsumere REST-tjenesten tokendings metadata. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
-                throw ConsumerException(msg.plus(response.unmarshalBody()))
+                throw ConsumerException(consumerErrorMessage(endpoint, response.status, responseBody))
             }
-
-            return response.unmarshalBody()
-        } catch (e: Exception) {
-            val msg = "Forsøkte å konsumere REST-tjenesten tokendings metadata. endpoint=[$endpoint]."
-            throw ConsumerException(msg, e)
+            return JsonDeserialize.objectMapper.readValue(responseBody)
         }
     }
 

@@ -1,10 +1,12 @@
 package no.nav.personopplysninger.features.personalia
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.common.log.MDCConstants
 import no.nav.dkif.kontaktinformasjon.DigitalKontaktinfoBolk
-import no.nav.personopplysninger.consumerutils.CONSUMER_ID
-import no.nav.personopplysninger.consumerutils.ConsumerException
-import no.nav.personopplysninger.consumerutils.unmarshalBody
+import no.nav.personopplysninger.util.CONSUMER_ID
+import no.nav.personopplysninger.util.ConsumerException
+import no.nav.personopplysninger.util.JsonDeserialize
+import no.nav.personopplysninger.util.consumerErrorMessage
 import org.slf4j.MDC
 import java.net.URI
 import javax.ws.rs.client.Client
@@ -28,22 +30,12 @@ class KontaktinfoConsumer(private val client: Client, private val endpoint: URI)
     }
 
     private fun hentKontaktinformasjon(request: Invocation.Builder): DigitalKontaktinfoBolk {
-        try {
-            return request.getResponse()
-        } catch (e: Exception) {
-            val msg = "Forsøkte å konsumere REST-tjenesten DKIF. endpoint=[$endpoint]."
-            throw ConsumerException(msg, e)
-        }
-
-    }
-
-    private fun Invocation.Builder.getResponse(): DigitalKontaktinfoBolk {
-        val response = get()
-        if (SUCCESSFUL != response.statusInfo.family) {
-            val msg = "Forsøkte å konsumere REST-tjenesten DKIF. endpoint=[$endpoint], HTTP response status=[${response.status}]. - "
-            throw ConsumerException(msg.plus(response.unmarshalBody()))
-        } else {
-            return response.unmarshalBody()
+        request.get().use { response ->
+            val responseBody = response.readEntity(String::class.java)
+            if (SUCCESSFUL != response.statusInfo.family) {
+                throw ConsumerException(consumerErrorMessage(endpoint, response.status, responseBody))
+            }
+            return JsonDeserialize.objectMapper.readValue(responseBody)
         }
     }
 }

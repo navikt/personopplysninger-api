@@ -1,5 +1,6 @@
-package no.nav.personopplysninger.integrationtests;
+package no.nav.personopplysninger.integrationtests.status;
 
+import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 
-class StatusResourceTest extends AbstractIntegrationTest {
+class StatusIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void skalGi200MedGyldigToken() {
