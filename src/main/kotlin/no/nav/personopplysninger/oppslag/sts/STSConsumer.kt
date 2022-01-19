@@ -17,16 +17,15 @@ class STSConsumer(private val client: Client, private val endpoint: URI) {
             return getToken(request)
         }
 
-    private fun getBuilder(path: String): Invocation.Builder {
+    private fun getBuilder(): Invocation.Builder {
         return client.target(endpoint)
-            .path(path)
             .queryParam("grant_type", "client_credentials")
             .queryParam("scope", "openid")
             .request()
     }
 
     private fun buildSTSRequest(): Invocation.Builder {
-        return getBuilder("")
+        return getBuilder()
     }
 
     private fun getToken(request: Invocation.Builder): TokenDto {
