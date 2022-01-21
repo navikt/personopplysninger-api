@@ -15,9 +15,23 @@ private const val claimsIssuer = "selvbetjening"
 private val cacheControl = CacheControl()
 
 @Component
-@Path("migrert")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
+@Path("/")
 class PersonaliaResource @Autowired constructor(private var personaliaService: PersonaliaService) {
+
+    @GET
+    @Path("/migrert/personalia")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun hentPersoninfoMigrert(): Response {
+        cacheControl.isMustRevalidate = true
+        cacheControl.isNoStore = true
+        val fodselsnr = hentFnrFraToken()
+        val personaliaOgAdresser = personaliaService.hentPersoninfo(fodselsnr)
+        return Response
+                .ok(personaliaOgAdresser)
+                .cacheControl(cacheControl)
+                .build()
+    }
 
     @GET
     @Path("/personalia")
