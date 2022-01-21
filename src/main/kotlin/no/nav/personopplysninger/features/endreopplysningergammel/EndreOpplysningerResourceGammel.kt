@@ -1,7 +1,10 @@
-package no.nav.personopplysninger.features.endreopplysninger
+package no.nav.personopplysninger.features.endreopplysningergammel
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
-import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
+import no.nav.personopplysninger.features.endreopplysningergammel.domain.kontonummer.Kontonummer
+import no.nav.personopplysninger.features.endreopplysningergammel.domain.telefon.Telefonnummer
+import no.nav.personopplysninger.features.personaliagammel.dto.outbound.adresse.kontaktadresse.DownstreamPostboksadresse
+import no.nav.personopplysninger.features.personaliagammel.dto.outbound.adresse.kontaktadresse.DownstreamUtenlandskAdresse
+import no.nav.personopplysninger.features.personaliagammel.dto.outbound.adresse.kontaktadresse.DownstreamVegadresse
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,9 +16,9 @@ import javax.ws.rs.core.Response
 private const val claimsIssuer = "selvbetjening"
 
 @Component
-@Path("migrert")
+@Path("/")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
-class EndreOpplysningerResource @Autowired constructor(private var endreOpplysningerService: EndreOpplysningerService) {
+class EndreOpplysningerResourceGammel @Autowired constructor(private var endreOpplysningerService: EndreOpplysningerServiceGammel) {
 
     @POST
     @Path("/endreTelefonnummer")
@@ -44,6 +47,33 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     fun endreKontonummer(kontonummer: Kontonummer): Response {
         val resp = endreOpplysningerService.endreKontonummer(
                 hentFnrFraToken(), kontonummer)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreKontaktadresse/vegadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreKontaktadresseVegadresse(vegadresse: DownstreamVegadresse): Response {
+        val resp = endreOpplysningerService.endreKontaktadresseVegadresse(hentFnrFraToken(), vegadresse)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreKontaktadresse/postboksadresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreKontaktadressePostboksadresse(postboksadresse: DownstreamPostboksadresse): Response {
+        val resp = endreOpplysningerService.endreKontaktadressePostboksadresse(hentFnrFraToken(), postboksadresse)
+        return Response.ok(resp).build()
+    }
+
+    @POST
+    @Path("/endreKontaktadresse/utenlandskAdresse")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun endreKontaktadresseUtenlandskAdresse(utenlandskAdresse: DownstreamUtenlandskAdresse): Response {
+        val resp = endreOpplysningerService.endreKontaktadresseUtenlandskAdresse(hentFnrFraToken(), utenlandskAdresse)
         return Response.ok(resp).build()
     }
 
