@@ -20,12 +20,11 @@ class PersonaliaResource @Autowired constructor(private var personaliaService: P
     @GET
     @Path("/migrert/personalia")
     @Produces(MediaType.APPLICATION_JSON)
-    fun hentPersoninfoMigrert(): Response {
-        val fodselsnr = hentFnrFraToken()
-        val personaliaOgAdresser = personaliaService.hentPersoninfo(fodselsnr)
+    fun skalSlettes(): Response {
         return Response
-            .ok(personaliaOgAdresser)
-            .build()    }
+            .ok("personaliaOgAdresser")
+            .build()
+    }
 
     @GET
     @Path("/personalia")
