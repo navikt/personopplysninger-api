@@ -24,14 +24,7 @@ class PersonaliaResource @Autowired constructor(private var personaliaService: P
     @Produces(MediaType.APPLICATION_JSON)
     fun hentPersoninfoMigrert(): Response {
         // Midlertidig for å kunne svare på to ulike paths, skal fjernes
-        cacheControl.isMustRevalidate = true
-        cacheControl.isNoStore = true
-        val fodselsnr = hentFnrFraToken()
-        val personaliaOgAdresser = personaliaService.hentPersoninfo(fodselsnr)
-        return Response
-                .ok(personaliaOgAdresser)
-                .cacheControl(cacheControl)
-                .build()
+        return hentPersoninfo()
     }
 
     @GET
