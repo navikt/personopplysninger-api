@@ -19,7 +19,7 @@ private val cacheControl = CacheControl()
 class PersonaliaResource @Autowired constructor(private var personaliaService: PersonaliaService) {
 
     @GET
-    @Path("migrert/personalia")
+    @Path("/migrert/personalia")
     @Produces(MediaType.APPLICATION_JSON)
     fun hentPersoninfoMigrert(): Response {
         // Midlertidig for å kunne svare på to ulike paths, skal fjernes
