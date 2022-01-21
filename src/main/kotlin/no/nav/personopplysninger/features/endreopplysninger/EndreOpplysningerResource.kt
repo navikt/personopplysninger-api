@@ -14,6 +14,7 @@ private const val claimsIssuer = "selvbetjening"
 
 @Component
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
+@Path("/")
 class EndreOpplysningerResource @Autowired constructor(private var endreOpplysningerService: EndreOpplysningerService) {
 
     @POST
