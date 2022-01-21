@@ -20,26 +20,31 @@ private val cacheControl = CacheControl()
 class PersonaliaResource @Autowired constructor(private var personaliaService: PersonaliaService) {
 
     @GET
-    @Path("/migrert/personalia")
+    @Path("/migrert2/personalia")
     @Produces(MediaType.APPLICATION_JSON)
     fun hentPersoninfoMigrert(): Response {
-        // Midlertidig for å kunne svare på to ulike paths, skal fjernes
-        return hentPersoninfo()
-    }
-
-    @GET
-    @Path("/personalia")
-    @Produces(MediaType.APPLICATION_JSON)
-    fun hentPersoninfo(): Response {
         cacheControl.isMustRevalidate = true
         cacheControl.isNoStore = true
         val fodselsnr = hentFnrFraToken()
         val personaliaOgAdresser = personaliaService.hentPersoninfo(fodselsnr)
         return Response
-                .ok(personaliaOgAdresser)
-                .cacheControl(cacheControl)
-                .build()
-    }
+            .ok(personaliaOgAdresser)
+            .cacheControl(cacheControl)
+            .build()    }
+
+    //@GET
+    //@Path("/personalia")
+    //@Produces(MediaType.APPLICATION_JSON)
+    //fun hentPersoninfo(): Response {
+    //    cacheControl.isMustRevalidate = true
+    //    cacheControl.isNoStore = true
+    //    val fodselsnr = hentFnrFraToken()
+    //    val personaliaOgAdresser = personaliaService.hentPersoninfo(fodselsnr)
+    //    return Response
+    //            .ok(personaliaOgAdresser)
+    //            .cacheControl(cacheControl)
+    //            .build()
+    //}
 
     @GET
     @Path("/kontaktinformasjon")
