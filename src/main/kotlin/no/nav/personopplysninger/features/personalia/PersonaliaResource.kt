@@ -18,7 +18,7 @@ private const val claimsIssuer = "selvbetjening"
 class PersonaliaResource @Autowired constructor(private var personaliaService: PersonaliaService) {
 
     @GET
-    @Path("/migrert/personalia")
+    @Path("/migrert123/personalia")
     @Produces(MediaType.APPLICATION_JSON)
     fun skalSlettes(): Response {
         return Response
