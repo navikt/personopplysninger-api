@@ -22,7 +22,7 @@ data class Personalia(
 
 data class Adresser(
         val geografiskTilknytning: GeografiskTilknytning? = null,
-        val kontaktadresse: Kontaktadresse? = null,
+        val kontaktadresser: List<Kontaktadresse> = arrayListOf(),
         val bostedsadresse: Bostedsadresse? = null,
         val oppholdsadresse: Oppholdsadresse? = null,
         val deltBosted: DeltBosted? = null,

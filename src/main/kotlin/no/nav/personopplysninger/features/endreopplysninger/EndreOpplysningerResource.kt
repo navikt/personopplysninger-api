@@ -13,8 +13,8 @@ import javax.ws.rs.core.Response
 private const val claimsIssuer = "selvbetjening"
 
 @Component
-@Path("/")
 @ProtectedWithClaims(issuer = claimsIssuer, claimMap = ["acr=Level4"])
+@Path("/")
 class EndreOpplysningerResource @Autowired constructor(private var endreOpplysningerService: EndreOpplysningerService) {
 
     @POST
