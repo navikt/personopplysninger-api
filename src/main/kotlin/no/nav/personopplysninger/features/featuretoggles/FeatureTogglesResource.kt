@@ -6,6 +6,7 @@ import no.nav.common.featuretoggle.UnleashClient
 import no.nav.common.featuretoggle.UnleashClientImpl
 import no.nav.common.featuretoggle.UnleashUtils.UNLEASH_URL_ENV_NAME
 import no.nav.common.utils.EnvironmentUtils.getOptionalProperty
+import no.nav.common.utils.EnvironmentUtils.getRequiredProperty
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Autowired
@@ -60,7 +61,7 @@ class FeatureTogglesResource @Autowired constructor() {
 
     private fun unleashService(): UnleashClient {
         return UnleashClientImpl(getOptionalProperty(UNLEASH_URL_ENV_NAME).orElse("https://unleash.nais.io/api/"),
-            System.getenv("NAIS_APP_NAME"),
+            getRequiredProperty("NAIS_APP_NAME"),
             Collections.singletonList(ByApplicationStrategy()) as List<Strategy>?)
     }
 
