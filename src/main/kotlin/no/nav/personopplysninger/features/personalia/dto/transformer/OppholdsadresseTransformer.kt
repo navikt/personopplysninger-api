@@ -5,21 +5,30 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.Opphol
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.AdresseMappingType.*
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlOppholdsadresse
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 object OppholdsadresseTransformer {
 
-    fun toOutbound(inbound: PdlOppholdsadresse, kodeverk: PersonaliaKodeverk): Oppholdsadresse {
-        return Oppholdsadresse(
-            oppholdAnnetSted = inbound.oppholdAnnetSted,
-            gyldigFraOgMed = inbound.gyldigFraOgMed,
-            gyldigTilOgMed = inbound.gyldigTilOgMed,
-            coAdressenavn = inbound.coAdressenavn,
-            kilde = inbound.metadata.master.lowercase(),
-            adresse = transformAdresse(inbound, kodeverk)
-        )
+    private val logger: Logger = LoggerFactory.getLogger(OppholdsadresseTransformer::class.java)
+
+    fun toOutbound(inbound: PdlOppholdsadresse, kodeverk: PersonaliaKodeverk): Oppholdsadresse? {
+        val adresse = transformAdresse(inbound, kodeverk)
+        return if (adresse != null) {
+            Oppholdsadresse(
+                oppholdAnnetSted = inbound.oppholdAnnetSted,
+                gyldigFraOgMed = inbound.gyldigFraOgMed,
+                gyldigTilOgMed = inbound.gyldigTilOgMed,
+                coAdressenavn = inbound.coAdressenavn,
+                kilde = inbound.metadata.master.lowercase(),
+                adresse = adresse
+            )
+        } else {
+            null
+        }
     }
 
-    private fun transformAdresse(inbound: PdlOppholdsadresse, kodeverk: PersonaliaKodeverk): Adresse {
+    private fun transformAdresse(inbound: PdlOppholdsadresse, kodeverk: PersonaliaKodeverk): Adresse? {
         return when (inbound.mappingType) {
             INNLAND_VEGADRESSE -> transformVegadresse(
                 inbound.vegadresse!!,
@@ -32,7 +41,10 @@ object OppholdsadresseTransformer {
                 kodeverk.oppholdsadresseKommune
             )
             UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse!!, kodeverk.oppholdsadresseLand)
-            else -> throw IllegalStateException("Prøvde å transformere ugyldig PdlOppholdsadresse-objekt.")
+            else -> {
+                logger.warn("Forsøkte å mappe oppholdsadresse på uventet format, null returnert. Adressetype: ${inbound.mappingType}")
+                null
+            }
         }
     }
 

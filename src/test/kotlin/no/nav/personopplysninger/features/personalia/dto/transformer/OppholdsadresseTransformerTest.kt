@@ -9,8 +9,8 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.cr
 import no.nav.personopplysninger.testutils.assertMatrikkeladresseEquals
 import no.nav.personopplysninger.testutils.assertUtenlandskAdresseEquals
 import no.nav.personopplysninger.testutils.assertVegadresseEquals
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -23,7 +23,7 @@ class OppholdsadresseTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = OppholdsadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = OppholdsadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.oppholdAnnetSted, inbound.oppholdAnnetSted)
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
@@ -48,7 +48,7 @@ class OppholdsadresseTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = OppholdsadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = OppholdsadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.oppholdAnnetSted, inbound.oppholdAnnetSted)
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
@@ -73,7 +73,7 @@ class OppholdsadresseTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = OppholdsadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = OppholdsadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.oppholdAnnetSted, inbound.oppholdAnnetSted)
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
@@ -92,13 +92,13 @@ class OppholdsadresseTransformerTest {
     }
 
     @Test
-    fun unsupportedAdresseTypeThrowsException() {
+    fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createDummyOppholdsadresse(UKJENTBOSTED)
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        assertThrows(IllegalStateException::class.java) {
-            OppholdsadresseTransformer.toOutbound(inbound, personaliaKodeverk)
-        }
+        val actual = OppholdsadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+
+        Assertions.assertNull(actual)
     }
 }

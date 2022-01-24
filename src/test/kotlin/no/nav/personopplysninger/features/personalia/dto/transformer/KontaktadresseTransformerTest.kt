@@ -6,7 +6,7 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.cr
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonaliaKodeverk
 import no.nav.personopplysninger.testutils.*
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -19,7 +19,7 @@ class KontaktadresseTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -43,7 +43,7 @@ class KontaktadresseTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -66,7 +66,7 @@ class KontaktadresseTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -89,7 +89,7 @@ class KontaktadresseTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -113,7 +113,7 @@ class KontaktadresseTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -131,13 +131,13 @@ class KontaktadresseTransformerTest {
     }
 
     @Test
-    fun unsupportedAdresseTypeThrowsException() {
+    fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createDummyKontaktadresse(UKJENTBOSTED)
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        assertThrows(IllegalStateException::class.java) {
-            KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
-        }
+        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+
+        assertNull(actual)
     }
 }

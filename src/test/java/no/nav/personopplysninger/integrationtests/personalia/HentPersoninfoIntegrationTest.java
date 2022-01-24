@@ -11,8 +11,7 @@ import org.springframework.http.ResponseEntity;
 import static no.nav.personopplysninger.stubs.KodeverkStubs.*;
 import static no.nav.personopplysninger.stubs.Norg2Stubs.stubNorg2_200;
 import static no.nav.personopplysninger.stubs.Norg2Stubs.stubNorg2_500;
-import static no.nav.personopplysninger.stubs.PdlStubs.stubPdl200;
-import static no.nav.personopplysninger.stubs.PdlStubs.stubPdl500;
+import static no.nav.personopplysninger.stubs.PdlStubs.*;
 import static no.nav.personopplysninger.stubs.StsStubs.stubSts200;
 import static no.nav.personopplysninger.stubs.StsStubs.stubSts500;
 import static no.nav.personopplysninger.stubs.TpsStubs.stubTps200;
@@ -54,11 +53,24 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     void personaliaSkalGi200MedFeilIKallMotNorg2() {
         stubNorg2_500();
 
-        ResponseEntity<String> response = restTemplate.exchange(
+        ResponseEntity<PersonaliaOgAdresser> response = restTemplate.exchange(
                 "/personalia",
                 HttpMethod.GET,
                 createEntityWithAuthHeader(IDENT),
-                String.class);
+                PersonaliaOgAdresser.class);
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
+    }
+
+    @Test
+    void skalGi200MedOppholdAnnetSted() {
+        stubPdl200OppholdAnnetSted();
+
+        ResponseEntity<PersonaliaOgAdresser> response = restTemplate.exchange(
+                "/personalia",
+                HttpMethod.GET,
+                createEntityWithAuthHeader(IDENT),
+                PersonaliaOgAdresser.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
     }
