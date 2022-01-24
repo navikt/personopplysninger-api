@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.config;
 
+import no.nav.personopplysninger.exception.ExceptionHandler;
 import no.nav.personopplysninger.features.auth.AuthStatusResource;
 import no.nav.personopplysninger.features.endreopplysninger.EndreOpplysningerResource;
 import no.nav.personopplysninger.features.featuretoggles.FeatureTogglesResource;
@@ -38,6 +39,7 @@ public class RestResourceConfiguration extends ResourceConfig {
         register(AuthStatusResource.class);
         register(MedlResource.class);
         register(FeatureTogglesResource.class);
+        register(ExceptionHandler.class);
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
     }
 

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.util
+package no.nav.personopplysninger.exception
 
 import java.net.URI
 

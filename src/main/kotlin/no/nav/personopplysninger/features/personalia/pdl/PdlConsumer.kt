@@ -2,15 +2,15 @@ package no.nav.personopplysninger.features.personalia.pdl
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.common.log.MDCConstants
+import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.exception.consumerErrorMessage
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlData
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPerson
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlResponse
 import no.nav.personopplysninger.features.personalia.pdl.request.*
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
 import no.nav.personopplysninger.util.CONSUMER_ID
-import no.nav.personopplysninger.util.ConsumerException
 import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
-import no.nav.personopplysninger.util.consumerErrorMessage
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC

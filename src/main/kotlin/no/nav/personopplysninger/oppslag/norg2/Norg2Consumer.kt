@@ -2,12 +2,12 @@ package no.nav.personopplysninger.oppslag.norg2
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.common.log.MDCConstants
+import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.exception.consumerErrorMessage
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2EnhetKontaktinfo
 import no.nav.personopplysninger.util.CONSUMER_ID
-import no.nav.personopplysninger.util.ConsumerException
 import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
-import no.nav.personopplysninger.util.consumerErrorMessage
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC

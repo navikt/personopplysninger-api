@@ -3,6 +3,8 @@ package no.nav.personopplysninger.features.endreopplysninger
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.common.log.MDCConstants
+import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.exception.consumerErrorMessage
 import no.nav.personopplysninger.features.endreopplysninger.domain.Endring
 import no.nav.personopplysninger.features.endreopplysninger.domain.Personopplysning
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
@@ -12,9 +14,7 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Endre
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.personalia.dto.getJson
 import no.nav.personopplysninger.util.CONSUMER_ID
-import no.nav.personopplysninger.util.ConsumerException
 import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
-import no.nav.personopplysninger.util.consumerErrorMessage
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import java.net.URI

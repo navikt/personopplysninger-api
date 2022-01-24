@@ -1,9 +1,9 @@
 package no.nav.personopplysninger.oppslag.sts
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import no.nav.personopplysninger.util.ConsumerException
+import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.exception.consumerErrorMessage
 import no.nav.personopplysninger.util.JsonDeserialize
-import no.nav.personopplysninger.util.consumerErrorMessage
 import java.net.URI
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation

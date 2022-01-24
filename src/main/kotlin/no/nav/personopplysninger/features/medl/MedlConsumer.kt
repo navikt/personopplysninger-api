@@ -2,9 +2,14 @@ package no.nav.personopplysninger.features.medl
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.common.log.MDCConstants
+import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.exception.consumerErrorMessage
 import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
-import no.nav.personopplysninger.util.*
+import no.nav.personopplysninger.util.CONSUMER_ID
+import no.nav.personopplysninger.util.HEADER_NAV_CALL_ID
+import no.nav.personopplysninger.util.HEADER_NAV_CONSUMER_ID
+import no.nav.personopplysninger.util.HEADER_NAV_PERSONIDENT_KEY
 import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.eclipse.jetty.http.HttpHeader

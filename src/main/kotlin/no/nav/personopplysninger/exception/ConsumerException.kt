@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.util
+package no.nav.personopplysninger.exception
 
 class ConsumerException : RuntimeException {
 

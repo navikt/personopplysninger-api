@@ -3,10 +3,10 @@ package no.nav.personopplysninger.features.personalia
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.common.log.MDCConstants
 import no.nav.dkif.kontaktinformasjon.DigitalKontaktinfoBolk
+import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.exception.consumerErrorMessage
 import no.nav.personopplysninger.util.CONSUMER_ID
-import no.nav.personopplysninger.util.ConsumerException
 import no.nav.personopplysninger.util.JsonDeserialize
-import no.nav.personopplysninger.util.consumerErrorMessage
 import org.slf4j.MDC
 import java.net.URI
 import javax.ws.rs.client.Client

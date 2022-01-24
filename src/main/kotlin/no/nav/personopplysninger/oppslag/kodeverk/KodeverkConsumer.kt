@@ -2,12 +2,12 @@ package no.nav.personopplysninger.oppslag.kodeverk
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.common.log.MDCConstants
+import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.exception.consumerErrorMessage
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.Kodeverk
 import no.nav.personopplysninger.util.CONSUMER_ID
-import no.nav.personopplysninger.util.ConsumerException
 import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
-import no.nav.personopplysninger.util.consumerErrorMessage
 import org.slf4j.MDC
 import org.springframework.cache.annotation.Cacheable
 import java.net.URI
