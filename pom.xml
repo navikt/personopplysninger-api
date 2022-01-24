@@ -21,15 +21,15 @@
 
         <commons-logging.version>1.2</commons-logging.version>
         <jersey-test-framework.version>3.0.3</jersey-test-framework.version>
-        <kotlin-logging.version>2.1.0</kotlin-logging.version>
+        <kotlin-logging.version>2.1.21</kotlin-logging.version>
         <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
         <oidc-support.version>1.3.9</oidc-support.version>
-        <swagger-annotations.version>1.6.3</swagger-annotations.version>
+        <swagger-annotations.version>1.6.4</swagger-annotations.version>
         <arrow.version>1.0.1</arrow.version>
         <swagger-codegen-maven-plugin.version>3.0.2</swagger-codegen-maven-plugin.version>
         <jackson-module-kotlin.version>2.9.8</jackson-module-kotlin.version>
         <konfig-version>1.6.10.0</konfig-version>
-        <nav-common-version>2.2021.11.15_14.58-d7a174cfb6a8</nav-common-version>
+        <nav-common-version>2.2021.12.09_11.56-a71c36a61ba3</nav-common-version>
 
         <!-- Needed to avoid incompatibility with token-validation-spring-test -->
         <okhttp3.version>4.9.0</okhttp3.version>
@@ -68,7 +68,8 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/dkif/kontaktinformasjon-swagger.json</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/dkif/kontaktinformasjon-swagger.json
+                            </inputSpec>
                             <language>kotlin-client</language>
                             <generateApis>false</generateApis>
                             <modelPackage>no.nav.dkif.kontaktinformasjon</modelPackage>
@@ -260,6 +261,16 @@
             <groupId>no.nav.common</groupId>
             <artifactId>log</artifactId>
             <version>${nav-common-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.common</groupId>
+            <artifactId>feature-toggle</artifactId>
+            <version>${nav-common-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>no.finn.unleash</groupId>
+            <artifactId>unleash-client-java</artifactId>
+            <version>4.4.1</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
