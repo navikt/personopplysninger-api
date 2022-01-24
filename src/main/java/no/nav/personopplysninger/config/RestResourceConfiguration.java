@@ -26,20 +26,20 @@ import java.util.List;
 
 @Configuration
 public class RestResourceConfiguration extends ResourceConfig {
-    private static final List<Class> WHITELISTED_CLASSES = Arrays.asList(WadlModelProcessor.OptionsHandler.class);
+    private static final List<Class> WHITELISTED_CLASSES = Arrays.asList(WadlModelProcessor.OptionsHandler.class, FeatureTogglesResource.class);
     private static final List<Class> WHITELISTED_PARENT_CLASSES = Collections.singletonList(OptionsMethodProcessor.class);
 
     public RestResourceConfiguration() {
         register(JacksonFeature.class);
         register(StatusResource.class);
         register(PersonaliaResource.class);
+        register(FeatureTogglesResource.class);
         register(CORSResponseFilter.class);
         register(OidcResourceFilteringFeature.class);
         register(EndreOpplysningerResource.class);
         register(InstitusjonResource.class);
         register(AuthStatusResource.class);
         register(MedlResource.class);
-        register(FeatureTogglesResource.class);
         register(DefaultExceptionMapper.class);
         register(WebApplicationExceptionMapper.class);
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
@@ -48,7 +48,7 @@ public class RestResourceConfiguration extends ResourceConfig {
     public static class OidcResourceFilteringFeature implements DynamicFeature {
         @Override
         public void configure(ResourceInfo resourceInfo, FeatureContext context) {
-            if(WHITELISTED_CLASSES.contains(resourceInfo.getResourceClass()) ||
+            if (WHITELISTED_CLASSES.contains(resourceInfo.getResourceClass()) ||
                     WHITELISTED_PARENT_CLASSES.contains(resourceInfo.getResourceClass().getEnclosingClass())) {
                 return;
             }
