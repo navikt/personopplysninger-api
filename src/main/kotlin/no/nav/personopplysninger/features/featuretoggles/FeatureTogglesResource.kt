@@ -1,10 +1,12 @@
 package no.nav.personopplysninger.features.featuretoggles
 
 import no.finn.unleash.UnleashContext
-import no.nav.sbl.featuretoggle.unleash.UnleashService
-import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig
-import no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.UNLEASH_API_URL_PROPERTY_NAME
-import no.nav.sbl.util.EnvironmentUtils.getOptionalProperty
+import no.finn.unleash.strategy.Strategy
+import no.nav.common.featuretoggle.UnleashClient
+import no.nav.common.featuretoggle.UnleashClientImpl
+import no.nav.common.featuretoggle.UnleashUtils.UNLEASH_URL_ENV_NAME
+import no.nav.common.utils.EnvironmentUtils.getOptionalProperty
+import no.nav.common.utils.EnvironmentUtils.getRequiredProperty
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Autowired
@@ -57,13 +59,10 @@ class FeatureTogglesResource @Autowired constructor() {
         }
     }
 
-    private fun unleashService(): UnleashService {
-        return UnleashService(UnleashServiceConfig.builder()
-                .applicationName(System.getenv("NAIS_APP_NAME"))
-                .unleashApiUrl(getOptionalProperty(UNLEASH_API_URL_PROPERTY_NAME).orElse("https://unleash.nais.io/api/"))
-                .build(),
-                ByApplicationStrategy()
-        )
+    private fun unleashService(): UnleashClient {
+        return UnleashClientImpl(getOptionalProperty(UNLEASH_URL_ENV_NAME).orElse("https://unleash.nais.io/api/"),
+            getRequiredProperty("NAIS_APP_NAME"),
+            Collections.singletonList(ByApplicationStrategy()) as List<Strategy>?)
     }
 
     private fun generateSessionId(httpServletRequest: HttpServletResponse): String {

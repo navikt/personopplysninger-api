@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.oppslag.sts
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
+import no.nav.personopplysninger.util.DEFAULT_APIKEY_USERNAME
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

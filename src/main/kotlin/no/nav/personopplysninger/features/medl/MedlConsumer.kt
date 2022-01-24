@@ -1,9 +1,16 @@
 package no.nav.personopplysninger.features.medl
 
-import no.nav.log.MDCConstants
-import no.nav.personopplysninger.consumerutils.*
+import com.fasterxml.jackson.module.kotlin.readValue
+import no.nav.common.log.MDCConstants
+import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.exception.consumerErrorMessage
 import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
+import no.nav.personopplysninger.util.CONSUMER_ID
+import no.nav.personopplysninger.util.HEADER_NAV_CALL_ID
+import no.nav.personopplysninger.util.HEADER_NAV_CONSUMER_ID
+import no.nav.personopplysninger.util.HEADER_NAV_PERSONIDENT_KEY
+import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
 import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.eclipse.jetty.http.HttpHeader
 import org.slf4j.MDC
@@ -14,38 +21,31 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
 class MedlConsumer constructor(
-        private val client: Client,
-        private val endpoint: URI,
-        private val tokenDingsService: TokenDingsService,
-        private val targetApp: String?
-)
-{
+    private val client: Client,
+    private val endpoint: URI,
+    private val tokenDingsService: TokenDingsService,
+    private val targetApp: String?
+) {
     fun hentMedlemskap(fnr: String): Medlemskapsunntak {
-        try {
-            val tokendingsToken = tokenDingsService.exchangeToken(getToken(), targetApp)
-            getBuilder(fnr, tokendingsToken.accessToken)
-            val response = getBuilder(fnr, tokendingsToken.accessToken).get()
-
+        val tokendingsToken = tokenDingsService.exchangeToken(getToken(), targetApp)
+        getBuilder(fnr, tokendingsToken.accessToken).get().use { response ->
+            val responseBody = response.readEntity(String::class.java)
             if (SUCCESSFUL != response.statusInfo.family) {
-                val msg = "Forsøkte å konsumere REST-tjenesten medl. endpoint=[$endpoint], HTTP response status=[${response.status}]. "
-                throw ConsumerException(msg.plus(response.unmarshalBody()))
+                throw ConsumerException(consumerErrorMessage(endpoint, response.status, responseBody))
             }
-            return response.unmarshalBody()
-        } catch (e: Exception) {
-            val msg = "Forsøkte å konsumere REST-tjenesten medl. endpoint=[$endpoint]."
-            throw ConsumerException(msg, e)
+            return objectMapper.readValue(responseBody)
         }
     }
 
     private fun getBuilder(fnr: String, accessToken: String): Invocation.Builder {
         return client.target(endpoint)
-                .path("api/v1/innsyn/person")
-                .request()
-                .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
-                .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-                .header(HEADER_NAV_PERSONIDENT_KEY, fnr)
-                .header(HttpHeader.ACCEPT.asString(), MediaType.APPLICATION_JSON)
-                .header(HttpHeader.AUTHORIZATION.asString(), "Bearer $accessToken")
+            .path("api/v1/innsyn/person")
+            .request()
+            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+            .header(HEADER_NAV_PERSONIDENT_KEY, fnr)
+            .header(HttpHeader.ACCEPT.asString(), MediaType.APPLICATION_JSON)
+            .header(HttpHeader.AUTHORIZATION.asString(), "Bearer $accessToken")
     }
 
     private fun getToken(): String {

@@ -39,3 +39,5 @@ spec:
     path: /person/personopplysninger-api/internal/actuator/prometheus
   tokenx:
     enabled: true
+  secureLogs:
+    enabled: true

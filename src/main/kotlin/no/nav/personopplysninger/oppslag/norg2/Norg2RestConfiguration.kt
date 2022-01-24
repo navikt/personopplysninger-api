@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.oppslag.norg2
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
+import no.nav.personopplysninger.util.DEFAULT_APIKEY_USERNAME
 import no.nav.security.token.support.jaxrs.JwtTokenClientRequestFilter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean

@@ -1,8 +1,8 @@
 package no.nav.personopplysninger.features.medl
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
+import no.nav.personopplysninger.util.DEFAULT_APIKEY_USERNAME
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

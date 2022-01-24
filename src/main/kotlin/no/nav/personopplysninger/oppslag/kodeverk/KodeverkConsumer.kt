@@ -1,11 +1,13 @@
 package no.nav.personopplysninger.oppslag.kodeverk
 
-import no.nav.log.MDCConstants
-import no.nav.personopplysninger.consumerutils.CONSUMER_ID
-import no.nav.personopplysninger.consumerutils.unmarshalBody
+import com.fasterxml.jackson.module.kotlin.readValue
+import no.nav.common.log.MDCConstants
+import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.exception.consumerErrorMessage
 import no.nav.personopplysninger.oppslag.kodeverk.api.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.oppslag.kodeverk.api.Kodeverk
-import no.nav.personopplysninger.oppslag.kodeverk.exceptions.KodeverkConsumerException
+import no.nav.personopplysninger.util.CONSUMER_ID
+import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
 import org.slf4j.MDC
 import org.springframework.cache.annotation.Cacheable
 import java.net.URI
@@ -14,17 +16,12 @@ import javax.ws.rs.client.Invocation
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
 open class KodeverkConsumer constructor(
-        private val client: Client,
-        private val endpoint: URI
+    private val client: Client,
+    private val endpoint: URI
 ) {
     @Cacheable("retningsnummer")
     open fun hentRetningsnumre(): Kodeverk {
         return hentKodeverkBetydning("Retningsnumre", true)
-    }
-
-    @Cacheable("kjonn")
-    open fun hentKjonn(): Kodeverk {
-        return hentKodeverkBetydning("Kjønnstyper", true)
     }
 
     @Cacheable("kommune")
@@ -37,24 +34,9 @@ open class KodeverkConsumer constructor(
         return hentKodeverkBetydning("Landkoder", true)
     }
 
-    @Cacheable("status")
-    open fun hentPersonstatus(): Kodeverk {
-        return hentKodeverkBetydning("Personstatuser", true)
-    }
-
     @Cacheable("postnr")
     open fun hentPostnummer(): Kodeverk {
         return hentKodeverkBetydning("Postnummer", true)
-    }
-
-    @Cacheable("sivilstand")
-    open fun hentSivilstand(): Kodeverk {
-        return hentKodeverkBetydning("Sivilstander", true)
-    }
-
-    @Cacheable("spraak")
-    open fun hentSpraak(): Kodeverk {
-        return hentKodeverkBetydning("Språk", true)
     }
 
     @Cacheable("valuta")
@@ -79,28 +61,22 @@ open class KodeverkConsumer constructor(
 
     private fun buildRequest(path: String, eksluderUgyldige: Boolean): Invocation.Builder {
         return client.target(endpoint)
-                .path(path)
-                .queryParam("spraak", "nb")
-                .queryParam("ekskluderUgyldige", eksluderUgyldige)
-                .request()
-                .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-                .header("Nav-Consumer-Id", CONSUMER_ID)
+            .path(path)
+            .queryParam("spraak", "nb")
+            .queryParam("ekskluderUgyldige", eksluderUgyldige)
+            .request()
+            .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+            .header("Nav-Consumer-Id", CONSUMER_ID)
     }
 
     private fun hentKodeverkBetydning(navn: String, eksluderUgyldige: Boolean): Kodeverk {
-        try {
-            val response = buildRequest("v1/kodeverk/$navn/koder/betydninger", eksluderUgyldige).get()
+        buildRequest("v1/kodeverk/$navn/koder/betydninger", eksluderUgyldige).get().use { response ->
+            val responseBody = response.readEntity(String::class.java)
             if (SUCCESSFUL != response.statusInfo.family) {
-                val msg = "Forsøkte å konsumere kodeverk. endpoint=[$endpoint], HTTP response status=[${response.status}], body=[${response.unmarshalBody<String>()}]."
-                throw KodeverkConsumerException(msg)
+                throw ConsumerException(consumerErrorMessage(endpoint, response.status, responseBody))
             }
-            return response.unmarshalBody<GetKodeverkKoderBetydningerResponse>()
-                    .let { Kodeverk.fromKoderBetydningerResponse(navn, it) }
-        } catch (e: KodeverkConsumerException) {
-          throw e
-        } catch (e: Exception) {
-            val msg = "Forsøkte å konsumere kodeverk. endpoint=[$endpoint]."
-            throw KodeverkConsumerException(msg, e)
+            return objectMapper.readValue<GetKodeverkKoderBetydningerResponse>(responseBody)
+                .let { Kodeverk.fromKoderBetydningerResponse(navn, it) }
         }
     }
 }

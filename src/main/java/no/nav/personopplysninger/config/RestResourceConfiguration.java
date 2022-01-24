@@ -1,5 +1,7 @@
 package no.nav.personopplysninger.config;
 
+import no.nav.personopplysninger.exception.DefaultExceptionMapper;
+import no.nav.personopplysninger.exception.WebApplicationExceptionMapper;
 import no.nav.personopplysninger.features.auth.AuthStatusResource;
 import no.nav.personopplysninger.features.endreopplysninger.EndreOpplysningerResource;
 import no.nav.personopplysninger.features.featuretoggles.FeatureTogglesResource;
@@ -38,13 +40,15 @@ public class RestResourceConfiguration extends ResourceConfig {
         register(InstitusjonResource.class);
         register(AuthStatusResource.class);
         register(MedlResource.class);
+        register(DefaultExceptionMapper.class);
+        register(WebApplicationExceptionMapper.class);
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
     }
 
     public static class OidcResourceFilteringFeature implements DynamicFeature {
         @Override
         public void configure(ResourceInfo resourceInfo, FeatureContext context) {
-            if(WHITELISTED_CLASSES.contains(resourceInfo.getResourceClass()) ||
+            if (WHITELISTED_CLASSES.contains(resourceInfo.getResourceClass()) ||
                     WHITELISTED_PARENT_CLASSES.contains(resourceInfo.getResourceClass().getEnclosingClass())) {
                 return;
             }

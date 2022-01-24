@@ -1,20 +1,5 @@
 package no.nav.personopplysninger.testutils
 
-fun testklasseJson() = """
-            {
-                "dato": "1900-01-01",
-                "tekst": "foo bar"
-            }
-        """.trimIndent()
-
-fun tpsNavnJson() = """
-            {
-                "kortNavn": "AMIZIC VINAYAGUM-MASK",
-                "fornavn": "VINAYAGUM-MASK",
-                "etternavn": "AMIZIC"
-            }
-        """.trimIndent()
-
 fun instJson() = """
             {
                 "organisasjonsnummer": "00974707330",
@@ -53,3 +38,90 @@ fun utenlandskKontonummerJson() = """
             }
         """.trimIndent()
 
+fun pdlJson() = """
+            {
+              "data": {
+                "person": {
+                  "telefonnummer": [
+                    {
+                      "landskode": "+47",
+                      "nummer": "22334455",
+                      "prioritet": 1,
+                      "metadata": {
+                        "opplysningsId": "b2cf4a5c-99e9-46e5-88d9-65d79aee3bb0"
+                      }
+                    }
+                  ],
+                  "kontaktadresse": [
+                    {
+                      "gyldigFraOgMed": "2020-03-24T00:00",
+                      "gyldigTilOgMed": null,
+                      "type": "Innland",
+                      "coAdressenavn": null,
+                      "postboksadresse": null,
+                      "vegadresse": null,
+                      "postadresseIFrittFormat": {
+                        "adresselinje1": "Linjeveien 1",
+                        "adresselinje2": "1234 LINJE",
+                        "adresselinje3": "Norge",
+                        "postnummer": null
+                      },
+                      "utenlandskAdresse": null,
+                      "utenlandskAdresseIFrittFormat": null,
+                      "folkeregistermetadata": {
+                        "ajourholdstidspunkt": null,
+                        "gyldighetstidspunkt": "2020-03-24T00:00",
+                        "opphoerstidspunkt": null,
+                        "kilde": "KILDE_DSF",
+                        "aarsak": null,
+                        "sekvens": null
+                      },
+                      "metadata": {
+                        "opplysningsId": "abcd1234-1234-abcd-1234-123456abcdef",
+                        "master": "Freg",
+                        "endringer": [
+                          {
+                            "type": "OPPRETT",
+                            "registrert": "2020-04-24T13:07:20",
+                            "registrertAv": "Folkeregisteret",
+                            "systemkilde": "FREG",
+                            "kilde": "KILDE_DSF"
+                          }
+                        ],
+                        "historisk": false
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+        """.trimIndent()
+
+fun telefonnummerJson() = """
+            {
+              "landskode": "+47",
+              "nummer": "22334455",
+              "type": "MOBIL"
+            }
+        """.trimIndent()
+
+fun PMKontaktadresseJson() = """
+        {
+          "ident": "12045678900",
+          "endringstype": "OPPRETT",
+          "opplysningstype": "KONTAKTADRESSE",
+          "endringsmelding": {
+            "@type": "KONTAKTADRESSE",
+            "gyldigFraOgMed": "2020-01-01",
+            "gyldigTilOgMed": "2020-07-01",
+            "coAdressenavn": "Grå Banan",
+            "kilde": "test",
+            "adresse": {
+              "@type": "POSTBOKSADRESSE",
+              "postbokseier": "Snill Tester",
+              "postboks": "Postboks 13",
+              "postnummer": "0001"
+            }
+          }
+        }
+        """.trimIndent()

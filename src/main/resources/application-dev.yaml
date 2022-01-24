@@ -13,13 +13,6 @@ server:
   servlet:
     context-path: /person/personopplysninger-api
 
-no.nav.security.oidc:
-  issuers: selvbetjening
-  issuer.selvbetjening:
-     discoveryurl: http://metadata
-     accepted_audience: aud-localhost
-     cookie_name: localhost-idtoken
-
 management:
   metrics:
     export:
@@ -32,4 +25,4 @@ management:
         include: ["info", "health", "prometheus", "metrics"]
 
 logging:
-  config: "classpath:logback-spring.xml"
+  config: "classpath:logback-test.xml"

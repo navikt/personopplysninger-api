@@ -1,4 +1,4 @@
-{
+[ {
   "endringstype": "KORRIGER",
   "ident": 12345678910,
   "innmeldtEndring": "{\"landskode\":\"+47\",\"nummer\":\"123123133\",\"prioritet\":2,\"kilde\":\"BRUKER SELV\"}",  "lineage": "12ab7a9c-6e5c-44da-12d3-0152ba44123",
@@ -32,4 +32,4 @@
         "domene": "TPS"
       }
     ]  }
-}
+} ]

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.consumerutils
+package no.nav.personopplysninger.util
 
 const val CONSUMER_ID = "personbruker-personopplysninger-api"
 const val DEFAULT_APIKEY_USERNAME = "x-nav-apiKey"

@@ -1,0 +1,40 @@
+{
+  "betydninger": {
+    "3014": [
+      {
+        "gyldigFra": "2019-12-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Indre Østfold",
+            "tekst": "Indre Østfold"
+          }
+        }
+      }
+    ],
+    "5434": [
+      {
+        "gyldigFra": "2019-12-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Måsøy",
+            "tekst": "Måsøy"
+          }
+        }
+      }
+    ],
+    "5435": [
+      {
+        "gyldigFra": "2019-12-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Nordkapp",
+            "tekst": "Nordkapp"
+          }
+        }
+      }
+    ]
+  }
+}

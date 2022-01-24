@@ -1,0 +1,88 @@
+{
+  "betydninger": {
+    "LSL": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Maloti Lesotho",
+            "tekst": "Maloti Lesotho"
+          }
+        }
+      }
+    ],
+    "DKK": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Danske kroner",
+            "tekst": "Danske kroner"
+          }
+        }
+      }
+    ],
+    "ZWD": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Zimbabwe",
+            "tekst": "Zimbabwe"
+          }
+        }
+      }
+    ],
+    "CAD": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Kanadiske dollar",
+            "tekst": "Kanadiske dollar"
+          }
+        }
+      }
+    ],
+    "BGN": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Leva Bulgaria",
+            "tekst": "Leva Bulgaria"
+          }
+        }
+      }
+    ],
+    "MMK": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Kyats Myanmar (Burma)",
+            "tekst": "Kyats Myanmar (Burma)"
+          }
+        }
+      }
+    ],
+    "NOK": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Norske kroner",
+            "tekst": "Norske kroner"
+          }
+        }
+      }
+    ]
+  }
+}

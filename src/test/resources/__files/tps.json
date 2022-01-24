@@ -1,0 +1,161 @@
+{
+  "ident": "10108000398",
+  "identtype": {
+    "verdi": "FNR",
+    "kodeverk": "Personidenter"
+  },
+  "kjonn": "M",
+  "alder": 41,
+  "foedselsdato": "1980-10-10",
+  "foedtILand": {
+    "verdi": "NOR",
+    "kodeverk": "Landkoder"
+  },
+  "foedtIKommune": {
+    "verdi": "0301",
+    "kodeverk": "Kommuner"
+  },
+  "datoFraOgMed": "2010-10-21",
+  "kilde": "SKD",
+  "status": {
+    "datoFraOgMed": "1980-10-10",
+    "kilde": "SKD",
+    "kode": {
+      "verdi": "BOSA",
+      "kodeverk": "Personstatuser"
+    }
+  },
+  "navn": {
+    "datoFraOgMed": "2010-10-21",
+    "kilde": "SKD",
+    "forkortetNavn": "TESTFAMILIEN AREMARK",
+    "slektsnavn": "TESTFAMILIEN",
+    "fornavn": "AREMARK",
+    "mellomnavn": "",
+    "slektsnavnUgift": ""
+  },
+  "spraak": {
+    "datoFraOgMed": "2019-11-01",
+    "kilde": "PDL",
+    "kode": {
+      "verdi": "NN",
+      "kodeverk": "Språk"
+    }
+  },
+  "sivilstand": {
+    "datoFraOgMed": "2010-02-01",
+    "kilde": "SKD",
+    "kode": {
+      "verdi": "UGIF",
+      "kodeverk": "Sivilstander"
+    }
+  },
+  "statsborgerskap": {
+    "datoFraOgMed": "2010-02-01",
+    "kilde": "SKD",
+    "kode": {
+      "verdi": "NOR",
+      "kodeverk": "StatsborgerskapFreg"
+    }
+  },
+  "doedsdato": null,
+  "spesiellOpplysning": null,
+  "tiltak": null,
+  "egenansatt": {
+    "datoFraOgMed": null,
+    "kilde": null,
+    "erEgenansatt": false
+  },
+  "telefon": {
+    "landkodePrivat": "+47",
+    "privat": "55553333",
+    "privatDatoRegistrert": "2020-06-04",
+    "privatKilde": "PDL",
+    "landkodeJobb": null,
+    "jobb": null,
+    "jobbDatoRegistrert": null,
+    "jobbKilde": null,
+    "landkodeMobil": "+47",
+    "mobil": "41503560",
+    "mobilDatoRegistrert": "2020-06-04",
+    "mobilKilde": "PDL"
+  },
+  "adresseinfo": {
+    "boadresse": {
+      "datoFraOgMed": "2001-04-04",
+      "kilde": "SKD",
+      "adresse": "RÅDHUSET",
+      "landkode": "NOR",
+      "kommune": "3012",
+      "postnummer": "1798",
+      "bydel": null,
+      "adressetillegg": null,
+      "veiadresse": {
+        "gatekode": "77777",
+        "husnummer": null,
+        "bokstav": null,
+        "bolignummer": "H1"
+      },
+      "matrikkeladresse": {
+        "gaardsnummer": null,
+        "bruksnummer": null,
+        "festenummer": null,
+        "undernummer": null
+      }
+    },
+    "postadresse": {
+      "datoFraOgMed": "2016-03-21",
+      "kilde": "SKD",
+      "adresse1": "NAV IKT v/ Jeremy Elsom",
+      "adresse2": "Postboks 5 St. Olavs plass",
+      "adresse3": "",
+      "postnummer": "0130",
+      "land": "NOR"
+    },
+    "prioritertAdresse": null,
+    "geografiskTilknytning": {
+      "datoFraOgMed": "2001-04-04",
+      "kilde": "SKD",
+      "land": null,
+      "kommune": "3012",
+      "bydel": null
+    },
+    "tilleggsadresse": null,
+    "utenlandskAdresse": null
+  },
+  "antallBarn": 0,
+  "antallLevendeBarnUnder18": 0,
+  "relasjonFinnes": false,
+  "foreldreansvar": {
+    "datoFraOgMed": "2010-02-01",
+    "kilde": "",
+    "kode": {
+      "verdi": "MORA",
+      "kodeverk": "Foreldreansvarstyper"
+    }
+  },
+  "oppholdstillatelse": null,
+  "kontonummer": null,
+  "innvandringUtvandring": null,
+  "vergemaalListe": [],
+  "brukerbehovListe": [
+    {
+      "datoFraOgMed": "2018-11-30",
+      "kilde": "BD06",
+      "kode": {
+        "verdi": "TOHJ",
+        "kodeverk": "TilrettelagtKommunikasjon"
+      }
+    },
+    {
+      "datoFraOgMed": "2018-11-27",
+      "kilde": "BD06",
+      "kode": {
+        "verdi": "KOSK",
+        "kodeverk": "TilrettelagtKommunikasjon"
+      }
+    }
+  ],
+  "utenlandsinfoList": [],
+  "utenlandskBank": null
+}

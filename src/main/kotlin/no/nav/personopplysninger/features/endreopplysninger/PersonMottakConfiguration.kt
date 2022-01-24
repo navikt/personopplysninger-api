@@ -1,8 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.personopplysninger.consumerutils.DEFAULT_APIKEY_USERNAME
-import no.nav.personopplysninger.oppslag.sts.STSConsumer
+import no.nav.personopplysninger.util.DEFAULT_APIKEY_USERNAME
 import no.nav.security.token.support.jaxrs.JwtTokenClientRequestFilter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -24,21 +23,21 @@ open class PersonMottakConfiguration {
     @Bean
     @Throws(URISyntaxException::class)
     open fun personMottakConsumer(
-            @Named("personMottakClient") client: Client,
-            @Value("\${PERSON_MOTTAK_API_URL}") personMottakServiceUri: String,
-            stsConsumer: STSConsumer): PersonMottakConsumer {
-        return PersonMottakConsumer(client, URI(personMottakServiceUri), stsConsumer)
+        @Named("personMottakClient") client: Client,
+        @Value("\${PERSON_MOTTAK_API_URL}") personMottakServiceUri: String
+    ): PersonMottakConsumer {
+        return PersonMottakConsumer(client, URI(personMottakServiceUri))
     }
 
     @Bean
     open fun personMottakClient(clientObjectMapperResolver: ContextResolver<ObjectMapper>): Client {
         return ClientBuilder.newBuilder()
-                .register(JwtTokenClientRequestFilter::class.java)
-                .register(clientObjectMapperResolver)
-                .register(ClientRequestFilter { requestContext ->
-                    requestContext.headers
-                            .putSingle(DEFAULT_APIKEY_USERNAME, personMottakApiKeyPassword)
-                })
-                .build()
+            .register(JwtTokenClientRequestFilter::class.java)
+            .register(clientObjectMapperResolver)
+            .register(ClientRequestFilter { requestContext ->
+                requestContext.headers
+                    .putSingle(DEFAULT_APIKEY_USERNAME, personMottakApiKeyPassword)
+            })
+            .build()
     }
 }

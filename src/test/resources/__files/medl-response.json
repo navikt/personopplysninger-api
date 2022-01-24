@@ -1,0 +1,43 @@
+{
+  "perioder": [
+    {
+      "fraOgMed": "2012-01-01",
+      "hjemmel": "hjemmel",
+      "kilde": "kilde",
+      "lovvalgsland": "lovvalgsland",
+      "medlem": true,
+      "studieinformasjon": {
+        "statsborgerland": "statsborgerland",
+        "studieland": "studieland"
+      },
+      "tilOgMed": "2012-01-01",
+      "trygdedekning": "trygdedekning"
+    },
+    {
+      "fraOgMed": "2012-02-02",
+      "hjemmel": "hjemmel",
+      "kilde": "kilde",
+      "lovvalgsland": "lovvalgsland",
+      "medlem": true,
+      "studieinformasjon": {
+        "statsborgerland": "statsborgerland",
+        "studieland": "studieland"
+      },
+      "tilOgMed": "2012-02-02",
+      "trygdedekning": "trygdedekning"
+    },
+    {
+      "fraOgMed": "2012-03-03",
+      "hjemmel": "hjemmel",
+      "kilde": "kilde",
+      "lovvalgsland": "lovvalgsland",
+      "medlem": true,
+      "studieinformasjon": {
+        "statsborgerland": "statsborgerland",
+        "studieland": "studieland"
+      },
+      "tilOgMed": "2012-03-03",
+      "trygdedekning": "trygdedekning"
+    }
+  ]
+}
