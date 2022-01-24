@@ -18,6 +18,14 @@ public class PdlStubs {
                         .withHeader(HttpHeaders.CONTENT_TYPE, "application/json")));
     }
 
+    public static void stubPdl200OppholdAnnetSted() {
+        stubFor(post(urlEqualTo("/pdl/graphql"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withBodyFile("pdl_opphold_annet_sted.json")
+                        .withHeader(HttpHeaders.CONTENT_TYPE, "application/json")));
+    }
+
     public static void stubPdl500() {
         stubFor(post(urlEqualTo("/pdl/graphql"))
                 .willReturn(aResponse()

@@ -5,20 +5,29 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.Kontak
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.AdresseMappingType.*
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontaktadresse
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 object KontaktadresseTransformer {
 
-    fun toOutbound(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse {
-        return Kontaktadresse(
-            gyldigFraOgMed = inbound.gyldigFraOgMed,
-            gyldigTilOgMed = inbound.gyldigTilOgMed,
-            coAdressenavn = inbound.coAdressenavn,
-            kilde = inbound.metadata.master.lowercase(),
-            adresse = transformAdresse(inbound, kodeverk)
-        )
+    private val logger: Logger = LoggerFactory.getLogger(KontaktadresseTransformer::class.java)
+
+    fun toOutbound(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse? {
+        val adresse = transformAdresse(inbound, kodeverk)
+        return if (adresse != null) {
+            Kontaktadresse(
+                gyldigFraOgMed = inbound.gyldigFraOgMed,
+                gyldigTilOgMed = inbound.gyldigTilOgMed,
+                coAdressenavn = inbound.coAdressenavn,
+                kilde = inbound.metadata.master.lowercase(),
+                adresse = adresse
+            )
+        } else {
+            null
+        }
     }
 
-    private fun transformAdresse(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Adresse {
+    private fun transformAdresse(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Adresse? {
         return when (inbound.mappingType) {
             INNLAND_VEGADRESSE -> transformVegadresse(
                 inbound.vegadresse!!,
@@ -38,7 +47,10 @@ object KontaktadresseTransformer {
                 inbound.utenlandskAdresseIFrittFormat!!,
                 kodeverk.kontaktadresseLand
             )
-            else -> throw IllegalStateException("Prøvde å transformere ugyldig PdlKontaktadresse-objekt.")
+            else -> {
+                logger.warn("Forsøkte å mappe oppholdsadresse på uventet format, null returnert. Adressetype: ${inbound.mappingType}")
+                null
+            }
         }
     }
 }

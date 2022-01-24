@@ -5,20 +5,29 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.DeltBo
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.AdresseMappingType.*
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlDeltBosted
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 object DeltBostedTransformer {
 
-    fun toOutbound(inbound: PdlDeltBosted, kodeverk: PersonaliaKodeverk): DeltBosted {
-        return DeltBosted(
-            startdatoForKontrakt = inbound.startdatoForKontrakt,
-            sluttdatoForKontrakt = inbound.sluttdatoForKontrakt,
-            coAdressenavn = inbound.coAdressenavn,
-            kilde = inbound.metadata.master.lowercase(),
-            adresse = transformAdresse(inbound, kodeverk)
-        )
+    private val logger: Logger = LoggerFactory.getLogger(DeltBostedTransformer::class.java)
+
+    fun toOutbound(inbound: PdlDeltBosted, kodeverk: PersonaliaKodeverk): DeltBosted? {
+        val adresse = transformAdresse(inbound, kodeverk)
+        return if (adresse != null) {
+            DeltBosted(
+                startdatoForKontrakt = inbound.startdatoForKontrakt,
+                sluttdatoForKontrakt = inbound.sluttdatoForKontrakt,
+                coAdressenavn = inbound.coAdressenavn,
+                kilde = inbound.metadata.master.lowercase(),
+                adresse = adresse
+            )
+        } else {
+            null
+        }
     }
 
-    private fun transformAdresse(inbound: PdlDeltBosted, kodeverk: PersonaliaKodeverk): Adresse {
+    private fun transformAdresse(inbound: PdlDeltBosted, kodeverk: PersonaliaKodeverk): Adresse? {
         return when (inbound.mappingType) {
             INNLAND_VEGADRESSE -> transformVegadresse(
                 inbound.vegadresse!!,
@@ -32,7 +41,10 @@ object DeltBostedTransformer {
             )
             UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse!!, kodeverk.deltBostedLand)
             UKJENT_BOSTED -> transformUkjentBosted(kodeverk.deltBostedKommune)
-            else -> throw IllegalStateException("Prøvde å transformere ugyldig PdlDeltBosted-objekt.")
+            else -> {
+                logger.warn("Forsøkte å mappe deltbosted på uventet format, null returnert. Adressetype: ${inbound.mappingType}")
+                null
+            }
         }
     }
 

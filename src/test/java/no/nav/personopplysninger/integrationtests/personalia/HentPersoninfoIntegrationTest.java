@@ -11,8 +11,7 @@ import org.springframework.http.ResponseEntity;
 import static no.nav.personopplysninger.stubs.KodeverkStubs.*;
 import static no.nav.personopplysninger.stubs.Norg2Stubs.stubNorg2_200;
 import static no.nav.personopplysninger.stubs.Norg2Stubs.stubNorg2_500;
-import static no.nav.personopplysninger.stubs.PdlStubs.stubPdl200;
-import static no.nav.personopplysninger.stubs.PdlStubs.stubPdl500;
+import static no.nav.personopplysninger.stubs.PdlStubs.*;
 import static no.nav.personopplysninger.stubs.StsStubs.stubSts200;
 import static no.nav.personopplysninger.stubs.StsStubs.stubSts500;
 import static no.nav.personopplysninger.stubs.TpsStubs.stubTps200;
@@ -40,7 +39,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi200MedGyldigToken() {
+    void skalGi200MedGyldigToken() {
         ResponseEntity<PersonaliaOgAdresser> response = restTemplate.exchange(
                 "/personalia",
                 HttpMethod.GET,
@@ -51,20 +50,33 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi200MedFeilIKallMotNorg2() {
+    void skalGi200MedFeilIKallMotNorg2() {
         stubNorg2_500();
 
-        ResponseEntity<String> response = restTemplate.exchange(
+        ResponseEntity<PersonaliaOgAdresser> response = restTemplate.exchange(
                 "/personalia",
                 HttpMethod.GET,
                 createEntityWithAuthHeader(IDENT),
-                String.class);
+                PersonaliaOgAdresser.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
     }
 
     @Test
-    void personaliaSkalGi401UtenGyldigToken() {
+    void skalGi200MedOppholdAnnetSted() {
+        stubPdl200OppholdAnnetSted();
+
+        ResponseEntity<PersonaliaOgAdresser> response = restTemplate.exchange(
+                "/personalia",
+                HttpMethod.GET,
+                createEntityWithAuthHeader(IDENT),
+                PersonaliaOgAdresser.class);
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
+    }
+
+    @Test
+    void skalGi401UtenGyldigToken() {
         ResponseEntity<String> response = restTemplate.exchange(
                 "/personalia",
                 HttpMethod.GET,
@@ -75,7 +87,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi500MedFeilIKallMotSts() {
+    void skalGi500MedFeilIKallMotSts() {
         stubSts500();
 
         ResponseEntity<String> response = restTemplate.exchange(
@@ -88,7 +100,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi500MedFeilIKallMotPdl() {
+    void skalGi500MedFeilIKallMotPdl() {
         stubPdl500();
 
         ResponseEntity<String> response = restTemplate.exchange(
@@ -101,7 +113,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi500MedFeilIKallMotTps() {
+    void skalGi500MedFeilIKallMotTps() {
         stubTps500();
 
         ResponseEntity<String> response = restTemplate.exchange(
@@ -114,7 +126,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi500MedFeilIKallMotKodeverk() {
+    void skalGi500MedFeilIKallMotKodeverk() {
         stubKodeverkKommuner500();
 
         ResponseEntity<String> response = restTemplate.exchange(

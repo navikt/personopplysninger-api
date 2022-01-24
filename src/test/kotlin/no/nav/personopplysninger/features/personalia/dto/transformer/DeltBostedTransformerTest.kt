@@ -11,8 +11,8 @@ import no.nav.personopplysninger.testutils.assertMatrikkeladresseEquals
 import no.nav.personopplysninger.testutils.assertUkjentbostedEquals
 import no.nav.personopplysninger.testutils.assertUtenlandskAdresseEquals
 import no.nav.personopplysninger.testutils.assertVegadresseEquals
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -25,7 +25,7 @@ class DeltBostedTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = DeltBostedTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = DeltBostedTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.startdatoForKontrakt, inbound.startdatoForKontrakt)
         assertEquals(actual.sluttdatoForKontrakt, inbound.sluttdatoForKontrakt)
@@ -49,7 +49,7 @@ class DeltBostedTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = DeltBostedTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = DeltBostedTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.startdatoForKontrakt, inbound.startdatoForKontrakt)
         assertEquals(actual.sluttdatoForKontrakt, inbound.sluttdatoForKontrakt)
@@ -74,7 +74,7 @@ class DeltBostedTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = DeltBostedTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = DeltBostedTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.startdatoForKontrakt, inbound.startdatoForKontrakt)
         assertEquals(actual.sluttdatoForKontrakt, inbound.sluttdatoForKontrakt)
@@ -97,7 +97,7 @@ class DeltBostedTransformerTest {
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        val actual = DeltBostedTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = DeltBostedTransformer.toOutbound(inbound, personaliaKodeverk)!!
 
         assertEquals(actual.startdatoForKontrakt, inbound.startdatoForKontrakt)
         assertEquals(actual.sluttdatoForKontrakt, inbound.sluttdatoForKontrakt)
@@ -111,13 +111,13 @@ class DeltBostedTransformerTest {
     }
 
     @Test
-    fun unsupportedAdresseTypeThrowsException() {
+    fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createDummyDeltBosted(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
 
         val personaliaKodeverk = createDummyPersonaliaKodeverk()
 
-        assertThrows(IllegalStateException::class.java) {
-            DeltBostedTransformer.toOutbound(inbound, personaliaKodeverk)
-        }
+        val actual = DeltBostedTransformer.toOutbound(inbound, personaliaKodeverk)
+
+        Assertions.assertNull(actual)
     }
 }

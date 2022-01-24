@@ -21,7 +21,7 @@ object AdresseinfoTransformer {
                     kodeverk
                 )
             },
-            kontaktadresser = kontaktadresse!!.map { (KontaktadresseTransformer.toOutbound(it, kodeverk)) },
+            kontaktadresser = kontaktadresse!!.mapNotNull { (KontaktadresseTransformer.toOutbound(it, kodeverk)) },
             bostedsadresse = bostedsadresse?.let { BostedsadresseTransformer.toOutbound(it, kodeverk) },
             oppholdsadresse = oppholdsadresse?.let { OppholdsadresseTransformer.toOutbound(it, kodeverk) },
             deltBosted = deltBosted?.let { DeltBostedTransformer.toOutbound(it, kodeverk) },
