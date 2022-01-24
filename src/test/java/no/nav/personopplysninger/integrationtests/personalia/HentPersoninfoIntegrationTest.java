@@ -39,7 +39,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi200MedGyldigToken() {
+    void skalGi200MedGyldigToken() {
         ResponseEntity<PersonaliaOgAdresser> response = restTemplate.exchange(
                 "/personalia",
                 HttpMethod.GET,
@@ -50,7 +50,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi200MedFeilIKallMotNorg2() {
+    void skalGi200MedFeilIKallMotNorg2() {
         stubNorg2_500();
 
         ResponseEntity<PersonaliaOgAdresser> response = restTemplate.exchange(
@@ -76,7 +76,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi401UtenGyldigToken() {
+    void skalGi401UtenGyldigToken() {
         ResponseEntity<String> response = restTemplate.exchange(
                 "/personalia",
                 HttpMethod.GET,
@@ -87,7 +87,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi500MedFeilIKallMotSts() {
+    void skalGi500MedFeilIKallMotSts() {
         stubSts500();
 
         ResponseEntity<String> response = restTemplate.exchange(
@@ -100,7 +100,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi500MedFeilIKallMotPdl() {
+    void skalGi500MedFeilIKallMotPdl() {
         stubPdl500();
 
         ResponseEntity<String> response = restTemplate.exchange(
@@ -113,7 +113,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi500MedFeilIKallMotTps() {
+    void skalGi500MedFeilIKallMotTps() {
         stubTps500();
 
         ResponseEntity<String> response = restTemplate.exchange(
@@ -126,7 +126,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void personaliaSkalGi500MedFeilIKallMotKodeverk() {
+    void skalGi500MedFeilIKallMotKodeverk() {
         stubKodeverkKommuner500();
 
         ResponseEntity<String> response = restTemplate.exchange(
