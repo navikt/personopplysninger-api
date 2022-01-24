@@ -8,11 +8,11 @@ class ByApplicationStrategy : Strategy {
     override fun getName(): String = "byApplication"
 
     override fun isEnabled(parameters: Map<String, String>): Boolean {
-            return getThisAppName().let { appName ->
-                parameters.getActiveAppNames().any { activeAppName ->
-                    activeAppName == appName
-                }
+        return getThisAppName().let { appName ->
+            parameters.getActiveAppNames().any { activeAppName ->
+                activeAppName == appName
             }
+        }
     }
 
     private fun getThisAppName(): String? {
@@ -21,7 +21,7 @@ class ByApplicationStrategy : Strategy {
 
     private fun Map<String, String>.getActiveAppNames(): List<String> {
         return get("app")
-                ?.split(",")
-                ?: emptyList()
+            ?.split(",")
+            ?: emptyList()
     }
 }
