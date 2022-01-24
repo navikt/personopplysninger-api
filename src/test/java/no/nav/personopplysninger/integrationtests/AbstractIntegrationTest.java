@@ -59,7 +59,7 @@ public abstract class AbstractIntegrationTest {
 
     // TokenX needs to run on its own wiremock server, as it is used in application config which is run before
     // the autoconfigured wiremock server is started.
-    static WireMockServer tokenxMockServer = new WireMockServer(findAvailableTcpPort());
+    static final WireMockServer tokenxMockServer = new WireMockServer(findAvailableTcpPort());
 
     @BeforeAll
     static void mockConfig() throws NoSuchAlgorithmException {

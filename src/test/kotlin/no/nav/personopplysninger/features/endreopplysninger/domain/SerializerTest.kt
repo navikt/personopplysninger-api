@@ -24,7 +24,7 @@ class SerializerTest {
     @Test
     fun testSerializationTelefonnummer() {
         val json: String = readFile("endring-telefonnummer.json")
-        val endringList: List<EndringTelefon> = objectMapper.readValue(json);
+        val endringList: List<EndringTelefon> = objectMapper.readValue(json)
         val endring = endringList[0]
         assertEquals("KORRIGER", endring.endringstype)
         assertEquals("BRUKER SELV", endring.innmeldtEndring?.kilde)
