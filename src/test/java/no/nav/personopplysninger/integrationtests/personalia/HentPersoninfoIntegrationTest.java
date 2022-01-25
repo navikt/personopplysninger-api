@@ -94,7 +94,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
 
         assert adresser != null;
         assertThat(adresser.getKontaktadresser().size(), is(2));
-        assertThat(adresser.getOppholdsadresser().size(), is(1));
+        assertThat(adresser.getOppholdsadresser().size(), is(2));
     }
 
     @Test

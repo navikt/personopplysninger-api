@@ -14,7 +14,7 @@ object OppholdsadresseTransformer {
 
     fun toOutbound(inbound: PdlOppholdsadresse, kodeverk: AdresseKodeverk): Oppholdsadresse? {
         val adresse = transformAdresse(inbound, kodeverk)
-        return if (adresse != null) {
+        return if (adresse != null || inbound.oppholdAnnetSted != null) {
             Oppholdsadresse(
                 oppholdAnnetSted = inbound.oppholdAnnetSted,
                 gyldigFraOgMed = inbound.gyldigFraOgMed,
@@ -42,7 +42,10 @@ object OppholdsadresseTransformer {
             )
             UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse!!, kodeverk.land)
             else -> {
-                logger.warn("Forsøkte å mappe oppholdsadresse på uventet format, null returnert. Adressetype: ${inbound.mappingType}")
+                // Adresse kan være null dersom oppholdAnnetSted er satt. Da trenger vi ikke logge warning.
+                if (inbound.oppholdAnnetSted == null) {
+                    logger.warn("Forsøkte å mappe oppholdsadresse på uventet format, null returnert. Adressetype: ${inbound.mappingType}")
+                }
                 null
             }
         }

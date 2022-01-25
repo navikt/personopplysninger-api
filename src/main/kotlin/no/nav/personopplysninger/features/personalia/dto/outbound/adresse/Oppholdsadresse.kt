@@ -8,5 +8,5 @@ data class Oppholdsadresse(
     val gyldigTilOgMed: LocalDateTime?,
     val coAdressenavn: String?,
     val kilde: String?,
-    val adresse: Adresse
+    val adresse: Adresse?
 )
