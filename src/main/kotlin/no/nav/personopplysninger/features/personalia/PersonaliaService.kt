@@ -7,6 +7,7 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAd
 import no.nav.personopplysninger.features.personalia.dto.transformer.GeografiskEnhetKontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.KontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
+import no.nav.personopplysninger.features.personalia.kodeverk.AdresseKodeverk
 import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.pdl.PdlService
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlData
@@ -18,11 +19,11 @@ import org.springframework.stereotype.Service
 
 @Service
 class PersonaliaService @Autowired constructor(
-        private var personConsumer: PersonConsumer,
-        private var kontaktinfoConsumer: KontaktinfoConsumer,
-        private var kodeverkConsumer: KodeverkConsumer,
-        private var norg2Consumer: Norg2Consumer,
-        private var pdlService: PdlService
+    private var personConsumer: PersonConsumer,
+    private var kontaktinfoConsumer: KontaktinfoConsumer,
+    private var kodeverkConsumer: KodeverkConsumer,
+    private var norg2Consumer: Norg2Consumer,
+    private var pdlService: PdlService
 ) {
 
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
@@ -38,7 +39,7 @@ class PersonaliaService @Autowired constructor(
         val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
         if (tilknytning != null) {
             val enhet = norg2Consumer.hentEnhetDersomGyldig(tilknytning)
-            if(enhet != null){
+            if (enhet != null) {
                 personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhet.navn
                 personaliaOgAdresser.enhetKontaktInformasjon.enhet = hentEnhetKontaktinformasjon(enhet.enhetNr)
             }
@@ -50,30 +51,45 @@ class PersonaliaService @Autowired constructor(
         val pdlPerson = inboundPdl.person!!
         val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning!!
 
-        val kontaktadresse = pdlPerson.kontaktadresse.firstOrNull()
+        val kontaktadresse = pdlPerson.kontaktadresse
         val bostedsadresse = pdlPerson.bostedsadresse.firstOrNull()
         val deltBosted = pdlPerson.deltBosted.firstOrNull()
-        val oppholdsadresse = pdlPerson.oppholdsadresse.firstOrNull()
+        val oppholdsadresse = pdlPerson.oppholdsadresse
 
         return PersonaliaKodeverk().apply {
             foedekommuneterm = getKommuneKodeverksTerm(pdlPerson.foedsel.firstOrNull()?.foedekommune)
             foedelandterm = kodeverkConsumer.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
             gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning.gtLand)
-            statsborgerskapterm = kodeverkConsumer.hentStatsborgerskap().term(pdlPerson.statsborgerskap.firstOrNull()?.land)
+            statsborgerskapterm =
+                kodeverkConsumer.hentStatsborgerskap().term(pdlPerson.statsborgerskap.firstOrNull()?.land)
             utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inbound.utenlandskBank?.land?.verdi)
             utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inbound.utenlandskBank?.valuta?.verdi)
-            kontaktadressePostSted = kodeverkConsumer.hentPostnummer().term(kontaktadresse?.postnummer)
-            kontaktadresseLand = kodeverkConsumer.hentLandKoder().term(kontaktadresse?.landkode)
-            kontaktadresseKommune = getKommuneKodeverksTerm(kontaktadresse?.kommunenummer)
-            bostedsadressePostSted = kodeverkConsumer.hentPostnummer().term(bostedsadresse?.postnummer)
-            bostedsadresseLand = kodeverkConsumer.hentLandKoder().term(bostedsadresse?.landkode)
-            bostedsadresseKommune = getKommuneKodeverksTerm(bostedsadresse?.kommunenummer)
-            deltBostedPostSted = kodeverkConsumer.hentPostnummer().term(deltBosted?.postnummer)
-            deltBostedLand = kodeverkConsumer.hentLandKoder().term(deltBosted?.landkode)
-            deltBostedKommune = getKommuneKodeverksTerm(deltBosted?.kommunenummer)
-            oppholdsadressePostSted = kodeverkConsumer.hentPostnummer().term(oppholdsadresse?.postnummer)
-            oppholdsadresseLand = kodeverkConsumer.hentLandKoder().term(oppholdsadresse?.landkode)
-            oppholdsadresseKommune = getKommuneKodeverksTerm(oppholdsadresse?.kommunenummer)
+            kontaktadresseKodeverk = kontaktadresse.map { adresse ->
+                hentAdresseKodeverk(
+                    adresse.postnummer,
+                    adresse.landkode,
+                    adresse.kommunenummer
+                )
+            }
+            bostedsadresseKodeverk =
+                hentAdresseKodeverk(bostedsadresse?.postnummer, bostedsadresse?.landkode, bostedsadresse?.kommunenummer)
+            deltBostedKodeverk =
+                hentAdresseKodeverk(deltBosted?.postnummer, deltBosted?.landkode, deltBosted?.kommunenummer)
+            oppholdsadresseKodeverk = oppholdsadresse.map { adresse ->
+                hentAdresseKodeverk(
+                    adresse.postnummer,
+                    adresse.landkode,
+                    adresse.kommunenummer
+                )
+            }
+        }
+    }
+
+    private fun hentAdresseKodeverk(postnummer: String?, landkode: String?, kommunenummer: String?): AdresseKodeverk {
+        return AdresseKodeverk().apply {
+            poststed = kodeverkConsumer.hentPostnummer().term(postnummer)
+            land = kodeverkConsumer.hentLandKoder().term(landkode)
+            kommune = getKommuneKodeverksTerm(kommunenummer)
         }
     }
 

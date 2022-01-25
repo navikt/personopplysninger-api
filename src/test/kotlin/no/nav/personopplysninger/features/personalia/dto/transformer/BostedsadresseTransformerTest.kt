@@ -5,8 +5,8 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.Matrik
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.Ukjentbosted
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.UtenlandskAdresse
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.Vegadresse
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyAdresseKodeverk
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyBostedsadresse
-import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonaliaKodeverk
 import no.nav.personopplysninger.testutils.assertMatrikkeladresseEquals
 import no.nav.personopplysninger.testutils.assertUkjentbostedEquals
 import no.nav.personopplysninger.testutils.assertUtenlandskAdresseEquals
@@ -19,13 +19,12 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BostedsadresseTransformerTest {
 
+    val adresseKodeverk = createDummyAdresseKodeverk()
+
     @Test
     fun canTransformVegdresse() {
         val inbound = createDummyBostedsadresse(VEGADRESSE)
-
-        val personaliaKodeverk = createDummyPersonaliaKodeverk()
-
-        val actual = BostedsadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
+        val actual = BostedsadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
 
         assertEquals(actual.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
@@ -38,8 +37,8 @@ class BostedsadresseTransformerTest {
 
         assertVegadresseEquals(
             vegadresse,
-            personaliaKodeverk.bostedsadressePostSted!!,
-            personaliaKodeverk.bostedsadresseKommune!!,
+            adresseKodeverk.poststed!!,
+            adresseKodeverk.kommune!!,
             inbound.vegadresse!!
         )
     }
@@ -47,10 +46,7 @@ class BostedsadresseTransformerTest {
     @Test
     fun canTransformMatrikkeladresse() {
         val inbound = createDummyBostedsadresse(MATRIKKELADRESSE)
-
-        val personaliaKodeverk = createDummyPersonaliaKodeverk()
-
-        val actual = BostedsadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
+        val actual = BostedsadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
 
         assertEquals(actual.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
@@ -63,8 +59,8 @@ class BostedsadresseTransformerTest {
 
         assertMatrikkeladresseEquals(
             matrikkeladresse,
-            personaliaKodeverk.bostedsadressePostSted!!,
-            personaliaKodeverk.bostedsadresseKommune!!,
+            adresseKodeverk.poststed!!,
+            adresseKodeverk.kommune!!,
             inbound.matrikkeladresse!!
         )
 
@@ -73,10 +69,7 @@ class BostedsadresseTransformerTest {
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createDummyBostedsadresse(UTENLANDSK_ADRESSE)
-
-        val personaliaKodeverk = createDummyPersonaliaKodeverk()
-
-        val actual = BostedsadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
+        val actual = BostedsadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
 
         assertEquals(actual.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
@@ -89,7 +82,7 @@ class BostedsadresseTransformerTest {
 
         assertUtenlandskAdresseEquals(
             utenlandskAdresse,
-            personaliaKodeverk.bostedsadresseLand!!,
+            adresseKodeverk.land!!,
             inbound.utenlandskAdresse!!
         )
     }
@@ -97,10 +90,7 @@ class BostedsadresseTransformerTest {
     @Test
     fun canTransformUkjentbosted() {
         val inbound = createDummyBostedsadresse(UKJENTBOSTED)
-
-        val personaliaKodeverk = createDummyPersonaliaKodeverk()
-
-        val actual = BostedsadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
+        val actual = BostedsadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
 
         assertEquals(actual.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
@@ -111,16 +101,13 @@ class BostedsadresseTransformerTest {
 
         val ukjentbosted = actual.adresse as Ukjentbosted
 
-        assertUkjentbostedEquals(ukjentbosted, personaliaKodeverk.bostedsadresseKommune!!)
+        assertUkjentbostedEquals(ukjentbosted, adresseKodeverk.kommune!!)
     }
 
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createDummyBostedsadresse(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-
-        val personaliaKodeverk = createDummyPersonaliaKodeverk()
-
-        val actual = BostedsadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = BostedsadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
         Assertions.assertNull(actual)
     }

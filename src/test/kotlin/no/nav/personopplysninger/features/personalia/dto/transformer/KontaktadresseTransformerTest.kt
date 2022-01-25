@@ -2,8 +2,8 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.*
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.*
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyAdresseKodeverk
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyKontaktadresse
-import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonaliaKodeverk
 import no.nav.personopplysninger.testutils.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
@@ -13,13 +13,12 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class KontaktadresseTransformerTest {
 
+    val adresseKodeverk = createDummyAdresseKodeverk()
+
     @Test
     fun canTransformVegdresse() {
         val inbound = createDummyKontaktadresse(VEGADRESSE)
-
-        val personaliaKodeverk = createDummyPersonaliaKodeverk()
-
-        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
+        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
 
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -31,8 +30,8 @@ class KontaktadresseTransformerTest {
 
         assertVegadresseEquals(
             vegadresse,
-            personaliaKodeverk.kontaktadressePostSted!!,
-            personaliaKodeverk.kontaktadresseKommune!!,
+            adresseKodeverk.poststed!!,
+            adresseKodeverk.kommune!!,
             inbound.vegadresse!!
         )
     }
@@ -40,10 +39,7 @@ class KontaktadresseTransformerTest {
     @Test
     fun canTransformPostadresseIFrittFormat() {
         val inbound = createDummyKontaktadresse(POSTADRESSE_I_FRITT_FORMAT)
-
-        val personaliaKodeverk = createDummyPersonaliaKodeverk()
-
-        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
+        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
 
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -55,7 +51,7 @@ class KontaktadresseTransformerTest {
 
         assertPostAdresseIFrittFormatEquals(
             postAdresseIFrittFormat,
-            personaliaKodeverk.kontaktadressePostSted!!,
+            adresseKodeverk.poststed!!,
             inbound.postadresseIFrittFormat!!
         )
     }
@@ -63,10 +59,7 @@ class KontaktadresseTransformerTest {
     @Test
     fun canTransformPdlPostboksadresse() {
         val inbound = createDummyKontaktadresse(POSTBOKSADRESSE)
-
-        val personaliaKodeverk = createDummyPersonaliaKodeverk()
-
-        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
+        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
 
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -78,7 +71,7 @@ class KontaktadresseTransformerTest {
 
         assertPostboksadresseEquals(
             postboksadresse,
-            personaliaKodeverk.kontaktadressePostSted!!,
+            adresseKodeverk.poststed!!,
             inbound.postboksadresse!!
         )
     }
@@ -86,10 +79,7 @@ class KontaktadresseTransformerTest {
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createDummyKontaktadresse(UTENLANDSK_ADRESSE)
-
-        val personaliaKodeverk = createDummyPersonaliaKodeverk()
-
-        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
+        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
 
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -101,7 +91,7 @@ class KontaktadresseTransformerTest {
 
         assertUtenlandskAdresseEquals(
             utenlandskAdresse,
-            personaliaKodeverk.kontaktadresseLand!!,
+            adresseKodeverk.land!!,
             inbound.utenlandskAdresse!!
         )
     }
@@ -110,10 +100,7 @@ class KontaktadresseTransformerTest {
     fun canTransformUtenlandskAdresseIFrittFormat() {
         val inbound =
             createDummyKontaktadresse(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-
-        val personaliaKodeverk = createDummyPersonaliaKodeverk()
-
-        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)!!
+        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
 
         assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -125,7 +112,7 @@ class KontaktadresseTransformerTest {
 
         assertUtenlandskAdresseIFrittFormatEquals(
             utenlandskAdresseIFrittFormat,
-            personaliaKodeverk.kontaktadresseLand!!,
+            adresseKodeverk.land!!,
             inbound.utenlandskAdresseIFrittFormat!!
         )
     }
@@ -133,10 +120,7 @@ class KontaktadresseTransformerTest {
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createDummyKontaktadresse(UKJENTBOSTED)
-
-        val personaliaKodeverk = createDummyPersonaliaKodeverk()
-
-        val actual = KontaktadresseTransformer.toOutbound(inbound, personaliaKodeverk)
+        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
         assertNull(actual)
     }
