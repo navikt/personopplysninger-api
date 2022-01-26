@@ -8,17 +8,16 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static no.nav.personopplysninger.stubs.DkifStubs.stubDkif200;
-import static no.nav.personopplysninger.stubs.DkifStubs.stubDkif500;
+import static no.nav.personopplysninger.stubs.DigdirKrrStubs.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 
 class HentKontaktinformasjonIntegrationTest extends AbstractIntegrationTest {
 
     @BeforeEach
     void setup() {
-        stubDkif200();
+        stubDigdirKrr200();
     }
 
     @Test
@@ -33,6 +32,28 @@ class HentKontaktinformasjonIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
+    void kontaktinformasjonSkalGiTomResponsMedClientErrorIKallMotDigdir() {
+        stubDigdirKrr404();
+
+        ResponseEntity<Kontaktinformasjon> response = restTemplate.exchange(
+                "/kontaktinformasjon",
+                HttpMethod.GET,
+                createEntityWithAuthHeader(IDENT),
+                Kontaktinformasjon.class);
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
+
+        Kontaktinformasjon body = response.getBody();
+        assert body != null;
+
+        assertThat(body.getEpostadresse(), is(emptyOrNullString()));
+        assertThat(body.getKanVarsles(), is(nullValue()));
+        assertThat(body.getMobiltelefonnummer(), is(emptyOrNullString()));
+        assertThat(body.getReservert(), is(nullValue()));
+        assertThat(body.getSpraak(), is(emptyOrNullString()));
+    }
+
+    @Test
     void kontaktinformasjonSkalGiSkalGi401UtenGyldigToken() {
         ResponseEntity<String> response = restTemplate.exchange(
                 "/kontaktinformasjon",
@@ -44,8 +65,8 @@ class HentKontaktinformasjonIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void kontaktinformasjonSkalGi500MedFeilIKallMotDkif() {
-        stubDkif500();
+    void kontaktinformasjonSkalGi500MedServerErrorIKallMotDigdir() {
+        stubDigdirKrr500();
 
         ResponseEntity<String> response = restTemplate.exchange(
                 "/kontaktinformasjon",

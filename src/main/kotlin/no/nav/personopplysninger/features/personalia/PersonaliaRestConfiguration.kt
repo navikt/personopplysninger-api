@@ -2,6 +2,7 @@ package no.nav.personopplysninger.features.personalia
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.features.personalia.pdl.PdlConsumer
+import no.nav.personopplysninger.features.tokendings.TokenDingsService
 import no.nav.personopplysninger.oppslag.sts.STSConsumer
 import no.nav.personopplysninger.util.DEFAULT_APIKEY_USERNAME
 import no.nav.security.token.support.jaxrs.JwtTokenClientRequestFilter
@@ -22,11 +23,11 @@ open class PersonaliaRestConfiguration {
     @Value("\${PERSONOPPLYSNINGER_API_TPS_PROXY_API_V1_INNSYN_APIKEY_PASSWORD}")
     private val tpsProxyApiKeyPassword: String? = null
 
-    @Value("\${PERSONOPPLYSNINGER_API_DKIF_API_APIKEY_PASSWORD}")
-    private val dkifApiKeyPassword: String? = null
-
     @Value("\${PERSONOPPLYSNINGER_API_PDL_API_APIKEY_PASSWORD}")
     private val pdlApiKeyPassword: String? = null
+
+    @Value("\${DIGDIR_KRR_PROXY_CONSUMER_TARGET_APP}")
+    private val targetApp: String? = null
 
     @Bean
     @Throws(URISyntaxException::class)
@@ -39,9 +40,10 @@ open class PersonaliaRestConfiguration {
     @Bean
     @Throws(URISyntaxException::class)
     open fun kontaktinformasjonConsumer(
-            @Named("dkifClient") client: Client,
-            @Value("\${DKIF_API_URL}") kontaktinfoServiceUri: String): KontaktinfoConsumer {
-        return KontaktinfoConsumer(client, URI(kontaktinfoServiceUri))
+        @Named("digdirKrrClient") client: Client,
+        @Value("\${DIGDIR_KRR_PROXY_URL}") kontaktinfoServiceUri: String,
+        tokenDingsService: TokenDingsService): KontaktinfoConsumer {
+        return KontaktinfoConsumer(client, URI(kontaktinfoServiceUri), tokenDingsService, targetApp)
     }
 
     @Bean
@@ -73,13 +75,8 @@ open class PersonaliaRestConfiguration {
     }
 
     @Bean
-    open fun dkifClient(clientObjectMapperResolver: ContextResolver<ObjectMapper>): Client {
-        return clientBuilder(clientObjectMapperResolver)
-                .register(ClientRequestFilter { requestContext ->
-                    requestContext.headers
-                            .putSingle(DEFAULT_APIKEY_USERNAME, dkifApiKeyPassword)
-                })
-                .build()
+    open fun digdirKrrClient(clientObjectMapperResolver: ContextResolver<ObjectMapper>): Client {
+        return clientBuilder(clientObjectMapperResolver).build()
     }
 
     private fun clientBuilder(clientObjectMapperResolver: ContextResolver<ObjectMapper>): ClientBuilder {

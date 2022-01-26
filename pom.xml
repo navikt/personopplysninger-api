@@ -62,26 +62,6 @@
                             </configOptions>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>dkif-swagger</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/dkif/kontaktinformasjon-swagger.json
-                            </inputSpec>
-                            <language>kotlin-client</language>
-                            <generateApis>false</generateApis>
-                            <modelPackage>no.nav.dkif.kontaktinformasjon</modelPackage>
-                            <modelNameSuffix>Dto</modelNameSuffix>
-                            <generateSupportingFiles>false</generateSupportingFiles>
-                            <configOptions>
-                                <java8>true</java8>
-                                <useBeanValidation>false</useBeanValidation>
-                                <sourceFolder>personalia</sourceFolder>
-                            </configOptions>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
 

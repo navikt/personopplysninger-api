@@ -103,7 +103,7 @@ class PersonaliaService @Autowired constructor(
 
     fun hentKontaktinformasjon(fodselsnr: String): Kontaktinformasjon {
         val inbound = kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
-        return KontaktinformasjonTransformer.toOutbound(inbound, fodselsnr)
+        return KontaktinformasjonTransformer.toOutbound(inbound)
     }
 
     private fun hentEnhetKontaktinformasjon(enhetsnr: String): GeografiskEnhetKontaktInformasjon {
