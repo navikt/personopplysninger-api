@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.integrationtests.personalia;
 
+import no.nav.personopplysninger.features.personalia.dto.outbound.Adresser;
 import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAdresser;
 import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Objects;
 
 import static no.nav.personopplysninger.stubs.KodeverkStubs.*;
 import static no.nav.personopplysninger.stubs.Norg2Stubs.stubNorg2_200;
@@ -73,6 +76,25 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
                 PersonaliaOgAdresser.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
+    }
+
+    @Test
+    void skalGi200MedToKontaktadresserOgOppholdsadresser() {
+        stubPdl200FlereAdresser();
+
+        ResponseEntity<PersonaliaOgAdresser> response = restTemplate.exchange(
+                "/personalia",
+                HttpMethod.GET,
+                createEntityWithAuthHeader(IDENT),
+                PersonaliaOgAdresser.class);
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
+
+        Adresser adresser = Objects.requireNonNull(response.getBody()).getAdresser();
+
+        assert adresser != null;
+        assertThat(adresser.getKontaktadresser().size(), is(2));
+        assertThat(adresser.getOppholdsadresser().size(), is(2));
     }
 
     @Test

@@ -11,20 +11,27 @@ object AdresseinfoTransformer {
 
         val kontaktadresse = pdlData.person?.kontaktadresse
         val bostedsadresse = pdlData.person?.bostedsadresse?.firstOrNull()
-        val oppholdsadresse = pdlData.person?.oppholdsadresse?.firstOrNull()
+        val oppholdsadresse = pdlData.person?.oppholdsadresse
         val deltBosted = pdlData.person?.deltBosted?.firstOrNull()
 
-        return Adresser (
+        val kontaktadresseKodeverk = kodeverk.kontaktadresseKodeverk
+        val bostedsadresseKodeverk = kodeverk.bostedsadresseKodeverk
+        val oppholdsadresseKodeverk = kodeverk.oppholdsadresseKodeverk
+        val deltBostedKodeverk = kodeverk.deltBostedKodeverk
+
+        return Adresser(
             geografiskTilknytning = pdlData.geografiskTilknytning?.let {
                 GeografiskTilknytningTransformer.toOutbound(
                     it,
                     kodeverk
                 )
             },
-            kontaktadresser = kontaktadresse!!.mapNotNull { (KontaktadresseTransformer.toOutbound(it, kodeverk)) },
-            bostedsadresse = bostedsadresse?.let { BostedsadresseTransformer.toOutbound(it, kodeverk) },
-            oppholdsadresse = oppholdsadresse?.let { OppholdsadresseTransformer.toOutbound(it, kodeverk) },
-            deltBosted = deltBosted?.let { DeltBostedTransformer.toOutbound(it, kodeverk) },
+            kontaktadresser = kontaktadresse!!.zip(kontaktadresseKodeverk)
+                .mapNotNull { pair -> KontaktadresseTransformer.toOutbound(pair.first, pair.second) },
+            bostedsadresse = bostedsadresse?.let { BostedsadresseTransformer.toOutbound(it, bostedsadresseKodeverk) },
+            oppholdsadresser = oppholdsadresse!!.zip(oppholdsadresseKodeverk)
+                .mapNotNull { pair -> OppholdsadresseTransformer.toOutbound(pair.first, pair.second) },
+            deltBosted = deltBosted?.let { DeltBostedTransformer.toOutbound(it, deltBostedKodeverk) },
         )
     }
 }

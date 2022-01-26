@@ -2,7 +2,7 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.Adresse
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.Kontaktadresse
-import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
+import no.nav.personopplysninger.features.personalia.kodeverk.AdresseKodeverk
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.AdresseMappingType.*
 import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlKontaktadresse
 import org.slf4j.Logger
@@ -12,7 +12,7 @@ object KontaktadresseTransformer {
 
     private val logger: Logger = LoggerFactory.getLogger(KontaktadresseTransformer::class.java)
 
-    fun toOutbound(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Kontaktadresse? {
+    fun toOutbound(inbound: PdlKontaktadresse, kodeverk: AdresseKodeverk): Kontaktadresse? {
         val adresse = transformAdresse(inbound, kodeverk)
         return if (adresse != null) {
             Kontaktadresse(
@@ -27,25 +27,25 @@ object KontaktadresseTransformer {
         }
     }
 
-    private fun transformAdresse(inbound: PdlKontaktadresse, kodeverk: PersonaliaKodeverk): Adresse? {
+    private fun transformAdresse(inbound: PdlKontaktadresse, kodeverk: AdresseKodeverk): Adresse? {
         return when (inbound.mappingType) {
             INNLAND_VEGADRESSE -> transformVegadresse(
                 inbound.vegadresse!!,
-                kodeverk.kontaktadressePostSted,
-                kodeverk.kontaktadresseKommune
+                kodeverk.poststed,
+                kodeverk.kommune
             )
             INNLAND_FRIFORMADRESSE -> transformPostadresseIFrittFormat(
                 inbound.postadresseIFrittFormat!!,
-                kodeverk.kontaktadressePostSted
+                kodeverk.poststed
             )
             INNLAND_POSTBOKSADRESSE -> transformPostboksadresse(
                 inbound.postboksadresse!!,
-                kodeverk.kontaktadressePostSted
+                kodeverk.poststed
             )
-            UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse!!, kodeverk.kontaktadresseLand)
+            UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse!!, kodeverk.land)
             UTLAND_FRIFORMADRESSE -> transformUtenlandskAdresseIFrittFormat(
                 inbound.utenlandskAdresseIFrittFormat!!,
-                kodeverk.kontaktadresseLand
+                kodeverk.land
             )
             else -> {
                 logger.warn("Forsøkte å mappe oppholdsadresse på uventet format, null returnert. Adressetype: ${inbound.mappingType}")

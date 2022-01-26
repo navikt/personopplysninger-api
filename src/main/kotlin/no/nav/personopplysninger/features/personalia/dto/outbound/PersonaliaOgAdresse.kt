@@ -24,7 +24,7 @@ data class Adresser(
         val geografiskTilknytning: GeografiskTilknytning? = null,
         val kontaktadresser: List<Kontaktadresse> = arrayListOf(),
         val bostedsadresse: Bostedsadresse? = null,
-        val oppholdsadresse: Oppholdsadresse? = null,
+        val oppholdsadresser: List<Oppholdsadresse> = arrayListOf(),
         val deltBosted: DeltBosted? = null,
 )
 
