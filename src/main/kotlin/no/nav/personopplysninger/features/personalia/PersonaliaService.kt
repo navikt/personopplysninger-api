@@ -49,7 +49,7 @@ class PersonaliaService @Autowired constructor(
 
     private fun createPersonaliaKodeverk(inbound: Personinfo, inboundPdl: PdlData): PersonaliaKodeverk {
         val pdlPerson = inboundPdl.person!!
-        val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning!!
+        val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning!! // todo: fiks mulig NPE
 
         val kontaktadresse = pdlPerson.kontaktadresse
         val bostedsadresse = pdlPerson.bostedsadresse.firstOrNull()
