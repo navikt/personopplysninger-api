@@ -13,7 +13,6 @@ import java.util.Map;
 import static no.nav.personopplysninger.stubs.PdlStubs.stubPdl200;
 import static no.nav.personopplysninger.stubs.PdlStubs.stubPdl500;
 import static no.nav.personopplysninger.stubs.StsStubs.stubSts200;
-import static no.nav.personopplysninger.stubs.StsStubs.stubSts500;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
@@ -52,19 +51,6 @@ class GetNameIntegrationTest extends AbstractIntegrationTest {
     @Test
     void skalGi500MedFeilIKallMotPdl() {
         stubPdl500();
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                "/name",
-                HttpMethod.GET,
-                createEntityWithAuthHeader(IDENT),
-                String.class);
-
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.INTERNAL_SERVER_ERROR)));
-    }
-
-    @Test
-    void skalGi500MedFeilIKallMotSts() {
-        stubSts500();
 
         ResponseEntity<String> response = restTemplate.exchange(
                 "/name",

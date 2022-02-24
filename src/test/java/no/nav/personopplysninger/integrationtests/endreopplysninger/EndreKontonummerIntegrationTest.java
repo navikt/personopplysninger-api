@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import static no.nav.personopplysninger.stubs.PersonmottakStubs.stubPersonmottakBankkonto200;
 import static no.nav.personopplysninger.stubs.PersonmottakStubs.stubPersonmottakBankkonto500;
 import static no.nav.personopplysninger.stubs.StsStubs.stubSts200;
-import static no.nav.personopplysninger.stubs.StsStubs.stubSts500;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
@@ -46,19 +45,6 @@ class EndreKontonummerIntegrationTest extends AbstractIntegrationTest {
                 String.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.UNAUTHORIZED)));
-    }
-
-    @Test
-    void skalGi500MedFeilIKallMotSts() {
-        stubSts500();
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                "/endreKontonummer",
-                HttpMethod.POST,
-                new HttpEntity<>(new Kontonummer(), createAuthHeader(IDENT)),
-                String.class);
-
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.INTERNAL_SERVER_ERROR)));
     }
 
     @Test

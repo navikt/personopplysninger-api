@@ -16,7 +16,6 @@ import static no.nav.personopplysninger.stubs.Norg2Stubs.stubNorg2_200;
 import static no.nav.personopplysninger.stubs.Norg2Stubs.stubNorg2_500;
 import static no.nav.personopplysninger.stubs.PdlStubs.*;
 import static no.nav.personopplysninger.stubs.StsStubs.stubSts200;
-import static no.nav.personopplysninger.stubs.StsStubs.stubSts500;
 import static no.nav.personopplysninger.stubs.TpsStubs.stubTps200;
 import static no.nav.personopplysninger.stubs.TpsStubs.stubTps500;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -106,19 +105,6 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
                 String.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.UNAUTHORIZED)));
-    }
-
-    @Test
-    void skalGi500MedFeilIKallMotSts() {
-        stubSts500();
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                "/personalia",
-                HttpMethod.GET,
-                createEntityWithAuthHeader(IDENT),
-                String.class);
-
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.INTERNAL_SERVER_ERROR)));
     }
 
     @Test

@@ -8,7 +8,7 @@ import no.nav.personopplysninger.features.personalia.kontaktinformasjon.DigitalK
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
 import no.nav.personopplysninger.util.CONSUMER_ID
 import no.nav.personopplysninger.util.JsonDeserialize
-import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
+import no.nav.personopplysninger.util.getToken
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
@@ -55,11 +55,5 @@ class KontaktinfoConsumer(
             }
             return JsonDeserialize.objectMapper.readValue(responseBody)
         }
-    }
-
-    private fun getToken(): String {
-        val claimsIssuer = "selvbetjening"
-        val context = JaxrsTokenValidationContextHolder.getHolder()
-        return context.tokenValidationContext.getJwtToken(claimsIssuer).tokenAsString
     }
 }
