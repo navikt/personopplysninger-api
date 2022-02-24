@@ -25,7 +25,14 @@ spec:
   replicas:
     min: 2
     max: 4
-  webproxy: true
+  accessPolicy:
+    rules:
+      - application: personopplysninger-proxy
+        namespace: personbruker
+        cluster: {{ fss-cluster }}
+    outbound:
+      external:
+        - host: {{ proxy-host }}
   resources:
     limits:
       cpu: '3'
@@ -34,6 +41,7 @@ spec:
       memory: 1500Mi
   envFrom:
       - configmap: loginservice-idporten
+      - secret: arbeidsforhold-api-secret
   prometheus:
     enabled: true
     path: /person/personopplysninger-api/internal/actuator/prometheus

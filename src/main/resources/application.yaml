@@ -26,8 +26,6 @@ management:
       exposure:
         include: ["info", "health", "prometheus", "metrics"]
 
-http.proxy: http://webproxy-nais.nav.no:8088
-
 logging:
   config: "classpath:logback-spring.xml"
 

@@ -37,13 +37,15 @@ jobs:
           cat > .nais/vars.yaml <<EOF
           namespace: personbruker
           ingresses:
-            - https://www.dev.nav.no/person/personopplysninger-api
+            - https://person.dev.nav.no/person/personopplysninger-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
+          proxy-host: https://personopplysninger-proxy.dev-fss-pub.nais.io,
+          fss-cluster: dev-fss
           EOF
       - uses: nais/deploy/actions/deploy@master
         env:
-          CLUSTER: dev-sbs
+          CLUSTER: dev-gcp
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: .nais/config.yaml
           VARS: .nais/vars.yaml
