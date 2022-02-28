@@ -76,7 +76,7 @@ open class KodeverkConsumer constructor(
     }
 
     private fun hentKodeverkBetydning(navn: String, eksluderUgyldige: Boolean): Kodeverk {
-        buildRequest("v1/kodeverk/$navn/koder/betydninger", eksluderUgyldige).get().use { response ->
+        buildRequest("api/v1/kodeverk/$navn/koder/betydninger", eksluderUgyldige).get().use { response ->
             val responseBody = response.readEntity(String::class.java)
             if (SUCCESSFUL != response.statusInfo.family) {
                 throw ConsumerException(consumerErrorMessage(endpoint, response.status, responseBody))

@@ -40,7 +40,8 @@ jobs:
             - https://person.dev.nav.no/person/personopplysninger-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
-          proxy-host: https://personopplysninger-proxy.dev-fss-pub.nais.io,
+          proxy-host: https://personopplysninger-proxy.dev-fss-pub.nais.io
+          pdl-api-host: https://personopplysninger-proxy.dev-fss-pub.nais.io
           fss-cluster: dev-fss
           EOF
       - uses: nais/deploy/actions/deploy@master

@@ -30,9 +30,15 @@ spec:
       - application: personopplysninger-proxy
         namespace: personbruker
         cluster: {{ fss-cluster }}
+      - application: digdir-krr-proxy
+        namespace: team-rocket
+      - application: pdl-api
+        namespace: pdl
+        cluster: {{ fss-cluster }}
     outbound:
       external:
         - host: {{ proxy-host }}
+        - host: {{ pdl-api-host }}
   resources:
     limits:
       cpu: '3'
@@ -41,7 +47,7 @@ spec:
       memory: 1500Mi
   envFrom:
       - configmap: loginservice-idporten
-      - secret: arbeidsforhold-api-secret
+      - secret: personopplysninger-api-secret
   prometheus:
     enabled: true
     path: /person/personopplysninger-api/internal/actuator/prometheus
