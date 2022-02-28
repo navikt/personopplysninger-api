@@ -39,7 +39,7 @@ class MedlConsumer constructor(
             .request()
             .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
             .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-            .header(HEADER_NAV_PERSONIDENT_KEY, fnr)
+            .header(HEADER_NAV_PERSONIDENT, fnr)
             .header(HttpHeader.ACCEPT.asString(), MediaType.APPLICATION_JSON)
             .header(HttpHeader.AUTHORIZATION.asString(), "Bearer $accessToken")
     }

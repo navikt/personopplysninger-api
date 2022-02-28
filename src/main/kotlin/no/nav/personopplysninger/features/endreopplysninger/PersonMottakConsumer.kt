@@ -14,9 +14,8 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Endre
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.personalia.dto.getJson
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
-import no.nav.personopplysninger.util.CONSUMER_ID
+import no.nav.personopplysninger.util.*
 import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
-import no.nav.personopplysninger.util.getToken
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import java.net.URI
@@ -41,7 +40,6 @@ class PersonMottakConsumer(
     private val HTTP_CODE_422 = 422
     private val HTTP_CODE_423 = 423
 
-    private val BEARER = "Bearer "
     private val SLEEP_TIME_MS = 1000L
     private val MAX_POLLS = 3
 
@@ -72,14 +70,14 @@ class PersonMottakConsumer(
         return client.target(endpoint)
             .path(path)
             .request()
-            .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-            .header("Authorization", BEARER + accessToken)
-            .header("Nav-Consumer-Id", CONSUMER_ID)
+            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
+            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
     }
 
     private fun buildEndreRequest(fnr: String, path: String): Invocation.Builder {
         return getBuilder(path)
-            .header("Nav-Personident", fnr)
+            .header(HEADER_NAV_PERSONIDENT, fnr)
     }
 
     private fun buildPollEndringRequest(url: String): Invocation.Builder {

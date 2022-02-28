@@ -15,7 +15,7 @@ import javax.ws.rs.ext.ContextResolver
 @Configuration
 open class PersonMottakConfiguration {
 
-    @Value("\${PERSON_MOTTAK_CONSUMER_TARGET_APP}")
+    @Value("\${PERSONOPPLYSNINGER_PROXY_TARGET_APP}")
     private val targetApp: String? = null
 
     @Bean

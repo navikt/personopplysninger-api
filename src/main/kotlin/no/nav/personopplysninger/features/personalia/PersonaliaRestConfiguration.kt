@@ -22,13 +22,17 @@ open class PersonaliaRestConfiguration {
     @Value("\${PDL_CONSUMER_TARGET_APP}")
     private val pdlTargetApp: String? = null
 
+    @Value("\${PERSONOPPLYSNINGER_PROXY_TARGET_APP}")
+    private val personMottakTargetApp: String? = null
+
     @Bean
     @Throws(URISyntaxException::class)
     open fun personConsumer(
         @Named("tpsProxyClient") client: Client,
-        @Value("\${TPS_PROXY_API_V1_INNSYN_URL}") personServiceUri: String
+        @Value("\${TPS_PROXY_API_V1_INNSYN_URL}") personServiceUri: String,
+        tokenDingsService: TokenDingsService
     ): PersonConsumer {
-        return PersonConsumer(client, URI(personServiceUri))
+        return PersonConsumer(client, URI(personServiceUri), tokenDingsService, personMottakTargetApp)
     }
 
     @Bean

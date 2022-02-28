@@ -9,9 +9,8 @@ import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPerson
 import no.nav.personopplysninger.features.personalia.pdl.dto.PdlResponse
 import no.nav.personopplysninger.features.personalia.pdl.request.*
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
-import no.nav.personopplysninger.util.CONSUMER_ID
+import no.nav.personopplysninger.util.*
 import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
-import no.nav.personopplysninger.util.getToken
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
@@ -66,12 +65,10 @@ class PdlConsumer(
         val selvbetjeningToken = getToken()
         val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp)
         return client.target(endpoint)
-            .path("/graphql")
             .request()
-            .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-            .header("Nav-Consumer-Id", CONSUMER_ID)
-            .header("Authorization", accessToken)
-            .header("Nav-Consumer-Token", "Bearer ${getToken()}")
+            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+            .header(HEADER_AUTHORIZATION, accessToken)
             .header("Tema", RETT_PERSONOPPLYSNINGER)
     }
 }

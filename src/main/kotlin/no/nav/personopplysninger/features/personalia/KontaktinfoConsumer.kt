@@ -6,9 +6,7 @@ import no.nav.personopplysninger.exception.ConsumerException
 import no.nav.personopplysninger.exception.consumerErrorMessage
 import no.nav.personopplysninger.features.personalia.kontaktinformasjon.DigitalKontaktinformasjon
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
-import no.nav.personopplysninger.util.CONSUMER_ID
-import no.nav.personopplysninger.util.JsonDeserialize
-import no.nav.personopplysninger.util.getToken
+import no.nav.personopplysninger.util.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
@@ -37,10 +35,10 @@ class KontaktinfoConsumer(
         return client.target(endpoint)
             .path("rest/v1/person")
             .request()
-            .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-            .header("Nav-Consumer-Id", CONSUMER_ID)
-            .header("Nav-Personident", fnr)
-            .header("Authorization", "Bearer $accessToken")
+            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+            .header(HEADER_NAV_PERSONIDENT, fnr)
+            .header(HEADER_AUTHORIZATION, BEARER.plus(accessToken))
     }
 
     private fun hentKontaktinformasjon(request: Invocation.Builder): DigitalKontaktinformasjon {
