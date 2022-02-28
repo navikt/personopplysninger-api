@@ -11,7 +11,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkKommuner200() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/Kommuner/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Kommuner/.*"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBodyFile("kodeverk-kommuner.json")
@@ -19,7 +19,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkLandkoder200() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/Landkoder/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Landkoder/.*"))
                 .atPriority(2)
                 .willReturn(aResponse()
                         .withStatus(200)
@@ -28,7 +28,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkStatsborgerskapFreg200() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/StatsborgerskapFreg/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/StatsborgerskapFreg/.*"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBodyFile("kodeverk-statsborgerskap.json")
@@ -36,7 +36,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkValutaer200() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/Valutaer/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Valutaer/.*"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBodyFile("kodeverk-valutaer.json")
@@ -44,7 +44,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkPostnummer200() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/Postnummer/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Postnummer/.*"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBodyFile("kodeverk-postnummer.json")
@@ -52,7 +52,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkGrunnlagMedl200() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/GrunnlagMedl/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/GrunnlagMedl/.*"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBodyFile("kodeverk-grunnlagmedl.json")
@@ -60,7 +60,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkDekningMedl200() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/DekningMedl/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/DekningMedl/.*"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBodyFile("kodeverk-dekningmedl.json")
@@ -68,7 +68,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkRetningsnumre200() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/Retningsnumre/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Retningsnumre/.*"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBodyFile("kodeverk-retningsnumre.json")
@@ -76,7 +76,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkKommuner500() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/Kommuner/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Kommuner/.*"))
                 .willReturn(aResponse()
                         .withStatus(500)
                         .withBody("Noe gikk galt")
@@ -84,7 +84,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkLandkoder500() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/Landkoder/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Landkoder/.*"))
                 .atPriority(1)
                 .willReturn(aResponse()
                         .withStatus(500)
@@ -93,7 +93,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkStatsborgerskapFreg500() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/StatsborgerskapFreg/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/StatsborgerskapFreg/.*"))
                 .willReturn(aResponse()
                         .withStatus(500)
                         .withBody("Noe gikk galt")
@@ -101,7 +101,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkValutaer500() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/Valutaer/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Valutaer/.*"))
                 .willReturn(aResponse()
                         .withStatus(500)
                         .withBody("Noe gikk galt")
@@ -109,7 +109,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkPostnummer500() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/Postnummer/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Postnummer/.*"))
                 .willReturn(aResponse()
                         .withStatus(500)
                         .withBody("Noe gikk galt")
@@ -117,7 +117,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkGrunnlagMedl500() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/GrunnlagMedl/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/GrunnlagMedl/.*"))
                 .willReturn(aResponse()
                         .withStatus(500)
                         .withBody("Noe gikk galt")
@@ -125,7 +125,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkDekningMedl500() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/DekningMedl/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/DekningMedl/.*"))
                 .willReturn(aResponse()
                         .withStatus(500)
                         .withBody("Noe gikk galt")
@@ -133,7 +133,7 @@ public class KodeverkStubs {
     }
 
     public static void stubKodeverkRetningsnumre500() {
-        stubFor(get(urlPathMatching("/kodeverk/v1/kodeverk/Retningsnumre/.*"))
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Retningsnumre/.*"))
                 .willReturn(aResponse()
                         .withStatus(500)
                         .withBody("Noe gikk galt")
