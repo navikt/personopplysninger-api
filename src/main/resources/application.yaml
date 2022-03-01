@@ -28,6 +28,7 @@ management:
 
 logging:
   config: "classpath:logback-spring.xml"
+  level: debug
 
 no.nav.security.oidc:
   issuers: selvbetjening
