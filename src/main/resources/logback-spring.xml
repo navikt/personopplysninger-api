@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="true">
-    <property name="ROOT_LOG_LEVEL" value="DEBUG"/>
+<configuration>
     <include resource="no/nav/common/log/logback-default.xml"/>
 </configuration>
