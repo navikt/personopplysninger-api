@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia
 
+import no.nav.personopplysninger.util.hentFnrFraToken
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import javax.ws.rs.GET
@@ -43,10 +43,4 @@ class PersonaliaResource @Autowired constructor(private var personaliaService: P
                 .ok(kontakinformasjon)
                 .build()
     }
-
-    private fun hentFnrFraToken(): String {
-        val context = JaxrsTokenValidationContextHolder.getHolder()
-        return context.tokenValidationContext.getClaims(claimsIssuer).subject
-    }
-
 }

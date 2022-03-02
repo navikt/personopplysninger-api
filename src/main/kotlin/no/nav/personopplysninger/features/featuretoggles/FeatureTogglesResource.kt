@@ -7,8 +7,8 @@ import no.nav.common.featuretoggle.UnleashClientImpl
 import no.nav.common.featuretoggle.UnleashUtils.UNLEASH_URL_ENV_NAME
 import no.nav.common.utils.EnvironmentUtils.getOptionalProperty
 import no.nav.common.utils.EnvironmentUtils.getRequiredProperty
+import no.nav.personopplysninger.util.hentFnrFraToken
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.*
@@ -73,10 +73,5 @@ class FeatureTogglesResource @Autowired constructor() {
         cookie.maxAge = -1
         httpServletRequest.addCookie(cookie)
         return sessionId
-    }
-
-    private fun hentFnrFraToken(): String {
-        val context = JaxrsTokenValidationContextHolder.getHolder()
-        return context.tokenValidationContext.getClaims(claimsIssuer).subject
     }
 }

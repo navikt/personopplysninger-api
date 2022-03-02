@@ -2,8 +2,8 @@ package no.nav.personopplysninger.features.endreopplysninger
 
 import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
+import no.nav.personopplysninger.util.hentFnrFraToken
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import javax.ws.rs.*
@@ -82,10 +82,5 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     @Produces(MediaType.APPLICATION_JSON)
     fun hentpostnummer(): Response {
         return Response.ok(endreOpplysningerService.hentPostnummer()).build()
-    }
-
-    private fun hentFnrFraToken(): String {
-        val context = JaxrsTokenValidationContextHolder.getHolder()
-        return context.tokenValidationContext.getClaims(claimsIssuer).subject
     }
 }
