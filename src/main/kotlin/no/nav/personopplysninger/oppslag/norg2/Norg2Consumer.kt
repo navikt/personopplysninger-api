@@ -47,7 +47,7 @@ class Norg2Consumer(
 
     private fun buildEnhetRequest(geografisk: String): Invocation.Builder {
         val selvbetjeningToken = getToken()
-        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp)
+        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
         return client.target(endpoint)
             .path("enhet/navkontor/$geografisk")
             .request()
@@ -59,7 +59,7 @@ class Norg2Consumer(
 
     private fun buildKontaktinfoRequest(enhetsnr: String): Invocation.Builder {
         val selvbetjeningToken = getToken()
-        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp)
+        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
         return client.target(endpoint)
             .path("enhet/$enhetsnr/kontaktinformasjon")
             .request()

@@ -63,7 +63,7 @@ class PdlConsumer(
 
     private fun buildRequest(): Invocation.Builder {
         val selvbetjeningToken = getToken()
-        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp)
+        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
         return client.target(endpoint)
             .request()
             .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))

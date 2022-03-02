@@ -32,7 +32,7 @@ class InstitusjonConsumer constructor(
 
     private fun buildRequest(fnr: String): Invocation.Builder {
         val selvbetjeningToken = getToken()
-        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp)
+        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
         return client.target(endpoint)
             .path("v1/person/innsyn")
             .request()

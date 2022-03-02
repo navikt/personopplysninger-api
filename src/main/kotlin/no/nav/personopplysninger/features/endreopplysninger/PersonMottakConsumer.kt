@@ -66,7 +66,7 @@ class PersonMottakConsumer(
 
     private fun getBuilder(path: String): Invocation.Builder {
         val selvbetjeningToken = getToken()
-        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp)
+        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
         return client.target(endpoint)
             .path(path)
             .request()
