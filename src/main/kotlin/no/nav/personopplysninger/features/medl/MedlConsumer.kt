@@ -35,7 +35,7 @@ class MedlConsumer constructor(
 
     private fun getBuilder(fnr: String, accessToken: String): Invocation.Builder {
         return client.target(endpoint)
-            .path("api/v1/innsyn/person")
+            .path("/api/v1/innsyn/person")
             .request()
             .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
             .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
