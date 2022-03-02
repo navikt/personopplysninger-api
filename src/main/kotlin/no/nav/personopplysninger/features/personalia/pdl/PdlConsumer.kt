@@ -68,7 +68,7 @@ class PdlConsumer(
             .request()
             .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
             .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-            .header(HEADER_AUTHORIZATION, accessToken)
+            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
             .header("Tema", RETT_PERSONOPPLYSNINGER)
     }
 }
