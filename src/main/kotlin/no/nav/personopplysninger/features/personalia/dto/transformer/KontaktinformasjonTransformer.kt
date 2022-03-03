@@ -9,6 +9,6 @@ object KontaktinformasjonTransformer {
         kanVarsles = inbound.kanVarsles,
         mobiltelefonnummer = inbound.mobiltelefonnummer,
         reservert = inbound.reservert,
-        spraak = spraakTerm
+        spraak = if (spraakTerm.equals("Norsk")) "Bokmål" else spraakTerm
     )
 }
