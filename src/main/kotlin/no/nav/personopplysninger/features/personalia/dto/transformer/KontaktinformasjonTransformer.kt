@@ -4,11 +4,11 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinforma
 import no.nav.personopplysninger.features.personalia.kontaktinformasjon.DigitalKontaktinformasjon
 
 object KontaktinformasjonTransformer {
-    fun toOutbound(inbound: DigitalKontaktinformasjon) = Kontaktinformasjon(
+    fun toOutbound(inbound: DigitalKontaktinformasjon, spraakTerm: String) = Kontaktinformasjon(
         epostadresse = inbound.epostadresse,
         kanVarsles = inbound.kanVarsles,
         mobiltelefonnummer = inbound.mobiltelefonnummer,
         reservert = inbound.reservert,
-        spraak = inbound.spraak
+        spraak = spraakTerm
     )
 }

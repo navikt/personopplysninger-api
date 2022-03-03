@@ -62,6 +62,11 @@ open class KodeverkConsumer constructor(
         return hentKodeverkBetydning("GrunnlagMedl", true)
     }
 
+    @Cacheable("spraak")
+    open fun hentSpraak(): Kodeverk {
+        return hentKodeverkBetydning("Språk", true)
+    }
+
     private fun buildRequest(path: String, eksluderUgyldige: Boolean): Invocation.Builder {
         val selvbetjeningToken = getToken()
         val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken

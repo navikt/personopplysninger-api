@@ -11,11 +11,13 @@ class KontaktinformasjonTransformerTest {
     @Test
     fun gittKontaktinformasjon_skalFaaKontaktinformasjon() {
         val inbound = createDummyDigitalKontaktinfo()
+        val spraakTerm = "Norsk"
 
-        val actual = KontaktinformasjonTransformer.toOutbound(inbound)
+        val actual = KontaktinformasjonTransformer.toOutbound(inbound, spraakTerm)
 
         assertEquals(inbound.epostadresse!!, actual.epostadresse)
         assert(inbound.kanVarsles == actual.kanVarsles!!)
         assertEquals(inbound.mobiltelefonnummer!!, actual.mobiltelefonnummer)
+        assertEquals(spraakTerm, actual.spraak)
     }
 }
