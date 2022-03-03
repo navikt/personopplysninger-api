@@ -103,7 +103,7 @@ class PersonaliaService @Autowired constructor(
 
     fun hentKontaktinformasjon(fodselsnr: String): Kontaktinformasjon {
         val inbound = kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
-        val spraakTerm = kodeverkConsumer.hentSpraak().term(inbound.spraak)
+        val spraakTerm = kodeverkConsumer.hentSpraak().term(inbound.spraak.uppercase())
         return KontaktinformasjonTransformer.toOutbound(inbound, spraakTerm)
     }
 

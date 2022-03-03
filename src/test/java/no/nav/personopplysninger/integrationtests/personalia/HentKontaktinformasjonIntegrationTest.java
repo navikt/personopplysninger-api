@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static no.nav.personopplysninger.stubs.DigdirKrrStubs.*;
+import static no.nav.personopplysninger.stubs.KodeverkStubs.stubKodeverkSpraak200;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
@@ -18,6 +19,7 @@ class HentKontaktinformasjonIntegrationTest extends AbstractIntegrationTest {
     @BeforeEach
     void setup() {
         stubDigdirKrr200();
+        stubKodeverkSpraak200();
     }
 
     @Test

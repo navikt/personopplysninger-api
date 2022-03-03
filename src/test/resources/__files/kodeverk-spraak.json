@@ -1,0 +1,184 @@
+{
+  "betydninger": {
+    "NB": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Norsk",
+            "tekst": "Norsk"
+          }
+        }
+      }
+    ],
+    "ND": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Nord-ndebele",
+            "tekst": "Nord-ndebele"
+          }
+        }
+      }
+    ],
+    "NE": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Nepali",
+            "tekst": "Nepali"
+          }
+        }
+      }
+    ],
+    "NG": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Ndonga",
+            "tekst": "Ndonga"
+          }
+        }
+      }
+    ],
+    "VO": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Volapük",
+            "tekst": "Volapük"
+          }
+        }
+      }
+    ],
+    "FA": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Persisk",
+            "tekst": "Persisk"
+          }
+        }
+      }
+    ],
+    "NL": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Nederlandsk",
+            "tekst": "Nederlandsk"
+          }
+        }
+      }
+    ],
+    "NN": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Nynorsk",
+            "tekst": "Nynorsk"
+          }
+        }
+      }
+    ],
+    "FF": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Fulfulde",
+            "tekst": "Fulfulde"
+          }
+        }
+      }
+    ],
+    "NO": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Norsk",
+            "tekst": "Norsk"
+          }
+        }
+      }
+    ],
+    "FI": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Finsk",
+            "tekst": "Finsk"
+          }
+        }
+      }
+    ],
+    "NR": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Sør-ndebele",
+            "tekst": "Sør-ndebele"
+          }
+        }
+      }
+    ],
+    "FJ": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Fijisk",
+            "tekst": "Fijisk"
+          }
+        }
+      }
+    ],
+    "NV": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Navajo",
+            "tekst": "Navajo"
+          }
+        }
+      }
+    ],
+    "FO": [
+      {
+        "gyldigFra": "2017-10-27",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Færøysk",
+            "tekst": "Færøysk"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -75,6 +75,14 @@ public class KodeverkStubs {
                         .withHeader(HttpHeaders.CONTENT_TYPE, "application/json")));
     }
 
+    public static void stubKodeverkSpraak200() {
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Spr%C3%A5k/.*"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withBodyFile("kodeverk-spraak.json")
+                        .withHeader(HttpHeaders.CONTENT_TYPE, "application/json")));
+    }
+
     public static void stubKodeverkKommuner500() {
         stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Kommuner/.*"))
                 .willReturn(aResponse()
