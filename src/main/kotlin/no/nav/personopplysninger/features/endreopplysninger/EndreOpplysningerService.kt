@@ -13,12 +13,10 @@ import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.oppslag.kodeverk.api.KodeOgTekstDto
 import no.nav.personopplysninger.oppslag.kodeverk.api.Kodeverk
 import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
-import no.nav.personopplysninger.oppslag.sts.STSConsumer
 import org.springframework.stereotype.Service
 
 @Service
 class EndreOpplysningerService (
-        private var stsConsumer: STSConsumer,
         private var personMottakConsumer: PersonMottakConsumer,
         private var kodeverkConsumer: KodeverkConsumer,
         private var pdlService: PdlService
@@ -28,7 +26,7 @@ class EndreOpplysningerService (
         if (!setOf(1, 2).contains(telefonnummer.prioritet)) {
             throw RuntimeException("Støtter kun prioritet [1, 2] eller type ['HJEM', 'MOBIL']")
         } else {
-            return personMottakConsumer.endreTelefonnummer(fnr, endreNummerPayload(fnr, telefonnummer), systemToken)
+            return personMottakConsumer.endreTelefonnummer(fnr, endreNummerPayload(fnr, telefonnummer))
         }
     }
 
@@ -36,18 +34,18 @@ class EndreOpplysningerService (
         val opplysningsId = pdlService.getOpplysningsIdForTelefon(fnr, telefonnummer.landskode!!, telefonnummer.nummer!!)
                 ?: throw RuntimeException("Kan ikke slette nummer som ikke eksisterer: ${telefonnummer.landskode}, ${telefonnummer.nummer}")
 
-        return personMottakConsumer.slettPersonopplysning(fnr, slettNummerPayload(fnr, opplysningsId), systemToken, EndringTelefon::class.java)
+        return personMottakConsumer.slettPersonopplysning(fnr, slettNummerPayload(fnr, opplysningsId), EndringTelefon::class.java)
     }
 
     fun endreKontonummer(fnr: String, kontonummer: Kontonummer): EndringKontonummer {
-        return personMottakConsumer.endreKontonummer(fnr, kontonummer, systemToken)
+        return personMottakConsumer.endreKontonummer(fnr, kontonummer)
     }
 
     fun slettKontaktadresse(fnr: String): EndringKontaktadresse {
         val opplysningsId = pdlService.getOpplysningsIdForKontaktadresse(fnr)
                 ?: throw RuntimeException("Fant ingen kontaktadresser som kan slettes")
 
-        return personMottakConsumer.slettPersonopplysning(fnr, slettKontaktadressePayload(fnr, opplysningsId), systemToken, EndringKontaktadresse::class.java)
+        return personMottakConsumer.slettPersonopplysning(fnr, slettKontaktadressePayload(fnr, opplysningsId), EndringKontaktadresse::class.java)
     }
 
     fun hentRetningsnumre(): Array<RetningsnummerDTO> {
@@ -76,6 +74,4 @@ class EndreOpplysningerService (
                 .sortedBy { it.tekst }
                 .toTypedArray()
     }
-
-    private inline val systemToken: String get() = stsConsumer.token.access_token
 }

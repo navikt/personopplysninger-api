@@ -1,13 +1,14 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.dkif.kontaktinformasjon.DigitalKontaktinfoBolk
 import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon
+import no.nav.personopplysninger.features.personalia.kontaktinformasjon.DigitalKontaktinformasjon
 
 object KontaktinformasjonTransformer {
-    fun toOutbound(inbound: DigitalKontaktinfoBolk, fnr: String) = Kontaktinformasjon (
-            epostadresse = inbound.kontaktinfo?.get(fnr)?.epostadresse,
-            kanVarsles = inbound.kontaktinfo?.get(fnr)?.kanVarsles,
-            mobiltelefonnummer = inbound.kontaktinfo?.get(fnr)?.mobiltelefonnummer,
-            reservert = inbound.kontaktinfo?.get(fnr)?.reservert
+    fun toOutbound(inbound: DigitalKontaktinformasjon, spraakTerm: String) = Kontaktinformasjon(
+        epostadresse = inbound.epostadresse,
+        kanVarsles = inbound.kanVarsles,
+        mobiltelefonnummer = inbound.mobiltelefonnummer,
+        reservert = inbound.reservert,
+        spraak = if (spraakTerm == "Norsk") "Bokmål" else spraakTerm
     )
 }

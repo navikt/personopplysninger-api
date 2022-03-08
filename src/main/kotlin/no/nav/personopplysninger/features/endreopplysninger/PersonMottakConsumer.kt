@@ -13,7 +13,8 @@ import no.nav.personopplysninger.features.endreopplysninger.domain.opphoer.Oppho
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndreTelefon
 import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.features.personalia.dto.getJson
-import no.nav.personopplysninger.util.CONSUMER_ID
+import no.nav.personopplysninger.features.tokendings.TokenDingsService
+import no.nav.personopplysninger.util.*
 import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
@@ -27,14 +28,18 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
-class PersonMottakConsumer(private val client: Client, private val endpoint: URI) {
+class PersonMottakConsumer(
+    private val client: Client,
+    private val endpoint: URI,
+    private var tokenDingsService: TokenDingsService,
+    private var targetApp: String?
+) {
 
     private val log = LoggerFactory.getLogger(PersonMottakConsumer::class.java)
 
     private val HTTP_CODE_422 = 422
     private val HTTP_CODE_423 = 423
 
-    private val BEARER = "Bearer "
     private val SLEEP_TIME_MS = 1000L
     private val MAX_POLLS = 3
 
@@ -42,52 +47,53 @@ class PersonMottakConsumer(private val client: Client, private val endpoint: URI
 
     private val URL_ENDRINGER = "/api/v1/endringer"
 
-    fun endreTelefonnummer(fnr: String, endreTelefon: EndreTelefon, systemUserToken: String): EndringTelefon {
-        return sendPdlEndring(endreTelefon, fnr, systemUserToken, URL_ENDRINGER, EndringTelefon::class.java)
+    fun endreTelefonnummer(fnr: String, endreTelefon: EndreTelefon): EndringTelefon {
+        return sendPdlEndring(endreTelefon, fnr, URL_ENDRINGER, EndringTelefon::class.java)
     }
 
-    fun endreKontonummer(fnr: String, kontonummer: Kontonummer, systemUserToken: String): EndringKontonummer {
-        val request = buildEndreRequest(fnr, systemUserToken, URL_KONTONUMMER)
-        return sendEndring(request, kontonummer, systemUserToken, HttpMethod.POST, EndringKontonummer::class.java)
+    fun endreKontonummer(fnr: String, kontonummer: Kontonummer): EndringKontonummer {
+        val request = buildEndreRequest(fnr, URL_KONTONUMMER)
+        return sendEndring(request, kontonummer, HttpMethod.POST, EndringKontonummer::class.java)
     }
 
     fun <T : Endring<T>> slettPersonopplysning(
         fnr: String,
         opphoerPersonopplysning: OpphoerPersonopplysning,
-        systemUserToken: String,
         endringsType: Class<T>
     ): T {
-        return sendPdlEndring(opphoerPersonopplysning, fnr, systemUserToken, URL_ENDRINGER, endringsType)
+        return sendPdlEndring(opphoerPersonopplysning, fnr, URL_ENDRINGER, endringsType)
     }
 
-    private fun getBuilder(path: String, systemUserToken: String): Invocation.Builder {
+    private fun getBuilder(path: String): Invocation.Builder {
+        val selvbetjeningToken = getToken()
+        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
         return client.target(endpoint)
             .path(path)
             .request()
-            .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-            .header("Nav-Consumer-Token", BEARER + systemUserToken)
-            .header("Nav-Consumer-Id", CONSUMER_ID)
+            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
+            .header(HEADER_NAV_CONSUMER_TOKEN, selvbetjeningToken)
+            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
     }
 
-    private fun buildEndreRequest(fnr: String, systemUserToken: String, path: String): Invocation.Builder {
-        return getBuilder(path, systemUserToken)
-            .header("Nav-Personident", fnr)
+    private fun buildEndreRequest(fnr: String, path: String): Invocation.Builder {
+        return getBuilder(path)
+            .header(HEADER_NAV_PERSONIDENT, fnr)
     }
 
-    private fun buildPollEndringRequest(url: String, systemUserToken: String): Invocation.Builder {
-        return getBuilder(url, systemUserToken)
+    private fun buildPollEndringRequest(url: String): Invocation.Builder {
+        return getBuilder(url)
     }
 
     private fun <T : Endring<T>> sendEndring(
         request: Invocation.Builder,
         entitetSomEndres: Any,
-        systemUserToken: String,
         httpMethod: String,
         c: Class<T>
     ): T {
         return try {
             request.method(httpMethod, Entity.entity(entitetSomEndres, MediaType.APPLICATION_JSON))
-                .use { response -> readResponseAndPollStatus(response, systemUserToken, c) }
+                .use { response -> readResponseAndPollStatus(response, c) }
         } catch (e: Exception) {
             val msg = "Forsøkte å endre personopplysning. endpoint=[$endpoint]."
             throw ConsumerException(msg, e)
@@ -97,12 +103,11 @@ class PersonMottakConsumer(private val client: Client, private val endpoint: URI
     private fun <T, R : Endring<R>> sendPdlEndring(
         entitetSomEndres: Personopplysning<T>,
         fnr: String,
-        systemUserToken: String,
         path: String,
         endringType: Class<R>
     ): R {
 
-        val request = buildEndreRequest(fnr, systemUserToken, path)
+        val request = buildEndreRequest(fnr, path)
 
         val entity = Entity.entity(entitetSomEndres.asSingleEndring(), MediaType.APPLICATION_JSON)
 
@@ -110,7 +115,7 @@ class PersonMottakConsumer(private val client: Client, private val endpoint: URI
             request.method(
                 HttpMethod.POST, entity
             ).use { response ->
-                readResponseAndPollStatus(response, systemUserToken, endringType)
+                readResponseAndPollStatus(response, endringType)
             }
         } catch (e: Exception) {
             val msg = "Forsøkte å endre personopplysning. endpoint=[$endpoint]."
@@ -120,7 +125,6 @@ class PersonMottakConsumer(private val client: Client, private val endpoint: URI
 
     private fun <T : Endring<T>> readResponseAndPollStatus(
         response: Response,
-        systemUserToken: String,
         clazz: Class<T>
     ): T {
         val responseBody = response.readEntity(String::class.java)
@@ -142,7 +146,7 @@ class PersonMottakConsumer(private val client: Client, private val endpoint: URI
             }
             else -> {
                 val pollEndringUrl = response.getHeaderString(HttpHeaders.LOCATION)
-                buildPollEndringRequest(pollEndringUrl, systemUserToken)
+                buildPollEndringRequest(pollEndringUrl)
                     .pollFor(clazz, SLEEP_TIME_MS, MAX_POLLS)
             }
         }

@@ -11,7 +11,7 @@ public class PdlStubs {
     }
 
     public static void stubPdl200() {
-        stubFor(post(urlEqualTo("/pdl/graphql"))
+        stubFor(post(urlEqualTo("/pdl"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBodyFile("pdl.json")
@@ -19,7 +19,7 @@ public class PdlStubs {
     }
 
     public static void stubPdl200FlereAdresser() {
-        stubFor(post(urlEqualTo("/pdl/graphql"))
+        stubFor(post(urlEqualTo("/pdl"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBodyFile("pdl_flere_adresser.json")
@@ -27,7 +27,7 @@ public class PdlStubs {
     }
 
     public static void stubPdl200OppholdAnnetSted() {
-        stubFor(post(urlEqualTo("/pdl/graphql"))
+        stubFor(post(urlEqualTo("/pdl"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBodyFile("pdl_opphold_annet_sted.json")
@@ -35,7 +35,7 @@ public class PdlStubs {
     }
 
     public static void stubPdl500() {
-        stubFor(post(urlEqualTo("/pdl/graphql"))
+        stubFor(post(urlEqualTo("/pdl"))
                 .willReturn(aResponse()
                         .withStatus(500)
                         .withBody("Noe gikk galt")

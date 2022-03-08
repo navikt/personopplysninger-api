@@ -4,9 +4,10 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.exception.ConsumerException
 import no.nav.personopplysninger.exception.consumerErrorMessage
+import no.nav.personopplysninger.features.tokendings.TokenDingsService
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2Enhet
 import no.nav.personopplysninger.oppslag.norg2.domain.Norg2EnhetKontaktinfo
-import no.nav.personopplysninger.util.CONSUMER_ID
+import no.nav.personopplysninger.util.*
 import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -16,7 +17,12 @@ import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
-class Norg2Consumer(private val client: Client, private val endpoint: URI) {
+class Norg2Consumer(
+    private val client: Client,
+    private val endpoint: URI,
+    private val tokenDingsService: TokenDingsService,
+    private val targetApp: String?
+) {
 
     private var logger: Logger = LoggerFactory.getLogger(javaClass)
 
@@ -40,19 +46,27 @@ class Norg2Consumer(private val client: Client, private val endpoint: URI) {
     }
 
     private fun buildEnhetRequest(geografisk: String): Invocation.Builder {
+        val selvbetjeningToken = getToken()
+        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
         return client.target(endpoint)
             .path("enhet/navkontor/$geografisk")
             .request()
-            .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-            .header("Nav-Consumer-Id", CONSUMER_ID)
+            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
+            .header(HEADER_NAV_CONSUMER_TOKEN, selvbetjeningToken)
+            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
     }
 
     private fun buildKontaktinfoRequest(enhetsnr: String): Invocation.Builder {
+        val selvbetjeningToken = getToken()
+        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
         return client.target(endpoint)
             .path("enhet/$enhetsnr/kontaktinformasjon")
             .request()
-            .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-            .header("Nav-Consumer-Id", CONSUMER_ID)
+            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
+            .header(HEADER_NAV_CONSUMER_TOKEN, selvbetjeningToken)
+            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
             .header("enhetsnr", enhetsnr)
     }
 

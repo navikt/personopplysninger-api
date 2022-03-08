@@ -49,7 +49,7 @@ class PersonaliaService @Autowired constructor(
 
     private fun createPersonaliaKodeverk(inbound: Personinfo, inboundPdl: PdlData): PersonaliaKodeverk {
         val pdlPerson = inboundPdl.person!!
-        val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning!!
+        val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning
 
         val kontaktadresse = pdlPerson.kontaktadresse
         val bostedsadresse = pdlPerson.bostedsadresse.firstOrNull()
@@ -59,7 +59,7 @@ class PersonaliaService @Autowired constructor(
         return PersonaliaKodeverk().apply {
             foedekommuneterm = getKommuneKodeverksTerm(pdlPerson.foedsel.firstOrNull()?.foedekommune)
             foedelandterm = kodeverkConsumer.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
-            gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning.gtLand)
+            gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
             statsborgerskapterm =
                 kodeverkConsumer.hentStatsborgerskap().term(pdlPerson.statsborgerskap.firstOrNull()?.land)
             utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inbound.utenlandskBank?.land?.verdi)
@@ -103,7 +103,8 @@ class PersonaliaService @Autowired constructor(
 
     fun hentKontaktinformasjon(fodselsnr: String): Kontaktinformasjon {
         val inbound = kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
-        return KontaktinformasjonTransformer.toOutbound(inbound, fodselsnr)
+        val spraakTerm = kodeverkConsumer.hentSpraak().term(inbound.spraak?.uppercase())
+        return KontaktinformasjonTransformer.toOutbound(inbound, spraakTerm)
     }
 
     private fun hentEnhetKontaktinformasjon(enhetsnr: String): GeografiskEnhetKontaktInformasjon {

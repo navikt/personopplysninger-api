@@ -25,10 +25,6 @@ import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.RequestContextFilter;
 
 import javax.servlet.DispatcherType;
-import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
-import java.net.Proxy;
-import java.net.URL;
 import java.util.EnumSet;
 
 @SpringBootConfiguration
@@ -96,11 +92,7 @@ public class ApplicationConfig implements EnvironmentAware {
 
     @Bean
     public ProxyAwareResourceRetriever oidcResourceRetriever() {
-        URL proxyUrl = getConfiguredProxy();
-        ProxyAwareResourceRetriever resourceRetriever = new ProxyAwareResourceRetriever();
-        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyUrl.getHost(), proxyUrl.getPort()));
-        resourceRetriever.setProxy(proxy);
-        return resourceRetriever;
+        return new ProxyAwareResourceRetriever();
     }
 
     @Bean
@@ -113,27 +105,6 @@ public class ApplicationConfig implements EnvironmentAware {
         // slik at loggfilteret kjøres først. Årsaken til dette er avhengigheter til MDC i forretningskoden (uthenting av callId).
         filterRegistration.setOrder(-100001);
         return filterRegistration;
-    }
-
-    private URL getConfiguredProxy() {
-        String proxyParameterName = env.getProperty("http.proxy.parametername", "http.proxy");
-        String proxyconfig = env.getProperty(proxyParameterName);
-        URL proxy = null;
-        if (isProxyConfigAvailable(proxyconfig)) {
-            log.info("Proxy configuration found [" + proxyParameterName + "] was " + proxyconfig);
-            try {
-                proxy = new URL(proxyconfig);
-            } catch (MalformedURLException e) {
-                throw new RuntimeException("config [" + proxyParameterName + "] is misconfigured: " + e, e);
-            }
-        } else {
-            log.info("No proxy configuration found [" + proxyParameterName + "]");
-        }
-        return proxy;
-    }
-
-    private boolean isProxyConfigAvailable(String proxyconfig) {
-        return proxyconfig != null && proxyconfig.trim().length() > 0;
     }
 
     @Override

@@ -6,12 +6,8 @@ import no.nav.personopplysninger.exception.ConsumerException
 import no.nav.personopplysninger.exception.consumerErrorMessage
 import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
 import no.nav.personopplysninger.features.tokendings.TokenDingsService
-import no.nav.personopplysninger.util.CONSUMER_ID
-import no.nav.personopplysninger.util.HEADER_NAV_CALL_ID
-import no.nav.personopplysninger.util.HEADER_NAV_CONSUMER_ID
-import no.nav.personopplysninger.util.HEADER_NAV_PERSONIDENT_KEY
+import no.nav.personopplysninger.util.*
 import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
-import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.eclipse.jetty.http.HttpHeader
 import org.slf4j.MDC
 import java.net.URI
@@ -39,19 +35,12 @@ class MedlConsumer constructor(
 
     private fun getBuilder(fnr: String, accessToken: String): Invocation.Builder {
         return client.target(endpoint)
-            .path("api/v1/innsyn/person")
+            .path("/api/v1/innsyn/person")
             .request()
             .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
             .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-            .header(HEADER_NAV_PERSONIDENT_KEY, fnr)
+            .header(HEADER_NAV_PERSONIDENT, fnr)
             .header(HttpHeader.ACCEPT.asString(), MediaType.APPLICATION_JSON)
             .header(HttpHeader.AUTHORIZATION.asString(), "Bearer $accessToken")
     }
-
-    private fun getToken(): String {
-        val claimsIssuer = "selvbetjening"
-        val context = JaxrsTokenValidationContextHolder.getHolder()
-        return context.tokenValidationContext.getJwtToken(claimsIssuer).tokenAsString
-    }
-
 }

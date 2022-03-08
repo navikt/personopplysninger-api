@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.institusjon
 
+import no.nav.personopplysninger.util.hentFnrFraToken
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.security.token.support.jaxrs.JaxrsTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import javax.ws.rs.GET
@@ -26,10 +26,5 @@ class InstitusjonResource @Autowired constructor(
         return Response
                 .ok(institusjonService.hentInstitusjonsopphold(hentFnrFraToken()))
                 .build()
-    }
-
-    private fun hentFnrFraToken(): String {
-        val context = JaxrsTokenValidationContextHolder.getHolder()
-        return context.tokenValidationContext.getClaims(claimsIssuer).subject
     }
 }

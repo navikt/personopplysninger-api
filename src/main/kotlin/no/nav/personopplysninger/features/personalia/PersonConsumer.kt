@@ -4,7 +4,8 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.exception.ConsumerException
 import no.nav.personopplysninger.exception.consumerErrorMessage
-import no.nav.personopplysninger.util.CONSUMER_ID
+import no.nav.personopplysninger.features.tokendings.TokenDingsService
+import no.nav.personopplysninger.util.*
 import no.nav.personopplysninger.util.JsonDeserialize.objectMapper
 import no.nav.tps.person.Personinfo
 import org.slf4j.MDC
@@ -13,7 +14,12 @@ import javax.ws.rs.client.Client
 import javax.ws.rs.client.Invocation
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
-class PersonConsumer(private val client: Client, private val endpoint: URI) {
+class PersonConsumer(
+    private val client: Client,
+    private val endpoint: URI,
+    private val tokenDingsService: TokenDingsService,
+    private val targetApp: String?
+) {
 
     fun hentPersonInfo(fnr: String): Personinfo {
         val request = buildRequest(fnr)
@@ -21,12 +27,16 @@ class PersonConsumer(private val client: Client, private val endpoint: URI) {
     }
 
     private fun buildRequest(fnr: String): Invocation.Builder {
+        val selvbetjeningToken = getToken()
+        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
         return client.target(endpoint)
             .path("person")
             .request()
-            .header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
-            .header("Nav-Consumer-Id", CONSUMER_ID)
-            .header("Nav-Personident", fnr)
+            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
+            .header(HEADER_NAV_CONSUMER_TOKEN, selvbetjeningToken)
+            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+            .header(HEADER_NAV_PERSONIDENT, fnr)
     }
 
     private fun hentPersoninfo(request: Invocation.Builder): Personinfo {
