@@ -130,7 +130,7 @@ public abstract class AbstractIntegrationTest {
                         ISSUER,
                         subject,
                         List.of(audience),
-                        Map.of("acr", "Level4"),
+                        Map.of("acr", "Level4", "pid", subject),
                         3600
                 )
         ).serialize();
