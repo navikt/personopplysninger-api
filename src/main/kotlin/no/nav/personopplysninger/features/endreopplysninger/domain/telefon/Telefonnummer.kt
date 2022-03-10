@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain.telefon
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.JsonMappingException
@@ -10,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import java.io.IOException
 import java.util.*
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 class Telefonnummer {
     @JsonProperty("@type")
     private val subtype = "TELEFONNUMMER"

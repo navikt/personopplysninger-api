@@ -1,8 +1,5 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 class Substatus {
     val beskrivelse: String? = null
     val domene: String? = null

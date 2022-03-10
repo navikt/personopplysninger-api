@@ -1,13 +1,11 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain.telefon
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import no.nav.personopplysninger.features.endreopplysninger.domain.EndringsType
 import no.nav.personopplysninger.features.endreopplysninger.domain.Personopplysning
 import no.nav.personopplysninger.features.endreopplysninger.domain.opphoer.OpphoerPersonopplysning
 
 private const val OPPLYSNINGSTYPE = "TELEFONNUMMER"
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 class EndreTelefon(
         ident: String,
         endringsType: EndringsType,

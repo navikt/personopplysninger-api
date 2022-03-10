@@ -1,9 +1,6 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 
 class Kontaktadresse (
         val gyldigFraOgMed: String,
