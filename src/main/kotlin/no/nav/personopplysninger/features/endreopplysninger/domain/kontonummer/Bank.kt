@@ -1,8 +1,5 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 class Bank {
     val adresseLinje1: String? = null
     val adresseLinje2: String? = null

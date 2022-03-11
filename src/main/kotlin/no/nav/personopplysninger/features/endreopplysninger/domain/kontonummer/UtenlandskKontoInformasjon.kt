@@ -1,8 +1,5 @@
 package no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 class UtenlandskKontoInformasjon {
     val bank: Bank? = null
     val landkode: String? = null

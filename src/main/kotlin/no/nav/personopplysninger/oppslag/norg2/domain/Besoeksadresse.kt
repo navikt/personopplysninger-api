@@ -1,8 +1,5 @@
 package no.nav.personopplysninger.oppslag.norg2.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 data class Besoeksadresse (
         val type: String? = null,
         val postnummer: String? = null,

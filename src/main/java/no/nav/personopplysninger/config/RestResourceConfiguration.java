@@ -30,7 +30,7 @@ public class RestResourceConfiguration extends ResourceConfig {
     private static final List<Class> WHITELISTED_PARENT_CLASSES = Collections.singletonList(OptionsMethodProcessor.class);
 
     public RestResourceConfiguration() {
-        register(JacksonFeature.class);
+        register(JacksonFeature.withoutExceptionMappers());
         register(StatusResource.class);
         register(PersonaliaResource.class);
         register(FeatureTogglesResource.class);

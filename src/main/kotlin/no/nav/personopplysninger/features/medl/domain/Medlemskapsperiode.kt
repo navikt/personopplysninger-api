@@ -1,9 +1,7 @@
 package no.nav.personopplysninger.features.medl.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.time.LocalDate
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 data class Medlemskapsperiode (
         val fraOgMed: LocalDate,
         var hjemmel: String,

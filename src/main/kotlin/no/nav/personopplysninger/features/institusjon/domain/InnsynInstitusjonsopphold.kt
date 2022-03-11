@@ -1,10 +1,8 @@
 package no.nav.personopplysninger.features.institusjon.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 data class InnsynInstitusjonsopphold (
         val organisasjonsnummer: String?,
         val institusjonsnavn: String?,

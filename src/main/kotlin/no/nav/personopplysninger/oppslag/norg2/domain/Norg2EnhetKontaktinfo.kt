@@ -1,8 +1,5 @@
 package no.nav.personopplysninger.oppslag.norg2.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 data class Norg2EnhetKontaktinfo (
         val id: String? = null,
         val telefonnummer: String? = null,
