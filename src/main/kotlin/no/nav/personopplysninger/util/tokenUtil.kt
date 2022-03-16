@@ -12,5 +12,6 @@ fun getToken(): String {
 
 fun hentFnrFraToken(): String {
     val context = JaxrsTokenValidationContextHolder.getHolder()
-    return context.tokenValidationContext.getClaims(CLAIMS_ISSUER).getStringClaim(PID_CLAIM_KEY)
+    return context?.tokenValidationContext?.getClaims(CLAIMS_ISSUER)?.getStringClaim(PID_CLAIM_KEY)
+        ?: throw RuntimeException("Kunne ikke utlede fødselsnummer fra token")
 }
