@@ -14,7 +14,7 @@ import no.nav.personopplysninger.consumer.personmottak.domain.telefon.EndreTelef
 import no.nav.personopplysninger.consumer.personmottak.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
 import no.nav.personopplysninger.exception.ConsumerException
-import no.nav.personopplysninger.exception.consumerErrorMessage
+import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.personopplysninger.util.getJson
 import no.nav.personopplysninger.util.getToken
 import org.slf4j.LoggerFactory
@@ -29,24 +29,20 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
+private const val HTTP_CODE_422 = 422
+private const val HTTP_CODE_423 = 423
+private const val SLEEP_TIME_MS = 1000L
+private const val MAX_POLLS = 3
+private const val URL_KONTONUMMER = "/api/v1/endring/bankkonto"
+private const val URL_ENDRINGER = "/api/v1/endringer"
+
 class PersonMottakConsumer(
     private val client: Client,
     private val endpoint: URI,
     private var tokenDingsService: TokenDingsService,
     private var targetApp: String?
 ) {
-
     private val log = LoggerFactory.getLogger(PersonMottakConsumer::class.java)
-
-    private val HTTP_CODE_422 = 422
-    private val HTTP_CODE_423 = 423
-
-    private val SLEEP_TIME_MS = 1000L
-    private val MAX_POLLS = 3
-
-    private val URL_KONTONUMMER = "/api/v1/endring/bankkonto"
-
-    private val URL_ENDRINGER = "/api/v1/endringer"
 
     fun endreTelefonnummer(fnr: String, endreTelefon: EndreTelefon): EndringTelefon {
         return sendPdlEndring(endreTelefon, fnr, URL_ENDRINGER, EndringTelefon::class.java)

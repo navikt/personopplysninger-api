@@ -6,7 +6,7 @@ import no.nav.personopplysninger.consumer.*
 import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
 import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
 import no.nav.personopplysninger.exception.ConsumerException
-import no.nav.personopplysninger.exception.consumerErrorMessage
+import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.personopplysninger.util.getToken
 import no.nav.tps.person.Personinfo
 import org.slf4j.MDC

@@ -24,7 +24,7 @@ object BostedsadresseTransformer {
                 adresse = adresse
             )
         } else {
-            null;
+            null
         }
     }
 

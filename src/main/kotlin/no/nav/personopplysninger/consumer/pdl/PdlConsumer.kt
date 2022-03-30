@@ -10,7 +10,7 @@ import no.nav.personopplysninger.consumer.pdl.dto.PdlResponse
 import no.nav.personopplysninger.consumer.pdl.request.*
 import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
 import no.nav.personopplysninger.exception.ConsumerException
-import no.nav.personopplysninger.exception.consumerErrorMessage
+import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.personopplysninger.util.getToken
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -22,16 +22,14 @@ import javax.ws.rs.client.Invocation
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
+private const val RETT_PERSONOPPLYSNINGER = "RPO"
+
 class PdlConsumer(
     private val client: Client,
     private val endpoint: URI,
     private val tokenDingsService: TokenDingsService,
     private val targetApp: String?
 ) {
-
-
-    private val RETT_PERSONOPPLYSNINGER = "RPO"
-
     val log: Logger = LoggerFactory.getLogger(PdlConsumer::class.java)
 
     fun getPersonInfo(ident: String): PdlData {

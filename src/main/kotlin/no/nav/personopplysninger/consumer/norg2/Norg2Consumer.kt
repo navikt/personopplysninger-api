@@ -8,7 +8,7 @@ import no.nav.personopplysninger.consumer.norg2.domain.Norg2Enhet
 import no.nav.personopplysninger.consumer.norg2.domain.Norg2EnhetKontaktinfo
 import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
 import no.nav.personopplysninger.exception.ConsumerException
-import no.nav.personopplysninger.exception.consumerErrorMessage
+import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.personopplysninger.util.getToken
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

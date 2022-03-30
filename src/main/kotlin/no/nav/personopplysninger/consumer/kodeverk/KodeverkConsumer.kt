@@ -8,7 +8,7 @@ import no.nav.personopplysninger.consumer.kodeverk.domain.GetKodeverkKoderBetydn
 import no.nav.personopplysninger.consumer.kodeverk.domain.Kodeverk
 import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
 import no.nav.personopplysninger.exception.ConsumerException
-import no.nav.personopplysninger.exception.consumerErrorMessage
+import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.personopplysninger.util.getToken
 import org.slf4j.MDC
 import org.springframework.cache.annotation.Cacheable
