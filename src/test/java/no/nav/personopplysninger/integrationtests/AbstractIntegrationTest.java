@@ -2,7 +2,6 @@ package no.nav.personopplysninger.integrationtests;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
-import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.jwk.KeyUse;
 import com.nimbusds.jose.jwk.RSAKey;
 import no.nav.personopplysninger.api.TestLauncher;
@@ -130,7 +129,6 @@ public abstract class AbstractIntegrationTest {
                 new DefaultOAuth2TokenCallback(
                         ISSUER,
                         subject,
-                        JOSEObjectType.JWT.getType(),
                         List.of(audience),
                         Map.of("acr", "Level4", "pid", subject),
                         3600
