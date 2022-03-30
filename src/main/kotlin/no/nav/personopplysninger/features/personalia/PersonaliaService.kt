@@ -4,10 +4,11 @@ import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.consumer.kodeverk.domain.AdresseKodeverk
 import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
 import no.nav.personopplysninger.consumer.kontaktinformasjon.KontaktinfoConsumer
+import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
+import no.nav.personopplysninger.consumer.kontoregister.domain.Konto
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
 import no.nav.personopplysninger.consumer.pdl.PdlService
 import no.nav.personopplysninger.consumer.pdl.dto.PdlData
-import no.nav.personopplysninger.consumer.tpsproxy.TpsProxyConsumer
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskEnhetKontaktInformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskTilknytning
 import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon
@@ -15,28 +16,27 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAd
 import no.nav.personopplysninger.features.personalia.dto.transformer.GeografiskEnhetKontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.KontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
-import no.nav.tps.person.Personinfo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class PersonaliaService @Autowired constructor(
-    private var tpsProxyConsumer: TpsProxyConsumer,
     private var kontaktinfoConsumer: KontaktinfoConsumer,
     private var kodeverkConsumer: KodeverkConsumer,
     private var norg2Consumer: Norg2Consumer,
+    private var kontoregisterConsumer: KontoregisterConsumer,
     private var pdlService: PdlService
 ) {
 
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
 
-        val inbound = tpsProxyConsumer.hentPersonInfo(fodselsnr)
-
         val pdlPersonInfo = pdlService.getPersonInfo(fodselsnr)
 
-        val personaliaKV = createPersonaliaKodeverk(inbound, pdlPersonInfo)
+        val konto = kontoregisterConsumer.hentAktivKonto(fodselsnr)
 
-        val personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, pdlPersonInfo, personaliaKV)
+        val personaliaKV = createPersonaliaKodeverk(pdlPersonInfo, konto)
+
+        val personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(pdlPersonInfo, konto, personaliaKV)
 
         val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
         if (tilknytning != null) {
@@ -49,7 +49,7 @@ class PersonaliaService @Autowired constructor(
         return personaliaOgAdresser
     }
 
-    private fun createPersonaliaKodeverk(inbound: Personinfo, inboundPdl: PdlData): PersonaliaKodeverk {
+    private fun createPersonaliaKodeverk(inboundPdl: PdlData, inboundKonto: Konto): PersonaliaKodeverk {
         val pdlPerson = inboundPdl.person!!
         val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning
 
@@ -64,8 +64,8 @@ class PersonaliaService @Autowired constructor(
             gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
             statsborgerskapterm =
                 kodeverkConsumer.hentStatsborgerskap().term(pdlPerson.statsborgerskap.firstOrNull()?.land)
-            utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inbound.utenlandskBank?.land?.verdi)
-            utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inbound.utenlandskBank?.valuta?.verdi)
+            utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inboundKonto.utenlandskKontoInfo?.bankLandkode)
+            utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inboundKonto.utenlandskKontoInfo?.valutakode)
             kontaktadresseKodeverk = kontaktadresse.map { adresse ->
                 hentAdresseKodeverk(
                     adresse.postnummer,
