@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.testutils
 
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.*
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.*
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.*
 import org.junit.jupiter.api.Assertions.assertEquals
 
 fun assertVegadresseEquals(vegadresse: Vegadresse, poststed: String, kommune: String, inbound: PdlVegadresse) {

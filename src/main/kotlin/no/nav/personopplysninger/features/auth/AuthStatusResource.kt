@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.auth
 
-import no.nav.personopplysninger.features.personalia.pdl.PdlConsumer
+import no.nav.personopplysninger.consumer.pdl.PdlConsumer
 import no.nav.personopplysninger.util.hentFnrFraToken
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.apache.commons.lang3.StringUtils.isEmpty

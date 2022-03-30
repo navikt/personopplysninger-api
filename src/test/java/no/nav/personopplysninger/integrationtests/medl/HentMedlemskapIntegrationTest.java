@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.integrationtests.medl;
 
-import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak;
+import no.nav.personopplysninger.consumer.medl.domain.Medlemskapsunntak;
 import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

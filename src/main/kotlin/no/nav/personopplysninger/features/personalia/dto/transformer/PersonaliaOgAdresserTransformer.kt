@@ -1,9 +1,9 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
+import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
+import no.nav.personopplysninger.consumer.pdl.dto.PdlData
 import no.nav.personopplysninger.features.personalia.dto.outbound.EnhetsKontaktInformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAdresser
-import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlData
 import no.nav.tps.person.Personinfo
 
 object PersonaliaOgAdresserTransformer {

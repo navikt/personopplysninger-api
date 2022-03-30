@@ -1,5 +1,13 @@
 package no.nav.personopplysninger.features.personalia
 
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.consumer.kodeverk.domain.AdresseKodeverk
+import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
+import no.nav.personopplysninger.consumer.kontaktinformasjon.KontaktinfoConsumer
+import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
+import no.nav.personopplysninger.consumer.pdl.PdlService
+import no.nav.personopplysninger.consumer.pdl.dto.PdlData
+import no.nav.personopplysninger.consumer.tpsproxy.TpsProxyConsumer
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskEnhetKontaktInformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskTilknytning
 import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon
@@ -7,19 +15,13 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAd
 import no.nav.personopplysninger.features.personalia.dto.transformer.GeografiskEnhetKontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.KontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
-import no.nav.personopplysninger.features.personalia.kodeverk.AdresseKodeverk
-import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import no.nav.personopplysninger.features.personalia.pdl.PdlService
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlData
-import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.oppslag.norg2.Norg2Consumer
 import no.nav.tps.person.Personinfo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class PersonaliaService @Autowired constructor(
-    private var personConsumer: PersonConsumer,
+    private var tpsProxyConsumer: TpsProxyConsumer,
     private var kontaktinfoConsumer: KontaktinfoConsumer,
     private var kodeverkConsumer: KodeverkConsumer,
     private var norg2Consumer: Norg2Consumer,
@@ -28,7 +30,7 @@ class PersonaliaService @Autowired constructor(
 
     fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
 
-        val inbound = personConsumer.hentPersonInfo(fodselsnr)
+        val inbound = tpsProxyConsumer.hentPersonInfo(fodselsnr)
 
         val pdlPersonInfo = pdlService.getPersonInfo(fodselsnr)
 

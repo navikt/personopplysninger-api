@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.*
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.*
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.*
 
 fun transformVegadresse(inbound: PdlVegadresse, poststed: String?, kommune: String?): Vegadresse {
     return Vegadresse(

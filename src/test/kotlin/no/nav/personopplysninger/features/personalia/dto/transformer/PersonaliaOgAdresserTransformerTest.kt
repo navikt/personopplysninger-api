@@ -1,9 +1,9 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
 
+import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPdlData
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonInfo
-import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS

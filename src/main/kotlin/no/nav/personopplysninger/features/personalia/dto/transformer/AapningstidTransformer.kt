@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
+import no.nav.personopplysninger.consumer.norg2.domain.Aapningstider
 import no.nav.personopplysninger.features.personalia.dto.outbound.Aapningstid
-import no.nav.personopplysninger.oppslag.norg2.domain.Aapningstider
 
 object AapningstidTransformer {
     fun toOutbound(inbound: Aapningstider?): Aapningstid {

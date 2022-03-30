@@ -1,10 +1,10 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
+import no.nav.personopplysninger.consumer.kodeverk.domain.AdresseKodeverk
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.AdresseMappingType.*
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.PdlDeltBosted
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.Adresse
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.DeltBosted
-import no.nav.personopplysninger.features.personalia.kodeverk.AdresseKodeverk
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.AdresseMappingType.*
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.PdlDeltBosted
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 

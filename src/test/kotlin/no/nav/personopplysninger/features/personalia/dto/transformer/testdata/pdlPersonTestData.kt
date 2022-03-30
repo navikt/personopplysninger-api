@@ -1,12 +1,12 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer.testdata
 
+import no.nav.personopplysninger.consumer.pdl.dto.PdlData
+import no.nav.personopplysninger.consumer.pdl.dto.PdlGeografiskTilknytning
+import no.nav.personopplysninger.consumer.pdl.dto.PdlPerson
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.*
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.*
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.*
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlData
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlGeografiskTilknytning
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPerson
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.*
-import no.nav.personopplysninger.features.personalia.pdl.dto.personalia.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 

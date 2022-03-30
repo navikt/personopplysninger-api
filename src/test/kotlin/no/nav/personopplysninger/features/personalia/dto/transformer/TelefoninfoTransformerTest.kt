@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPerson
-import no.nav.personopplysninger.features.personalia.pdl.dto.personalia.PdlTelefonnummer
+import no.nav.personopplysninger.consumer.pdl.dto.PdlPerson
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlTelefonnummer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals

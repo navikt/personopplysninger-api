@@ -1,8 +1,8 @@
 
 package no.nav.personopplysninger.integrationtests.endreopplysninger;
 
+import no.nav.personopplysninger.consumer.kodeverk.domain.KodeOgTekstDto;
 import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
-import no.nav.personopplysninger.oppslag.kodeverk.api.KodeOgTekstDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;

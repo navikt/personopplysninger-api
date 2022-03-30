@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.integrationtests.institusjon;
 
-import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold;
+import no.nav.personopplysninger.consumer.inst.domain.InnsynInstitusjonsopphold;
 import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,25 +1,26 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.EndringKontaktadresse
-import no.nav.personopplysninger.features.endreopplysninger.domain.kontaktadresse.slettKontaktadressePayload
-import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer
-import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer
-import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon
-import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer
-import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.endreNummerPayload
-import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.slettNummerPayload
-import no.nav.personopplysninger.features.personalia.pdl.PdlService
-import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.oppslag.kodeverk.api.KodeOgTekstDto
-import no.nav.personopplysninger.oppslag.kodeverk.api.Kodeverk
-import no.nav.personopplysninger.oppslag.kodeverk.api.RetningsnummerDTO
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.consumer.kodeverk.domain.KodeOgTekstDto
+import no.nav.personopplysninger.consumer.kodeverk.domain.Kodeverk
+import no.nav.personopplysninger.consumer.kodeverk.domain.RetningsnummerDTO
+import no.nav.personopplysninger.consumer.pdl.PdlService
+import no.nav.personopplysninger.consumer.personmottak.PersonMottakConsumer
+import no.nav.personopplysninger.consumer.personmottak.domain.kontaktadresse.EndringKontaktadresse
+import no.nav.personopplysninger.consumer.personmottak.domain.kontaktadresse.slettKontaktadressePayload
+import no.nav.personopplysninger.consumer.personmottak.domain.kontonummer.EndringKontonummer
+import no.nav.personopplysninger.consumer.personmottak.domain.kontonummer.Kontonummer
+import no.nav.personopplysninger.consumer.personmottak.domain.telefon.EndringTelefon
+import no.nav.personopplysninger.consumer.personmottak.domain.telefon.Telefonnummer
+import no.nav.personopplysninger.consumer.personmottak.domain.telefon.endreNummerPayload
+import no.nav.personopplysninger.consumer.personmottak.domain.telefon.slettNummerPayload
 import org.springframework.stereotype.Service
 
 @Service
 class EndreOpplysningerService (
-        private var personMottakConsumer: PersonMottakConsumer,
-        private var kodeverkConsumer: KodeverkConsumer,
-        private var pdlService: PdlService
+    private var personMottakConsumer: PersonMottakConsumer,
+    private var kodeverkConsumer: KodeverkConsumer,
+    private var pdlService: PdlService
 ) {
 
     fun endreTelefonnummer(fnr: String, telefonnummer: Telefonnummer): EndringTelefon {

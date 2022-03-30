@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.integrationtests.endreopplysninger;
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.EndringTelefon;
-import no.nav.personopplysninger.features.endreopplysninger.domain.telefon.Telefonnummer;
+import no.nav.personopplysninger.consumer.personmottak.domain.telefon.EndringTelefon;
+import no.nav.personopplysninger.consumer.personmottak.domain.telefon.Telefonnummer;
 import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

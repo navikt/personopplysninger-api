@@ -1,10 +1,10 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
+import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
+import no.nav.personopplysninger.consumer.pdl.dto.PdlPerson
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlNavn
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personident
-import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import no.nav.personopplysninger.features.personalia.pdl.dto.PdlPerson
-import no.nav.personopplysninger.features.personalia.pdl.dto.personalia.PdlNavn
 import no.nav.tps.person.Personinfo
 
 

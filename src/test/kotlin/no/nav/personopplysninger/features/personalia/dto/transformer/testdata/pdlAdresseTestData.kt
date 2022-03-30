@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer.testdata
 
-import no.nav.personopplysninger.features.personalia.pdl.dto.adresse.*
-import no.nav.personopplysninger.features.personalia.pdl.dto.common.PdlMetadata
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.*
+import no.nav.personopplysninger.consumer.pdl.dto.common.PdlMetadata
 
 fun createDummyVegadresse(): PdlVegadresse {
 

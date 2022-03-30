@@ -5,7 +5,7 @@ import com.github.tomakehurst.wiremock.client.WireMock;
 import com.nimbusds.jose.jwk.KeyUse;
 import com.nimbusds.jose.jwk.RSAKey;
 import no.nav.personopplysninger.api.TestLauncher;
-import no.nav.personopplysninger.tasks.EvickCacheTask;
+import no.nav.personopplysninger.tasks.EvictCacheTask;
 import no.nav.security.mock.oauth2.MockOAuth2Server;
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback;
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server;
@@ -55,7 +55,7 @@ public abstract class AbstractIntegrationTest {
     private MockOAuth2Server oAuth2Server;
 
     @Autowired
-    EvickCacheTask cacheTask;
+    EvictCacheTask cacheTask;
 
     // TokenX needs to run on its own wiremock server, as it is used in application config which is run before
     // the autoconfigured wiremock server is started.
