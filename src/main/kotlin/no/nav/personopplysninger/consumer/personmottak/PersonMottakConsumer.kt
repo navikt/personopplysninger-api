@@ -7,8 +7,6 @@ import no.nav.personopplysninger.consumer.*
 import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
 import no.nav.personopplysninger.consumer.personmottak.domain.Endring
 import no.nav.personopplysninger.consumer.personmottak.domain.Personopplysning
-import no.nav.personopplysninger.consumer.personmottak.domain.kontonummer.EndringKontonummer
-import no.nav.personopplysninger.consumer.personmottak.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.consumer.personmottak.domain.opphoer.OpphoerPersonopplysning
 import no.nav.personopplysninger.consumer.personmottak.domain.telefon.EndreTelefon
 import no.nav.personopplysninger.consumer.personmottak.domain.telefon.EndringTelefon
@@ -33,7 +31,6 @@ private const val HTTP_CODE_422 = 422
 private const val HTTP_CODE_423 = 423
 private const val SLEEP_TIME_MS = 1000L
 private const val MAX_POLLS = 3
-private const val URL_KONTONUMMER = "/api/v1/endring/bankkonto"
 private const val URL_ENDRINGER = "/api/v1/endringer"
 
 class PersonMottakConsumer(
@@ -46,11 +43,6 @@ class PersonMottakConsumer(
 
     fun endreTelefonnummer(fnr: String, endreTelefon: EndreTelefon): EndringTelefon {
         return sendPdlEndring(endreTelefon, fnr, URL_ENDRINGER, EndringTelefon::class.java)
-    }
-
-    fun endreKontonummer(fnr: String, kontonummer: Kontonummer): EndringKontonummer {
-        val request = buildEndreRequest(fnr, URL_KONTONUMMER)
-        return sendEndring(request, kontonummer, HttpMethod.POST, EndringKontonummer::class.java)
     }
 
     fun <T : Endring<T>> slettPersonopplysning(
@@ -80,21 +72,6 @@ class PersonMottakConsumer(
 
     private fun buildPollEndringRequest(url: String): Invocation.Builder {
         return getBuilder(url)
-    }
-
-    private fun <T : Endring<T>> sendEndring(
-        request: Invocation.Builder,
-        entitetSomEndres: Any,
-        httpMethod: String,
-        c: Class<T>
-    ): T {
-        return try {
-            request.method(httpMethod, Entity.entity(entitetSomEndres, MediaType.APPLICATION_JSON))
-                .use { response -> readResponseAndPollStatus(response, c) }
-        } catch (e: Exception) {
-            val msg = "Forsøkte å endre personopplysning. endpoint=[$endpoint]."
-            throw ConsumerException(msg, e)
-        }
     }
 
     private fun <T, R : Endring<R>> sendPdlEndring(

@@ -2,15 +2,14 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 
 
 import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
+import no.nav.personopplysninger.consumer.kontoregister.domain.Konto
 import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlTelefonnummer
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.dto.outbound.UtenlandskBankInfo
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyKonto
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPerson
-import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonInfo
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonaliaKodeverk
-import no.nav.tps.person.Personinfo
-import no.nav.tps.person.UtenlandskBank
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
@@ -21,10 +20,10 @@ class PersoninfoTransformerTest {
 
     @Test
     fun gittPersonalia_skalFaaPersonalia() {
-        val tpsPerson: Personinfo = createDummyPersonInfo()
+        val konto = createDummyKonto()
         val kodeverk = createDummyPersonaliaKodeverk()
         val pdlPerson = createDummyPerson()
-        val actual: Personalia = PersoninfoTransformer.toOutbound(tpsPerson, pdlPerson, kodeverk)
+        val actual: Personalia = PersoninfoTransformer.toOutbound(pdlPerson, konto, kodeverk)
 
         val pdlNavn = pdlPerson.navn.first()
         val pdlFolkeregisteridentifikator = pdlPerson.folkeregisteridentifikator.first()
@@ -35,9 +34,9 @@ class PersoninfoTransformerTest {
         assertEquals(pdlNavn.etternavn, actual.etternavn!!)
         assertEquals(pdlFolkeregisteridentifikator.identifikasjonsnummer, actual.personident!!.verdi)
         assertEquals(pdlFolkeregisteridentifikator.type, actual.personident!!.type)
-        assertEquals(tpsPerson.kontonummer!!.nummer!!, actual.kontonr!!)
+        assertEquals(konto.kontonummer, actual.kontonr!!)
         assertTlfnr(pdlPerson.telefonnummer, actual.tlfnr!!)
-        assertUtenlandskBank(tpsPerson.utenlandskBank!!, actual.utenlandskbank!!, kodeverk)
+        assertUtenlandskBank(konto, actual.utenlandskbank!!, kodeverk)
         assertEquals(kodeverk.statsborgerskapterm, actual.statsborgerskap)
         assertEquals("${kodeverk.foedekommuneterm}, ${kodeverk.foedelandterm}", actual.foedested)
         assertEquals(pdlSivilstand, actual.sivilstand)
@@ -50,19 +49,20 @@ class PersoninfoTransformerTest {
     }
 
     private fun assertUtenlandskBank(
-        inbound: UtenlandskBank,
+        inbound: Konto,
         outbound: UtenlandskBankInfo,
         kodeverk: PersonaliaKodeverk
     ) {
-        assertEquals(inbound.adresse1, outbound.adresse1)
-        assertEquals(inbound.adresse2, outbound.adresse2)
-        assertEquals(inbound.adresse3, outbound.adresse3)
-        assertEquals(inbound.bankkode, outbound.bankkode)
-        assertEquals(inbound.banknavn, outbound.banknavn)
-        assertEquals(inbound.iban, outbound.iban)
+        val utenlandskBank = inbound.utenlandskKontoInfo!!
+
+        assertEquals(utenlandskBank.bankadresse1, outbound.adresse1)
+        assertEquals(utenlandskBank.bankadresse2, outbound.adresse2)
+        assertEquals(utenlandskBank.bankadresse3, outbound.adresse3)
+        assertEquals(utenlandskBank.bankkode, outbound.bankkode)
+        assertEquals(utenlandskBank.banknavn, outbound.banknavn)
         assertEquals(inbound.kontonummer, outbound.kontonummer)
         assertEquals(kodeverk.utenlandskbanklandterm, outbound.land)
-        assertEquals(inbound.swiftkode, outbound.swiftkode)
+        assertEquals(utenlandskBank.swiftBicKode, outbound.swiftkode)
         assertEquals(kodeverk.utenlandskbankvalutaterm, outbound.valuta)
     }
 }

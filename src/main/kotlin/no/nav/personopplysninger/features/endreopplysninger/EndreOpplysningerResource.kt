@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.consumer.personmottak.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.consumer.personmottak.domain.telefon.Telefonnummer
+import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
 import no.nav.personopplysninger.util.hentFnrFraToken
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.beans.factory.annotation.Autowired
@@ -42,9 +42,9 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     fun endreKontonummer(kontonummer: Kontonummer): Response {
-        val resp = endreOpplysningerService.endreKontonummer(
+        endreOpplysningerService.endreKontonummer(
                 hentFnrFraToken(), kontonummer)
-        return Response.ok(resp).build()
+        return Response.ok().build()
     }
 
     @POST

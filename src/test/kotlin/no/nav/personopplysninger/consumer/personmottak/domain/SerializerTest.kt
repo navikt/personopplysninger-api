@@ -5,12 +5,10 @@ import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
 import no.nav.personopplysninger.consumer.inst.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.consumer.kodeverk.domain.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.consumer.kodeverk.domain.RetningsnummerDTO
-import no.nav.personopplysninger.consumer.personmottak.domain.kontonummer.EndringKontonummer
-import no.nav.personopplysninger.consumer.personmottak.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.consumer.personmottak.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.consumer.personmottak.domain.telefon.Telefonnummer
+import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
-import no.nav.personopplysninger.testutils.endringJson
 import no.nav.personopplysninger.testutils.utenlandskKontonummerJson
 import no.nav.personopplysninger.util.getJson
 import org.junit.jupiter.api.Test
@@ -32,27 +30,10 @@ class SerializerTest {
     }
 
     @Test
-    fun testSerializationKontonummer() {
-        val json: String = readFile("endring-kontonummer.json")
-        val endringer: List<EndringKontonummer> = objectMapper.readValue(json)
-        val endring = endringer[0]
-        assertEquals("OPPRETT", endring.endringstype)
-        assertEquals("BRUKER SELV", endring.innmeldtEndring!!.kilde)
-        assertEquals(3, endring.status.substatus.size)
-    }
-
-    @Test
     fun testSerializationInstitusjonsopphold() {
         val json: String = readFile("inst2.json")
         val institusjonsopphold: List<InnsynInstitusjonsopphold> = objectMapper.readValue(json)
         assertEquals(7, institusjonsopphold.size)
-    }
-
-    @Test
-    fun testSerializationKontonummer2() {
-        val endring: EndringKontonummer = objectMapper.readValue(endringJson())
-        assertEquals("12345678910", endring.ident)
-        assertEquals(2113, endring.status.endringId)
     }
 
     @Test

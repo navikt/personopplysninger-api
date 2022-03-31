@@ -12,12 +12,12 @@ import org.springframework.http.ResponseEntity;
 import java.util.Objects;
 
 import static no.nav.personopplysninger.stubs.KodeverkStubs.*;
+import static no.nav.personopplysninger.stubs.KontoregisterStubs.stubHentKonto200;
+import static no.nav.personopplysninger.stubs.KontoregisterStubs.stubHentKonto500;
 import static no.nav.personopplysninger.stubs.Norg2Stubs.stubNorg2_200;
 import static no.nav.personopplysninger.stubs.Norg2Stubs.stubNorg2_500;
 import static no.nav.personopplysninger.stubs.PdlStubs.*;
 import static no.nav.personopplysninger.stubs.StsStubs.stubSts200;
-import static no.nav.personopplysninger.stubs.TpsStubs.stubTps200;
-import static no.nav.personopplysninger.stubs.TpsStubs.stubTps500;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
@@ -36,7 +36,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
         stubKodeverkKommuner200();
         stubSts200();
         stubPdl200();
-        stubTps200();
+        stubHentKonto200();
         stubNorg2_200();
     }
 
@@ -121,8 +121,8 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void skalGi500MedFeilIKallMotTps() {
-        stubTps500();
+    void skalGi500MedFeilIKallMotKontoregister() {
+        stubHentKonto500();
 
         ResponseEntity<String> response = restTemplate.exchange(
                 "/personalia",

@@ -2,8 +2,8 @@ package no.nav.personopplysninger.features.personalia.dto.transformer
 
 
 import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
+import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyKonto
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPdlData
-import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonInfo
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
@@ -16,9 +16,9 @@ class PersonaliaOgAdresserTransformerTest {
 
     @Test
     fun gittPersonaliaOgAdresser_skalFaaPersonaliaOgAdresser() {
-        val inbound = createDummyPersonInfo()
+        val konto = createDummyKonto()
         val pdlData = createDummyPdlData()
-        val actual = PersonaliaOgAdresserTransformer.toOutbound(inbound, pdlData, personaliaKodeverk)
+        val actual = PersonaliaOgAdresserTransformer.toOutbound(pdlData, konto, personaliaKodeverk)
 
         assertNotNull(actual.personalia)
         assertNotNull(actual.adresser)

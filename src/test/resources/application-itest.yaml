@@ -1,14 +1,15 @@
 DIGDIR_KRR_PROXY_CONSUMER_TARGET_APP: dummy
 PDL_CONSUMER_TARGET_APP: dummy
 PERSONOPPLYSNINGER_PROXY_TARGET_APP: dummy
+KONTOREGISTER_TARGET_APP: dummy
 PERSON_MOTTAK_API_URL: http://localhost:${wiremock.server.port}/personmottak
 DIGDIR_KRR_PROXY_URL: http://localhost:${wiremock.server.port}/digdir-krr-proxy
 PDL_API_URL: http://localhost:${wiremock.server.port}/pdl
 KODEVERK_REST_API_URL: http://localhost:${wiremock.server.port}/kodeverk
 NORG2_API_V1_URL: http://localhost:${wiremock.server.port}/norg2
-TPS_PROXY_API_V1_INNSYN_URL: http://localhost:${wiremock.server.port}/tpsproxy
 INST2_API_URL: http://localhost:${wiremock.server.port}/inst2
 MEDLEMSKAP_MEDL_API_URL: http://localhost:${wiremock.server.port}/medl
+KONTOREGISTER_URL: http://localhost:${wiremock.server.port}/kontoregister
 
 LOGINSERVICE_IDPORTEN_DISCOVERY_URL: http://localhost:${mock-oauth2-server.port}/selvbetjening/.well-known/openid-configuration
 LOGINSERVICE_IDPORTEN_AUDIENCE: someaudience
