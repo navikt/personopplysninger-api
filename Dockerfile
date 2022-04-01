@@ -1,4 +1,4 @@
-FROM navikt/java:11
+FROM navikt/java:17
 COPY target/personopplysninger-api.jar app.jar
 ENV APPD_ENABLED=true
 ENV APP_LOG_HOME="/tmp"
