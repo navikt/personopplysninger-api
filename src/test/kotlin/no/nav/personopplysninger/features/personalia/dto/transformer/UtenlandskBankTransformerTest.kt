@@ -1,8 +1,8 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
+import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyUtenlandskBank
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createUtenlandskBankNullObject
-import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance

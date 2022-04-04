@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.integrationtests.endreopplysninger;
 
-import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.EndringKontonummer;
-import no.nav.personopplysninger.features.endreopplysninger.domain.kontonummer.Kontonummer;
+import no.nav.personopplysninger.consumer.personmottak.domain.kontonummer.EndringKontonummer;
+import no.nav.personopplysninger.consumer.personmottak.domain.kontonummer.Kontonummer;
 import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,13 +1,14 @@
 package no.nav.personopplysninger.features.medl
-import no.nav.personopplysninger.features.medl.domain.Medlemskapsunntak
-import no.nav.personopplysninger.oppslag.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.consumer.medl.MedlConsumer
+import no.nav.personopplysninger.consumer.medl.domain.Medlemskapsunntak
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class MedlService @Autowired constructor(
-        private var medlConsumer: MedlConsumer,
-        private var kodeverkConsumer: KodeverkConsumer
+    private var medlConsumer: MedlConsumer,
+    private var kodeverkConsumer: KodeverkConsumer
 ) {
     fun hentMeldemskap(fnr: String): Medlemskapsunntak {
         val perioder = medlConsumer.hentMedlemskap(fnr)

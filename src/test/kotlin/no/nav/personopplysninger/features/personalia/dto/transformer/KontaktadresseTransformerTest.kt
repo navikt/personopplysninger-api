@@ -13,7 +13,7 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class KontaktadresseTransformerTest {
 
-    val adresseKodeverk = createDummyAdresseKodeverk()
+    private val adresseKodeverk = createDummyAdresseKodeverk()
 
     @Test
     fun canTransformVegdresse() {

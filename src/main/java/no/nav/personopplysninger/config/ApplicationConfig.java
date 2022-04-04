@@ -31,7 +31,7 @@ import java.util.EnumSet;
 @ComponentScan({
         "no.nav.personopplysninger.features",
         "no.nav.personopplysninger.api",
-        "no.nav.personopplysninger.oppslag",
+        "no.nav.personopplysninger.consumer",
         "no.nav.personopplysninger.tasks"
 })
 @EnableConfigurationProperties(MultiIssuerProperties.class)

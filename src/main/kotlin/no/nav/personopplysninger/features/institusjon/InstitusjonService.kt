@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.features.institusjon
 
-import no.nav.personopplysninger.features.institusjon.domain.InnsynInstitusjonsopphold
+import no.nav.personopplysninger.consumer.inst.InstitusjonConsumer
+import no.nav.personopplysninger.consumer.inst.domain.InnsynInstitusjonsopphold
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

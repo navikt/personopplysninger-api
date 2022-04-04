@@ -1,14 +1,14 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
 
+import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlTelefonnummer
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.dto.outbound.UtenlandskBankInfo
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPerson
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonInfo
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonaliaKodeverk
-import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
-import no.nav.personopplysninger.features.personalia.pdl.dto.personalia.PdlTelefonnummer
 import no.nav.tps.person.Personinfo
 import no.nav.tps.person.UtenlandskBank
 import org.junit.jupiter.api.Test

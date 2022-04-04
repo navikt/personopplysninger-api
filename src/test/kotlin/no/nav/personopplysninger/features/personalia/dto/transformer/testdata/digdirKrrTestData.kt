@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer.testdata
 
-import no.nav.personopplysninger.features.personalia.kontaktinformasjon.DigitalKontaktinformasjon
-import no.nav.personopplysninger.features.personalia.kontaktinformasjon.SikkerDigitalPostkasse
+import no.nav.personopplysninger.consumer.kontaktinformasjon.domain.DigitalKontaktinformasjon
+import no.nav.personopplysninger.consumer.kontaktinformasjon.domain.SikkerDigitalPostkasse
 
 fun createDummyDigitalKontaktinfo(): DigitalKontaktinformasjon {
     return DigitalKontaktinformasjon(

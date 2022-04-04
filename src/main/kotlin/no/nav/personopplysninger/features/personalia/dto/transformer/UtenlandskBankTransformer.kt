@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
+import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.dto.outbound.UtenlandskBankInfo
-import no.nav.personopplysninger.features.personalia.kodeverk.PersonaliaKodeverk
 import no.nav.tps.person.UtenlandskBank
 
 object UtenlandskBankTransformer {
