@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.integrationtests.endreopplysninger;
 
-import no.nav.personopplysninger.consumer.personmottak.domain.kontaktadresse.EndringKontaktadresse;
+import no.nav.personopplysninger.consumer.pdlmottak.domain.kontaktadresse.EndringKontaktadresse;
 import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,10 +8,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static no.nav.personopplysninger.stubs.PdlMottakStubs.stubPdlMottakSlettKontaktadresse200;
+import static no.nav.personopplysninger.stubs.PdlMottakStubs.stubPdlMottakSlettKontaktadresse500;
 import static no.nav.personopplysninger.stubs.PdlStubs.stubPdl200;
 import static no.nav.personopplysninger.stubs.PdlStubs.stubPdl500;
-import static no.nav.personopplysninger.stubs.PersonmottakStubs.stubPersonmottakSlettKontaktadresse200;
-import static no.nav.personopplysninger.stubs.PersonmottakStubs.stubPersonmottakSlettKontaktadresse500;
 import static no.nav.personopplysninger.stubs.StsStubs.stubSts200;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -23,7 +23,7 @@ class SlettKontaktadresseIntegrationTest extends AbstractIntegrationTest {
     void setup() {
         stubPdl200();
         stubSts200();
-        stubPersonmottakSlettKontaktadresse200();
+        stubPdlMottakSlettKontaktadresse200();
     }
 
     @Test
@@ -62,8 +62,8 @@ class SlettKontaktadresseIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void skalGi500MedFeilIKallMotPersonmottak() {
-        stubPersonmottakSlettKontaktadresse500();
+    void skalGi500MedFeilIKallMotPdlMottak() {
+        stubPdlMottakSlettKontaktadresse500();
 
         ResponseEntity<String> response = restTemplate.exchange(
                 "/slettKontaktadresse",

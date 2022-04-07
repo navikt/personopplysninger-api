@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.integrationtests.endreopplysninger;
 
-import no.nav.personopplysninger.consumer.personmottak.domain.kontonummer.EndringKontonummer;
-import no.nav.personopplysninger.consumer.personmottak.domain.kontonummer.Kontonummer;
+import no.nav.personopplysninger.consumer.pdlmottak.domain.kontonummer.EndringKontonummer;
+import no.nav.personopplysninger.consumer.pdlmottak.domain.kontonummer.Kontonummer;
 import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +10,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static no.nav.personopplysninger.stubs.PersonmottakStubs.stubPersonmottakBankkonto200;
-import static no.nav.personopplysninger.stubs.PersonmottakStubs.stubPersonmottakBankkonto500;
+import static no.nav.personopplysninger.stubs.PdlMottakStubs.stubPdlMottakBankkonto200;
+import static no.nav.personopplysninger.stubs.PdlMottakStubs.stubPdlMottakBankkonto500;
 import static no.nav.personopplysninger.stubs.StsStubs.stubSts200;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -22,7 +22,7 @@ class EndreKontonummerIntegrationTest extends AbstractIntegrationTest {
     @BeforeEach
     void setup() {
         stubSts200();
-        stubPersonmottakBankkonto200();
+        stubPdlMottakBankkonto200();
     }
 
     @Test
@@ -48,8 +48,8 @@ class EndreKontonummerIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void skalGi500MedFeilIKallMotPersonmottak() {
-        stubPersonmottakBankkonto500();
+    void skalGi500MedFeilIKallMotPdlMottak() {
+        stubPdlMottakBankkonto500();
 
         ResponseEntity<String> response = restTemplate.exchange(
                 "/endreKontonummer",

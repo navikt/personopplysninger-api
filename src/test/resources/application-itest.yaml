@@ -1,7 +1,7 @@
 DIGDIR_KRR_PROXY_CONSUMER_TARGET_APP: dummy
 PDL_CONSUMER_TARGET_APP: dummy
 PERSONOPPLYSNINGER_PROXY_TARGET_APP: dummy
-PERSON_MOTTAK_API_URL: http://localhost:${wiremock.server.port}/personmottak
+PDL_MOTTAK_API_URL: http://localhost:${wiremock.server.port}/pdlmottak
 DIGDIR_KRR_PROXY_URL: http://localhost:${wiremock.server.port}/digdir-krr-proxy
 PDL_API_URL: http://localhost:${wiremock.server.port}/pdl
 KODEVERK_REST_API_URL: http://localhost:${wiremock.server.port}/kodeverk
