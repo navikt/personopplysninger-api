@@ -13,7 +13,6 @@ object UtenlandskBankTransformer {
                 adresse3 = utenlandskKontoInfo.bankadresse3,
                 bankkode = utenlandskKontoInfo.bankkode,
                 banknavn = utenlandskKontoInfo.banknavn,
-                //iban = inbound.iban,
                 kontonummer = inbound.kontonummer,
                 swiftkode = utenlandskKontoInfo.swiftBicKode,
                 land = utenlandskKontoInfo.bankLandkode?.let { kodeverk.utenlandskbanklandterm },

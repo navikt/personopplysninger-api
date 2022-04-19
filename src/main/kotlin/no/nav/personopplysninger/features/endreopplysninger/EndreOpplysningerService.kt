@@ -48,12 +48,12 @@ class EndreOpplysningerService(
 
     fun endreKontonummer(fnr: String, kontonummer: Kontonummer) {
         val request = OppdaterKonto(
-            kontohaver = fnr, nyttKontonummer = kontonummer.value,
+            kontohaver = fnr,
+            nyttKontonummer = kontonummer.value,
             utenlandskKontoInfo = kontonummer.utenlandskKontoInformasjon?.let {
                 UtenlandskKontoInfo(
                     bankLandkode = kontonummer.utenlandskKontoInformasjon.landkode,
                     valutakode = kontonummer.utenlandskKontoInformasjon.valuta!!,
-                    banknavn = kontonummer.utenlandskKontoInformasjon.bank?.navn,
                     swiftBicKode = kontonummer.utenlandskKontoInformasjon.swift
                 )
             }
