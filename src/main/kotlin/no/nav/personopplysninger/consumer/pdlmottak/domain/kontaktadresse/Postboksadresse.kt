@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.consumer.personmottak.domain.kontaktadresse
+package no.nav.personopplysninger.consumer.pdlmottak.domain.kontaktadresse
 
 class Postboksadresse(
         val postbokseier: String? = null,

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.consumer.personmottak.domain.telefon
+package no.nav.personopplysninger.consumer.pdlmottak.domain.telefon
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.consumer.personmottak.domain.opphoer
+package no.nav.personopplysninger.consumer.pdlmottak.domain.opphoer
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

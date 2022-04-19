@@ -1,7 +1,7 @@
-package no.nav.personopplysninger.consumer.personmottak.domain.kontaktadresse
+package no.nav.personopplysninger.consumer.pdlmottak.domain.kontaktadresse
 
-import no.nav.personopplysninger.consumer.personmottak.domain.Endring
-import no.nav.personopplysninger.consumer.personmottak.domain.Error
+import no.nav.personopplysninger.consumer.pdlmottak.domain.Endring
+import no.nav.personopplysninger.consumer.pdlmottak.domain.Error
 
 class EndringKontaktadresse : Endring<EndringKontaktadresse> {
 

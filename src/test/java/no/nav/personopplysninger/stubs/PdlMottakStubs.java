@@ -4,42 +4,42 @@ import org.springframework.http.HttpHeaders;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
-public class PersonmottakStubs {
+public class PdlMottakStubs {
 
-    private PersonmottakStubs() {
+    private PdlMottakStubs() {
         // noop
     }
 
-    public static void stubPersonmottakTelefon200() {
+    public static void stubPdlMottakTelefon200() {
         stubEndringer200();
 
-        stubFor(get(urlEqualTo("/personmottak/location"))
+        stubFor(get(urlEqualTo("/pdlmottak/location"))
                 .willReturn(aResponse()
                         .withBodyFile("endring-telefonnummer.json")
                         .withStatus(200)
                         .withHeader(HttpHeaders.CONTENT_TYPE, "application/json")));
     }
 
-    public static void stubPersonmottakTelefon500() {
+    public static void stubPdlMottakTelefon500() {
         stubEndringer500();
     }
 
-    public static void stubPersonmottakSlettKontaktadresse200(){
+    public static void stubPdlMottakSlettKontaktadresse200(){
         stubEndringer200();
 
-        stubFor(get(urlEqualTo("/personmottak/location"))
+        stubFor(get(urlEqualTo("/pdlmottak/location"))
                 .willReturn(aResponse()
                         .withBodyFile("endring-kontaktadresse.json")
                         .withStatus(200)
                         .withHeader(HttpHeaders.CONTENT_TYPE, "application/json")));
     }
 
-    public static void stubPersonmottakSlettKontaktadresse500(){
+    public static void stubPdlMottakSlettKontaktadresse500(){
         stubEndringer500();
     }
 
     private static void stubEndringer200() {
-        stubFor(post(urlEqualTo("/personmottak/api/v1/endringer"))
+        stubFor(post(urlEqualTo("/pdlmottak/api/v1/endringer"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(HttpHeaders.CONTENT_TYPE, "application/json")
@@ -47,7 +47,7 @@ public class PersonmottakStubs {
     }
 
     private static void stubEndringer500() {
-        stubFor(post(urlEqualTo("/personmottak/api/v1/endringer"))
+        stubFor(post(urlEqualTo("/pdlmottak/api/v1/endringer"))
                 .willReturn(aResponse()
                         .withStatus(500)
                         .withBody("Noe gikk galt")

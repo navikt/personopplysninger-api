@@ -1,8 +1,8 @@
-package no.nav.personopplysninger.consumer.personmottak.domain.kontaktadresse
+package no.nav.personopplysninger.consumer.pdlmottak.domain.kontaktadresse
 
-import no.nav.personopplysninger.consumer.personmottak.domain.EndringsType
-import no.nav.personopplysninger.consumer.personmottak.domain.Personopplysning
-import no.nav.personopplysninger.consumer.personmottak.domain.opphoer.OpphoerPersonopplysning
+import no.nav.personopplysninger.consumer.pdlmottak.domain.EndringsType
+import no.nav.personopplysninger.consumer.pdlmottak.domain.Personopplysning
+import no.nav.personopplysninger.consumer.pdlmottak.domain.opphoer.OpphoerPersonopplysning
 
 private const val OPPLYSNINGSTYPE = "KONTAKTADRESSE"
 

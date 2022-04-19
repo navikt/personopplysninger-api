@@ -1,6 +1,6 @@
-package no.nav.personopplysninger.consumer.personmottak.domain.telefon
+package no.nav.personopplysninger.consumer.pdlmottak.domain.telefon
 
-import no.nav.personopplysninger.consumer.personmottak.domain.Endring
+import no.nav.personopplysninger.consumer.pdlmottak.domain.Endring
 
 class EndringTelefon : Endring<EndringTelefon> {
     var innmeldtEndring: Telefonnummer? = null

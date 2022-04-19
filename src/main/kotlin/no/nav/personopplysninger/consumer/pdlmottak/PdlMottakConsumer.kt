@@ -1,15 +1,17 @@
-package no.nav.personopplysninger.consumer.personmottak
+package no.nav.personopplysninger.consumer.pdlmottak
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.consumer.*
 import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
-import no.nav.personopplysninger.consumer.personmottak.domain.Endring
-import no.nav.personopplysninger.consumer.personmottak.domain.Personopplysning
-import no.nav.personopplysninger.consumer.personmottak.domain.opphoer.OpphoerPersonopplysning
-import no.nav.personopplysninger.consumer.personmottak.domain.telefon.EndreTelefon
-import no.nav.personopplysninger.consumer.personmottak.domain.telefon.EndringTelefon
+import no.nav.personopplysninger.consumer.pdlmottak.domain.Endring
+import no.nav.personopplysninger.consumer.pdlmottak.domain.Personopplysning
+import no.nav.personopplysninger.consumer.pdlmottak.domain.kontonummer.EndringKontonummer
+import no.nav.personopplysninger.consumer.pdlmottak.domain.kontonummer.Kontonummer
+import no.nav.personopplysninger.consumer.pdlmottak.domain.opphoer.OpphoerPersonopplysning
+import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.EndreTelefon
+import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
 import no.nav.personopplysninger.exception.ConsumerException
 import no.nav.personopplysninger.util.consumerErrorMessage
@@ -33,13 +35,13 @@ private const val SLEEP_TIME_MS = 1000L
 private const val MAX_POLLS = 3
 private const val URL_ENDRINGER = "/api/v1/endringer"
 
-class PersonMottakConsumer(
+class PdlMottakConsumer(
     private val client: Client,
     private val endpoint: URI,
     private var tokenDingsService: TokenDingsService,
     private var targetApp: String?
 ) {
-    private val log = LoggerFactory.getLogger(PersonMottakConsumer::class.java)
+    private val log = LoggerFactory.getLogger(PdlMottakConsumer::class.java)
 
     fun endreTelefonnummer(fnr: String, endreTelefon: EndreTelefon): EndringTelefon {
         return sendPdlEndring(endreTelefon, fnr, URL_ENDRINGER, EndringTelefon::class.java)
@@ -61,7 +63,6 @@ class PersonMottakConsumer(
             .request()
             .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
             .header(HEADER_AUTHORIZATION, BEARER + accessToken)
-            .header(HEADER_NAV_CONSUMER_TOKEN, selvbetjeningToken)
             .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
     }
 

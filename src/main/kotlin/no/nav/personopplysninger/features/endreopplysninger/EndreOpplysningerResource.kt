@@ -2,6 +2,8 @@ package no.nav.personopplysninger.features.endreopplysninger
 
 import no.nav.personopplysninger.consumer.personmottak.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
+import no.nav.personopplysninger.consumer.pdlmottak.domain.kontonummer.Kontonummer
+import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.util.hentFnrFraToken
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.beans.factory.annotation.Autowired

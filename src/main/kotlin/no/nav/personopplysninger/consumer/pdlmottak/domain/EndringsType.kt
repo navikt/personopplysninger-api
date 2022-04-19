@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.consumer.personmottak.domain
+package no.nav.personopplysninger.consumer.pdlmottak.domain
 
 enum class EndringsType {
     OPPHOER, ANNULER, OPPRETT, KORRIGER

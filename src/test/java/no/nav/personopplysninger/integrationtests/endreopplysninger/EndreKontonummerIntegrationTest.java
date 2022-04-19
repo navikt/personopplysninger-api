@@ -47,7 +47,7 @@ class EndreKontonummerIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void skalGi500MedFeilIKallMotPersonmottak() {
+    void skalGi500MedFeilIKallMotKontoregister() {
         stubOppdaterKonto500();
 
         ResponseEntity<String> response = restTemplate.exchange(

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.consumer.personmottak
+package no.nav.personopplysninger.consumer.pdlmottak
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
@@ -13,23 +13,23 @@ import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.ext.ContextResolver
 
 @Configuration
-open class PersonMottakConfiguration {
+open class PdlMottakConfiguration {
 
-    @Value("\${PERSONOPPLYSNINGER_PROXY_TARGET_APP}")
+    @Value("\${PDL_MOTTAK_TARGET_APP}")
     private val targetApp: String? = null
 
     @Bean
     @Throws(URISyntaxException::class)
-    open fun personMottakConsumer(
-        @Named("personMottakClient") client: Client,
-        @Value("\${PERSON_MOTTAK_API_URL}") personMottakServiceUri: String,
+    open fun pdlMottakConsumer(
+        @Named("pdlMottakClient") client: Client,
+        @Value("\${PDL_MOTTAK_API_URL}") pdlMottakServiceUri: String,
         tokenDingsService: TokenDingsService
-    ): PersonMottakConsumer {
-        return PersonMottakConsumer(client, URI(personMottakServiceUri), tokenDingsService, targetApp)
+    ): PdlMottakConsumer {
+        return PdlMottakConsumer(client, URI(pdlMottakServiceUri), tokenDingsService, targetApp)
     }
 
     @Bean
-    open fun personMottakClient(clientObjectMapperResolver: ContextResolver<ObjectMapper>): Client {
+    open fun pdlMottakClient(clientObjectMapperResolver: ContextResolver<ObjectMapper>): Client {
         return ClientBuilder.newBuilder()
             .register(clientObjectMapperResolver)
             .build()
