@@ -5,13 +5,9 @@ import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
 import no.nav.personopplysninger.consumer.inst.domain.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.consumer.kodeverk.domain.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.consumer.kodeverk.domain.RetningsnummerDTO
-import no.nav.personopplysninger.consumer.personmottak.domain.telefon.EndringTelefon
-import no.nav.personopplysninger.consumer.personmottak.domain.telefon.Telefonnummer
-import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
-import no.nav.personopplysninger.consumer.pdlmottak.domain.kontonummer.EndringKontonummer
-import no.nav.personopplysninger.consumer.pdlmottak.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.Telefonnummer
+import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
 import no.nav.personopplysninger.testutils.utenlandskKontonummerJson
 import no.nav.personopplysninger.util.getJson

@@ -24,7 +24,7 @@ public class PdlMottakStubs {
         stubEndringer500();
     }
 
-    public static void stubPdlMottakSlettKontaktadresse200(){
+    public static void stubPdlMottakSlettKontaktadresse200() {
         stubEndringer200();
 
         stubFor(get(urlEqualTo("/pdlmottak/location"))
@@ -34,7 +34,7 @@ public class PdlMottakStubs {
                         .withHeader(HttpHeaders.CONTENT_TYPE, "application/json")));
     }
 
-    public static void stubPdlMottakSlettKontaktadresse500(){
+    public static void stubPdlMottakSlettKontaktadresse500() {
         stubEndringer500();
     }
 

@@ -7,8 +7,6 @@ import no.nav.personopplysninger.consumer.*
 import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
 import no.nav.personopplysninger.consumer.pdlmottak.domain.Endring
 import no.nav.personopplysninger.consumer.pdlmottak.domain.Personopplysning
-import no.nav.personopplysninger.consumer.pdlmottak.domain.kontonummer.EndringKontonummer
-import no.nav.personopplysninger.consumer.pdlmottak.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.consumer.pdlmottak.domain.opphoer.OpphoerPersonopplysning
 import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.EndreTelefon
 import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.EndringTelefon

@@ -8,23 +8,14 @@ import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.consumer.kontoregister.domain.OppdaterKonto
 import no.nav.personopplysninger.consumer.kontoregister.domain.UtenlandskKontoInfo
 import no.nav.personopplysninger.consumer.pdl.PdlService
-import no.nav.personopplysninger.consumer.personmottak.PersonMottakConsumer
-import no.nav.personopplysninger.consumer.personmottak.domain.kontaktadresse.EndringKontaktadresse
-import no.nav.personopplysninger.consumer.personmottak.domain.kontaktadresse.slettKontaktadressePayload
-import no.nav.personopplysninger.consumer.personmottak.domain.telefon.EndringTelefon
-import no.nav.personopplysninger.consumer.personmottak.domain.telefon.Telefonnummer
-import no.nav.personopplysninger.consumer.personmottak.domain.telefon.endreNummerPayload
-import no.nav.personopplysninger.consumer.personmottak.domain.telefon.slettNummerPayload
-import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
 import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
 import no.nav.personopplysninger.consumer.pdlmottak.domain.kontaktadresse.EndringKontaktadresse
 import no.nav.personopplysninger.consumer.pdlmottak.domain.kontaktadresse.slettKontaktadressePayload
-import no.nav.personopplysninger.consumer.pdlmottak.domain.kontonummer.EndringKontonummer
-import no.nav.personopplysninger.consumer.pdlmottak.domain.kontonummer.Kontonummer
 import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.EndringTelefon
 import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.endreNummerPayload
 import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.slettNummerPayload
+import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
 import org.springframework.stereotype.Service
 
 @Service
