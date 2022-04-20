@@ -47,7 +47,7 @@ class EndreOpplysningerResource @Autowired constructor(private var endreOpplysni
         endreOpplysningerService.endreKontonummer(
             hentFnrFraToken(), kontonummer
         )
-        return Response.ok(kontonummer).build()
+        return Response.ok(mapOf("statusType" to "OK")).build()
     }
 
     @POST
