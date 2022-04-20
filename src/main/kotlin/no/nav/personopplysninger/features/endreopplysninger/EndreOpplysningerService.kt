@@ -52,9 +52,14 @@ class EndreOpplysningerService(
             nyttKontonummer = kontonummer.value,
             utenlandskKontoInfo = kontonummer.utenlandskKontoInformasjon?.let {
                 UtenlandskKontoInfo(
+                    banknavn = kontonummer.utenlandskKontoInformasjon.bank?.navn,
+                    bankkode = kontonummer.utenlandskKontoInformasjon.bank?.kode,
                     bankLandkode = kontonummer.utenlandskKontoInformasjon.landkode,
                     valutakode = kontonummer.utenlandskKontoInformasjon.valuta!!,
-                    swiftBicKode = kontonummer.utenlandskKontoInformasjon.swift
+                    swiftBicKode = kontonummer.utenlandskKontoInformasjon.swift,
+                    bankadresse1 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje1,
+                    bankadresse2 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje2,
+                    bankadresse3 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje3,
                 )
             }
         )
