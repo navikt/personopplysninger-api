@@ -38,6 +38,11 @@ open class KodeverkConsumer constructor(
         return hentKodeverkBetydning("Landkoder", true)
     }
 
+    @Cacheable("landISO2")
+    open fun hentLandKoderISO2(): Kodeverk {
+        return hentKodeverkBetydning("LandkoderISO2", true)
+    }
+
     @Cacheable("postnr")
     open fun hentPostnummer(): Kodeverk {
         return hentKodeverkBetydning("Postnummer", true)

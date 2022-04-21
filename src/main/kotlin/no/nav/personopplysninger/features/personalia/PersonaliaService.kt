@@ -64,7 +64,7 @@ class PersonaliaService @Autowired constructor(
             gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
             statsborgerskapterm =
                 kodeverkConsumer.hentStatsborgerskap().term(pdlPerson.statsborgerskap.firstOrNull()?.land)
-            utenlandskbanklandterm = kodeverkConsumer.hentLandKoder().term(inboundKonto.utenlandskKontoInfo?.bankLandkode)
+            utenlandskbanklandterm = kodeverkConsumer.hentLandKoderISO2().term(inboundKonto.utenlandskKontoInfo?.bankLandkode)
             utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inboundKonto.utenlandskKontoInfo?.valutakode)
             kontaktadresseKodeverk = kontaktadresse.map { adresse ->
                 hentAdresseKodeverk(

@@ -28,6 +28,7 @@ class HentPersoninfoIntegrationTest extends AbstractIntegrationTest {
     void setup() {
         stubKodeverkKommuner200();
         stubKodeverkLandkoder200();
+        stubKodeverkLandkoderISO2200();
         stubKodeverkStatsborgerskapFreg200();
         stubKodeverkValutaer200();
         stubKodeverkPostnummer200();

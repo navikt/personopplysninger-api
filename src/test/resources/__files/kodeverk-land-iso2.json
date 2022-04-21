@@ -1,0 +1,40 @@
+{
+  "betydninger": {
+    "SX": [
+      {
+        "gyldigFra": "2011-12-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "SINT MAARTEN",
+            "tekst": "SINT MAARTEN"
+          }
+        }
+      }
+    ],
+    "SY": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "SYRIA",
+            "tekst": "SYRIA"
+          }
+        }
+      }
+    ],
+    "CI": [
+      {
+        "gyldigFra": "1900-01-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "ELFENBENSKYSTEN",
+            "tekst": "ELFENBENSKYSTEN"
+          }
+        }
+      }
+    ]
+  }
+}

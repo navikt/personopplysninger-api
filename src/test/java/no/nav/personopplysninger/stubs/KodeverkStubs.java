@@ -27,6 +27,15 @@ public class KodeverkStubs {
                         .withHeader(HttpHeaders.CONTENT_TYPE, "application/json")));
     }
 
+    public static void stubKodeverkLandkoderISO2200() {
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/LandkoderISO2/.*"))
+                .atPriority(2)
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withBodyFile("kodeverk-land-iso2.json")
+                        .withHeader(HttpHeaders.CONTENT_TYPE, "application/json")));
+    }
+
     public static void stubKodeverkStatsborgerskapFreg200() {
         stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/StatsborgerskapFreg/.*"))
                 .willReturn(aResponse()
@@ -93,6 +102,15 @@ public class KodeverkStubs {
 
     public static void stubKodeverkLandkoder500() {
         stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/Landkoder/.*"))
+                .atPriority(1)
+                .willReturn(aResponse()
+                        .withStatus(500)
+                        .withBody("Noe gikk galt")
+                        .withHeader(HttpHeaders.CONTENT_TYPE, "application/json")));
+    }
+
+    public static void stubKodeverkLandkoderISO2500() {
+        stubFor(get(urlPathMatching("/kodeverk/api/v1/kodeverk/LandkoderISO2/.*"))
                 .atPriority(1)
                 .willReturn(aResponse()
                         .withStatus(500)

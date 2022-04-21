@@ -28,6 +28,7 @@ public class Launcher {
                 new ConcurrentMapCache("kjonn"),
                 new ConcurrentMapCache("kommune"),
                 new ConcurrentMapCache("land"),
+                new ConcurrentMapCache("landISO2"),
                 new ConcurrentMapCache("status"),
                 new ConcurrentMapCache("postnr"),
                 new ConcurrentMapCache("sivilstand"),
