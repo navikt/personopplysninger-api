@@ -54,7 +54,7 @@ class EndreOpplysningerService(
                 UtenlandskKontoInfo(
                     banknavn = kontonummer.utenlandskKontoInformasjon.bank?.navn,
                     bankkode = kontonummer.utenlandskKontoInformasjon.bank?.kode,
-                    bankLandkode = kontonummer.utenlandskKontoInformasjon.landkode,
+                    bankLandkode = kontonummer.utenlandskKontoInformasjon.landkodeTobokstavs,
                     valutakode = kontonummer.utenlandskKontoInformasjon.valuta!!,
                     swiftBicKode = kontonummer.utenlandskKontoInformasjon.swift,
                     bankadresse1 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje1,
