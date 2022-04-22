@@ -23,7 +23,7 @@ object PersoninfoTransformer {
             etternavn = pdlPerson.navn.firstOrNull()?.etternavn,
             personident = pdlPerson.folkeregisteridentifikator.firstOrNull()
                 .let { Personident(it!!.identifikasjonsnummer, it.type) },
-            kontonr = konto?.kontonummer,
+            kontonr = if (konto?.utenlandskKontoInfo == null) konto?.kontonummer else null,
             tlfnr = pdlPerson.telefonnummer.toTlfnr(),
             utenlandskbank = konto?.utenlandskKontoInfo?.let { UtenlandskBankTransformer.toOutbound(konto, kodeverk) },
             statsborgerskap = kodeverk.statsborgerskapterm,
