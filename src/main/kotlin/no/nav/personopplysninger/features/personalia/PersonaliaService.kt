@@ -49,7 +49,7 @@ class PersonaliaService @Autowired constructor(
         return personaliaOgAdresser
     }
 
-    private fun createPersonaliaKodeverk(inboundPdl: PdlData, inboundKonto: Konto): PersonaliaKodeverk {
+    private fun createPersonaliaKodeverk(inboundPdl: PdlData, inboundKonto: Konto?): PersonaliaKodeverk {
         val pdlPerson = inboundPdl.person!!
         val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning
 
@@ -64,8 +64,8 @@ class PersonaliaService @Autowired constructor(
             gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
             statsborgerskapterm =
                 kodeverkConsumer.hentStatsborgerskap().term(pdlPerson.statsborgerskap.firstOrNull()?.land)
-            utenlandskbanklandterm = kodeverkConsumer.hentLandKoderISO2().term(inboundKonto.utenlandskKontoInfo?.bankLandkode)
-            utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inboundKonto.utenlandskKontoInfo?.valutakode)
+            utenlandskbanklandterm = kodeverkConsumer.hentLandKoderISO2().term(inboundKonto?.utenlandskKontoInfo?.bankLandkode)
+            utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inboundKonto?.utenlandskKontoInfo?.valutakode)
             kontaktadresseKodeverk = kontaktadresse.map { adresse ->
                 hentAdresseKodeverk(
                     adresse.postnummer,

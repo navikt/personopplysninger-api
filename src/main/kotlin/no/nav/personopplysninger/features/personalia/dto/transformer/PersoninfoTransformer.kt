@@ -10,7 +10,7 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.Personident
 
 object PersoninfoTransformer {
 
-    fun toOutbound(pdlPerson: PdlPerson, konto: Konto, kodeverk: PersonaliaKodeverk): Personalia {
+    fun toOutbound(pdlPerson: PdlPerson, konto: Konto?, kodeverk: PersonaliaKodeverk): Personalia {
 
         fun fornavn(navn: PdlNavn): String =
             if (navn.mellomnavn == null) navn.fornavn
@@ -23,9 +23,9 @@ object PersoninfoTransformer {
             etternavn = pdlPerson.navn.firstOrNull()?.etternavn,
             personident = pdlPerson.folkeregisteridentifikator.firstOrNull()
                 .let { Personident(it!!.identifikasjonsnummer, it.type) },
-            kontonr = konto.kontonummer,
+            kontonr = konto?.kontonummer,
             tlfnr = pdlPerson.telefonnummer.toTlfnr(),
-            utenlandskbank = konto.utenlandskKontoInfo?.let { UtenlandskBankTransformer.toOutbound(konto, kodeverk) },
+            utenlandskbank = konto?.utenlandskKontoInfo?.let { UtenlandskBankTransformer.toOutbound(konto, kodeverk) },
             statsborgerskap = kodeverk.statsborgerskapterm,
             foedested = foedested(kodeverk.foedekommuneterm, kodeverk.foedelandterm),
             sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.beskrivelse,

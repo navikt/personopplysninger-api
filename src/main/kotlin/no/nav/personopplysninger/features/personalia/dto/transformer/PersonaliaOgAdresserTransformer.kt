@@ -8,7 +8,7 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAd
 
 object PersonaliaOgAdresserTransformer {
 
-    fun toOutbound(pdlData: PdlData, konto: Konto, kodeverk: PersonaliaKodeverk) =
+    fun toOutbound(pdlData: PdlData, konto: Konto?, kodeverk: PersonaliaKodeverk) =
         PersonaliaOgAdresser(
             personalia = PersoninfoTransformer.toOutbound(pdlData.person!!, konto, kodeverk),
             adresser = AdresseinfoTransformer.toOutbound(pdlData, kodeverk),

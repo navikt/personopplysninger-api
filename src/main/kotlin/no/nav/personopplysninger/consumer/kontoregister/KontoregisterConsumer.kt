@@ -14,6 +14,7 @@ import no.nav.personopplysninger.exception.ConsumerException
 import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.personopplysninger.util.getToken
 import org.eclipse.jetty.http.HttpHeader
+import org.eclipse.jetty.http.HttpStatus
 import org.slf4j.MDC
 import java.net.URI
 import javax.ws.rs.client.Client
@@ -31,7 +32,7 @@ class KontoregisterConsumer constructor(
     private val tokenDingsService: TokenDingsService,
     private val targetApp: String?
 ) {
-    fun hentAktivKonto(fnr: String): Konto {
+    fun hentAktivKonto(fnr: String): Konto? {
         val tokendingsToken = tokenDingsService.exchangeToken(getToken(), targetApp)
         val request = HentAktivKonto(kontohaver = fnr)
         getBuilder(HENT_KONTO_PATH, tokendingsToken.accessToken).post(
@@ -43,6 +44,9 @@ class KontoregisterConsumer constructor(
             .use { response ->
                 val responseBody = response.readEntity(String::class.java)
                 if (SUCCESSFUL != response.statusInfo.family) {
+                    if (HttpStatus.NOT_FOUND_404 == response.status) {
+                        return null
+                    }
                     throw ConsumerException(consumerErrorMessage(endpoint, response.status, responseBody))
                 }
                 return objectMapper.readValue(responseBody)
