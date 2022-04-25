@@ -7,9 +7,9 @@ import no.nav.personopplysninger.consumer.inst.domain.Institusjonstype
 import no.nav.personopplysninger.consumer.kodeverk.domain.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.consumer.norg2.domain.Norg2Enhet
 import no.nav.personopplysninger.consumer.pdl.dto.PdlResponse
-import no.nav.personopplysninger.consumer.personmottak.domain.kontaktadresse.EndreKontaktadresse
-import no.nav.personopplysninger.consumer.personmottak.domain.kontaktadresse.Postboksadresse
-import no.nav.personopplysninger.consumer.personmottak.domain.telefon.Telefonnummer
+import no.nav.personopplysninger.consumer.pdlmottak.domain.kontaktadresse.EndreKontaktadresse
+import no.nav.personopplysninger.consumer.pdlmottak.domain.kontaktadresse.Postboksadresse
+import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.Telefonnummer
 import no.nav.personopplysninger.testutils.PMKontaktadresseJson
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
 import no.nav.personopplysninger.testutils.instJson

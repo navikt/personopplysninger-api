@@ -42,6 +42,7 @@ jobs:
           version: $IMAGE_VERSION
           proxy-host: https://personopplysninger-proxy.dev-fss-pub.nais.io
           pdl-api-host: https://pdl-api.dev-fss-pub.nais.io
+          pdl-mottak-host: https://pdl-mottak.dev-fss-pub.nais.io
           fss-cluster: dev-fss
           EOF
       - uses: nais/deploy/actions/deploy@master

@@ -30,6 +30,9 @@ spec:
       - application: personopplysninger-proxy
         namespace: personbruker
         cluster: {{ fss-cluster }}
+      - application: pdl-mottak
+        namespace: personbruker
+        cluster: {{ fss-cluster }}
       - application: digdir-krr-proxy
         namespace: team-rocket
       - application: pdl-api
@@ -39,6 +42,7 @@ spec:
       external:
         - host: {{ proxy-host }}
         - host: {{ pdl-api-host }}
+        - host: {{ pdl-mottak-host }}
   resources:
     limits:
       cpu: '3'
