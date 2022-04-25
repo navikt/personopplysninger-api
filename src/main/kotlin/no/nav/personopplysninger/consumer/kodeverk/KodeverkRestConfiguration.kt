@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.consumer.kodeverk
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -15,17 +14,13 @@ import javax.ws.rs.ext.ContextResolver
 @Configuration
 open class KodeverkRestConfiguration {
 
-    @Value("\${PERSONOPPLYSNINGER_PROXY_TARGET_APP}")
-    private val targetApp: String? = null
-
     @Bean
     @Throws(URISyntaxException::class)
     open fun kodeverkConsumer(
         @Named("kodeverkClient") client: Client,
-        @Value("\${KODEVERK_REST_API_URL}") kodeServiceUri: String,
-        tokenDingsService: TokenDingsService
+        @Value("\${KODEVERK_REST_API_URL}") kodeServiceUri: String
     ): KodeverkConsumer {
-        return KodeverkConsumer(client, URI(kodeServiceUri), tokenDingsService, targetApp)
+        return KodeverkConsumer(client, URI(kodeServiceUri))
     }
 
     @Bean

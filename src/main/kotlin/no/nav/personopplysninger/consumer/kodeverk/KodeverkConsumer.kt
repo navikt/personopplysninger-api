@@ -2,14 +2,14 @@ package no.nav.personopplysninger.consumer.kodeverk
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.common.log.MDCConstants
-import no.nav.personopplysninger.consumer.*
+import no.nav.personopplysninger.consumer.CONSUMER_ID
+import no.nav.personopplysninger.consumer.HEADER_NAV_CALL_ID
+import no.nav.personopplysninger.consumer.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
 import no.nav.personopplysninger.consumer.kodeverk.domain.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.consumer.kodeverk.domain.Kodeverk
-import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
 import no.nav.personopplysninger.exception.ConsumerException
 import no.nav.personopplysninger.util.consumerErrorMessage
-import no.nav.personopplysninger.util.getToken
 import org.slf4j.MDC
 import org.springframework.cache.annotation.Cacheable
 import java.net.URI
@@ -20,8 +20,6 @@ import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 open class KodeverkConsumer constructor(
     private val client: Client,
     private val endpoint: URI,
-    private val tokenDingsService: TokenDingsService,
-    private val targetApp: String?
 ) {
     @Cacheable("retningsnummer")
     open fun hentRetningsnumre(): Kodeverk {
@@ -74,8 +72,6 @@ open class KodeverkConsumer constructor(
     }
 
     private fun buildRequest(path: String, eksluderUgyldige: Boolean): Invocation.Builder {
-        val selvbetjeningToken = getToken()
-        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
         return client.target(endpoint)
             .path(path)
             .queryParam("spraak", "nb")
@@ -83,7 +79,6 @@ open class KodeverkConsumer constructor(
             .request()
             .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
             .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
     }
 
     private fun hentKodeverkBetydning(navn: String, eksluderUgyldige: Boolean): Kodeverk {
