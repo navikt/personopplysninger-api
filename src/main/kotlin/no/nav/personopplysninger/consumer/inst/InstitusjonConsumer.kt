@@ -37,7 +37,7 @@ class InstitusjonConsumer constructor(
         return client.target(endpoint)
             .path("v1/person/innsyn")
             .request()
-            .header("token-x-authorization", BEARER + accessToken)
+            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
             .header(HEADER_NAV_CONSUMER_TOKEN, selvbetjeningToken)
             .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
             .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
