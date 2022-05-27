@@ -29,7 +29,7 @@
         <swagger-codegen-maven-plugin.version>3.0.2</swagger-codegen-maven-plugin.version>
         <jackson-module-kotlin.version>2.9.8</jackson-module-kotlin.version>
         <konfig-version>1.6.10.0</konfig-version>
-        <nav-common-version>2.2022.05.13_07.24-6eadb37dec31</nav-common-version>
+        <nav-common-version>2.2021.12.09_11.56-a71c36a61ba3</nav-common-version>
 
         <!-- Needed to avoid incompatibility with token-validation-spring-test -->
         <okhttp3.version>4.9.0</okhttp3.version>
