@@ -4,7 +4,7 @@ package no.nav.personopplysninger.consumer.pdl.request
 const val navnQueryPart = "navn {fornavn, mellomnavn, etternavn}"
 const val telefonQueryPart = "telefonnummer { landskode, nummer, prioritet, metadata { opplysningsId } }"
 const val folkeregisteridentifikatorQueryPart = "folkeregisteridentifikator{identifikasjonsnummer, status, type}"
-const val statsborgerskapQueryPart = "statsborgerskap{land, gyldigTom}"
+const val statsborgerskapQueryPart = "statsborgerskap{land, gyldigTilOgMed}"
 const val foedselQueryPart = "foedsel{foedested, foedekommune, foedeland}"
 const val sivilstandQueryPart = "sivilstand{type, gyldigFraOgMed}"
 const val kjoennQueryPart = "kjoenn{kjoenn}"
