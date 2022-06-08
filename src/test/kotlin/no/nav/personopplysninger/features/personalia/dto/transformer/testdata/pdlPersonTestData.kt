@@ -3,10 +3,28 @@ package no.nav.personopplysninger.features.personalia.dto.transformer.testdata
 import no.nav.personopplysninger.consumer.pdl.dto.PdlData
 import no.nav.personopplysninger.consumer.pdl.dto.PdlGeografiskTilknytning
 import no.nav.personopplysninger.consumer.pdl.dto.PdlPerson
-import no.nav.personopplysninger.consumer.pdl.dto.adresse.*
-import no.nav.personopplysninger.consumer.pdl.dto.personalia.*
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.PdlBostedsadresse
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.PdlDeltBosted
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.PdlKontaktadresse
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.PdlKontaktadressetype
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.PdlOppholdsadresse
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlFoedsel
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlFolkeregisteridentifikator
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlKjoenn
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlKjoennType
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlNavn
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlSivilstand
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlSivilstandstype
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlStatsborgerskap
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlTelefonnummer
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType
-import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.*
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.MATRIKKELADRESSE
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.POSTADRESSE_I_FRITT_FORMAT
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.POSTBOKSADRESSE
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.UKJENTBOSTED
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.UTENLANDSK_ADRESSE
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.UTENLANDSK_ADRESSE_I_FRITT_FORMAT
+import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.VEGADRESSE
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -43,7 +61,7 @@ fun createDummyPerson(): PdlPerson {
         ),
         statsborgerskap = listOf(
             PdlStatsborgerskap(
-                "land"
+                land = "land"
             )
         ),
         foedsel = listOf(
