@@ -81,7 +81,7 @@ class PersonaliaService @Autowired constructor(
 
     private fun hentGyldigeStatsborgerskap(statsborgerskap: List<PdlStatsborgerskap>): List<String> {
         return statsborgerskap
-            .filter { it.land != "XUK" && it.gyldigTom?.isBefore(LocalDate.now()) != true } // Filtrer ut ukjent og ugyldige
+            .filter { it.land != "XUK" && it.gyldigTilOgMed?.isBefore(LocalDate.now()) != true } // Filtrer ut ukjent og ugyldige
             .map { kodeverkConsumer.hentStatsborgerskap().term(it.land) }
             .filter { !isEmpty(it) }
     }

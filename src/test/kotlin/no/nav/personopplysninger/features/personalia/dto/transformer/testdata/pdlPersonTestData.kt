@@ -62,7 +62,7 @@ fun createDummyPerson(): PdlPerson {
         statsborgerskap = listOf(
             PdlStatsborgerskap(
                 land = "land",
-                gyldigTom = null
+                gyldigTilOgMed = null
             )
         ),
         foedsel = listOf(
