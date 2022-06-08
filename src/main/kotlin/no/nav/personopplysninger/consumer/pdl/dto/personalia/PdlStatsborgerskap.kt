@@ -4,5 +4,5 @@ import java.time.LocalDate
 
 data class PdlStatsborgerskap(
     val land: String,
-    val gyldigTom: LocalDate? = null
+    val gyldigTom: LocalDate?
 )
