@@ -14,7 +14,7 @@ data class Personalia(
         val kontonr: String? = null,
         val tlfnr: Tlfnr? = null,
         val utenlandskbank : UtenlandskBankInfo? = null,
-        val statsborgerskap: String? = null,
+        val statsborgerskap: List<String> = arrayListOf(),
         val foedested: String? = null,
         val sivilstand: String? = null,
         val kjoenn: String? = null
