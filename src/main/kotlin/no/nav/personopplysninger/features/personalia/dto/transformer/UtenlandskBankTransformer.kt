@@ -15,7 +15,7 @@ object UtenlandskBankTransformer {
                 banknavn = utenlandskKontoInfo.banknavn,
                 kontonummer = inbound.kontonummer,
                 swiftkode = utenlandskKontoInfo.swiftBicKode,
-                land = utenlandskKontoInfo.bankLandkode?.let { kodeverk.utenlandskbanklandterm },
+                land = utenlandskKontoInfo.bankLandkode.let { kodeverk.utenlandskbanklandterm },
                 valuta = utenlandskKontoInfo.valutakode.let { kodeverk.utenlandskbankvalutaterm }
         )
     }
