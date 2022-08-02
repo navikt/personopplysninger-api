@@ -26,7 +26,7 @@ object PersoninfoTransformer {
             kontonr = if (konto?.utenlandskKontoInfo == null) konto?.kontonummer else null,
             tlfnr = pdlPerson.telefonnummer.toTlfnr(),
             utenlandskbank = konto?.utenlandskKontoInfo?.let { UtenlandskBankTransformer.toOutbound(konto, kodeverk) },
-            statsborgerskap = kodeverk.statsborgerskapterm,
+            statsborgerskap = kodeverk.statsborgerskaptermer,
             foedested = foedested(kodeverk.foedekommuneterm, kodeverk.foedelandterm),
             sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.beskrivelse,
             kjoenn = pdlPerson.kjoenn.firstOrNull()?.kjoenn?.beskrivelse,

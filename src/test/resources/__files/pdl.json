@@ -28,6 +28,20 @@
       "statsborgerskap": [
         {
           "land": "NOR"
+        },
+        {
+          "land": "SYR",
+          "gyldigTilOgMed": "2020-02-28"
+        },
+        {
+          "land": "CZE",
+          "gyldigTilOgMed": "3000-02-28"
+        },
+        {
+          "land": "XUK"
+        },
+        {
+          "land": "XXX"
         }
       ],
       "foedsel": [

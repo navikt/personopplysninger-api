@@ -8,7 +8,7 @@ fun createDummyPersonaliaKodeverk(): PersonaliaKodeverk {
         foedekommuneterm = "foedekommuneterm"
         foedelandterm = "foedelandterm"
         gtLandterm = "gtLandterm"
-        statsborgerskapterm = "stasborgerskapterm"
+        statsborgerskaptermer = listOf("stasborgerskapterm")
         utenlandskbanklandterm = "utenlandskbanklandterm"
         utenlandskbankvalutaterm = "utenlandskbankvalutaterm"
         kontaktadresseKodeverk = listOf(createDummyAdresseKodeverk())
