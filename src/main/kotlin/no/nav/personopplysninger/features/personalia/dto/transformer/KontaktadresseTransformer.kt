@@ -1,7 +1,11 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.consumer.kodeverk.domain.AdresseKodeverk
-import no.nav.personopplysninger.consumer.pdl.dto.adresse.AdresseMappingType.*
+import no.nav.personopplysninger.consumer.kodeverk.dto.AdresseKodeverk
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.AdresseMappingType.INNLAND_FRIFORMADRESSE
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.AdresseMappingType.INNLAND_POSTBOKSADRESSE
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.AdresseMappingType.INNLAND_VEGADRESSE
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.AdresseMappingType.UTLAND_ADRESSE
+import no.nav.personopplysninger.consumer.pdl.dto.adresse.AdresseMappingType.UTLAND_FRIFORMADRESSE
 import no.nav.personopplysninger.consumer.pdl.dto.adresse.PdlKontaktadresse
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.Adresse
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.Kontaktadresse

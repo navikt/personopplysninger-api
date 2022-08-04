@@ -1,73 +1,74 @@
 package no.nav.personopplysninger.consumer.pdl
 
-import com.fasterxml.jackson.module.kotlin.readValue
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.header
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.isSuccess
 import no.nav.common.log.MDCConstants
-import no.nav.personopplysninger.consumer.*
-import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
+import no.nav.personopplysninger.config.BEARER
+import no.nav.personopplysninger.config.CONSUMER_ID
+import no.nav.personopplysninger.config.Environment
+import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
+import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
+import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.consumer.pdl.dto.PdlData
 import no.nav.personopplysninger.consumer.pdl.dto.PdlPerson
 import no.nav.personopplysninger.consumer.pdl.dto.PdlResponse
-import no.nav.personopplysninger.consumer.pdl.request.*
-import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
-import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.consumer.pdl.request.PDLRequest
+import no.nav.personopplysninger.consumer.pdl.request.createKontaktadresseRequest
+import no.nav.personopplysninger.consumer.pdl.request.createNavnRequest
+import no.nav.personopplysninger.consumer.pdl.request.createPersonInfoRequest
+import no.nav.personopplysninger.consumer.pdl.request.createTelefonRequest
 import no.nav.personopplysninger.util.consumerErrorMessage
-import no.nav.personopplysninger.util.getToken
+import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
-import java.net.URI
-import javax.ws.rs.client.Client
-import javax.ws.rs.client.Entity
-import javax.ws.rs.client.Invocation
-import javax.ws.rs.core.MediaType
-import javax.ws.rs.core.Response
 
 private const val RETT_PERSONOPPLYSNINGER = "RPO"
 
 class PdlConsumer(
-    private val client: Client,
-    private val endpoint: URI,
-    private val tokenDingsService: TokenDingsService,
-    private val targetApp: String?
+    private val client: HttpClient,
+    private val environment: Environment,
+    private val tokenDingsService: TokendingsService,
 ) {
     val log: Logger = LoggerFactory.getLogger(PdlConsumer::class.java)
 
-    fun getPersonInfo(ident: String): PdlData {
-        return postPersonQuery(createPersonInfoRequest(ident))
+    suspend fun getPersonInfo(token: String, ident: String): PdlData {
+        return postPersonQuery(token, createPersonInfoRequest(ident))
     }
 
-    fun getKontaktadresseInfo(ident: String): PdlPerson {
-        return postPersonQuery(createKontaktadresseRequest(ident)).person!!
+    suspend fun getKontaktadresseInfo(token: String, ident: String): PdlPerson {
+        return postPersonQuery(token, createKontaktadresseRequest(ident)).person!!
     }
 
-    fun getTelefonInfo(ident: String): PdlPerson {
-        return postPersonQuery(createTelefonRequest(ident)).person!!
+    suspend fun getTelefonInfo(token: String, ident: String): PdlPerson {
+        return postPersonQuery(token, createTelefonRequest(ident)).person!!
     }
 
-    fun getNavn(ident: String): PdlPerson {
-        return postPersonQuery(createNavnRequest(ident)).person!!
+    suspend fun getNavn(token: String, ident: String): PdlPerson {
+        return postPersonQuery(token, createNavnRequest(ident)).person!!
     }
 
-    private fun postPersonQuery(request: PDLRequest): PdlData {
-        buildRequest().post(Entity.entity(request, MediaType.APPLICATION_JSON)).use { response ->
-            val responseBody = response.readEntity(String::class.java)
-            if (Response.Status.Family.SUCCESSFUL != response.statusInfo.family) {
-                throw ConsumerException(consumerErrorMessage(endpoint, response.status, responseBody))
+    private suspend fun postPersonQuery(token: String, request: PDLRequest): PdlData {
+        val accessToken = tokenDingsService.exchangeToken(token, environment.kontoregisterTargetApp)
+        val endpoint = environment.pdlUrl
+
+        val response: HttpResponse =
+            client.post(endpoint) {
+                header(HEADER_AUTHORIZATION, BEARER + accessToken)
+                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+                header("Tema", RETT_PERSONOPPLYSNINGER)
+                setBody(request)
             }
-            return objectMapper
-                .readValue<PdlResponse>(responseBody)
-                .data
+        return if (response.status.isSuccess()) {
+            response.body<PdlResponse>().data
+        } else {
+            throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
         }
-    }
-
-    private fun buildRequest(): Invocation.Builder {
-        val selvbetjeningToken = getToken()
-        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
-        return client.target(endpoint)
-            .request()
-            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
-            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
-            .header("Tema", RETT_PERSONOPPLYSNINGER)
     }
 }

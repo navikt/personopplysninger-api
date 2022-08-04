@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
+import no.nav.personopplysninger.consumer.kodeverk.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.consumer.pdl.dto.PdlData
 import no.nav.personopplysninger.features.personalia.dto.outbound.Adresser
 import no.nav.personopplysninger.util.firstOrNull

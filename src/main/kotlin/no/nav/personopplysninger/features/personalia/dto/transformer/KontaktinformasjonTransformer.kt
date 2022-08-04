@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.consumer.kontaktinformasjon.domain.DigitalKontaktinformasjon
+import no.nav.personopplysninger.consumer.kontaktinformasjon.dto.DigitalKontaktinformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon
 
 object KontaktinformasjonTransformer {

@@ -1,15 +1,10 @@
 package no.nav.personopplysninger.features.institusjon
 
 import no.nav.personopplysninger.consumer.inst.InstitusjonConsumer
-import no.nav.personopplysninger.consumer.inst.domain.InnsynInstitusjonsopphold
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
+import no.nav.personopplysninger.consumer.inst.dto.InnsynInstitusjonsopphold
 
-@Service
-class InstitusjonService  @Autowired constructor(
-    private var institusjonConsumer: InstitusjonConsumer
-) {
-    fun hentInstitusjonsopphold(fnr: String): List<InnsynInstitusjonsopphold> {
-        return institusjonConsumer.getInstitusjonsopphold(fnr)
+class InstitusjonService(private var institusjonConsumer: InstitusjonConsumer) {
+    suspend fun hentInstitusjonsopphold(token: String, fnr: String): List<InnsynInstitusjonsopphold> {
+        return institusjonConsumer.getInstitusjonsopphold(token, fnr)
     }
 }

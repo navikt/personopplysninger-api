@@ -1,94 +1,80 @@
 package no.nav.personopplysninger.consumer.kodeverk
 
-import com.fasterxml.jackson.module.kotlin.readValue
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.request.parameter
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.isSuccess
 import no.nav.common.log.MDCConstants
-import no.nav.personopplysninger.consumer.CONSUMER_ID
-import no.nav.personopplysninger.consumer.HEADER_NAV_CALL_ID
-import no.nav.personopplysninger.consumer.HEADER_NAV_CONSUMER_ID
-import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
-import no.nav.personopplysninger.consumer.kodeverk.domain.GetKodeverkKoderBetydningerResponse
-import no.nav.personopplysninger.consumer.kodeverk.domain.Kodeverk
-import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.config.CONSUMER_ID
+import no.nav.personopplysninger.config.Environment
+import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
+import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
+import no.nav.personopplysninger.consumer.kodeverk.dto.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.consumer.kodeverk.dto.Kodeverk
 import no.nav.personopplysninger.util.consumerErrorMessage
 import org.slf4j.MDC
-import org.springframework.cache.annotation.Cacheable
-import java.net.URI
-import javax.ws.rs.client.Client
-import javax.ws.rs.client.Invocation
-import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
 open class KodeverkConsumer constructor(
-    private val client: Client,
-    private val endpoint: URI,
+    private val client: HttpClient,
+    private val environment: Environment,
 ) {
-    @Cacheable("retningsnummer")
-    open fun hentRetningsnumre(): Kodeverk {
+    open suspend fun hentRetningsnumre(): Kodeverk {
         return hentKodeverkBetydning("Retningsnumre", true)
     }
 
-    @Cacheable("kommune")
-    open fun hentKommuner(): Kodeverk {
+    open suspend fun hentKommuner(): Kodeverk {
         return hentKodeverkBetydning("Kommuner", false)
     }
 
-    @Cacheable("land")
-    open fun hentLandKoder(): Kodeverk {
+    open suspend fun hentLandKoder(): Kodeverk {
         return hentKodeverkBetydning("Landkoder", true)
     }
 
-    @Cacheable("landISO2")
-    open fun hentLandKoderISO2(): Kodeverk {
+    open suspend fun hentLandKoderISO2(): Kodeverk {
         return hentKodeverkBetydning("LandkoderISO2", true)
     }
 
-    @Cacheable("postnr")
-    open fun hentPostnummer(): Kodeverk {
+    open suspend fun hentPostnummer(): Kodeverk {
         return hentKodeverkBetydning("Postnummer", true)
     }
 
-    @Cacheable("valuta")
-    open fun hentValuta(): Kodeverk {
+    open suspend fun hentValuta(): Kodeverk {
         return hentKodeverkBetydning("Valutaer", true)
     }
 
-    @Cacheable("statsborgerskap")
-    open fun hentStatsborgerskap(): Kodeverk {
+    open suspend fun hentStatsborgerskap(): Kodeverk {
         return hentKodeverkBetydning("StatsborgerskapFreg", true)
     }
 
-    @Cacheable("dekningmedl")
-    open fun hentDekningMedl(): Kodeverk {
+    open suspend fun hentDekningMedl(): Kodeverk {
         return hentKodeverkBetydning("DekningMedl", true)
     }
 
-    @Cacheable("grunnlagmedl")
-    open fun hentGrunnlagMedl(): Kodeverk {
+    open suspend fun hentGrunnlagMedl(): Kodeverk {
         return hentKodeverkBetydning("GrunnlagMedl", true)
     }
 
-    @Cacheable("spraak")
-    open fun hentSpraak(): Kodeverk {
+    open suspend fun hentSpraak(): Kodeverk {
         return hentKodeverkBetydning("Språk", true)
     }
 
-    private fun buildRequest(path: String, eksluderUgyldige: Boolean): Invocation.Builder {
-        return client.target(endpoint)
-            .path(path)
-            .queryParam("spraak", "nb")
-            .queryParam("ekskluderUgyldige", eksluderUgyldige)
-            .request()
-            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
-            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-    }
+    private suspend fun hentKodeverkBetydning(navn: String, eksluderUgyldige: Boolean): Kodeverk {
+        val endpoint = environment.kodeverkUrl.plus("/api/v1/kodeverk/$navn/koder/betydninger")
 
-    private fun hentKodeverkBetydning(navn: String, eksluderUgyldige: Boolean): Kodeverk {
-        buildRequest("api/v1/kodeverk/$navn/koder/betydninger", eksluderUgyldige).get().use { response ->
-            val responseBody = response.readEntity(String::class.java)
-            if (SUCCESSFUL != response.statusInfo.family) {
-                throw ConsumerException(consumerErrorMessage(endpoint, response.status, responseBody))
+        val response: HttpResponse =
+            client.get(endpoint) {
+                parameter("spraak", "nb")
+                parameter("ekskluderUgyldige", eksluderUgyldige)
+                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
             }
-            return objectMapper.readValue<GetKodeverkKoderBetydningerResponse>(responseBody)
-                .let { Kodeverk.fromKoderBetydningerResponse(navn, it) }
+        return if (response.status.isSuccess()) {
+            response.body<GetKodeverkKoderBetydningerResponse>().let { Kodeverk.fromKoderBetydningerResponse(navn, it) }
+        } else {
+            throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
         }
     }
 }

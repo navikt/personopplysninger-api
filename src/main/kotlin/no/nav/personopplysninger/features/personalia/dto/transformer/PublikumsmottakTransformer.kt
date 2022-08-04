@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
 
-import no.nav.personopplysninger.consumer.norg2.domain.Publikumsmottak
+import no.nav.personopplysninger.consumer.norg2.dto.Publikumsmottak
 import no.nav.personopplysninger.features.personalia.dto.outbound.Aapningstid
 import no.nav.personopplysninger.features.personalia.dto.outbound.PublikumsmottakDto
 

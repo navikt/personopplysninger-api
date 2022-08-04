@@ -1,29 +1,10 @@
-object Tomakehurst {
-    private const val version = "2.27.2"
-    private const val groupId = "com.github.tomakehurst"
+object DittNAV {
+    object Common {
+        private const val version = "2022.04.19-11.11-1043a85c4f6f"
+        private const val groupId = "com.github.navikt.dittnav-common-lib"
 
-    const val wiremock = "$groupId:wiremock:$version"
-}
-
-object SpringCloud {
-    private const val version = "3.1.2"
-    private const val groupId = "org.springframework.cloud"
-
-    const val stubRunner = "$groupId:spring-cloud-starter-contract-stub-runner:$version"
-}
-
-object Arrow {
-    private const val version = "1.1.2"
-    private const val groupId = "io.arrow-kt"
-
-    const val core = "$groupId:arrow-core:$version"
-}
-
-object CommonsLogging {
-    private const val version = "1.2"
-    private const val groupId = "commons-logging"
-
-    const val logging = "$groupId:commons-logging:$version"
+        const val logging = "$groupId:dittnav-common-logging:$version"
+    }
 }
 
 object Finn {
@@ -35,31 +16,9 @@ object Finn {
 
 object Jackson {
     private const val version = "2.13.2"
-    private const val groupId = "com.fasterxml.jackson.module"
 
-    const val kotlinModule = "$groupId:jackson-module-kotlin:$version"
-}
-
-object Jakarta {
-    private const val version = "2.3.3"
-    private const val groupId = "jakarta.xml.bind"
-
-    const val xmlBindApi = "$groupId:jakarta.xml.bind-api:$version"
-}
-
-object Jaxb {
-    private const val version = "2.3.6"
-    private const val groupId = "org.glassfish.jaxb"
-
-    const val runtime = "$groupId:jaxb-runtime:$version"
-}
-
-object Junit {
-    private const val version = "5.8.2"
-    private const val groupId = "org.junit.jupiter"
-    const val api = "$groupId:junit-jupiter-api:$version"
-
-    const val engine = "$groupId:junit-jupiter-engine:$version"
+    const val kotlinModule = "com.fasterxml.jackson.module:jackson-module-kotlin:$version"
+    const val datatypeJsr310 = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$version"
 }
 
 object Kotlin {
@@ -77,6 +36,29 @@ object Kotlinx {
     const val coroutinesCore = "$groupId:kotlinx-coroutines-core:$version"
 }
 
+object Ktor {
+    private const val version = "2.0.3"
+    private const val groupId = "io.ktor"
+
+    const val serverNetty = "$groupId:ktor-server-netty:$version"
+    const val serverCallLogging = "$groupId:ktor-server-call-logging:$version"
+    const val serverCore = "$groupId:ktor-server-core:$version"
+    const val serialization = "$groupId:ktor-serialization:$version"
+    const val serializationGson = "$groupId:ktor-serialization-gson:$version"
+    const val serverCors = "$groupId:ktor-server-cors:$version"
+    const val serverStatusPages = "$groupId:ktor-server-status-pages:$version"
+    const val serverContentNegotiation = "$groupId:ktor-server-content-negotiation:$version"
+    const val serverAuth = "$groupId:ktor-server-auth:$version"
+    const val serverTestHost = "$groupId:ktor-server-test-host:$version"
+    const val clientContentNegotiation = "$groupId:ktor-client-content-negotiation:$version"
+    const val clientApache = "$groupId:ktor-client-apache:$version"
+}
+
+object Logback {
+    private const val version = "1.2.11"
+    const val classic = "ch.qos.logback:logback-classic:$version"
+}
+
 object Logstash {
     private const val version = "7.1.1"
     private const val groupId = "net.logstash.logback"
@@ -84,45 +66,19 @@ object Logstash {
     const val logbackEncoder = "$groupId:logstash-logback-encoder:$version"
 }
 
-object Micrometer {
-    private const val version = "1.8.4"
-    private const val groupId = "io.micrometer"
-
-    const val registryPrometheus = "$groupId:micrometer-registry-prometheus:$version"
-}
-
-object Microutils {
-    private const val version = "2.1.21"
-
-    private const val groupId = "io.github.microutils"
-    const val kotlinLogging = "$groupId:kotlin-logging:$version"
-}
-
-object Natpryce {
-    private const val version = "1.6.10.0"
-    private const val groupId = "com.natpryce"
-
-    const val konfig = "$groupId:konfig:$version"
-}
-
 object NAV {
     object Security {
-        private const val version = "2.0.20"
+        private const val version = "2.1.3"
         private const val groupId = "no.nav.security"
-        const val tokenValidatorCore = "$groupId:token-validation-core:$version"
 
-        const val tokenValidatorJaxrs = "$groupId:token-validation-jaxrs:$version"
-        const val tokenValidatorSpringTest = "$groupId:token-validation-spring-test:$version"
+        const val tokenValidationKtor = "$groupId:token-validation-ktor-v2:$version"
     }
 
     object Common {
         private const val version = "2.2022.05.13_07.24-6eadb37dec31"
         private const val groupId = "no.nav.common"
-        const val rest = "$groupId:rest:$version"
-        const val log = "$groupId:log:$version"
         const val featureToggle = "$groupId:feature-toggle:$version"
     }
-
 }
 
 object Shadow {
@@ -130,22 +86,11 @@ object Shadow {
     const val pluginId = "com.github.johnrengelman.shadow"
 }
 
-object Slf4j {
-    private const val version = "1.7.36"
-    private const val groupId = "org.slf4j"
+object TmsKtorTokenSupport {
+    private const val version = "2022.05.19-09.32-5076b2435b0a"
+    private const val groupId = "com.github.navikt.tms-ktor-token-support"
 
-    const val api = "$groupId:slf4j-api:$version"
-}
-
-object SpringBoot {
-    private const val version = "2.6.6"
-    private const val groupId = "org.springframework.boot"
-
-    const val starterJetty = "$groupId:spring-boot-starter-jetty:$version"
-    const val starterActuator = "$groupId:spring-boot-starter-actuator:$version"
-    const val starterJersey = "$groupId:spring-boot-starter-jersey:$version"
-    const val starterWeb = "$groupId:spring-boot-starter-web:$version"
-    const val starterTest = "$groupId:spring-boot-starter-test:$version"
+    const val tokendingsExchange = "$groupId:token-support-tokendings-exchange:$version"
 }
 
 object Versions {

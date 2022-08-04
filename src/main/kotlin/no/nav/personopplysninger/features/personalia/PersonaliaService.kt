@@ -1,11 +1,11 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.consumer.kodeverk.domain.AdresseKodeverk
-import no.nav.personopplysninger.consumer.kodeverk.domain.PersonaliaKodeverk
+import no.nav.personopplysninger.consumer.kodeverk.dto.AdresseKodeverk
+import no.nav.personopplysninger.consumer.kodeverk.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.consumer.kontaktinformasjon.KontaktinfoConsumer
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
-import no.nav.personopplysninger.consumer.kontoregister.domain.Konto
+import no.nav.personopplysninger.consumer.kontoregister.dto.Konto
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
 import no.nav.personopplysninger.consumer.pdl.PdlService
 import no.nav.personopplysninger.consumer.pdl.dto.PdlData
@@ -17,13 +17,9 @@ import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAd
 import no.nav.personopplysninger.features.personalia.dto.transformer.GeografiskEnhetKontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.KontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
-import org.springframework.util.ObjectUtils.isEmpty
 import java.time.LocalDate
 
-@Service
-class PersonaliaService @Autowired constructor(
+class PersonaliaService(
     private var kontaktinfoConsumer: KontaktinfoConsumer,
     private var kodeverkConsumer: KodeverkConsumer,
     private var norg2Consumer: Norg2Consumer,
@@ -31,11 +27,11 @@ class PersonaliaService @Autowired constructor(
     private var pdlService: PdlService
 ) {
 
-    fun hentPersoninfo(fodselsnr: String): PersonaliaOgAdresser {
+    suspend fun hentPersoninfo(token: String, fodselsnr: String): PersonaliaOgAdresser {
 
-        val pdlPersonInfo = pdlService.getPersonInfo(fodselsnr)
+        val pdlPersonInfo = pdlService.getPersonInfo(token, fodselsnr)
 
-        val konto = kontoregisterConsumer.hentAktivKonto(fodselsnr)
+        val konto = kontoregisterConsumer.hentAktivKonto(token, fodselsnr)
 
         val personaliaKV = createPersonaliaKodeverk(pdlPersonInfo, konto)
 
@@ -43,16 +39,16 @@ class PersonaliaService @Autowired constructor(
 
         val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
         if (tilknytning != null) {
-            val enhet = norg2Consumer.hentEnhetDersomGyldig(tilknytning)
+            val enhet = norg2Consumer.hentEnhet(token, tilknytning)
             if (enhet != null) {
                 personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhet.navn
-                personaliaOgAdresser.enhetKontaktInformasjon.enhet = hentEnhetKontaktinformasjon(enhet.enhetNr)
+                personaliaOgAdresser.enhetKontaktInformasjon.enhet = hentEnhetKontaktinformasjon(token, enhet.enhetNr)
             }
         }
         return personaliaOgAdresser
     }
 
-    private fun createPersonaliaKodeverk(inboundPdl: PdlData, inboundKonto: Konto?): PersonaliaKodeverk {
+    private suspend fun createPersonaliaKodeverk(inboundPdl: PdlData, inboundKonto: Konto?): PersonaliaKodeverk {
         val pdlPerson = inboundPdl.person!!
         val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning
 
@@ -66,7 +62,8 @@ class PersonaliaService @Autowired constructor(
             foedelandterm = kodeverkConsumer.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
             gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
             statsborgerskaptermer = hentGyldigeStatsborgerskap(pdlPerson.statsborgerskap)
-            utenlandskbanklandterm = kodeverkConsumer.hentLandKoderISO2().term(inboundKonto?.utenlandskKontoInfo?.bankLandkode)
+            utenlandskbanklandterm =
+                kodeverkConsumer.hentLandKoderISO2().term(inboundKonto?.utenlandskKontoInfo?.bankLandkode)
             utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inboundKonto?.utenlandskKontoInfo?.valutakode)
             kontaktadresseKodeverk =
                 kontaktadresse.map { hentAdresseKodeverk(it.postnummer, it.landkode, it.kommunenummer) }
@@ -79,14 +76,18 @@ class PersonaliaService @Autowired constructor(
         }
     }
 
-    private fun hentGyldigeStatsborgerskap(statsborgerskap: List<PdlStatsborgerskap>): List<String> {
+    private suspend fun hentGyldigeStatsborgerskap(statsborgerskap: List<PdlStatsborgerskap>): List<String> {
         return statsborgerskap
             .filter { it.land != "XUK" && it.gyldigTilOgMed?.isBefore(LocalDate.now()) != true } // Filtrer ut ukjent og ugyldige
             .map { kodeverkConsumer.hentStatsborgerskap().term(it.land) }
-            .filter { !isEmpty(it) }
+            .filter { it.isNotEmpty() }
     }
 
-    private fun hentAdresseKodeverk(postnummer: String?, landkode: String?, kommunenummer: String?): AdresseKodeverk {
+    private suspend fun hentAdresseKodeverk(
+        postnummer: String?,
+        landkode: String?,
+        kommunenummer: String?
+    ): AdresseKodeverk {
         return AdresseKodeverk().apply {
             poststed = kodeverkConsumer.hentPostnummer().term(postnummer)
             land = kodeverkConsumer.hentLandKoder().term(landkode)
@@ -94,7 +95,7 @@ class PersonaliaService @Autowired constructor(
         }
     }
 
-    private fun getKommuneKodeverksTerm(inbound: String?): String {
+    private suspend fun getKommuneKodeverksTerm(inbound: String?): String {
         return if ("0000" == inbound) {
             ""
         } else {
@@ -102,14 +103,17 @@ class PersonaliaService @Autowired constructor(
         }
     }
 
-    fun hentKontaktinformasjon(fodselsnr: String): Kontaktinformasjon {
-        val inbound = kontaktinfoConsumer.hentKontaktinformasjon(fodselsnr)
+    suspend fun hentKontaktinformasjon(token: String, fodselsnr: String): Kontaktinformasjon {
+        val inbound = kontaktinfoConsumer.hentKontaktinformasjon(token, fodselsnr)
         val spraakTerm = kodeverkConsumer.hentSpraak().term(inbound.spraak?.uppercase())
         return KontaktinformasjonTransformer.toOutbound(inbound, spraakTerm)
     }
 
-    private fun hentEnhetKontaktinformasjon(enhetsnr: String): GeografiskEnhetKontaktInformasjon {
-        val inbound = norg2Consumer.hentKontaktinfo(enhetsnr)
+    private suspend fun hentEnhetKontaktinformasjon(
+        token: String,
+        enhetsnr: String
+    ): GeografiskEnhetKontaktInformasjon {
+        val inbound = norg2Consumer.hentKontaktinfo(token, enhetsnr)
         return GeografiskEnhetKontaktinformasjonTransformer.toOutbound(inbound)
     }
 

@@ -1,11 +1,9 @@
 package no.nav.personopplysninger.util
 
-import java.net.URI
-
-fun consumerErrorMessage(endpoint: URI, status: Int, feilmelding: String): String {
+fun consumerErrorMessage(endpoint: String, status: Int, feilmelding: String): String {
     return "Feil i kall mot ekstern tjeneste - endepunkt=[$endpoint], HTTP response status=[$status], feilmelding=[$feilmelding]"
 }
 
-fun consumerErrorMessage(endpoint: URI, status: Int): String {
+fun consumerErrorMessage(endpoint: String, status: Int): String {
     return "Feil i kall mot ekstern tjeneste - endepunkt=[$endpoint], HTTP response status=[$status]"
 }

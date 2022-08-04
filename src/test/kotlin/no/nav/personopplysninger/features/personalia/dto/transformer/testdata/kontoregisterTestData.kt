@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer.testdata
 
-import no.nav.personopplysninger.consumer.kontoregister.domain.Konto
-import no.nav.personopplysninger.consumer.kontoregister.domain.UtenlandskKontoInfo
+import no.nav.personopplysninger.consumer.kontoregister.dto.Konto
+import no.nav.personopplysninger.consumer.kontoregister.dto.UtenlandskKontoInfo
 
 
 fun createDummyKonto(): Konto {

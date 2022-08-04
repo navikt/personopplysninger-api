@@ -1,83 +1,70 @@
 package no.nav.personopplysninger.consumer.norg2
 
-import com.fasterxml.jackson.module.kotlin.readValue
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.isSuccess
 import no.nav.common.log.MDCConstants
-import no.nav.personopplysninger.consumer.*
-import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
-import no.nav.personopplysninger.consumer.norg2.domain.Norg2Enhet
-import no.nav.personopplysninger.consumer.norg2.domain.Norg2EnhetKontaktinfo
-import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
-import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.config.BEARER
+import no.nav.personopplysninger.config.CONSUMER_ID
+import no.nav.personopplysninger.config.Environment
+import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
+import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
+import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
+import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_TOKEN
+import no.nav.personopplysninger.consumer.norg2.dto.Norg2Enhet
+import no.nav.personopplysninger.consumer.norg2.dto.Norg2EnhetKontaktinfo
 import no.nav.personopplysninger.util.consumerErrorMessage
-import no.nav.personopplysninger.util.getToken
+import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
-import java.net.URI
-import javax.ws.rs.client.Client
-import javax.ws.rs.client.Invocation
-import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
 class Norg2Consumer(
-    private val client: Client,
-    private val endpoint: URI,
-    private val tokenDingsService: TokenDingsService,
-    private val targetApp: String?
+    private val client: HttpClient,
+    private val environment: Environment,
+    private val tokenDingsService: TokendingsService,
 ) {
 
     private var logger: Logger = LoggerFactory.getLogger(javaClass)
 
-    fun hentEnhetDersomGyldig(geografisk: String): Norg2Enhet? {
-        return try {
-            hentEnhet(geografisk)
-        } catch (e: ConsumerException) {
-            logger.warn("Feil oppstod ved henting av enhet: ", e)
+    suspend fun hentEnhet(token: String, geografisk: String): Norg2Enhet? {
+        val accessToken = tokenDingsService.exchangeToken(token, environment.personopplysningerProxyTargetApp)
+        val endpoint = environment.norg2Url.plus("/enhet/navkontor/$geografisk")
+
+        val response: HttpResponse =
+            client.get(endpoint) {
+                header(HEADER_AUTHORIZATION, BEARER + accessToken)
+                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+                header(HEADER_NAV_CONSUMER_TOKEN, token)
+            }
+        return if (response.status.isSuccess()) {
+            response.body()
+        } else {
+            logger.warn("Feil oppstod ved henting av enhet, returnerer tomt objekt. Status=[${response.status}], melding=[${response.body<String>()}]")
             null
         }
     }
 
-    private fun hentEnhet(geografisk: String): Norg2Enhet? {
-        val request = buildEnhetRequest(geografisk)
-        return request.readResponse()
-    }
+    suspend fun hentKontaktinfo(token: String, enhetsnr: String): Norg2EnhetKontaktinfo {
+        val accessToken = tokenDingsService.exchangeToken(token, environment.personopplysningerProxyTargetApp)
+        val endpoint = environment.medlTargetApp.plus("/enhet/$enhetsnr/kontaktinformasjon")
 
-    fun hentKontaktinfo(enhetsnr: String): Norg2EnhetKontaktinfo {
-        val request = buildKontaktinfoRequest(enhetsnr)
-        return request.readResponse()
-    }
-
-    private fun buildEnhetRequest(geografisk: String): Invocation.Builder {
-        val selvbetjeningToken = getToken()
-        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
-        return client.target(endpoint)
-            .path("enhet/navkontor/$geografisk")
-            .request()
-            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
-            .header(HEADER_NAV_CONSUMER_TOKEN, selvbetjeningToken)
-            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
-            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-    }
-
-    private fun buildKontaktinfoRequest(enhetsnr: String): Invocation.Builder {
-        val selvbetjeningToken = getToken()
-        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
-        return client.target(endpoint)
-            .path("enhet/$enhetsnr/kontaktinformasjon")
-            .request()
-            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
-            .header(HEADER_NAV_CONSUMER_TOKEN, selvbetjeningToken)
-            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
-            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-            .header("enhetsnr", enhetsnr)
-    }
-
-    private inline fun <reified T> Invocation.Builder.readResponse(): T {
-        get().use { response ->
-            val responseBody = response.readEntity(String::class.java)
-            if (SUCCESSFUL != response.statusInfo.family) {
-                throw ConsumerException(consumerErrorMessage(endpoint, response.status, responseBody))
+        val response: HttpResponse =
+            client.get(endpoint) {
+                header(HEADER_AUTHORIZATION, BEARER + accessToken)
+                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+                header(HEADER_NAV_CONSUMER_TOKEN, token)
+                header("enhetsnr", enhetsnr)
             }
-            return objectMapper.readValue(responseBody)
+        return if (response.status.isSuccess()) {
+            response.body()
+        } else {
+            throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
         }
     }
 }

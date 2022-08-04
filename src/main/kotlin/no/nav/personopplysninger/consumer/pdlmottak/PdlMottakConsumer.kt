@@ -1,143 +1,154 @@
 package no.nav.personopplysninger.consumer.pdlmottak
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.isSuccess
 import no.nav.common.log.MDCConstants
-import no.nav.personopplysninger.consumer.*
-import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
-import no.nav.personopplysninger.consumer.pdlmottak.domain.Endring
-import no.nav.personopplysninger.consumer.pdlmottak.domain.Personopplysning
-import no.nav.personopplysninger.consumer.pdlmottak.domain.opphoer.OpphoerPersonopplysning
-import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.EndreTelefon
-import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.EndringTelefon
-import no.nav.personopplysninger.consumer.tokendings.TokenDingsService
-import no.nav.personopplysninger.exception.ConsumerException
+import no.nav.personopplysninger.config.BEARER
+import no.nav.personopplysninger.config.CONSUMER_ID
+import no.nav.personopplysninger.config.Environment
+import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
+import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
+import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
+import no.nav.personopplysninger.config.HEADER_NAV_PERSONIDENT
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Endring
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Personopplysning
+import no.nav.personopplysninger.consumer.pdlmottak.dto.opphoer.OpphoerPersonopplysning
+import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.EndreTelefon
+import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.EndringTelefon
 import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.personopplysninger.util.getJson
-import no.nav.personopplysninger.util.getToken
+import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
-import java.net.URI
-import javax.ws.rs.HttpMethod
-import javax.ws.rs.client.Client
-import javax.ws.rs.client.Entity
-import javax.ws.rs.client.Invocation
-import javax.ws.rs.core.HttpHeaders
-import javax.ws.rs.core.MediaType
-import javax.ws.rs.core.Response
-import javax.ws.rs.core.Response.Status.Family.SUCCESSFUL
 
-private const val HTTP_CODE_422 = 422
-private const val HTTP_CODE_423 = 423
 private const val SLEEP_TIME_MS = 1000L
 private const val MAX_POLLS = 3
 private const val URL_ENDRINGER = "/api/v1/endringer"
 
 class PdlMottakConsumer(
-    private val client: Client,
-    private val endpoint: URI,
-    private var tokenDingsService: TokenDingsService,
-    private var targetApp: String?
+    private val client: HttpClient,
+    private val environment: Environment,
+    private val tokenDingsService: TokendingsService,
+    private val objectMapper: ObjectMapper,
 ) {
     private val log = LoggerFactory.getLogger(PdlMottakConsumer::class.java)
 
-    fun endreTelefonnummer(fnr: String, endreTelefon: EndreTelefon): EndringTelefon {
-        return sendPdlEndring(endreTelefon, fnr, URL_ENDRINGER, EndringTelefon::class.java)
+    suspend fun endreTelefonnummer(token: String, fnr: String, endreTelefon: EndreTelefon): EndringTelefon {
+        return sendPdlEndring(token, endreTelefon, fnr, URL_ENDRINGER, EndringTelefon::class.java)
     }
 
-    fun <T : Endring<T>> slettPersonopplysning(
+    suspend fun <T : Endring<T>> slettPersonopplysning(
+        token: String,
         fnr: String,
         opphoerPersonopplysning: OpphoerPersonopplysning,
         endringsType: Class<T>
     ): T {
-        return sendPdlEndring(opphoerPersonopplysning, fnr, URL_ENDRINGER, endringsType)
+        return sendPdlEndring(token, opphoerPersonopplysning, fnr, URL_ENDRINGER, endringsType)
     }
 
-    private fun getBuilder(path: String): Invocation.Builder {
-        val selvbetjeningToken = getToken()
-        val accessToken = tokenDingsService.exchangeToken(selvbetjeningToken, targetApp).accessToken
-        return client.target(endpoint)
-            .path(path)
-            .request()
-            .header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
-            .header(HEADER_AUTHORIZATION, BEARER + accessToken)
-            .header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-    }
-
-    private fun buildEndreRequest(fnr: String, path: String): Invocation.Builder {
-        return getBuilder(path)
-            .header(HEADER_NAV_PERSONIDENT, fnr)
-    }
-
-    private fun buildPollEndringRequest(url: String): Invocation.Builder {
-        return getBuilder(url)
-    }
-
-    private fun <T, R : Endring<R>> sendPdlEndring(
+    private suspend fun <T, R : Endring<R>> sendPdlEndring(
+        token: String,
         entitetSomEndres: Personopplysning<T>,
         fnr: String,
         path: String,
         endringType: Class<R>
     ): R {
+        val accessToken = tokenDingsService.exchangeToken(token, environment.kontoregisterTargetApp)
+        val endpoint = environment.pdlMottakUrl.plus(path)
 
-        val request = buildEndreRequest(fnr, path)
-
-        val entity = Entity.entity(entitetSomEndres.asSingleEndring(), MediaType.APPLICATION_JSON)
+        val response: HttpResponse =
+            client.post(endpoint) {
+                header(HEADER_AUTHORIZATION, BEARER + accessToken)
+                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+                header(HEADER_NAV_PERSONIDENT, fnr)
+                setBody(entitetSomEndres.asSingleEndring())
+            }
 
         return try {
-            request.method(
-                HttpMethod.POST, entity
-            ).use { response ->
-                readResponseAndPollStatus(response, endringType)
-            }
+            readResponseAndPollStatus(accessToken, response, endringType)
         } catch (e: Exception) {
             val msg = "Forsøkte å endre personopplysning. endpoint=[$endpoint]."
-            throw ConsumerException(msg, e)
+            throw RuntimeException(msg, e)
         }
     }
 
-    private fun <T : Endring<T>> readResponseAndPollStatus(
-        response: Response,
+    private suspend fun <T : Endring<T>> readResponseAndPollStatus(
+        accessToken: String,
+        response: HttpResponse,
         clazz: Class<T>
     ): T {
-        val responseBody = response.readEntity(String::class.java)
         return when {
-            response.status == HTTP_CODE_423 -> {
+            response.status == HttpStatusCode.Locked -> {
                 getEndring(clazz, "REJECTED").apply {
-                    error = objectMapper.readValue(responseBody)
+                    error = response.body()
                     log.info("Oppdatering avvist pga status pending.")
                 }
             }
-            response.status == HTTP_CODE_422 -> {
+            response.status == HttpStatusCode.UnprocessableEntity -> {
                 getEndring(clazz, "ERROR").apply {
-                    error = objectMapper.readValue(responseBody)
+                    error = response.body()
                     log.error("Fikk valideringsfeil: ${getJson(this)}")
                 }
             }
-            SUCCESSFUL != response.statusInfo.family -> {
-                throw ConsumerException(consumerErrorMessage(endpoint, response.status, responseBody))
+            !response.status.isSuccess() -> {
+                throw RuntimeException(
+                    consumerErrorMessage(
+                        environment.pdlMottakUrl,
+                        response.status.value,
+                        response.body()
+                    )
+                )
             }
             else -> {
-                val pollEndringUrl = response.getHeaderString(HttpHeaders.LOCATION)
-                buildPollEndringRequest(pollEndringUrl)
-                    .pollFor(clazz, SLEEP_TIME_MS, MAX_POLLS)
+                val pollEndringUrl = response.headers[HttpHeaders.Location]!!
+                pollEndring(clazz, accessToken, pollEndringUrl, SLEEP_TIME_MS, MAX_POLLS)
             }
         }
     }
 
-    private fun <T : Endring<T>> Invocation.Builder.pollFor(clazz: Class<T>, pollInterval: Long, maxPolls: Int): T {
+    private fun <T : Endring<T>> getEndring(clazz: Class<T>, statusType: String): T {
+        try {
+            return clazz.getDeclaredConstructor().newInstance().apply { this.statusType = statusType }
+        } catch (e: Exception) {
+            log.error("Fikk exception ved forsøk på å instansiere ${clazz.name}")
+            throw RuntimeException(e)
+        }
+    }
+
+    private suspend fun <T : Endring<T>> pollEndring(
+        clazz: Class<T>,
+        accessToken: String,
+        url: String,
+        pollInterval: Long,
+        maxPolls: Int
+    ): T {
         var endring: T
         var i = 0
         do {
             try {
                 Thread.sleep(pollInterval)
             } catch (ie: InterruptedException) {
-                throw ConsumerException("Fikk feil under polling på status", ie)
+                throw RuntimeException("Fikk feil under polling på status", ie)
             }
 
-            val pollResponse = get()
+            val response: HttpResponse =
+                client.get(url) {
+                    header(HEADER_AUTHORIZATION, BEARER + accessToken)
+                    header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                    header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+                }
             val type = objectMapper.typeFactory.constructCollectionType(List::class.java, clazz)
-            val endringList = objectMapper.readValue<List<T>>(pollResponse.readEntity(String::class.java), type)
+            val endringList = objectMapper.readValue<List<T>>(response.body<String>(), type)
             endring = endringList[0]
         } while (++i < maxPolls && endring.isPending)
         log.info("Antall polls for status: $i")
@@ -150,14 +161,5 @@ class PdlMottakConsumer(
             log.warn("${endring.errorMessage}\n$json")
         }
         return endring
-    }
-
-    private fun <T : Endring<T>> getEndring(clazz: Class<T>, statusType: String): T {
-        try {
-            return clazz.getDeclaredConstructor().newInstance().apply { this.statusType = statusType }
-        } catch (e: Exception) {
-            log.error("Fikk exception ved forsøk på å instansiere ${clazz.name}")
-            throw RuntimeException(e)
-        }
     }
 }
