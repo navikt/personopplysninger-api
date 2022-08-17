@@ -22,6 +22,7 @@ repositories {
 }
 
 dependencies {
+    implementation(Auth0.jwt)
     implementation(Ktor.serverNetty)
     implementation(Ktor.serverCallLogging)
     implementation(Ktor.serverCore)
@@ -43,7 +44,6 @@ dependencies {
     implementation(Jackson.datatypeJsr310)
     implementation(NAV.Common.featureToggle)
     implementation(Finn.unleashClient)
-    implementation(Kotlinx.coroutinesCore)
     testImplementation(Kotlin.junit5)
     testImplementation(Ktor.serverTestHost)
 }

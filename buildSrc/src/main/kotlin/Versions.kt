@@ -1,3 +1,10 @@
+object Auth0 {
+    private const val version = "4.0.0"
+    private const val groupId = "com.auth0"
+
+    const val jwt = "$groupId:java-jwt:$version"
+}
+
 object DittNAV {
     object Common {
         private const val version = "2022.04.19-11.11-1043a85c4f6f"
@@ -22,22 +29,15 @@ object Jackson {
 }
 
 object Kotlin {
-    const val version = "1.6.21"
+    const val version = "1.7.10"
     private const val groupId = "org.jetbrains.kotlin"
 
     const val jdk8 = "$groupId:kotlin-stdlib-jdk8:$version"
     const val junit5 = "$groupId:kotlin-test-junit5:$version"
 }
 
-object Kotlinx {
-    const val version = "1.5.2"
-    private const val groupId = "org.jetbrains.kotlinx"
-
-    const val coroutinesCore = "$groupId:kotlinx-coroutines-core:$version"
-}
-
 object Ktor {
-    private const val version = "2.0.3"
+    private const val version = "2.1.0"
     private const val groupId = "io.ktor"
 
     const val serverNetty = "$groupId:ktor-server-netty:$version"
@@ -60,7 +60,7 @@ object Logback {
 }
 
 object Logstash {
-    private const val version = "7.1.1"
+    private const val version = "7.2"
     private const val groupId = "net.logstash.logback"
 
     const val logbackEncoder = "$groupId:logstash-logback-encoder:$version"
@@ -87,7 +87,7 @@ object Shadow {
 }
 
 object TmsKtorTokenSupport {
-    private const val version = "2022.05.19-09.32-5076b2435b0a"
+    private const val version = "2.0.0"
     private const val groupId = "com.github.navikt.tms-ktor-token-support"
 
     const val tokendingsExchange = "$groupId:token-support-tokendings-exchange:$version"
