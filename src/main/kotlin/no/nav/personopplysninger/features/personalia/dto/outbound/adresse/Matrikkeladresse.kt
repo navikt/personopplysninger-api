@@ -1,7 +1,11 @@
 package no.nav.personopplysninger.features.personalia.dto.outbound.adresse
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.MATRIKKELADRESSE
 
+@Serializable
+@SerialName("Matrikkeladresse")
 data class Matrikkeladresse(
     val bruksenhetsnummer: String?,
     val tilleggsnavn: String?,

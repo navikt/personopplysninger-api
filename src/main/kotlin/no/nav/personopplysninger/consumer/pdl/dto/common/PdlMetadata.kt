@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PdlMetadata(
     val opplysningsId: String? = null,
-    val master: String,
-    val endringer: List<PdlEndring>,
-    val historisk: Boolean
+    val master: String? = null,
+    val endringer: List<PdlEndring>? = emptyList(),
+    val historisk: Boolean? = null
 )

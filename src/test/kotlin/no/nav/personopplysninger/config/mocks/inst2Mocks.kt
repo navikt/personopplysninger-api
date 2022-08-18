@@ -18,5 +18,5 @@ fun MockRequestHandleScope.mockInst2(status: HttpStatusCode) =
             headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
         )
     } else {
-        respondError(HttpStatusCode.InternalServerError)
+        respondError(status)
     }

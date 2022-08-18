@@ -1,5 +1,8 @@
 package no.nav.personopplysninger.consumer.pdl.request
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class NavnRequest(override val variables: QueryVariables) : PDLRequest {
 
     override val query: String

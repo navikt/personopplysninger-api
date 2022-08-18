@@ -1,7 +1,11 @@
 package no.nav.personopplysninger.features.personalia.dto.outbound.adresse
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.UTENLANDSK_ADRESSE
 
+@Serializable
+@SerialName("UtenlandskAdresse")
 data class UtenlandskAdresse(
     val adressenavnNummer: String?,
     val bygningEtasjeLeilighet: String?,

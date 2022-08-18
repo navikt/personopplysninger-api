@@ -19,7 +19,7 @@ fun MockRequestHandleScope.mockKodeverk(request: HttpRequestData, status: HttpSt
             headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
         )
     } else {
-        respondError(HttpStatusCode.InternalServerError)
+        respondError(status)
     }
 
 private fun readKodeverkResponse(path: String): String {
@@ -39,7 +39,7 @@ private fun readKodeverkResponse(path: String): String {
         readFile("kodeverk-dekningmedl.json")
     } else if (path.contains("Retningsnumre")) {
         readFile("kodeverk-retningsnumre.json")
-    } else if (path.contains("Spr%C3%A5k")) {
+    } else if (path.contains("Språk")) {
         readFile("kodeverk-spraak.json")
     } else {
         throw RuntimeException("Fant ikke mock for path")

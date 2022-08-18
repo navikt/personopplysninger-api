@@ -21,7 +21,7 @@ fun MockRequestHandleScope.mockPdl(status: HttpStatusCode, responseType: PdlResp
             headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
         )
     } else {
-        respondError(HttpStatusCode.InternalServerError)
+        respondError(status)
     }
 
 private fun readPdlResponse(responseType: PdlResponseType): String {

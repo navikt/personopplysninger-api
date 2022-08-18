@@ -11,6 +11,7 @@ class PdlService(private val pdlConsumer: PdlConsumer) {
     ): String? {
         return pdlConsumer.getTelefonInfo(token, ident).telefonnummer
             .find { tlf -> landskode == tlf.landskode && telefonnummer == tlf.nummer }
+            ?.metadata
             ?.opplysningsId
     }
 

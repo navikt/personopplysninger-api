@@ -19,13 +19,13 @@ fun MockRequestHandleScope.mockNorg2(request: HttpRequestData, status: HttpStatu
             headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
         )
     } else {
-        respondError(HttpStatusCode.InternalServerError)
+        respondError(status)
     }
 
 private fun readNorg2Response(path: String): String {
     return if (path.contains("navkontor")) {
         readFile("norg2-navkontor.json")
-    } else if (path.startsWith("kontaktinformasjon")) {
+    } else if (path.contains("kontaktinformasjon")) {
         readFile("norg2-kontaktinformasjon.json")
     } else {
         throw RuntimeException("Fant ikke mock for path")

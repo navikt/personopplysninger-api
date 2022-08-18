@@ -23,7 +23,7 @@ object BostedsadresseTransformer {
                 gyldigFraOgMed = inbound.gyldigFraOgMed,
                 gyldigTilOgMed = inbound.gyldigTilOgMed,
                 coAdressenavn = inbound.coAdressenavn,
-                kilde = inbound.metadata.master.lowercase(),
+                kilde = inbound.metadata.master?.lowercase(),
                 adresse = adresse
             )
         } else {

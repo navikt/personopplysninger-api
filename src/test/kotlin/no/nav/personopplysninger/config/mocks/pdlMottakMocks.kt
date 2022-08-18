@@ -36,7 +36,7 @@ fun MockRequestHandleScope.mockPdlMottak(
             throw RuntimeException("Fant ikke mock for path")
         }
     } else {
-        respondError(HttpStatusCode.InternalServerError)
+        respondError(status)
     }
 
 private fun readPdlMottakResponse(responseType: PdlMottakResponseType): String {

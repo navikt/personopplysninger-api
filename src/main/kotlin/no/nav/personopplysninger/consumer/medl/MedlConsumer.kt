@@ -26,7 +26,7 @@ class MedlConsumer constructor(
 ) {
     suspend fun hentMedlemskap(token: String, fnr: String): Medlemskapsunntak {
         val accessToken = tokenDingsService.exchangeToken(token, environment.medlTargetApp)
-        val endpoint = environment.medlTargetApp.plus("/api/v1/innsyn/person")
+        val endpoint = environment.medlUrl.plus("/api/v1/innsyn/person")
 
         val response: HttpResponse =
             client.get(endpoint) {

@@ -51,7 +51,7 @@ class Norg2Consumer(
 
     suspend fun hentKontaktinfo(token: String, enhetsnr: String): Norg2EnhetKontaktinfo {
         val accessToken = tokenDingsService.exchangeToken(token, environment.personopplysningerProxyTargetApp)
-        val endpoint = environment.medlTargetApp.plus("/enhet/$enhetsnr/kontaktinformasjon")
+        val endpoint = environment.norg2Url.plus("/enhet/$enhetsnr/kontaktinformasjon")
 
         val response: HttpResponse =
             client.get(endpoint) {

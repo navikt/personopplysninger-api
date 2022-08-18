@@ -51,8 +51,8 @@ fun createDummyPerson(): PdlPerson {
             PdlNavn("fornavn", "mellomnavn", "etternavn")
         ),
         telefonnummer = listOf(
-            PdlTelefonnummer("+47", "97505050", 1, "opl-123"),
-            PdlTelefonnummer("+47", "22113344", 2, "opl-456")
+            PdlTelefonnummer("+47", "97505050", 1, createDummyMetadata()),
+            PdlTelefonnummer("+47", "22113344", 2, createDummyMetadata())
         ),
         folkeregisteridentifikator = listOf(
             PdlFolkeregisteridentifikator(
