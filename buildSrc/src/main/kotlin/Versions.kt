@@ -52,6 +52,7 @@ object Ktor {
     const val serverTestHost = "$groupId:ktor-server-test-host:$version"
     const val clientContentNegotiation = "$groupId:ktor-client-content-negotiation:$version"
     const val clientApache = "$groupId:ktor-client-apache:$version"
+    const val clientMock = "$groupId:ktor-client-mock:$version"
 }
 
 object Logback {

@@ -8,8 +8,10 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.config.BEARER
@@ -71,6 +73,7 @@ class PdlMottakConsumer(
                 header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
                 header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 header(HEADER_NAV_PERSONIDENT, fnr)
+                contentType(ContentType.Application.Json)
                 setBody(entitetSomEndres.asSingleEndring())
             }
 

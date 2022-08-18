@@ -46,6 +46,7 @@ dependencies {
     implementation(Finn.unleashClient)
     testImplementation(Kotlin.junit5)
     testImplementation(Ktor.serverTestHost)
+    testImplementation(Ktor.clientMock)
 }
 
 application {

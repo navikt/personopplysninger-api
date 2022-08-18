@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class Bostedsadresse(
-    val angittFlyttedato: LocalDate?,
+    val angittFlyttedato: LocalDate? = null,
     val gyldigFraOgMed: LocalDateTime?,
     val gyldigTilOgMed: LocalDateTime?,
     val coAdressenavn: String?,
