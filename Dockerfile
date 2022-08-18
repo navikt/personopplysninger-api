@@ -1,6 +1,7 @@
 FROM navikt/java:17
-COPY build/libs/personopplysninger-api.jar app.jar
-ENV APPD_ENABLED=true
-ENV APP_LOG_HOME="/tmp"
-ENV contextName="personopplysninger-api"
-EXPOSE 8080
+COPY build/libs/personopplysninger-api-all.jar /app/app.jar
+ENV JAVA_OPTS="-XX:MaxRAMPercentage=75 \
+               -XX:+HeapDumpOnOutOfMemoryError \
+               -XX:HeapDumpPath=/oom-dump.hprof"
+ENV PORT=8080
+EXPOSE $PORT

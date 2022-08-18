@@ -24,6 +24,7 @@ import no.nav.personopplysninger.features.institusjon.institusjon
 import no.nav.personopplysninger.features.medl.medl
 import no.nav.personopplysninger.features.personalia.personalia
 import no.nav.personopplysninger.health.health
+import no.nav.security.token.support.v2.RequiredClaims
 import no.nav.security.token.support.v2.tokenValidationSupport
 import org.slf4j.LoggerFactory
 
@@ -40,7 +41,13 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
 
     val conf = this.environment.config
     install(Authentication) {
-        tokenValidationSupport(config = conf)
+        tokenValidationSupport(
+            config = conf,
+            requiredClaims = RequiredClaims(
+                issuer = "loginservice",
+                claimMap = arrayOf("acr=Level4")
+            )
+        )
     }
 
     install(CallLogging) {
