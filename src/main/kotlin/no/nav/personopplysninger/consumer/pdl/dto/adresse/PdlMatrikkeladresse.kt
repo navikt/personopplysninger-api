@@ -1,8 +1,11 @@
 package no.nav.personopplysninger.consumer.pdl.dto.adresse
 
-data class PdlMatrikkeladresse (
-    val bruksenhetsnummer: String?,
-    val tilleggsnavn: String?,
-    val postnummer: String?,
-    val kommunenummer: String?
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class PdlMatrikkeladresse(
+    val bruksenhetsnummer: String? = null,
+    val tilleggsnavn: String? = null,
+    val postnummer: String? = null,
+    val kommunenummer: String? = null
 )

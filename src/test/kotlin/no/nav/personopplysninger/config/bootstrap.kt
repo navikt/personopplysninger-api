@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.config
 
-import io.ktor.serialization.gson.gson
+import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
@@ -17,9 +17,7 @@ import no.nav.personopplysninger.features.personalia.personalia
 fun Application.testModule(appContext: TestApplicationContext) {
 
     install(ContentNegotiation) {
-        gson {
-            setPrettyPrinting()
-        }
+        json(jsonConfig())
     }
 
     routing {

@@ -1,10 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.outbound.adresse
 
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL
 import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.AdresseType.UTENLANDSK_ADRESSE
 
-@JsonInclude(NON_NULL)
 data class UtenlandskAdresse(
     val adressenavnNummer: String?,
     val bygningEtasjeLeilighet: String?,

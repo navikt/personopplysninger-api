@@ -3,7 +3,6 @@ package no.nav.personopplysninger.features.endreopplysninger
 import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.consumer.kodeverk.dto.KodeOgTekstDto
 import no.nav.personopplysninger.consumer.kodeverk.dto.Kodeverk
-import no.nav.personopplysninger.consumer.kodeverk.dto.RetningsnummerDTO
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.consumer.kontoregister.dto.OppdaterKonto
 import no.nav.personopplysninger.consumer.kontoregister.dto.UtenlandskKontoInfo
@@ -16,6 +15,7 @@ import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.Telefonnummer
 import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.endreNummerPayload
 import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.slettNummerPayload
 import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
+import no.nav.personopplysninger.features.endreopplysninger.dto.Retningsnummer
 
 class EndreOpplysningerService(
     private var pdlMottakConsumer: PdlMottakConsumer,
@@ -77,10 +77,10 @@ class EndreOpplysningerService(
         )
     }
 
-    suspend fun hentRetningsnumre(): Array<RetningsnummerDTO> {
+    suspend fun hentRetningsnumre(): Array<Retningsnummer> {
         return kodeverkConsumer.hentRetningsnumre().koder
             .map { kode ->
-                RetningsnummerDTO(
+                Retningsnummer(
                     kode.navn,
                     kode.betydninger.first().beskrivelser.entries.first().value.tekst
                 )

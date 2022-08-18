@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.consumer.kodeverk.dto.PersonaliaKodeverk
+import no.nav.personopplysninger.features.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPdlData
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPdlDataWithoutAdresser
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyPersonaliaKodeverk

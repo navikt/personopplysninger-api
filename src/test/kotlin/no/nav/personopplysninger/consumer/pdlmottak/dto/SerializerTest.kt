@@ -6,10 +6,10 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.personopplysninger.consumer.inst.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.consumer.kodeverk.dto.GetKodeverkKoderBetydningerResponse
-import no.nav.personopplysninger.consumer.kodeverk.dto.RetningsnummerDTO
 import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.EndringTelefon
 import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.Telefonnummer
 import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
+import no.nav.personopplysninger.features.endreopplysninger.dto.Retningsnummer
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
 import no.nav.personopplysninger.testutils.utenlandskKontonummerJson
 import no.nav.personopplysninger.util.getJson
@@ -51,7 +51,7 @@ class SerializerTest {
 
     @Test
     fun testSerializationRetningsnummer() {
-        assertTrue { objectMapper.canSerialize(RetningsnummerDTO::class.java) }
+        assertTrue { objectMapper.canSerialize(Retningsnummer::class.java) }
     }
 
     @Test
@@ -65,9 +65,9 @@ class SerializerTest {
             response.betydninger.entries.first().value.first().beskrivelser.entries.first().value.tekst
         )
 
-        val retningsnumre: Array<RetningsnummerDTO> = response.betydninger
+        val retningsnumre: Array<Retningsnummer> = response.betydninger
             .map { entry ->
-                RetningsnummerDTO(
+                Retningsnummer(
                     entry.key,
                     entry.value.first().beskrivelser.entries.first().value.tekst
                 )

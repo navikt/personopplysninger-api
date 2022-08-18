@@ -1,19 +1,24 @@
 package no.nav.personopplysninger.consumer.pdl.dto.adresse
 
+import kotlinx.serialization.Serializable
+import no.nav.personopplysninger.config.serializer.LocalDateTimeSerializer
 import no.nav.personopplysninger.consumer.pdl.dto.common.PdlMetadata
 import java.time.LocalDateTime
 
+@Serializable
 data class PdlKontaktadresse(
-    val gyldigFraOgMed: LocalDateTime?,
-    val gyldigTilOgMed: LocalDateTime?,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val gyldigFraOgMed: LocalDateTime? = null,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val gyldigTilOgMed: LocalDateTime? = null,
     val type: PdlKontaktadressetype,
-    val coAdressenavn: String?,
-    val postboksadresse: PdlPostboksadresse?,
-    val vegadresse: PdlVegadresse?,
-    val postadresseIFrittFormat: PdlPostadresseIFrittFormat?,
-    val utenlandskAdresse: PdlUtenlandskAdresse?,
-    val utenlandskAdresseIFrittFormat: PdlUtenlandskAdresseIFrittFormat?,
-    val folkeregistermetadata: PdlFolkeregistermetadata?,
+    val coAdressenavn: String? = null,
+    val postboksadresse: PdlPostboksadresse? = null,
+    val vegadresse: PdlVegadresse? = null,
+    val postadresseIFrittFormat: PdlPostadresseIFrittFormat? = null,
+    val utenlandskAdresse: PdlUtenlandskAdresse? = null,
+    val utenlandskAdresseIFrittFormat: PdlUtenlandskAdresseIFrittFormat? = null,
+    val folkeregistermetadata: PdlFolkeregistermetadata? = null,
     val metadata: PdlMetadata
 ) {
     val mappingType: AdresseMappingType

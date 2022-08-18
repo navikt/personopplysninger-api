@@ -1,8 +1,11 @@
 package no.nav.personopplysninger.consumer.kodeverk.dto
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class KodeOgTekstDto(
         val kode: String,
-        val tekst: String?
+        val tekst: String? = null
 ){
     companion object {
         fun fromKode(kode: Kode): KodeOgTekstDto {

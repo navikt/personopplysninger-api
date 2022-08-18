@@ -1,6 +1,9 @@
 package no.nav.personopplysninger.consumer.medl.dto
 
-data class Studieinformasjon (
-        var statsborgerland: String,
-        var studieland: String
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Studieinformasjon(
+    var statsborgerland: String,
+    var studieland: String
 )

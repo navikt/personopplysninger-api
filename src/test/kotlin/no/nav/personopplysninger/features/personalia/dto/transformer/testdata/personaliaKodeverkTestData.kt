@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer.testdata
 
-import no.nav.personopplysninger.consumer.kodeverk.dto.AdresseKodeverk
-import no.nav.personopplysninger.consumer.kodeverk.dto.PersonaliaKodeverk
+import no.nav.personopplysninger.features.personalia.dto.AdresseKodeverk
+import no.nav.personopplysninger.features.personalia.dto.PersonaliaKodeverk
 
 fun createDummyPersonaliaKodeverk(): PersonaliaKodeverk {
     return PersonaliaKodeverk().apply {

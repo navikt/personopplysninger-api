@@ -1,8 +1,11 @@
 package no.nav.personopplysninger.consumer.pdl.dto.adresse
 
-data class PdlPostadresseIFrittFormat (
-    val adresselinje1: String?,
-    val adresselinje2: String?,
-    val adresselinje3: String?,
-    val postnummer: String?
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class PdlPostadresseIFrittFormat(
+    val adresselinje1: String? = null,
+    val adresselinje2: String? = null,
+    val adresselinje3: String? = null,
+    val postnummer: String? = null
 )

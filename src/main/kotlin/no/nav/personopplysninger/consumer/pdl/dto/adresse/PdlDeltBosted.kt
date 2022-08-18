@@ -1,16 +1,21 @@
 package no.nav.personopplysninger.consumer.pdl.dto.adresse
 
+import kotlinx.serialization.Serializable
+import no.nav.personopplysninger.config.serializer.LocalDateSerializer
 import no.nav.personopplysninger.consumer.pdl.dto.common.PdlMetadata
 import java.time.LocalDate
 
+@Serializable
 data class PdlDeltBosted(
-    val startdatoForKontrakt: LocalDate?,
-    val sluttdatoForKontrakt: LocalDate?,
-    val coAdressenavn: String?,
-    val vegadresse: PdlVegadresse?,
-    val matrikkeladresse: PdlMatrikkeladresse?,
-    val utenlandskAdresse: PdlUtenlandskAdresse?,
-    val ukjentBosted: PdlUkjentbosted?,
+    @Serializable(with = LocalDateSerializer::class)
+    val startdatoForKontrakt: LocalDate? = null,
+    @Serializable(with = LocalDateSerializer::class)
+    val sluttdatoForKontrakt: LocalDate? = null,
+    val coAdressenavn: String? = null,
+    val vegadresse: PdlVegadresse? = null,
+    val matrikkeladresse: PdlMatrikkeladresse? = null,
+    val utenlandskAdresse: PdlUtenlandskAdresse? = null,
+    val ukjentBosted: PdlUkjentbosted? = null,
     val metadata: PdlMetadata
 ) {
     val mappingType: AdresseMappingType

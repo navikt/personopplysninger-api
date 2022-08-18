@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.consumer.kodeverk.dto
+package no.nav.personopplysninger.features.personalia.dto
 
 class AdresseKodeverk {
     var poststed: String? = null

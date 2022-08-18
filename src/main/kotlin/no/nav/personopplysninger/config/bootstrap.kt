@@ -3,7 +3,7 @@ package no.nav.personopplysninger.config
 import io.ktor.client.HttpClient
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.gson.gson
+import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStopping
 import io.ktor.server.application.install
@@ -61,9 +61,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     }
 
     install(ContentNegotiation) {
-        gson {
-            setPrettyPrinting()
-        }
+        json(jsonConfig())
     }
 
     install(CORS) {

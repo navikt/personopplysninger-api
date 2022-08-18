@@ -9,10 +9,7 @@ import no.nav.personopplysninger.consumer.inst.dto.Institusjonstype
 import no.nav.personopplysninger.consumer.kodeverk.dto.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.consumer.norg2.dto.Norg2Enhet
 import no.nav.personopplysninger.consumer.pdl.dto.PdlResponse
-import no.nav.personopplysninger.consumer.pdlmottak.dto.kontaktadresse.EndreKontaktadresse
-import no.nav.personopplysninger.consumer.pdlmottak.dto.kontaktadresse.Postboksadresse
 import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.Telefonnummer
-import no.nav.personopplysninger.testutils.PMKontaktadresseJson
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
 import no.nav.personopplysninger.testutils.instJson
 import no.nav.personopplysninger.testutils.pdlJson
@@ -63,16 +60,6 @@ class DeserialiseringTest {
         assertEquals(telefonnummer.landskode, "+47")
         assertEquals(telefonnummer.nummer, "22334455")
         assertEquals(telefonnummer.prioritet, 1)
-    }
-
-    @Test
-    fun canDeserializePMKontaktadresseResponse() {
-        val json = PMKontaktadresseJson()
-
-        val response: EndreKontaktadresse = objectMapper.readValue(json)
-
-        assertEquals(response.ident, "12045678900")
-        assertEquals((response.endringsmelding.adresse as Postboksadresse).postbokseier, "Snill Tester")
     }
 
     @Test

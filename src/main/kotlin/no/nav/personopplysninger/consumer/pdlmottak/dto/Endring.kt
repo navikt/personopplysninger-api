@@ -16,7 +16,7 @@ open class Endring<T> {
 
     constructor()
 
-    protected constructor(error: Error): this() {
+    protected constructor(error: Error) : this() {
         this.error = error
         this.statusType = "ERROR"
     }

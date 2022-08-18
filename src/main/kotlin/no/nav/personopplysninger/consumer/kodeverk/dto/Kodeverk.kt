@@ -1,7 +1,9 @@
 package no.nav.personopplysninger.consumer.kodeverk.dto
 
+import kotlinx.serialization.Serializable
 import org.slf4j.LoggerFactory
 
+@Serializable
 class Kodeverk(
         val navn: String,
         val koder: List<Kode>

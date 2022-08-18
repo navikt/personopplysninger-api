@@ -1,11 +1,19 @@
 package no.nav.personopplysninger.consumer.pdl.dto
 
+import kotlinx.serialization.Serializable
 import no.nav.personopplysninger.consumer.pdl.dto.adresse.PdlBostedsadresse
 import no.nav.personopplysninger.consumer.pdl.dto.adresse.PdlDeltBosted
 import no.nav.personopplysninger.consumer.pdl.dto.adresse.PdlKontaktadresse
 import no.nav.personopplysninger.consumer.pdl.dto.adresse.PdlOppholdsadresse
-import no.nav.personopplysninger.consumer.pdl.dto.personalia.*
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlFoedsel
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlFolkeregisteridentifikator
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlKjoenn
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlNavn
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlSivilstand
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlStatsborgerskap
+import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlTelefonnummer
 
+@Serializable
 data class PdlPerson(
     val navn: List<PdlNavn> = emptyList(),
     val telefonnummer: List<PdlTelefonnummer> = emptyList(),

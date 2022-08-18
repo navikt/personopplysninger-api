@@ -1,12 +1,18 @@
 package no.nav.personopplysninger.consumer.pdl.dto.adresse
 
+import kotlinx.serialization.Serializable
+import no.nav.personopplysninger.config.serializer.LocalDateTimeSerializer
 import java.time.LocalDateTime
 
+@Serializable
 data class PdlFolkeregistermetadata(
-        val ajourholdstidspunkt: LocalDateTime?,
-        val gyldighetstidspunkt: LocalDateTime?,
-        val opphoerstidspunkt: LocalDateTime?,
-        val kilde: String?,
-        val aarsak: String?,
-        val sekvens: Int?
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val ajourholdstidspunkt: LocalDateTime? = null,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val gyldighetstidspunkt: LocalDateTime? = null,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val opphoerstidspunkt: LocalDateTime? = null,
+    val kilde: String? = null,
+    val aarsak: String? = null,
+    val sekvens: Int? = null
 )

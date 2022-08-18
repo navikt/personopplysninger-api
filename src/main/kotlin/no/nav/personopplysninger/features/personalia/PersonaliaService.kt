@@ -1,8 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.consumer.kodeverk.dto.AdresseKodeverk
-import no.nav.personopplysninger.consumer.kodeverk.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.consumer.kontaktinformasjon.KontaktinfoConsumer
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.consumer.kontoregister.dto.Konto
@@ -10,6 +8,8 @@ import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
 import no.nav.personopplysninger.consumer.pdl.PdlService
 import no.nav.personopplysninger.consumer.pdl.dto.PdlData
 import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlStatsborgerskap
+import no.nav.personopplysninger.features.personalia.dto.AdresseKodeverk
+import no.nav.personopplysninger.features.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskEnhetKontaktInformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskTilknytning
 import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon

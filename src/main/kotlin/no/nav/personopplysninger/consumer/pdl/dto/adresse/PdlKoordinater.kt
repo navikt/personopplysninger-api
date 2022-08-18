@@ -1,8 +1,11 @@
 package no.nav.personopplysninger.consumer.pdl.dto.adresse
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class PdlKoordinater(
-        val x: Double?,
-        val y: Double?,
-        val z: Double?,
-        val kvalitet: Int?
+        val x: Double? = null,
+        val y: Double? = null,
+        val z: Double? = null,
+        val kvalitet: Int? = null
 )

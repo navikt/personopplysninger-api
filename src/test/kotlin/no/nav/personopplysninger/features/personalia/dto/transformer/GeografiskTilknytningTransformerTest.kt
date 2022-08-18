@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
-import no.nav.personopplysninger.consumer.kodeverk.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.consumer.pdl.dto.PdlGeografiskTilknytning
+import no.nav.personopplysninger.features.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.dto.transformer.testdata.createDummyGeografiskTilknytning
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance

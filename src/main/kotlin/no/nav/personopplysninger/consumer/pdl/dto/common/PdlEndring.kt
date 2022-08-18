@@ -1,11 +1,15 @@
 package no.nav.personopplysninger.consumer.pdl.dto.common
 
+import kotlinx.serialization.Serializable
+import no.nav.personopplysninger.config.serializer.LocalDateTimeSerializer
 import java.time.LocalDateTime
 
-data class PdlEndring (
-        val type: PdlEndringstype,
-        val registrert: LocalDateTime,
-        val registrertAv: String,
-        val systemkilde: String,
-        val kilde: String
+@Serializable
+data class PdlEndring(
+    val type: PdlEndringstype,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val registrert: LocalDateTime,
+    val registrertAv: String,
+    val systemkilde: String,
+    val kilde: String
 )

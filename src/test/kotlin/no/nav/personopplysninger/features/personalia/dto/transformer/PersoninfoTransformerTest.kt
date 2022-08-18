@@ -1,9 +1,9 @@
 package no.nav.personopplysninger.features.personalia.dto.transformer
 
 
-import no.nav.personopplysninger.consumer.kodeverk.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.consumer.kontoregister.dto.Konto
 import no.nav.personopplysninger.consumer.pdl.dto.personalia.PdlTelefonnummer
+import no.nav.personopplysninger.features.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.features.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.features.personalia.dto.outbound.UtenlandskBankInfo

@@ -1,16 +1,21 @@
 package no.nav.personopplysninger.consumer.pdl.dto.adresse
 
+import kotlinx.serialization.Serializable
+import no.nav.personopplysninger.config.serializer.LocalDateTimeSerializer
 import no.nav.personopplysninger.consumer.pdl.dto.common.PdlMetadata
 import java.time.LocalDateTime
 
+@Serializable
 data class PdlOppholdsadresse(
-    val gyldigFraOgMed: LocalDateTime?,
-    val gyldigTilOgMed: LocalDateTime?,
-    val coAdressenavn: String?,
-    val utenlandskAdresse: PdlUtenlandskAdresse?,
-    val vegadresse: PdlVegadresse?,
-    val matrikkeladresse: PdlMatrikkeladresse?,
-    val oppholdAnnetSted: String?,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val gyldigFraOgMed: LocalDateTime? = null,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val gyldigTilOgMed: LocalDateTime? = null,
+    val coAdressenavn: String? = null,
+    val utenlandskAdresse: PdlUtenlandskAdresse? = null,
+    val vegadresse: PdlVegadresse? = null,
+    val matrikkeladresse: PdlMatrikkeladresse? = null,
+    val oppholdAnnetSted: String? = null,
     val metadata: PdlMetadata
 ) {
     val mappingType: AdresseMappingType

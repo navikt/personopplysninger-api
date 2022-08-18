@@ -23,11 +23,11 @@ repositories {
 
 dependencies {
     implementation(Auth0.jwt)
+    implementation(Ktor.serialization)
+    implementation(Ktor.serializationKotlinx)
     implementation(Ktor.serverNetty)
     implementation(Ktor.serverCallLogging)
     implementation(Ktor.serverCore)
-    implementation(Ktor.serialization)
-    implementation(Ktor.serializationGson)
     implementation(Ktor.serverCors)
     implementation(Ktor.serverStatusPages)
     implementation(Ktor.serverContentNegotiation)

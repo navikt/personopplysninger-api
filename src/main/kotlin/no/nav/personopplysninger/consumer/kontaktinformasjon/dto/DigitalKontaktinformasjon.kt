@@ -1,5 +1,8 @@
 package no.nav.personopplysninger.consumer.kontaktinformasjon.dto
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class DigitalKontaktinformasjon (
     val personident: String? = null,
     val aktiv: Boolean,

@@ -1,5 +1,8 @@
 package no.nav.personopplysninger.consumer.kontoregister.dto
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class UtenlandskKontoInfo(
     val banknavn: String = "",
     val bankkode: String = "",

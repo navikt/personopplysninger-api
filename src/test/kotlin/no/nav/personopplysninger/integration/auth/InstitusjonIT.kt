@@ -8,14 +8,14 @@ import no.nav.personopplysninger.integration.IntegrationTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 
-class HentNavnIT : IntegrationTest() {
+class InstitusjonIT : IntegrationTest() {
 
-    val HENT_NAVN_PATH = "/name"
+    val HENT_INSTITUSJONSOPPHOLD_PATH = "/institusjonsopphold"
 
     @Test
-    fun hentNavn200() = integrationTest(setupMockedClient()) {
+    fun hentInstitusjonsopphold200() = integrationTest(setupMockedClient()) {
         val client = createClient { install(ContentNegotiation) { json() } }
-        val response = get(client, HENT_NAVN_PATH)
+        val response = get(client, HENT_INSTITUSJONSOPPHOLD_PATH)
 
         assertEquals(HttpStatusCode.OK, response.status)
     }
@@ -25,7 +25,7 @@ class HentNavnIT : IntegrationTest() {
         integrationTest(setupMockedClient(pdlStatus = HttpStatusCode.InternalServerError)) {
             val client = createClient { install(ContentNegotiation) { json() } }
 
-            val response = get(client, HENT_NAVN_PATH)
+            val response = get(client, HENT_INSTITUSJONSOPPHOLD_PATH)
 
             assertEquals(HttpStatusCode.InternalServerError, response.status)
         }

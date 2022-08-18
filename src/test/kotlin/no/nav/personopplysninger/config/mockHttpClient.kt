@@ -3,9 +3,10 @@ package no.nav.personopplysninger.config
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respondError
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.gson.gson
+import io.ktor.serialization.kotlinx.json.json
 import no.nav.personopplysninger.config.mocks.PdlMottakResponseType
 import no.nav.personopplysninger.config.mocks.PdlResponseType
 import no.nav.personopplysninger.config.mocks.mockDigdirKrrProxy
@@ -75,8 +76,9 @@ fun setupMockedClient(
 
         }
         install(ContentNegotiation) {
-            gson()
+            json(jsonConfig())
         }
+        install(HttpTimeout)
         expectSuccess = false
     }
 }
