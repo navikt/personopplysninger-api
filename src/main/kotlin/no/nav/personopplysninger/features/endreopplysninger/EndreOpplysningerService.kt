@@ -8,12 +8,11 @@ import no.nav.personopplysninger.consumer.kontoregister.dto.OppdaterKonto
 import no.nav.personopplysninger.consumer.kontoregister.dto.UtenlandskKontoInfo
 import no.nav.personopplysninger.consumer.pdl.PdlService
 import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
-import no.nav.personopplysninger.consumer.pdlmottak.dto.kontaktadresse.EndringKontaktadresse
-import no.nav.personopplysninger.consumer.pdlmottak.dto.kontaktadresse.slettKontaktadressePayload
-import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.EndringTelefon
-import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.Telefonnummer
-import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.endreNummerPayload
-import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.slettNummerPayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Endring
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Telefonnummer
+import no.nav.personopplysninger.consumer.pdlmottak.dto.endreNummerPayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.slettKontaktadressePayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.slettNummerPayload
 import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.dto.Retningsnummer
 
@@ -24,7 +23,7 @@ class EndreOpplysningerService(
     private var pdlService: PdlService
 ) {
 
-    suspend fun endreTelefonnummer(token: String, fnr: String, telefonnummer: Telefonnummer): EndringTelefon {
+    suspend fun endreTelefonnummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
         if (!setOf(1, 2).contains(telefonnummer.prioritet)) {
             throw RuntimeException("Støtter kun prioritet [1, 2] eller type ['HJEM', 'MOBIL']")
         } else {
@@ -32,7 +31,7 @@ class EndreOpplysningerService(
         }
     }
 
-    suspend fun slettTelefonNummer(token: String, fnr: String, telefonnummer: Telefonnummer): EndringTelefon {
+    suspend fun slettTelefonNummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
         val opplysningsId =
             pdlService.getOpplysningsIdForTelefon(token, fnr, telefonnummer.landskode!!, telefonnummer.nummer!!)
                 ?: throw RuntimeException("Kan ikke slette nummer som ikke eksisterer: ${telefonnummer.landskode}, ${telefonnummer.nummer}")
@@ -40,8 +39,7 @@ class EndreOpplysningerService(
         return pdlMottakConsumer.slettPersonopplysning(
             token,
             fnr,
-            slettNummerPayload(fnr, opplysningsId),
-            EndringTelefon::class.java
+            slettNummerPayload(fnr, opplysningsId)
         )
     }
 
@@ -65,7 +63,7 @@ class EndreOpplysningerService(
         kontoregisterConsumer.endreKontonummer(token, request)
     }
 
-    suspend fun slettKontaktadresse(token: String, fnr: String): EndringKontaktadresse {
+    suspend fun slettKontaktadresse(token: String, fnr: String): Endring {
         val opplysningsId = pdlService.getOpplysningsIdForKontaktadresse(token, fnr)
             ?: throw RuntimeException("Fant ingen kontaktadresser som kan slettes")
 
@@ -73,7 +71,6 @@ class EndreOpplysningerService(
             token,
             fnr,
             slettKontaktadressePayload(fnr, opplysningsId),
-            EndringKontaktadresse::class.java
         )
     }
 

@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
+import no.nav.personopplysninger.consumer.inst.domain.InnsynInstitusjonsopphold
+import no.nav.personopplysninger.consumer.kodeverk.domain.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.consumer.kodeverk.domain.RetningsnummerDTO
 import no.nav.personopplysninger.consumer.inst.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.consumer.kodeverk.dto.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.EndringTelefon
@@ -29,10 +33,8 @@ class SerializerTest {
     @Test
     fun testSerializationTelefonnummer() {
         val json: String = readFile("endring-telefonnummer.json")
-        val endringList: List<EndringTelefon> = objectMapper.readValue(json)
+        val endringList: List<Endring> = objectMapper.readValue(json)
         val endring = endringList[0]
-        assertEquals("KORRIGER", endring.endringstype)
-        assertEquals("BRUKER SELV", endring.innmeldtEndring?.kilde)
         assertEquals(3, endring.status.substatus.size)
     }
 
@@ -94,7 +96,7 @@ class SerializerTest {
 
     @Test
     fun testSubType() {
-        val telefonnummer = Telefonnummer("+47", "11223344", 1)
+        val telefonnummer = Telefonnummer(landskode = "+47", nummer = "11223344", prioritet = 1)
         val json = getJson(telefonnummer)
         assertTrue(json.contains("@type"))
     }

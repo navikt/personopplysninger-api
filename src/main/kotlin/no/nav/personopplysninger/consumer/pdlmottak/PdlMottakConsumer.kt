@@ -23,9 +23,6 @@ import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_PERSONIDENT
 import no.nav.personopplysninger.consumer.pdlmottak.dto.Endring
 import no.nav.personopplysninger.consumer.pdlmottak.dto.Personopplysning
-import no.nav.personopplysninger.consumer.pdlmottak.dto.opphoer.OpphoerPersonopplysning
-import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.EndreTelefon
-import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.EndringTelefon
 import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.personopplysninger.util.getJson
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
@@ -44,28 +41,17 @@ class PdlMottakConsumer(
 ) {
     private val log = LoggerFactory.getLogger(PdlMottakConsumer::class.java)
 
-    suspend fun endreTelefonnummer(token: String, fnr: String, endreTelefon: EndreTelefon): EndringTelefon {
-        return sendPdlEndring(token, endreTelefon, fnr, URL_ENDRINGER, EndringTelefon::class.java)
+    suspend fun endreTelefonnummer(fnr: String, endreTelefon: Personopplysning): Endring {
+        return sendPdlEndring(endreTelefon, fnr)
     }
 
-    suspend fun <T : Endring<T>> slettPersonopplysning(
-        token: String,
-        fnr: String,
-        opphoerPersonopplysning: OpphoerPersonopplysning,
-        endringsType: Class<T>
-    ): T {
-        return sendPdlEndring(token, opphoerPersonopplysning, fnr, URL_ENDRINGER, endringsType)
+    suspend fun slettPersonopplysning(fnr: String, opphoerPersonopplysning: Personopplysning): Endring {
+        return sendPdlEndring(opphoerPersonopplysning, fnr)
     }
 
-    private suspend fun <T, R : Endring<R>> sendPdlEndring(
-        token: String,
-        entitetSomEndres: Personopplysning<T>,
-        fnr: String,
-        path: String,
-        endringType: Class<R>
-    ): R {
+    private suspend fun sendPdlEndring(token: String, entitetSomEndres: Personopplysning, fnr: String, ): Endring {
         val accessToken = tokenDingsService.exchangeToken(token, environment.kontoregisterTargetApp)
-        val endpoint = environment.pdlMottakUrl.plus(path)
+        val endpoint = environment.pdlMottakUrl.plus(URL_ENDRINGER)
 
         val response: HttpResponse =
             client.post(endpoint) {
@@ -78,30 +64,23 @@ class PdlMottakConsumer(
             }
 
         return try {
-            readResponseAndPollStatus(accessToken, response, endringType)
+            readResponseAndPollStatus(accessToken, response)
         } catch (e: Exception) {
             val msg = "Forsøkte å endre personopplysning. endpoint=[$endpoint]."
             throw RuntimeException(msg, e)
         }
     }
 
-    private suspend fun <T : Endring<T>> readResponseAndPollStatus(
-        accessToken: String,
-        response: HttpResponse,
-        clazz: Class<T>
-    ): T {
+    private suspend fun readResponseAndPollStatus(accessToken: String, response: HttpResponse): Endring {
         return when {
             response.status == HttpStatusCode.Locked -> {
-                getEndring(clazz, "REJECTED").apply {
-                    error = response.body()
-                    log.info("Oppdatering avvist pga status pending.")
-                }
+                log.info("Oppdatering avvist pga status pending.")
+                Endring(statusType = "REJECTED", error = response.body())
+
             }
             response.status == HttpStatusCode.UnprocessableEntity -> {
-                getEndring(clazz, "ERROR").apply {
-                    error = response.body()
-                    log.error("Fikk valideringsfeil: ${getJson(this)}")
-                }
+                log.error("Fikk valideringsfeil: ${getJson(this)}")
+                Endring(statusType = "ERROR", error = response.body())
             }
             !response.status.isSuccess() -> {
                 throw RuntimeException(
@@ -114,28 +93,13 @@ class PdlMottakConsumer(
             }
             else -> {
                 val pollEndringUrl = response.headers[HttpHeaders.Location]!!
-                pollEndring(clazz, accessToken, pollEndringUrl, SLEEP_TIME_MS, MAX_POLLS)
+                pollEndring(accessToken, pollEndringUrl, SLEEP_TIME_MS, MAX_POLLS)
             }
         }
     }
 
-    private fun <T : Endring<T>> getEndring(clazz: Class<T>, statusType: String): T {
-        try {
-            return clazz.getDeclaredConstructor().newInstance().apply { this.statusType = statusType }
-        } catch (e: Exception) {
-            log.error("Fikk exception ved forsøk på å instansiere ${clazz.name}")
-            throw RuntimeException(e)
-        }
-    }
-
-    private suspend fun <T : Endring<T>> pollEndring(
-        clazz: Class<T>,
-        accessToken: String,
-        url: String,
-        pollInterval: Long,
-        maxPolls: Int
-    ): T {
-        var endring: T
+    private suspend fun pollEndring(accessToken: String, url: String, pollInterval: Long, maxPolls: Int): Endring {
+        var endring: Endring
         var i = 0
         do {
             try {
@@ -150,18 +114,17 @@ class PdlMottakConsumer(
                     header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
                     header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 }
-            val type = objectMapper.typeFactory.constructCollectionType(List::class.java, clazz)
-            val endringList = objectMapper.readValue<List<T>>(response.body<String>(), type)
+            val endringList = response.body<List<String>>()
             endring = endringList[0]
-        } while (++i < maxPolls && endring.isPending)
+        } while (++i < maxPolls && endring.isPending())
         log.info("Antall polls for status: $i")
 
-        if (!endring.confirmedOk) {
+        if (!endring.confirmedOk()) {
             endring.createValidationErrorIfTpsHasError()
             val json = runCatching {
                 ObjectMapper().writeValueAsString(endring)
             }.getOrDefault("")
-            log.warn("${endring.errorMessage}\n$json")
+            log.warn("${endring.errorMessage()}\n$json")
         }
         return endring
     }
