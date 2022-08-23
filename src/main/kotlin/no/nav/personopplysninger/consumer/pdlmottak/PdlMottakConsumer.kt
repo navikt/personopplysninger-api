@@ -13,6 +13,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
+import kotlinx.coroutines.delay
 import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.config.BEARER
 import no.nav.personopplysninger.config.CONSUMER_ID
@@ -64,8 +65,7 @@ class PdlMottakConsumer(
         return try {
             readResponseAndPollStatus(accessToken, response)
         } catch (e: Exception) {
-            val msg = "Forsøkte å endre personopplysning. endpoint=[$endpoint]."
-            throw RuntimeException(msg, e)
+            throw RuntimeException("Forsøkte å endre personopplysning. endpoint=[$endpoint].", e)
         }
     }
 
@@ -82,11 +82,7 @@ class PdlMottakConsumer(
             }
             !response.status.isSuccess() -> {
                 throw RuntimeException(
-                    consumerErrorMessage(
-                        environment.pdlMottakUrl,
-                        response.status.value,
-                        response.body()
-                    )
+                    consumerErrorMessage(environment.pdlMottakUrl, response.status.value, response.body())
                 )
             }
             else -> {
@@ -102,7 +98,7 @@ class PdlMottakConsumer(
         var i = 0
         do {
             try {
-                Thread.sleep(pollInterval)
+                delay(pollInterval)
             } catch (ie: InterruptedException) {
                 throw RuntimeException("Fikk feil under polling på status", ie)
             }

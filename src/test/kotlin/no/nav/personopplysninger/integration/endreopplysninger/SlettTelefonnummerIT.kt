@@ -3,6 +3,7 @@ package no.nav.personopplysninger.integration.endreopplysninger
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
+import no.nav.personopplysninger.config.mocks.PdlMottakResponseType
 import no.nav.personopplysninger.config.setupMockedClient
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.integration.IntegrationTest
@@ -18,21 +19,29 @@ class SlettTelefonnummerIT : IntegrationTest() {
     private val PRIORITET = 1
 
     @Test
-    fun slettTelefonnummer200() = integrationTest(setupMockedClient()) {
-        val client = createClient { install(ContentNegotiation) { json() } }
-        val response = post(client,
-            SLETT_TELEFONNUMMER_PATH,
-            Telefonnummer(landskode = LANDKODE, nummer = NUMMER, prioritet = PRIORITET)
-        )
+    fun slettTelefonnummer200() =
+        integrationTest(setupMockedClient(pdlMottakResponseType = PdlMottakResponseType.TELEFON)) {
+            val client = createClient { install(ContentNegotiation) { json() } }
+            val response = post(
+                client,
+                SLETT_TELEFONNUMMER_PATH,
+                Telefonnummer(landskode = LANDKODE, nummer = NUMMER, prioritet = PRIORITET)
+            )
 
-        assertEquals(HttpStatusCode.OK, response.status)
-    }
+            assertEquals(HttpStatusCode.OK, response.status)
+        }
 
     @Test
     fun feilMotPdlMottakSkalGi500() =
-        integrationTest(setupMockedClient(pdlMottakStatus = HttpStatusCode.InternalServerError)) {
+        integrationTest(
+            setupMockedClient(
+                pdlMottakResponseType = PdlMottakResponseType.TELEFON,
+                pdlMottakStatus = HttpStatusCode.InternalServerError
+            )
+        ) {
             val client = createClient { install(ContentNegotiation) { json() } }
-            val response = post(client,
+            val response = post(
+                client,
                 SLETT_TELEFONNUMMER_PATH,
                 Telefonnummer(landskode = LANDKODE, nummer = NUMMER, prioritet = PRIORITET)
             )
@@ -42,9 +51,15 @@ class SlettTelefonnummerIT : IntegrationTest() {
 
     @Test
     fun feilMotPdlSkalGi500() =
-        integrationTest(setupMockedClient(pdlStatus = HttpStatusCode.InternalServerError)) {
+        integrationTest(
+            setupMockedClient(
+                pdlMottakResponseType = PdlMottakResponseType.TELEFON,
+                pdlStatus = HttpStatusCode.InternalServerError
+            )
+        ) {
             val client = createClient { install(ContentNegotiation) { json() } }
-            val response = post(client,
+            val response = post(
+                client,
                 SLETT_TELEFONNUMMER_PATH,
                 Telefonnummer(landskode = LANDKODE, nummer = NUMMER, prioritet = PRIORITET)
             )

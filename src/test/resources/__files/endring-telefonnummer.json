@@ -10,7 +10,7 @@
     "sendt": false,
     "status": {
       "endringId": 65,
-      "statusType": "PENDING",
+      "statusType": "DONE",
       "substatus": [
         {
           "status": "IGNORED",
