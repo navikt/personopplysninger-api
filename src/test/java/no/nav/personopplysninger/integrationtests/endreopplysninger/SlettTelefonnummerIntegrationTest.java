@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.integrationtests.endreopplysninger;
 
-import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.EndringTelefon;
-import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.Telefonnummer;
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Endring;
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Telefonnummer;
 import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +21,8 @@ import static org.hamcrest.core.Is.is;
 
 class SlettTelefonnummerIntegrationTest extends AbstractIntegrationTest {
 
+    private static final String SUBTYPE = "TELEFONNUMMER";
+    private static final String KILDE = "BRUKER SELV";
     private static final String LANDKODE = "+47";
     private static final String NUMMER = "55553334";
     private static final Integer PRIORITET = 1;
@@ -34,11 +36,11 @@ class SlettTelefonnummerIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void skalGi200MedGyldigToken() {
-        ResponseEntity<EndringTelefon> response = restTemplate.exchange(
+        ResponseEntity<Endring> response = restTemplate.exchange(
                 "/slettTelefonnummer",
                 HttpMethod.POST,
-                new HttpEntity<>(new Telefonnummer(LANDKODE, NUMMER, PRIORITET), createAuthHeader(IDENT)),
-                EndringTelefon.class);
+                new HttpEntity<>(new Telefonnummer(SUBTYPE, KILDE, LANDKODE, NUMMER, PRIORITET), createAuthHeader(IDENT)),
+                Endring.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
     }
@@ -61,7 +63,7 @@ class SlettTelefonnummerIntegrationTest extends AbstractIntegrationTest {
         ResponseEntity<String> response = restTemplate.exchange(
                 "/slettTelefonnummer",
                 HttpMethod.POST,
-                new HttpEntity<>(new Telefonnummer(LANDKODE, NUMMER, PRIORITET), createAuthHeader(IDENT)),
+                new HttpEntity<>(new Telefonnummer(SUBTYPE, KILDE, LANDKODE, NUMMER, PRIORITET), createAuthHeader(IDENT)),
                 String.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.INTERNAL_SERVER_ERROR)));
@@ -74,7 +76,7 @@ class SlettTelefonnummerIntegrationTest extends AbstractIntegrationTest {
         ResponseEntity<String> response = restTemplate.exchange(
                 "/slettTelefonnummer",
                 HttpMethod.POST,
-                new HttpEntity<>(new Telefonnummer(LANDKODE, NUMMER, PRIORITET), createAuthHeader(IDENT)),
+                new HttpEntity<>(new Telefonnummer(SUBTYPE, KILDE, LANDKODE, NUMMER, PRIORITET), createAuthHeader(IDENT)),
                 String.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.INTERNAL_SERVER_ERROR)));
