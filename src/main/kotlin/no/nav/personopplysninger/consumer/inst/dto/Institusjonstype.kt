@@ -7,6 +7,9 @@ import kotlinx.serialization.json.JsonNames
 @Serializable
 enum class Institusjonstype(val tekst: String) {
 
+    // Siden enumet brukes både i inbound og outbound, som er på forskjellige format,
+    // trenger vi SerialName og JsonNames for riktig serialisering og deserialisering.
+
     @SerialName("Alders- og sykehjem")
     @JsonNames("AS")
     AS("Alders- og sykehjem"),
