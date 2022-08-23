@@ -1,8 +1,5 @@
 package no.nav.personopplysninger.config
 
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.finn.unleash.strategy.Strategy
 import no.nav.common.featuretoggle.UnleashClient
 import no.nav.common.featuretoggle.UnleashClientImpl
@@ -29,11 +26,6 @@ class ApplicationContext {
 
     val env = Environment()
     val httpClient = HttpClientBuilder.build()
-    val objectMapper = jacksonObjectMapper().apply {
-        configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        registerModule(JavaTimeModule())
-    }
-
 
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
     val unleashClient = unleashClient()
@@ -45,7 +37,7 @@ class ApplicationContext {
     val medlConsumer = MedlConsumer(httpClient, env, tokendingsService)
     val norg2Consumer = Norg2Consumer(httpClient, env, tokendingsService)
     val pdlConsumer = PdlConsumer(httpClient, env, tokendingsService)
-    val pdlMottakConsumer = PdlMottakConsumer(httpClient, env, tokendingsService, objectMapper)
+    val pdlMottakConsumer = PdlMottakConsumer(httpClient, env, tokendingsService)
 
     val pdlService = PdlService(pdlConsumer)
     val endreOpplysningerService =

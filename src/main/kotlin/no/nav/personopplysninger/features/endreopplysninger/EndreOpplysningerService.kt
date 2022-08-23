@@ -43,6 +43,17 @@ class EndreOpplysningerService(
         )
     }
 
+    suspend fun slettKontaktadresse(token: String, fnr: String): Endring {
+        val opplysningsId = pdlService.getOpplysningsIdForKontaktadresse(token, fnr)
+            ?: throw RuntimeException("Fant ingen kontaktadresser som kan slettes")
+
+        return pdlMottakConsumer.slettPersonopplysning(
+            token,
+            fnr,
+            slettKontaktadressePayload(fnr, opplysningsId),
+        )
+    }
+
     suspend fun endreKontonummer(token: String, fnr: String, kontonummer: Kontonummer) {
         val request = OppdaterKonto(
             kontohaver = fnr,
@@ -61,17 +72,6 @@ class EndreOpplysningerService(
             }
         )
         kontoregisterConsumer.endreKontonummer(token, request)
-    }
-
-    suspend fun slettKontaktadresse(token: String, fnr: String): Endring {
-        val opplysningsId = pdlService.getOpplysningsIdForKontaktadresse(token, fnr)
-            ?: throw RuntimeException("Fant ingen kontaktadresser som kan slettes")
-
-        return pdlMottakConsumer.slettPersonopplysning(
-            token,
-            fnr,
-            slettKontaktadressePayload(fnr, opplysningsId),
-        )
     }
 
     suspend fun hentRetningsnumre(): Array<Retningsnummer> {

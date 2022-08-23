@@ -37,19 +37,18 @@ class PdlMottakConsumer(
     private val client: HttpClient,
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,
-    private val objectMapper: ObjectMapper,
 ) {
     private val log = LoggerFactory.getLogger(PdlMottakConsumer::class.java)
 
-    suspend fun endreTelefonnummer(fnr: String, endreTelefon: Personopplysning): Endring {
-        return sendPdlEndring(endreTelefon, fnr)
+    suspend fun endreTelefonnummer(token: String, fnr: String, endreTelefon: Personopplysning): Endring {
+        return sendPdlEndring(token, endreTelefon, fnr)
     }
 
-    suspend fun slettPersonopplysning(fnr: String, opphoerPersonopplysning: Personopplysning): Endring {
-        return sendPdlEndring(opphoerPersonopplysning, fnr)
+    suspend fun slettPersonopplysning(token: String, fnr: String, opphoerPersonopplysning: Personopplysning): Endring {
+        return sendPdlEndring(token, opphoerPersonopplysning, fnr)
     }
 
-    private suspend fun sendPdlEndring(token: String, entitetSomEndres: Personopplysning, fnr: String, ): Endring {
+    private suspend fun sendPdlEndring(token: String, entitetSomEndres: Personopplysning, fnr: String): Endring {
         val accessToken = tokenDingsService.exchangeToken(token, environment.kontoregisterTargetApp)
         val endpoint = environment.pdlMottakUrl.plus(URL_ENDRINGER)
 
@@ -114,7 +113,7 @@ class PdlMottakConsumer(
                     header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
                     header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 }
-            val endringList = response.body<List<String>>()
+            val endringList = response.body<List<Endring>>()
             endring = endringList[0]
         } while (++i < maxPolls && endring.isPending())
         log.info("Antall polls for status: $i")

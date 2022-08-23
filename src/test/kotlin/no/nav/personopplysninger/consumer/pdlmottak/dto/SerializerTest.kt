@@ -4,14 +4,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import no.nav.personopplysninger.consumer.JsonDeserialize.objectMapper
-import no.nav.personopplysninger.consumer.inst.domain.InnsynInstitusjonsopphold
-import no.nav.personopplysninger.consumer.kodeverk.domain.GetKodeverkKoderBetydningerResponse
-import no.nav.personopplysninger.consumer.kodeverk.domain.RetningsnummerDTO
 import no.nav.personopplysninger.consumer.inst.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.consumer.kodeverk.dto.GetKodeverkKoderBetydningerResponse
-import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.EndringTelefon
-import no.nav.personopplysninger.consumer.pdlmottak.dto.telefon.Telefonnummer
 import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.dto.Retningsnummer
 import no.nav.personopplysninger.testutils.TestFileReader.readFile

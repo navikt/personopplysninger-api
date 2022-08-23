@@ -26,8 +26,6 @@ import no.nav.personopplysninger.consumer.pdl.request.createPersonInfoRequest
 import no.nav.personopplysninger.consumer.pdl.request.createTelefonRequest
 import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 
 private const val RETT_PERSONOPPLYSNINGER = "RPO"
@@ -37,8 +35,6 @@ class PdlConsumer(
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,
 ) {
-    val log: Logger = LoggerFactory.getLogger(PdlConsumer::class.java)
-
     suspend fun getPersonInfo(token: String, ident: String): PdlData {
         return postPersonQuery(token, createPersonInfoRequest(ident))
     }

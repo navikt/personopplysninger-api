@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.config
 
 const val CONSUMER_ID = "personbruker-personopplysninger-api"
-const val MDC_CALL_ID = "callId"
 
 const val HEADER_AUTHORIZATION = "Authorization"
 const val HEADER_NAV_CONSUMER_ID = "Nav-Consumer-Id"
