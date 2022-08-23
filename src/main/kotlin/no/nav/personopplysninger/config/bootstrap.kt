@@ -21,6 +21,7 @@ import no.nav.personopplysninger.features.auth.auth
 import no.nav.personopplysninger.features.endreopplysninger.endreOpplysninger
 import no.nav.personopplysninger.features.featuretoggles.featureToggles
 import no.nav.personopplysninger.features.institusjon.institusjon
+import no.nav.personopplysninger.features.kontaktinformasjon.kontaktinformasjon
 import no.nav.personopplysninger.features.medl.medl
 import no.nav.personopplysninger.features.personalia.personalia
 import no.nav.personopplysninger.health.health
@@ -78,7 +79,8 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
             featureToggles(appContext.unleashClient)
             institusjon(appContext.institusjonService)
             medl(appContext.medlService)
-            personalia(appContext.peronaliaService)
+            personalia(appContext.personaliaService)
+            kontaktinformasjon(appContext.kontaktinformasjonService)
         }
     }
 

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.integration.auth
+package no.nav.personopplysninger.integration.institusjon
 
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.HttpStatusCode

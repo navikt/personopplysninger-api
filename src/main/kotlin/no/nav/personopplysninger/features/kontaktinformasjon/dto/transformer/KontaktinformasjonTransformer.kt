@@ -1,7 +1,7 @@
-package no.nav.personopplysninger.features.personalia.dto.transformer
+package no.nav.personopplysninger.features.kontaktinformasjon.dto.transformer
 
 import no.nav.personopplysninger.consumer.kontaktinformasjon.dto.DigitalKontaktinformasjon
-import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon
+import no.nav.personopplysninger.features.kontaktinformasjon.dto.outbound.Kontaktinformasjon
 
 object KontaktinformasjonTransformer {
     fun toOutbound(inbound: DigitalKontaktinformasjon, spraakTerm: String) = Kontaktinformasjon(

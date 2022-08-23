@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
 import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.consumer.kontaktinformasjon.KontaktinfoConsumer
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.consumer.kontoregister.dto.Konto
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
@@ -12,15 +11,12 @@ import no.nav.personopplysninger.features.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.features.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskEnhetKontaktInformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.GeografiskTilknytning
-import no.nav.personopplysninger.features.personalia.dto.outbound.Kontaktinformasjon
 import no.nav.personopplysninger.features.personalia.dto.outbound.PersonaliaOgAdresser
 import no.nav.personopplysninger.features.personalia.dto.transformer.GeografiskEnhetKontaktinformasjonTransformer
-import no.nav.personopplysninger.features.personalia.dto.transformer.KontaktinformasjonTransformer
 import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaOgAdresserTransformer
 import java.time.LocalDate
 
 class PersonaliaService(
-    private var kontaktinfoConsumer: KontaktinfoConsumer,
     private var kodeverkConsumer: KodeverkConsumer,
     private var norg2Consumer: Norg2Consumer,
     private var kontoregisterConsumer: KontoregisterConsumer,
@@ -101,12 +97,6 @@ class PersonaliaService(
         } else {
             kodeverkConsumer.hentKommuner().term(inbound)
         }
-    }
-
-    suspend fun hentKontaktinformasjon(token: String, fodselsnr: String): Kontaktinformasjon {
-        val inbound = kontaktinfoConsumer.hentKontaktinformasjon(token, fodselsnr)
-        val spraakTerm = kodeverkConsumer.hentSpraak().term(inbound.spraak?.uppercase())
-        return KontaktinformasjonTransformer.toOutbound(inbound, spraakTerm)
     }
 
     private suspend fun hentEnhetKontaktinformasjon(

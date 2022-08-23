@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.personalia
+package no.nav.personopplysninger.features.kontaktinformasjon
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
@@ -10,18 +10,18 @@ import no.nav.personopplysninger.util.getSelvbetjeningTokenFromCall
 import org.slf4j.LoggerFactory
 
 
-private val logger = LoggerFactory.getLogger("personaliaRoute")
+private val logger = LoggerFactory.getLogger("kontaktinformasjonRoute")
 
-fun Route.personalia(personaliaService: PersonaliaService) {
-    get("/personalia") {
+fun Route.kontaktinformasjon(kontaktinformasjonService: KontaktinformasjonService) {
+    get("/kontaktinformasjon") {
         try {
             val selvbetjeningIdtoken = getSelvbetjeningTokenFromCall(call)
             val fnr = getFnrFromToken(selvbetjeningIdtoken)
 
-            val resp = personaliaService.hentPersoninfo(selvbetjeningIdtoken, fnr)
+            val resp = kontaktinformasjonService.hentKontaktinformasjon(selvbetjeningIdtoken, fnr)
             call.respond(resp)
         } catch (e: Exception) {
-            logger.error("Noe gikk galt ved henting av personalia", e)
+            logger.error("Noe gikk galt ved henting av kontaktinformasjon", e)
             call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
         }
     }

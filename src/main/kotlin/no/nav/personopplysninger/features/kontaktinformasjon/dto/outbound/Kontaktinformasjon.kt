@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.features.personalia.dto.outbound
+package no.nav.personopplysninger.features.kontaktinformasjon.dto.outbound
 
 import kotlinx.serialization.Serializable
 
