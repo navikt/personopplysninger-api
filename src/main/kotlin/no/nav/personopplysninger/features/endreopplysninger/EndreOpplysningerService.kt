@@ -9,12 +9,11 @@ import no.nav.personopplysninger.consumer.kontoregister.domain.OppdaterKonto
 import no.nav.personopplysninger.consumer.kontoregister.domain.UtenlandskKontoInfo
 import no.nav.personopplysninger.consumer.pdl.PdlService
 import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
-import no.nav.personopplysninger.consumer.pdlmottak.domain.kontaktadresse.EndringKontaktadresse
-import no.nav.personopplysninger.consumer.pdlmottak.domain.kontaktadresse.slettKontaktadressePayload
-import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.EndringTelefon
-import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.Telefonnummer
-import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.endreNummerPayload
-import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.slettNummerPayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Endring
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Telefonnummer
+import no.nav.personopplysninger.consumer.pdlmottak.dto.endreNummerPayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.slettKontaktadressePayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.slettNummerPayload
 import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
 import org.springframework.stereotype.Service
 
@@ -26,7 +25,7 @@ class EndreOpplysningerService(
     private var pdlService: PdlService
 ) {
 
-    fun endreTelefonnummer(fnr: String, telefonnummer: Telefonnummer): EndringTelefon {
+    fun endreTelefonnummer(fnr: String, telefonnummer: Telefonnummer): Endring {
         if (!setOf(1, 2).contains(telefonnummer.prioritet)) {
             throw RuntimeException("Støtter kun prioritet [1, 2] eller type ['HJEM', 'MOBIL']")
         } else {
@@ -34,15 +33,14 @@ class EndreOpplysningerService(
         }
     }
 
-    fun slettTelefonNummer(fnr: String, telefonnummer: Telefonnummer): EndringTelefon {
+    fun slettTelefonNummer(fnr: String, telefonnummer: Telefonnummer): Endring {
         val opplysningsId =
             pdlService.getOpplysningsIdForTelefon(fnr, telefonnummer.landskode!!, telefonnummer.nummer!!)
                 ?: throw RuntimeException("Kan ikke slette nummer som ikke eksisterer: ${telefonnummer.landskode}, ${telefonnummer.nummer}")
 
         return pdlMottakConsumer.slettPersonopplysning(
             fnr,
-            slettNummerPayload(fnr, opplysningsId),
-            EndringTelefon::class.java
+            slettNummerPayload(fnr, opplysningsId)
         )
     }
 
@@ -66,14 +64,13 @@ class EndreOpplysningerService(
         kontoregisterConsumer.endreKontonummer(request)
     }
 
-    fun slettKontaktadresse(fnr: String): EndringKontaktadresse {
+    fun slettKontaktadresse(fnr: String): Endring {
         val opplysningsId = pdlService.getOpplysningsIdForKontaktadresse(fnr)
             ?: throw RuntimeException("Fant ingen kontaktadresser som kan slettes")
 
         return pdlMottakConsumer.slettPersonopplysning(
             fnr,
             slettKontaktadressePayload(fnr, opplysningsId),
-            EndringKontaktadresse::class.java
         )
     }
 

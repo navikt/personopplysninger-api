@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.consumer.pdlmottak.domain
+package no.nav.personopplysninger.consumer.pdlmottak.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
 

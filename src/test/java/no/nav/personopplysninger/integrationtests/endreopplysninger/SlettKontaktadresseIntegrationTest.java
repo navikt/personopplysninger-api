@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.integrationtests.endreopplysninger;
 
-import no.nav.personopplysninger.consumer.pdlmottak.domain.kontaktadresse.EndringKontaktadresse;
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Endring;
 import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,11 +28,11 @@ class SlettKontaktadresseIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void skalGi200MedGyldigToken() {
-        ResponseEntity<EndringKontaktadresse> response = restTemplate.exchange(
+        ResponseEntity<Endring> response = restTemplate.exchange(
                 "/slettKontaktadresse",
                 HttpMethod.POST,
                 createEntityWithAuthHeader(IDENT),
-                EndringKontaktadresse.class);
+                Endring.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
     }

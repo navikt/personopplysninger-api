@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.integrationtests.endreopplysninger;
 
-import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.EndringTelefon;
-import no.nav.personopplysninger.consumer.pdlmottak.domain.telefon.Telefonnummer;
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Endring;
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Telefonnummer;
 import no.nav.personopplysninger.integrationtests.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,11 +27,11 @@ class EndreTelefonnummerIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void skalGi200MedGyldigToken() {
-        ResponseEntity<EndringTelefon> response = restTemplate.exchange(
+        ResponseEntity<Endring> response = restTemplate.exchange(
                 "/endreTelefonnummer",
                 HttpMethod.POST,
-                new HttpEntity<>(new Telefonnummer("dummy", "dummy", 1), createAuthHeader(IDENT)),
-                EndringTelefon.class);
+                new HttpEntity<>(new Telefonnummer("TELEFONNUMMER", "BRUKER SELV", "dummy", "dummy", 1), createAuthHeader(IDENT)),
+                Endring.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.OK)));
     }
@@ -54,7 +54,7 @@ class EndreTelefonnummerIntegrationTest extends AbstractIntegrationTest {
         ResponseEntity<String> response = restTemplate.exchange(
                 "/endreTelefonnummer",
                 HttpMethod.POST,
-                new HttpEntity<>(new Telefonnummer("dummy", "dummy", 1), createAuthHeader(IDENT)),
+                new HttpEntity<>(new Telefonnummer("TELEFONNUMMER", "BRUKER SELV", "dummy", "dummy", 1), createAuthHeader(IDENT)),
                 String.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.INTERNAL_SERVER_ERROR)));
