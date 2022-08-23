@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.integration.medl
+package no.nav.personopplysninger.integration.endreopplysninger
 
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.HttpStatusCode
@@ -8,34 +8,32 @@ import no.nav.personopplysninger.integration.IntegrationTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 
-class MedlIT : IntegrationTest() {
+class SlettKontaktadresseIT : IntegrationTest() {
 
-    val HENT_MEDLEMSKAP_PATH = "/medl"
+    val SLETT_KONTAKTADRESSE_PATH = "/slettKontaktadresse"
 
     @Test
-    fun hentMedlemskap200() = integrationTest(setupMockedClient()) {
+    fun slettKontaktadresse200() = integrationTest(setupMockedClient()) {
         val client = createClient { install(ContentNegotiation) { json() } }
-        val response = get(client, HENT_MEDLEMSKAP_PATH)
+        val response = post(client, SLETT_KONTAKTADRESSE_PATH)
 
         assertEquals(HttpStatusCode.OK, response.status)
     }
 
     @Test
-    fun feilMotMedlSkalGi500() =
-        integrationTest(setupMockedClient(medlStatus = HttpStatusCode.InternalServerError)) {
+    fun feilMotPdlMottakSkalGi500() =
+        integrationTest(setupMockedClient(pdlMottakStatus = HttpStatusCode.InternalServerError)) {
             val client = createClient { install(ContentNegotiation) { json() } }
-
-            val response = get(client, HENT_MEDLEMSKAP_PATH)
+            val response = post(client, SLETT_KONTAKTADRESSE_PATH)
 
             assertEquals(HttpStatusCode.InternalServerError, response.status)
         }
 
     @Test
-    fun feilMotKodeverkSkalGi500() =
-        integrationTest(setupMockedClient(kodeverkStatus = HttpStatusCode.InternalServerError)) {
+    fun feilMotPdlSkalGi500() =
+        integrationTest(setupMockedClient(pdlStatus = HttpStatusCode.InternalServerError)) {
             val client = createClient { install(ContentNegotiation) { json() } }
-
-            val response = get(client, HENT_MEDLEMSKAP_PATH)
+            val response = post(client, SLETT_KONTAKTADRESSE_PATH)
 
             assertEquals(HttpStatusCode.InternalServerError, response.status)
         }

@@ -21,13 +21,6 @@ object Finn {
     const val unleashClient = "$groupId:unleash-client-java:$version"
 }
 
-object Jackson {
-    private const val version = "2.13.2"
-
-    const val kotlinModule = "com.fasterxml.jackson.module:jackson-module-kotlin:$version"
-    const val datatypeJsr310 = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$version"
-}
-
 object Kotlin {
     const val version = "1.7.10"
     private const val groupId = "org.jetbrains.kotlin"

@@ -1,8 +1,11 @@
-package no.nav.personopplysninger.consumer.pdlmottak.dto
+package no.nav.personopplysninger.consumer.pdlmottak.dto.inbound
+
+import kotlinx.serialization.Serializable
 
 private const val TELEFONNUMMER = "TELEFONNUMMER"
 private const val KONTAKTADRESSE = "KONTAKTADRESSE"
 
+@Serializable
 class Personopplysning(
     val ident: String,
     val endringstype: EndringsType,

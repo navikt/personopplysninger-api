@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.integration.kontaktinformasjon
+package no.nav.personopplysninger.integration.endreopplysninger
 
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.HttpStatusCode
@@ -8,24 +8,23 @@ import no.nav.personopplysninger.integration.IntegrationTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 
-class KontaktinformasjonIT : IntegrationTest() {
+class HentPostnummerIT : IntegrationTest() {
 
-    val HENT_KONTAKTINFORMASJON_PATH = "/kontaktinformasjon"
+    val HENT_POSTNUMMER_PATH = "/postnummer"
 
     @Test
-    fun hentKontaktinformasjon200() = integrationTest(setupMockedClient()) {
+    fun hentPostnummer200() = integrationTest(setupMockedClient()) {
         val client = createClient { install(ContentNegotiation) { json() } }
-        val response = get(client, HENT_KONTAKTINFORMASJON_PATH)
+        val response = get(client, HENT_POSTNUMMER_PATH)
 
         assertEquals(HttpStatusCode.OK, response.status)
     }
 
     @Test
-    fun serverfeilMotDigdirSkalGi500() =
-        integrationTest(setupMockedClient(digdirKrrProxyStatus = HttpStatusCode.InternalServerError)) {
+    fun feilMotKodeverkSkalGi500() =
+        integrationTest(setupMockedClient(kodeverkStatus = HttpStatusCode.InternalServerError)) {
             val client = createClient { install(ContentNegotiation) { json() } }
-
-            val response = get(client, HENT_KONTAKTINFORMASJON_PATH)
+            val response = get(client, HENT_POSTNUMMER_PATH)
 
             assertEquals(HttpStatusCode.InternalServerError, response.status)
         }

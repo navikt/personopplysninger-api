@@ -1,0 +1,32 @@
+package no.nav.personopplysninger.integration.endreopplysninger
+
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.http.HttpStatusCode
+import io.ktor.serialization.kotlinx.json.json
+import no.nav.personopplysninger.config.setupMockedClient
+import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
+import no.nav.personopplysninger.integration.IntegrationTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import kotlin.test.Test
+
+class EndreKontonummerIT : IntegrationTest() {
+
+    val ENDRE_KONTNUMMER_PATH = "/endreKontonummer"
+
+    @Test
+    fun endreKontonummer200() = integrationTest(setupMockedClient()) {
+        val client = createClient { install(ContentNegotiation) { json() } }
+        val response = post(client, ENDRE_KONTNUMMER_PATH, Kontonummer("kilde", null, "12345678911"))
+
+        assertEquals(HttpStatusCode.OK, response.status)
+    }
+
+    @Test
+    fun feilMotKontoregisterSkalGi500() =
+        integrationTest(setupMockedClient(kontoregisterStatus = HttpStatusCode.InternalServerError)) {
+            val client = createClient { install(ContentNegotiation) { json() } }
+            val response = post(client, ENDRE_KONTNUMMER_PATH, Kontonummer("kilde", null, "12345678911"))
+
+            assertEquals(HttpStatusCode.InternalServerError, response.status)
+        }
+}

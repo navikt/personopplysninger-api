@@ -1,8 +1,8 @@
-package no.nav.personopplysninger.consumer.pdlmottak.dto
+package no.nav.personopplysninger.consumer.pdlmottak.dto.outbound
 
-import com.fasterxml.jackson.annotation.JsonInclude
+import kotlinx.serialization.Serializable
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Serializable
 data class Endring(
     var status: Status = Status(),
     var statusType: String = "OK",

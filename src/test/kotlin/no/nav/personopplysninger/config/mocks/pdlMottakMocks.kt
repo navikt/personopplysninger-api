@@ -25,7 +25,7 @@ fun MockRequestHandleScope.mockPdlMottak(
         if (request.url.encodedPath.contains("endringer")) {
             respond(
                 "Suksess",
-                headers = headersOf(HttpHeaders.Location, "location"),
+                headers = headersOf(HttpHeaders.Location, "/location"),
             )
         } else if (request.url.encodedPath.contains("location")) {
             respond(

@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.consumer.pdlmottak
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -8,6 +7,7 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
@@ -21,10 +21,9 @@ import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_PERSONIDENT
-import no.nav.personopplysninger.consumer.pdlmottak.dto.Endring
-import no.nav.personopplysninger.consumer.pdlmottak.dto.Personopplysning
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Personopplysning
+import no.nav.personopplysninger.consumer.pdlmottak.dto.outbound.Endring
 import no.nav.personopplysninger.util.consumerErrorMessage
-import no.nav.personopplysninger.util.getJson
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
@@ -78,7 +77,7 @@ class PdlMottakConsumer(
 
             }
             response.status == HttpStatusCode.UnprocessableEntity -> {
-                log.error("Fikk valideringsfeil: ${getJson(this)}")
+                log.error("Fikk valideringsfeil: ${response.bodyAsText()}")
                 Endring(statusType = "ERROR", error = response.body())
             }
             !response.status.isSuccess() -> {
@@ -91,7 +90,8 @@ class PdlMottakConsumer(
                 )
             }
             else -> {
-                val pollEndringUrl = response.headers[HttpHeaders.Location]!!
+                val location = response.headers[HttpHeaders.Location]!!
+                val pollEndringUrl = environment.pdlMottakUrl.plus(location)
                 pollEndring(accessToken, pollEndringUrl, SLEEP_TIME_MS, MAX_POLLS)
             }
         }
@@ -120,10 +120,7 @@ class PdlMottakConsumer(
 
         if (!endring.confirmedOk()) {
             endring.createValidationErrorIfTpsHasError()
-            val json = runCatching {
-                ObjectMapper().writeValueAsString(endring)
-            }.getOrDefault("")
-            log.warn("${endring.errorMessage()}\n$json")
+            log.warn(endring.errorMessage())
         }
         return endring
     }

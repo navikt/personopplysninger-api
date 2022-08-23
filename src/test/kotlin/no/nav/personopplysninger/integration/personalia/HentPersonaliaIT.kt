@@ -9,7 +9,7 @@ import no.nav.personopplysninger.integration.IntegrationTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 
-class PersonaliaIT : IntegrationTest() {
+class HentPersonaliaIT : IntegrationTest() {
 
     val HENT_PERSONALIA_PATH = "/personalia"
 

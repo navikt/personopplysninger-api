@@ -40,8 +40,6 @@ dependencies {
     implementation(Kotlin.jdk8)
     implementation(Logstash.logbackEncoder)
     implementation(Logback.classic)
-    implementation(Jackson.kotlinModule)
-    implementation(Jackson.datatypeJsr310)
     implementation(NAV.Common.featureToggle)
     implementation(Finn.unleashClient)
     testImplementation(Kotlin.junit5)

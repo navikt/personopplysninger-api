@@ -7,7 +7,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
-import no.nav.personopplysninger.consumer.pdlmottak.dto.Telefonnummer
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
 import no.nav.personopplysninger.util.getFnrFromToken
 import no.nav.personopplysninger.util.getSelvbetjeningTokenFromCall

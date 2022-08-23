@@ -1,5 +1,8 @@
-package no.nav.personopplysninger.consumer.pdlmottak.dto
+package no.nav.personopplysninger.consumer.pdlmottak.dto.outbound
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class Substatus {
     val beskrivelse: String? = null
     val domene: String? = null

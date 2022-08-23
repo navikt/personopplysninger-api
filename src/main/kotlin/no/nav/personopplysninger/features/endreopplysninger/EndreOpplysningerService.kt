@@ -8,11 +8,11 @@ import no.nav.personopplysninger.consumer.kontoregister.dto.OppdaterKonto
 import no.nav.personopplysninger.consumer.kontoregister.dto.UtenlandskKontoInfo
 import no.nav.personopplysninger.consumer.pdl.PdlService
 import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
-import no.nav.personopplysninger.consumer.pdlmottak.dto.Endring
-import no.nav.personopplysninger.consumer.pdlmottak.dto.Telefonnummer
-import no.nav.personopplysninger.consumer.pdlmottak.dto.endreNummerPayload
-import no.nav.personopplysninger.consumer.pdlmottak.dto.slettKontaktadressePayload
-import no.nav.personopplysninger.consumer.pdlmottak.dto.slettNummerPayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.endreNummerPayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.slettKontaktadressePayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.slettNummerPayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.outbound.Endring
 import no.nav.personopplysninger.features.endreopplysninger.dto.Kontonummer
 import no.nav.personopplysninger.features.endreopplysninger.dto.Retningsnummer
 

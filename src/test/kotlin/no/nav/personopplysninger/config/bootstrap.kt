@@ -10,6 +10,7 @@ import io.ktor.server.routing.routing
 import no.nav.personopplysninger.features.auth.auth
 import no.nav.personopplysninger.features.endreopplysninger.endreOpplysninger
 import no.nav.personopplysninger.features.institusjon.institusjon
+import no.nav.personopplysninger.features.kontaktinformasjon.kontaktinformasjon
 import no.nav.personopplysninger.features.medl.medl
 import no.nav.personopplysninger.features.personalia.personalia
 
@@ -25,7 +26,8 @@ fun Application.testModule(appContext: TestApplicationContext) {
         endreOpplysninger(appContext.endreOpplysningerService)
         institusjon(appContext.institusjonService)
         medl(appContext.medlService)
-        personalia(appContext.peronaliaService)
+        personalia(appContext.personaliaService)
+        kontaktinformasjon(appContext.kontaktinformasjonService)
     }
 }
 

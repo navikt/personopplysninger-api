@@ -1,20 +1,18 @@
 package no.nav.personopplysninger.consumer
 
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import no.nav.personopplysninger.config.jsonConfig
 import no.nav.personopplysninger.consumer.inst.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.consumer.inst.dto.Institusjonstype
 import no.nav.personopplysninger.consumer.kodeverk.dto.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.consumer.norg2.dto.Norg2Enhet
 import no.nav.personopplysninger.consumer.pdl.dto.PdlResponse
-import no.nav.personopplysninger.consumer.pdlmottak.dto.Telefonnummer
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
 import no.nav.personopplysninger.testutils.instJson
 import no.nav.personopplysninger.testutils.pdlJson
 import no.nav.personopplysninger.testutils.telefonnummerJson
-import no.nav.personopplysninger.util.getJson
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
@@ -23,22 +21,19 @@ import kotlin.test.assertTrue
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DeserialiseringTest {
 
-    val objectMapper = jacksonObjectMapper().apply {
-        configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        registerModule(JavaTimeModule())
-    }
+    val serializer = jsonConfig()
 
     @Test
     fun deserialiseringFungererDersomDataClassHarJsonAnnotering() {
         val response = readFile("kodeverk-kjonnstyper.json")
-        objectMapper.readValue(response, GetKodeverkKoderBetydningerResponse::class.java)
+        serializer.decodeFromString<GetKodeverkKoderBetydningerResponse>(response)
     }
 
     @Test
     fun canDeserializePdlResponse() {
         val json = pdlJson()
 
-        val person: PdlResponse = objectMapper.readValue(json)
+        val person: PdlResponse = serializer.decodeFromString(json)
         val telefonnummer = person.data.person!!.telefonnummer.first()
         val kontaktadresse = person.data.person!!.kontaktadresse.first()
 
@@ -55,7 +50,7 @@ class DeserialiseringTest {
     fun canDeserializeLegacyTelefonnummerFormat() {
         val json = telefonnummerJson()
 
-        val telefonnummer: Telefonnummer = objectMapper.readValue(json)
+        val telefonnummer: Telefonnummer = serializer.decodeFromString(json)
 
         assertEquals(telefonnummer.landskode, "+47")
         assertEquals(telefonnummer.nummer, "22334455")
@@ -65,7 +60,7 @@ class DeserialiseringTest {
     @Test
     fun deserialiseringNorg2() {
         val response = readFile("norg2-enhet.json")
-        val norg2Enhet: Norg2Enhet = objectMapper.readValue(response)
+        val norg2Enhet: Norg2Enhet = serializer.decodeFromString(response)
         assertEquals("NAV Aremark", norg2Enhet.navn)
         assertEquals("0118", norg2Enhet.enhetNr)
         assertEquals("287", norg2Enhet.antallRessurser)
@@ -74,14 +69,14 @@ class DeserialiseringTest {
     @Test
     fun deserialiserInstitusjon() {
         val response = instJson()
-        val inst: InnsynInstitusjonsopphold = objectMapper.readValue(response)
+        val inst: InnsynInstitusjonsopphold = serializer.decodeFromString(response)
         assertEquals(Institusjonstype.FO, inst.institusjonstype)
-        val json = getJson(inst)
+        val json = serializer.encodeToString(inst)
         assertTrue(json.contains("Fengsel"))
 
         val responseList = readFile("inst2.json")
 
-        val instList: List<InnsynInstitusjonsopphold> = objectMapper.readValue(responseList)
+        val instList: List<InnsynInstitusjonsopphold> = serializer.decodeFromString(responseList)
         assertEquals(7, instList.size)
     }
 }
