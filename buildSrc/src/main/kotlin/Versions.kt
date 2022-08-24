@@ -5,6 +5,14 @@ object Auth0 {
     const val jwt = "$groupId:java-jwt:$version"
 }
 
+object Caffeine {
+
+    private const val version = "3.1.1"
+    private const val groupId = "com.github.ben-manes.caffeine"
+
+    const val caffeine = "$groupId:caffeine:$version"
+}
+
 object DittNAV {
     object Common {
         private const val version = "2022.04.19-11.11-1043a85c4f6f"
@@ -58,6 +66,11 @@ object Logstash {
     private const val groupId = "net.logstash.logback"
 
     const val logbackEncoder = "$groupId:logstash-logback-encoder:$version"
+}
+
+object Mockk {
+    private const val version = "1.12.5"
+    const val mockk = "io.mockk:mockk:$version"
 }
 
 object NAV {

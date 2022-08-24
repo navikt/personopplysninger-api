@@ -20,7 +20,7 @@ import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.MDC
 
 
-class InstitusjonConsumer constructor(
+class InstitusjonConsumer(
     private val client: HttpClient,
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,

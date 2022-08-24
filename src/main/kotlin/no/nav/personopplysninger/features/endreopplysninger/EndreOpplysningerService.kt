@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.endreopplysninger
 
-import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkService
 import no.nav.personopplysninger.consumer.kodeverk.dto.KodeOgTekstDto
 import no.nav.personopplysninger.consumer.kodeverk.dto.Kodeverk
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
@@ -18,7 +18,7 @@ import no.nav.personopplysninger.features.endreopplysninger.dto.Retningsnummer
 
 class EndreOpplysningerService(
     private var pdlMottakConsumer: PdlMottakConsumer,
-    private var kodeverkConsumer: KodeverkConsumer,
+    private var kodeverkService: KodeverkService,
     private var kontoregisterConsumer: KontoregisterConsumer,
     private var pdlService: PdlService
 ) {
@@ -75,7 +75,7 @@ class EndreOpplysningerService(
     }
 
     suspend fun hentRetningsnumre(): Array<Retningsnummer> {
-        return kodeverkConsumer.hentRetningsnumre().koder
+        return kodeverkService.hentRetningsnumre().koder
             .map { kode ->
                 Retningsnummer(
                     kode.navn,
@@ -87,15 +87,15 @@ class EndreOpplysningerService(
     }
 
     suspend fun hentLand(): Array<KodeOgTekstDto> {
-        return toSortedKodeOgTekstArray(kodeverkConsumer.hentLandKoder())
+        return toSortedKodeOgTekstArray(kodeverkService.hentLandKoder())
     }
 
     suspend fun hentValuta(): Array<KodeOgTekstDto> {
-        return toSortedKodeOgTekstArray(kodeverkConsumer.hentValuta())
+        return toSortedKodeOgTekstArray(kodeverkService.hentValuta())
     }
 
     suspend fun hentPostnummer(): Array<KodeOgTekstDto> {
-        return toSortedKodeOgTekstArray(kodeverkConsumer.hentPostnummer())
+        return toSortedKodeOgTekstArray(kodeverkService.hentPostnummer())
     }
 
     private fun toSortedKodeOgTekstArray(kodeverk: Kodeverk): Array<KodeOgTekstDto> {

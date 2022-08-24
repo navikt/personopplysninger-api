@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.features.personalia
 
-import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkService
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.consumer.kontoregister.dto.Konto
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
@@ -17,7 +17,7 @@ import no.nav.personopplysninger.features.personalia.dto.transformer.PersonaliaO
 import java.time.LocalDate
 
 class PersonaliaService(
-    private var kodeverkConsumer: KodeverkConsumer,
+    private var kodeverkService: KodeverkService,
     private var norg2Consumer: Norg2Consumer,
     private var kontoregisterConsumer: KontoregisterConsumer,
     private var pdlService: PdlService
@@ -55,12 +55,12 @@ class PersonaliaService(
 
         return PersonaliaKodeverk().apply {
             foedekommuneterm = getKommuneKodeverksTerm(pdlPerson.foedsel.firstOrNull()?.foedekommune)
-            foedelandterm = kodeverkConsumer.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
-            gtLandterm = kodeverkConsumer.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
+            foedelandterm = kodeverkService.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
+            gtLandterm = kodeverkService.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
             statsborgerskaptermer = hentGyldigeStatsborgerskap(pdlPerson.statsborgerskap)
             utenlandskbanklandterm =
-                kodeverkConsumer.hentLandKoderISO2().term(inboundKonto?.utenlandskKontoInfo?.bankLandkode)
-            utenlandskbankvalutaterm = kodeverkConsumer.hentValuta().term(inboundKonto?.utenlandskKontoInfo?.valutakode)
+                kodeverkService.hentLandKoderISO2().term(inboundKonto?.utenlandskKontoInfo?.bankLandkode)
+            utenlandskbankvalutaterm = kodeverkService.hentValuta().term(inboundKonto?.utenlandskKontoInfo?.valutakode)
             kontaktadresseKodeverk =
                 kontaktadresse.map { hentAdresseKodeverk(it.postnummer, it.landkode, it.kommunenummer) }
             bostedsadresseKodeverk =
@@ -75,7 +75,7 @@ class PersonaliaService(
     private suspend fun hentGyldigeStatsborgerskap(statsborgerskap: List<PdlStatsborgerskap>): List<String> {
         return statsborgerskap
             .filter { it.land != "XUK" && it.gyldigTilOgMed?.isBefore(LocalDate.now()) != true } // Filtrer ut ukjent og ugyldige
-            .map { kodeverkConsumer.hentStatsborgerskap().term(it.land) }
+            .map { kodeverkService.hentStatsborgerskap().term(it.land) }
             .filter { it.isNotEmpty() }
     }
 
@@ -85,8 +85,8 @@ class PersonaliaService(
         kommunenummer: String?
     ): AdresseKodeverk {
         return AdresseKodeverk().apply {
-            poststed = kodeverkConsumer.hentPostnummer().term(postnummer)
-            land = kodeverkConsumer.hentLandKoder().term(landkode)
+            poststed = kodeverkService.hentPostnummer().term(postnummer)
+            land = kodeverkService.hentLandKoder().term(landkode)
             kommune = getKommuneKodeverksTerm(kommunenummer)
         }
     }
@@ -95,7 +95,7 @@ class PersonaliaService(
         return if ("0000" == inbound) {
             ""
         } else {
-            kodeverkConsumer.hentKommuner().term(inbound)
+            kodeverkService.hentKommuner().term(inbound)
         }
     }
 

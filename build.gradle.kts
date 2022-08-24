@@ -23,6 +23,7 @@ repositories {
 
 dependencies {
     implementation(Auth0.jwt)
+    implementation(Caffeine.caffeine)
     implementation(Ktor.serialization)
     implementation(Ktor.serializationKotlinx)
     implementation(Ktor.serverNetty)
@@ -45,6 +46,7 @@ dependencies {
     testImplementation(Kotlin.junit5)
     testImplementation(Ktor.serverTestHost)
     testImplementation(Ktor.clientMock)
+    testImplementation(Mockk.mockk)
 }
 
 application {

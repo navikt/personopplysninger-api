@@ -19,7 +19,7 @@ import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.MDC
 
-class MedlConsumer constructor(
+class MedlConsumer(
     private val client: HttpClient,
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,

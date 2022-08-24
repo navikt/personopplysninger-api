@@ -1,0 +1,54 @@
+package no.nav.personopplysninger.consumer.kodeverk
+
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.benmanes.caffeine.cache.Caffeine
+import io.mockk.coEvery
+import io.mockk.mockk
+import kotlinx.coroutines.runBlocking
+import no.nav.personopplysninger.consumer.kodeverk.dto.Kodeverk
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
+
+class KodeverkServiceTest {
+
+    val cache: Cache<String, Kodeverk> = Caffeine.newBuilder().build()
+    val kodeverkConsumer: KodeverkConsumer = mockk()
+
+    val kodeverkService = KodeverkService(cache, kodeverkConsumer)
+
+    @BeforeEach
+    fun setup() {
+        cache.invalidateAll()
+    }
+
+    @Test
+    fun shouldHitCache() {
+        coEvery {
+            kodeverkConsumer.fetchFromKodeverk(any(), any())
+        } returns kodeverkDummy("cached postnummer") andThen kodeverkDummy("new postnummer")
+
+        val first = runBlocking { kodeverkService.hentPostnummer() }
+        val second = runBlocking { kodeverkService.hentPostnummer() }
+
+        assertEquals(first.navn, second.navn)
+    }
+
+    @Test
+    fun shouldNotHitCache() {
+        coEvery {
+            kodeverkConsumer.fetchFromKodeverk(any(), any())
+        } returns kodeverkDummy("postnummer") andThen kodeverkDummy("kommune")
+
+        val first = runBlocking { kodeverkService.hentPostnummer() }
+        val second = runBlocking { kodeverkService.hentKommuner() }
+
+        assertNotEquals(first.navn, second.navn)
+    }
+
+    private fun kodeverkDummy(navn: String): Kodeverk {
+        return Kodeverk(navn = navn, emptyList())
+    }
+
+}

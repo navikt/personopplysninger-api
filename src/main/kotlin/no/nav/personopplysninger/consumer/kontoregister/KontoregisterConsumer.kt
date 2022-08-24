@@ -27,7 +27,7 @@ import org.slf4j.MDC
 private const val HENT_KONTO_PATH = "/kontoregister/api/navno/v1/hent-aktiv-konto"
 private const val OPPDATER_KONTO_PATH = "/kontoregister/api/navno/v1/oppdater-konto"
 
-class KontoregisterConsumer constructor(
+class KontoregisterConsumer(
     private val client: HttpClient,
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,
