@@ -24,7 +24,7 @@ class KodeverkServiceTest {
     }
 
     @Test
-    fun shouldHitCache() {
+    fun shouldReturnCachedValue() {
         coEvery {
             kodeverkConsumer.fetchFromKodeverk(any(), any())
         } returns kodeverkDummy("cached postnummer") andThen kodeverkDummy("new postnummer")
@@ -36,7 +36,20 @@ class KodeverkServiceTest {
     }
 
     @Test
-    fun shouldNotHitCache() {
+    fun shouldInvalidateCacheAndReturnNewValue() {
+        coEvery {
+            kodeverkConsumer.fetchFromKodeverk(any(), any())
+        } returns kodeverkDummy("cached postnummer") andThen kodeverkDummy("new postnummer")
+
+        val first = runBlocking { kodeverkService.hentPostnummer() }
+        cache.invalidateAll()
+        val second = runBlocking { kodeverkService.hentPostnummer() }
+
+        assertNotEquals(first.navn, second.navn)
+    }
+
+    @Test
+    fun shouldNotHitCacheWithDifferentKey() {
         coEvery {
             kodeverkConsumer.fetchFromKodeverk(any(), any())
         } returns kodeverkDummy("postnummer") andThen kodeverkDummy("kommune")
