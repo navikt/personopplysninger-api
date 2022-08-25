@@ -9,11 +9,9 @@ import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.endreopplysninger.dto.outbound.Error
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SerialiseringTest {
 
     val serializer = jsonConfig()

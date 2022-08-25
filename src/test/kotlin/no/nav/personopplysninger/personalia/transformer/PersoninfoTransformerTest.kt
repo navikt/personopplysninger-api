@@ -11,11 +11,8 @@ import no.nav.personopplysninger.personalia.transformer.testdata.createDummyKont
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyPerson
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyPersonaliaKodeverk
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import kotlin.test.assertEquals
 
-@TestInstance(PER_CLASS)
 class PersoninfoTransformerTest {
 
     @Test

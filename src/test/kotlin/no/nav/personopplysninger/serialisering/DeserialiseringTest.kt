@@ -8,11 +8,9 @@ import no.nav.personopplysninger.institusjon.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.institusjon.dto.Institusjonstype
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DeserialiseringTest {
 
     val serializer = jsonConfig()

@@ -2,10 +2,8 @@ package no.nav.personopplysninger.kontaktinformasjon.transformer
 
 import no.nav.personopplysninger.kontaktinformasjon.transformer.testdata.createDummyDigitalKontaktinfo
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class KontaktinformasjonTransformerTest {
 
     @Test

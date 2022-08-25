@@ -4,11 +4,9 @@ import no.nav.personopplysninger.common.pdl.dto.PdlPerson
 import no.nav.personopplysninger.common.pdl.dto.personalia.PdlTelefonnummer
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyMetadata
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TelefoninfoTransformerTest {
 
     @Test

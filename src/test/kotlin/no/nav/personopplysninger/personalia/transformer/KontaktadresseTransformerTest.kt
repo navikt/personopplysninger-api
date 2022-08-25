@@ -21,9 +21,7 @@ import no.nav.personopplysninger.testutils.assertVegadresseEquals
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class KontaktadresseTransformerTest {
 
     private val adresseKodeverk = createDummyAdresseKodeverk()
