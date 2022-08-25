@@ -3,15 +3,11 @@ package no.nav.personopplysninger.serialisering
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import no.nav.personopplysninger.common.kodeverk.dto.GetKodeverkKoderBetydningerResponse
-import no.nav.personopplysninger.common.kontoregister.dto.inbound.Kontonummer
 import no.nav.personopplysninger.common.kontoregister.dto.inbound.Retningsnummer
 import no.nav.personopplysninger.config.jsonConfig
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
-import no.nav.personopplysninger.endreopplysninger.dto.outbound.Endring
 import no.nav.personopplysninger.endreopplysninger.dto.outbound.Error
-import no.nav.personopplysninger.institusjon.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
-import no.nav.personopplysninger.testutils.utenlandskKontonummerJson
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
@@ -21,27 +17,6 @@ import kotlin.test.assertTrue
 class SerialiseringTest {
 
     val serializer = jsonConfig()
-
-    @Test
-    fun testSerializationTelefonnummer() {
-        val json: String = readFile("endring-telefonnummer.json")
-        val endringList: List<Endring> = serializer.decodeFromString(json)
-        val endring = endringList[0]
-        assertEquals(3, endring.status.substatus.size)
-    }
-
-    @Test
-    fun testSerializationInstitusjonsopphold() {
-        val json: String = readFile("inst2.json")
-        val institusjonsopphold: List<InnsynInstitusjonsopphold> = serializer.decodeFromString(json)
-        assertEquals(7, institusjonsopphold.size)
-    }
-
-    @Test
-    fun testSerializationUtenlandskKontonummer() {
-        val utenlandskKontonummer: Kontonummer = serializer.decodeFromString(utenlandskKontonummerJson())
-        assertEquals("SWE", utenlandskKontonummer.utenlandskKontoInformasjon!!.landkode)
-    }
 
     @Test
     fun testRetningsnummerMapping() {
