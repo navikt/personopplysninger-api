@@ -2,48 +2,27 @@
 
 ![Deploy-to-prod](https://github.com/navikt/personopplysninger-api/workflows/Deploy-to-prod/badge.svg) | ![Deploy-to-dev](https://github.com/navikt/personopplysninger-api/workflows/Deploy-to-dev/badge.svg)
 
-Spring Boot backend som skal gi brukeren innsikt i informasjonen NAV har lagret. 
+Ktor-backend som skal gi brukeren innsikt i informasjonen NAV har lagret. 
 
-## Deploy til dev-miljø
+## Lokalt kjøring
 
-[Deploy-to-dev](https://github.com/navikt/personopplysninger-api/actions/workflows/deploy.dev.yml) -> Run workflow -> Velg branch -> Run workflow
+Kjør main-funksjon i [localServer](src/test/kotlin/no/nav/personopplysninger/localServer.kt). Endepunkter eksponeres da på localhost:8080, og kan kalles uten token. Merk at alle eksterne avhengigheter er mocket ut.
+
+Appen kan kjøres opp i development mode med auto-reload dersom man legger til `-Dio.ktor.development=true` under VM options under Run/Debug configurations i IntelliJ. Merk at IntelliJ ikke bygger prosjektet automatisk ved endringer, så man må fortsatt bygge manuelt for at endringer skal registreres.
+
+## Deploy til dev
+
+[Actions](https://github.com/navikt/nav-enonicxp-frontend/actions) -> Velg workflow -> Run workflow -> Velg branch -> Run workflow
 
 ## Prodsetting
 
-Publiser en ny release på master for å starte deploy til prod
-
-## Lokalt Kjøring
-
-For å kjøre opp løsningen lokalt <br>
-Kjør [TestLauncher](src/test/java/no/nav/personopplysninger/api/TestLauncher.java).
-
-## Teste endepunkter i Q
-
-Endepunkter for å oppdatere brukeropplysninger kan gjøres via CLI med følgende kommando:
-
-```
-curl --insecure -XPOST "https://www.dev.nav.no/person/personopplysninger-api/endreTelefonnummer" -H "accept: application/json" -H "Authorization: Bearer OIDC-TOKEN" -H "Nav-Call-Id: 123456" -H "Nav-Consumer-Token: Bearer STS-TOKEN" -H "Nav-Consumer-Id: personbruker-personopplysninger-api" -H "Nav-Personident: FNR" -H "Content-Type: application/json" -d "{ \"landskode\": \"+47\", \"nummer\": 12345678, \"type\": \"MOBIL\"}"
-```
-
-Erstatt følgende:
-* OIDC-TOKEN med cookie "selvbetjening-idtoken" etter å ha logget på https://www.dev.nav.no/person/personopplysninger.
-* FNR for pålogget bruker.
-* STS-TOKEN for systembruker. Kan hentes ut via kall:
-
-```
-curl --insecure --user srvpersonopplysnin:PASSORD "https://security-token-service.nais.preprod.local/rest/v1/sts/token?grant_type=client_credentials&scope=openid" --header "accept: application/json"
-```
-
-* PASSORD slås opp i vault.
-
-## Blokkdiagram
-
-![Blokkdiagram](./diagrams/block-diagram.svg)
+-   Lag en PR til master, og merge inn etter godkjenning
+-   Lag en release på master med versjon-bump, beskrivende tittel og oppsummering av endringene dine
+-   Publiser release'en for å starte deploy til prod
 
 ## Logging
 
-Feil ved API-kall blir logget via frontendlogger og vises i Kibana<br>
-[https://logs.adeo.no](https://logs.adeo.no/app/kibana#/discover/ad01c200-4af4-11e9-a5a6-7fddb220bd0c)
+[Kibana](https://logs.adeo.no/app/discover#/view/165042a0-246c-11ed-9b1a-4723a5e7a9db)
 
 ## Henvendelser
 
