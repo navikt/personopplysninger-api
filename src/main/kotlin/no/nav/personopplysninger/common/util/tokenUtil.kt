@@ -1,13 +1,14 @@
 package no.nav.personopplysninger.common.util
 
 import io.ktor.server.application.ApplicationCall
+import io.ktor.server.request.authorization
 import no.nav.security.token.support.core.jwt.JwtToken
 
 private const val PID_CLAIM = "pid"
 private const val OIDC_COOKIE_NAME = "selvbetjening-idtoken"
 
 fun getSelvbetjeningTokenFromCall(call: ApplicationCall): String {
-    return call.request.cookies[OIDC_COOKIE_NAME]!!
+    return call.request.cookies[OIDC_COOKIE_NAME] ?: call.request.authorization()!!
 }
 
 fun getFnrFromToken(token: String): String {
