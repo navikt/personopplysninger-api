@@ -4,7 +4,7 @@
 
 Ktor-backend som skal gi brukeren innsikt i informasjonen NAV har lagret. 
 
-## Lokalt kjøring
+## Lokal kjøring
 
 Kjør main-funksjon i [localServer](src/test/kotlin/no/nav/personopplysninger/localServer.kt). Endepunkter eksponeres da på localhost:8080, og kan kalles uten token. Merk at alle eksterne avhengigheter er mocket ut.
 

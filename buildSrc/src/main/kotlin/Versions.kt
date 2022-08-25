@@ -69,7 +69,7 @@ object Logstash {
 }
 
 object Mockk {
-    private const val version = "1.12.5"
+    private const val version = "1.12.7"
     const val mockk = "io.mockk:mockk:$version"
 }
 
