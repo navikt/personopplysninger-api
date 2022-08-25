@@ -2,7 +2,9 @@
 
 ![Deploy-to-prod](https://github.com/navikt/personopplysninger-api/workflows/Deploy-to-prod/badge.svg) | ![Deploy-to-dev](https://github.com/navikt/personopplysninger-api/workflows/Deploy-to-dev/badge.svg)
 
-Ktor-backend som skal gi brukeren innsikt i informasjonen NAV har lagret. 
+Ktor-backend som skal gi brukeren innsikt i informasjonen NAV har lagret.
+
+Secrets ligger i [Google Secret Manager](https://doc.nais.io/security/secrets/google-secrets-manager/).
 
 ## Lokal kjøring
 
