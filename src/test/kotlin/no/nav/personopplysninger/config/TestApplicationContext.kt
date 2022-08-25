@@ -23,7 +23,25 @@ import java.util.concurrent.TimeUnit
 
 class TestApplicationContext(httpClient: HttpClient) {
 
-    val env = Environment()
+    val env = Environment(
+        corsAllowedOrigins = "",
+        corsAllowedSchemes = "https",
+        inst2Url = "http://inst2",
+        kodeverkUrl = "http://kodeverk",
+        norg2Url = "http://norg2",
+        digdirKrrProxyUrl = "http://digdir-krr-proxy",
+        pdlMottakUrl = "http://pdl-mottak",
+        pdlUrl = "http://pdl",
+        medlUrl = "http://medl",
+        kontoregisterUrl = "http://kontoregister",
+        inst2TargetApp = "",
+        digdirKrrProxyTargetApp = "",
+        medlTargetApp = "",
+        personopplysningerProxyTargetApp = "",
+        pdlTargetApp = "",
+        pdlMottakTargetApp = "",
+        kontoregisterTargetApp = "",
+    )
 
     val tokendingsService = DummyTokendingsService()
 
