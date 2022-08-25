@@ -4,6 +4,6 @@ import java.io.InputStreamReader
 
 object TestFileReader {
     fun readFile(filename: String): String {
-        return InputStreamReader(this.javaClass.getResourceAsStream("/__files/$filename")!!).readText()
+        return InputStreamReader(this.javaClass.getResourceAsStream("/json/$filename")!!).readText()
     }
 }

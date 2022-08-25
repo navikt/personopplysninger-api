@@ -20,7 +20,7 @@ open class IntegrationTest {
 
     fun integrationTest(httpClient: HttpClient, block: suspend ApplicationTestBuilder.() -> Unit) = testApplication {
         environment {
-            config = ApplicationConfig("application.conf")
+            config = ApplicationConfig("application-test.conf")
         }
         application {
             testModule(TestApplicationContext(httpClient))
