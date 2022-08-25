@@ -17,14 +17,13 @@ import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
 import io.ktor.server.request.uri
 import io.ktor.server.routing.routing
-import no.nav.personopplysninger.features.auth.auth
-import no.nav.personopplysninger.features.endreopplysninger.endreOpplysninger
-import no.nav.personopplysninger.features.featuretoggles.featureToggles
-import no.nav.personopplysninger.features.institusjon.institusjon
-import no.nav.personopplysninger.features.kontaktinformasjon.kontaktinformasjon
-import no.nav.personopplysninger.features.medl.medl
-import no.nav.personopplysninger.features.personalia.personalia
+import no.nav.personopplysninger.endreopplysninger.endreOpplysninger
+import no.nav.personopplysninger.featuretoggles.featureToggles
 import no.nav.personopplysninger.health.health
+import no.nav.personopplysninger.institusjon.institusjon
+import no.nav.personopplysninger.kontaktinformasjon.kontaktinformasjon
+import no.nav.personopplysninger.medl.medl
+import no.nav.personopplysninger.personalia.personalia
 import no.nav.security.token.support.v2.RequiredClaims
 import no.nav.security.token.support.v2.tokenValidationSupport
 import org.slf4j.LoggerFactory
@@ -74,7 +73,6 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     routing {
         health()
         authenticate {
-            auth(appContext.pdlConsumer)
             endreOpplysninger(appContext.endreOpplysningerService)
             featureToggles(appContext.unleashClient)
             institusjon(appContext.institusjonService)

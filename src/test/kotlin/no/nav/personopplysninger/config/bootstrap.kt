@@ -7,12 +7,11 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.routing.routing
-import no.nav.personopplysninger.features.auth.auth
-import no.nav.personopplysninger.features.endreopplysninger.endreOpplysninger
-import no.nav.personopplysninger.features.institusjon.institusjon
-import no.nav.personopplysninger.features.kontaktinformasjon.kontaktinformasjon
-import no.nav.personopplysninger.features.medl.medl
-import no.nav.personopplysninger.features.personalia.personalia
+import no.nav.personopplysninger.endreopplysninger.endreOpplysninger
+import no.nav.personopplysninger.institusjon.institusjon
+import no.nav.personopplysninger.kontaktinformasjon.kontaktinformasjon
+import no.nav.personopplysninger.medl.medl
+import no.nav.personopplysninger.personalia.personalia
 
 
 fun Application.testModule(appContext: TestApplicationContext) {
@@ -22,7 +21,6 @@ fun Application.testModule(appContext: TestApplicationContext) {
     }
 
     routing {
-        auth(appContext.pdlConsumer)
         endreOpplysninger(appContext.endreOpplysningerService)
         institusjon(appContext.institusjonService)
         medl(appContext.medlService)

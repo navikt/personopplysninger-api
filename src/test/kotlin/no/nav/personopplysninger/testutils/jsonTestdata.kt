@@ -12,20 +12,6 @@ fun instJson() = """
             }
         """.trimIndent()
 
-fun endringJson() = """
-            {
-                "endringstype": "OPPRETT",
-                "ident": "12345678910",
-                "lineage": "cdbd4444-f851-4adb-b22f-f8794825bb22",
-                "opplysningsId": null,
-                "status": {
-                    "endringId": 2113,
-                    "statusType": "DONE"
-                },
-                "innmeldtEndring": {"kilde": "BRUKER SELV", "utenlandskKontoInformasjon":null, "value": "11112233333"}
-            }
-        """.trimIndent()
-
 fun utenlandskKontonummerJson() = """
             {
                 "@type": "KONTONUMMER",
@@ -103,25 +89,4 @@ fun telefonnummerJson() = """
               "nummer": "22334455",
               "type": "MOBIL"
             }
-        """.trimIndent()
-
-fun PMKontaktadresseJson() = """
-        {
-          "ident": "12045678900",
-          "endringstype": "OPPRETT",
-          "opplysningstype": "KONTAKTADRESSE",
-          "endringsmelding": {
-            "@type": "KONTAKTADRESSE",
-            "gyldigFraOgMed": "2020-01-01",
-            "gyldigTilOgMed": "2020-07-01",
-            "coAdressenavn": "Grå Banan",
-            "kilde": "test",
-            "adresse": {
-              "@type": "POSTBOKSADRESSE",
-              "postbokseier": "Snill Tester",
-              "postboks": "Postboks 13",
-              "postnummer": "0001"
-            }
-          }
-        }
         """.trimIndent()

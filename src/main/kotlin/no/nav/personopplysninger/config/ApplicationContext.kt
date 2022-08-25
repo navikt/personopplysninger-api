@@ -7,23 +7,23 @@ import no.nav.common.featuretoggle.UnleashClient
 import no.nav.common.featuretoggle.UnleashClientImpl
 import no.nav.common.featuretoggle.UnleashUtils
 import no.nav.common.utils.EnvironmentUtils
-import no.nav.personopplysninger.consumer.inst.InstitusjonConsumer
-import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
-import no.nav.personopplysninger.consumer.kodeverk.KodeverkService
-import no.nav.personopplysninger.consumer.kodeverk.dto.Kodeverk
-import no.nav.personopplysninger.consumer.kontaktinformasjon.KontaktinfoConsumer
-import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
-import no.nav.personopplysninger.consumer.medl.MedlConsumer
-import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
-import no.nav.personopplysninger.consumer.pdl.PdlConsumer
-import no.nav.personopplysninger.consumer.pdl.PdlService
-import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
-import no.nav.personopplysninger.features.endreopplysninger.EndreOpplysningerService
-import no.nav.personopplysninger.features.featuretoggles.ByApplicationStrategy
-import no.nav.personopplysninger.features.institusjon.InstitusjonService
-import no.nav.personopplysninger.features.kontaktinformasjon.KontaktinformasjonService
-import no.nav.personopplysninger.features.medl.MedlService
-import no.nav.personopplysninger.features.personalia.PersonaliaService
+import no.nav.personopplysninger.common.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.common.kodeverk.KodeverkService
+import no.nav.personopplysninger.common.kodeverk.dto.Kodeverk
+import no.nav.personopplysninger.common.kontoregister.KontoregisterConsumer
+import no.nav.personopplysninger.common.pdl.PdlConsumer
+import no.nav.personopplysninger.common.pdl.PdlService
+import no.nav.personopplysninger.endreopplysninger.EndreOpplysningerService
+import no.nav.personopplysninger.endreopplysninger.consumer.PdlMottakConsumer
+import no.nav.personopplysninger.featuretoggles.ByApplicationStrategy
+import no.nav.personopplysninger.institusjon.InstitusjonService
+import no.nav.personopplysninger.institusjon.consumer.InstitusjonConsumer
+import no.nav.personopplysninger.kontaktinformasjon.KontaktinformasjonService
+import no.nav.personopplysninger.kontaktinformasjon.consumer.KontaktinfoConsumer
+import no.nav.personopplysninger.medl.MedlService
+import no.nav.personopplysninger.medl.consumer.MedlConsumer
+import no.nav.personopplysninger.personalia.PersonaliaService
+import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
 import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -47,6 +47,7 @@ class ApplicationContext {
 
     val kodeverkService = KodeverkService(setupKodeverkCache(env), kodeverkConsumer)
     val pdlService = PdlService(pdlConsumer)
+
     val endreOpplysningerService =
         EndreOpplysningerService(pdlMottakConsumer, kodeverkService, kontoregisterConsumer, pdlService)
     val institusjonService = InstitusjonService(institusjonConsumer)
