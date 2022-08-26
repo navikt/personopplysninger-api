@@ -11,13 +11,12 @@ import no.nav.personopplysninger.config.setupMockedClient
 import no.nav.personopplysninger.config.testModule
 
 fun main() {
-    mockkStatic(::getSelvbetjeningTokenFromCall)
-    coEvery { getSelvbetjeningTokenFromCall(any()) } returns "dummyToken"
-
-    mockkStatic(::getFnrFromToken)
-    coEvery { getFnrFromToken(any()) } returns "10108000398"
-
     embeddedServer(Netty, port = 8080, watchPaths = listOf("classes")) {
-        testModule(TestApplicationContext(setupMockedClient()))
-    }.start(wait = true)
+        mockkStatic(::getSelvbetjeningTokenFromCall)
+        mockkStatic(::getFnrFromToken)
+
+        coEvery { getSelvbetjeningTokenFromCall(any()) } returns "dummyToken"
+        coEvery { getFnrFromToken(any()) } returns "10108000398"
+
+        testModule(TestApplicationContext(setupMockedClient()))    }.start(wait = true)
 }
