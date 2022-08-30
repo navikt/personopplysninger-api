@@ -48,7 +48,7 @@ class PdlConsumer(
     }
 
     private suspend fun postPersonQuery(token: String, request: PDLRequest): PdlData {
-        val accessToken = tokenDingsService.exchangeToken(token, environment.kontoregisterTargetApp)
+        val accessToken = tokenDingsService.exchangeToken(token, environment.pdlTargetApp)
         val endpoint = environment.pdlUrl
 
         val response: HttpResponse =
