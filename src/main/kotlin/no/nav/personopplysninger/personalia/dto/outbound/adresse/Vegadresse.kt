@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.VEGADRESSE
 
 @Serializable
-@SerialName("Vegadresse")
+@SerialName("VEGADRESSE")
 data class Vegadresse(
     val husnummer: String?,
     val husbokstav: String?,

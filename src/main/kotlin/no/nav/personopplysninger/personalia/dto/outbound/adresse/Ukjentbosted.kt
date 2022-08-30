@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.UKJENTBOSTED
 
 @Serializable
-@SerialName("Ukjentbosted")
+@SerialName("UKJENTBOSTED")
 data class Ukjentbosted(
     val bostedskommune: String?
 ) : Adresse {

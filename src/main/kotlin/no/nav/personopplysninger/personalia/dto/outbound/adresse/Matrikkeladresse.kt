@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.MATRIKKELADRESSE
 
 @Serializable
-@SerialName("Matrikkeladresse")
+@SerialName("MATRIKKELADRESSE")
 data class Matrikkeladresse(
     val bruksenhetsnummer: String?,
     val tilleggsnavn: String?,

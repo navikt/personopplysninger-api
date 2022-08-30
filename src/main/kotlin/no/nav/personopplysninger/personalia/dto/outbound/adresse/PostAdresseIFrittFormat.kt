@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.POSTADRESSE_I_FRITT_FORMAT
 
 @Serializable
-@SerialName("PostAdresseIFrittFormat")
+@SerialName("POSTADRESSE_I_FRITT_FORMAT")
 data class PostAdresseIFrittFormat(
     val adresselinje1: String?,
     val adresselinje2: String?,

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.POSTBOKSADRESSE
 
 @Serializable
-@SerialName("Postboksadresse")
+@SerialName("POSTBOKSADRESSE")
 data class Postboksadresse(
     val postbokseier: String?,
     val postboks: String,

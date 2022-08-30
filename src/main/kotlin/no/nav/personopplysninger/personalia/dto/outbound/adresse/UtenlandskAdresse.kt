@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.UTENLANDSK_ADRESSE
 
 @Serializable
-@SerialName("UtenlandskAdresse")
+@SerialName("UTENLANDSK_ADRESSE")
 data class UtenlandskAdresse(
     val adressenavnNummer: String?,
     val bygningEtasjeLeilighet: String?,

@@ -6,7 +6,7 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.UTE
 
 
 @Serializable
-@SerialName("UtenlandskAdresseIFrittFormat")
+@SerialName("UTENLANDSK_ADRESSE_I_FRITT_FORMAT")
 data class UtenlandskAdresseIFrittFormat(
     val adresselinje1: String?,
     val adresselinje2: String?,
