@@ -5,8 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 class PersonInfoRequest(override val variables: QueryVariables) : PDLRequest {
 
-    override val query: String
-        get() = """
+    override val query: String = """
             query (${"$"}ident: ID!) {
                 person: hentPerson(ident: ${"$"}ident) {
                     $navnQueryPart,
