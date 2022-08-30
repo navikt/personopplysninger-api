@@ -6,9 +6,11 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
+import no.nav.personbruker.dittnav.common.logging.util.logger
 import no.nav.personopplysninger.common.pdl.dto.PdlData
 import no.nav.personopplysninger.common.pdl.dto.PdlPerson
 import no.nav.personopplysninger.common.pdl.dto.PdlResponse
@@ -59,6 +61,7 @@ class PdlConsumer(
                 setBody(request)
             }
         return if (response.status.isSuccess()) {
+            logger.info(response.bodyAsText())
             response.body<PdlResponse>().data
         } else {
             throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
