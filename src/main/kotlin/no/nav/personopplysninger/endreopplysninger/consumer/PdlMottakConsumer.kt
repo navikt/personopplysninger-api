@@ -48,7 +48,7 @@ class PdlMottakConsumer(
     }
 
     private suspend fun sendPdlEndring(token: String, entitetSomEndres: Personopplysning, fnr: String): Endring {
-        val accessToken = tokenDingsService.exchangeToken(token, environment.kontoregisterTargetApp)
+        val accessToken = tokenDingsService.exchangeToken(token, environment.pdlMottakTargetApp)
         val endpoint = environment.pdlMottakUrl.plus(URL_ENDRINGER)
 
         val response: HttpResponse =
