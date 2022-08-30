@@ -18,6 +18,7 @@ import no.nav.personopplysninger.config.HEADER_NAV_PERSONIDENT
 import no.nav.personopplysninger.kontaktinformasjon.dto.inbound.DigitalKontaktinformasjon
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.MDC
+import java.util.*
 
 class KontaktinfoConsumer(
     private val client: HttpClient,
@@ -32,7 +33,7 @@ class KontaktinfoConsumer(
         val response: HttpResponse =
             client.get(endpoint) {
                 header(HEADER_AUTHORIZATION, BEARER + accessToken)
-                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID) ?: UUID.randomUUID())
                 header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 header(HEADER_NAV_PERSONIDENT, fnr)
             }
