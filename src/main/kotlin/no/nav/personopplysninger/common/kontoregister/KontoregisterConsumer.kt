@@ -10,7 +10,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
-import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.common.kontoregister.dto.outbound.HentAktivKonto
 import no.nav.personopplysninger.common.kontoregister.dto.outbound.Konto
 import no.nav.personopplysninger.common.kontoregister.dto.outbound.OppdaterKonto
@@ -22,7 +21,7 @@ import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
-import org.slf4j.MDC
+import java.util.*
 
 private const val HENT_KONTO_PATH = "/kontoregister/api/navno/v1/hent-aktiv-konto"
 private const val OPPDATER_KONTO_PATH = "/kontoregister/api/navno/v1/oppdater-konto"
@@ -41,7 +40,7 @@ class KontoregisterConsumer(
         val response: HttpResponse =
             client.post(endpoint) {
                 header(HEADER_AUTHORIZATION, BEARER + accessToken)
-                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                header(HEADER_NAV_CALL_ID, UUID.randomUUID())
                 header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 contentType(ContentType.Application.Json)
                 setBody(request)
@@ -62,7 +61,7 @@ class KontoregisterConsumer(
         val response: HttpResponse =
             client.post(endpoint) {
                 header(HEADER_AUTHORIZATION, BEARER + accessToken)
-                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                header(HEADER_NAV_CALL_ID, UUID.randomUUID())
                 header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 contentType(ContentType.Application.Json)
                 setBody(request)

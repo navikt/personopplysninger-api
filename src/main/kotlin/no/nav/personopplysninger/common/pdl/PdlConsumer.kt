@@ -9,7 +9,6 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
-import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.common.pdl.dto.PdlData
 import no.nav.personopplysninger.common.pdl.dto.PdlPerson
 import no.nav.personopplysninger.common.pdl.dto.PdlResponse
@@ -25,7 +24,7 @@ import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
-import org.slf4j.MDC
+import java.util.*
 
 private const val RETT_PERSONOPPLYSNINGER = "RPO"
 
@@ -53,7 +52,7 @@ class PdlConsumer(
         val response: HttpResponse =
             client.post(endpoint) {
                 header(HEADER_AUTHORIZATION, BEARER + accessToken)
-                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                header(HEADER_NAV_CALL_ID, UUID.randomUUID())
                 header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 header("Tema", RETT_PERSONOPPLYSNINGER)
                 contentType(ContentType.Application.Json)

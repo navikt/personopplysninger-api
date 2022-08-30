@@ -14,7 +14,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.delay
-import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.common.util.consumerErrorMessage
 import no.nav.personopplysninger.config.BEARER
 import no.nav.personopplysninger.config.CONSUMER_ID
@@ -27,7 +26,7 @@ import no.nav.personopplysninger.endreopplysninger.dto.inbound.Personopplysning
 import no.nav.personopplysninger.endreopplysninger.dto.outbound.Endring
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.LoggerFactory
-import org.slf4j.MDC
+import java.util.*
 
 private const val SLEEP_TIME_MS = 1000L
 private const val MAX_POLLS = 3
@@ -55,7 +54,7 @@ class PdlMottakConsumer(
         val response: HttpResponse =
             client.post(endpoint) {
                 header(HEADER_AUTHORIZATION, BEARER + accessToken)
-                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                header(HEADER_NAV_CALL_ID, UUID.randomUUID())
                 header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 header(HEADER_NAV_PERSONIDENT, fnr)
                 contentType(ContentType.Application.Json)
@@ -106,7 +105,7 @@ class PdlMottakConsumer(
             val response: HttpResponse =
                 client.get(url) {
                     header(HEADER_AUTHORIZATION, BEARER + accessToken)
-                    header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                    header(HEADER_NAV_CALL_ID, UUID.randomUUID())
                     header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 }
             val endringList = response.body<List<Endring>>()

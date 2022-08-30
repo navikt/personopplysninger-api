@@ -7,7 +7,6 @@ import io.ktor.client.request.header
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
-import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.common.kodeverk.dto.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.common.kodeverk.dto.Kodeverk
 import no.nav.personopplysninger.common.util.consumerErrorMessage
@@ -15,7 +14,7 @@ import no.nav.personopplysninger.config.CONSUMER_ID
 import no.nav.personopplysninger.config.Environment
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
-import org.slf4j.MDC
+import java.util.*
 
 class KodeverkConsumer(
     private val client: HttpClient,
@@ -28,7 +27,7 @@ class KodeverkConsumer(
             client.get(endpoint) {
                 parameter("spraak", "nb")
                 parameter("ekskluderUgyldige", eksluderUgyldige)
-                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID))
+                header(HEADER_NAV_CALL_ID, UUID.randomUUID())
                 header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
             }
         return if (response.status.isSuccess()) {

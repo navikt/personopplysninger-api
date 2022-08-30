@@ -6,7 +6,6 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
-import no.nav.common.log.MDCConstants
 import no.nav.personopplysninger.common.util.consumerErrorMessage
 import no.nav.personopplysninger.config.BEARER
 import no.nav.personopplysninger.config.CONSUMER_ID
@@ -17,7 +16,6 @@ import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_PERSONIDENT
 import no.nav.personopplysninger.kontaktinformasjon.dto.inbound.DigitalKontaktinformasjon
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
-import org.slf4j.MDC
 import java.util.*
 
 class KontaktinfoConsumer(
@@ -33,7 +31,7 @@ class KontaktinfoConsumer(
         val response: HttpResponse =
             client.get(endpoint) {
                 header(HEADER_AUTHORIZATION, BEARER + accessToken)
-                header(HEADER_NAV_CALL_ID, MDC.get(MDCConstants.MDC_CALL_ID) ?: UUID.randomUUID())
+                header(HEADER_NAV_CALL_ID, UUID.randomUUID())
                 header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 header(HEADER_NAV_PERSONIDENT, fnr)
             }
