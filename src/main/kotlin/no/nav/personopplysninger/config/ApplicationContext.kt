@@ -23,7 +23,8 @@ import no.nav.personopplysninger.kontaktinformasjon.consumer.KontaktinfoConsumer
 import no.nav.personopplysninger.medl.MedlService
 import no.nav.personopplysninger.medl.consumer.MedlConsumer
 import no.nav.personopplysninger.personalia.PersonaliaService
-import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
+import no.nav.personopplysninger.personalia.consumer.norg2.Norg2Consumer
+import no.nav.personopplysninger.personalia.consumer.tpsproxy.TpsProxyConsumer
 import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -44,6 +45,7 @@ class ApplicationContext {
     val norg2Consumer = Norg2Consumer(httpClient, env, tokendingsService)
     val pdlConsumer = PdlConsumer(httpClient, env, tokendingsService)
     val pdlMottakConsumer = PdlMottakConsumer(httpClient, env, tokendingsService)
+    val tpsProxyConsumer = TpsProxyConsumer(httpClient, env, tokendingsService)
 
     val kodeverkService = KodeverkService(setupKodeverkCache(env), kodeverkConsumer)
     val pdlService = PdlService(pdlConsumer)
@@ -53,7 +55,7 @@ class ApplicationContext {
     val institusjonService = InstitusjonService(institusjonConsumer)
     val medlService = MedlService(medlConsumer, kodeverkService)
     val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkService)
-    val personaliaService = PersonaliaService(kodeverkService, norg2Consumer, kontoregisterConsumer, pdlService)
+    val personaliaService = PersonaliaService(kodeverkService, norg2Consumer, kontoregisterConsumer, pdlService, tpsProxyConsumer)
 
 
     private fun setupKodeverkCache(environment: Environment): Cache<String, Kodeverk> {

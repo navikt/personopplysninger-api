@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.personalia.consumer.dto
+package no.nav.personopplysninger.personalia.consumer.norg2.dto
 
 import kotlinx.serialization.Serializable
 

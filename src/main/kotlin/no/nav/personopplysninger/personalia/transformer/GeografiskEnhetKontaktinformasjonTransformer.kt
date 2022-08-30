@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.personalia.consumer.dto.Norg2EnhetKontaktinfo
+import no.nav.personopplysninger.personalia.consumer.norg2.dto.Norg2EnhetKontaktinfo
 import no.nav.personopplysninger.personalia.dto.outbound.GeografiskEnhetKontaktInformasjon
 
 object GeografiskEnhetKontaktinformasjonTransformer {
