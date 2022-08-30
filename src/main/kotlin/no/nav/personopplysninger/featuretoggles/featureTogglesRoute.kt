@@ -5,7 +5,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.call
 import io.ktor.server.plugins.origin
-import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
@@ -22,7 +21,7 @@ private val logger = LoggerFactory.getLogger("featureTogglesRoute")
 private const val UNLEASH_COOKIE_NAME = "unleash-cookie"
 
 fun Route.featureToggles(unleashClient: UnleashClient) {
-    get("/name") {
+    get("/feature-toggles") {
         try {
             val selvbetjeningIdtoken = getSelvbetjeningTokenFromCall(call)
             val fodselsnr = getFnrFromToken(selvbetjeningIdtoken)
@@ -34,7 +33,7 @@ fun Route.featureToggles(unleashClient: UnleashClient) {
                 .remoteAddress(call.request.origin.remoteHost)
                 .build()
 
-            val features = call.receive<List<String>>()
+            val features: List<String> = call.request.queryParameters.getAll("feature") ?: emptyList()
 
             val evaluation: Map<String, Boolean> = features.associateWith { feature ->
                 unleashClient.isEnabled(feature, unleashContext)
