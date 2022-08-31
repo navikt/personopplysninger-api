@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.personalia
 
 import no.nav.personopplysninger.common.kodeverk.KodeverkService
-import no.nav.personopplysninger.common.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.common.pdl.PdlService
 import no.nav.personopplysninger.common.pdl.dto.PdlData
 import no.nav.personopplysninger.common.pdl.dto.personalia.PdlStatsborgerskap
@@ -20,7 +19,6 @@ import java.time.LocalDate
 class PersonaliaService(
     private var kodeverkService: KodeverkService,
     private var norg2Consumer: Norg2Consumer,
-    private var kontoregisterConsumer: KontoregisterConsumer,
     private var pdlService: PdlService,
     private var tpsProxyConsumer: TpsProxyConsumer
 ) {

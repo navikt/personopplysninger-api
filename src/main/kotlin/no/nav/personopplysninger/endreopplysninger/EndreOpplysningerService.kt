@@ -3,23 +3,19 @@ package no.nav.personopplysninger.endreopplysninger
 import no.nav.personopplysninger.common.kodeverk.KodeverkService
 import no.nav.personopplysninger.common.kodeverk.dto.KodeOgTekstDto
 import no.nav.personopplysninger.common.kodeverk.dto.Kodeverk
-import no.nav.personopplysninger.common.kontoregister.KontoregisterConsumer
-import no.nav.personopplysninger.common.kontoregister.dto.inbound.Kontonummer
-import no.nav.personopplysninger.common.kontoregister.dto.inbound.Retningsnummer
-import no.nav.personopplysninger.common.kontoregister.dto.outbound.OppdaterKonto
-import no.nav.personopplysninger.common.kontoregister.dto.outbound.UtenlandskKontoInfo
 import no.nav.personopplysninger.common.pdl.PdlService
 import no.nav.personopplysninger.endreopplysninger.consumer.PdlMottakConsumer
+import no.nav.personopplysninger.endreopplysninger.dto.inbound.Kontonummer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.endreNummerPayload
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettKontaktadressePayload
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettNummerPayload
 import no.nav.personopplysninger.endreopplysninger.dto.outbound.Endring
+import no.nav.personopplysninger.endreopplysninger.dto.outbound.Retningsnummer
 
 class EndreOpplysningerService(
     private var pdlMottakConsumer: PdlMottakConsumer,
     private var kodeverkService: KodeverkService,
-    private var kontoregisterConsumer: KontoregisterConsumer,
     private var pdlService: PdlService
 ) {
 
@@ -29,6 +25,10 @@ class EndreOpplysningerService(
         } else {
             return pdlMottakConsumer.endreTelefonnummer(token, fnr, endreNummerPayload(fnr, telefonnummer))
         }
+    }
+
+    suspend fun endreKontonummer(token: String, fnr: String, kontonummer: Kontonummer): Endring {
+        return pdlMottakConsumer.endreKontonummer(token, fnr, kontonummer)
     }
 
     suspend fun slettTelefonNummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
@@ -52,26 +52,6 @@ class EndreOpplysningerService(
             fnr,
             slettKontaktadressePayload(fnr, opplysningsId),
         )
-    }
-
-    suspend fun endreKontonummer(token: String, fnr: String, kontonummer: Kontonummer) {
-        val request = OppdaterKonto(
-            kontohaver = fnr,
-            nyttKontonummer = kontonummer.value,
-            utenlandskKontoInfo = kontonummer.utenlandskKontoInformasjon?.let {
-                UtenlandskKontoInfo(
-                    banknavn = kontonummer.utenlandskKontoInformasjon.bank?.navn.orEmpty(),
-                    bankkode = kontonummer.utenlandskKontoInformasjon.bank?.kode.orEmpty(),
-                    bankLandkode = kontonummer.utenlandskKontoInformasjon.landkodeTobokstavs.orEmpty(),
-                    valutakode = kontonummer.utenlandskKontoInformasjon.valuta!!,
-                    swiftBicKode = kontonummer.utenlandskKontoInformasjon.swift.orEmpty(),
-                    bankadresse1 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje1.orEmpty(),
-                    bankadresse2 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje2.orEmpty(),
-                    bankadresse3 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje3.orEmpty(),
-                )
-            }
-        )
-        kontoregisterConsumer.endreKontonummer(token, request)
     }
 
     suspend fun hentRetningsnumre(): Array<Retningsnummer> {

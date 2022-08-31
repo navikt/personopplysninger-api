@@ -22,6 +22,7 @@ import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_PERSONIDENT
+import no.nav.personopplysninger.endreopplysninger.dto.inbound.Kontonummer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Personopplysning
 import no.nav.personopplysninger.endreopplysninger.dto.outbound.Endring
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
@@ -43,6 +44,10 @@ class PdlMottakConsumer(
         return sendPdlEndring(token, endreTelefon, fnr)
     }
 
+    suspend fun endreKontonummer(token: String, fnr: String, kontonummer: Kontonummer): Endring {
+        return sendKontonummerEndring(token, kontonummer, fnr)
+    }
+
     suspend fun slettPersonopplysning(token: String, fnr: String, opphoerPersonopplysning: Personopplysning): Endring {
         return sendPdlEndring(token, opphoerPersonopplysning, fnr)
     }
@@ -59,6 +64,27 @@ class PdlMottakConsumer(
                 header(HEADER_NAV_PERSONIDENT, fnr)
                 contentType(ContentType.Application.Json)
                 setBody(entitetSomEndres.asSingleEndring())
+            }
+
+        return try {
+            readResponseAndPollStatus(accessToken, response)
+        } catch (e: Exception) {
+            throw RuntimeException("Forsøkte å endre personopplysning. endpoint=[$endpoint].", e)
+        }
+    }
+
+    private suspend fun sendKontonummerEndring(token: String, kontonummer: Kontonummer, fnr: String): Endring {
+        val accessToken = tokenDingsService.exchangeToken(token, environment.pdlMottakTargetApp)
+        val endpoint = environment.pdlMottakUrl.plus(URL_ENDRINGER)
+
+        val response: HttpResponse =
+            client.post(endpoint) {
+                header(HEADER_AUTHORIZATION, BEARER + accessToken)
+                header(HEADER_NAV_CALL_ID, UUID.randomUUID())
+                header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+                header(HEADER_NAV_PERSONIDENT, fnr)
+                contentType(ContentType.Application.Json)
+                setBody(kontonummer)
             }
 
         return try {

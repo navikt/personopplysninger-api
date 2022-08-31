@@ -12,7 +12,6 @@ import no.nav.personopplysninger.config.mocks.PdlResponseType
 import no.nav.personopplysninger.config.mocks.mockDigdirKrrProxy
 import no.nav.personopplysninger.config.mocks.mockInst2
 import no.nav.personopplysninger.config.mocks.mockKodeverk
-import no.nav.personopplysninger.config.mocks.mockKontoregister
 import no.nav.personopplysninger.config.mocks.mockMedl
 import no.nav.personopplysninger.config.mocks.mockNorg2
 import no.nav.personopplysninger.config.mocks.mockPdl
@@ -24,7 +23,6 @@ fun setupMockedClient(
     inst2Status: HttpStatusCode = HttpStatusCode.OK,
     kodeverkStatus: HttpStatusCode = HttpStatusCode.OK,
     digdirKrrProxyStatus: HttpStatusCode = HttpStatusCode.OK,
-    kontoregisterStatus: HttpStatusCode = HttpStatusCode.OK,
     medlStatus: HttpStatusCode = HttpStatusCode.OK,
     norg2Status: HttpStatusCode = HttpStatusCode.OK,
     pdlStatus: HttpStatusCode = HttpStatusCode.OK,
@@ -36,7 +34,6 @@ fun setupMockedClient(
     val INST2 = "inst2"
     val KODEVERK = "kodeverk"
     val DIGDIR_KRR_PROXY = "digdir-krr-proxy"
-    val KONTOREGISTER = "kontoregister"
     val MEDL = "medl"
     val NORG2 = "norg2"
     val PDL = "pdl"
@@ -55,9 +52,6 @@ fun setupMockedClient(
                     }
                     DIGDIR_KRR_PROXY -> {
                         mockDigdirKrrProxy(digdirKrrProxyStatus)
-                    }
-                    KONTOREGISTER -> {
-                        mockKontoregister(kontoregisterStatus)
                     }
                     MEDL -> {
                         mockMedl(medlStatus)
