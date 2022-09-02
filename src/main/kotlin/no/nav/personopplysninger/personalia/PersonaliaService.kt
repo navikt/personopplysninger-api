@@ -2,12 +2,11 @@ package no.nav.personopplysninger.personalia
 
 import no.nav.personopplysninger.common.kodeverk.KodeverkService
 import no.nav.personopplysninger.common.kontoregister.KontoregisterConsumer
+import no.nav.personopplysninger.common.kontoregister.dto.outbound.Konto
 import no.nav.personopplysninger.common.pdl.PdlService
 import no.nav.personopplysninger.common.pdl.dto.PdlData
 import no.nav.personopplysninger.common.pdl.dto.personalia.PdlStatsborgerskap
-import no.nav.personopplysninger.personalia.consumer.norg2.Norg2Consumer
-import no.nav.personopplysninger.personalia.consumer.tpsproxy.TpsProxyConsumer
-import no.nav.personopplysninger.personalia.consumer.tpsproxy.dto.Personinfo
+import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.GeografiskEnhetKontaktInformasjon
@@ -21,19 +20,18 @@ class PersonaliaService(
     private var kodeverkService: KodeverkService,
     private var norg2Consumer: Norg2Consumer,
     private var kontoregisterConsumer: KontoregisterConsumer,
-    private var pdlService: PdlService,
-    private var tpsProxyConsumer: TpsProxyConsumer
+    private var pdlService: PdlService
 ) {
 
     suspend fun hentPersoninfo(token: String, fodselsnr: String): PersonaliaOgAdresser {
 
-        val inbound = tpsProxyConsumer.hentPersoninfo(token, fodselsnr)
-
         val pdlPersonInfo = pdlService.getPersonInfo(token, fodselsnr)
 
-        val personaliaKV = createPersonaliaKodeverk(inbound, pdlPersonInfo)
+        val konto = kontoregisterConsumer.hentAktivKonto(token, fodselsnr)
 
-        val personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(inbound, pdlPersonInfo, personaliaKV)
+        val personaliaKV = createPersonaliaKodeverk(pdlPersonInfo, konto)
+
+        val personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(pdlPersonInfo, konto, personaliaKV)
 
         val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
         if (tilknytning != null) {
@@ -46,7 +44,7 @@ class PersonaliaService(
         return personaliaOgAdresser
     }
 
-    private suspend fun createPersonaliaKodeverk(inbound: Personinfo, inboundPdl: PdlData): PersonaliaKodeverk {
+    private suspend fun createPersonaliaKodeverk(inboundPdl: PdlData, inboundKonto: Konto?): PersonaliaKodeverk {
         val pdlPerson = inboundPdl.person!!
         val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning
 
@@ -60,8 +58,9 @@ class PersonaliaService(
             foedelandterm = kodeverkService.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
             gtLandterm = kodeverkService.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
             statsborgerskaptermer = hentGyldigeStatsborgerskap(pdlPerson.statsborgerskap)
-            utenlandskbanklandterm = kodeverkService.hentLandKoder().term(inbound.utenlandskBank?.land?.verdi)
-            utenlandskbankvalutaterm = kodeverkService.hentValuta().term(inbound.utenlandskBank?.valuta?.verdi)
+            utenlandskbanklandterm =
+                kodeverkService.hentLandKoderISO2().term(inboundKonto?.utenlandskKontoInfo?.bankLandkode)
+            utenlandskbankvalutaterm = kodeverkService.hentValuta().term(inboundKonto?.utenlandskKontoInfo?.valutakode)
             kontaktadresseKodeverk =
                 kontaktadresse.map { hentAdresseKodeverk(it.postnummer, it.landkode, it.kommunenummer) }
             bostedsadresseKodeverk =

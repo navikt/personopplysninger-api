@@ -18,8 +18,7 @@ import no.nav.personopplysninger.kontaktinformasjon.consumer.KontaktinfoConsumer
 import no.nav.personopplysninger.medl.MedlService
 import no.nav.personopplysninger.medl.consumer.MedlConsumer
 import no.nav.personopplysninger.personalia.PersonaliaService
-import no.nav.personopplysninger.personalia.consumer.norg2.Norg2Consumer
-import no.nav.personopplysninger.personalia.consumer.tpsproxy.TpsProxyConsumer
+import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
 import java.util.concurrent.TimeUnit
 
 class TestApplicationContext(httpClient: HttpClient) {
@@ -35,8 +34,6 @@ class TestApplicationContext(httpClient: HttpClient) {
         pdlUrl = "https://pdl",
         medlUrl = "https://medl",
         kontoregisterUrl = "https://kontoregister",
-        tpsProxyUrl = "https://tps-proxy",
-        tpsProxyTargetApp = "",
         inst2TargetApp = "",
         digdirKrrProxyTargetApp = "",
         medlTargetApp = "",
@@ -56,7 +53,6 @@ class TestApplicationContext(httpClient: HttpClient) {
     val norg2Consumer = Norg2Consumer(httpClient, env, tokendingsService)
     val pdlConsumer = PdlConsumer(httpClient, env, tokendingsService)
     val pdlMottakConsumer = PdlMottakConsumer(httpClient, env, tokendingsService)
-    val tpsProxyConsumer = TpsProxyConsumer(httpClient, env, tokendingsService)
 
     val kodeverkService = KodeverkService(setupKodeverkCache(env), kodeverkConsumer)
     val pdlService = PdlService(pdlConsumer)
@@ -65,7 +61,7 @@ class TestApplicationContext(httpClient: HttpClient) {
     val institusjonService = InstitusjonService(institusjonConsumer)
     val medlService = MedlService(medlConsumer, kodeverkService)
     val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkService)
-    val personaliaService = PersonaliaService(kodeverkService, norg2Consumer, kontoregisterConsumer, pdlService, tpsProxyConsumer)
+    val personaliaService = PersonaliaService(kodeverkService, norg2Consumer, kontoregisterConsumer, pdlService)
 
     private fun setupKodeverkCache(environment: Environment): Cache<String, Kodeverk> {
         return Caffeine.newBuilder()

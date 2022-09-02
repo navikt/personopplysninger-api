@@ -17,7 +17,6 @@ import no.nav.personopplysninger.config.mocks.mockMedl
 import no.nav.personopplysninger.config.mocks.mockNorg2
 import no.nav.personopplysninger.config.mocks.mockPdl
 import no.nav.personopplysninger.config.mocks.mockPdlMottak
-import no.nav.personopplysninger.config.mocks.mockTpsProxy
 
 
 fun setupMockedClient(
@@ -31,7 +30,6 @@ fun setupMockedClient(
     pdlResponseType: PdlResponseType = PdlResponseType.STANDARD,
     pdlMottakStatus: HttpStatusCode = HttpStatusCode.OK,
     pdlMottakResponseType: PdlMottakResponseType = PdlMottakResponseType.TELEFON,
-    tpsProxyStatus: HttpStatusCode = HttpStatusCode.OK
 ): HttpClient {
     val INST2 = "inst2"
     val KODEVERK = "kodeverk"
@@ -41,7 +39,6 @@ fun setupMockedClient(
     val NORG2 = "norg2"
     val PDL = "pdl"
     val PDL_MOTTAK = "pdl-mottak"
-    val TPS_PROXY = "tps-proxy"
 
     return HttpClient(MockEngine) {
         engine {
@@ -70,9 +67,6 @@ fun setupMockedClient(
                     }
                     PDL_MOTTAK -> {
                         mockPdlMottak(request, pdlMottakStatus, pdlMottakResponseType)
-                    }
-                    TPS_PROXY -> {
-                        mockTpsProxy(tpsProxyStatus)
                     }
                     else -> {
                         respondError(HttpStatusCode.NotFound)

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.personalia.consumer.norg2
+package no.nav.personopplysninger.personalia.consumer
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -14,8 +14,8 @@ import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_TOKEN
-import no.nav.personopplysninger.personalia.consumer.norg2.dto.Norg2Enhet
-import no.nav.personopplysninger.personalia.consumer.norg2.dto.Norg2EnhetKontaktinfo
+import no.nav.personopplysninger.personalia.consumer.dto.Norg2Enhet
+import no.nav.personopplysninger.personalia.consumer.dto.Norg2EnhetKontaktinfo
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

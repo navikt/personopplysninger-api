@@ -12,7 +12,6 @@ data class Environment(
     val pdlUrl: String = System.getenv("PDL_API_URL"),
     val medlUrl: String = System.getenv("MEDLEMSKAP_MEDL_API_URL"),
     val kontoregisterUrl: String = System.getenv("KONTOREGISTER_URL"),
-    val tpsProxyUrl: String = System.getenv("TPS_PROXY_API_V1_INNSYN_URL"),
 
     val inst2TargetApp: String = System.getenv("PERSONOPPLYSNINGER_PROXY_TARGET_APP"),
     val digdirKrrProxyTargetApp: String = System.getenv("DIGDIR_KRR_PROXY_CONSUMER_TARGET_APP"),
@@ -21,7 +20,6 @@ data class Environment(
     val pdlTargetApp: String = System.getenv("PDL_CONSUMER_TARGET_APP"),
     val pdlMottakTargetApp: String = System.getenv("PDL_MOTTAK_TARGET_APP"),
     val kontoregisterTargetApp: String = System.getenv("KONTOREGISTER_TARGET_APP"),
-    val tpsProxyTargetApp: String = System.getenv("PERSONOPPLYSNINGER_PROXY_TARGET_APP"),
 
     val subjectNameCacheThreshold: Long = (System.getenv("KODEVERK_CACHE_THRESHOLD") ?: 20L) as Long,
     val subjectNameCacheExpiryMinutes: Long = (System.getenv("KODEVERK_CACHE_EXPIRY_MINUTES") ?: 60L) as Long,
