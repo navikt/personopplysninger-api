@@ -32,7 +32,6 @@ import java.util.*
 private const val SLEEP_TIME_MS = 1000L
 private const val MAX_POLLS = 3
 private const val URL_ENDRINGER = "/api/v1/endringer"
-private const val URL_KONTONUMMER = "/api/v1/endring/bankkonto"
 
 class PdlMottakConsumer(
     private val client: HttpClient,
@@ -76,7 +75,7 @@ class PdlMottakConsumer(
 
     private suspend fun sendKontonummerEndring(token: String, kontonummer: Kontonummer, fnr: String): Endring {
         val accessToken = tokenDingsService.exchangeToken(token, environment.pdlMottakTargetApp)
-        val endpoint = environment.pdlMottakUrl.plus(URL_KONTONUMMER)
+        val endpoint = environment.pdlMottakUrl.plus(URL_ENDRINGER)
 
         val response: HttpResponse =
             client.post(endpoint) {
