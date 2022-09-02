@@ -1,0 +1,13 @@
+{
+  "kontonummer": "8361347234732292",
+  "utenlandskKontoInfo": {
+    "banknavn": "string",
+    "bankkode": "CC123456789",
+    "bankLandkode": "SY",
+    "valutakode": "MMK",
+    "swiftBicKode": "SHEDNO22",
+    "bankadresse1": "string",
+    "bankadresse2": "string",
+    "bankadresse3": "string"
+  }
+}

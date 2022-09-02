@@ -1,7 +1,18 @@
 package no.nav.personopplysninger.testutils
 
-import no.nav.personopplysninger.consumer.pdl.dto.adresse.*
-import no.nav.personopplysninger.features.personalia.dto.outbound.adresse.*
+import no.nav.personopplysninger.common.pdl.dto.adresse.PdlMatrikkeladresse
+import no.nav.personopplysninger.common.pdl.dto.adresse.PdlPostadresseIFrittFormat
+import no.nav.personopplysninger.common.pdl.dto.adresse.PdlPostboksadresse
+import no.nav.personopplysninger.common.pdl.dto.adresse.PdlUtenlandskAdresse
+import no.nav.personopplysninger.common.pdl.dto.adresse.PdlUtenlandskAdresseIFrittFormat
+import no.nav.personopplysninger.common.pdl.dto.adresse.PdlVegadresse
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.Matrikkeladresse
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.PostAdresseIFrittFormat
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.Postboksadresse
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.Ukjentbosted
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresse
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresseIFrittFormat
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
 import org.junit.jupiter.api.Assertions.assertEquals
 
 fun assertVegadresseEquals(vegadresse: Vegadresse, poststed: String, kommune: String, inbound: PdlVegadresse) {

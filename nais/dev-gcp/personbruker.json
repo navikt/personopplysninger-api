@@ -1,0 +1,9 @@
+{
+  "ingresses": [
+    "https://person.dev.nav.no/person/personopplysninger-api"
+  ],
+  "proxy-host": "https://personopplysninger-proxy.dev-fss-pub.nais.io",
+  "pdl-api-host": "https://pdl-api.dev-fss-pub.nais.io",
+  "pdl-mottak-host": "https://pdl-mottak.dev-fss-pub.nais.io",
+  "fss-cluster": "dev-fss"
+}
