@@ -6,6 +6,7 @@ import io.ktor.client.HttpClient
 import no.nav.personopplysninger.common.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.common.kodeverk.KodeverkService
 import no.nav.personopplysninger.common.kodeverk.dto.Kodeverk
+import no.nav.personopplysninger.common.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.common.pdl.PdlConsumer
 import no.nav.personopplysninger.common.pdl.PdlService
 import no.nav.personopplysninger.endreopplysninger.EndreOpplysningerService
@@ -33,6 +34,7 @@ class TestApplicationContext(httpClient: HttpClient) {
         pdlMottakUrl = "https://pdl-mottak",
         pdlUrl = "https://pdl",
         medlUrl = "https://medl",
+        kontoregisterUrl = "https://kontoregister",
         tpsProxyUrl = "https://tps-proxy",
         tpsProxyTargetApp = "",
         inst2TargetApp = "",
@@ -41,12 +43,14 @@ class TestApplicationContext(httpClient: HttpClient) {
         personopplysningerProxyTargetApp = "",
         pdlTargetApp = "",
         pdlMottakTargetApp = "",
+        kontoregisterTargetApp = "",
     )
 
     val tokendingsService = DummyTokendingsService()
 
     val institusjonConsumer = InstitusjonConsumer(httpClient, env, tokendingsService)
     val kontaktinfoConsumer = KontaktinfoConsumer(httpClient, env, tokendingsService)
+    val kontoregisterConsumer = KontoregisterConsumer(httpClient, env, tokendingsService)
     val kodeverkConsumer = KodeverkConsumer(httpClient, env)
     val medlConsumer = MedlConsumer(httpClient, env, tokendingsService)
     val norg2Consumer = Norg2Consumer(httpClient, env, tokendingsService)
@@ -57,11 +61,11 @@ class TestApplicationContext(httpClient: HttpClient) {
     val kodeverkService = KodeverkService(setupKodeverkCache(env), kodeverkConsumer)
     val pdlService = PdlService(pdlConsumer)
     val endreOpplysningerService =
-        EndreOpplysningerService(pdlMottakConsumer, kodeverkService, pdlService)
+        EndreOpplysningerService(pdlMottakConsumer, kodeverkService, kontoregisterConsumer, pdlService)
     val institusjonService = InstitusjonService(institusjonConsumer)
     val medlService = MedlService(medlConsumer, kodeverkService)
     val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkService)
-    val personaliaService = PersonaliaService(kodeverkService, norg2Consumer, pdlService, tpsProxyConsumer)
+    val personaliaService = PersonaliaService(kodeverkService, norg2Consumer, kontoregisterConsumer, pdlService, tpsProxyConsumer)
 
     private fun setupKodeverkCache(environment: Environment): Cache<String, Kodeverk> {
         return Caffeine.newBuilder()

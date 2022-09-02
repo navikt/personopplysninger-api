@@ -10,6 +10,7 @@ import no.nav.common.utils.EnvironmentUtils
 import no.nav.personopplysninger.common.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.common.kodeverk.KodeverkService
 import no.nav.personopplysninger.common.kodeverk.dto.Kodeverk
+import no.nav.personopplysninger.common.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.common.pdl.PdlConsumer
 import no.nav.personopplysninger.common.pdl.PdlService
 import no.nav.personopplysninger.endreopplysninger.EndreOpplysningerService
@@ -38,6 +39,7 @@ class ApplicationContext {
 
     val institusjonConsumer = InstitusjonConsumer(httpClient, env, tokendingsService)
     val kontaktinfoConsumer = KontaktinfoConsumer(httpClient, env, tokendingsService)
+    val kontoregisterConsumer = KontoregisterConsumer(httpClient, env, tokendingsService)
     val kodeverkConsumer = KodeverkConsumer(httpClient, env)
     val medlConsumer = MedlConsumer(httpClient, env, tokendingsService)
     val norg2Consumer = Norg2Consumer(httpClient, env, tokendingsService)
@@ -49,11 +51,11 @@ class ApplicationContext {
     val pdlService = PdlService(pdlConsumer)
 
     val endreOpplysningerService =
-        EndreOpplysningerService(pdlMottakConsumer, kodeverkService, pdlService)
+        EndreOpplysningerService(pdlMottakConsumer, kodeverkService, kontoregisterConsumer, pdlService)
     val institusjonService = InstitusjonService(institusjonConsumer)
     val medlService = MedlService(medlConsumer, kodeverkService)
     val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkService)
-    val personaliaService = PersonaliaService(kodeverkService, norg2Consumer, pdlService, tpsProxyConsumer)
+    val personaliaService = PersonaliaService(kodeverkService, norg2Consumer, kontoregisterConsumer, pdlService, tpsProxyConsumer)
 
 
     private fun setupKodeverkCache(environment: Environment): Cache<String, Kodeverk> {

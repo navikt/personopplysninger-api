@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.endreopplysninger.dto.inbound
+package no.nav.personopplysninger.common.kontoregister.dto.inbound
 
 import kotlinx.serialization.Serializable
 

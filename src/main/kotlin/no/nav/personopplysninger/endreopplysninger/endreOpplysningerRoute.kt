@@ -7,9 +7,9 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
+import no.nav.personopplysninger.common.kontoregister.dto.inbound.Kontonummer
 import no.nav.personopplysninger.common.util.getFnrFromToken
 import no.nav.personopplysninger.common.util.getSelvbetjeningTokenFromCall
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.Kontonummer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import org.slf4j.LoggerFactory
 
