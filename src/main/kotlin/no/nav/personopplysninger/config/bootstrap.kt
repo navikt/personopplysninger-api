@@ -9,6 +9,7 @@ import io.ktor.server.application.ApplicationStopping
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
 import io.ktor.server.auth.authenticate
+import io.ktor.server.metrics.micrometer.MicrometerMetrics
 import io.ktor.server.plugins.callloging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
@@ -60,6 +61,10 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
         }
     }
 
+    install(MicrometerMetrics) {
+        registry = appContext.appMicrometerRegistry
+    }
+
     install(ContentNegotiation) {
         json(jsonConfig())
     }
@@ -71,7 +76,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     }
 
     routing {
-        health()
+        health(appContext.appMicrometerRegistry)
         authenticate {
             endreOpplysninger(appContext.endreOpplysningerService)
             featureToggles(appContext.unleashClient)
