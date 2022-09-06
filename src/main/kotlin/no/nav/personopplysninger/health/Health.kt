@@ -11,9 +11,9 @@ import io.micrometer.prometheus.PrometheusMeterRegistry
 
 
 fun Routing.health(
+    collectorRegistry: PrometheusMeterRegistry,
     ready: () -> Boolean = { true },
     alive: () -> Boolean = { true },
-    collectorRegistry: PrometheusMeterRegistry,
 ) {
 
     fun statusFor(b: () -> Boolean) = b().let { if (it) HttpStatusCode.OK else HttpStatusCode.InternalServerError }
