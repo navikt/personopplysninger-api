@@ -115,7 +115,6 @@ class PdlMottakConsumer(
 
         if (!endring.confirmedOk()) {
             endring.createValidationErrorIfTpsHasError()
-            log.warn(endring.errorMessage())
         }
         return endring
     }
