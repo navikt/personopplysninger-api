@@ -23,8 +23,8 @@ import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import java.util.*
 
-private const val HENT_KONTO_PATH = "/kontoregister/api/navno/v1/hent-aktiv-konto"
-private const val OPPDATER_KONTO_PATH = "/kontoregister/api/navno/v1/oppdater-konto"
+private const val HENT_KONTO_PATH = "/api/borger/v1/hent-aktiv-konto"
+private const val OPPDATER_KONTO_PATH = "/api/borger/v1/oppdater-konto"
 
 class KontoregisterConsumer(
     private val client: HttpClient,
