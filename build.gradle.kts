@@ -35,6 +35,8 @@ dependencies {
     implementation(Ktor.serverAuth)
     implementation(Ktor.clientContentNegotiation)
     implementation(Ktor.clientApache)
+    implementation(Ktor.metricsMicrometer)
+    implementation(Micrometer.registryPrometheus)
     implementation(DittNAV.Common.logging)
     implementation(NAV.Security.tokenValidationKtor)
     implementation(TmsKtorTokenSupport.tokendingsExchange)

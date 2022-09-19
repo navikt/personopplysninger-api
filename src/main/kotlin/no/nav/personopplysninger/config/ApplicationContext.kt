@@ -2,6 +2,8 @@ package no.nav.personopplysninger.config
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
+import io.micrometer.prometheus.PrometheusConfig
+import io.micrometer.prometheus.PrometheusMeterRegistry
 import no.finn.unleash.strategy.Strategy
 import no.nav.common.featuretoggle.UnleashClient
 import no.nav.common.featuretoggle.UnleashClientImpl
@@ -32,6 +34,8 @@ class ApplicationContext {
 
     val env = Environment()
     val httpClient = HttpClientBuilder.build()
+
+    val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
 
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
     val unleashClient = unleashClient()
