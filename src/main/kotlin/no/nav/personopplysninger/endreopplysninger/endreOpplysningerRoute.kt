@@ -9,6 +9,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import no.nav.personopplysninger.common.util.getFnrFromToken
 import no.nav.personopplysninger.common.util.getSelvbetjeningTokenFromCall
+import no.nav.personopplysninger.config.MetricsCollector
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Kontonummer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import org.slf4j.LoggerFactory
@@ -49,6 +50,13 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService) 
             val kontonummer = call.receive<Kontonummer>()
 
             endreOpplysningerService.endreKontonummer(selvbetjeningIdtoken, fnr, kontonummer)
+
+            if (kontonummer.utenlandskKontoInformasjon == null) {
+                MetricsCollector.NORSK_KONTONUMMER_COUNTER.inc()
+            } else {
+                MetricsCollector.UTENLANDSK_KONTONUMMER_COUNTER.inc()
+            }
+
             call.respond(mapOf("statusType" to "OK"))
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved endring av kontonummer", e)
