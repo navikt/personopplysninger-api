@@ -8,6 +8,7 @@ import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
 import io.ktor.server.routing.routing
+import io.prometheus.client.CollectorRegistry
 import no.nav.personopplysninger.endreopplysninger.endreOpplysninger
 import no.nav.personopplysninger.institusjon.institusjon
 import no.nav.personopplysninger.kontaktinformasjon.kontaktinformasjon
@@ -32,7 +33,7 @@ fun Application.testModule(appContext: TestApplicationContext) {
     }
 
     routing {
-        endreOpplysninger(appContext.endreOpplysningerService)
+        endreOpplysninger(appContext.endreOpplysningerService, MetricsCollector(CollectorRegistry()))
         institusjon(appContext.institusjonService)
         medl(appContext.medlService)
         personalia(appContext.personaliaService)
