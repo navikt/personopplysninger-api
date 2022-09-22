@@ -24,6 +24,7 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
             val telefonnummer = call.receive<Telefonnummer>()
 
             val resp = endreOpplysningerService.endreTelefonnummer(selvbetjeningIdtoken, fnr, telefonnummer)
+            metricsCollector.ENDRE_TELEFONNUMMER_COUNTER.inc()
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved endring av telefonnummer", e)
@@ -37,6 +38,7 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
             val telefonnummer = call.receive<Telefonnummer>()
 
             val resp = endreOpplysningerService.slettTelefonNummer(selvbetjeningIdtoken, fnr, telefonnummer)
+            metricsCollector.SLETT_TELEFONNUMMER_COUNTER.inc()
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved sletting av telefonnummer", e)
@@ -52,9 +54,9 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
             endreOpplysningerService.endreKontonummer(selvbetjeningIdtoken, fnr, kontonummer)
 
             if (kontonummer.utenlandskKontoInformasjon == null) {
-                metricsCollector.NORSK_KONTONUMMER_COUNTER.inc()
+                metricsCollector.ENDRE_NORSK_KONTONUMMER_COUNTER.inc()
             } else {
-                metricsCollector.UTENLANDSK_KONTONUMMER_COUNTER.inc()
+                metricsCollector.ENDRE_UTENLANDSK_KONTONUMMER_COUNTER.inc()
             }
 
             call.respond(mapOf("statusType" to "OK"))
@@ -69,6 +71,7 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
             val fnr = getFnrFromToken(selvbetjeningIdtoken)
 
             val resp = endreOpplysningerService.slettKontaktadresse(selvbetjeningIdtoken, fnr)
+            metricsCollector.SLETT_KONTAKTADRESSE_COUNTER
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved sletting av kontaktadresse", e)
