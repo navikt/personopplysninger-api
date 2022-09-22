@@ -12,20 +12,9 @@ data class Endring(
         return ("DONE" == status.statusType && !hasTpsError()) || "OK" == status.statusType
     }
 
-    fun errorMessage(): String {
-        return if (hasTpsError()) "TPS rapporterer feil på oppdatering."
-        else if (!isDone()) "Endring har status $statusType"
-        else ""
-    }
-
     fun isPending(): Boolean {
         return "PENDING" == status.statusType
     }
-
-    private fun isDone(): Boolean {
-        return "DONE" == status.statusType
-    }
-
 
     private fun getTpsBeskrivelse(): String? {
         for (substatus in status.substatus) {
