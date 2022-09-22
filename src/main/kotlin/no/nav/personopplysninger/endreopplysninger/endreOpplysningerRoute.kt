@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("endreOpplysningerRoute")
 
-fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService) {
+fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, metricsCollector: MetricsCollector) {
     post("/endreTelefonnummer") {
         try {
             val selvbetjeningIdtoken = getSelvbetjeningTokenFromCall(call)
@@ -52,9 +52,9 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService) 
             endreOpplysningerService.endreKontonummer(selvbetjeningIdtoken, fnr, kontonummer)
 
             if (kontonummer.utenlandskKontoInformasjon == null) {
-                MetricsCollector.NORSK_KONTONUMMER_COUNTER.inc()
+                metricsCollector.NORSK_KONTONUMMER_COUNTER.inc()
             } else {
-                MetricsCollector.UTENLANDSK_KONTONUMMER_COUNTER.inc()
+                metricsCollector.UTENLANDSK_KONTONUMMER_COUNTER.inc()
             }
 
             call.respond(mapOf("statusType" to "OK"))

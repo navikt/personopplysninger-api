@@ -1,20 +1,21 @@
 package no.nav.personopplysninger.config
 
+import io.prometheus.client.CollectorRegistry
 import io.prometheus.client.Counter
 
-object MetricsCollector {
+class MetricsCollector(registry: CollectorRegistry) {
 
-    private const val NAMESPACE = "personbruker"
+    private val NAMESPACE = "personbruker"
 
     val NORSK_KONTONUMMER_COUNTER = Counter.build()
         .name("endring_norsk_kontonummer")
         .namespace(NAMESPACE)
         .help("Antall endringer av norske kontonummer")
-        .register()
+        .register(registry)
 
     val UTENLANDSK_KONTONUMMER_COUNTER = Counter.build()
         .name("endring_utenlandsk_kontonummer")
         .namespace(NAMESPACE)
         .help("Antall endringer av utenlandske kontonummer")
-        .register()
+        .register(registry)
 }

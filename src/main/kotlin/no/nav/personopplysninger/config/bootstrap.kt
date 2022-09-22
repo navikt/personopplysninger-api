@@ -78,7 +78,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     routing {
         health(appContext.appMicrometerRegistry)
         authenticate {
-            endreOpplysninger(appContext.endreOpplysningerService)
+            endreOpplysninger(appContext.endreOpplysningerService, appContext.metricsCollector)
             featureToggles(appContext.unleashClient)
             institusjon(appContext.institusjonService)
             medl(appContext.medlService)
