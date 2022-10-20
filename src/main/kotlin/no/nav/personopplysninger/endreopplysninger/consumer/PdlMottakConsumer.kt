@@ -100,7 +100,6 @@ class PdlMottakConsumer(
             response.status == HttpStatusCode.Locked -> {
                 log.info("Oppdatering avvist pga status pending.")
                 Endring(statusType = "REJECTED", error = response.body())
-
             }
             response.status == HttpStatusCode.UnprocessableEntity -> {
                 log.error("Fikk valideringsfeil: ${response.bodyAsText()}")
