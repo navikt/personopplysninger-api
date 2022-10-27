@@ -140,7 +140,11 @@ class PdlMottakConsumer(
         log.info("Antall polls for status: $i")
 
         if (!endring.confirmedOk()) {
-            endring.createValidationErrorIfTpsHasError()
+            if (endring.hasTpsError()) {
+                endring.addValidationError()
+            } else {
+                log.warn("Polling timet ut før endring ble bekreftet OK av pdl-mottak")
+            }
         }
         return endring
     }
