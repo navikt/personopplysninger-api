@@ -16,15 +16,11 @@ class PdlService(private val pdlConsumer: PdlConsumer) {
 
         log.info("Henter opplysningsId for telefonnummer med landskode $landskode")
 
-        val pdlTelefonnummerList = pdlConsumer.getTelefonInfo(token, ident).telefonnummer;
-
-        log.info("Fant totalt ${pdlTelefonnummerList.size} telefonnumre")
-
-        val pdlTelefonnummer = pdlTelefonnummerList
+        val pdlTelefonnummer = pdlConsumer.getTelefonInfo(token, ident).telefonnummer
             .find { tlf -> landskode == tlf.landskode && telefonnummer == tlf.nummer }
 
         if (pdlTelefonnummer == null) {
-            log.warn("Fant ikke oppgitt telefonnummer")
+            log.warn("Fant ikke telefonnummer")
             return null
         }
 
