@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory
 import java.util.*
 
 private const val SLEEP_TIME_MS = 1000L
-private const val MAX_POLLS = 3
+private const val MAX_POLLS = 5
 private const val URL_ENDRINGER = "/api/v1/endringer"
 private const val URL_KONTONUMMER = "/api/v1/endring/bankkonto"
 
@@ -113,17 +113,17 @@ class PdlMottakConsumer(
             else -> {
                 val location = response.headers[HttpHeaders.Location]!!
                 val pollEndringUrl = environment.pdlMottakUrl.plus(location)
-                pollEndring(accessToken, pollEndringUrl, SLEEP_TIME_MS, MAX_POLLS)
+                pollEndring(accessToken, pollEndringUrl)
             }
         }
     }
 
-    private suspend fun pollEndring(accessToken: String, url: String, pollInterval: Long, maxPolls: Int): Endring {
+    private suspend fun pollEndring(accessToken: String, url: String): Endring {
         var endring: Endring
         var i = 0
         do {
             try {
-                delay(pollInterval)
+                delay(SLEEP_TIME_MS)
             } catch (ie: InterruptedException) {
                 throw RuntimeException("Fikk feil under polling på status", ie)
             }
@@ -136,11 +136,15 @@ class PdlMottakConsumer(
                 }
             val endringList = response.body<List<Endring>>()
             endring = endringList[0]
-        } while (++i < maxPolls && endring.isPending())
+        } while (++i < MAX_POLLS && endring.isPending())
         log.info("Antall polls for status: $i")
 
         if (!endring.confirmedOk()) {
-            endring.createValidationErrorIfTpsHasError()
+            if (endring.hasTpsError()) {
+                endring.addValidationError()
+            } else {
+                log.warn("Polling timet ut før endring ble bekreftet OK av pdl-mottak")
+            }
         }
         return endring
     }

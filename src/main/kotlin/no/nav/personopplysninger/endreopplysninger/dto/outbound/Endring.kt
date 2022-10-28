@@ -16,6 +16,21 @@ data class Endring(
         return "PENDING" == status.statusType
     }
 
+    fun addValidationError() {
+        val validationError = Error(message = getTpsBeskrivelse())
+        this.statusType = "ERROR"
+        this.error = validationError
+    }
+
+    fun hasTpsError(): Boolean {
+        for (substatus in status.substatus) {
+            if ("TPS".equals(substatus.domene, ignoreCase = true)) {
+                return "ERROR" == substatus.status
+            }
+        }
+        return false
+    }
+
     private fun getTpsBeskrivelse(): String? {
         for (substatus in status.substatus) {
             if ("TPS".equals(substatus.domene, ignoreCase = true)) {
@@ -23,22 +38,5 @@ data class Endring(
             }
         }
         return null
-    }
-
-    fun createValidationErrorIfTpsHasError() {
-        if (hasTpsError()) {
-            val validationError = Error(message = getTpsBeskrivelse())
-            this.statusType = "ERROR"
-            this.error = validationError
-        }
-    }
-
-    private fun hasTpsError(): Boolean {
-        for (substatus in status.substatus) {
-            if ("TPS".equals(substatus.domene, ignoreCase = true)) {
-                return "ERROR" == substatus.status
-            }
-        }
-        return false
     }
 }

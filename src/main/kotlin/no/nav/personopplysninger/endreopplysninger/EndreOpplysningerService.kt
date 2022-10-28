@@ -34,7 +34,7 @@ class EndreOpplysningerService(
     suspend fun slettTelefonNummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
         val opplysningsId =
             pdlService.getOpplysningsIdForTelefon(token, fnr, telefonnummer.landskode!!, telefonnummer.nummer!!)
-                ?: throw RuntimeException("Kan ikke slette nummer som ikke eksisterer: ${telefonnummer.landskode}, ${telefonnummer.nummer}")
+                ?: throw RuntimeException("Fant ikke oppgitt telefonnummer")
 
         return pdlMottakConsumer.slettPersonopplysning(
             token,
