@@ -41,9 +41,9 @@ data class PdlKontaktadresse(
     val postnummer: String?
         get() {
             return when (mappingType) {
-                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse!!.postnummer
-                AdresseMappingType.INNLAND_FRIFORMADRESSE -> postadresseIFrittFormat!!.postnummer
-                AdresseMappingType.INNLAND_POSTBOKSADRESSE -> postboksadresse!!.postnummer
+                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse?.postnummer
+                AdresseMappingType.INNLAND_FRIFORMADRESSE -> postadresseIFrittFormat?.postnummer
+                AdresseMappingType.INNLAND_POSTBOKSADRESSE -> postboksadresse?.postnummer
                 else -> null
             }
         }
@@ -51,8 +51,8 @@ data class PdlKontaktadresse(
     val landkode: String?
         get() {
             return when (mappingType) {
-                AdresseMappingType.UTLAND_ADRESSE -> utenlandskAdresse!!.landkode
-                AdresseMappingType.UTLAND_FRIFORMADRESSE -> utenlandskAdresseIFrittFormat!!.landkode
+                AdresseMappingType.UTLAND_ADRESSE -> utenlandskAdresse?.landkode
+                AdresseMappingType.UTLAND_FRIFORMADRESSE -> utenlandskAdresseIFrittFormat?.landkode
                 else -> null
             }
         }
@@ -60,7 +60,7 @@ data class PdlKontaktadresse(
     val kommunenummer: String?
         get() {
             return when (mappingType) {
-                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse!!.kommunenummer
+                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse?.kommunenummer
                 else -> null
             }
         }

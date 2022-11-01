@@ -38,11 +38,11 @@ class PdlConsumer(
     }
 
     suspend fun getKontaktadresseInfo(token: String, ident: String): PdlPerson {
-        return postPersonQuery(token, createKontaktadresseRequest(ident)).person!!
+        return postPersonQuery(token, createKontaktadresseRequest(ident)).person
     }
 
     suspend fun getTelefonInfo(token: String, ident: String): PdlPerson {
-        return postPersonQuery(token, createTelefonRequest(ident)).person!!
+        return postPersonQuery(token, createTelefonRequest(ident)).person
     }
 
     private suspend fun postPersonQuery(token: String, request: PDLRequest): PdlData {

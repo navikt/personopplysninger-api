@@ -48,10 +48,10 @@ class SerialiseringTest {
         val json: String = readFile("validation-error.json")
         val validationError: Error = serializer.decodeFromString(json)
         assertEquals("Validering feilet", validationError.message)
-        assertEquals(3, validationError.details!!.size)
-        val feilForFelt = validationError.details!!["objekt.feltnavn"]
-        assertEquals(3, feilForFelt!!.size)
-        assertEquals("valideringsfeil 1", feilForFelt[0])
+        assertEquals(3, validationError.details?.size)
+        val feilForFelt = validationError.details?.get("objekt.feltnavn")
+        assertEquals(3, feilForFelt?.size)
+        assertEquals("valideringsfeil 1", feilForFelt?.get(0))
     }
 
     @Test

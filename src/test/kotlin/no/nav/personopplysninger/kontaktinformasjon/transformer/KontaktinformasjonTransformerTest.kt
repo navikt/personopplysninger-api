@@ -13,9 +13,9 @@ class KontaktinformasjonTransformerTest {
 
         val actual = KontaktinformasjonTransformer.toOutbound(inbound, spraakTerm)
 
-        assertEquals(inbound.epostadresse!!, actual.epostadresse)
-        assert(inbound.kanVarsles == actual.kanVarsles!!)
-        assertEquals(inbound.mobiltelefonnummer!!, actual.mobiltelefonnummer)
+        assertEquals(inbound.epostadresse, actual.epostadresse)
+        assertEquals(inbound.kanVarsles, actual.kanVarsles)
+        assertEquals(inbound.mobiltelefonnummer, actual.mobiltelefonnummer)
         assertEquals(spraakTerm, actual.spraak)
     }
 
@@ -26,9 +26,9 @@ class KontaktinformasjonTransformerTest {
 
         val actual = KontaktinformasjonTransformer.toOutbound(inbound, spraakTerm)
 
-        assertEquals(inbound.epostadresse!!, actual.epostadresse)
-        assert(inbound.kanVarsles == actual.kanVarsles!!)
-        assertEquals(inbound.mobiltelefonnummer!!, actual.mobiltelefonnummer)
+        assertEquals(inbound.epostadresse, actual.epostadresse)
+        assertEquals(inbound.kanVarsles, actual.kanVarsles)
+        assertEquals(inbound.mobiltelefonnummer, actual.mobiltelefonnummer)
         assertEquals("Bokmål", actual.spraak)
     }
 }

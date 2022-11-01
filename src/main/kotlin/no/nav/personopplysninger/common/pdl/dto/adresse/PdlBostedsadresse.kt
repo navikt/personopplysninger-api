@@ -40,8 +40,8 @@ data class PdlBostedsadresse(
     val postnummer: String?
         get() {
             return when (mappingType) {
-                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse!!.postnummer
-                AdresseMappingType.MATRIKKELADRESSE -> matrikkeladresse!!.postnummer
+                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse?.postnummer
+                AdresseMappingType.MATRIKKELADRESSE -> matrikkeladresse?.postnummer
                 else -> null
             }
         }
@@ -49,7 +49,7 @@ data class PdlBostedsadresse(
     val landkode: String?
         get() {
             return when (mappingType) {
-                AdresseMappingType.UTLAND_ADRESSE -> utenlandskAdresse!!.landkode
+                AdresseMappingType.UTLAND_ADRESSE -> utenlandskAdresse?.landkode
                 else -> null
             }
         }
@@ -57,9 +57,9 @@ data class PdlBostedsadresse(
     val kommunenummer: String?
         get() {
             return when (mappingType) {
-                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse!!.kommunenummer
-                AdresseMappingType.MATRIKKELADRESSE -> matrikkeladresse!!.kommunenummer
-                AdresseMappingType.UKJENT_BOSTED -> ukjentBosted!!.bostedskommune
+                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse?.kommunenummer
+                AdresseMappingType.MATRIKKELADRESSE -> matrikkeladresse?.kommunenummer
+                AdresseMappingType.UKJENT_BOSTED -> ukjentBosted?.bostedskommune
                 else -> null
             }
         }

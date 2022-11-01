@@ -14,7 +14,10 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdres
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresseIFrittFormat
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
 
-fun transformVegadresse(inbound: PdlVegadresse, poststed: String?, kommune: String?): Vegadresse {
+private const val FANT_IKKE_ADRESSE_ERROR_MESSAGE = "Fant ikke adresse som skulle transformeres"
+
+fun transformVegadresse(inbound: PdlVegadresse?, poststed: String?, kommune: String?): Vegadresse {
+    inbound ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return Vegadresse(
         husnummer = inbound.husnummer,
         husbokstav = inbound.husbokstav,
@@ -29,9 +32,10 @@ fun transformVegadresse(inbound: PdlVegadresse, poststed: String?, kommune: Stri
 }
 
 fun transformPostadresseIFrittFormat(
-    inbound: PdlPostadresseIFrittFormat,
+    inbound: PdlPostadresseIFrittFormat?,
     poststed: String?
 ): PostAdresseIFrittFormat {
+    inbound ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return PostAdresseIFrittFormat(
         adresselinje1 = inbound.adresselinje1,
         adresselinje2 = inbound.adresselinje2,
@@ -41,7 +45,8 @@ fun transformPostadresseIFrittFormat(
     )
 }
 
-fun transformPostboksadresse(inbound: PdlPostboksadresse, poststed: String?): Postboksadresse {
+fun transformPostboksadresse(inbound: PdlPostboksadresse?, poststed: String?): Postboksadresse {
+    inbound ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return Postboksadresse(
         postbokseier = inbound.postbokseier,
         postboks = inbound.postboks,
@@ -51,9 +56,10 @@ fun transformPostboksadresse(inbound: PdlPostboksadresse, poststed: String?): Po
 }
 
 fun transformUtenlandskAdresse(
-    inbound: PdlUtenlandskAdresse,
+    inbound: PdlUtenlandskAdresse?,
     land: String?
 ): UtenlandskAdresse {
+    inbound ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return UtenlandskAdresse(
         adressenavnNummer = inbound.adressenavnNummer,
         bygningEtasjeLeilighet = inbound.bygningEtasjeLeilighet,
@@ -67,9 +73,10 @@ fun transformUtenlandskAdresse(
 }
 
 fun transformUtenlandskAdresseIFrittFormat(
-    inbound: PdlUtenlandskAdresseIFrittFormat,
+    inbound: PdlUtenlandskAdresseIFrittFormat?,
     land: String?
 ): UtenlandskAdresseIFrittFormat {
+    inbound ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return UtenlandskAdresseIFrittFormat(
         adresselinje1 = inbound.adresselinje1,
         adresselinje2 = inbound.adresselinje2,
@@ -82,10 +89,11 @@ fun transformUtenlandskAdresseIFrittFormat(
 }
 
 fun transformMatrikkeladresse(
-    inbound: PdlMatrikkeladresse,
+    inbound: PdlMatrikkeladresse?,
     poststed: String?,
     kommune: String?
 ): Matrikkeladresse {
+    inbound ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return Matrikkeladresse(
         bruksenhetsnummer = inbound.bruksenhetsnummer,
         tilleggsnavn = inbound.tilleggsnavn,

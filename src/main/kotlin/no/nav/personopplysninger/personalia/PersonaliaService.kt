@@ -45,7 +45,7 @@ class PersonaliaService(
     }
 
     private suspend fun createPersonaliaKodeverk(inbound: Personinfo, inboundPdl: PdlData): PersonaliaKodeverk {
-        val pdlPerson = inboundPdl.person!!
+        val pdlPerson = inboundPdl.person
         val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning
 
         val kontaktadresse = pdlPerson.kontaktadresse
