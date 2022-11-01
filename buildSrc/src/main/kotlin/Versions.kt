@@ -1,5 +1,5 @@
 object Auth0 {
-    private const val version = "4.1.0"
+    private const val version = "4.2.1"
     private const val groupId = "com.auth0"
 
     const val jwt = "$groupId:java-jwt:$version"
@@ -28,7 +28,7 @@ object Kotlin {
 }
 
 object Ktor {
-    private const val version = "2.1.2"
+    private const val version = "2.1.3"
     private const val groupId = "io.ktor"
 
     const val metricsMicrometer = "$groupId:ktor-server-metrics-micrometer:$version"
@@ -71,14 +71,14 @@ object Mockk {
 
 object NAV {
     object Security {
-        private const val version = "2.1.6"
+        private const val version = "2.1.7"
         private const val groupId = "no.nav.security"
 
         const val tokenValidationKtor = "$groupId:token-validation-ktor-v2:$version"
     }
 
     object Common {
-        private const val version = "2.2022.10.20_07.46-64a2e6bdf2d0"
+        private const val version = "2.2022.10.28_08.02-d7d341cf26ba"
         private const val groupId = "no.nav.common"
         const val featureToggle = "$groupId:feature-toggle:$version"
     }
