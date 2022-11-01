@@ -1,5 +1,5 @@
 object Auth0 {
-    private const val version = "4.1.0"
+    private const val version = "4.2.1"
     private const val groupId = "com.auth0"
 
     const val jwt = "$groupId:java-jwt:$version"
