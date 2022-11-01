@@ -78,7 +78,7 @@ object NAV {
     }
 
     object Common {
-        private const val version = "2.2022.10.28_08.02-d7d341cf26ba"
+        private const val version = "2.2022.10.20_07.46-64a2e6bdf2d0"
         private const val groupId = "no.nav.common"
         const val featureToggle = "$groupId:feature-toggle:$version"
     }
