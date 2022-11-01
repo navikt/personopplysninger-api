@@ -22,45 +22,33 @@ data class PdlBostedsadresse(
     val ukjentBosted: PdlUkjentbosted? = null,
     val metadata: PdlMetadata
 ) {
-    val mappingType: AdresseMappingType
-        get() {
-            return if (vegadresse != null) {
-                AdresseMappingType.INNLAND_VEGADRESSE
-            } else if (matrikkeladresse != null) {
-                AdresseMappingType.MATRIKKELADRESSE
-            } else if (utenlandskAdresse != null) {
-                AdresseMappingType.UTLAND_ADRESSE
-            } else if (ukjentBosted != null) {
-                AdresseMappingType.UKJENT_BOSTED
-            } else {
-                AdresseMappingType.EMPTY
-            }
-        }
+    val mappingType = if (vegadresse != null) {
+        AdresseMappingType.INNLAND_VEGADRESSE
+    } else if (matrikkeladresse != null) {
+        AdresseMappingType.MATRIKKELADRESSE
+    } else if (utenlandskAdresse != null) {
+        AdresseMappingType.UTLAND_ADRESSE
+    } else if (ukjentBosted != null) {
+        AdresseMappingType.UKJENT_BOSTED
+    } else {
+        AdresseMappingType.EMPTY
+    }
 
-    val postnummer: String?
-        get() {
-            return when (mappingType) {
-                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse?.postnummer
-                AdresseMappingType.MATRIKKELADRESSE -> matrikkeladresse?.postnummer
-                else -> null
-            }
-        }
+    val postnummer = when (mappingType) {
+        AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse?.postnummer
+        AdresseMappingType.MATRIKKELADRESSE -> matrikkeladresse?.postnummer
+        else -> null
+    }
 
-    val landkode: String?
-        get() {
-            return when (mappingType) {
-                AdresseMappingType.UTLAND_ADRESSE -> utenlandskAdresse?.landkode
-                else -> null
-            }
-        }
+    val landkode = when (mappingType) {
+        AdresseMappingType.UTLAND_ADRESSE -> utenlandskAdresse?.landkode
+        else -> null
+    }
 
-    val kommunenummer: String?
-        get() {
-            return when (mappingType) {
-                AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse?.kommunenummer
-                AdresseMappingType.MATRIKKELADRESSE -> matrikkeladresse?.kommunenummer
-                AdresseMappingType.UKJENT_BOSTED -> ukjentBosted?.bostedskommune
-                else -> null
-            }
-        }
+    val kommunenummer = when (mappingType) {
+        AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse?.kommunenummer
+        AdresseMappingType.MATRIKKELADRESSE -> matrikkeladresse?.kommunenummer
+        AdresseMappingType.UKJENT_BOSTED -> ukjentBosted?.bostedskommune
+        else -> null
+    }
 }
