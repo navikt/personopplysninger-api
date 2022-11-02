@@ -17,8 +17,8 @@ class GeografiskTilknytningTransformerTest {
 
         val actual = GeografiskTilknytningTransformer.toOutbound(inbound, kodeverk)
 
-        assertEquals(inbound.gtBydel!!, actual.bydel)
-        assertEquals(inbound.gtKommune!!, actual.kommune)
+        assertEquals(inbound.gtBydel, actual.bydel)
+        assertEquals(inbound.gtKommune, actual.kommune)
         assertEquals(land, actual.land)
     }
 

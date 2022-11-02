@@ -111,7 +111,8 @@ class PdlMottakConsumer(
                 )
             }
             else -> {
-                val location = response.headers[HttpHeaders.Location]!!
+                val location = response.headers[HttpHeaders.Location]
+                    ?: throw RuntimeException("Fant ikke Location-header i respons fra Pdl-mottak")
                 val pollEndringUrl = environment.pdlMottakUrl.plus(location)
                 pollEndring(accessToken, pollEndringUrl)
             }

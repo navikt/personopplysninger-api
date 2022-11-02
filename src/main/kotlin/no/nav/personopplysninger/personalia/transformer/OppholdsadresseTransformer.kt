@@ -33,16 +33,16 @@ object OppholdsadresseTransformer {
     private fun transformAdresse(inbound: PdlOppholdsadresse, kodeverk: AdresseKodeverk): Adresse? {
         return when (inbound.mappingType) {
             INNLAND_VEGADRESSE -> transformVegadresse(
-                inbound.vegadresse!!,
+                inbound.vegadresse,
                 kodeverk.poststed,
                 kodeverk.kommune
             )
             MATRIKKELADRESSE -> transformMatrikkeladresse(
-                inbound.matrikkeladresse!!,
+                inbound.matrikkeladresse,
                 kodeverk.poststed,
                 kodeverk.kommune
             )
-            UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse!!, kodeverk.land)
+            UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse, kodeverk.land)
             else -> {
                 // Adresse kan være null dersom oppholdAnnetSted er satt. Da trenger vi ikke logge warning.
                 if (inbound.oppholdAnnetSted == null) {

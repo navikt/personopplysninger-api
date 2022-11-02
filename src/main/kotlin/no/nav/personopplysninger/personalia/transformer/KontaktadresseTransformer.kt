@@ -34,21 +34,21 @@ object KontaktadresseTransformer {
     private fun transformAdresse(inbound: PdlKontaktadresse, kodeverk: AdresseKodeverk): Adresse? {
         return when (inbound.mappingType) {
             INNLAND_VEGADRESSE -> transformVegadresse(
-                inbound.vegadresse!!,
+                inbound.vegadresse,
                 kodeverk.poststed,
                 kodeverk.kommune
             )
             INNLAND_FRIFORMADRESSE -> transformPostadresseIFrittFormat(
-                inbound.postadresseIFrittFormat!!,
+                inbound.postadresseIFrittFormat,
                 kodeverk.poststed
             )
             INNLAND_POSTBOKSADRESSE -> transformPostboksadresse(
-                inbound.postboksadresse!!,
+                inbound.postboksadresse,
                 kodeverk.poststed
             )
-            UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse!!, kodeverk.land)
+            UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse, kodeverk.land)
             UTLAND_FRIFORMADRESSE -> transformUtenlandskAdresseIFrittFormat(
-                inbound.utenlandskAdresseIFrittFormat!!,
+                inbound.utenlandskAdresseIFrittFormat,
                 kodeverk.land
             )
             else -> {
