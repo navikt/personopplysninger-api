@@ -1,5 +1,5 @@
 object Auth0 {
-    private const val version = "4.2.1"
+    private const val version = "4.1.0"
     private const val groupId = "com.auth0"
 
     const val jwt = "$groupId:java-jwt:$version"
@@ -71,7 +71,7 @@ object Mockk {
 
 object NAV {
     object Security {
-        private const val version = "2.1.7"
+        private const val version = "2.1.6"
         private const val groupId = "no.nav.security"
 
         const val tokenValidationKtor = "$groupId:token-validation-ktor-v2:$version"
