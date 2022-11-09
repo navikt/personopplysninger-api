@@ -20,8 +20,8 @@ class DeserialiseringTest {
         val json = readFile("pdl.json")
 
         val person: PdlResponse = serializer.decodeFromString(json)
-        val telefonnummer = person.data.person!!.telefonnummer.first()
-        val kontaktadresse = person.data.person!!.kontaktadresse.first()
+        val telefonnummer = person.data.person.telefonnummer.first()
+        val kontaktadresse = person.data.person.kontaktadresse.first()
 
         assertEquals(telefonnummer.landskode, "+47")
         assertEquals(telefonnummer.nummer, "55553334")

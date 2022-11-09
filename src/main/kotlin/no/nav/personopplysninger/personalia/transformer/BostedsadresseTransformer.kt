@@ -34,16 +34,19 @@ object BostedsadresseTransformer {
     private fun transformAdresse(inbound: PdlBostedsadresse, kodeverk: AdresseKodeverk): Adresse? {
         return when (inbound.mappingType) {
             INNLAND_VEGADRESSE -> transformVegadresse(
-                inbound.vegadresse!!,
+                inbound.vegadresse,
                 kodeverk.poststed,
                 kodeverk.kommune
             )
             MATRIKKELADRESSE -> transformMatrikkeladresse(
-                inbound.matrikkeladresse!!,
+                inbound.matrikkeladresse,
                 kodeverk.poststed,
                 kodeverk.kommune
             )
-            UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse!!, kodeverk.land)
+            UTLAND_ADRESSE -> transformUtenlandskAdresse(
+                inbound.utenlandskAdresse,
+                kodeverk.land
+            )
             UKJENT_BOSTED -> transformUkjentBosted(kodeverk.kommune)
             else -> {
                 logger.warn("Forsøkte å mappe bostedsadresse på uventet format, null returnert. Adressetype: ${inbound.mappingType}")

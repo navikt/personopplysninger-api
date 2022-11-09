@@ -36,6 +36,7 @@ class ApplicationContext {
     val httpClient = HttpClientBuilder.build()
 
     val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
+    val metricsCollector = MetricsCollector(appMicrometerRegistry.prometheusRegistry)
 
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
     val unleashClient = unleashClient()

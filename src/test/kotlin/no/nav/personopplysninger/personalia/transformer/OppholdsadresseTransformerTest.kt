@@ -23,65 +23,65 @@ class OppholdsadresseTransformerTest {
     @Test
     fun canTransformVegdresse() {
         val inbound = createDummyOppholdsadresse(VEGADRESSE)
-        val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
+        val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
-        assertEquals(actual.oppholdAnnetSted, inbound.oppholdAnnetSted)
-        assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
-        assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual.adresse?.type, VEGADRESSE)
-        assertEquals(actual.kilde, inbound.metadata.master)
+        assertEquals(actual?.oppholdAnnetSted, inbound.oppholdAnnetSted)
+        assertEquals(actual?.gyldigFraOgMed, inbound.gyldigFraOgMed)
+        assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
+        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(actual?.adresse?.type, VEGADRESSE)
+        assertEquals(actual?.kilde, inbound.metadata.master)
 
-        val vegadresse = actual.adresse as Vegadresse
+        val vegadresse = actual?.adresse as Vegadresse
 
         assertVegadresseEquals(
             vegadresse,
-            adresseKodeverk.poststed!!,
-            adresseKodeverk.kommune!!,
-            inbound.vegadresse!!
+            adresseKodeverk.poststed,
+            adresseKodeverk.kommune,
+            inbound.vegadresse
         )
     }
 
     @Test
     fun canTransformMatrikkeladresse() {
         val inbound = createDummyOppholdsadresse(MATRIKKELADRESSE)
-        val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
+        val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
-        assertEquals(actual.oppholdAnnetSted, inbound.oppholdAnnetSted)
-        assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
-        assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual.adresse?.type, MATRIKKELADRESSE)
-        assertEquals(actual.kilde, inbound.metadata.master)
+        assertEquals(actual?.oppholdAnnetSted, inbound.oppholdAnnetSted)
+        assertEquals(actual?.gyldigFraOgMed, inbound.gyldigFraOgMed)
+        assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
+        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(actual?.adresse?.type, MATRIKKELADRESSE)
+        assertEquals(actual?.kilde, inbound.metadata.master)
 
-        val matrikkeladresse = actual.adresse as Matrikkeladresse
+        val matrikkeladresse = actual?.adresse as Matrikkeladresse
 
         assertMatrikkeladresseEquals(
             matrikkeladresse,
-            adresseKodeverk.poststed!!,
-            adresseKodeverk.kommune!!,
-            inbound.matrikkeladresse!!
+            adresseKodeverk.poststed,
+            adresseKodeverk.kommune,
+            inbound.matrikkeladresse
         )
     }
 
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createDummyOppholdsadresse(UTENLANDSK_ADRESSE)
-        val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)!!
+        val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
-        assertEquals(actual.oppholdAnnetSted, inbound.oppholdAnnetSted)
-        assertEquals(actual.gyldigFraOgMed, inbound.gyldigFraOgMed)
-        assertEquals(actual.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(actual.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual.adresse?.type, UTENLANDSK_ADRESSE)
-        assertEquals(actual.kilde, inbound.metadata.master)
+        assertEquals(actual?.oppholdAnnetSted, inbound.oppholdAnnetSted)
+        assertEquals(actual?.gyldigFraOgMed, inbound.gyldigFraOgMed)
+        assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
+        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(actual?.adresse?.type, UTENLANDSK_ADRESSE)
+        assertEquals(actual?.kilde, inbound.metadata.master)
 
-        val utenlandskAdresse = actual.adresse as UtenlandskAdresse
+        val utenlandskAdresse = actual?.adresse as UtenlandskAdresse
 
         assertUtenlandskAdresseEquals(
             utenlandskAdresse,
-            adresseKodeverk.land!!,
-            inbound.utenlandskAdresse!!
+            adresseKodeverk.land,
+            inbound.utenlandskAdresse
         )
     }
 

@@ -2,6 +2,7 @@ package no.nav.personopplysninger.config
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.apache.Apache
+import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -17,6 +18,9 @@ object HttpClientBuilder {
             }
             install(ContentNegotiation) {
                 json(jsonConfig())
+            }
+            install(HttpRequestRetry) {
+                retryOnExceptionOrServerErrors(maxRetries = 5)
             }
             install(HttpTimeout)
             expectSuccess = false

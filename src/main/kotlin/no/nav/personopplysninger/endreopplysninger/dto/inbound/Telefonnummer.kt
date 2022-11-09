@@ -8,7 +8,7 @@ data class Telefonnummer(
     @SerialName("@type")
     override val subtype: String = "TELEFONNUMMER",
     override val kilde: String = "BRUKER SELV",
-    val landskode: String? = null,
-    val nummer: String? = null,
+    val landskode: String,
+    val nummer: String,
     val prioritet: Int? = 1,
 ) : Endringsmelding

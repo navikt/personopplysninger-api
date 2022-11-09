@@ -10,12 +10,13 @@ import io.ktor.server.routing.post
 import no.nav.personopplysninger.common.kontoregister.dto.inbound.Kontonummer
 import no.nav.personopplysninger.common.util.getFnrFromToken
 import no.nav.personopplysninger.common.util.getSelvbetjeningTokenFromCall
+import no.nav.personopplysninger.config.MetricsCollector
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("endreOpplysningerRoute")
 
-fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService) {
+fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, metricsCollector: MetricsCollector) {
     post("/endreTelefonnummer") {
         try {
             val selvbetjeningIdtoken = getSelvbetjeningTokenFromCall(call)
@@ -23,6 +24,7 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService) 
             val telefonnummer = call.receive<Telefonnummer>()
 
             val resp = endreOpplysningerService.endreTelefonnummer(selvbetjeningIdtoken, fnr, telefonnummer)
+            metricsCollector.ENDRE_TELEFONNUMMER_COUNTER.inc()
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved endring av telefonnummer", e)
@@ -36,6 +38,7 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService) 
             val telefonnummer = call.receive<Telefonnummer>()
 
             val resp = endreOpplysningerService.slettTelefonNummer(selvbetjeningIdtoken, fnr, telefonnummer)
+            metricsCollector.SLETT_TELEFONNUMMER_COUNTER.inc()
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved sletting av telefonnummer", e)
@@ -49,6 +52,13 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService) 
             val kontonummer = call.receive<Kontonummer>()
 
             endreOpplysningerService.endreKontonummer(selvbetjeningIdtoken, fnr, kontonummer)
+
+            if (kontonummer.utenlandskKontoInformasjon == null) {
+                metricsCollector.ENDRE_NORSK_KONTONUMMER_COUNTER.inc()
+            } else {
+                metricsCollector.ENDRE_UTENLANDSK_KONTONUMMER_COUNTER.inc()
+            }
+
             call.respond(mapOf("statusType" to "OK"))
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved endring av kontonummer", e)
@@ -61,6 +71,7 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService) 
             val fnr = getFnrFromToken(selvbetjeningIdtoken)
 
             val resp = endreOpplysningerService.slettKontaktadresse(selvbetjeningIdtoken, fnr)
+            metricsCollector.SLETT_KONTAKTADRESSE_COUNTER
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved sletting av kontaktadresse", e)

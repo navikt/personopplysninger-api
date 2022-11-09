@@ -27,11 +27,11 @@ class PersoninfoTransformerTest {
         val pdlSivilstand = pdlPerson.sivilstand.first().type.beskrivelse
         val pdlKjoenn = pdlPerson.kjoenn.first().kjoenn?.beskrivelse
 
-        assertEquals(pdlNavn.let { "${it.fornavn} ${it.mellomnavn}" }, actual.fornavn!!)
-        assertEquals(pdlNavn.etternavn, actual.etternavn!!)
-        assertEquals(pdlFolkeregisteridentifikator.identifikasjonsnummer, actual.personident!!.verdi)
-        assertEquals(pdlFolkeregisteridentifikator.type, actual.personident!!.type)
-        assertTlfnr(pdlPerson.telefonnummer, actual.tlfnr!!)
+        assertEquals(pdlNavn.let { "${it.fornavn} ${it.mellomnavn}" }, actual.fornavn)
+        assertEquals(pdlNavn.etternavn, actual.etternavn)
+        assertEquals(pdlFolkeregisteridentifikator.identifikasjonsnummer, actual.personident?.verdi)
+        assertEquals(pdlFolkeregisteridentifikator.type, actual.personident?.type)
+        assertTlfnr(pdlPerson.telefonnummer, actual.tlfnr)
         assertUtenlandskBank(konto, actual.utenlandskbank!!, kodeverk)
         assertEquals(kodeverk.statsborgerskaptermer, actual.statsborgerskap)
         assertEquals("${kodeverk.foedekommuneterm}, ${kodeverk.foedelandterm}", actual.foedested)
@@ -39,9 +39,9 @@ class PersoninfoTransformerTest {
         assertEquals(pdlKjoenn, actual.kjoenn)
     }
 
-    private fun assertTlfnr(expected: List<PdlTelefonnummer>, actual: Tlfnr) {
-        assertEquals(expected.find { it.prioritet == 1 }?.nummer, actual.telefonHoved!!)
-        assertEquals(expected.find { it.prioritet == 2 }?.nummer, actual.telefonAlternativ!!)
+    private fun assertTlfnr(expected: List<PdlTelefonnummer>, actual: Tlfnr?) {
+        assertEquals(expected.find { it.prioritet == 1 }?.nummer, actual?.telefonHoved)
+        assertEquals(expected.find { it.prioritet == 2 }?.nummer, actual?.telefonAlternativ)
     }
 
     private fun assertUtenlandskBank(

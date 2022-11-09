@@ -8,7 +8,8 @@ private const val PID_CLAIM = "pid"
 private const val OIDC_COOKIE_NAME = "selvbetjening-idtoken"
 
 fun getSelvbetjeningTokenFromCall(call: ApplicationCall): String {
-    return call.request.cookies[OIDC_COOKIE_NAME] ?: call.request.authorization()!!
+    return call.request.cookies[OIDC_COOKIE_NAME] ?: call.request.authorization()
+    ?: throw RuntimeException("Fant ikke token i cookie eller auth-header")
 }
 
 fun getFnrFromToken(token: String): String {

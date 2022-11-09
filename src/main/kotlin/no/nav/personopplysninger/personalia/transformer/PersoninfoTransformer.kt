@@ -21,8 +21,8 @@ object PersoninfoTransformer {
         return Personalia(
             fornavn = pdlPerson.navn.firstOrNull()?.let { fornavn(it) },
             etternavn = pdlPerson.navn.firstOrNull()?.etternavn,
-            personident = pdlPerson.folkeregisteridentifikator.firstOrNull()
-                .let { Personident(it!!.identifikasjonsnummer, it.type) },
+            personident = pdlPerson.folkeregisteridentifikator.first()
+                .let { Personident(it.identifikasjonsnummer, it.type) },
             kontonr = if (konto?.utenlandskKontoInfo == null) konto?.kontonummer else null,
             tlfnr = pdlPerson.telefonnummer.toTlfnr(),
             utenlandskbank = konto?.utenlandskKontoInfo?.let { UtenlandskBankTransformer.toOutbound(konto, kodeverk) },

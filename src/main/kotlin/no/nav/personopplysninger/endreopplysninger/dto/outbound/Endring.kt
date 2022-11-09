@@ -12,20 +12,24 @@ data class Endring(
         return ("DONE" == status.statusType && !hasTpsError()) || "OK" == status.statusType
     }
 
-    fun errorMessage(): String {
-        return if (hasTpsError()) "TPS rapporterer feil på oppdatering."
-        else if (!isDone()) "Endring har status $statusType"
-        else ""
-    }
-
     fun isPending(): Boolean {
         return "PENDING" == status.statusType
     }
 
-    private fun isDone(): Boolean {
-        return "DONE" == status.statusType
+    fun addValidationError() {
+        val validationError = Error(message = getTpsBeskrivelse())
+        this.statusType = "ERROR"
+        this.error = validationError
     }
 
+    fun hasTpsError(): Boolean {
+        for (substatus in status.substatus) {
+            if ("TPS".equals(substatus.domene, ignoreCase = true)) {
+                return "ERROR" == substatus.status
+            }
+        }
+        return false
+    }
 
     private fun getTpsBeskrivelse(): String? {
         for (substatus in status.substatus) {
@@ -34,22 +38,5 @@ data class Endring(
             }
         }
         return null
-    }
-
-    fun createValidationErrorIfTpsHasError() {
-        if (hasTpsError()) {
-            val validationError = Error(message = getTpsBeskrivelse())
-            this.statusType = "ERROR"
-            this.error = validationError
-        }
-    }
-
-    private fun hasTpsError(): Boolean {
-        for (substatus in status.substatus) {
-            if ("TPS".equals(substatus.domene, ignoreCase = true)) {
-                return "ERROR" == substatus.status
-            }
-        }
-        return false
     }
 }
