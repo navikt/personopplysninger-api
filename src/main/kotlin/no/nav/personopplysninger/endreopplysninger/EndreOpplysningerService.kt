@@ -63,7 +63,7 @@ class EndreOpplysningerService(
                     banknavn = kontonummer.utenlandskKontoInformasjon.bank?.navn.orEmpty(),
                     bankkode = kontonummer.utenlandskKontoInformasjon.bank?.kode.orEmpty(),
                     bankLandkode = kontonummer.utenlandskKontoInformasjon.landkodeTobokstavs.orEmpty(),
-                    valutakode = kontonummer.utenlandskKontoInformasjon.valuta!!,
+                    valutakode = kontonummer.utenlandskKontoInformasjon.valuta,
                     swiftBicKode = kontonummer.utenlandskKontoInformasjon.swift.orEmpty(),
                     bankadresse1 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje1.orEmpty(),
                     bankadresse2 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje2.orEmpty(),

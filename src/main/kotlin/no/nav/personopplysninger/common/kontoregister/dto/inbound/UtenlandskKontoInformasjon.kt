@@ -8,5 +8,5 @@ data class UtenlandskKontoInformasjon (
     val landkode: String? = null,
     val landkodeTobokstavs: String? = null,
     val swift: String? = null,
-    val valuta: String? = null,
+    val valuta: String,
 )
