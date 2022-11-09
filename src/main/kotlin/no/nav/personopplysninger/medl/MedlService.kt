@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.medl
 
-import no.nav.personopplysninger.common.kodeverk.KodeverkService
+import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
 import no.nav.personopplysninger.medl.consumer.MedlConsumer
 import no.nav.personopplysninger.medl.dto.Medlemskapsunntak
 

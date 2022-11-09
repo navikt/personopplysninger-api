@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.common.pdl.dto.PdlPerson
-import no.nav.personopplysninger.common.pdl.dto.personalia.PdlTelefonnummer
+import no.nav.personopplysninger.common.consumer.pdl.dto.PdlPerson
+import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlTelefonnummer
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyMetadata
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals

@@ -1,14 +1,14 @@
 package no.nav.personopplysninger.personalia.transformer.testdata
 
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlKoordinater
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlMatrikkeladresse
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlPostadresseIFrittFormat
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlPostboksadresse
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlUkjentbosted
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlUtenlandskAdresse
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlUtenlandskAdresseIFrittFormat
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlVegadresse
-import no.nav.personopplysninger.common.pdl.dto.common.PdlMetadata
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlKoordinater
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlMatrikkeladresse
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlPostadresseIFrittFormat
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlPostboksadresse
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUkjentbosted
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUtenlandskAdresse
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUtenlandskAdresseIFrittFormat
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlVegadresse
+import no.nav.personopplysninger.common.consumer.pdl.dto.common.PdlMetadata
 
 fun createDummyVegadresse(): PdlVegadresse {
 

@@ -1,8 +1,8 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.common.kontoregister.dto.outbound.Konto
-import no.nav.personopplysninger.common.pdl.dto.PdlPerson
-import no.nav.personopplysninger.common.pdl.dto.personalia.PdlNavn
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
+import no.nav.personopplysninger.common.consumer.pdl.dto.PdlPerson
+import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlNavn
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.personalia.dto.outbound.Personident

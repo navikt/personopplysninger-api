@@ -1,11 +1,11 @@
 package no.nav.personopplysninger.personalia
 
-import no.nav.personopplysninger.common.kodeverk.KodeverkService
-import no.nav.personopplysninger.common.kontoregister.KontoregisterConsumer
-import no.nav.personopplysninger.common.kontoregister.dto.outbound.Konto
-import no.nav.personopplysninger.common.pdl.PdlService
-import no.nav.personopplysninger.common.pdl.dto.PdlData
-import no.nav.personopplysninger.common.pdl.dto.personalia.PdlStatsborgerskap
+import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
+import no.nav.personopplysninger.common.consumer.kontoregister.KontoregisterConsumer
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
+import no.nav.personopplysninger.common.consumer.pdl.PdlService
+import no.nav.personopplysninger.common.consumer.pdl.dto.PdlData
+import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlStatsborgerskap
 import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk

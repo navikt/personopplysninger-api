@@ -4,7 +4,7 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import no.nav.personopplysninger.IntegrationTest
-import no.nav.personopplysninger.common.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
 import no.nav.personopplysninger.config.setupMockedClient
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test

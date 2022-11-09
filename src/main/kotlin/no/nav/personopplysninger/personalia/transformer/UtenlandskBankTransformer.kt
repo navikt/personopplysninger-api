@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.common.kontoregister.dto.outbound.Konto
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.UtenlandskBankInfo
 

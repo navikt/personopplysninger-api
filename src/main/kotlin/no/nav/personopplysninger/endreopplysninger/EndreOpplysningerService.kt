@@ -1,14 +1,14 @@
 package no.nav.personopplysninger.endreopplysninger
 
-import no.nav.personopplysninger.common.kodeverk.KodeverkService
-import no.nav.personopplysninger.common.kodeverk.dto.KodeOgTekstDto
-import no.nav.personopplysninger.common.kodeverk.dto.Kodeverk
-import no.nav.personopplysninger.common.kontoregister.KontoregisterConsumer
-import no.nav.personopplysninger.common.kontoregister.dto.inbound.Kontonummer
-import no.nav.personopplysninger.common.kontoregister.dto.inbound.Retningsnummer
-import no.nav.personopplysninger.common.kontoregister.dto.outbound.OppdaterKonto
-import no.nav.personopplysninger.common.kontoregister.dto.outbound.UtenlandskKontoInfo
-import no.nav.personopplysninger.common.pdl.PdlService
+import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
+import no.nav.personopplysninger.common.consumer.kodeverk.dto.KodeOgTekstDto
+import no.nav.personopplysninger.common.consumer.kodeverk.dto.Kodeverk
+import no.nav.personopplysninger.common.consumer.kontoregister.KontoregisterConsumer
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Retningsnummer
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.OppdaterKonto
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.UtenlandskKontoInfo
+import no.nav.personopplysninger.common.consumer.pdl.PdlService
 import no.nav.personopplysninger.endreopplysninger.consumer.PdlMottakConsumer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.endreNummerPayload
