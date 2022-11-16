@@ -1,0 +1,54 @@
+[
+  {
+    "valutakode": "AED",
+    "valuta": "Emiratarabisk dirham"
+  },
+  {
+    "valutakode": "AFN",
+    "valuta": "Afghansk afghani"
+  },
+  {
+    "valutakode": "ALL",
+    "valuta": "Albansk lek"
+  },
+  {
+    "valutakode": "AMD",
+    "valuta": "Armensk dram"
+  },
+  {
+    "valutakode": "ANG",
+    "valuta": "Antillansk gylden"
+  },
+  {
+    "valutakode": "AOA",
+    "valuta": "Angolansk kwanza"
+  },
+  {
+    "valutakode": "ARS",
+    "valuta": "Argentinsk peso"
+  },
+  {
+    "valutakode": "AUD",
+    "valuta": "Australsk dollar"
+  },
+  {
+    "valutakode": "AWG",
+    "valuta": "Arubansk florin"
+  },
+  {
+    "valutakode": "AZN",
+    "valuta": "Aserbajdsjansk manat"
+  },
+  {
+    "valutakode": "BAM",
+    "valuta": "Konvertibilna mark"
+  },
+  {
+    "valutakode": "BBD",
+    "valuta": "Barbadisk dollar"
+  },
+  {
+    "valutakode": "BDT",
+    "valuta": "Bangladeshisk taka"
+  }
+]

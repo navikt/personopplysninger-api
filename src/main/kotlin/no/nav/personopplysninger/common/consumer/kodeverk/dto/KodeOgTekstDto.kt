@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class KodeOgTekstDto(
-        val kode: String,
-        val tekst: String? = null
-){
+    val kode: String,
+    val tekst: String? = null
+) {
     companion object {
         fun fromKode(kode: Kode): KodeOgTekstDto {
             val enkeltBeskrivelse = kode.betydninger.first().beskrivelser.values.first().tekst

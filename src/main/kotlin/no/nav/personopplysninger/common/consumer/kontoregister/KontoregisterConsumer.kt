@@ -2,6 +2,7 @@ package no.nav.personopplysninger.common.consumer.kontoregister
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -10,7 +11,9 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Landkode
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.ValidationError
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Valutakode
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.HentAktivKonto
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.OppdaterKonto
@@ -27,6 +30,8 @@ import java.util.*
 
 private const val HENT_KONTO_PATH = "/api/borger/v1/hent-aktiv-konto"
 private const val OPPDATER_KONTO_PATH = "/api/borger/v1/oppdater-konto"
+private const val HENT_LANDKODER_PATH = "/api/system/v1/hent-landkoder"
+private const val HENT_VALUTAKODER_PATH = "/api/system/v1/hent-valutakoder"
 
 class KontoregisterConsumer(
     private val client: HttpClient,
@@ -54,6 +59,16 @@ class KontoregisterConsumer(
         } else {
             throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
         }
+    }
+
+    suspend fun hentLandkoder(): List<Landkode> {
+        val endpoint = environment.kontoregisterUrl.plus(HENT_LANDKODER_PATH)
+        return client.get(endpoint).body()
+    }
+
+    suspend fun hentValutakoder(): List<Valutakode> {
+        val endpoint = environment.kontoregisterUrl.plus(HENT_VALUTAKODER_PATH)
+        return client.get(endpoint).body()
     }
 
     suspend fun endreKontonummer(token: String, request: OppdaterKonto) {

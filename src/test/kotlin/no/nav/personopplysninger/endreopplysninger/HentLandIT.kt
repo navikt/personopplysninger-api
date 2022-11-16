@@ -21,8 +21,8 @@ class HentLandIT : IntegrationTest() {
     }
 
     @Test
-    fun feilMotKodeverkSkalGi500() =
-        integrationTest(setupMockedClient(kodeverkStatus = HttpStatusCode.InternalServerError)) {
+    fun feilMotKontoregisterSkalGi500() =
+        integrationTest(setupMockedClient(kontoregisterStatus = HttpStatusCode.InternalServerError)) {
             val client = createClient { install(ContentNegotiation) { json() } }
             val response = get(client, HENT_LAND_PATH)
 

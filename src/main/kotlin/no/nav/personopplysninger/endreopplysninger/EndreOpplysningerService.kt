@@ -6,6 +6,8 @@ import no.nav.personopplysninger.common.consumer.kodeverk.dto.Kodeverk
 import no.nav.personopplysninger.common.consumer.kodeverk.dto.Retningsnummer
 import no.nav.personopplysninger.common.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Landkode
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Valutakode
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.OppdaterKonto
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.UtenlandskKontoInfo
 import no.nav.personopplysninger.common.consumer.pdl.PdlService
@@ -62,7 +64,7 @@ class EndreOpplysningerService(
                 UtenlandskKontoInfo(
                     banknavn = kontonummer.utenlandskKontoInformasjon.bank?.navn.orEmpty(),
                     bankkode = kontonummer.utenlandskKontoInformasjon.bank?.kode.orEmpty(),
-                    bankLandkode = kontonummer.utenlandskKontoInformasjon.landkodeTobokstavs.orEmpty(),
+                    bankLandkode = kontonummer.utenlandskKontoInformasjon.landkode.orEmpty(),
                     valutakode = kontonummer.utenlandskKontoInformasjon.valuta,
                     swiftBicKode = kontonummer.utenlandskKontoInformasjon.swift.orEmpty(),
                     bankadresse1 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje1.orEmpty(),
@@ -86,12 +88,12 @@ class EndreOpplysningerService(
             .toTypedArray()
     }
 
-    suspend fun hentLand(): Array<KodeOgTekstDto> {
-        return toSortedKodeOgTekstArray(kodeverkService.hentLandKoder())
+    suspend fun hentLandkoder(): List<Landkode> {
+        return kontoregisterConsumer.hentLandkoder()
     }
 
-    suspend fun hentValuta(): Array<KodeOgTekstDto> {
-        return toSortedKodeOgTekstArray(kodeverkService.hentValuta())
+    suspend fun hentValutakoder(): List<Valutakode> {
+        return kontoregisterConsumer.hentValutakoder()
     }
 
     suspend fun hentPostnummer(): Array<KodeOgTekstDto> {

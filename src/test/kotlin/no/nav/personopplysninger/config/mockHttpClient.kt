@@ -54,7 +54,7 @@ fun setupMockedClient(
                         mockDigdirKrrProxy(digdirKrrProxyStatus)
                     }
                     KONTOREGISTER -> {
-                        mockKontoregister(kontoregisterStatus)
+                        mockKontoregister(request, kontoregisterStatus)
                     }
                     MEDL -> {
                         mockMedl(medlStatus)

@@ -1,0 +1,66 @@
+[
+  {
+    "landkode": "AF",
+    "land": "Afghanistan",
+    "kreverIban": false,
+    "kreverBankkode": false
+  },
+  {
+    "landkode": "AL",
+    "land": "Albania",
+    "kreverIban": true,
+    "ibanLengde": 28,
+    "kreverBankkode": false
+  },
+  {
+    "landkode": "DZ",
+    "land": "Algerie",
+    "kreverIban": false,
+    "ibanLengde": 26,
+    "kreverBankkode": false
+  },
+  {
+    "landkode": "AS",
+    "land": "Amerikansk Samoa",
+    "kreverIban": false,
+    "kreverBankkode": false
+  },
+  {
+    "landkode": "AD",
+    "land": "Andorra",
+    "kreverIban": true,
+    "ibanLengde": 24,
+    "kreverBankkode": false
+  },
+  {
+    "landkode": "AO",
+    "land": "Angola",
+    "kreverIban": false,
+    "ibanLengde": 25,
+    "kreverBankkode": false
+  },
+  {
+    "landkode": "AI",
+    "land": "Anguilla",
+    "kreverIban": false,
+    "kreverBankkode": false
+  },
+  {
+    "landkode": "AQ",
+    "land": "Antarktika",
+    "kreverIban": false,
+    "kreverBankkode": false
+  },
+  {
+    "landkode": "AG",
+    "land": "Antigua og Barbuda",
+    "kreverIban": false,
+    "kreverBankkode": false
+  },
+  {
+    "landkode": "AR",
+    "land": "Argentina",
+    "kreverIban": false,
+    "kreverBankkode": false
+  }
+]

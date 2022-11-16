@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory
 
 @Serializable
 class Kodeverk(
-        val navn: String,
-        val koder: List<Kode>
+    val navn: String,
+    val koder: List<Kode>
 ) {
     private val log = LoggerFactory.getLogger(Kodeverk::class.java)
 
@@ -24,10 +24,10 @@ class Kodeverk(
         }
         try {
             return getBetydninger(kode)
-                    .first()
-                    .beskrivelser
-                    .getValue("nb")
-                    .term
+                .first()
+                .beskrivelser
+                .getValue("nb")
+                .term
         } catch (nse: NoSuchElementException) {
             log.warn("Oppslag på kodeverkstype $navn gav ingen term-treff for verdi $kode")
         }
@@ -40,10 +40,10 @@ class Kodeverk(
         }
         try {
             return getBetydninger(kode)
-                    .first()
-                    .beskrivelser
-                    .getValue("nb")
-                    .tekst ?: term(kode)
+                .first()
+                .beskrivelser
+                .getValue("nb")
+                .tekst ?: term(kode)
         } catch (nse: NoSuchElementException) {
             log.warn("Oppslag på kodeverkstype $navn gav ingen tekst-treff for verdi $kode")
         }
@@ -53,9 +53,9 @@ class Kodeverk(
     companion object {
         fun fromKoderBetydningerResponse(navn: String, response: GetKodeverkKoderBetydningerResponse): Kodeverk {
             return response.betydninger
-                    .entries
-                    .map { Kode(it.key, it.value) }
-                    .let { koder -> Kodeverk(navn, koder) }
+                .entries
+                .map { Kode(it.key, it.value) }
+                .let { koder -> Kodeverk(navn, koder) }
         }
     }
 }

@@ -93,7 +93,7 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
     }
     get("/land") {
         try {
-            val resp = endreOpplysningerService.hentLand()
+            val resp = endreOpplysningerService.hentLandkoder()
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved henting av land", e)
@@ -102,7 +102,7 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
     }
     get("/valuta") {
         try {
-            val resp = endreOpplysningerService.hentValuta()
+            val resp = endreOpplysningerService.hentValutakoder()
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved henting av valuta", e)
