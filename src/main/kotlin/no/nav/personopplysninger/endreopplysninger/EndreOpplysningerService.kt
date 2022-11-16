@@ -63,10 +63,10 @@ class EndreOpplysningerService(
             utenlandskKontoInfo = kontonummer.utenlandskKontoInformasjon?.let {
                 UtenlandskKontoInfo(
                     banknavn = kontonummer.utenlandskKontoInformasjon.bank?.navn.orEmpty(),
-                    bankkode = kontonummer.utenlandskKontoInformasjon.bank?.kode.orEmpty(),
+                    bankkode = kontonummer.utenlandskKontoInformasjon.bank?.kode,
                     bankLandkode = kontonummer.utenlandskKontoInformasjon.landkode.orEmpty(),
                     valutakode = kontonummer.utenlandskKontoInformasjon.valuta,
-                    swiftBicKode = kontonummer.utenlandskKontoInformasjon.swift.orEmpty(),
+                    swiftBicKode = kontonummer.utenlandskKontoInformasjon.swift,
                     bankadresse1 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje1.orEmpty(),
                     bankadresse2 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje2.orEmpty(),
                     bankadresse3 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje3.orEmpty(),
