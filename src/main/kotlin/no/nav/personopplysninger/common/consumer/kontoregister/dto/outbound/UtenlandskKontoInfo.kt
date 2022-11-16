@@ -8,7 +8,7 @@ data class UtenlandskKontoInfo(
     val bankkode: String = "",
     val bankLandkode: String = "",
     val valutakode: String,
-    val swiftBicKode: String = "",
+    val swiftBicKode: String? = null,
     val bankadresse1: String = "",
     val bankadresse2: String = "",
     val bankadresse3: String = "",
