@@ -8,6 +8,7 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.common.consumer.kontoregister.exception.KontoregisterValidationException
 import no.nav.personopplysninger.common.util.getFnrFromToken
 import no.nav.personopplysninger.common.util.getSelvbetjeningTokenFromCall
 import no.nav.personopplysninger.config.MetricsCollector
@@ -60,6 +61,9 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
             }
 
             call.respond(mapOf("statusType" to "OK"))
+        } catch (e: KontoregisterValidationException) {
+            logger.error("Validering feilet ved endring av kontonummer", e)
+            call.respond(HttpStatusCode.BadRequest, e.message ?: "Validering av kontonummer feilet")
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved endring av kontonummer", e)
             call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)

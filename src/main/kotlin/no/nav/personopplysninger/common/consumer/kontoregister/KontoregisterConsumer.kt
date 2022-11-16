@@ -10,9 +10,11 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.ValidationError
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.HentAktivKonto
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.OppdaterKonto
+import no.nav.personopplysninger.common.consumer.kontoregister.exception.KontoregisterValidationException
 import no.nav.personopplysninger.common.util.consumerErrorMessage
 import no.nav.personopplysninger.config.BEARER
 import no.nav.personopplysninger.config.CONSUMER_ID
@@ -67,6 +69,10 @@ class KontoregisterConsumer(
                 setBody(request)
             }
         if (!response.status.isSuccess()) {
+            if (response.status == HttpStatusCode.NotAcceptable) {
+                val errorResponse: ValidationError = response.body()
+                throw KontoregisterValidationException(errorResponse.feilmelding)
+            }
             throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
         }
     }
