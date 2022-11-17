@@ -9,4 +9,8 @@ data class Landkode(
     val kode: String,
     @JsonNames("land")
     val tekst: String,
+    val kreverIban: Boolean,
+    val ibanLengde: Int? = null,
+    val kreverBankkode: Boolean,
+    val bankkodeLengde: Int? = null,
 )
