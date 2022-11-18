@@ -22,7 +22,6 @@ import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_PERSONIDENT
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.Kontonummer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Personopplysning
 import no.nav.personopplysninger.endreopplysninger.dto.outbound.Endring
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
@@ -32,7 +31,6 @@ import java.util.*
 private const val SLEEP_TIME_MS = 1000L
 private const val MAX_POLLS = 5
 private const val URL_ENDRINGER = "/api/v1/endringer"
-private const val URL_KONTONUMMER = "/api/v1/endring/bankkonto"
 
 class PdlMottakConsumer(
     private val client: HttpClient,
@@ -43,10 +41,6 @@ class PdlMottakConsumer(
 
     suspend fun endreTelefonnummer(token: String, fnr: String, endreTelefon: Personopplysning): Endring {
         return sendPdlEndring(token, endreTelefon, fnr)
-    }
-
-    suspend fun endreKontonummer(token: String, fnr: String, kontonummer: Kontonummer): Endring {
-        return sendKontonummerEndring(token, kontonummer, fnr)
     }
 
     suspend fun slettPersonopplysning(token: String, fnr: String, opphoerPersonopplysning: Personopplysning): Endring {
@@ -65,27 +59,6 @@ class PdlMottakConsumer(
                 header(HEADER_NAV_PERSONIDENT, fnr)
                 contentType(ContentType.Application.Json)
                 setBody(entitetSomEndres.asSingleEndring())
-            }
-
-        return try {
-            readResponseAndPollStatus(accessToken, response)
-        } catch (e: Exception) {
-            throw RuntimeException("Forsøkte å endre personopplysning. endpoint=[$endpoint].", e)
-        }
-    }
-
-    private suspend fun sendKontonummerEndring(token: String, kontonummer: Kontonummer, fnr: String): Endring {
-        val accessToken = tokenDingsService.exchangeToken(token, environment.pdlMottakTargetApp)
-        val endpoint = environment.pdlMottakUrl.plus(URL_KONTONUMMER)
-
-        val response: HttpResponse =
-            client.post(endpoint) {
-                header(HEADER_AUTHORIZATION, BEARER + accessToken)
-                header(HEADER_NAV_CALL_ID, UUID.randomUUID())
-                header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-                header(HEADER_NAV_PERSONIDENT, fnr)
-                contentType(ContentType.Application.Json)
-                setBody(kontonummer)
             }
 
         return try {

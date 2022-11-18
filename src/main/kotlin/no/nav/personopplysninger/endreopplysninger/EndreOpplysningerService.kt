@@ -1,21 +1,27 @@
 package no.nav.personopplysninger.endreopplysninger
 
-import no.nav.personopplysninger.common.kodeverk.KodeverkService
-import no.nav.personopplysninger.common.kodeverk.dto.KodeOgTekstDto
-import no.nav.personopplysninger.common.kodeverk.dto.Kodeverk
-import no.nav.personopplysninger.common.pdl.PdlService
+import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
+import no.nav.personopplysninger.common.consumer.kodeverk.dto.KodeOgTekstDto
+import no.nav.personopplysninger.common.consumer.kodeverk.dto.Kodeverk
+import no.nav.personopplysninger.common.consumer.kodeverk.dto.Retningsnummer
+import no.nav.personopplysninger.common.consumer.kontoregister.KontoregisterConsumer
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Landkode
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Valutakode
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.OppdaterKonto
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.UtenlandskKontoInfo
+import no.nav.personopplysninger.common.consumer.pdl.PdlService
 import no.nav.personopplysninger.endreopplysninger.consumer.PdlMottakConsumer
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.Kontonummer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.endreNummerPayload
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettKontaktadressePayload
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettNummerPayload
 import no.nav.personopplysninger.endreopplysninger.dto.outbound.Endring
-import no.nav.personopplysninger.endreopplysninger.dto.outbound.Retningsnummer
 
 class EndreOpplysningerService(
     private var pdlMottakConsumer: PdlMottakConsumer,
     private var kodeverkService: KodeverkService,
+    private var kontoregisterConsumer: KontoregisterConsumer,
     private var pdlService: PdlService
 ) {
 
@@ -25,10 +31,6 @@ class EndreOpplysningerService(
         } else {
             return pdlMottakConsumer.endreTelefonnummer(token, fnr, endreNummerPayload(fnr, telefonnummer))
         }
-    }
-
-    suspend fun endreKontonummer(token: String, fnr: String, kontonummer: Kontonummer): Endring {
-        return pdlMottakConsumer.endreKontonummer(token, fnr, kontonummer)
     }
 
     suspend fun slettTelefonNummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
@@ -54,6 +56,26 @@ class EndreOpplysningerService(
         )
     }
 
+    suspend fun endreKontonummer(token: String, fnr: String, kontonummer: Kontonummer) {
+        val request = OppdaterKonto(
+            kontohaver = fnr,
+            nyttKontonummer = kontonummer.value,
+            utenlandskKontoInfo = kontonummer.utenlandskKontoInformasjon?.let {
+                UtenlandskKontoInfo(
+                    banknavn = kontonummer.utenlandskKontoInformasjon.bank?.navn.orEmpty(),
+                    bankkode = kontonummer.utenlandskKontoInformasjon.bank?.kode,
+                    bankLandkode = kontonummer.utenlandskKontoInformasjon.landkode.orEmpty(),
+                    valutakode = kontonummer.utenlandskKontoInformasjon.valuta,
+                    swiftBicKode = kontonummer.utenlandskKontoInformasjon.swift,
+                    bankadresse1 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje1.orEmpty(),
+                    bankadresse2 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje2.orEmpty(),
+                    bankadresse3 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje3.orEmpty(),
+                )
+            }
+        )
+        kontoregisterConsumer.endreKontonummer(token, request)
+    }
+
     suspend fun hentRetningsnumre(): Array<Retningsnummer> {
         return kodeverkService.hentRetningsnumre().koder
             .map { kode ->
@@ -66,12 +88,12 @@ class EndreOpplysningerService(
             .toTypedArray()
     }
 
-    suspend fun hentLand(): Array<KodeOgTekstDto> {
-        return toSortedKodeOgTekstArray(kodeverkService.hentLandKoder())
+    suspend fun hentLandkoder(): List<Landkode> {
+        return kontoregisterConsumer.hentLandkoder()
     }
 
-    suspend fun hentValuta(): Array<KodeOgTekstDto> {
-        return toSortedKodeOgTekstArray(kodeverkService.hentValuta())
+    suspend fun hentValutakoder(): List<Valutakode> {
+        return kontoregisterConsumer.hentValutakoder()
     }
 
     suspend fun hentPostnummer(): Array<KodeOgTekstDto> {

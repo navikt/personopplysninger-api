@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.common.pdl.dto.personalia.PdlTelefonnummer
+import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlTelefonnummer
 import no.nav.personopplysninger.personalia.dto.outbound.Tlfnr
 
 fun List<PdlTelefonnummer>.toTlfnr(): Tlfnr {

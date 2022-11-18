@@ -22,7 +22,7 @@ class HentValutaIT : IntegrationTest() {
 
     @Test
     fun feilMotKodeverkSkalGi500() =
-        integrationTest(setupMockedClient(kodeverkStatus = HttpStatusCode.InternalServerError)) {
+        integrationTest(setupMockedClient(kontoregisterStatus = HttpStatusCode.InternalServerError)) {
             val client = createClient { install(ContentNegotiation) { json() } }
             val response = get(client, HENT_VALUTA_PATH)
 

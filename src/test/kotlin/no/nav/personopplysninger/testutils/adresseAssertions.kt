@@ -1,11 +1,11 @@
 package no.nav.personopplysninger.testutils
 
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlMatrikkeladresse
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlPostadresseIFrittFormat
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlPostboksadresse
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlUtenlandskAdresse
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlUtenlandskAdresseIFrittFormat
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlVegadresse
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlMatrikkeladresse
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlPostadresseIFrittFormat
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlPostboksadresse
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUtenlandskAdresse
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUtenlandskAdresseIFrittFormat
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlVegadresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Matrikkeladresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.PostAdresseIFrittFormat
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Postboksadresse

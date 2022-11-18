@@ -2,11 +2,11 @@ package no.nav.personopplysninger.serialisering
 
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import no.nav.personopplysninger.common.kodeverk.dto.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.common.consumer.kodeverk.dto.GetKodeverkKoderBetydningerResponse
+import no.nav.personopplysninger.common.consumer.kodeverk.dto.Retningsnummer
 import no.nav.personopplysninger.config.jsonConfig
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.endreopplysninger.dto.outbound.Error
-import no.nav.personopplysninger.endreopplysninger.dto.outbound.Retningsnummer
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals

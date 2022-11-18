@@ -2,7 +2,7 @@ package no.nav.personopplysninger.serialisering
 
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import no.nav.personopplysninger.common.pdl.dto.PdlResponse
+import no.nav.personopplysninger.common.consumer.pdl.dto.PdlResponse
 import no.nav.personopplysninger.config.jsonConfig
 import no.nav.personopplysninger.institusjon.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.institusjon.dto.Institusjonstype

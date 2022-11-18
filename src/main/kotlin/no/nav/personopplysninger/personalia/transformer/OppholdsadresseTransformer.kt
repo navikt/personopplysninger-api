@@ -1,9 +1,9 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.common.pdl.dto.adresse.AdresseMappingType.INNLAND_VEGADRESSE
-import no.nav.personopplysninger.common.pdl.dto.adresse.AdresseMappingType.MATRIKKELADRESSE
-import no.nav.personopplysninger.common.pdl.dto.adresse.AdresseMappingType.UTLAND_ADRESSE
-import no.nav.personopplysninger.common.pdl.dto.adresse.PdlOppholdsadresse
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.INNLAND_VEGADRESSE
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.MATRIKKELADRESSE
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.UTLAND_ADRESSE
+import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlOppholdsadresse
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Adresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Oppholdsadresse

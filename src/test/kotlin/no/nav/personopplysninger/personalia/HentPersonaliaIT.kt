@@ -58,8 +58,8 @@ class HentPersonaliaIT : IntegrationTest() {
         }
 
     @Test
-    fun feilMotTpsProxySkalGi500() =
-        integrationTest(setupMockedClient(tpsProxyStatus = HttpStatusCode.InternalServerError)) {
+    fun feilMotKontoregisterSkalGi500() =
+        integrationTest(setupMockedClient(kontoregisterStatus = HttpStatusCode.InternalServerError)) {
             val client = createClient { install(ContentNegotiation) { json() } }
             val response = get(client, HENT_PERSONALIA_PATH)
 

@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.personalia.consumer.norg2.dto.Aapningstider
+import no.nav.personopplysninger.personalia.consumer.dto.Aapningstider
 import no.nav.personopplysninger.personalia.dto.outbound.Aapningstid
 
 object AapningstidTransformer {

@@ -7,10 +7,11 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.common.consumer.kontoregister.exception.KontoregisterValidationException
 import no.nav.personopplysninger.common.util.getFnrFromToken
 import no.nav.personopplysninger.common.util.getSelvbetjeningTokenFromCall
 import no.nav.personopplysninger.config.MetricsCollector
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.Kontonummer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import org.slf4j.LoggerFactory
 
@@ -60,6 +61,9 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
             }
 
             call.respond(mapOf("statusType" to "OK"))
+        } catch (e: KontoregisterValidationException) {
+            logger.error("Validering feilet ved endring av kontonummer", e)
+            call.respond(HttpStatusCode.BadRequest, e.message ?: "Validering av kontonummer feilet")
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved endring av kontonummer", e)
             call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
@@ -89,7 +93,7 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
     }
     get("/land") {
         try {
-            val resp = endreOpplysningerService.hentLand()
+            val resp = endreOpplysningerService.hentLandkoder()
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved henting av land", e)
@@ -98,7 +102,7 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
     }
     get("/valuta") {
         try {
-            val resp = endreOpplysningerService.hentValuta()
+            val resp = endreOpplysningerService.hentValutakoder()
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved henting av valuta", e)

@@ -22,7 +22,7 @@ fun MockRequestHandleScope.mockPdlMottak(
     responseType: PdlMottakResponseType
 ) =
     if (status.isSuccess()) {
-        if (request.url.encodedPath.contains("endring")) {
+        if (request.url.encodedPath.contains("endringer")) {
             respond(
                 "Suksess",
                 headers = headersOf(HttpHeaders.Location, "/location"),
