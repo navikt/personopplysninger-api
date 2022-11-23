@@ -48,7 +48,7 @@ object Ktor {
 }
 
 object Logback {
-    private const val version = "1.4.4"
+    private const val version = "1.4.5"
     const val classic = "ch.qos.logback:logback-classic:$version"
 }
 
@@ -60,7 +60,7 @@ object Logstash {
 }
 
 object Micrometer {
-    private const val version = "1.9.5"
+    private const val version = "1.10.1"
     const val registryPrometheus = "io.micrometer:micrometer-registry-prometheus:$version"
 }
 
@@ -97,6 +97,6 @@ object TmsKtorTokenSupport {
 }
 
 object Versions {
-    const val version = "0.43.0"
+    const val version = "0.44.0"
     const val pluginId = "com.github.ben-manes.versions"
 }

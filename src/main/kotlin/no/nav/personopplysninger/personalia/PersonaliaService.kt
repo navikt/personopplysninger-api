@@ -58,9 +58,8 @@ class PersonaliaService(
             foedelandterm = kodeverkService.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
             gtLandterm = kodeverkService.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
             statsborgerskaptermer = hentGyldigeStatsborgerskap(pdlPerson.statsborgerskap)
-            utenlandskbanklandterm =
-                kodeverkService.hentLandKoderISO2().term(inboundKonto?.utenlandskKontoInfo?.bankLandkode)
-            utenlandskbankvalutaterm = kodeverkService.hentValuta().term(inboundKonto?.utenlandskKontoInfo?.valutakode)
+            utenlandskbanklandterm = hentLandKodeterm(inboundKonto?.utenlandskKontoInfo?.bankLandkode)
+            utenlandskbankvalutaterm = hentValutaKodeterm(inboundKonto?.utenlandskKontoInfo?.valutakode)
             kontaktadresseKodeverk =
                 kontaktadresse.map { hentAdresseKodeverk(it.postnummer, it.landkode, it.kommunenummer) }
             bostedsadresseKodeverk =
@@ -97,6 +96,14 @@ class PersonaliaService(
         } else {
             kodeverkService.hentKommuner().term(inbound)
         }
+    }
+
+    private suspend fun hentValutaKodeterm(kode: String?): String? {
+        return kontoregisterConsumer.hentValutakoder().find { valuta -> kode == valuta.kode }?.tekst
+    }
+
+    private suspend fun hentLandKodeterm(kode: String?): String? {
+        return kontoregisterConsumer.hentLandkoder().find { land -> kode == land.kode }?.tekst
     }
 
     private suspend fun hentEnhetKontaktinformasjon(

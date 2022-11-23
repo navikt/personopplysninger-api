@@ -52,11 +52,6 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
             val fnr = getFnrFromToken(selvbetjeningIdtoken)
             val kontonummer = call.receive<Kontonummer>()
 
-            if (kontonummer.utenlandskKontoInformasjon != null) {
-                logger.info("Mottatt forespørsel om endring av utenlandsk kontonummer med landkode ${kontonummer.utenlandskKontoInformasjon.landkode} og valutakode ${kontonummer.utenlandskKontoInformasjon.valuta}")
-            }
-
-
             endreOpplysningerService.endreKontonummer(selvbetjeningIdtoken, fnr, kontonummer)
 
             if (kontonummer.utenlandskKontoInformasjon == null) {

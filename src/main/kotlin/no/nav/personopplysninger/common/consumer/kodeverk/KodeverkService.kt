@@ -20,16 +20,8 @@ class KodeverkService(
         return hentKodeverkBetydning("Landkoder", true)
     }
 
-    suspend fun hentLandKoderISO2(): Kodeverk {
-        return hentKodeverkBetydning("LandkoderISO2", true)
-    }
-
     suspend fun hentPostnummer(): Kodeverk {
         return hentKodeverkBetydning("Postnummer", true)
-    }
-
-    suspend fun hentValuta(): Kodeverk {
-        return hentKodeverkBetydning("Valutaer", true)
     }
 
     suspend fun hentStatsborgerskap(): Kodeverk {
