@@ -3,8 +3,8 @@
   "utenlandskKontoInfo": {
     "banknavn": "string",
     "bankkode": "CC123456789",
-    "bankLandkode": "SY",
-    "valutakode": "MMK",
+    "bankLandkode": "AF",
+    "valutakode": "AOA",
     "swiftBicKode": "SHEDNO22",
     "bankadresse1": "string",
     "bankadresse2": "string",
