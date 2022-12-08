@@ -57,7 +57,7 @@ class KontoregisterConsumer(
         } else if (response.status == HttpStatusCode.NotFound) {
             null
         } else {
-            throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
+            Konto(error = true)
         }
     }
 

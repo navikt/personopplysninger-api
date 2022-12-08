@@ -58,8 +58,8 @@ class PersonaliaService(
             foedelandterm = kodeverkService.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
             gtLandterm = kodeverkService.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
             statsborgerskaptermer = hentGyldigeStatsborgerskap(pdlPerson.statsborgerskap)
-            utenlandskbanklandterm = hentLandKodeterm(inboundKonto?.utenlandskKontoInfo?.bankLandkode)
-            utenlandskbankvalutaterm = hentValutaKodeterm(inboundKonto?.utenlandskKontoInfo?.valutakode)
+            utenlandskbanklandterm = if (inboundKonto?.utenlandskKontoInfo != null) hentLandKodeterm(inboundKonto.utenlandskKontoInfo.bankLandkode) else null
+            utenlandskbankvalutaterm = if (inboundKonto?.utenlandskKontoInfo != null) hentValutaKodeterm(inboundKonto.utenlandskKontoInfo.valutakode) else null
             kontaktadresseKodeverk =
                 kontaktadresse.map { hentAdresseKodeverk(it.postnummer, it.landkode, it.kommunenummer) }
             bostedsadresseKodeverk =
