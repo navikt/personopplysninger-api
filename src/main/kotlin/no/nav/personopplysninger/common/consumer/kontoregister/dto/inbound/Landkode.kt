@@ -13,4 +13,5 @@ data class Landkode(
     val ibanLengde: Int? = null,
     val kreverBankkode: Boolean,
     val bankkodeLengde: Int? = null,
+    val alternativLandkode: String? = null
 )

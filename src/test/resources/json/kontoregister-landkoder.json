@@ -62,5 +62,12 @@
     "land": "Argentina",
     "kreverIban": false,
     "kreverBankkode": false
+  },
+  {
+    "landkode": "AX",
+    "alternativLandkode": "FI",
+    "land": "Åland",
+    "kreverIban": false,
+    "kreverBankkode": false
   }
 ]
