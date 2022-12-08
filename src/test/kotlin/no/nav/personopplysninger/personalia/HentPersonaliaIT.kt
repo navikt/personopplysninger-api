@@ -58,12 +58,12 @@ class HentPersonaliaIT : IntegrationTest() {
         }
 
     @Test
-    fun feilMotKontoregisterSkalGi500() =
+    fun feilMotKontoregisterSkalGi200() =
         integrationTest(setupMockedClient(kontoregisterStatus = HttpStatusCode.InternalServerError)) {
             val client = createClient { install(ContentNegotiation) { json() } }
             val response = get(client, HENT_PERSONALIA_PATH)
 
-            assertEquals(HttpStatusCode.InternalServerError, response.status)
+            assertEquals(HttpStatusCode.OK, response.status)
         }
 
     @Test
