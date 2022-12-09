@@ -14,6 +14,7 @@ import io.ktor.http.isSuccess
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Landkode
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.ValidationError
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Valutakode
+import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.HentAktivKonto
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.OppdaterKonto
 import no.nav.personopplysninger.common.consumer.kontoregister.exception.KontoregisterValidationException
@@ -37,8 +38,27 @@ class KontoregisterConsumer(
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,
 ) {
-    fun hentAktivKonto(token: String, fnr: String): Konto? {
-        return Konto(error = true)
+    suspend fun hentAktivKonto(token: String, fnr: String): Konto? {
+        val accessToken = tokenDingsService.exchangeToken(token, environment.kontoregisterTargetApp)
+        val endpoint = environment.kontoregisterUrl.plus(HENT_KONTO_PATH)
+
+        val request = HentAktivKonto(kontohaver = fnr)
+
+        val response: HttpResponse =
+            client.post(endpoint) {
+                header(HEADER_AUTHORIZATION, BEARER + accessToken)
+                header(HEADER_NAV_CALL_ID, UUID.randomUUID())
+                header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+                contentType(ContentType.Application.Json)
+                setBody(request)
+            }
+        return if (response.status.isSuccess()) {
+            response.body()
+        } else if (response.status == HttpStatusCode.NotFound) {
+            null
+        } else {
+            Konto(error = true)
+        }
     }
 
     suspend fun hentLandkoder(): List<Landkode> {
