@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Konto(
-    val kontonummer: String? = null,
-    val utenlandskKontoInfo: UtenlandskKontoInfo? = null,
-    val error: Boolean = false
+    val kontonummer: String,
+    val utenlandskKontoInfo: UtenlandskKontoInfo? = null
 )
