@@ -18,5 +18,6 @@ fun main() {
         coEvery { getSelvbetjeningTokenFromCall(any()) } returns "dummyToken"
         coEvery { getFnrFromToken(any()) } returns "10108000398"
 
-        testModule(TestApplicationContext(setupMockedClient()))    }.start(wait = true)
+        testModule(TestApplicationContext(setupMockedClient()))
+    }.start(wait = true)
 }

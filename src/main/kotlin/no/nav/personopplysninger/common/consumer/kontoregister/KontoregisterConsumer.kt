@@ -2,6 +2,7 @@ package no.nav.personopplysninger.common.consumer.kontoregister
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.network.sockets.SocketTimeoutException
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -26,6 +27,8 @@ import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.util.*
 
 private const val HENT_KONTO_PATH = "/api/borger/v1/hent-aktiv-konto"
@@ -38,26 +41,33 @@ class KontoregisterConsumer(
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,
 ) {
+
+    private val logger: Logger = LoggerFactory.getLogger(KontoregisterConsumer::class.java)
+
     suspend fun hentAktivKonto(token: String, fnr: String): Konto? {
         val accessToken = tokenDingsService.exchangeToken(token, environment.kontoregisterTargetApp)
         val endpoint = environment.kontoregisterUrl.plus(HENT_KONTO_PATH)
 
         val request = HentAktivKonto(kontohaver = fnr)
 
-        val response: HttpResponse =
-            client.post(endpoint) {
-                header(HEADER_AUTHORIZATION, BEARER + accessToken)
-                header(HEADER_NAV_CALL_ID, UUID.randomUUID())
-                header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-                contentType(ContentType.Application.Json)
-                setBody(request)
+        try {
+            val response: HttpResponse =
+                client.post(endpoint) {
+                    header(HEADER_AUTHORIZATION, BEARER + accessToken)
+                    header(HEADER_NAV_CALL_ID, UUID.randomUUID())
+                    header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+                    contentType(ContentType.Application.Json)
+                    setBody(request)
+                }
+            return if (response.status.isSuccess()) {
+                response.body()
+            } else {
+                logger.warn("Kall mot kontoregister feilet med status ${response.status}. Returnerer feilobjekt.")
+                Konto(error = true)
             }
-        return if (response.status.isSuccess()) {
-            response.body()
-        } else if (response.status == HttpStatusCode.NotFound) {
-            null
-        } else {
-            Konto(error = true)
+        } catch (e: SocketTimeoutException) {
+            logger.warn("Kall mot kontoregister timet ut. Returnerer feilobjekt.")
+            return Konto(error = true)
         }
     }
 

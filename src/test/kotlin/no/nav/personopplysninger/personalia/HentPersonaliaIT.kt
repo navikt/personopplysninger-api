@@ -1,12 +1,14 @@
 package no.nav.personopplysninger.personalia
 
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import no.nav.personopplysninger.IntegrationTest
 import no.nav.personopplysninger.config.mocks.PdlResponseType
 import no.nav.personopplysninger.config.setupMockedClient
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import kotlin.test.Test
 
 class HentPersonaliaIT : IntegrationTest() {
@@ -64,6 +66,7 @@ class HentPersonaliaIT : IntegrationTest() {
             val response = get(client, HENT_PERSONALIA_PATH)
 
             assertEquals(HttpStatusCode.OK, response.status)
+            assertTrue(response.bodyAsText().contains("\"kontoregisterStatus\": \"ERROR\""))
         }
 
     @Test
