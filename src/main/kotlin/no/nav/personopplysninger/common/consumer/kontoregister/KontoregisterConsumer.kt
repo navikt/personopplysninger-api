@@ -2,7 +2,9 @@ package no.nav.personopplysninger.common.consumer.kontoregister
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.network.sockets.ConnectTimeoutException
 import io.ktor.client.network.sockets.SocketTimeoutException
+import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -65,8 +67,14 @@ class KontoregisterConsumer(
                 logger.warn("Kall mot kontoregister feilet med status ${response.status}. Returnerer feilobjekt.")
                 Konto(error = true)
             }
-        } catch (e: SocketTimeoutException) {
-            logger.warn("Kall mot kontoregister timet ut. Returnerer feilobjekt.")
+        } catch (e: Exception) {
+            val feilmelding = when (e) {
+                is SocketTimeoutException,
+                is HttpRequestTimeoutException,
+                is ConnectTimeoutException -> "Kall mot kontoregister timet ut. Returnerer feilobjekt."
+                else -> "Ukjent feil ved kall mot kontoregister. Returnerer feilobjekt."
+            }
+            logger.warn(feilmelding, e)
             return Konto(error = true)
         }
     }

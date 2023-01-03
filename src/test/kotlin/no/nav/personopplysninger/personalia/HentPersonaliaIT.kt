@@ -70,6 +70,16 @@ class HentPersonaliaIT : IntegrationTest() {
         }
 
     @Test
+    fun timeoutMotKontoregisterSkalGi200() =
+        integrationTest(setupMockedClient(kontoregisterDelay = 1000L)) {
+            val client = createClient { install(ContentNegotiation) { json() } }
+            val response = get(client, HENT_PERSONALIA_PATH)
+
+            assertEquals(HttpStatusCode.OK, response.status)
+            assertTrue(response.bodyAsText().contains("\"kontoregisterStatus\": \"ERROR\""))
+        }
+
+    @Test
     fun feilMotKodeverkSkalGi500() =
         integrationTest(setupMockedClient(kodeverkStatus = HttpStatusCode.InternalServerError)) {
             val client = createClient { install(ContentNegotiation) { json() } }

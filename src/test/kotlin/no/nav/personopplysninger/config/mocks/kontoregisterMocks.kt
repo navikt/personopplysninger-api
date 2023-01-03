@@ -9,6 +9,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.http.isSuccess
+import kotlinx.coroutines.delay
 import kotlinx.serialization.encodeToString
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.ValidationError
 import no.nav.personopplysninger.config.jsonConfig
@@ -16,8 +17,15 @@ import no.nav.personopplysninger.testutils.TestFileReader.readFile
 
 const val KONTONUMMER_VALIDERINGSFEIL = "Valideringsfeil"
 
-fun MockRequestHandleScope.mockKontoregister(request: HttpRequestData, status: HttpStatusCode) =
+suspend fun MockRequestHandleScope.mockKontoregister(
+    request: HttpRequestData,
+    status: HttpStatusCode,
+    delayMilliseconds: Long
+) =
     if (status.isSuccess()) {
+        if (delayMilliseconds > 0) {
+            delay(delayMilliseconds)
+        }
         respond(
             readKontoregisterResponse(request.url.encodedPath),
             headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
