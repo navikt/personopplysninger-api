@@ -7,7 +7,7 @@ object Auth0 {
 
 object Caffeine {
 
-    private const val version = "3.1.1"
+    private const val version = "3.1.2"
     private const val groupId = "com.github.ben-manes.caffeine"
 
     const val caffeine = "$groupId:caffeine:$version"
@@ -21,14 +21,14 @@ object Finn {
 }
 
 object Kotlin {
-    const val version = "1.7.20"
+    const val version = "1.8.0"
     private const val groupId = "org.jetbrains.kotlin"
 
     const val junit5 = "$groupId:kotlin-test-junit5:$version"
 }
 
 object Ktor {
-    private const val version = "2.1.2"
+    private const val version = "2.2.1"
     private const val groupId = "io.ktor"
 
     const val metricsMicrometer = "$groupId:ktor-server-metrics-micrometer:$version"
@@ -60,25 +60,25 @@ object Logstash {
 }
 
 object Micrometer {
-    private const val version = "1.10.1"
+    private const val version = "1.10.2"
     const val registryPrometheus = "io.micrometer:micrometer-registry-prometheus:$version"
 }
 
 object Mockk {
-    private const val version = "1.13.2"
+    private const val version = "1.13.3"
     const val mockk = "io.mockk:mockk:$version"
 }
 
 object NAV {
     object Security {
-        private const val version = "2.1.7"
+        private const val version = "3.0.2"
         private const val groupId = "no.nav.security"
 
         const val tokenValidationKtor = "$groupId:token-validation-ktor-v2:$version"
     }
 
     object Common {
-        private const val version = "2.2022.10.28_08.02-d7d341cf26ba"
+        private const val version = "2.2023.01.02_13.51-1c6adeb1653b"
         private const val groupId = "no.nav.common"
         const val featureToggle = "$groupId:feature-toggle:$version"
     }
