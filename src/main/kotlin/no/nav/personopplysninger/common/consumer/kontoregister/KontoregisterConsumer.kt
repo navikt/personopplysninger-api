@@ -63,6 +63,8 @@ class KontoregisterConsumer(
                 }
             return if (response.status.isSuccess()) {
                 response.body()
+            } else if (response.status == HttpStatusCode.NotFound) {
+                null
             } else {
                 logger.warn("Kall mot kontoregister feilet med status ${response.status}. Returnerer feilobjekt.")
                 Konto(error = true)
