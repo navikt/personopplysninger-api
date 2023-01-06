@@ -23,7 +23,7 @@ object HttpClientBuilder {
                 retryOnExceptionOrServerErrors(maxRetries = 3)
             }
             install(HttpTimeout) {
-                requestTimeoutMillis = 2000
+                requestTimeoutMillis = 3000
             }
             expectSuccess = false
         }
