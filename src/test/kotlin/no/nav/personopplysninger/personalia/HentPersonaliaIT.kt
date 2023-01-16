@@ -71,7 +71,7 @@ class HentPersonaliaIT : IntegrationTest() {
 
     @Test
     fun timeoutMotKontoregisterSkalGi200() =
-        integrationTest(setupMockedClient(kontoregisterDelay = 1000L)) {
+        integrationTest(setupMockedClient(kontoregisterDelay = 2000)) {
             val client = createClient { install(ContentNegotiation) { json() } }
             val response = get(client, HENT_PERSONALIA_PATH)
 
