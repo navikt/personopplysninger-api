@@ -5,7 +5,6 @@ import io.ktor.client.call.body
 import io.ktor.client.network.sockets.ConnectTimeoutException
 import io.ktor.client.network.sockets.SocketTimeoutException
 import io.ktor.client.plugins.HttpRequestTimeoutException
-import io.ktor.client.plugins.timeout
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -61,12 +60,6 @@ class KontoregisterConsumer(
                     header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                     contentType(ContentType.Application.Json)
                     setBody(request)
-                    /* Setter kortere timeout midlertidig, da denne tjenesten er ny og har hatt litt nedetid.
-                    Uheldig hvis det gjør at sluttbruker må vente opp til 9 sek på personalia.
-                    Kontonummer-data bør muligens skilles ut i et eget endepunkt. */
-                    timeout {
-                        requestTimeoutMillis = 1000
-                    }
                 }
             return if (response.status.isSuccess()) {
                 response.body()
