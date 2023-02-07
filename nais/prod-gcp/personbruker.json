@@ -5,5 +5,7 @@
   "proxy-host": "https://personopplysninger-proxy.prod-fss-pub.nais.io",
   "pdl-api-host": "https://pdl-api.prod-fss-pub.nais.io",
   "pdl-mottak-host": "https://pdl-mottak.prod-fss-pub.nais.io",
-  "fss-cluster": "prod-fss"
+  "fss-cluster": "prod-fss",
+  "min-replicas": 2,
+  "max-replicas": 4
 }
