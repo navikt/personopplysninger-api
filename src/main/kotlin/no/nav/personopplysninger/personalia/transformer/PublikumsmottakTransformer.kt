@@ -37,6 +37,7 @@ object PublikumsmottakTransformer {
                 }
             }
             mottaksliste.add(publikumsmottak)
+            publikumsmottak.aapningstider = mottak.aapningstider?.map { a -> AapningstidTransformer.toOutbound(a) }
         }
         return mottaksliste
     }
