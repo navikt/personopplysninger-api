@@ -16,6 +16,7 @@ data class PublikumsmottakDto (
         var aapningOnsdag: Aapningstid? = null,
         var aapningTorsdag: Aapningstid? = null,
         var aapningFredag: Aapningstid? = null,
-        var aapningAndre: List<Aapningstid>? = null
+        var aapningAndre: List<Aapningstid>? = null,
+        var aapningstider: List<Aapningstid>? = null
 
 )
