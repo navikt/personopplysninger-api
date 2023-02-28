@@ -46,7 +46,7 @@ class ApplicationContext {
     val kontoregisterConsumer = KontoregisterConsumer(httpClient, env, tokendingsService)
     val kodeverkConsumer = KodeverkConsumer(httpClient, env)
     val medlConsumer = MedlConsumer(httpClient, env, tokendingsService)
-    val norg2Consumer = Norg2Consumer(httpClient, env, tokendingsService)
+    val norg2Consumer = Norg2Consumer(httpClient, env)
     val pdlConsumer = PdlConsumer(httpClient, env, tokendingsService)
     val pdlMottakConsumer = PdlMottakConsumer(httpClient, env, tokendingsService)
 
