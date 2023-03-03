@@ -6,11 +6,12 @@ import no.nav.personopplysninger.personalia.dto.outbound.Aapningstid
 object AapningstidTransformer {
     fun toOutbound(inbound: Aapningstider?): Aapningstid {
         return Aapningstid(
-                dag = inbound?.dag,
-                fra = inbound?.fra,
-                til = inbound?.til,
-                stengt = inbound?.stengt,
-                kommentar = inbound?.kommentar
+            dag = inbound?.dag,
+            dato = inbound?.dato,
+            fra = inbound?.fra,
+            til = inbound?.til,
+            stengt = inbound?.stengt,
+            kommentar = inbound?.kommentar
         )
     }
 }

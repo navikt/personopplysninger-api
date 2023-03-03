@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.personalia.transformer
 
 
+import no.nav.personopplysninger.personalia.consumer.dto.Aapningstider
 import no.nav.personopplysninger.personalia.consumer.dto.Publikumsmottak
 import no.nav.personopplysninger.personalia.dto.outbound.Aapningstid
 import no.nav.personopplysninger.personalia.dto.outbound.PublikumsmottakDto
@@ -12,33 +13,34 @@ object PublikumsmottakTransformer {
     private const val torsdag = "Torsdag"
     private const val fredag = "Fredag"
 
-    fun toOutbound(inbound: List<Publikumsmottak>?): ArrayList<PublikumsmottakDto> {
+    private val UKEDAGER = listOf("Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag")
 
-        val mottaksliste = ArrayList<PublikumsmottakDto>(0)
+    fun toOutbound(inbound: List<Publikumsmottak>?): List<PublikumsmottakDto> {
 
-        for (mottak in inbound.orEmpty()) {
-            val publikumsmottak = PublikumsmottakDto()
-            val aapningstidsliste = ArrayList<Aapningstid>(0)
-            publikumsmottak.gateadresse = mottak.besoeksadresse?.gatenavn
-            publikumsmottak.poststed = mottak.besoeksadresse?.poststed
-            publikumsmottak.husnummer = mottak.besoeksadresse?.husnummer
-            publikumsmottak.husbokstav = mottak.besoeksadresse?.husbokstav
-            publikumsmottak.postnummer = mottak.besoeksadresse?.postnummer
-            publikumsmottak.stedsbeskrivelse = mottak.stedsbeskrivelse
-            publikumsmottak.aapningMandag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == mandag })
-            publikumsmottak.aapningTirsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == tirsdag })
-            publikumsmottak.aapningOnsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == onsdag })
-            publikumsmottak.aapningTorsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == torsdag })
-            publikumsmottak.aapningFredag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == fredag })
-            for (aapningstider in mottak.aapningstider.orEmpty()) {
-                if (aapningstider.dag != mandag && aapningstider.dag != tirsdag && aapningstider.dag != onsdag && aapningstider.dag != torsdag && aapningstider.dag != fredag) {
-                    val aapningstid = AapningstidTransformer.toOutbound(aapningstider)
-                    aapningstidsliste.add(aapningstid)
-                }
-            }
-            mottaksliste.add(publikumsmottak)
-            publikumsmottak.aapningstider = mottak.aapningstider?.map { a -> AapningstidTransformer.toOutbound(a) }
-        }
-        return mottaksliste
+        return inbound?.map { mottak ->
+            PublikumsmottakDto(
+                gateadresse = mottak.besoeksadresse?.gatenavn,
+                poststed = mottak.besoeksadresse?.poststed,
+                husnummer = mottak.besoeksadresse?.husnummer,
+                husbokstav = mottak.besoeksadresse?.husbokstav,
+                postnummer = mottak.besoeksadresse?.postnummer,
+                stedsbeskrivelse = mottak.stedsbeskrivelse,
+                aapningMandag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == mandag }),
+                aapningTirsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == tirsdag }),
+                aapningOnsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == onsdag }),
+                aapningTorsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == torsdag }),
+                aapningFredag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == fredag }),
+                aapningstider = getAapningstider(mottak.aapningstider),
+                spesielleAapningstider = getSpesielleAapningstider(mottak.aapningstider)
+            )
+        } ?: emptyList()
+    }
+
+    fun getAapningstider(aapningstider: List<Aapningstider>?): List<Aapningstid> {
+        return UKEDAGER.map { AapningstidTransformer.toOutbound(aapningstider?.find { aapningstid -> aapningstid.dag == it }) }
+    }
+
+    fun getSpesielleAapningstider(aapningstider: List<Aapningstider>?): List<Aapningstid> {
+        return aapningstider?.filter { it.dag == null }?.map { AapningstidTransformer.toOutbound(it) } ?: emptyList()
     }
 }
