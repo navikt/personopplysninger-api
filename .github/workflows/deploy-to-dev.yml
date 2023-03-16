@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev-gcp:personbruker
     env:
-      version: ghcr.io/${{ github.repository }}:${{ github.sha }}
       team: personbruker
     steps:
       - name: Checkout
@@ -45,5 +44,5 @@ jobs:
           CLUSTER: dev-gcp
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: ./nais/nais.yaml
-          VAR: version=${{ env.version }}
+          VAR: image=${{steps.docker-build-push.outputs.image}}
           VARS: ./nais/dev-gcp/personbruker.json
