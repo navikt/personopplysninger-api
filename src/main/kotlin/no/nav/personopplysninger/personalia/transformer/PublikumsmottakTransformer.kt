@@ -25,11 +25,6 @@ object PublikumsmottakTransformer {
                 husbokstav = mottak.besoeksadresse?.husbokstav,
                 postnummer = mottak.besoeksadresse?.postnummer,
                 stedsbeskrivelse = mottak.stedsbeskrivelse,
-                aapningMandag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == mandag }),
-                aapningTirsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == tirsdag }),
-                aapningOnsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == onsdag }),
-                aapningTorsdag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == torsdag }),
-                aapningFredag = AapningstidTransformer.toOutbound(mottak.aapningstider?.find { it.dag == fredag }),
                 aapningstider = getAapningstider(mottak.aapningstider),
                 spesielleAapningstider = getSpesielleAapningstider(mottak.aapningstider)
             )

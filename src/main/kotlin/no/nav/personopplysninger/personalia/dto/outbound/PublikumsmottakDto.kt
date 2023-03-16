@@ -10,12 +10,6 @@ data class PublikumsmottakDto(
     var husbokstav: String? = null,
     var postnummer: String? = null,
     var stedsbeskrivelse: String? = null,
-    var aapningMandag: Aapningstid? = null,
-    var aapningTirsdag: Aapningstid? = null,
-    var aapningOnsdag: Aapningstid? = null,
-    var aapningTorsdag: Aapningstid? = null,
-    var aapningFredag: Aapningstid? = null,
-    var aapningAndre: List<Aapningstid>? = null,
     var aapningstider: List<Aapningstid>,
     var spesielleAapningstider: List<Aapningstid>
 )
