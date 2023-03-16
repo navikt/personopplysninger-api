@@ -27,7 +27,8 @@ jobs:
       - name: Build application
         run: |
           ./gradlew clean build
-      - uses: nais/docker-build-push@v0
+      - name: Build and push docker image
+        uses: nais/docker-build-push@v0
         id: docker-build-push
         with:
           team: ${{env.team}}
