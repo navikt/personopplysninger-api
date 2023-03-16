@@ -9,8 +9,6 @@ jobs:
       id-token: "write"
     runs-on: ubuntu-latest
     environment: dev-gcp:personbruker
-    env:
-      team: personbruker
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -31,7 +29,7 @@ jobs:
         uses: nais/docker-build-push@v0
         id: docker-build-push
         with:
-          team: ${{env.team}}
+          team: personbruker
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
       - name: Deploy to dev-gcp
