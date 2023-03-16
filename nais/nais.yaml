@@ -24,9 +24,6 @@ spec:
   tokenx:
     enabled: true
   accessPolicy:
-    inbound:
-      rules:
-        - application: personopplysninger
     rules:
       - application: personopplysninger-proxy
         namespace: personbruker
