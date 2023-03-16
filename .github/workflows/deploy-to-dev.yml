@@ -39,5 +39,5 @@ jobs:
           CLUSTER: dev-gcp
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: ./nais/nais.yaml
-          IMAGE: ${{steps.docker-build-push.outputs.image}}
+          VAR: image=${{steps.docker-build-push.outputs.image}}
           VARS: ./nais/dev-gcp/personbruker.json
