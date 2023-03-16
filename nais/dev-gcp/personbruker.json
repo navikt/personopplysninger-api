@@ -1,6 +1,5 @@
 {
   "ingresses": [
-    "https://person.dev.nav.no/person/personopplysninger-api",
     "https://person.ekstern.dev.nav.no/person/personopplysninger-api"
   ],
   "proxy-host": "https://personopplysninger-proxy.dev-fss-pub.nais.io",
