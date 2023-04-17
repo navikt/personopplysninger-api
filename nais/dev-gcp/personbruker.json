@@ -8,7 +8,7 @@
   "pdl-mottak-host": "https://pdl-mottak.dev-fss-pub.nais.io",
   "pdl-api-host": "https://pdl-api.dev-fss-pub.nais.io",
   "inst2-host": "https://personopplysninger-proxy.dev-fss-pub.nais.io",
-  "meldemskap-host": "https://personopplysninger-proxy.dev-fss-pub.nais.io",
+  "medlemskap-host": "https://personopplysninger-proxy.dev-fss-pub.nais.io",
   "kontoregister-host": "https://sokos-kontoregister-person.dev.intern.nav.no",
   "min-replicas": 1,
   "max-replicas": 1
