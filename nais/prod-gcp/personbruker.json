@@ -3,7 +3,7 @@
     "https://www.nav.no/person/personopplysninger-api"
   ],
   "kodeverk-api-host": "https://kodeverk.prod-fss-pub.nais.io",
-  "norg2-host": "https://norg2.prod-fss-pub.nais.io/norg2/api/v1",
+  "norg2-host": "https://norg2.prod-fss-pub.nais.io",
   "digdir-krr-proxy-host": "https://digdir-krr-proxy.intern.nav.no",
   "pdl-mottak-host": "https://pdl-mottak.prod-fss-pub.nais.io",
   "pdl-api-host": "https://pdl-api.prod-fss-pub.nais.io",
