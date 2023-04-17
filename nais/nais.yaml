@@ -24,23 +24,16 @@ spec:
   tokenx:
     enabled: true
   accessPolicy:
-    rules:
-      - application: personopplysninger-proxy
-        namespace: personbruker
-        cluster: {{ fss-cluster }}
-      - application: pdl-mottak
-        namespace: personbruker
-        cluster: {{ fss-cluster }}
-      - application: digdir-krr-proxy
-        namespace: team-rocket
-      - application: pdl-api
-        namespace: pdl
-        cluster: {{ fss-cluster }}
     outbound:
       external:
-        - host: {{ proxy-host }}
-        - host: {{ pdl-api-host }}
+        - host: {{ kodeverk-api-host }}
+        - host: {{ norg2-host }}
+        - host: {{ digdir-krr-proxy-host }}
         - host: {{ pdl-mottak-host }}
+        - host: {{ pdl-api-host }}
+        - host: {{ inst2-host }}
+        - host: {{ medlemskap-host }}
+        - host: {{ kontoregister-host }}
   ingresses:
   {{#each ingresses}}
      - "{{this}}"
