@@ -2,10 +2,14 @@
   "ingresses": [
     "https://person.ekstern.dev.nav.no/person/personopplysninger-api"
   ],
-  "proxy-host": "https://personopplysninger-proxy.dev-fss-pub.nais.io",
-  "pdl-api-host": "https://pdl-api.dev-fss-pub.nais.io",
+  "kodeverk-api-host": "https://sokos-kontoregister-person.dev.intern.nav.no",
+  "norg2-host": "https://norg2.dev-fss-pub.nais.io",
+  "digdir-krr-proxy-host": "https://digdir-krr-proxy.dev.intern.nav.no",
   "pdl-mottak-host": "https://pdl-mottak.dev-fss-pub.nais.io",
-  "fss-cluster": "dev-fss",
+  "pdl-api-host": "https://pdl-api.dev-fss-pub.nais.io",
+  "inst2-host": "https://personopplysninger-proxy.dev-fss-pub.nais.io",
+  "medlemskap-host": "https://personopplysninger-proxy.dev-fss-pub.nais.io",
+  "kontoregister-host": "https://sokos-kontoregister-person.dev.intern.nav.no",
   "min-replicas": 1,
   "max-replicas": 1
 }
