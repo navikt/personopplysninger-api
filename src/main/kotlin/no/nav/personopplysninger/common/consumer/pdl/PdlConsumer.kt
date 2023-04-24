@@ -67,8 +67,8 @@ class PdlConsumer(
             }
         if (response.status.isSuccess()) {
             val responseBody = response.body<PdlResponse>()
-            val warnings = responseBody.extensions.warnings;
-            if (warnings.isNotEmpty()) {
+            val warnings = responseBody.extensions?.warnings;
+            if (!warnings.isNullOrEmpty()) {
                 warnings.forEach { logger.warn("Advarsel fra PDL: ${it.message}") }
             }
             return responseBody.data
