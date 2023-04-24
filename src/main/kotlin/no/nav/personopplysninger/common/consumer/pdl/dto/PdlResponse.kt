@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PdlResponse(
     val data: PdlData,
-    val extensions: PdlExtensions = null?
+    val extensions: PdlExtensions? = null
 )
