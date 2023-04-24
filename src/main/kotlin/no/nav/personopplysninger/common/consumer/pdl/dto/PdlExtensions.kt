@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PdlExtensions(
-    val warnings: List<PdlWarning>?,
+    val warnings: List<PdlWarning>? = null,
 )
