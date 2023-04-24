@@ -24,12 +24,15 @@ import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
+import org.slf4j.LoggerFactory
 import java.util.*
 
 private const val HEADER_TEMA = "tema"
 private const val HEADER_BEHANDLINGSNUMMER = "behandlingsnummer"
 private const val RETT_PERSONOPPLYSNINGER = "RPO"
 private const val BEHANDLINGSNUMMER_PERSONOPPLYSNINGER = "B258"
+
+private val logger = LoggerFactory.getLogger(PdlConsumer::class.java)
 
 class PdlConsumer(
     private val client: HttpClient,
@@ -62,8 +65,13 @@ class PdlConsumer(
                 contentType(ContentType.Application.Json)
                 setBody(request)
             }
-        return if (response.status.isSuccess()) {
-            response.body<PdlResponse>().data
+        if (response.status.isSuccess()) {
+            val responseBody = response.body<PdlResponse>()
+            val warnings = responseBody.extensions.warnings;
+            if (warnings.isNotEmpty()) {
+                warnings.forEach { logger.warn("Advarsel fra PDL: ${it.message}") }
+            }
+            return responseBody.data
         } else {
             throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
         }
