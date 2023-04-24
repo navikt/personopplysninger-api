@@ -26,7 +26,10 @@ import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import java.util.*
 
+private const val HEADER_TEMA = "tema"
+private const val HEADER_BEHANDLINGSNUMMER = "behandlingsnummer"
 private const val RETT_PERSONOPPLYSNINGER = "RPO"
+private const val BEHANDLINGSNUMMER_PERSONOPPLYSNINGER = "B258"
 
 class PdlConsumer(
     private val client: HttpClient,
@@ -54,7 +57,8 @@ class PdlConsumer(
                 header(HEADER_AUTHORIZATION, BEARER + accessToken)
                 header(HEADER_NAV_CALL_ID, UUID.randomUUID())
                 header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-                header("Tema", RETT_PERSONOPPLYSNINGER)
+                header(HEADER_TEMA, RETT_PERSONOPPLYSNINGER)
+                header(HEADER_BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_PERSONOPPLYSNINGER)
                 contentType(ContentType.Application.Json)
                 setBody(request)
             }
