@@ -12,6 +12,7 @@ import io.ktor.http.isSuccess
 import no.nav.personopplysninger.common.consumer.pdl.dto.PdlData
 import no.nav.personopplysninger.common.consumer.pdl.dto.PdlPerson
 import no.nav.personopplysninger.common.consumer.pdl.dto.PdlResponse
+import no.nav.personopplysninger.common.consumer.pdl.dto.extensions.PdlWarning
 import no.nav.personopplysninger.common.consumer.pdl.request.PDLRequest
 import no.nav.personopplysninger.common.consumer.pdl.request.createKontaktadresseRequest
 import no.nav.personopplysninger.common.consumer.pdl.request.createPersonInfoRequest
@@ -69,11 +70,21 @@ class PdlConsumer(
             val responseBody = response.body<PdlResponse>()
             val warnings = responseBody.extensions?.warnings;
             if (!warnings.isNullOrEmpty()) {
-                warnings.forEach { logger.warn("Advarsel fra PDL: ${it.message}") }
+                logWarnings(warnings)
             }
             return responseBody.data
         } else {
             throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
+        }
+    }
+
+    private fun logWarnings(warnings: List<PdlWarning>) {
+        warnings.forEach {
+            try {
+                logger.warn("Advarsel fra PDL: ${it.message}. Følgende mangler: ${it.details?.missing?.joinToString { ", " }}.")
+            } catch (e: Exception) {
+                logger.warn("Fikk advarsel fra PDL (deserialisering av advarsel feilet)")
+            }
         }
     }
 }
