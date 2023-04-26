@@ -6,5 +6,5 @@ import kotlinx.serialization.json.JsonElement
 @Serializable
 data class PdlWarning(
     val message: String? = null,
-    val details: JsonElement? = null,
+    val details: JsonElement? = null, // Kan være både objekt og string
 )
