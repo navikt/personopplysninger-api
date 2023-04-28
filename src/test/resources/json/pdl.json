@@ -156,5 +156,38 @@
       "gtBydel": "460108",
       "gtLand": null
     }
+  },
+  "extensions": {
+    "warnings": [
+      {
+        "query": "hentPerson",
+        "id": "behandlingskatalogen",
+        "message": "Behandling mangler opplysningstyper",
+        "details": {
+          "missing": [
+            "INNFLYTTING_TIL_NORGE",
+            "FOLKEREGISTERPERSONSTATUS_V1",
+            "UTFLYTTING_FRA_NORGE",
+            "IDENTITETSGRUNNLAG_V1",
+            "FAMILIERELASJON_V1",
+            "DOEDFOEDT_BARN_V1",
+            "KONTAKTINFORMASJON_DOEDSBO_V1",
+            "FORELDREANSVAR_V1",
+            "SIKKERHETSTILTAK_V1",
+            "DELT_BOSTED_V1",
+            "VERGEMAAL_ELLER_FREMTIDSFULLMAKT_V1",
+            "OPPHOLD_V1",
+            "FULLMAKT_V1",
+            "FOLKEREGISTERIDENTIFIKATOR_V1",
+            "ADRESSEBESKYTTELSE_V1",
+            "TILRETTELAGT_KOMMUNIKASJON_V1",
+            "UTENLANDSK_ID_V1",
+            "OPPHOLDSADRESSE_V1",
+            "DOEDSFALL_V1",
+            "FALSK_ID_V1"
+          ]
+        }
+      }
+    ]
   }
 }

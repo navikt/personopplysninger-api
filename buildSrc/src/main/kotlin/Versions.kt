@@ -1,5 +1,5 @@
 object Auth0 {
-    private const val version = "4.3.0"
+    private const val version = "4.4.0"
     private const val groupId = "com.auth0"
 
     const val jwt = "$groupId:java-jwt:$version"
@@ -7,7 +7,7 @@ object Auth0 {
 
 object Caffeine {
 
-    private const val version = "3.1.5"
+    private const val version = "3.1.6"
     private const val groupId = "com.github.ben-manes.caffeine"
 
     const val caffeine = "$groupId:caffeine:$version"
@@ -21,14 +21,14 @@ object Finn {
 }
 
 object Kotlin {
-    const val version = "1.8.10"
+    const val version = "1.8.20"
     private const val groupId = "org.jetbrains.kotlin"
 
     const val junit5 = "$groupId:kotlin-test-junit5:$version"
 }
 
 object Ktor {
-    private const val version = "2.2.4"
+    private const val version = "2.3.0"
     private const val groupId = "io.ktor"
 
     const val metricsMicrometer = "$groupId:ktor-server-metrics-micrometer:$version"
@@ -48,7 +48,7 @@ object Ktor {
 }
 
 object Logback {
-    private const val version = "1.4.5"
+    private const val version = "1.4.7"
     const val classic = "ch.qos.logback:logback-classic:$version"
 }
 
@@ -60,18 +60,18 @@ object Logstash {
 }
 
 object Micrometer {
-    private const val version = "1.10.5"
+    private const val version = "1.10.6"
     const val registryPrometheus = "io.micrometer:micrometer-registry-prometheus:$version"
 }
 
 object Mockk {
-    private const val version = "1.13.4"
+    private const val version = "1.13.5"
     const val mockk = "io.mockk:mockk:$version"
 }
 
 object NAV {
     object Security {
-        private const val version = "3.0.8"
+        private const val version = "3.0.10"
         private const val groupId = "no.nav.security"
 
         const val tokenValidationKtor = "$groupId:token-validation-ktor-v2:$version"
@@ -85,7 +85,7 @@ object NAV {
 }
 
 object Shadow {
-    const val version = "8.1.0"
+    const val version = "8.1.1"
     const val pluginId = "com.github.johnrengelman.shadow"
 }
 
