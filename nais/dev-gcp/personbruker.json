@@ -1,6 +1,6 @@
 {
   "ingresses": [
-    "https://person.ekstern.dev.nav.no/person/personopplysninger-api"
+    "https://www.intern.dev.nav.no/person/personopplysninger-api"
   ],
   "kodeverk-api-host": "https://sokos-kontoregister-person.dev.intern.nav.no",
   "norg2-host": "https://norg2.dev-fss-pub.nais.io",
