@@ -45,7 +45,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
         tokenValidationSupport(
             config = conf,
             requiredClaims = RequiredClaims(
-                issuer = "loginservice",
+                issuer = "idporten",
                 claimMap = arrayOf("acr=Level4")
             )
         )
