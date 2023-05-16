@@ -5,8 +5,8 @@ import io.ktor.server.application.call
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
+import no.nav.personopplysninger.common.util.getAuthTokenFromCall
 import no.nav.personopplysninger.common.util.getFnrFromToken
-import no.nav.personopplysninger.common.util.getSelvbetjeningTokenFromCall
 import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("institusjonRoute")
@@ -14,10 +14,10 @@ private val logger = LoggerFactory.getLogger("institusjonRoute")
 fun Route.institusjon(institusjonService: InstitusjonService) {
     get("/institusjonsopphold") {
         try {
-            val selvbetjeningIdtoken = getSelvbetjeningTokenFromCall(call)
-            val fnr = getFnrFromToken(selvbetjeningIdtoken)
+            val authToken = getAuthTokenFromCall(call)
+            val fnr = getFnrFromToken(authToken)
 
-            val resp = institusjonService.hentInstitusjonsopphold(selvbetjeningIdtoken, fnr)
+            val resp = institusjonService.hentInstitusjonsopphold(authToken, fnr)
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved henting av institusjonsopphold", e)

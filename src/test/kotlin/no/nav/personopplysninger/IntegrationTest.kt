@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.client.HttpClient
 import io.ktor.client.request.cookie
 import io.ktor.client.request.get
+import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
@@ -34,7 +35,7 @@ open class IntegrationTest {
         val token = createAccessToken("12341234123")
 
         return client.get(path) {
-            cookie("selvbetjening-idtoken", token)
+            header("Authorization", "Bearer $token")
         }
     }
 

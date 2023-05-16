@@ -10,8 +10,8 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import no.finn.unleash.UnleashContext
 import no.nav.common.featuretoggle.UnleashClient
+import no.nav.personopplysninger.common.util.getAuthTokenFromCall
 import no.nav.personopplysninger.common.util.getFnrFromToken
-import no.nav.personopplysninger.common.util.getSelvbetjeningTokenFromCall
 import org.slf4j.LoggerFactory
 import java.util.*
 
@@ -23,8 +23,8 @@ private const val UNLEASH_COOKIE_NAME = "unleash-cookie"
 fun Route.featureToggles(unleashClient: UnleashClient) {
     get("/feature-toggles") {
         try {
-            val selvbetjeningIdtoken = getSelvbetjeningTokenFromCall(call)
-            val fodselsnr = getFnrFromToken(selvbetjeningIdtoken)
+            val authToken = getAuthTokenFromCall(call)
+            val fodselsnr = getFnrFromToken(authToken)
             val sessionId = call.request.cookies[UNLEASH_COOKIE_NAME] ?: generateSessionId(call)
 
             val unleashContext = UnleashContext.builder()

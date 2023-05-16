@@ -9,8 +9,8 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
 import no.nav.personopplysninger.common.consumer.kontoregister.exception.KontoregisterValidationException
+import no.nav.personopplysninger.common.util.getAuthTokenFromCall
 import no.nav.personopplysninger.common.util.getFnrFromToken
-import no.nav.personopplysninger.common.util.getSelvbetjeningTokenFromCall
 import no.nav.personopplysninger.config.MetricsCollector
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import org.slf4j.LoggerFactory
@@ -20,11 +20,11 @@ private val logger = LoggerFactory.getLogger("endreOpplysningerRoute")
 fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, metricsCollector: MetricsCollector) {
     post("/endreTelefonnummer") {
         try {
-            val selvbetjeningIdtoken = getSelvbetjeningTokenFromCall(call)
-            val fnr = getFnrFromToken(selvbetjeningIdtoken)
+            val authToken = getAuthTokenFromCall(call)
+            val fnr = getFnrFromToken(authToken)
             val telefonnummer = call.receive<Telefonnummer>()
 
-            val resp = endreOpplysningerService.endreTelefonnummer(selvbetjeningIdtoken, fnr, telefonnummer)
+            val resp = endreOpplysningerService.endreTelefonnummer(authToken, fnr, telefonnummer)
             metricsCollector.ENDRE_TELEFONNUMMER_COUNTER.inc()
             call.respond(resp)
         } catch (e: Exception) {
@@ -34,11 +34,11 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
     }
     post("/slettTelefonnummer") {
         try {
-            val selvbetjeningIdtoken = getSelvbetjeningTokenFromCall(call)
-            val fnr = getFnrFromToken(selvbetjeningIdtoken)
+            val authToken = getAuthTokenFromCall(call)
+            val fnr = getFnrFromToken(authToken)
             val telefonnummer = call.receive<Telefonnummer>()
 
-            val resp = endreOpplysningerService.slettTelefonNummer(selvbetjeningIdtoken, fnr, telefonnummer)
+            val resp = endreOpplysningerService.slettTelefonNummer(authToken, fnr, telefonnummer)
             metricsCollector.SLETT_TELEFONNUMMER_COUNTER.inc()
             call.respond(resp)
         } catch (e: Exception) {
@@ -48,11 +48,11 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
     }
     post("/endreKontonummer") {
         try {
-            val selvbetjeningIdtoken = getSelvbetjeningTokenFromCall(call)
-            val fnr = getFnrFromToken(selvbetjeningIdtoken)
+            val authToken = getAuthTokenFromCall(call)
+            val fnr = getFnrFromToken(authToken)
             val kontonummer = call.receive<Kontonummer>()
 
-            endreOpplysningerService.endreKontonummer(selvbetjeningIdtoken, fnr, kontonummer)
+            endreOpplysningerService.endreKontonummer(authToken, fnr, kontonummer)
 
             if (kontonummer.utenlandskKontoInformasjon == null) {
                 metricsCollector.ENDRE_NORSK_KONTONUMMER_COUNTER.inc()
@@ -71,10 +71,10 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
     }
     post("/slettKontaktadresse") {
         try {
-            val selvbetjeningIdtoken = getSelvbetjeningTokenFromCall(call)
-            val fnr = getFnrFromToken(selvbetjeningIdtoken)
+            val authToken = getAuthTokenFromCall(call)
+            val fnr = getFnrFromToken(authToken)
 
-            val resp = endreOpplysningerService.slettKontaktadresse(selvbetjeningIdtoken, fnr)
+            val resp = endreOpplysningerService.slettKontaktadresse(authToken, fnr)
             metricsCollector.SLETT_KONTAKTADRESSE_COUNTER
             call.respond(resp)
         } catch (e: Exception) {
