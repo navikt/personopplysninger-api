@@ -3,7 +3,6 @@ package no.nav.personopplysninger
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.client.HttpClient
-import io.ktor.client.request.cookie
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -43,7 +42,7 @@ open class IntegrationTest {
         val token = createAccessToken()
 
         return client.post(path) {
-            cookie("selvbetjening-idtoken", token)
+            header("Authorization", "Bearer $token")
             contentType(ContentType.Application.Json)
 
             // Body castes til riktig klasse automagisk
