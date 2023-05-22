@@ -7,8 +7,8 @@ import no.nav.security.token.support.core.jwt.JwtToken
 private const val PID_CLAIM = "pid"
 private const val OIDC_COOKIE_NAME = "selvbetjening-idtoken"
 
-fun getSelvbetjeningTokenFromCall(call: ApplicationCall): String {
-    return call.request.cookies[OIDC_COOKIE_NAME] ?: call.request.authorization()
+fun getAuthTokenFromCall(call: ApplicationCall): String {
+    return call.request.authorization()?.replace("Bearer ", "") ?: call.request.cookies[OIDC_COOKIE_NAME]
     ?: throw RuntimeException("Fant ikke token i cookie eller auth-header")
 }
 

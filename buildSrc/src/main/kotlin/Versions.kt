@@ -21,7 +21,7 @@ object Finn {
 }
 
 object Kotlin {
-    const val version = "1.8.20"
+    const val version = "1.8.21"
     private const val groupId = "org.jetbrains.kotlin"
 
     const val junit5 = "$groupId:kotlin-test-junit5:$version"
@@ -60,7 +60,7 @@ object Logstash {
 }
 
 object Micrometer {
-    private const val version = "1.10.6"
+    private const val version = "1.11.0"
     const val registryPrometheus = "io.micrometer:micrometer-registry-prometheus:$version"
 }
 
@@ -71,7 +71,7 @@ object Mockk {
 
 object NAV {
     object Security {
-        private const val version = "3.0.10"
+        private const val version = "3.1.0"
         private const val groupId = "no.nav.security"
 
         const val tokenValidationKtor = "$groupId:token-validation-ktor-v2:$version"
