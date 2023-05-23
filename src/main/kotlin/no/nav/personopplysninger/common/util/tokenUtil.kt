@@ -5,11 +5,10 @@ import io.ktor.server.request.authorization
 import no.nav.security.token.support.core.jwt.JwtToken
 
 private const val PID_CLAIM = "pid"
-private const val OIDC_COOKIE_NAME = "selvbetjening-idtoken"
 
 fun getAuthTokenFromCall(call: ApplicationCall): String {
-    return call.request.authorization()?.replace("Bearer ", "") ?: call.request.cookies[OIDC_COOKIE_NAME]
-    ?: throw RuntimeException("Fant ikke token i cookie eller auth-header")
+    return call.request.authorization()?.replace("Bearer ", "")
+        ?: throw RuntimeException("Fant ikke token i cookie eller auth-header")
 }
 
 fun getFnrFromToken(token: String): String {
