@@ -18,6 +18,11 @@ fun Routing.health(
 
     fun statusFor(b: () -> Boolean) = b().let { if (it) HttpStatusCode.OK else HttpStatusCode.InternalServerError }
 
+    // For statusportalen
+    get("/isAlive") {
+        statusFor(alive).let { call.respondText("Alive: $it", status = it) }
+    }
+
     route("/internal") {
 
         get("/isReady") {
