@@ -1,7 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    // Apply the Kotlin JVM plugin to add support for Kotlin on the JVM.
     kotlin("jvm") version("1.8.21")
     kotlin("plugin.allopen") version("1.8.21")
     kotlin("plugin.serialization") version("1.8.21")
