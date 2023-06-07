@@ -5,8 +5,8 @@ plugins {
     kotlin("plugin.allopen") version("1.8.21")
     kotlin("plugin.serialization") version("1.8.21")
 
-    id("com.github.johnrengelman.shadow") version ("8.1.1")
-    id("com.github.ben-manes.versions") version ("0.46.0") // ./gradlew dependencyUpdates to check for new versions
+    id("com.github.johnrengelman.shadow") version("8.1.1")
+    id("com.github.ben-manes.versions") version("0.46.0") // ./gradlew dependencyUpdates to check for new versions
     application
 }
 
@@ -30,9 +30,8 @@ dependencies {
         val mockk = "1.13.5"
         val navSecurity = "3.1.0"
         val navCommon = "2.2023.01.10_13.49-81ddc732df3a"
-        val finnUnleash = "4.4.1"
+        val unleash = "4.4.1"
         val kotlin = "1.8.21"
-        val shadow = "8.1.1"
         val tmsKtorTokenSupport = "2.0.1"
     }
 
@@ -56,7 +55,7 @@ dependencies {
     implementation("net.logstash.logback:logstash-logback-encoder:${versions.logstash}")
     implementation("ch.qos.logback:logback-classic:${versions.logback}")
     implementation("no.nav.common:feature-toggle:${versions.navCommon}")
-    implementation("no.finn.unleash:unleash-client-java:${versions.finnUnleash}")
+    implementation("no.finn.unleash:unleash-client-java:${versions.unleash}")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:${versions.kotlin}")
     testImplementation("io.ktor:ktor-server-test-host:${versions.ktor}")
     testImplementation("io.ktor:ktor-client-mock:${versions.ktor}")
