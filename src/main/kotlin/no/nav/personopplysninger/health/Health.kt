@@ -20,7 +20,7 @@ fun Routing.health(
 
     // For statusportalen
     get("/isAlive") {
-        statusFor(alive).let { call.respondText("Alive: $it", status = it) }
+        call.respond(mapOf("status" to "OK"))
     }
 
     route("/internal") {
