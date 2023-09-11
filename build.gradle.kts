@@ -34,7 +34,7 @@ dependencies {
         val logstash = "7.4"
         val micrometer = "1.11.2"
         val mockk = "1.13.5"
-        val navSecurity = "3.1.0"
+        val navSecurity = "3.1.5"
         val navCommon = "2.2023.01.10_13.49-81ddc732df3a"
         val unleash = "4.4.1"
         val kotlin = "1.9.0"
