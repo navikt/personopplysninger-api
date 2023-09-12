@@ -19,7 +19,6 @@ import io.ktor.server.request.path
 import io.ktor.server.request.uri
 import io.ktor.server.routing.routing
 import no.nav.personopplysninger.endreopplysninger.endreOpplysninger
-import no.nav.personopplysninger.featuretoggles.featureToggles
 import no.nav.personopplysninger.health.health
 import no.nav.personopplysninger.institusjon.institusjon
 import no.nav.personopplysninger.kontaktinformasjon.kontaktinformasjon
@@ -80,7 +79,6 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
         health(appContext.appMicrometerRegistry)
         authenticate {
             endreOpplysninger(appContext.endreOpplysningerService, appContext.metricsCollector)
-            featureToggles(appContext.unleashClient)
             institusjon(appContext.institusjonService)
             medl(appContext.medlService)
             personalia(appContext.personaliaService)

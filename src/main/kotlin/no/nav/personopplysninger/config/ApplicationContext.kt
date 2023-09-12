@@ -4,11 +4,6 @@ import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import io.micrometer.prometheus.PrometheusConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
-import no.finn.unleash.strategy.Strategy
-import no.nav.common.featuretoggle.UnleashClient
-import no.nav.common.featuretoggle.UnleashClientImpl
-import no.nav.common.featuretoggle.UnleashUtils
-import no.nav.common.utils.EnvironmentUtils
 import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
 import no.nav.personopplysninger.common.consumer.kodeverk.dto.Kodeverk
@@ -17,7 +12,6 @@ import no.nav.personopplysninger.common.consumer.pdl.PdlConsumer
 import no.nav.personopplysninger.common.consumer.pdl.PdlService
 import no.nav.personopplysninger.endreopplysninger.EndreOpplysningerService
 import no.nav.personopplysninger.endreopplysninger.consumer.PdlMottakConsumer
-import no.nav.personopplysninger.featuretoggles.ByApplicationStrategy
 import no.nav.personopplysninger.institusjon.InstitusjonService
 import no.nav.personopplysninger.institusjon.consumer.InstitusjonConsumer
 import no.nav.personopplysninger.kontaktinformasjon.KontaktinformasjonService
@@ -27,7 +21,6 @@ import no.nav.personopplysninger.medl.consumer.MedlConsumer
 import no.nav.personopplysninger.personalia.PersonaliaService
 import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
 import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ApplicationContext {
@@ -39,7 +32,6 @@ class ApplicationContext {
     val metricsCollector = MetricsCollector(appMicrometerRegistry.prometheusRegistry)
 
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
-    val unleashClient = unleashClient()
 
     val institusjonConsumer = InstitusjonConsumer(httpClient, env, tokendingsService)
     val kontaktinfoConsumer = KontaktinfoConsumer(httpClient, env, tokendingsService)
@@ -66,14 +58,5 @@ class ApplicationContext {
             .maximumSize(environment.subjectNameCacheThreshold)
             .expireAfterWrite(environment.subjectNameCacheExpiryMinutes, TimeUnit.MINUTES)
             .build()
-    }
-
-    private fun unleashClient(): UnleashClient {
-        return UnleashClientImpl(
-            EnvironmentUtils.getOptionalProperty(UnleashUtils.UNLEASH_URL_ENV_NAME)
-                .orElse("https://unleash.nais.io/api/"),
-            EnvironmentUtils.getRequiredProperty("NAIS_APP_NAME"),
-            Collections.singletonList(ByApplicationStrategy()) as List<Strategy>?
-        )
     }
 }
