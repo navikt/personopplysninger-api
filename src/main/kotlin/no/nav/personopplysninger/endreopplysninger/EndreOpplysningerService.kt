@@ -18,6 +18,7 @@ import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettKontaktadres
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettNummerPayload
 import no.nav.personopplysninger.endreopplysninger.dto.outbound.Endring
 import no.nav.personopplysninger.endreopplysninger.kafka.HendelseProducer
+import org.slf4j.LoggerFactory
 import java.util.*
 
 class EndreOpplysningerService(
@@ -27,6 +28,7 @@ class EndreOpplysningerService(
     private var pdlService: PdlService,
     private var hendelseProducer: HendelseProducer
 ) {
+    private val logger = LoggerFactory.getLogger(EndreOpplysningerService::class.java)
 
     suspend fun endreTelefonnummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
         if (!setOf(1, 2).contains(telefonnummer.prioritet)) {
@@ -77,7 +79,11 @@ class EndreOpplysningerService(
             }
         )
         kontoregisterConsumer.endreKontonummer(token, request)
-        hendelseProducer.sendVarselHendelse(fnr = fnr, eventId = UUID.randomUUID().toString())
+        try {
+            hendelseProducer.sendVarselHendelse(fnr = fnr, eventId = UUID.randomUUID().toString())
+        } catch (e: Exception) {
+            logger.error("Feil ved publisering til brukervarsel-topic", e)
+        }
     }
 
     suspend fun hentRetningsnumre(): Array<Retningsnummer> {
