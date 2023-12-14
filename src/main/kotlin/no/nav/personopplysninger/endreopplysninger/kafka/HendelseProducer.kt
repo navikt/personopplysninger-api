@@ -29,8 +29,7 @@ class HendelseProducer(
             ident = fnr
             tekster += Tekst(
                 spraakkode = "nb",
-                tekst = "Kontonummeret ditt på NAV er endret. Ta kontakt med NAV hvis det ikke var \n" +
-                        "deg som endret.",
+                tekst = VARSLINGSTEKST,
                 default = true
             )
             link = "https://www.nav.no"
