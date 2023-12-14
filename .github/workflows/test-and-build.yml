@@ -4,6 +4,8 @@ on:
 
 jobs:
   build-branch:
+    permissions:
+      packages: read
     runs-on: ubuntu-latest
     steps:
       - name: Sjekk ut koden

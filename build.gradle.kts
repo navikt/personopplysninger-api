@@ -36,7 +36,7 @@ dependencies {
     val versions = object {
         val auth0Jwt = "4.4.0"
         val caffeine = "3.1.8"
-        val kafka = "3.5.0"
+        val kafka = "3.6.1"
         val ktor = "2.3.6"
         val logback = "1.4.11"
         val logstash = "7.4"
@@ -45,7 +45,7 @@ dependencies {
         val navSecurity = "3.1.8"
         val kotlin = "1.9.0"
         val tmsKtorTokenSupport = "3.0.0"
-        val tmsVarselBuilder = "1.0.0"
+        val tmsVarselBuilder = "1.0.1"
     }
 
     implementation("com.auth0:java-jwt:${versions.auth0Jwt}")
