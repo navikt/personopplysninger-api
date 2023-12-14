@@ -5,6 +5,7 @@ import io.ktor.http.Url
 import io.ktor.server.application.call
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import io.ktor.server.response.respondRedirect
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
@@ -58,7 +59,7 @@ fun Route.endreOpplysninger(
         }
     }
 
-    post("/endreKontonummerAuth") {
+    post("/endreKontonummer") {
         try {
 
             val redirect: String = idporten.redirectUri
@@ -68,9 +69,7 @@ fun Route.endreOpplysninger(
 
             val url: Url = idporten.authorizeUrl(redirect, state, nonce, pkce)
 
-            // TODO
-            //val kontonummer = call.receive<Kontonummer>()
-            val kontonummer = Kontonummer(kilde = "conubia", utenlandskKontoInformasjon = null, value = "verear")
+            val kontonummer = call.receive<Kontonummer>()
 
             val endreKontonummerState = EndreKontonummerState(state, nonce, pkce.verifier.value, kontonummer)
             val encoded: String = Json.encodeToString(endreKontonummerState)
@@ -86,8 +85,7 @@ fun Route.endreOpplysninger(
             call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
         }
     }
-
-    get("/endreKontonummerCallback") {
+    get("/lagreKontonummer"){
         val decrypted: String = idporten.decrypt(call.request.cookies["endreKontonummerState"]!!)
         val endreKontonummerState: EndreKontonummerState = Json.decodeFromString(decrypted)
 
@@ -115,6 +113,7 @@ fun Route.endreOpplysninger(
             }
 
             val kontonummer = endreKontonummerState.kontonummer
+            println("endre kontonummer: $kontonummer")
 
             endreOpplysningerService.endreKontonummer(authToken, fnr, kontonummer)
 
@@ -124,32 +123,9 @@ fun Route.endreOpplysninger(
                 metricsCollector.ENDRE_UTENLANDSK_KONTONUMMER_COUNTER.inc()
             }
 
+            call.respondRedirect("http://localhost:3000/person/personopplysninger/nb/#utbetaling")
             // TODO - should redirect back to some page on frontend?
-            call.respond(mapOf("statusType" to "OK"))
-        } catch (e: KontoregisterValidationException) {
-            logger.error("Validering feilet ved endring av kontonummer", e)
-            call.respond(HttpStatusCode.BadRequest, e.message ?: "Validering av kontonummer feilet")
-        } catch (e: Exception) {
-            logger.error("Noe gikk galt ved endring av kontonummer", e)
-            call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
-        }
-    }
-
-    post("/endreKontonummer") {
-        try {
-            val authToken = getAuthTokenFromCall(call)
-            val fnr = getFnrFromToken(authToken)
-            val kontonummer = call.receive<Kontonummer>()
-
-            endreOpplysningerService.endreKontonummer(authToken, fnr, kontonummer)
-
-            if (kontonummer.utenlandskKontoInformasjon == null) {
-                metricsCollector.ENDRE_NORSK_KONTONUMMER_COUNTER.inc()
-            } else {
-                metricsCollector.ENDRE_UTENLANDSK_KONTONUMMER_COUNTER.inc()
-            }
-
-            call.respond(mapOf("statusType" to "OK"))
+            //call.respond(mapOf("statusType" to "OK"))
         } catch (e: KontoregisterValidationException) {
             logger.error("Validering feilet ved endring av kontonummer", e)
             call.respond(HttpStatusCode.BadRequest, e.message ?: "Validering av kontonummer feilet")
