@@ -27,6 +27,8 @@ spec:
     enabled: true
     sidecar:
       enabled: true
+  kafka:
+    pool: {{ kafka-pool }}
   accessPolicy:
     outbound:
       external:

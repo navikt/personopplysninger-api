@@ -17,12 +17,15 @@ import no.nav.personopplysninger.endreopplysninger.dto.inbound.endreNummerPayloa
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettKontaktadressePayload
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettNummerPayload
 import no.nav.personopplysninger.endreopplysninger.dto.outbound.Endring
+import no.nav.personopplysninger.endreopplysninger.kafka.HendelseProducer
+import java.util.*
 
 class EndreOpplysningerService(
     private var pdlMottakConsumer: PdlMottakConsumer,
     private var kodeverkService: KodeverkService,
     private var kontoregisterConsumer: KontoregisterConsumer,
-    private var pdlService: PdlService
+    private var pdlService: PdlService,
+    private var hendelseProducer: HendelseProducer
 ) {
 
     suspend fun endreTelefonnummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
@@ -74,6 +77,7 @@ class EndreOpplysningerService(
             }
         )
         kontoregisterConsumer.endreKontonummer(token, request)
+        hendelseProducer.sendVarselHendelse(fnr = fnr, eventId = UUID.randomUUID().toString())
     }
 
     suspend fun hentRetningsnumre(): Array<Retningsnummer> {

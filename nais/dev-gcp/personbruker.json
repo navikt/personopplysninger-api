@@ -11,5 +11,6 @@
   "medlemskap-host": "personopplysninger-proxy.dev-fss-pub.nais.io",
   "kontoregister-host": "sokos-kontoregister-person.intern.dev.nav.no",
   "min-replicas": 1,
-  "max-replicas": 1
+  "max-replicas": 1,
+  "kafka-pool": "nav-dev"
 }
