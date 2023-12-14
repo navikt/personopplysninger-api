@@ -2,16 +2,13 @@ package no.nav.personopplysninger.config
 
 import io.ktor.client.HttpClient
 import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStopping
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
-import io.ktor.server.auth.OAuthServerSettings
 import io.ktor.server.auth.authenticate
-import io.ktor.server.auth.oauth
 import io.ktor.server.metrics.micrometer.MicrometerMetrics
 import io.ktor.server.plugins.callloging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
@@ -45,6 +42,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     val conf = this.environment.config
 
     val idporten = Idporten()
+
     install(Authentication) {
         tokenValidationSupport(
             config = conf,
@@ -83,7 +81,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     routing {
         health(appContext.appMicrometerRegistry)
         authenticate {
-            endreOpplysninger(appContext.endreOpplysningerService, appContext.metricsCollector)
+            endreOpplysninger(appContext.endreOpplysningerService, appContext.metricsCollector, idporten)
             institusjon(appContext.institusjonService)
             medl(appContext.medlService)
             personalia(appContext.personaliaService)
