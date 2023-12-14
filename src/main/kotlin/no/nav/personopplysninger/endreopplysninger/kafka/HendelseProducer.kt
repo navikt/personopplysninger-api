@@ -29,7 +29,7 @@ class HendelseProducer(
             ident = fnr
             tekster += Tekst(
                 spraakkode = "nb",
-                tekst = "Kontonummeret ditt på nav.no er endret. Ta kontakt med NAV hvis det ikke var \n" +
+                tekst = "Kontonummeret ditt på NAV er endret. Ta kontakt med NAV hvis det ikke var \n" +
                         "deg som endret.",
                 default = true
             )
@@ -46,8 +46,8 @@ class HendelseProducer(
 
     companion object {
         const val VARSLINGSTEKST =
-            "Kontonummeret ditt på nav.no er endret. Ta kontakt med NAV hvis det ikke var deg som endret."
+            "Kontonummeret ditt på NAV er endret. Ta kontakt med NAV hvis det ikke var deg som endret."
         const val VARSLINGSTITTEL =
-            "Kontonummeret ditt på nav.no er endret"
+            "Kontonummeret ditt på NAV er endret"
     }
 }
