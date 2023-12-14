@@ -46,7 +46,7 @@ class HendelseProducer(
 
     companion object {
         const val VARSLINGSTEKST =
-            "Kontonummeret ditt på NAV er endret. Ta kontakt med NAV hvis det ikke var deg som endret."
+            "Kontonummeret ditt på NAV er endret. Logg inn på NAV hvis det ikke var deg som endret."
         const val VARSLINGSTITTEL =
             "Kontonummeret ditt på NAV er endret"
     }
