@@ -29,17 +29,25 @@ class HendelseProducer(
             ident = fnr
             tekster += Tekst(
                 spraakkode = "nb",
-                tekst = "Norsk tekst", // Todo: Endre denne
+                tekst = "Kontonummeret ditt på nav.no er endret. Ta kontakt med NAV hvis det ikke var \n" +
+                        "deg som endret.",
                 default = true
-            )
-            tekster += Tekst(
-                spraakkode = "en",
-                tekst = "English text", // Todo: Endre denne
-                default = false
             )
             link = "https://www.nav.no"
             aktivFremTil = ZonedDateTime.now(ZoneId.of("Z")).plusDays(14)
-            eksternVarsling = EksternVarslingBestilling(prefererteKanaler = listOf(EksternKanal.SMS))
+            eksternVarsling = EksternVarslingBestilling(
+                prefererteKanaler = listOf(EksternKanal.SMS, EksternKanal.EPOST),
+                epostVarslingstekst = VARSLINGSTEKST,
+                epostVarslingstittel = VARSLINGSTITTEL,
+                smsVarslingstekst = VARSLINGSTEKST
+            )
         }
+    }
+
+    companion object {
+        const val VARSLINGSTEKST =
+            "Kontonummeret ditt på nav.no er endret. Ta kontakt med NAV hvis det ikke var deg som endret."
+        const val VARSLINGSTITTEL =
+            "Kontonummeret ditt på nav.no er endret"
     }
 }
