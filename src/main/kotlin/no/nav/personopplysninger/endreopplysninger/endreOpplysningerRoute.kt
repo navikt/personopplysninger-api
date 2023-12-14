@@ -46,7 +46,16 @@ fun Route.endreOpplysninger(endreOpplysningerService: EndreOpplysningerService, 
             call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
         }
     }
+    get("/endreKontonummerCallback"){
+        // get token and actually store data
+    }
+
+    post("/endreKontonummerAuth"){
+
+    }
+
     post("/endreKontonummer") {
+        // trigger auth from here
         try {
             val authToken = getAuthTokenFromCall(call)
             val fnr = getFnrFromToken(authToken)

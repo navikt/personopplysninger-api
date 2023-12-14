@@ -50,6 +50,7 @@ dependencies {
     implementation("io.ktor:ktor-server-status-pages:${versions.ktor}")
     implementation("io.ktor:ktor-server-content-negotiation:${versions.ktor}")
     implementation("io.ktor:ktor-server-auth:${versions.ktor}")
+    implementation("io.ktor:ktor-server-auth-jwt:${versions.ktor}")
     implementation("io.ktor:ktor-client-content-negotiation:${versions.ktor}")
     implementation("io.ktor:ktor-client-apache:${versions.ktor}")
     implementation("io.ktor:ktor-server-metrics-micrometer:${versions.ktor}")
