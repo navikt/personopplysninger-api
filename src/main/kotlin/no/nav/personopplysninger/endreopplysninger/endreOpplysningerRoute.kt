@@ -59,8 +59,7 @@ fun Route.endreOpplysninger(
         }
     }
 
-    // TODO - should be a POST
-    get("/endreKontonummerAuth") {
+    post("/endreKontonummerAuth") {
         try {
 
             val redirect: String = idporten.redirectUri

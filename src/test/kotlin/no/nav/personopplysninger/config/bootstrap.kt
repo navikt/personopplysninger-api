@@ -1,10 +1,12 @@
 package no.nav.personopplysninger.config
 
+import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.callloging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
 import io.ktor.server.routing.routing
@@ -17,6 +19,12 @@ import no.nav.personopplysninger.personalia.personalia
 
 
 fun Application.testModule(appContext: TestApplicationContext) {
+
+    install(CORS) {
+        allowHost("*", schemes = listOf("http"))
+        allowCredentials = true
+        allowHeader(HttpHeaders.ContentType)
+    }
 
     install(ContentNegotiation) {
         json(jsonConfig())
