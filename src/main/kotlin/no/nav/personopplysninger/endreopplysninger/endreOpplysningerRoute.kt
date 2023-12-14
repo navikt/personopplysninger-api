@@ -5,7 +5,6 @@ import io.ktor.http.Url
 import io.ktor.server.application.call
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
-import io.ktor.server.response.respondRedirect
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
@@ -78,7 +77,7 @@ fun Route.endreOpplysninger(
             val encrypted: String = idporten.encrypt(encoded)
 
             call.response.cookies.append("endreKontonummerState", encrypted)
-            call.respondRedirect(url)
+            call.respond(HttpStatusCode.Unauthorized, mapOf("redirect" to url.toString()))
         } catch (e: KontoregisterValidationException) {
             logger.error("Validering feilet ved endring av kontonummer", e)
             call.respond(HttpStatusCode.BadRequest, e.message ?: "Validering av kontonummer feilet")
