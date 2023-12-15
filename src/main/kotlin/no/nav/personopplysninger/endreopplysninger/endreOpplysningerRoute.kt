@@ -3,9 +3,11 @@ package no.nav.personopplysninger.endreopplysninger
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.URLBuilder
 import io.ktor.http.Url
+import io.ktor.http.appendPathSegments
 import io.ktor.http.takeFrom
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.call
+import io.ktor.server.request.header
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondRedirect
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory
 import java.util.UUID
 
 private val logger = LoggerFactory.getLogger("endreOpplysningerRoute")
+private val allowedLocales = setOf("nb", "nn", "en")
 
 fun Route.endreOpplysninger(
     endreOpplysningerService: EndreOpplysningerService,
@@ -66,6 +69,7 @@ fun Route.endreOpplysninger(
 
     post("/endreKontonummer") {
         try {
+            val locale: String = call.request.header("locale") ?: "nb"
             val state: String = UUID.randomUUID().toString()
             val nonce: String = UUID.randomUUID().toString()
             val pkce = Pkce()
@@ -75,7 +79,8 @@ fun Route.endreOpplysninger(
             val kontonummer = call.receive<Kontonummer>()
             val authToken = getAuthTokenFromCall(call)
             val bruker = getFnrFromToken(authToken)
-            val endreKontonummerState = EndreKontonummerState(state, nonce, pkce.verifier.value, kontonummer, bruker)
+            val endreKontonummerState =
+                EndreKontonummerState(state, nonce, pkce.verifier.value, kontonummer, bruker, locale)
             val encoded: String = Json.encodeToString(endreKontonummerState)
             val encrypted: String = idporten.encrypt(encoded)
 
@@ -95,6 +100,8 @@ fun Route.endreOpplysninger(
         }
     }
     get("/lagreKontonummer") {
+        var locale = "nb"
+
         try {
             call.response.cookies.append(
                 "endreKontonummerState",
@@ -108,6 +115,7 @@ fun Route.endreOpplysninger(
 
             val decrypted: String = idporten.decrypt(call.request.cookies["endreKontonummerState"]!!)
             val endreKontonummerState: EndreKontonummerState = Json.decodeFromString(decrypted)
+            locale = endreKontonummerState.locale
 
             // TODO - state cookie should have some expiry or validity period
 
@@ -143,16 +151,28 @@ fun Route.endreOpplysninger(
                 metricsCollector.ENDRE_UTENLANDSK_KONTONUMMER_COUNTER.inc()
             }
 
-            call.respondRedirect(idporten.frontendUri)
+            call.respondRedirect(idporten.frontendUri.withLocale(locale))
         } catch (e: KontoregisterValidationException) {
             logger.error("Validering feilet ved endring av kontonummer", e)
-            call.handleEndreKontonummerException(idporten.frontendUri, "validation", HttpStatusCode.BadRequest)
+            call.handleEndreKontonummerException(
+                idporten.frontendUri.withLocale(locale),
+                "validation",
+                HttpStatusCode.BadRequest
+            )
         } catch (e: IDPortenException) {
             logger.error("Feil ved autentisering", e)
-            call.handleEndreKontonummerException(idporten.frontendUri, "auth", HttpStatusCode.Unauthorized)
+            call.handleEndreKontonummerException(
+                idporten.frontendUri.withLocale(locale),
+                "auth",
+                HttpStatusCode.Unauthorized
+            )
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved endring av kontonummer", e)
-            call.handleEndreKontonummerException(idporten.frontendUri, "unexpected", HttpStatusCode.InternalServerError)
+            call.handleEndreKontonummerException(
+                idporten.frontendUri.withLocale(locale),
+                "unexpected",
+                HttpStatusCode.InternalServerError
+            )
         }
     }
     post("/slettKontaktadresse") {
@@ -206,7 +226,16 @@ fun Route.endreOpplysninger(
     }
 }
 
-private suspend fun ApplicationCall.handleEndreKontonummerException(uri: Url, error: String, statusCode: HttpStatusCode) {
+private fun Url.withLocale(locale: String): Url =
+    URLBuilder().takeFrom(this).apply {
+        appendPathSegments(allowedLocales.firstOrNull { it == locale } ?: "nb")
+    }.build()
+
+private suspend fun ApplicationCall.handleEndreKontonummerException(
+    uri: Url,
+    error: String,
+    statusCode: HttpStatusCode
+) {
     val u = URLBuilder().takeFrom(uri).apply {
         parameters.append("error", error)
         parameters.append("status", statusCode.value.toString())
@@ -221,4 +250,5 @@ data class EndreKontonummerState(
     val codeVerifier: String,
     val kontonummer: Kontonummer,
     val bruker: String,
+    val locale: String
 )
