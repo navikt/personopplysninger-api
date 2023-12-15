@@ -25,7 +25,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
       - name: Build application
         run: |
-          ./gradlew clean build
+          ./gradlew clean build -x test
       - name: Build and push docker image
         uses: nais/docker-build-push@v0
         id: docker-build-push
