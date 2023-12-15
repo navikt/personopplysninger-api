@@ -12,6 +12,7 @@ import no.nav.personopplysninger.common.consumer.pdl.PdlConsumer
 import no.nav.personopplysninger.common.consumer.pdl.PdlService
 import no.nav.personopplysninger.endreopplysninger.EndreOpplysningerService
 import no.nav.personopplysninger.endreopplysninger.consumer.PdlMottakConsumer
+import no.nav.personopplysninger.endreopplysninger.kafka.HendelseProducer
 import no.nav.personopplysninger.institusjon.InstitusjonService
 import no.nav.personopplysninger.institusjon.consumer.InstitusjonConsumer
 import no.nav.personopplysninger.kontaktinformasjon.KontaktinformasjonService
@@ -32,6 +33,7 @@ class ApplicationContext {
     val metricsCollector = MetricsCollector(appMicrometerRegistry.prometheusRegistry)
 
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
+    val hendelseProducer = HendelseProducer(initializeKafkaProducer(env), env.varselHendelseTopic)
 
     val institusjonConsumer = InstitusjonConsumer(httpClient, env, tokendingsService)
     val kontaktinfoConsumer = KontaktinfoConsumer(httpClient, env, tokendingsService)
@@ -46,7 +48,7 @@ class ApplicationContext {
     val pdlService = PdlService(pdlConsumer)
 
     val endreOpplysningerService =
-        EndreOpplysningerService(pdlMottakConsumer, kodeverkService, kontoregisterConsumer, pdlService)
+        EndreOpplysningerService(pdlMottakConsumer, kodeverkService, kontoregisterConsumer, pdlService, hendelseProducer)
     val institusjonService = InstitusjonService(institusjonConsumer)
     val medlService = MedlService(medlConsumer, kodeverkService)
     val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkService)

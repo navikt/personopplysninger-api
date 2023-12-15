@@ -4,6 +4,10 @@ on:
 
 jobs:
   build-branch:
+    permissions:
+      contents: read
+      id-token: write
+      packages: read
     runs-on: ubuntu-latest
     steps:
       - name: Sjekk ut koden
@@ -21,3 +25,5 @@ jobs:
       - name: Build application
         run: |
           ./gradlew clean build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

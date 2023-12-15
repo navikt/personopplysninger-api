@@ -11,6 +11,7 @@ import no.nav.personopplysninger.common.consumer.pdl.PdlConsumer
 import no.nav.personopplysninger.common.consumer.pdl.PdlService
 import no.nav.personopplysninger.endreopplysninger.EndreOpplysningerService
 import no.nav.personopplysninger.endreopplysninger.consumer.PdlMottakConsumer
+import no.nav.personopplysninger.endreopplysninger.kafka.HendelseProducer
 import no.nav.personopplysninger.institusjon.InstitusjonService
 import no.nav.personopplysninger.institusjon.consumer.InstitusjonConsumer
 import no.nav.personopplysninger.kontaktinformasjon.KontaktinformasjonService
@@ -19,6 +20,7 @@ import no.nav.personopplysninger.medl.MedlService
 import no.nav.personopplysninger.medl.consumer.MedlConsumer
 import no.nav.personopplysninger.personalia.PersonaliaService
 import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
+import org.apache.kafka.clients.producer.MockProducer
 import java.util.concurrent.TimeUnit
 
 class TestApplicationContext(httpClient: HttpClient) {
@@ -26,6 +28,11 @@ class TestApplicationContext(httpClient: HttpClient) {
     val env = Environment(
         corsAllowedOrigins = "",
         corsAllowedSchemes = "https",
+        kafkaBrokers = "",
+        kafkaTruststorePath = "",
+        kafkaKeystorePath = "",
+        kafkaCredstorePassword = "",
+        varselHendelseTopic = "",
         inst2Url = "https://inst2",
         kodeverkUrl = "https://kodeverk",
         norg2Url = "https://norg2",
@@ -44,6 +51,7 @@ class TestApplicationContext(httpClient: HttpClient) {
     )
 
     val tokendingsService = DummyTokendingsService()
+    val hendelseProducer = HendelseProducer(MockProducer(), "")
 
     val institusjonConsumer = InstitusjonConsumer(httpClient, env, tokendingsService)
     val kontaktinfoConsumer = KontaktinfoConsumer(httpClient, env, tokendingsService)
@@ -57,7 +65,13 @@ class TestApplicationContext(httpClient: HttpClient) {
     val kodeverkService = KodeverkService(setupKodeverkCache(env), kodeverkConsumer)
     val pdlService = PdlService(pdlConsumer)
     val endreOpplysningerService =
-        EndreOpplysningerService(pdlMottakConsumer, kodeverkService, kontoregisterConsumer, pdlService)
+        EndreOpplysningerService(
+            pdlMottakConsumer,
+            kodeverkService,
+            kontoregisterConsumer,
+            pdlService,
+            hendelseProducer
+        )
     val institusjonService = InstitusjonService(institusjonConsumer)
     val medlService = MedlService(medlConsumer, kodeverkService)
     val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkService)

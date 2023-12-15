@@ -7,12 +7,12 @@ plugins {
         val versions = "0.50.0"
     }
 
-    kotlin("jvm") version(versions.kotlin)
-    kotlin("plugin.allopen") version(versions.kotlin)
-    kotlin("plugin.serialization") version(versions.kotlin)
+    kotlin("jvm") version (versions.kotlin)
+    kotlin("plugin.allopen") version (versions.kotlin)
+    kotlin("plugin.serialization") version (versions.kotlin)
 
-    id("com.github.johnrengelman.shadow") version(versions.shadow)
-    id("com.github.ben-manes.versions") version(versions.versions) // ./gradlew dependencyUpdates to check for new versions
+    id("com.github.johnrengelman.shadow") version (versions.shadow)
+    id("com.github.ben-manes.versions") version (versions.versions) // ./gradlew dependencyUpdates to check for new versions
     application
 }
 
@@ -23,12 +23,20 @@ kotlin {
 repositories {
     mavenCentral()
     maven("https://jitpack.io")
+    maven("https://maven.pkg.github.com/navikt/tms-varsel-authority") {
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")?: "x-access-token"
+            password = System.getenv("GITHUB_TOKEN")?: project.findProperty("githubPassword") as String
+        }
+    }
+
 }
 
 dependencies {
     val versions = object {
         val auth0Jwt = "4.4.0"
         val caffeine = "3.1.8"
+        val kafka = "3.6.1"
         val ktor = "2.3.6"
         val logback = "1.4.11"
         val logstash = "7.4"
@@ -37,10 +45,13 @@ dependencies {
         val navSecurity = "3.1.8"
         val kotlin = "1.9.0"
         val tmsKtorTokenSupport = "3.0.0"
+        val tmsVarselBuilder = "1.0.1"
     }
 
     implementation("com.auth0:java-jwt:${versions.auth0Jwt}")
     implementation("com.github.ben-manes.caffeine:caffeine:${versions.caffeine}")
+    implementation("org.apache.kafka:kafka-clients:${versions.kafka}")
+    implementation("no.nav.tms.varsel:kotlin-builder:${versions.tmsVarselBuilder}")
     implementation("io.ktor:ktor-serialization:${versions.ktor}")
     implementation("io.ktor:ktor-serialization-kotlinx-json:${versions.ktor}")
     implementation("io.ktor:ktor-server-netty:${versions.ktor}")
