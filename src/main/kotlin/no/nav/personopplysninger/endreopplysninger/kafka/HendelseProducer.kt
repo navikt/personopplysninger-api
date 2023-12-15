@@ -29,16 +29,16 @@ class HendelseProducer(
             ident = fnr
             tekster += Tekst(
                 spraakkode = "nb",
-                tekst = VARSLINGSTITTEL,
+                tekst = BASE_VARSLINGSTEKST,
                 default = true
             )
             link = "https://www.nav.no"
             aktivFremTil = ZonedDateTime.now(ZoneId.of("Z")).plusDays(14)
             eksternVarsling = EksternVarslingBestilling(
                 prefererteKanaler = listOf(EksternKanal.SMS, EksternKanal.EPOST),
-                epostVarslingstekst = VARSLINGSTEKST,
+                epostVarslingstekst = EKSTERN_VARSLINGSTEKST,
                 epostVarslingstittel = VARSLINGSTITTEL,
-                smsVarslingstekst = VARSLINGSTEKST
+                smsVarslingstekst = EKSTERN_VARSLINGSTEKST
             )
         }
     }
@@ -46,7 +46,9 @@ class HendelseProducer(
     companion object {
         const val VARSLINGSTITTEL =
             "Du har endret kontonummeret ditt hos NAV"
-        const val VARSLINGSTEKST =
-            "Hei! Du har endret kontonummeret ditt hos NAV. Ring oss om dette ikke stemmer på tlf. 55 55 33 33. Hilsen NAV"
+        const val BASE_VARSLINGSTEKST =
+            "Du har endret kontonummeret ditt hos NAV. Ring oss om dette ikke stemmer på tlf. 55 55 33 33."
+        const val EKSTERN_VARSLINGSTEKST =
+            "Hei! $BASE_VARSLINGSTEKST Hilsen NAV"
     }
 }
