@@ -151,7 +151,14 @@ fun Route.endreOpplysninger(
                 metricsCollector.ENDRE_UTENLANDSK_KONTONUMMER_COUNTER.inc()
             }
 
-            call.respondRedirect(idporten.frontendUri.withLocale(locale))
+            val url = URLBuilder()
+                .takeFrom(idporten.frontendUri.withLocale(locale))
+                .apply {
+                    parameters.append("result", "success")
+                }
+                .build()
+
+            call.respondRedirect(url)
         } catch (e: KontoregisterValidationException) {
             logger.error("Validering feilet ved endring av kontonummer", e)
             call.handleEndreKontonummerException(
@@ -237,6 +244,7 @@ private suspend fun ApplicationCall.handleEndreKontonummerException(
     statusCode: HttpStatusCode
 ) {
     val u = URLBuilder().takeFrom(uri).apply {
+        parameters.append("result", "error")
         parameters.append("error", error)
         parameters.append("status", statusCode.value.toString())
     }
