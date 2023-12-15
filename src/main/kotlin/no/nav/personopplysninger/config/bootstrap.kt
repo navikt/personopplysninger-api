@@ -13,6 +13,7 @@ import io.ktor.server.metrics.micrometer.MicrometerMetrics
 import io.ktor.server.plugins.callloging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
+import io.ktor.server.plugins.forwardedheaders.XForwardedHeaders
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
@@ -53,6 +54,8 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
             )
         )
     }
+
+    install(XForwardedHeaders)
 
     install(CallLogging) {
         filter { call -> !call.request.path().contains("internal") }

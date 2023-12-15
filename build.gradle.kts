@@ -47,6 +47,7 @@ dependencies {
     implementation("io.ktor:ktor-server-call-logging:${versions.ktor}")
     implementation("io.ktor:ktor-server-core:${versions.ktor}")
     implementation("io.ktor:ktor-server-cors:${versions.ktor}")
+    implementation("io.ktor:ktor-server-forwarded-header:${versions.ktor}")
     implementation("io.ktor:ktor-server-status-pages:${versions.ktor}")
     implementation("io.ktor:ktor-server-content-negotiation:${versions.ktor}")
     implementation("io.ktor:ktor-server-auth:${versions.ktor}")
