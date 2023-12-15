@@ -1,7 +1,10 @@
 package no.nav.personopplysninger.endreopplysninger
 
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.URLBuilder
 import io.ktor.http.Url
+import io.ktor.http.takeFrom
+import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.call
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
@@ -9,6 +12,7 @@ import io.ktor.server.response.respondRedirect
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
+import io.ktor.util.date.GMTDate
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -16,7 +20,8 @@ import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Konto
 import no.nav.personopplysninger.common.consumer.kontoregister.exception.KontoregisterValidationException
 import no.nav.personopplysninger.common.util.getAuthTokenFromCall
 import no.nav.personopplysninger.common.util.getFnrFromToken
-import no.nav.personopplysninger.config.Idporten
+import no.nav.personopplysninger.config.IDPorten
+import no.nav.personopplysninger.config.IDPortenException
 import no.nav.personopplysninger.config.MetricsCollector
 import no.nav.personopplysninger.config.Pkce
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
@@ -28,7 +33,7 @@ private val logger = LoggerFactory.getLogger("endreOpplysningerRoute")
 fun Route.endreOpplysninger(
     endreOpplysningerService: EndreOpplysningerService,
     metricsCollector: MetricsCollector,
-    idporten: Idporten
+    idporten: IDPorten
 ) {
     post("/endreTelefonnummer") {
         try {
@@ -61,59 +66,74 @@ fun Route.endreOpplysninger(
 
     post("/endreKontonummer") {
         try {
-
-            val redirect: String = idporten.redirectUri
             val state: String = UUID.randomUUID().toString()
             val nonce: String = UUID.randomUUID().toString()
             val pkce = Pkce()
 
-            val url: Url = idporten.authorizeUrl(redirect, state, nonce, pkce)
+            val url: Url = idporten.authorizeUrl(state, nonce, pkce)
 
             val kontonummer = call.receive<Kontonummer>()
-
-            val endreKontonummerState = EndreKontonummerState(state, nonce, pkce.verifier.value, kontonummer)
+            val authToken = getAuthTokenFromCall(call)
+            val bruker = getFnrFromToken(authToken)
+            val endreKontonummerState = EndreKontonummerState(state, nonce, pkce.verifier.value, kontonummer, bruker)
             val encoded: String = Json.encodeToString(endreKontonummerState)
             val encrypted: String = idporten.encrypt(encoded)
 
-            call.response.cookies.append("endreKontonummerState", encrypted)
+            call.response.cookies.append(
+                "endreKontonummerState",
+                encrypted,
+                httpOnly = true,
+                secure = idporten.secureCookie,
+                extensions = mapOf("SameSite" to "Lax"),
+            )
+
+            call.response.headers.append("Location", url.toString())
             call.respond(HttpStatusCode.Unauthorized, mapOf("redirect" to url.toString()))
-        } catch (e: KontoregisterValidationException) {
-            logger.error("Validering feilet ved endring av kontonummer", e)
-            call.respond(HttpStatusCode.BadRequest, e.message ?: "Validering av kontonummer feilet")
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved endring av kontonummer", e)
             call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
         }
     }
-    get("/lagreKontonummer"){
-        val decrypted: String = idporten.decrypt(call.request.cookies["endreKontonummerState"]!!)
-        val endreKontonummerState: EndreKontonummerState = Json.decodeFromString(decrypted)
-
-        // TODO - error handling
-        // TODO - should clear state cookie if invalid
-        val actualState: String = call.request.queryParameters["state"]
-            ?: throw RuntimeException("no state in callback")
-        val expectedState: String = endreKontonummerState.state
-
-        if (actualState != expectedState) {
-            throw RuntimeException("state mismatch")
-        }
-
-        val code: String = call.request.queryParameters["code"]
-            ?: throw RuntimeException("no code in callback")
-        val stepupToken: String = idporten.token(code, endreKontonummerState.codeVerifier, endreKontonummerState.nonce)
-
+    get("/lagreKontonummer") {
         try {
+            call.response.cookies.append(
+                "endreKontonummerState",
+                "",
+                maxAge = 0L,
+                expires = GMTDate.START,
+                httpOnly = true,
+                secure = idporten.secureCookie,
+                extensions = mapOf("SameSite" to "Lax"),
+            )
+
+            val decrypted: String = idporten.decrypt(call.request.cookies["endreKontonummerState"]!!)
+            val endreKontonummerState: EndreKontonummerState = Json.decodeFromString(decrypted)
+
+            // TODO - state cookie should have some expiry or validity period
+
+            val actualState: String = call.request.queryParameters["state"]
+                ?: throw IDPortenException("no state in callback")
+            val expectedState: String = endreKontonummerState.state
+
+            if (actualState != expectedState) {
+                throw IDPortenException("state mismatch")
+            }
+
+            val code: String = call.request.queryParameters["code"]
+                ?: throw IDPortenException("no code in callback")
+            val reauthToken: String =
+                idporten.token(code, endreKontonummerState.codeVerifier, endreKontonummerState.nonce)
+
             val authToken = getAuthTokenFromCall(call)
             val fnr = getFnrFromToken(authToken)
-            val stepupFnr = getFnrFromToken(stepupToken)
+            val reauthFnr = getFnrFromToken(reauthToken)
+            val stateFnr = endreKontonummerState.bruker
 
-            if (fnr != stepupFnr) {
-                throw RuntimeException("fnr mismatch")
+            if (listOf(fnr, reauthFnr, stateFnr).distinct().size > 1) {
+                throw IDPortenException("fnr mismatch")
             }
 
             val kontonummer = endreKontonummerState.kontonummer
-            println("endre kontonummer: $kontonummer")
 
             endreOpplysningerService.endreKontonummer(authToken, fnr, kontonummer)
 
@@ -123,15 +143,16 @@ fun Route.endreOpplysninger(
                 metricsCollector.ENDRE_UTENLANDSK_KONTONUMMER_COUNTER.inc()
             }
 
-            call.respondRedirect("http://localhost:3000/person/personopplysninger/nb/#utbetaling")
-            // TODO - should redirect back to some page on frontend?
-            //call.respond(mapOf("statusType" to "OK"))
+            call.respondRedirect(idporten.frontendUri)
         } catch (e: KontoregisterValidationException) {
             logger.error("Validering feilet ved endring av kontonummer", e)
-            call.respond(HttpStatusCode.BadRequest, e.message ?: "Validering av kontonummer feilet")
+            call.handleEndreKontonummerException(idporten.frontendUri, "validation", HttpStatusCode.BadRequest)
+        } catch (e: IDPortenException) {
+            logger.error("Feil ved autentisering", e)
+            call.handleEndreKontonummerException(idporten.frontendUri, "auth", HttpStatusCode.Unauthorized)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved endring av kontonummer", e)
-            call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
+            call.handleEndreKontonummerException(idporten.frontendUri, "unexpected", HttpStatusCode.InternalServerError)
         }
     }
     post("/slettKontaktadresse") {
@@ -185,10 +206,19 @@ fun Route.endreOpplysninger(
     }
 }
 
+private suspend fun ApplicationCall.handleEndreKontonummerException(uri: Url, error: String, statusCode: HttpStatusCode) {
+    val u = URLBuilder().takeFrom(uri).apply {
+        parameters.append("error", error)
+        parameters.append("status", statusCode.value.toString())
+    }
+    respondRedirect(u.build())
+}
+
 @Serializable
 data class EndreKontonummerState(
     val state: String,
     val nonce: String,
     val codeVerifier: String,
     val kontonummer: Kontonummer,
+    val bruker: String,
 )

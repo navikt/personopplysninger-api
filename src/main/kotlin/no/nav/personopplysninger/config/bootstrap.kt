@@ -41,7 +41,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
 
     val conf = this.environment.config
 
-    val idporten = Idporten()
+    val idporten = IDPorten()
 
     install(Authentication) {
         tokenValidationSupport(

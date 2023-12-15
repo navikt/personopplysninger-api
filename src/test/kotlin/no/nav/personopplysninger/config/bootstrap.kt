@@ -41,7 +41,7 @@ fun Application.testModule(appContext: TestApplicationContext) {
     }
 
     routing {
-        endreOpplysninger(appContext.endreOpplysningerService, MetricsCollector(CollectorRegistry()), Idporten())
+        endreOpplysninger(appContext.endreOpplysningerService, MetricsCollector(CollectorRegistry()), IDPorten(secureCookie = false))
         institusjon(appContext.institusjonService)
         medl(appContext.medlService)
         personalia(appContext.personaliaService)

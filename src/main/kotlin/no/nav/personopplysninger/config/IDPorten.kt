@@ -45,8 +45,9 @@ import java.util.UUID
 import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec
 
-data class Idporten(
+data class IDPorten(
     val redirectUri: String = System.getenv("AUTH_REDIRECT_URI"),
+    val frontendUri: Url = URLBuilder().takeFrom(System.getenv("AUTH_FRONTEND_URI")).build(),
     val wellKnownUrl: String = System.getenv("IDPORTEN_WELL_KNOWN_URL"),
     val clientId: String = System.getenv("AUTH_CLIENT_ID"),
     val clientJwk: String = System.getenv("AUTH_CLIENT_JWK"),
@@ -55,24 +56,24 @@ data class Idporten(
         "AES"
     ),
     val acr: String = "idporten-loa-high",
-    val allowedAuthTimeSkewSeconds: Long = 10
+    val allowedAuthTimeSkewSeconds: Long = 3,
+    val secureCookie: Boolean = true,
 ) {
-    val rsaKey: RSAKey = RSAKey.parse(clientJwk)
-    val httpClient = HttpClientBuilder.build()
-    val metadata: OauthServerConfigurationMetadata =
+    private val rsaKey: RSAKey = RSAKey.parse(clientJwk)
+    private val httpClient = HttpClientBuilder.build()
+    private val metadata: OauthServerConfigurationMetadata =
         runBlocking {
             httpClient.getOAuthServerConfigurationMetadata(wellKnownUrl)
         }
-    val jwkSource: JWKSource<SecurityContext> = JWKSourceBuilder.create<SecurityContext>(URL(metadata.jwksUri))
+    private val jwkSource: JWKSource<SecurityContext> = JWKSourceBuilder.create<SecurityContext>(URL(metadata.jwksUri))
         .cache(true)
         .rateLimited(false)
         .refreshAheadCache(true)
         .build()
-    val jwsKeySelector = JWSVerificationKeySelector(JWSAlgorithm.RS256, jwkSource)
-    val idTokenValidator = IDTokenValidator(Issuer(metadata.issuer), ClientID(clientId), jwsKeySelector, null)
+    private val jwsKeySelector = JWSVerificationKeySelector(JWSAlgorithm.RS256, jwkSource)
+    private val idTokenValidator = IDTokenValidator(Issuer(metadata.issuer), ClientID(clientId), jwsKeySelector, null)
 
     fun authorizeUrl(
-        redirectUri: String,
         state: String,
         nonce: String,
         pkce: Pkce,
@@ -116,18 +117,18 @@ data class Idporten(
         val claims = idTokenValidator.validate(SignedJWT.parse(resp.idToken), Nonce(nonce))
 
         if (claims.acr != ACR(acr)) {
-            throw RuntimeException("invalid acr")
+            throw IDPortenException("invalid acr")
         }
 
         if (claims.authenticationTime == null) {
-            throw RuntimeException("missing auth_time")
+            throw IDPortenException("missing auth_time")
         }
 
         if (claims.authenticationTime.before(Date.from(Instant.now().minusSeconds(allowedAuthTimeSkewSeconds)))) {
-            throw RuntimeException("auth_time too old")
+            throw IDPortenException("auth_time too old")
         }
 
-        return resp.accessToken
+        return resp.idToken
     }
 
     fun encrypt(plaintext: String): String =
@@ -177,7 +178,7 @@ data class Pkce(
 }
 
 @Serializable
-data class TokenResponse(
+internal data class TokenResponse(
     @JsonNames("id_token")
     val idToken: String,
     @JsonNames("access_token")
@@ -189,7 +190,7 @@ data class TokenResponse(
 )
 
 @Serializable
-data class OauthServerConfigurationMetadata(
+internal data class OauthServerConfigurationMetadata(
     @JsonNames("issuer") val issuer: String,
     @JsonNames("token_endpoint") val tokenEndpoint: String,
     @JsonNames("jwks_uri") val jwksUri: String,
@@ -199,3 +200,5 @@ data class OauthServerConfigurationMetadata(
 internal suspend fun HttpClient.getOAuthServerConfigurationMetadata(url: String): OauthServerConfigurationMetadata {
     return get(url).body<OauthServerConfigurationMetadata>()
 }
+
+class IDPortenException(message: String, cause: Exception? = null) : Exception(message, cause)
