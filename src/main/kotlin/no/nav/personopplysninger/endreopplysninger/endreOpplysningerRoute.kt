@@ -235,7 +235,7 @@ fun Route.endreOpplysninger(
 
 private fun Url.withLocale(locale: String): Url =
     URLBuilder().takeFrom(this).apply {
-        appendPathSegments(allowedLocales.firstOrNull { it == locale } ?: "nb")
+        appendPathSegments(allowedLocales.firstOrNull { it == locale } ?: "nb", "endre-kontonummer")
     }.build()
 
 private suspend fun ApplicationCall.handleEndreKontonummerException(
