@@ -4,6 +4,12 @@ data class Environment(
     val corsAllowedOrigins: String = System.getenv("CORS_ALLOWED_ORIGINS"),
     val corsAllowedSchemes: String = System.getenv("CORS_ALLOWED_SCHEMES"),
 
+    val kafkaBrokers: String = System.getenv("KAFKA_BROKERS"),
+    val kafkaTruststorePath: String = System.getenv("KAFKA_TRUSTSTORE_PATH"),
+    val kafkaKeystorePath: String = System.getenv("KAFKA_KEYSTORE_PATH"),
+    val kafkaCredstorePassword: String = System.getenv("KAFKA_CREDSTORE_PASSWORD"),
+    val varselHendelseTopic: String = System.getenv("VARSEL_HENDELSE_TOPIC"),
+
     val inst2Url: String = System.getenv("INST2_API_URL"),
     val kodeverkUrl: String = System.getenv("KODEVERK_REST_API_URL"),
     val norg2Url: String = System.getenv("NORG2_API_V1_URL"),
