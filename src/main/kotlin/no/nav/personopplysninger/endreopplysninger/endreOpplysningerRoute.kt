@@ -88,7 +88,7 @@ fun Route.endreOpplysninger(
             )
 
             call.response.headers.append("Location", url.toString())
-            call.respond(HttpStatusCode.Unauthorized, mapOf("redirect" to url.toString()))
+            call.respond(HttpStatusCode.OK, mapOf("redirect" to url.toString()))
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved endring av kontonummer", e)
             call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
