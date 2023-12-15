@@ -36,8 +36,8 @@ class HendelseProducer(
             aktivFremTil = ZonedDateTime.now(ZoneId.of("Z")).plusDays(14)
             eksternVarsling = EksternVarslingBestilling(
                 prefererteKanaler = listOf(EksternKanal.SMS, EksternKanal.EPOST),
-                epostVarslingstekst = EKSTERN_VARSLINGSTEKST,
                 epostVarslingstittel = VARSLINGSTITTEL,
+                epostVarslingstekst = EKSTERN_VARSLINGSTEKST,
                 smsVarslingstekst = EKSTERN_VARSLINGSTEKST
             )
         }
