@@ -29,7 +29,7 @@ class HendelseProducer(
             ident = fnr
             tekster += Tekst(
                 spraakkode = "nb",
-                tekst = VARSLINGSTEKST,
+                tekst = VARSLINGSTITTEL,
                 default = true
             )
             link = "https://www.nav.no"
@@ -45,7 +45,7 @@ class HendelseProducer(
 
     companion object {
         const val VARSLINGSTEKST =
-            "Kontonummeret ditt på NAV er endret. Logg inn på NAV hvis det ikke var deg som endret."
+            "Hei! Kontonummeret ditt på NAV er endret. Logg inn på NAV hvis det ikke var deg som endret.\nVennlig hilsen NAV"
         const val VARSLINGSTITTEL =
             "Kontonummeret ditt på NAV er endret"
     }
