@@ -44,9 +44,9 @@ class HendelseProducer(
     }
 
     companion object {
-        const val VARSLINGSTEKST =
-            "Hei! Kontonummeret ditt på NAV er endret. Logg inn på NAV hvis det ikke var deg som endret. Vennlig hilsen NAV"
         const val VARSLINGSTITTEL =
-            "Kontonummeret ditt på NAV er endret"
+            "Du har endret kontonummeret ditt hos NAV"
+        const val VARSLINGSTEKST =
+            "Hei! Du har endret kontonummeret ditt hos NAV. Ring oss om dette ikke stemmer på tlf. 55 55 33 33. Hilsen NAV"
     }
 }
