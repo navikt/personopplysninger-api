@@ -157,7 +157,7 @@ fun Route.endreOpplysninger(
                 .takeFrom(idporten.frontendUri.withLocale(locale))
                 .build()
 
-            call.response.cookies.append(KONTONR_RESULT_COOKIE, "success")
+            call.withResultCookie("success")
 
             call.respondRedirect(url)
         } catch (e: KontoregisterValidationException) {
@@ -239,6 +239,10 @@ private fun Url.withLocale(locale: String): Url =
         appendPathSegments(allowedLocales.firstOrNull { it == locale } ?: "nb", "endre-kontonummer")
     }.build()
 
+private fun ApplicationCall.withResultCookie(result: String) {
+    response.cookies.append(KONTONR_RESULT_COOKIE, result, path = "/", domain = ".nav.no")
+}
+
 private suspend fun ApplicationCall.handleEndreKontonummerException(
     uri: Url,
     error: String,
@@ -249,7 +253,7 @@ private suspend fun ApplicationCall.handleEndreKontonummerException(
         parameters.append("status", statusCode.value.toString())
     }
 
-    response.cookies.append(KONTONR_RESULT_COOKIE, "error")
+    withResultCookie("error")
 
     respondRedirect(u.build())
 }
