@@ -33,6 +33,8 @@ import java.util.UUID
 private val logger = LoggerFactory.getLogger("endreOpplysningerRoute")
 private val allowedLocales = setOf("nb", "nn", "en")
 
+private const val KONTONR_RESULT_COOKIE = "kontonr-result"
+
 fun Route.endreOpplysninger(
     endreOpplysningerService: EndreOpplysningerService,
     metricsCollector: MetricsCollector,
@@ -158,6 +160,8 @@ fun Route.endreOpplysninger(
                 }
                 .build()
 
+            call.response.cookies.append(KONTONR_RESULT_COOKIE, "success")
+
             call.respondRedirect(url)
         } catch (e: KontoregisterValidationException) {
             logger.error("Validering feilet ved endring av kontonummer", e)
@@ -248,6 +252,9 @@ private suspend fun ApplicationCall.handleEndreKontonummerException(
         parameters.append("error", error)
         parameters.append("status", statusCode.value.toString())
     }
+
+    response.cookies.append(KONTONR_RESULT_COOKIE, "error")
+
     respondRedirect(u.build())
 }
 
