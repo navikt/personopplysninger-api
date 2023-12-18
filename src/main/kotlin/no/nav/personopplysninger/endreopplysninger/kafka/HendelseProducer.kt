@@ -67,7 +67,7 @@ class HendelseProducer(
         const val VARSLINGSTITTEL =
             "Du har endret kontonummeret ditt hos NAV"
 
-        val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("hh:mm")
+        val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
         val monthNamesMap = mapOf(
             1 to "januar",
