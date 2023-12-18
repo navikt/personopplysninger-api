@@ -155,9 +155,6 @@ fun Route.endreOpplysninger(
 
             val url = URLBuilder()
                 .takeFrom(idporten.frontendUri.withLocale(locale))
-                .apply {
-                    parameters.append("result", "success")
-                }
                 .build()
 
             call.response.cookies.append(KONTONR_RESULT_COOKIE, "success")
@@ -248,7 +245,6 @@ private suspend fun ApplicationCall.handleEndreKontonummerException(
     statusCode: HttpStatusCode
 ) {
     val u = URLBuilder().takeFrom(uri).apply {
-        parameters.append("result", "error")
         parameters.append("error", error)
         parameters.append("status", statusCode.value.toString())
     }
