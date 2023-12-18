@@ -8,8 +8,10 @@ import no.nav.tms.varsel.action.Varseltype
 import no.nav.tms.varsel.builder.VarselActionBuilder
 import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class HendelseProducer(
     private val kafkaProducer: Producer<String, String>,
@@ -22,6 +24,9 @@ class HendelseProducer(
     }
 
     private fun createHendelse(fnr: String, eventId: String): String {
+        val internVarslingstekst = internVarslingstekst()
+        val eksternVarslingstekst = eksternVarslingstekst(internVarslingstekst)
+
         return VarselActionBuilder.opprett {
             type = Varseltype.Beskjed
             varselId = eventId
@@ -29,7 +34,7 @@ class HendelseProducer(
             ident = fnr
             tekster += Tekst(
                 spraakkode = "nb",
-                tekst = BASE_VARSLINGSTEKST,
+                tekst = internVarslingstekst,
                 default = true
             )
             link = "https://www.nav.no"
@@ -37,18 +42,46 @@ class HendelseProducer(
             eksternVarsling = EksternVarslingBestilling(
                 prefererteKanaler = listOf(EksternKanal.SMS, EksternKanal.EPOST),
                 epostVarslingstittel = VARSLINGSTITTEL,
-                epostVarslingstekst = EKSTERN_VARSLINGSTEKST,
-                smsVarslingstekst = EKSTERN_VARSLINGSTEKST
+                epostVarslingstekst = eksternVarslingstekst,
+                smsVarslingstekst = eksternVarslingstekst,
             )
         }
+    }
+
+    // Varsling i dekoratøren
+    private fun internVarslingstekst(): String {
+        val timestamp = LocalDateTime.now()
+        val dayOfMonth = timestamp.dayOfMonth
+        val month = monthNamesMap[timestamp.monthValue]
+        val time = timestamp.format(timeFormatter)
+
+        return "Kontonummeret ditt hos NAV ble endret $dayOfMonth. $month kl $time. Ring oss om dette ikke stemmer på tlf. 55 55 33 33."
+    }
+
+    // Varsling på sms og e-post
+    private fun eksternVarslingstekst(baseText: String): String {
+        return "Hei! $baseText Hilsen NAV"
     }
 
     companion object {
         const val VARSLINGSTITTEL =
             "Du har endret kontonummeret ditt hos NAV"
-        const val BASE_VARSLINGSTEKST =
-            "Du har endret kontonummeret ditt hos NAV. Ring oss om dette ikke stemmer på tlf. 55 55 33 33."
-        const val EKSTERN_VARSLINGSTEKST =
-            "Hei! $BASE_VARSLINGSTEKST Hilsen NAV"
+
+        val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("hh:mm")
+
+        val monthNamesMap = mapOf(
+            1 to "januar",
+            2 to "februar",
+            3 to "mars",
+            4 to "april",
+            5 to "mai",
+            6 to "juni",
+            7 to "juli",
+            8 to "august",
+            9 to "september",
+            10 to "oktober",
+            11 to "november",
+            12 to "desember",
+        )
     }
 }
