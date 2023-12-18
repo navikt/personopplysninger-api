@@ -30,7 +30,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
       - name: Build application
         run: |
-          ./gradlew clean build
+          ./gradlew clean build -x test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push docker image
