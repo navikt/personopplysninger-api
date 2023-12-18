@@ -13,6 +13,7 @@ import io.ktor.server.metrics.micrometer.MicrometerMetrics
 import io.ktor.server.plugins.callloging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
+import io.ktor.server.plugins.forwardedheaders.XForwardedHeaders
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
@@ -40,6 +41,9 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     }
 
     val conf = this.environment.config
+
+    val idporten = IDPorten()
+
     install(Authentication) {
         tokenValidationSupport(
             config = conf,
@@ -50,6 +54,8 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
             )
         )
     }
+
+    install(XForwardedHeaders)
 
     install(CallLogging) {
         filter { call -> !call.request.path().contains("internal") }
@@ -78,7 +84,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     routing {
         health(appContext.appMicrometerRegistry)
         authenticate {
-            endreOpplysninger(appContext.endreOpplysningerService, appContext.metricsCollector)
+            endreOpplysninger(appContext.endreOpplysningerService, appContext.metricsCollector, idporten)
             institusjon(appContext.institusjonService)
             medl(appContext.medlService)
             personalia(appContext.personaliaService)

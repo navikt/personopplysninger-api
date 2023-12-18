@@ -55,7 +55,7 @@ class HendelseProducer(
         val month = monthNamesMap[timestamp.monthValue]
         val time = timestamp.format(timeFormatter)
 
-        return "Kontonummeret ditt hos NAV ble endret $dayOfMonth. $month kl $time. Ring oss om dette ikke stemmer på tlf. 55 55 33 33."
+        return "Kontonummeret ditt hos NAV ble endret $dayOfMonth. $month kl. $time. Ring oss om dette ikke stemmer på tlf. 55 55 33 33."
     }
 
     // Varsling på sms og e-post
