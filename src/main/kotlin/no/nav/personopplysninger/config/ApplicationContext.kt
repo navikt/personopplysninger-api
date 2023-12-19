@@ -2,6 +2,8 @@ package no.nav.personopplysninger.config
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
+import io.ktor.http.URLBuilder
+import io.ktor.http.takeFrom
 import io.micrometer.prometheus.PrometheusConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
 import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkConsumer
@@ -22,7 +24,9 @@ import no.nav.personopplysninger.medl.consumer.MedlConsumer
 import no.nav.personopplysninger.personalia.PersonaliaService
 import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
 import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
+import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.crypto.spec.SecretKeySpec
 
 class ApplicationContext {
 
@@ -34,6 +38,8 @@ class ApplicationContext {
 
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
     val hendelseProducer = HendelseProducer(initializeKafkaProducer(env), env.varselHendelseTopic)
+
+    val idporten = setupIdporten(env)
 
     val institusjonConsumer = InstitusjonConsumer(httpClient, env, tokendingsService)
     val kontaktinfoConsumer = KontaktinfoConsumer(httpClient, env, tokendingsService)
@@ -48,12 +54,32 @@ class ApplicationContext {
     val pdlService = PdlService(pdlConsumer)
 
     val endreOpplysningerService =
-        EndreOpplysningerService(pdlMottakConsumer, kodeverkService, kontoregisterConsumer, pdlService, hendelseProducer)
+        EndreOpplysningerService(
+            pdlMottakConsumer,
+            kodeverkService,
+            kontoregisterConsumer,
+            pdlService,
+            hendelseProducer
+        )
     val institusjonService = InstitusjonService(institusjonConsumer)
     val medlService = MedlService(medlConsumer, kodeverkService)
     val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkService)
     val personaliaService = PersonaliaService(kodeverkService, norg2Consumer, kontoregisterConsumer, pdlService)
 
+
+    private fun setupIdporten(env: Environment): IDPorten {
+        return IDPorten(
+            redirectUri = env.redirectUri,
+            frontendUri = URLBuilder().takeFrom(env.frontendUri).build(),
+            wellKnownUrl = env.wellKnownUrl,
+            clientId = env.clientId,
+            clientJwk = env.clientJwk,
+            encryptionKey = SecretKeySpec(
+                Base64.getDecoder().decode(env.encryptionKey),
+                "AES"
+            ),
+        )
+    }
 
     private fun setupKodeverkCache(environment: Environment): Cache<String, Kodeverk> {
         return Caffeine.newBuilder()
