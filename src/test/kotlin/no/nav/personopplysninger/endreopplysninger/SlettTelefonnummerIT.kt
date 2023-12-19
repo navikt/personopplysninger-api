@@ -1,8 +1,6 @@
 package no.nav.personopplysninger.endreopplysninger
 
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.kotlinx.json.json
 import no.nav.personopplysninger.IntegrationTest
 import no.nav.personopplysninger.config.mocks.PdlMottakResponseType
 import no.nav.personopplysninger.config.setupMockedClient
@@ -21,7 +19,7 @@ class SlettTelefonnummerIT : IntegrationTest() {
     @Test
     fun slettTelefonnummer200() =
         integrationTest(setupMockedClient(pdlMottakResponseType = PdlMottakResponseType.TELEFON)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
             val response = post(
                 client,
                 SLETT_TELEFONNUMMER_PATH,
@@ -39,7 +37,7 @@ class SlettTelefonnummerIT : IntegrationTest() {
                 pdlMottakStatus = HttpStatusCode.InternalServerError
             )
         ) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
             val response = post(
                 client,
                 SLETT_TELEFONNUMMER_PATH,
@@ -57,7 +55,7 @@ class SlettTelefonnummerIT : IntegrationTest() {
                 pdlStatus = HttpStatusCode.InternalServerError
             )
         ) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
             val response = post(
                 client,
                 SLETT_TELEFONNUMMER_PATH,

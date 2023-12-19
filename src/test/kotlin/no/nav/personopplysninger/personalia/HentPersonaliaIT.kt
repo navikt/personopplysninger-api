@@ -1,9 +1,7 @@
 package no.nav.personopplysninger.personalia
 
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.kotlinx.json.json
 import no.nav.personopplysninger.IntegrationTest
 import no.nav.personopplysninger.config.mocks.PdlResponseType
 import no.nav.personopplysninger.config.setupMockedClient
@@ -17,7 +15,7 @@ class HentPersonaliaIT : IntegrationTest() {
 
     @Test
     fun hentPersonalia200() = integrationTest(setupMockedClient()) {
-        val client = createClient { install(ContentNegotiation) { json() } }
+        val client = httpClient()
         val response = get(client, HENT_PERSONALIA_PATH)
 
         assertEquals(HttpStatusCode.OK, response.status)
@@ -26,7 +24,7 @@ class HentPersonaliaIT : IntegrationTest() {
     @Test
     fun hentPersonaliaOppholdAnnetSted200() =
         integrationTest(setupMockedClient(pdlResponseType = PdlResponseType.OPPHOLD_ANNET_STED)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
             val response = get(client, HENT_PERSONALIA_PATH)
 
             assertEquals(HttpStatusCode.OK, response.status)
@@ -35,7 +33,7 @@ class HentPersonaliaIT : IntegrationTest() {
     @Test
     fun hentPersonaliaFlereAdresser200() =
         integrationTest(setupMockedClient(pdlResponseType = PdlResponseType.FLERE_ADRESSER)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
             val response = get(client, HENT_PERSONALIA_PATH)
 
             assertEquals(HttpStatusCode.OK, response.status)
@@ -44,7 +42,7 @@ class HentPersonaliaIT : IntegrationTest() {
     @Test
     fun feilMotNorgSkalGi200() =
         integrationTest(setupMockedClient(norg2Status = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
             val response = get(client, HENT_PERSONALIA_PATH)
 
             assertEquals(HttpStatusCode.OK, response.status)
@@ -53,7 +51,7 @@ class HentPersonaliaIT : IntegrationTest() {
     @Test
     fun feilMotPdlSkalGi500() =
         integrationTest(setupMockedClient(pdlStatus = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
             val response = get(client, HENT_PERSONALIA_PATH)
 
             assertEquals(HttpStatusCode.InternalServerError, response.status)
@@ -62,7 +60,7 @@ class HentPersonaliaIT : IntegrationTest() {
     @Test
     fun feilMotKontoregisterSkalGi200() =
         integrationTest(setupMockedClient(kontoregisterStatus = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
             val response = get(client, HENT_PERSONALIA_PATH)
 
             assertEquals(HttpStatusCode.OK, response.status)
@@ -72,7 +70,7 @@ class HentPersonaliaIT : IntegrationTest() {
     @Test
     fun timeoutMotKontoregisterSkalGi200() =
         integrationTest(setupMockedClient(kontoregisterDelay = 2000)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
             val response = get(client, HENT_PERSONALIA_PATH)
 
             assertEquals(HttpStatusCode.OK, response.status)
@@ -82,7 +80,7 @@ class HentPersonaliaIT : IntegrationTest() {
     @Test
     fun feilMotKodeverkSkalGi500() =
         integrationTest(setupMockedClient(kodeverkStatus = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
             val response = get(client, HENT_PERSONALIA_PATH)
 
             assertEquals(HttpStatusCode.InternalServerError, response.status)
