@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.serialisering
 
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import no.nav.personopplysninger.common.consumer.kodeverk.dto.GetKodeverkKoderBetydningerResponse
 import no.nav.personopplysninger.common.consumer.kodeverk.dto.Retningsnummer

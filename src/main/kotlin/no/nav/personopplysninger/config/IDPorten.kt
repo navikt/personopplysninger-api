@@ -39,22 +39,16 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 import java.net.URL
 import java.time.Instant
-import java.util.Base64
-import java.util.Date
-import java.util.UUID
+import java.util.*
 import javax.crypto.SecretKey
-import javax.crypto.spec.SecretKeySpec
 
 data class IDPorten(
-    val redirectUri: String = System.getenv("AUTH_REDIRECT_URI"),
-    val frontendUri: Url = URLBuilder().takeFrom(System.getenv("AUTH_FRONTEND_URI")).build(),
-    val wellKnownUrl: String = System.getenv("IDPORTEN_WELL_KNOWN_URL"),
-    val clientId: String = System.getenv("AUTH_CLIENT_ID"),
-    val clientJwk: String = System.getenv("AUTH_CLIENT_JWK"),
-    val encryptionKey: SecretKey = SecretKeySpec(
-        Base64.getDecoder().decode(System.getenv("AUTH_ENCRYPTION_KEY")),
-        "AES"
-    ),
+    val redirectUri: String,
+    val frontendUri: Url,
+    val wellKnownUrl: String,
+    val clientId: String,
+    val clientJwk: String,
+    val encryptionKey: SecretKey,
     val acr: String = "idporten-loa-high",
     val allowedAuthTimeSkewSeconds: Long = 3,
     val secureCookie: Boolean = true,

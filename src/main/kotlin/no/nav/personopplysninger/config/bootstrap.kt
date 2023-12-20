@@ -42,8 +42,6 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
 
     val conf = this.environment.config
 
-    val idporten = IDPorten()
-
     install(Authentication) {
         tokenValidationSupport(
             config = conf,
@@ -84,7 +82,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     routing {
         health(appContext.appMicrometerRegistry)
         authenticate {
-            endreOpplysninger(appContext.endreOpplysningerService, appContext.metricsCollector, idporten)
+            endreOpplysninger(appContext.endreOpplysningerService, appContext.metricsCollector, appContext.idporten)
             institusjon(appContext.institusjonService)
             medl(appContext.medlService)
             personalia(appContext.personaliaService)

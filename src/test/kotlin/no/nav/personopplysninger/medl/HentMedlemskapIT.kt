@@ -1,8 +1,6 @@
 package no.nav.personopplysninger.medl
 
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.kotlinx.json.json
 import no.nav.personopplysninger.IntegrationTest
 import no.nav.personopplysninger.config.setupMockedClient
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -14,7 +12,7 @@ class HentMedlemskapIT : IntegrationTest() {
 
     @Test
     fun hentMedlemskap200() = integrationTest(setupMockedClient()) {
-        val client = createClient { install(ContentNegotiation) { json() } }
+        val client = httpClient()
         val response = get(client, HENT_MEDLEMSKAP_PATH)
 
         assertEquals(HttpStatusCode.OK, response.status)
@@ -23,7 +21,7 @@ class HentMedlemskapIT : IntegrationTest() {
     @Test
     fun feilMotMedlSkalGi500() =
         integrationTest(setupMockedClient(medlStatus = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
 
             val response = get(client, HENT_MEDLEMSKAP_PATH)
 
@@ -33,7 +31,7 @@ class HentMedlemskapIT : IntegrationTest() {
     @Test
     fun feilMotKodeverkSkalGi500() =
         integrationTest(setupMockedClient(kodeverkStatus = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val client = httpClient()
 
             val response = get(client, HENT_MEDLEMSKAP_PATH)
 
