@@ -25,8 +25,13 @@ class HendelseProducer(
     }
 
     private fun createHendelse(fnr: String, eventId: String): String {
-        val internVarslingstekst = internVarslingstekst()
-        val eksternVarslingstekst = eksternVarslingstekst(internVarslingstekst)
+        val timestamp = LocalDateTime.now()
+        val openingHours = openingHours(timestamp)
+        val endringstidspunkt = endringstidspunkt(timestamp)
+
+        val dekoratorVarslingstekst = dekoratorVarslingstekst(endringstidspunkt, openingHours)
+        val epostVarslingstekst = epostVarslingstekst(dekoratorVarslingstekst)
+        val smsVarslingstekst = smsVarslingstekst(endringstidspunkt, openingHours)
 
         return VarselActionBuilder.opprett {
             type = Varseltype.Beskjed
@@ -35,7 +40,7 @@ class HendelseProducer(
             ident = fnr
             tekster += Tekst(
                 spraakkode = "nb",
-                tekst = internVarslingstekst,
+                tekst = dekoratorVarslingstekst,
                 default = true
             )
             link = "https://www.nav.no"
@@ -43,27 +48,34 @@ class HendelseProducer(
             eksternVarsling = EksternVarslingBestilling(
                 prefererteKanaler = listOf(EksternKanal.SMS, EksternKanal.EPOST),
                 epostVarslingstittel = VARSLINGSTITTEL,
-                epostVarslingstekst = eksternVarslingstekst,
-                smsVarslingstekst = eksternVarslingstekst,
+                epostVarslingstekst = epostVarslingstekst,
+                smsVarslingstekst = smsVarslingstekst,
             )
         }
     }
 
-    // Varsling i dekoratøren
-    private fun internVarslingstekst(): String {
-        val timestamp = LocalDateTime.now()
+    private fun dekoratorVarslingstekst(endringstidspunkt: String, openingHours: String): String {
+        return "Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
+                "Hvis det ikke var deg som endret, kan du logge deg inn på NAV for å rette kontonummeret. " +
+                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden kl. $openingHours."
+    }
+
+    private fun epostVarslingstekst(baseText: String): String {
+        return "Hei! $baseText Hilsen NAV"
+    }
+
+    private fun smsVarslingstekst(endringstidspunkt: String, openingHours: String): String {
+        return "Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
+                "Hvis det er feil må du logge inn på NAV for å rette det. " +
+                "Ring oss på 55 55 33 33 fra $openingHours."
+    }
+
+    private fun endringstidspunkt(timestamp: LocalDateTime): String {
         val dayOfMonth = timestamp.dayOfMonth
         val month = monthNamesMap[timestamp.monthValue]
         val time = timestamp.format(timeFormatter)
 
-        return "Kontonummeret ditt hos NAV ble endret $dayOfMonth. $month kl. $time. " +
-                "Hvis det ikke var deg som endret, kan du logge deg inn på NAV for å rette kontonummeret. " +
-                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden kl. ${openingHours(timestamp)}."
-    }
-
-    // Varsling på sms og e-post
-    private fun eksternVarslingstekst(baseText: String): String {
-        return "Hei! $baseText Hilsen NAV"
+        return "$dayOfMonth. $month kl. $time"
     }
 
     private fun openingHours(timestamp: LocalDateTime): String {
