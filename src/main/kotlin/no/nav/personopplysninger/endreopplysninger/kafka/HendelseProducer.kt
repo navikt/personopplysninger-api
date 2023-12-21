@@ -8,6 +8,7 @@ import no.nav.tms.varsel.action.Varseltype
 import no.nav.tms.varsel.builder.VarselActionBuilder
 import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -55,7 +56,9 @@ class HendelseProducer(
         val month = monthNamesMap[timestamp.monthValue]
         val time = timestamp.format(timeFormatter)
 
-        return "Kontonummeret ditt hos NAV ble endret $dayOfMonth. $month kl. $time. Ring oss om dette ikke stemmer på tlf. 55 55 33 33."
+        return "Kontonummeret ditt hos NAV ble endret $dayOfMonth. $month kl. $time. " +
+                "Hvis det ikke var deg som endret, kan du logge deg inn på NAV for å rette kontonummeret. " +
+                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden kl. ${openingHours(timestamp)}."
     }
 
     // Varsling på sms og e-post
@@ -63,11 +66,22 @@ class HendelseProducer(
         return "Hei! $baseText Hilsen NAV"
     }
 
+    private fun openingHours(timestamp: LocalDateTime): String {
+        return if (timestamp.isAfter(startOfRomjulOpeningHours) && timestamp.isBefore(endOfRomjulOpeningHours)) {
+            "10:15-14:00"
+        } else {
+            "09:00-15:00"
+        }
+    }
+
     companion object {
         const val VARSLINGSTITTEL =
             "Du har endret kontonummeret ditt hos NAV"
 
         val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
+        val startOfRomjulOpeningHours = LocalDate.of(2023, 12, 22).atTime(15, 0)
+        val endOfRomjulOpeningHours = LocalDate.of(2023, 12, 29).atTime(15, 0)
 
         val monthNamesMap = mapOf(
             1 to "januar",
