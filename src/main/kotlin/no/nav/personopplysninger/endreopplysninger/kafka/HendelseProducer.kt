@@ -29,8 +29,8 @@ class HendelseProducer(
         val openingHours = openingHours(timestamp)
         val endringstidspunkt = endringstidspunkt(timestamp)
 
-        val dekoratorVarslingstekst = dekoratorVarslingstekst(endringstidspunkt, openingHours)
-        val epostVarslingstekst = epostVarslingstekst(dekoratorVarslingstekst)
+        val dekoratorVarslingstekst = dekoratorVarslingstekst(endringstidspunkt)
+        val epostVarslingstekst = epostVarslingstekst(endringstidspunkt, openingHours)
         val smsVarslingstekst = smsVarslingstekst(endringstidspunkt, openingHours)
 
         return VarselActionBuilder.opprett {
@@ -54,14 +54,16 @@ class HendelseProducer(
         }
     }
 
-    private fun dekoratorVarslingstekst(endringstidspunkt: String, openingHours: String): String {
+    private fun dekoratorVarslingstekst(endringstidspunkt: String): String {
         return "Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
-                "Hvis det ikke var deg som endret, kan du logge deg inn på NAV for å rette kontonummeret. " +
-                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden kl. $openingHours."
+                "Hvis det ikke var deg som endret, kan du endre det selv på Nav.no. " +
+                "Du må også ringe oss 55 55 33 33 i åpningstiden eller kontakte oss i våre digitale kanaler."
     }
 
-    private fun epostVarslingstekst(baseText: String): String {
-        return "Hei! $baseText Hilsen NAV"
+    private fun epostVarslingstekst(endringstidspunkt: String, openingHours: String): String {
+        return "Hei! Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
+                "Hvis det ikke var deg som endret, kan du logge deg inn på NAV for å rette kontonummeret. " +
+                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden kl. $openingHours. Hilsen NAV"
     }
 
     private fun smsVarslingstekst(endringstidspunkt: String, openingHours: String): String {
