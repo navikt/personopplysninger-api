@@ -26,12 +26,11 @@ class HendelseProducer(
 
     private fun createHendelse(fnr: String, eventId: String): String {
         val timestamp = LocalDateTime.now()
-        val openingHours = openingHours(timestamp)
         val endringstidspunkt = endringstidspunkt(timestamp)
 
         val dekoratorVarslingstekst = dekoratorVarslingstekst(endringstidspunkt)
-        val epostVarslingstekst = epostVarslingstekst(endringstidspunkt, openingHours)
-        val smsVarslingstekst = smsVarslingstekst(endringstidspunkt, openingHours)
+        val epostVarslingstekst = epostVarslingstekst(endringstidspunkt)
+        val smsVarslingstekst = smsVarslingstekst(endringstidspunkt)
 
         return VarselActionBuilder.opprett {
             type = Varseltype.Beskjed
@@ -60,16 +59,16 @@ class HendelseProducer(
                 "Du må også ringe oss 55 55 33 33 i åpningstiden eller kontakte oss i våre digitale kanaler."
     }
 
-    private fun epostVarslingstekst(endringstidspunkt: String, openingHours: String): String {
+    private fun epostVarslingstekst(endringstidspunkt: String): String {
         return "Hei! Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
                 "Hvis det ikke var deg som endret, kan du logge deg inn på NAV for å rette kontonummeret. " +
-                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden kl. $openingHours. Hilsen NAV"
+                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden kl. 09:00-15:00. Hilsen NAV"
     }
 
-    private fun smsVarslingstekst(endringstidspunkt: String, openingHours: String): String {
+    private fun smsVarslingstekst(endringstidspunkt: String): String {
         return "Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
                 "Hvis det er feil må du logge inn på NAV for å rette det. " +
-                "Ring oss på 55 55 33 33 fra $openingHours."
+                "Ring oss på 55 55 33 33 fra 09:00-15:00."
     }
 
     private fun endringstidspunkt(timestamp: LocalDateTime): String {
@@ -78,14 +77,6 @@ class HendelseProducer(
         val time = timestamp.format(timeFormatter)
 
         return "$dayOfMonth. $month kl. $time"
-    }
-
-    private fun openingHours(timestamp: LocalDateTime): String {
-        return if (timestamp.isAfter(startOfRomjulOpeningHours) && timestamp.isBefore(endOfRomjulOpeningHours)) {
-            "10:15-14:00"
-        } else {
-            "09:00-15:00"
-        }
     }
 
     companion object {
