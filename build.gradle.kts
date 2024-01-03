@@ -2,7 +2,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
     val versions = object {
-        val kotlin = "1.9.0"
+        val kotlin = "1.9.22"
         val shadow = "8.1.1"
         val versions = "0.50.0"
     }
@@ -29,7 +29,6 @@ repositories {
             password = System.getenv("GITHUB_TOKEN")?: project.findProperty("githubPassword") as String
         }
     }
-
 }
 
 dependencies {
@@ -37,14 +36,14 @@ dependencies {
         val auth0Jwt = "4.4.0"
         val caffeine = "3.1.8"
         val kafka = "3.6.1"
-        val ktor = "2.3.6"
-        val logback = "1.4.11"
+        val ktor = "2.3.7"
+        val logback = "1.4.14"
         val logstash = "7.4"
-        val micrometer = "1.12.0"
+        val micrometer = "1.12.1"
         val mockk = "1.13.8"
-        val navSecurity = "3.1.8"
-        val kotlin = "1.9.0"
-        val tmsKtorTokenSupport = "3.0.0"
+        val navSecurity = "3.2.0"
+        val kotlin = "1.9.22"
+        val tmsKtorTokenSupport = "4.0.0"
         val tmsVarselBuilder = "1.0.1"
     }
 
@@ -68,7 +67,7 @@ dependencies {
     implementation("io.ktor:ktor-server-metrics-micrometer:${versions.ktor}")
     implementation("io.micrometer:micrometer-registry-prometheus:${versions.micrometer}")
     implementation("no.nav.security:token-validation-ktor-v2:${versions.navSecurity}")
-    implementation("com.github.navikt.tms-ktor-token-support:token-support-tokendings-exchange:${versions.tmsKtorTokenSupport}")
+    implementation("com.github.navikt.tms-ktor-token-support:tokendings-exchange:${versions.tmsKtorTokenSupport}")
     implementation("net.logstash.logback:logstash-logback-encoder:${versions.logstash}")
     implementation("ch.qos.logback:logback-classic:${versions.logback}")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:${versions.kotlin}")
