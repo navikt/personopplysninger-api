@@ -67,6 +67,8 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
 
     install(MicrometerMetrics) {
         registry = appContext.appMicrometerRegistry
+        // Default prefix for ikke-ktor apps, nødvendig for å få data i felles grafana-dashboard
+        metricName = "http.request.duration"
     }
 
     install(ContentNegotiation) {
