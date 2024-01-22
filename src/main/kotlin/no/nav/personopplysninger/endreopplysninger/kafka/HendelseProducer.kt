@@ -42,7 +42,7 @@ class HendelseProducer(
                 tekst = dekoratorVarslingstekst,
                 default = true
             )
-            link = "https://www.nav.no"
+            link = "https://www.nav.no/person/personopplysninger/nb/#utbetaling"
             aktivFremTil = ZonedDateTime.now(ZoneId.of("Z")).plusDays(14)
             eksternVarsling = EksternVarslingBestilling(
                 prefererteKanaler = listOf(EksternKanal.SMS, EksternKanal.EPOST),
@@ -56,7 +56,7 @@ class HendelseProducer(
     private fun dekoratorVarslingstekst(endringstidspunkt: String): String {
         return "Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
                 "Hvis det ikke var deg som endret, kan du endre det selv på Nav.no. " +
-                "Du må også ringe oss 55 55 33 33 i åpningstiden eller kontakte oss i våre digitale kanaler."
+                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden eller kontakte oss i våre digitale kanaler."
     }
 
     private fun epostVarslingstekst(endringstidspunkt: String): String {
