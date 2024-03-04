@@ -1,105 +1,95 @@
 {
-  "id": 100000873,
-  "enhetNr": "1203",
+  "enhetNr": "0118",
+  "navn": "NAV Aremark",
   "telefonnummer": "55553333",
   "telefonnummerKommentar": null,
-  "faksnummer": null,
   "epost": null,
   "postadresse": {
-    "type": "postboksadresse",
-    "postnummer": "5826",
-    "poststed": "BERGEN",
-    "postboksnummer": "34",
-    "postboksanlegg": null
+    "type": "stedsadresse",
+    "postnummer": "1798",
+    "poststed": "AREMARK",
+    "gatenavn": "Rådhuset",
+    "husnummer": null,
+    "husbokstav": null,
+    "adresseTilleggsnavn": null
   },
   "besoeksadresse": {
     "type": "stedsadresse",
-    "postnummer": "5116",
-    "poststed": "ULSET",
-    "gatenavn": "Åsane Storsenter",
-    "husnummer": "19",
+    "postnummer": "1798",
+    "poststed": "AREMARK",
+    "gatenavn": "Aremarksveien",
+    "husnummer": "2276",
     "husbokstav": null,
     "adresseTilleggsnavn": null
   },
   "spesielleOpplysninger": null,
-  "publikumsmottak": [
-    {
-      "id": 100000702,
-      "besoeksadresse": {
-        "type": "stedsadresse",
-        "postnummer": "5116",
-        "poststed": "Ulset",
-        "gatenavn": "Åsane Storsenter",
-        "husnummer": "19",
-        "husbokstav": null,
-        "adresseTilleggsnavn": null
-      },
-      "aapningstider": [
-        {
-          "id": 100002456,
-          "dag": "Onsdag",
-          "dato": null,
-          "fra": "12:30",
-          "til": "14:30",
-          "kommentar": null,
-          "stengt": false
+  "brukerkontakt": {
+    "publikumsmottak": [
+      {
+        "besoeksadresse": {
+          "type": "stedsadresse",
+          "postnummer": "1798",
+          "poststed": "Aremark",
+          "gatenavn": "Aremarksveien",
+          "husnummer": "2276",
+          "husbokstav": null,
+          "adresseTilleggsnavn": null
         },
-        {
-          "id": 100002458,
-          "dag": "Fredag",
-          "dato": null,
-          "fra": "12:30",
-          "til": "14:30",
-          "kommentar": null,
-          "stengt": false
-        },
-        {
-          "id": 100002455,
-          "dag": "Tirsdag",
-          "dato": null,
-          "fra": "12:30",
-          "til": "14:30",
-          "kommentar": null,
-          "stengt": false
-        },
-        {
-          "id": 100002454,
-          "dag": "Mandag",
-          "dato": null,
-          "fra": "12:30",
-          "til": "14:30",
-          "kommentar": null,
-          "stengt": false
-        },
-        {
-          "id": 100002457,
-          "dag": "Torsdag",
-          "dato": null,
-          "fra": "12:30",
-          "til": "14:30",
-          "kommentar": null,
-          "stengt": false
-        },
-        {
-          "id": 100013986,
-          "dag": null,
-          "dato": "2021-12-24",
-          "fra": "10:00",
-          "til": "11:30",
-          "kommentar": "Åpent for akutte behov for alle NAV-kontorer i Bergen kommune",
-          "stengt": false
-        },
-        {
-          "id": 100013987,
-          "dag": null,
-          "dato": "2021-12-31",
-          "fra": null,
-          "til": null,
-          "kommentar": "NAV Bergen vest er åpent 10-11.30 for akutte behov",
-          "stengt": true
-        }
-      ],
-      "stedsbeskrivelse": null
-    }
-  ]
+        "aapningstider": [
+          {
+            "dag": "Mandag",
+            "dato": null,
+            "fra": "09:00",
+            "til": "14:30",
+            "kommentar": "Timeavtaler også utenom åpningstiden.",
+            "stengt": false,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Tirsdag",
+            "dato": null,
+            "fra": "09:00",
+            "til": "14:30",
+            "kommentar": "Timeavtaler også utenom åpningstiden.",
+            "stengt": false,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Torsdag",
+            "dato": null,
+            "fra": "09:00",
+            "til": "14:30",
+            "kommentar": "Timeavtaler også utenom åpningstiden.",
+            "stengt": false,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Onsdag",
+            "dato": null,
+            "fra": "09:00",
+            "til": "14:30",
+            "kommentar": "Timeavtaler også utenom åpningstiden.",
+            "stengt": false,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Fredag",
+            "dato": null,
+            "fra": "09:00",
+            "til": "14:30",
+            "kommentar": "Timeavtaler også utenom åpningstiden.",
+            "stengt": false,
+            "kunTimeavtale": false
+          }
+        ],
+        "stedsbeskrivelse": "Rådhuset",
+        "adkomstbeskrivelse": null
+      }
+    ],
+    "publikumskanaler": null,
+    "brukertjenesteTilbud": null,
+    "sosialhjelp": null,
+    "informasjonUtbetalinger": null,
+    "skriftspraak": null
+  }
 }

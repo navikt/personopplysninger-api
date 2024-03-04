@@ -1,6 +1,7 @@
 package no.nav.personopplysninger.personalia.transformer
 
 
+import kotlinx.serialization.json.JsonObject
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyKonto
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyPdlData
@@ -15,7 +16,12 @@ class PersonaliaOgAdresserTransformerTest {
     fun gittPersonaliaOgAdresser_skalFaaPersonaliaOgAdresser() {
         val konto = createDummyKonto()
         val pdlData = createDummyPdlData()
-        val actual = PersonaliaOgAdresserTransformer.toOutbound(pdlData, konto, personaliaKodeverk)
+        val actual = PersonaliaOgAdresserTransformer.toOutbound(
+            pdlData,
+            konto,
+            personaliaKodeverk,
+            JsonObject(emptyMap())
+        )
 
         assertNotNull(actual.personalia)
         assertNotNull(actual.adresser)

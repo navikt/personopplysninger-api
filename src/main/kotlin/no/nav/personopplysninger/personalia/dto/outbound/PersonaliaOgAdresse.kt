@@ -11,7 +11,7 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.Oppholdsadresse
 data class PersonaliaOgAdresser(
     val personalia: Personalia,
     val adresser: Adresser?,
-    val enhetKontaktInformasjon: EnhetsKontaktInformasjon
+    val enhetKontaktInformasjon: JsonObject?
 )
 
 @Serializable
@@ -36,9 +36,4 @@ data class Adresser(
     val bostedsadresse: Bostedsadresse? = null,
     val oppholdsadresser: List<Oppholdsadresse> = arrayListOf(),
     val deltBosted: DeltBosted? = null,
-)
-
-@Serializable
-data class EnhetsKontaktInformasjon(
-    var enhet: JsonObject? = null
 )
