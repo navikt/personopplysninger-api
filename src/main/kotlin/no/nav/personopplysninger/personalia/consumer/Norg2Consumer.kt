@@ -6,6 +6,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
+import kotlinx.serialization.json.JsonObject
 import no.nav.personopplysninger.common.util.consumerErrorMessage
 import no.nav.personopplysninger.config.CONSUMER_ID
 import no.nav.personopplysninger.config.Environment
@@ -13,7 +14,6 @@ import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_TOKEN
 import no.nav.personopplysninger.personalia.consumer.dto.Norg2Enhet
-import no.nav.personopplysninger.personalia.consumer.dto.Norg2EnhetKontaktinfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.*
@@ -26,7 +26,7 @@ class Norg2Consumer(
     private var logger: Logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun hentEnhet(token: String, geografisk: String): Norg2Enhet? {
-        val endpoint = environment.norg2Url.plus("/enhet/navkontor/$geografisk")
+        val endpoint = environment.norg2Url.plus("/api/v1/enhet/navkontor/$geografisk")
 
         val response: HttpResponse =
             client.get(endpoint) {
@@ -42,8 +42,8 @@ class Norg2Consumer(
         }
     }
 
-    suspend fun hentKontaktinfo(token: String, enhetsnr: String): Norg2EnhetKontaktinfo {
-        val endpoint = environment.norg2Url.plus("/enhet/$enhetsnr/kontaktinformasjon")
+    suspend fun hentKontaktinfo(token: String, enhetsnr: String): JsonObject {
+        val endpoint = environment.norg2Url.plus("/api/v2/enhet/$enhetsnr/kontaktinformasjon")
 
         val response: HttpResponse =
             client.get(endpoint) {
