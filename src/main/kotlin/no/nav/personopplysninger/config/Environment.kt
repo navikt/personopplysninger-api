@@ -19,7 +19,7 @@ data class Environment(
 
     val inst2Url: String = System.getenv("INST2_API_URL"),
     val kodeverkUrl: String = System.getenv("KODEVERK_REST_API_URL"),
-    val norg2Url: String = System.getenv("NORG2_API_V1_URL"),
+    val norg2Url: String = System.getenv("NORG2_API_URL"),
     val digdirKrrProxyUrl: String = System.getenv("DIGDIR_KRR_PROXY_URL"),
     val pdlMottakUrl: String = System.getenv("PDL_MOTTAK_API_URL"),
     val pdlUrl: String = System.getenv("PDL_API_URL"),
