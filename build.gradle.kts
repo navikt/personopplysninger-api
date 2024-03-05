@@ -1,18 +1,12 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    val versions = object {
-        val kotlin = "1.9.22"
-        val shadow = "8.1.1"
-        val versions = "0.51.0"
-    }
+    kotlin("jvm") version ("1.9.22")
+    kotlin("plugin.allopen") version ("1.9.22")
+    kotlin("plugin.serialization") version ("1.9.22")
 
-    kotlin("jvm") version (versions.kotlin)
-    kotlin("plugin.allopen") version (versions.kotlin)
-    kotlin("plugin.serialization") version (versions.kotlin)
-
-    id("com.github.johnrengelman.shadow") version (versions.shadow)
-    id("com.github.ben-manes.versions") version (versions.versions) // ./gradlew dependencyUpdates to check for new versions
+    id("com.github.johnrengelman.shadow") version ("8.1.1")
+    id("com.github.ben-manes.versions") version ("0.51.0") // ./gradlew dependencyUpdates to check for new versions
     application
 }
 
@@ -31,49 +25,47 @@ repositories {
     }
 }
 
-dependencies {
-    val versions = object {
-        val auth0Jwt = "4.4.0"
-        val caffeine = "3.1.8"
-        val kafka = "3.6.1"
-        val ktor = "2.3.8"
-        val logback = "1.5.0"
-        val logstash = "7.4"
-        val micrometer = "1.12.3"
-        val mockk = "1.13.9"
-        val navSecurity = "4.1.3"
-        val kotlin = "1.9.22"
-        val tmsKtorTokenSupport = "4.0.0"
-        val tmsVarselBuilder = "1.0.2"
-    }
+val auth0JwtVersion = "4.4.0"
+val caffeineVersion = "3.1.8"
+val kafkaVersion = "3.6.1"
+val ktorVersion = "2.3.8"
+val logbackVersion = "1.5.0"
+val logstashVersion = "7.4"
+val micrometerVersion = "1.12.3"
+val mockkVersion = "1.13.9"
+val navSecurityVersion = "4.1.3"
+val kotlinVersion = "1.9.22"
+val tmsKtorTokenSupportVersion = "4.0.0"
+val tmsVarselBuilderVersion = "1.0.2"
 
-    implementation("com.auth0:java-jwt:${versions.auth0Jwt}")
-    implementation("com.github.ben-manes.caffeine:caffeine:${versions.caffeine}")
-    implementation("org.apache.kafka:kafka-clients:${versions.kafka}")
-    implementation("no.nav.tms.varsel:kotlin-builder:${versions.tmsVarselBuilder}")
-    implementation("io.ktor:ktor-serialization:${versions.ktor}")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:${versions.ktor}")
-    implementation("io.ktor:ktor-server-netty:${versions.ktor}")
-    implementation("io.ktor:ktor-server-call-logging:${versions.ktor}")
-    implementation("io.ktor:ktor-server-core:${versions.ktor}")
-    implementation("io.ktor:ktor-server-cors:${versions.ktor}")
-    implementation("io.ktor:ktor-server-forwarded-header:${versions.ktor}")
-    implementation("io.ktor:ktor-server-status-pages:${versions.ktor}")
-    implementation("io.ktor:ktor-server-content-negotiation:${versions.ktor}")
-    implementation("io.ktor:ktor-server-auth:${versions.ktor}")
-    implementation("io.ktor:ktor-server-auth-jwt:${versions.ktor}")
-    implementation("io.ktor:ktor-client-content-negotiation:${versions.ktor}")
-    implementation("io.ktor:ktor-client-apache:${versions.ktor}")
-    implementation("io.ktor:ktor-server-metrics-micrometer:${versions.ktor}")
-    implementation("io.micrometer:micrometer-registry-prometheus:${versions.micrometer}")
-    implementation("no.nav.security:token-validation-ktor-v2:${versions.navSecurity}")
-    implementation("com.github.navikt.tms-ktor-token-support:tokendings-exchange:${versions.tmsKtorTokenSupport}")
-    implementation("net.logstash.logback:logstash-logback-encoder:${versions.logstash}")
-    implementation("ch.qos.logback:logback-classic:${versions.logback}")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:${versions.kotlin}")
-    testImplementation("io.ktor:ktor-server-test-host:${versions.ktor}")
-    testImplementation("io.ktor:ktor-client-mock:${versions.ktor}")
-    testImplementation("io.mockk:mockk:${versions.mockk}")
+dependencies {
+    implementation("com.auth0:java-jwt:$auth0JwtVersion")
+    implementation("com.github.ben-manes.caffeine:caffeine:$caffeineVersion")
+    implementation("org.apache.kafka:kafka-clients:$kafkaVersion")
+    implementation("no.nav.tms.varsel:kotlin-builder:$tmsVarselBuilderVersion")
+    implementation("io.ktor:ktor-serialization:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("io.ktor:ktor-server-netty:$ktorVersion")
+    implementation("io.ktor:ktor-server-call-logging:$ktorVersion")
+    implementation("io.ktor:ktor-server-core:$ktorVersion")
+    implementation("io.ktor:ktor-server-cors:$ktorVersion")
+    implementation("io.ktor:ktor-server-forwarded-header:$ktorVersion")
+    implementation("io.ktor:ktor-server-status-pages:$ktorVersion")
+    implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-server-auth:$ktorVersion")
+    implementation("io.ktor:ktor-server-auth-jwt:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-client-apache:$ktorVersion")
+    implementation("io.ktor:ktor-server-metrics-micrometer:$ktorVersion")
+    implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
+    implementation("no.nav.security:token-validation-ktor-v2:$navSecurityVersion")
+    implementation("com.github.navikt.tms-ktor-token-support:tokendings-exchange:$tmsKtorTokenSupportVersion")
+    implementation("net.logstash.logback:logstash-logback-encoder:$logstashVersion")
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlinVersion")
+    testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
+    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
 }
 
 application {
