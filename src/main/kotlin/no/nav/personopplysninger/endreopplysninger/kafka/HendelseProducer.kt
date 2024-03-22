@@ -54,14 +54,14 @@ class HendelseProducer(
 
     private fun dekoratorVarslingstekst(endringstidspunkt: String): String {
         return "Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
-                "Hvis det ikke var deg som endret, kan du endre det selv på Nav.no. " +
-                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden eller kontakte oss i våre digitale kanaler."
+                "Hvis det ikke var deg som endret, må du logge inn på NAV for å rette det. " +
+                "Trenger du hjelp, kan du ringe oss på 55 55 33 33 eller kontakte oss i våre digitale kanaler."
     }
 
     private fun epostVarslingstekst(endringstidspunkt: String): String {
         return "Hei! Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
-                "Hvis det ikke var deg som endret, kan du logge deg inn på NAV for å rette kontonummeret. " +
-                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden kl. 09:00-15:00. Hilsen NAV"
+                "Hvis det ikke var deg som endret, må du logge deg inn på NAV for å rette kontonummeret. " +
+                "Trenger du hjelp, kan du ringe oss på 55 55 33 33 kl. 09:00–15:00. Hilsen NAV."
     }
 
     private fun smsVarslingstekst(endringstidspunkt: String): String {
