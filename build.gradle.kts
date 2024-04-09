@@ -34,14 +34,14 @@ dependencies {
     val caffeineVersion = "3.1.8"
     val kafkaVersion = "3.7.0"
     val ktorVersion = "2.3.10"
-    val logbackVersion = "1.5.3"
+    val logbackVersion = "1.5.4"
     val logstashVersion = "7.4"
-    val micrometerVersion = "1.12.4"
+    val micrometerVersion = "1.12.5"
     val mockkVersion = "1.13.10"
     val navSecurityVersion = "4.1.4"
-    val kotlinVersion = "1.9.22"
+    val kotlinVersion = "1.9.23"
     val tmsKtorTokenSupportVersion = "4.0.0"
-    val tmsVarselBuilderVersion = "1.0.2"
+    val tmsVarselBuilderVersion = "1.0.3"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
     implementation("com.github.ben-manes.caffeine:caffeine:$caffeineVersion")
