@@ -8,7 +8,6 @@ import no.nav.tms.varsel.action.Varseltype
 import no.nav.tms.varsel.builder.VarselActionBuilder
 import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -55,28 +54,27 @@ class HendelseProducer(
 
     private fun dekoratorVarslingstekst(endringstidspunkt: String): String {
         return "Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
-                "Hvis det ikke var deg som endret, kan du endre det selv på Nav.no. " +
-                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden eller kontakte oss i våre digitale kanaler."
+                "Hvis det ikke var deg som endret, må du logge inn på NAV for å rette det. " +
+                "Trenger du hjelp, kan du ringe oss på 55 55 33 33 eller kontakte oss i våre digitale kanaler."
     }
 
     private fun epostVarslingstekst(endringstidspunkt: String): String {
         return "Hei! Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
-                "Hvis det ikke var deg som endret, kan du logge deg inn på NAV for å rette kontonummeret. " +
-                "Vi ber deg også ringe oss på 55 55 33 33 i åpningstiden kl. 09:00-15:00. Hilsen NAV"
+                "Hvis det ikke var deg som endret, må du logge deg inn på NAV for å rette kontonummeret. " +
+                "Trenger du hjelp, kan du ringe oss på 55 55 33 33 kl. 09:00–15:00. Hilsen NAV."
     }
 
     private fun smsVarslingstekst(endringstidspunkt: String): String {
         return "Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
-                "Hvis det er feil må du logge inn på NAV for å rette det. " +
-                "Ring oss på 55 55 33 33 fra 09:00-15:00."
+                "Hvis det er feil, må du logge inn på NAV for å rette det eller ringe oss på 55 55 33 33 fra 9-15."
     }
 
     private fun endringstidspunkt(timestamp: LocalDateTime): String {
         val dayOfMonth = timestamp.dayOfMonth
-        val month = monthNamesMap[timestamp.monthValue]
+        val month = timestamp.monthValue
         val time = timestamp.format(timeFormatter)
 
-        return "$dayOfMonth. $month kl. $time"
+        return "$dayOfMonth.$month. kl. $time"
     }
 
     companion object {
@@ -84,23 +82,5 @@ class HendelseProducer(
             "Du har endret kontonummeret ditt hos NAV"
 
         val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-
-        val startOfRomjulOpeningHours = LocalDate.of(2023, 12, 22).atTime(15, 0)
-        val endOfRomjulOpeningHours = LocalDate.of(2023, 12, 29).atTime(15, 0)
-
-        val monthNamesMap = mapOf(
-            1 to "januar",
-            2 to "februar",
-            3 to "mars",
-            4 to "april",
-            5 to "mai",
-            6 to "juni",
-            7 to "juli",
-            8 to "august",
-            9 to "september",
-            10 to "oktober",
-            11 to "november",
-            12 to "desember",
-        )
     }
 }
