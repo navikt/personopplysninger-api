@@ -15,7 +15,12 @@ class PersonaliaOgAdresserTransformerTest {
     fun gittPersonaliaOgAdresser_skalFaaPersonaliaOgAdresser() {
         val konto = createDummyKonto()
         val pdlData = createDummyPdlData()
-        val actual = PersonaliaOgAdresserTransformer.toOutbound(pdlData, konto, personaliaKodeverk)
+        val actual = PersonaliaOgAdresserTransformer.toOutbound(
+            pdlData,
+            konto,
+            personaliaKodeverk,
+            null
+        )
 
         assertNotNull(actual.personalia)
         assertNotNull(actual.adresser)

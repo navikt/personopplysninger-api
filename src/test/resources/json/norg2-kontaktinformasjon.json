@@ -1,105 +1,189 @@
 {
-  "id": 100000873,
-  "enhetNr": "1203",
+  "enhetNr": "0101",
+  "navn": "NAV Halden-Aremark",
   "telefonnummer": "55553333",
   "telefonnummerKommentar": null,
-  "faksnummer": null,
   "epost": null,
   "postadresse": {
     "type": "postboksadresse",
-    "postnummer": "5826",
-    "poststed": "BERGEN",
-    "postboksnummer": "34",
+    "postnummer": "1751",
+    "poststed": "HALDEN",
+    "postboksnummer": "56",
     "postboksanlegg": null
   },
   "besoeksadresse": {
     "type": "stedsadresse",
-    "postnummer": "5116",
-    "poststed": "ULSET",
-    "gatenavn": "Åsane Storsenter",
-    "husnummer": "19",
+    "postnummer": "1771",
+    "poststed": "HALDEN",
+    "gatenavn": "Storgata",
+    "husnummer": "8",
     "husbokstav": null,
     "adresseTilleggsnavn": null
   },
-  "spesielleOpplysninger": null,
-  "publikumsmottak": [
-    {
-      "id": 100000702,
-      "besoeksadresse": {
-        "type": "stedsadresse",
-        "postnummer": "5116",
-        "poststed": "Ulset",
-        "gatenavn": "Åsane Storsenter",
-        "husnummer": "19",
-        "husbokstav": null,
-        "adresseTilleggsnavn": null
+  "spesielleOpplysninger": "NAV Halden - Aremark har digital drop-in og er tilgjengelig via NAV sitt telefonnummer. Vi har samtaler ved fremmøte der det er behov for det og samhandler med våre innbyggere på de arenaer som er hensiktsmessige.\n\nFor deg som har mulighet, fortsett å benytt deg av våre tjenester på www.nav.no, «Skriv til oss» på Ditt NAV eller dialogen i aktivitetsplan. Alle våre veiledere er tilgjengelige på digitale løsninger.\n\nDersom du er i en akutt situasjon, f.eks. uten bolig, mat eller livsviktige medisiner, send inn digital søknad og merk denne «Nødhjelp».  Kan du ikke søke digitalt, kontakt oss på telefon. Halden kommunes servicesenter kan i nødtilfeller låne deg telefon, dersom du ikke disponerer det.",
+  "brukerkontakt": {
+    "publikumsmottak": [
+      {
+        "besoeksadresse": {
+          "type": "stedsadresse",
+          "postnummer": "1771",
+          "poststed": "HALDEN",
+          "gatenavn": "Storgata",
+          "husnummer": "8",
+          "husbokstav": null,
+          "adresseTilleggsnavn": null
+        },
+        "aapningstider": [
+          {
+            "dag": "Mandag",
+            "dato": null,
+            "fra": null,
+            "til": null,
+            "kommentar": "Timeavtaler i tidsrommet 10.00 - 14.00",
+            "stengt": true,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Tirsdag",
+            "dato": null,
+            "fra": null,
+            "til": null,
+            "kommentar": "Timeavtaler i tidsrommet 10.00 - 14.00",
+            "stengt": true,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Onsdag",
+            "dato": null,
+            "fra": null,
+            "til": null,
+            "kommentar": "Timeavtaler i tidsrommet 10.00 - 14.00",
+            "stengt": true,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Torsdag",
+            "dato": null,
+            "fra": null,
+            "til": null,
+            "kommentar": "Timeavtaler i tidsrommet 10.00 - 14.00",
+            "stengt": true,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Fredag",
+            "dato": null,
+            "fra": null,
+            "til": null,
+            "kommentar": "Timeavtaler i tidsrommet 10.00 - 14.00",
+            "stengt": true,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": null,
+            "dato": "2023-03-31",
+            "fra": null,
+            "til": null,
+            "kommentar": "Steng fordi Bjørnar er i Granca",
+            "stengt": true,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": null,
+            "dato": "2023-04-01",
+            "fra": null,
+            "til": null,
+            "kommentar": "Kun åpent for timeavtaler",
+            "stengt": false,
+            "kunTimeavtale": true
+          }
+        ],
+        "stedsbeskrivelse": "Halden",
+        "adkomstbeskrivelse": null
       },
-      "aapningstider": [
+      {
+        "besoeksadresse": {
+          "type": "stedsadresse",
+          "postnummer": "1798",
+          "poststed": "AREMARK",
+          "gatenavn": "Aremarkveien",
+          "husnummer": "2276",
+          "husbokstav": null,
+          "adresseTilleggsnavn": null
+        },
+        "aapningstider": [
+          {
+            "dag": "Tirsdag",
+            "dato": null,
+            "fra": null,
+            "til": null,
+            "kommentar": "Timeavtaler i tidsrommet 09.00 - 15.00.",
+            "stengt": true,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Torsdag",
+            "dato": null,
+            "fra": null,
+            "til": null,
+            "kommentar": null,
+            "stengt": true,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Mandag",
+            "dato": null,
+            "fra": null,
+            "til": null,
+            "kommentar": "Timeavtaler i tidsrommet 09.00 - 15.00.",
+            "stengt": true,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Onsdag",
+            "dato": null,
+            "fra": null,
+            "til": null,
+            "kommentar": "Timeavtaler i tidsrommet 09.00 - 15.00.",
+            "stengt": true,
+            "kunTimeavtale": false
+          },
+          {
+            "dag": "Fredag",
+            "dato": null,
+            "fra": null,
+            "til": null,
+            "kommentar": "Timeavtaler i tidsrommet 09.00 - 15.00.",
+            "stengt": true,
+            "kunTimeavtale": false
+          }
+        ],
+        "stedsbeskrivelse": "Aremark",
+        "adkomstbeskrivelse": null
+      }
+    ],
+    "publikumskanaler": [
+    ],
+    "brukertjenesteTilbud": {
+      "tjenester": [
         {
-          "id": 100002456,
-          "dag": "Onsdag",
-          "dato": null,
-          "fra": "12:30",
-          "til": "14:30",
-          "kommentar": null,
-          "stengt": false
+          "type": "FLYKTNINGTJENESTE"
         },
         {
-          "id": 100002458,
-          "dag": "Fredag",
-          "dato": null,
-          "fra": "12:30",
-          "til": "14:30",
-          "kommentar": null,
-          "stengt": false
+          "type": "KOMMUNAL_BOLIG"
         },
         {
-          "id": 100002455,
-          "dag": "Tirsdag",
-          "dato": null,
-          "fra": "12:30",
-          "til": "14:30",
-          "kommentar": null,
-          "stengt": false
-        },
-        {
-          "id": 100002454,
-          "dag": "Mandag",
-          "dato": null,
-          "fra": "12:30",
-          "til": "14:30",
-          "kommentar": null,
-          "stengt": false
-        },
-        {
-          "id": 100002457,
-          "dag": "Torsdag",
-          "dato": null,
-          "fra": "12:30",
-          "til": "14:30",
-          "kommentar": null,
-          "stengt": false
-        },
-        {
-          "id": 100013986,
-          "dag": null,
-          "dato": "2021-12-24",
-          "fra": "10:00",
-          "til": "11:30",
-          "kommentar": "Åpent for akutte behov for alle NAV-kontorer i Bergen kommune",
-          "stengt": false
-        },
-        {
-          "id": 100013987,
-          "dag": null,
-          "dato": "2021-12-31",
-          "fra": null,
-          "til": null,
-          "kommentar": "NAV Bergen vest er åpent 10-11.30 for akutte behov",
-          "stengt": true
+          "type": "PRIVATOKONOMI_FORVALTNING"
         }
       ],
-      "stedsbeskrivelse": null
-    }
-  ]
+      "ytterligereInformasjon": "Gjeldsrådgivning"
+    },
+    "sosialhjelp": {
+      "digitaleSoeknader": [
+      ],
+      "papirsoeknadInformasjon": "Papirsøknader kan leveres i postkassen/innkastet ved inngangsdøra til NAV ."
+    },
+    "informasjonUtbetalinger": null,
+    "skriftspraak": "NB"
+  }
 }

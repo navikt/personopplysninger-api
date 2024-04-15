@@ -9,10 +9,7 @@ import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlStatsborg
 import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
-import no.nav.personopplysninger.personalia.dto.outbound.GeografiskEnhetKontaktInformasjon
-import no.nav.personopplysninger.personalia.dto.outbound.GeografiskTilknytning
 import no.nav.personopplysninger.personalia.dto.outbound.PersonaliaOgAdresser
-import no.nav.personopplysninger.personalia.transformer.GeografiskEnhetKontaktinformasjonTransformer
 import no.nav.personopplysninger.personalia.transformer.PersonaliaOgAdresserTransformer
 import java.time.LocalDate
 
@@ -24,24 +21,19 @@ class PersonaliaService(
 ) {
 
     suspend fun hentPersoninfo(token: String, fodselsnr: String): PersonaliaOgAdresser {
-
         val pdlPersonInfo = pdlService.getPersonInfo(token, fodselsnr)
 
         val konto = kontoregisterConsumer.hentAktivKonto(token, fodselsnr)
 
+        val geografiskTilknytning = pdlPersonInfo.geografiskTilknytning.let { it?.gtBydel ?: it?.gtKommune }
+
+        val enhetKontaktInformasjon = geografiskTilknytning
+            ?.let { norg2Consumer.hentEnhet(token, it) }
+            ?.let { norg2Consumer.hentKontaktinfo(token, it.enhetNr) }
+
         val personaliaKV = createPersonaliaKodeverk(pdlPersonInfo, konto)
 
-        val personaliaOgAdresser = PersonaliaOgAdresserTransformer.toOutbound(pdlPersonInfo, konto, personaliaKV)
-
-        val tilknytning = hentGeografiskTilknytning(personaliaOgAdresser.adresser?.geografiskTilknytning)
-        if (tilknytning != null) {
-            val enhet = norg2Consumer.hentEnhet(token, tilknytning)
-            if (enhet != null) {
-                personaliaOgAdresser.adresser?.geografiskTilknytning?.enhet = enhet.navn
-                personaliaOgAdresser.enhetKontaktInformasjon.enhet = hentEnhetKontaktinformasjon(token, enhet.enhetNr)
-            }
-        }
-        return personaliaOgAdresser
+        return PersonaliaOgAdresserTransformer.toOutbound(pdlPersonInfo, konto, personaliaKV, enhetKontaktInformasjon)
     }
 
     private suspend fun createPersonaliaKodeverk(inboundPdl: PdlData, inboundKonto: Konto?): PersonaliaKodeverk {
@@ -58,8 +50,10 @@ class PersonaliaService(
             foedelandterm = kodeverkService.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
             gtLandterm = kodeverkService.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
             statsborgerskaptermer = hentGyldigeStatsborgerskap(pdlPerson.statsborgerskap)
-            utenlandskbanklandterm = if (inboundKonto?.utenlandskKontoInfo != null) hentLandKodeterm(inboundKonto.utenlandskKontoInfo.bankLandkode) else null
-            utenlandskbankvalutaterm = if (inboundKonto?.utenlandskKontoInfo != null) hentValutaKodeterm(inboundKonto.utenlandskKontoInfo.valutakode) else null
+            utenlandskbanklandterm =
+                if (inboundKonto?.utenlandskKontoInfo != null) hentLandKodeterm(inboundKonto.utenlandskKontoInfo.bankLandkode) else null
+            utenlandskbankvalutaterm =
+                if (inboundKonto?.utenlandskKontoInfo != null) hentValutaKodeterm(inboundKonto.utenlandskKontoInfo.valutakode) else null
             kontaktadresseKodeverk =
                 kontaktadresse.map { hentAdresseKodeverk(it.postnummer, it.landkode, it.kommunenummer) }
             bostedsadresseKodeverk =
@@ -104,18 +98,6 @@ class PersonaliaService(
 
     private suspend fun hentLandKodeterm(kode: String?): String? {
         return kontoregisterConsumer.hentLandkoder().find { land -> kode == land.kode }?.tekst
-    }
-
-    private suspend fun hentEnhetKontaktinformasjon(
-        token: String,
-        enhetsnr: String
-    ): GeografiskEnhetKontaktInformasjon {
-        val inbound = norg2Consumer.hentKontaktinfo(token, enhetsnr)
-        return GeografiskEnhetKontaktinformasjonTransformer.toOutbound(inbound)
-    }
-
-    private fun hentGeografiskTilknytning(inbound: GeografiskTilknytning?): String? {
-        return inbound?.bydel ?: inbound?.kommune
     }
 }
 

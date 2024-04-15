@@ -26,7 +26,7 @@ class Norg2Consumer(
     private var logger: Logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun hentEnhet(token: String, geografisk: String): Norg2Enhet? {
-        val endpoint = environment.norg2Url.plus("/enhet/navkontor/$geografisk")
+        val endpoint = environment.norg2Url.plus("/api/v1/enhet/navkontor/$geografisk")
 
         val response: HttpResponse =
             client.get(endpoint) {
@@ -43,7 +43,7 @@ class Norg2Consumer(
     }
 
     suspend fun hentKontaktinfo(token: String, enhetsnr: String): Norg2EnhetKontaktinfo {
-        val endpoint = environment.norg2Url.plus("/enhet/$enhetsnr/kontaktinformasjon")
+        val endpoint = environment.norg2Url.plus("/api/v2/enhet/$enhetsnr/kontaktinformasjon")
 
         val response: HttpResponse =
             client.get(endpoint) {
