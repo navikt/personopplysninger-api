@@ -6,7 +6,6 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
-import kotlinx.serialization.json.JsonObject
 import no.nav.personopplysninger.common.util.consumerErrorMessage
 import no.nav.personopplysninger.config.CONSUMER_ID
 import no.nav.personopplysninger.config.Environment
@@ -14,6 +13,7 @@ import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_TOKEN
 import no.nav.personopplysninger.personalia.consumer.dto.Norg2Enhet
+import no.nav.personopplysninger.personalia.consumer.dto.Norg2EnhetKontaktinfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.*
@@ -42,7 +42,7 @@ class Norg2Consumer(
         }
     }
 
-    suspend fun hentKontaktinfo(token: String, enhetsnr: String): JsonObject {
+    suspend fun hentKontaktinfo(token: String, enhetsnr: String): Norg2EnhetKontaktinfo {
         val endpoint = environment.norg2Url.plus("/api/v2/enhet/$enhetsnr/kontaktinformasjon")
 
         val response: HttpResponse =

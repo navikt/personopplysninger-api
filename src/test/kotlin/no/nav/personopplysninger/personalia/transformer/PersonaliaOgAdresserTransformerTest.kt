@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.personalia.transformer
 
 
-import kotlinx.serialization.json.JsonObject
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyKonto
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyPdlData
@@ -20,7 +19,7 @@ class PersonaliaOgAdresserTransformerTest {
             pdlData,
             konto,
             personaliaKodeverk,
-            JsonObject(emptyMap())
+            null
         )
 
         assertNotNull(actual.personalia)

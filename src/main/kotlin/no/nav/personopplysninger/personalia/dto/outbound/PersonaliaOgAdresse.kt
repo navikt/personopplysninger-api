@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.personalia.dto.outbound
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonObject
+import no.nav.personopplysninger.personalia.consumer.dto.Norg2EnhetKontaktinfo
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Bostedsadresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.DeltBosted
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Kontaktadresse
@@ -11,7 +11,7 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.Oppholdsadresse
 data class PersonaliaOgAdresser(
     val personalia: Personalia,
     val adresser: Adresser?,
-    val enhetKontaktInformasjon: JsonObject?
+    val enhetKontaktInformasjon: Norg2EnhetKontaktinfo?
 )
 
 @Serializable
