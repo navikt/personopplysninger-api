@@ -13,7 +13,7 @@ import kotlin.test.assertTrue
 
 class SerialiseringTest {
 
-    val serializer = jsonConfig()
+    private val serializer = jsonConfig()
 
     @Test
     fun testRetningsnummerMapping() {

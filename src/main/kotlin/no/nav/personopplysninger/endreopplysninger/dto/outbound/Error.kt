@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Error(
-    var message: String? = null,
+    val message: String? = null,
     val details: Map<String, List<String>>? = null
 )

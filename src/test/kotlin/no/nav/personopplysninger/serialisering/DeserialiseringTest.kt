@@ -12,7 +12,7 @@ import kotlin.test.assertTrue
 
 class DeserialiseringTest {
 
-    val serializer = jsonConfig()
+    private val serializer = jsonConfig()
 
     @Test
     fun canDeserializePdlResponse() {

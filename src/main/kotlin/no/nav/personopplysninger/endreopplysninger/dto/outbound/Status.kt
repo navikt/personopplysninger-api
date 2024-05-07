@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 class Status {
     val endringId: Int? = null
     val statusType: String? = null
-    var substatus: List<Substatus> = emptyList()
+    val substatus: List<Substatus> = emptyList()
 }

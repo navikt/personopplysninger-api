@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.personalia.dto
 
 class PersonaliaKodeverk {
-
     var foedelandterm: String? = null
     var gtLandterm: String? = null
     var foedekommuneterm: String? = null

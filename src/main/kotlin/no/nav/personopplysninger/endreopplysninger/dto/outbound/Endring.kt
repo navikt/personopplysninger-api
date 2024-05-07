@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Endring(
-    var status: Status = Status(),
+    val status: Status = Status(),
     var statusType: String = "OK",
     var error: Error? = null
 ) {

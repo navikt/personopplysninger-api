@@ -10,12 +10,6 @@ import kotlin.test.Test
 
 class SlettTelefonnummerIT : IntegrationTest() {
 
-    val SLETT_TELEFONNUMMER_PATH = "/slettTelefonnummer"
-
-    private val LANDKODE = "+47"
-    private val NUMMER = "55553334"
-    private val PRIORITET = 1
-
     @Test
     fun slettTelefonnummer200() =
         integrationTest(setupMockedClient(pdlMottakResponseType = PdlMottakResponseType.TELEFON)) {
@@ -64,4 +58,11 @@ class SlettTelefonnummerIT : IntegrationTest() {
 
             assertEquals(HttpStatusCode.InternalServerError, response.status)
         }
+
+    companion object {
+        private const val SLETT_TELEFONNUMMER_PATH = "/slettTelefonnummer"
+        private const val LANDKODE = "+47"
+        private const val NUMMER = "55553334"
+        private const val PRIORITET = 1
+    }
 }

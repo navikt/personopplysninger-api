@@ -22,11 +22,11 @@ import org.slf4j.LoggerFactory
 import java.util.*
 
 class EndreOpplysningerService(
-    private var pdlMottakConsumer: PdlMottakConsumer,
-    private var kodeverkService: KodeverkService,
-    private var kontoregisterConsumer: KontoregisterConsumer,
-    private var pdlService: PdlService,
-    private var hendelseProducer: HendelseProducer
+    private val pdlMottakConsumer: PdlMottakConsumer,
+    private val kodeverkService: KodeverkService,
+    private val kontoregisterConsumer: KontoregisterConsumer,
+    private val pdlService: PdlService,
+    private val hendelseProducer: HendelseProducer
 ) {
     private val logger = LoggerFactory.getLogger(EndreOpplysningerService::class.java)
 

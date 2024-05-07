@@ -13,9 +13,6 @@ import kotlin.test.Test
 
 class EndreKontonummerIT : IntegrationTest() {
 
-    val ENDRE_KONTNUMMER_PATH = "/endreKontonummer"
-    val LAGRE_KONTNUMMER_PATH = "/lagreKontonummer"
-
     @Test
     fun endreKontonummer200() = integrationTest(setupMockedClient()) {
         val client = httpClient()
@@ -70,4 +67,9 @@ class EndreKontonummerIT : IntegrationTest() {
             assertEquals(location.parameters["status"], "500")
             assertEquals(location.parameters["error"], "unexpected")
         }
+
+    companion object {
+        private const val ENDRE_KONTNUMMER_PATH = "/endreKontonummer"
+        private const val LAGRE_KONTNUMMER_PATH = "/lagreKontonummer"
+    }
 }

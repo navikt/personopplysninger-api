@@ -188,7 +188,7 @@ internal data class OauthServerConfigurationMetadata(
     @JsonNames("issuer") val issuer: String,
     @JsonNames("token_endpoint") val tokenEndpoint: String,
     @JsonNames("jwks_uri") val jwksUri: String,
-    @JsonNames("authorization_endpoint") var authorizationEndpoint: String = ""
+    @JsonNames("authorization_endpoint") val authorizationEndpoint: String = ""
 )
 
 internal suspend fun HttpClient.getOAuthServerConfigurationMetadata(url: String): OauthServerConfigurationMetadata {

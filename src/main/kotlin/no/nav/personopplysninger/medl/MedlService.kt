@@ -5,8 +5,8 @@ import no.nav.personopplysninger.medl.consumer.MedlConsumer
 import no.nav.personopplysninger.medl.dto.Medlemskapsunntak
 
 class MedlService(
-    private var medlConsumer: MedlConsumer,
-    private var kodeverkService: KodeverkService
+    private val medlConsumer: MedlConsumer,
+    private val kodeverkService: KodeverkService
 ) {
     suspend fun hentMeldemskap(token: String, fnr: String): Medlemskapsunntak {
         val perioder = medlConsumer.hentMedlemskap(token, fnr)
