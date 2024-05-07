@@ -28,7 +28,7 @@ import no.nav.personopplysninger.config.MetricsCollector
 import no.nav.personopplysninger.config.Pkce
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import org.slf4j.LoggerFactory
-import java.util.UUID
+import java.util.*
 
 private val logger = LoggerFactory.getLogger("endreOpplysningerRoute")
 private val allowedLocales = setOf("nb", "nn", "en")
@@ -47,7 +47,7 @@ fun Route.endreOpplysninger(
             val telefonnummer = call.receive<Telefonnummer>()
 
             val resp = endreOpplysningerService.endreTelefonnummer(authToken, fnr, telefonnummer)
-            metricsCollector.ENDRE_TELEFONNUMMER_COUNTER.inc()
+            metricsCollector.endreTelefonnummerCounter.inc()
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved endring av telefonnummer", e)
@@ -61,7 +61,7 @@ fun Route.endreOpplysninger(
             val telefonnummer = call.receive<Telefonnummer>()
 
             val resp = endreOpplysningerService.slettTelefonNummer(authToken, fnr, telefonnummer)
-            metricsCollector.SLETT_TELEFONNUMMER_COUNTER.inc()
+            metricsCollector.slettTelefonnummerCounter.inc()
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved sletting av telefonnummer", e)
@@ -148,9 +148,9 @@ fun Route.endreOpplysninger(
             endreOpplysningerService.endreKontonummer(authToken, fnr, kontonummer)
 
             if (kontonummer.utenlandskKontoInformasjon == null) {
-                metricsCollector.ENDRE_NORSK_KONTONUMMER_COUNTER.inc()
+                metricsCollector.endreNorskKontonummerCounter.inc()
             } else {
-                metricsCollector.ENDRE_UTENLANDSK_KONTONUMMER_COUNTER.inc()
+                metricsCollector.endreUtenlandskKontonummerCounter.inc()
             }
 
             val url = URLBuilder()
@@ -189,7 +189,7 @@ fun Route.endreOpplysninger(
             val fnr = getFnrFromToken(authToken)
 
             val resp = endreOpplysningerService.slettKontaktadresse(authToken, fnr)
-            metricsCollector.SLETT_KONTAKTADRESSE_COUNTER
+            metricsCollector.slettKontaktadresseCounter
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved sletting av kontaktadresse", e)

@@ -8,8 +8,6 @@ import kotlin.test.Test
 
 class HentRetningsnumreIT : IntegrationTest() {
 
-    val HENT_RETNINGSNUMRE_PATH = "/retningsnumre"
-
     @Test
     fun hentRetningsnumre200() = integrationTest(setupMockedClient()) {
         val client = httpClient()
@@ -26,4 +24,8 @@ class HentRetningsnumreIT : IntegrationTest() {
 
             assertEquals(HttpStatusCode.InternalServerError, response.status)
         }
+
+    companion object {
+        private const val HENT_RETNINGSNUMRE_PATH = "/retningsnumre"
+    }
 }

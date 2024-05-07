@@ -10,8 +10,6 @@ import kotlin.test.Test
 
 class EndreTelefonnummerIT : IntegrationTest() {
 
-    val ENDRE_TELEFONNUMMER_PATH = "/endreTelefonnummer"
-
     @Test
     fun endreTelefonnummer200() =
         integrationTest(setupMockedClient(pdlMottakResponseType = PdlMottakResponseType.TELEFON)) {
@@ -42,4 +40,8 @@ class EndreTelefonnummerIT : IntegrationTest() {
 
             assertEquals(HttpStatusCode.InternalServerError, response.status)
         }
+
+    companion object {
+        private const val ENDRE_TELEFONNUMMER_PATH = "/endreTelefonnummer"
+    }
 }

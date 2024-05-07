@@ -13,10 +13,9 @@ import kotlin.test.assertNotEquals
 
 class KodeverkServiceTest {
 
-    val cache: Cache<String, Kodeverk> = Caffeine.newBuilder().build()
-    val kodeverkConsumer: KodeverkConsumer = mockk()
-
-    val kodeverkService = KodeverkService(cache, kodeverkConsumer)
+    private val cache: Cache<String, Kodeverk> = Caffeine.newBuilder().build()
+    private val kodeverkConsumer: KodeverkConsumer = mockk()
+    private val kodeverkService = KodeverkService(cache, kodeverkConsumer)
 
     @BeforeEach
     fun setup() {

@@ -9,8 +9,6 @@ import kotlin.test.Test
 
 class SlettKontaktadresseIT : IntegrationTest() {
 
-    val SLETT_KONTAKTADRESSE_PATH = "/slettKontaktadresse"
-
     @Test
     fun slettKontaktadresse200() =
         integrationTest(setupMockedClient(pdlMottakResponseType = PdlMottakResponseType.SLETT_KONTAKTADRESSE)) {
@@ -47,4 +45,8 @@ class SlettKontaktadresseIT : IntegrationTest() {
 
             assertEquals(HttpStatusCode.InternalServerError, response.status)
         }
+
+    companion object {
+        private const val SLETT_KONTAKTADRESSE_PATH = "/slettKontaktadresse"
+    }
 }

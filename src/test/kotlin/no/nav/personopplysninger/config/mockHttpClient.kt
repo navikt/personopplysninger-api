@@ -19,6 +19,14 @@ import no.nav.personopplysninger.config.mocks.mockNorg2
 import no.nav.personopplysninger.config.mocks.mockPdl
 import no.nav.personopplysninger.config.mocks.mockPdlMottak
 
+const val INST2 = "inst2"
+const val KODEVERK = "kodeverk"
+const val DIGDIR_KRR_PROXY = "digdir-krr-proxy"
+const val KONTOREGISTER = "kontoregister"
+const val MEDL = "medl"
+const val NORG2 = "norg2"
+const val PDL = "pdl"
+const val PDL_MOTTAK = "pdl-mottak"
 
 fun setupMockedClient(
     inst2Status: HttpStatusCode = HttpStatusCode.OK,
@@ -33,15 +41,6 @@ fun setupMockedClient(
     pdlMottakStatus: HttpStatusCode = HttpStatusCode.OK,
     pdlMottakResponseType: PdlMottakResponseType = PdlMottakResponseType.TELEFON,
 ): HttpClient {
-    val INST2 = "inst2"
-    val KODEVERK = "kodeverk"
-    val DIGDIR_KRR_PROXY = "digdir-krr-proxy"
-    val KONTOREGISTER = "kontoregister"
-    val MEDL = "medl"
-    val NORG2 = "norg2"
-    val PDL = "pdl"
-    val PDL_MOTTAK = "pdl-mottak"
-
     return runBlocking {
         HttpClient(MockEngine) {
             engine {
