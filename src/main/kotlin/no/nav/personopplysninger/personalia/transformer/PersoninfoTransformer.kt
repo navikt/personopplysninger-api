@@ -6,6 +6,7 @@ import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlNavn
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.personalia.dto.outbound.Personident
+import java.time.LocalDate
 
 
 object PersoninfoTransformer {
@@ -30,8 +31,13 @@ object PersoninfoTransformer {
             foedested = foedested(kodeverk.foedekommuneterm, kodeverk.foedelandterm),
             sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.beskrivelse,
             kjoenn = pdlPerson.kjoenn.firstOrNull()?.kjoenn?.beskrivelse,
-            kontoregisterStatus = if (konto?.error == true) "ERROR" else "SUCCESS"
+            kontoregisterStatus = if (konto?.error == true) "ERROR" else "SUCCESS",
+            isMyndig = pdlPerson.foedsel.firstOrNull()?.foedselsdato?.let { isMyndig(it) } ?: false
         )
+    }
+
+    private fun isMyndig(foedselsdato: LocalDate): Boolean {
+        return foedselsdato.until(LocalDate.now()).years >= 18
     }
 
     private fun foedested(foedtIKommune: String?, foedtILand: String?): String? {
