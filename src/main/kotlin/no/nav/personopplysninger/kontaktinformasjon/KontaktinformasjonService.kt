@@ -6,8 +6,8 @@ import no.nav.personopplysninger.kontaktinformasjon.dto.outbound.Kontaktinformas
 import no.nav.personopplysninger.kontaktinformasjon.transformer.KontaktinformasjonTransformer
 
 class KontaktinformasjonService(
-    private var kontaktinfoConsumer: KontaktinfoConsumer,
-    private var kodeverkService: KodeverkService,
+    private val kontaktinfoConsumer: KontaktinfoConsumer,
+    private val kodeverkService: KodeverkService,
 ) {
     suspend fun hentKontaktinformasjon(token: String, fodselsnr: String): Kontaktinformasjon {
         val inbound = kontaktinfoConsumer.hentKontaktinformasjon(token, fodselsnr)

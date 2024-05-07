@@ -14,10 +14,10 @@ import no.nav.personopplysninger.personalia.transformer.PersonaliaOgAdresserTran
 import java.time.LocalDate
 
 class PersonaliaService(
-    private var kodeverkService: KodeverkService,
-    private var norg2Consumer: Norg2Consumer,
-    private var kontoregisterConsumer: KontoregisterConsumer,
-    private var pdlService: PdlService
+    private val kodeverkService: KodeverkService,
+    private val norg2Consumer: Norg2Consumer,
+    private val kontoregisterConsumer: KontoregisterConsumer,
+    private val pdlService: PdlService
 ) {
 
     suspend fun hentPersoninfo(token: String, fodselsnr: String): PersonaliaOgAdresser {

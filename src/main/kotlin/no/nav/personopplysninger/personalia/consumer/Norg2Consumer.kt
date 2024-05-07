@@ -23,7 +23,7 @@ class Norg2Consumer(
     private val environment: Environment,
 ) {
 
-    private var logger: Logger = LoggerFactory.getLogger(javaClass)
+    private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun hentEnhet(token: String, geografisk: String): Norg2Enhet? {
         val endpoint = environment.norg2Url.plus("/api/v1/enhet/navkontor/$geografisk")
