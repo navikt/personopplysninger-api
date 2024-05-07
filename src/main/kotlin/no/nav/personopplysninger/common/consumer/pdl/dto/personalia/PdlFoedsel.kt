@@ -11,4 +11,8 @@ data class PdlFoedsel(
     val foedested: String? = null,
     val foedekommune: String? = null,
     val foedeland: String? = null,
-)
+) {
+    fun isMyndig(): Boolean? {
+        return foedselsdato?.let { it.until(LocalDate.now()).years >= 18 }
+    }
+}

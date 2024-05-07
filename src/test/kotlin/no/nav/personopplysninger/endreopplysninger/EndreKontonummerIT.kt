@@ -5,11 +5,13 @@ import io.ktor.http.URLBuilder
 import io.ktor.http.takeFrom
 import no.nav.personopplysninger.IntegrationTest
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.config.mocks.PdlResponseType
 import no.nav.personopplysninger.config.setupMockedClient
 import no.nav.personopplysninger.testutils.FNR
 import no.nav.personopplysninger.testutils.STATE
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
+import kotlin.test.assertNull
 
 class EndreKontonummerIT : IntegrationTest() {
 
@@ -32,11 +34,31 @@ class EndreKontonummerIT : IntegrationTest() {
         )
 
         assertEquals(HttpStatusCode.Found, response.status)
+
+        val location = URLBuilder().takeFrom(response.headers["Location"]!!)
+        assertNull(location.parameters["status"])
     }
 
     @Test
     fun valideringsfeilMotKontoregisterSkalGi400() =
         integrationTest(setupMockedClient(kontoregisterStatus = HttpStatusCode.NotAcceptable)) {
+            val client = httpClient()
+            val response = get(
+                client,
+                LAGRE_KONTNUMMER_PATH,
+                cookie = Pair("endreKontonummerState", "dummy"),
+                queryParams = mapOf("state" to STATE, "code" to "code"),
+            )
+            assertEquals(HttpStatusCode.Found, response.status)
+
+            val location = URLBuilder().takeFrom(response.headers["Location"]!!)
+            assertEquals(location.parameters["status"], "400")
+            assertEquals(location.parameters["error"], "validation")
+        }
+
+    @Test
+    fun ikkeMyndigSkalGi400() =
+        integrationTest(setupMockedClient(pdlResponseType = PdlResponseType.IKKE_MYNDIG)) {
             val client = httpClient()
             val response = get(
                 client,

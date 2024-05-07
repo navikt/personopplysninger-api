@@ -25,4 +25,8 @@ class PdlService(private val pdlConsumer: PdlConsumer) {
     suspend fun getPersonInfo(token: String, ident: String): PdlData {
         return pdlConsumer.getPersonInfo(token, ident)
     }
+
+    suspend fun getFoedsel(token: String, ident: String): PdlData {
+        return pdlConsumer.getFoedsel(token, ident)
+    }
 }

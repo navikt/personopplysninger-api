@@ -11,7 +11,7 @@ import io.ktor.http.isSuccess
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
 
 enum class PdlResponseType {
-    STANDARD, FLERE_ADRESSER, OPPHOLD_ANNET_STED
+    STANDARD, FLERE_ADRESSER, OPPHOLD_ANNET_STED, IKKE_MYNDIG
 }
 
 fun MockRequestHandleScope.mockPdl(status: HttpStatusCode, responseType: PdlResponseType) =
@@ -34,6 +34,9 @@ private fun readPdlResponse(responseType: PdlResponseType): String {
         }
         PdlResponseType.OPPHOLD_ANNET_STED -> {
             readFile("pdl_opphold_annet_sted.json")
+        }
+        PdlResponseType.IKKE_MYNDIG -> {
+            readFile("pdl_ikke_myndig.json")
         }
     }
 }

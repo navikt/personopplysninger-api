@@ -14,6 +14,7 @@ import no.nav.personopplysninger.common.consumer.pdl.dto.PdlPerson
 import no.nav.personopplysninger.common.consumer.pdl.dto.PdlResponse
 import no.nav.personopplysninger.common.consumer.pdl.dto.PdlWarning
 import no.nav.personopplysninger.common.consumer.pdl.request.PDLRequest
+import no.nav.personopplysninger.common.consumer.pdl.request.createFoedselRequest
 import no.nav.personopplysninger.common.consumer.pdl.request.createKontaktadresseRequest
 import no.nav.personopplysninger.common.consumer.pdl.request.createPersonInfoRequest
 import no.nav.personopplysninger.common.consumer.pdl.request.createTelefonRequest
@@ -42,6 +43,10 @@ class PdlConsumer(
 ) {
     suspend fun getPersonInfo(token: String, ident: String): PdlData {
         return postPersonQuery(token, createPersonInfoRequest(ident))
+    }
+
+    suspend fun getFoedsel(token: String, ident: String): PdlData {
+        return postPersonQuery(token, createFoedselRequest(ident))
     }
 
     suspend fun getKontaktadresseInfo(token: String, ident: String): PdlPerson {

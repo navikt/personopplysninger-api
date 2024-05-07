@@ -11,12 +11,14 @@ import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Valut
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.OppdaterKonto
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.UtenlandskKontoInfo
 import no.nav.personopplysninger.common.consumer.pdl.PdlService
+import no.nav.personopplysninger.common.util.firstOrNull
 import no.nav.personopplysninger.endreopplysninger.consumer.PdlMottakConsumer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.endreNummerPayload
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettKontaktadressePayload
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettNummerPayload
 import no.nav.personopplysninger.endreopplysninger.dto.outbound.Endring
+import no.nav.personopplysninger.endreopplysninger.exception.IkkeMyndigException
 import no.nav.personopplysninger.endreopplysninger.kafka.HendelseProducer
 import org.slf4j.LoggerFactory
 import java.util.*
@@ -62,6 +64,10 @@ class EndreOpplysningerService(
     }
 
     suspend fun endreKontonummer(token: String, fnr: String, kontonummer: Kontonummer) {
+        pdlService.getFoedsel(token, fnr).person.foedsel.firstOrNull()?.isMyndig()?.let {
+            if (!it) throw IkkeMyndigException("Feil ved endring av kontonummer - bruker er under 18")
+        } ?: throw RuntimeException("Feil oppstod ved sjekk av alder")
+
         val request = OppdaterKonto(
             kontohaver = fnr,
             nyttKontonummer = kontonummer.value,
