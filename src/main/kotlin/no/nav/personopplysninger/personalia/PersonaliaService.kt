@@ -50,10 +50,8 @@ class PersonaliaService(
             foedelandterm = kodeverkService.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
             gtLandterm = kodeverkService.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
             statsborgerskaptermer = hentGyldigeStatsborgerskap(pdlPerson.statsborgerskap)
-            utenlandskbanklandterm =
-                if (inboundKonto?.utenlandskKontoInfo != null) hentLandKodeterm(inboundKonto.utenlandskKontoInfo.bankLandkode) else null
-            utenlandskbankvalutaterm =
-                if (inboundKonto?.utenlandskKontoInfo != null) hentValutaKodeterm(inboundKonto.utenlandskKontoInfo.valutakode) else null
+            utenlandskbanklandterm = inboundKonto?.utenlandskKontoInfo?.let { hentLandKodeterm(it.bankLandkode) }
+            utenlandskbankvalutaterm = inboundKonto?.utenlandskKontoInfo?.let { hentValutaKodeterm(it.valutakode) }
             kontaktadresseKodeverk =
                 kontaktadresse.map { hentAdresseKodeverk(it.postnummer, it.landkode, it.kommunenummer) }
             bostedsadresseKodeverk =
@@ -67,7 +65,7 @@ class PersonaliaService(
 
     private suspend fun hentGyldigeStatsborgerskap(statsborgerskap: List<PdlStatsborgerskap>): List<String> {
         return statsborgerskap
-            .filter { it.land != "XUK" && it.gyldigTilOgMed?.isBefore(LocalDate.now()) != true } // Filtrer ut ukjent og ugyldige
+            .filter { it.land != UKJENT_LAND && it.gyldigTilOgMed?.isBefore(LocalDate.now()) != true } // Filtrer ut ukjent og ugyldige
             .map { kodeverkService.hentStatsborgerskap().term(it.land) }
             .filter { it.isNotEmpty() }
     }
@@ -98,6 +96,10 @@ class PersonaliaService(
 
     private suspend fun hentLandKodeterm(kode: String?): String? {
         return kontoregisterConsumer.hentLandkoder().find { land -> kode == land.kode }?.tekst
+    }
+
+    companion object {
+        private const val UKJENT_LAND = "XUK"
     }
 }
 
