@@ -33,7 +33,7 @@ dependencies {
     val auth0JwtVersion = "4.4.0"
     val caffeineVersion = "3.1.8"
     val kafkaVersion = "3.7.0"
-    val ktorVersion = "2.3.10"
+    val ktorVersion = "2.3.11"
     val logbackVersion = "1.5.6"
     val logstashVersion = "7.4"
     val micrometerVersion = "1.12.5"
