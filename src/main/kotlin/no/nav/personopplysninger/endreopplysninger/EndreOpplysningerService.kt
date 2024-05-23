@@ -86,7 +86,7 @@ class EndreOpplysningerService(
         }
     }
 
-    suspend fun hentRetningsnumre(): Array<Retningsnummer> {
+    suspend fun hentRetningsnumre(): List<Retningsnummer> {
         return kodeverkService.hentRetningsnumre().koder
             .map { kode ->
                 Retningsnummer(
@@ -95,7 +95,6 @@ class EndreOpplysningerService(
                 )
             }
             .sortedBy { it.land }
-            .toTypedArray()
     }
 
     suspend fun hentLandkoder(): List<Landkode> {
@@ -106,15 +105,14 @@ class EndreOpplysningerService(
         return kontoregisterConsumer.hentValutakoder()
     }
 
-    suspend fun hentPostnummer(): Array<KodeOgTekstDto> {
+    suspend fun hentPostnummer(): List<KodeOgTekstDto> {
         return toSortedKodeOgTekstArray(kodeverkService.hentPostnummer())
     }
 
-    private fun toSortedKodeOgTekstArray(kodeverk: Kodeverk): Array<KodeOgTekstDto> {
+    private fun toSortedKodeOgTekstArray(kodeverk: Kodeverk): List<KodeOgTekstDto> {
         return kodeverk.koder
             .filter { kode -> kode.betydninger.isNotEmpty() }
-            .map { kode -> KodeOgTekstDto.fromKode(kode) }
+            .map(KodeOgTekstDto::fromKode)
             .sortedBy { it.tekst }
-            .toTypedArray()
     }
 }
