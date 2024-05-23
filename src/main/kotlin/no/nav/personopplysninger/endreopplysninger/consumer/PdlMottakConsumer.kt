@@ -108,8 +108,7 @@ class PdlMottakConsumer(
                     header(HEADER_NAV_CALL_ID, UUID.randomUUID())
                     header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 }
-            val endringList = response.body<List<Endring>>()
-            endring = endringList[0]
+            endring = response.body<List<Endring>>().first()
         } while (++i < MAX_POLLS && endring.isPending())
         log.info("Antall polls for status: $i")
 

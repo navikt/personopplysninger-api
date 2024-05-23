@@ -8,8 +8,6 @@ class Kodeverk(
     val navn: String,
     val koder: List<Kode>
 ) {
-    private val log = LoggerFactory.getLogger(Kodeverk::class.java)
-
     private val koderByNavn: Map<String, Kode> by lazy {
         koder.associateBy { it.navn }
     }
@@ -51,6 +49,8 @@ class Kodeverk(
     }
 
     companion object {
+        private val log = LoggerFactory.getLogger(Kodeverk::class.java)
+
         fun fromKoderBetydningerResponse(navn: String, response: GetKodeverkKoderBetydningerResponse): Kodeverk {
             return response.betydninger
                 .entries
