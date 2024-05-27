@@ -26,7 +26,7 @@ class SerialiseringTest {
             response.betydninger.entries.first().value.first().beskrivelser.entries.first().value.tekst
         )
 
-        val retningsnumre: Array<Retningsnummer> = response.betydninger
+        val retningsnumre: List<Retningsnummer> = response.betydninger
             .map { entry ->
                 Retningsnummer(
                     entry.key,
@@ -34,7 +34,6 @@ class SerialiseringTest {
                 )
             }
             .sortedBy { it.land }
-            .toTypedArray()
 
         assertEquals(2, retningsnumre.size)
         assertEquals("+52", retningsnumre[0].landskode)

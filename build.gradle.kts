@@ -36,11 +36,11 @@ dependencies {
     val ktorVersion = "2.3.11"
     val logbackVersion = "1.5.6"
     val logstashVersion = "7.4"
-    val micrometerVersion = "1.12.5"
+    val micrometerVersion = "1.13.0"
     val mockkVersion = "1.13.11"
     val navSecurityVersion = "4.1.7"
-    val kotlinVersion = "1.9.23"
-    val tmsKtorTokenSupportVersion = "4.0.0"
+    val kotlinVersion = "2.0.0"
+    val tmsKtorTokenSupportVersion = "4.1.1"
     val tmsVarselBuilderVersion = "1.0.4"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
@@ -63,7 +63,7 @@ dependencies {
     implementation("io.ktor:ktor-server-metrics-micrometer:$ktorVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
     implementation("no.nav.security:token-validation-ktor-v2:$navSecurityVersion")
-    implementation("com.github.navikt.tms-ktor-token-support:tokendings-exchange:$tmsKtorTokenSupportVersion")
+    implementation("no.nav.tms.token.support:tokendings-exchange:$tmsKtorTokenSupportVersion")
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashVersion")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlinVersion")

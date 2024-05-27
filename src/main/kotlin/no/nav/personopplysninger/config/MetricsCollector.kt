@@ -1,37 +1,37 @@
 package no.nav.personopplysninger.config
 
-import io.prometheus.client.CollectorRegistry
-import io.prometheus.client.Counter
+import io.prometheus.metrics.core.metrics.Counter
+import io.prometheus.metrics.model.registry.PrometheusRegistry
 
-class MetricsCollector(registry: CollectorRegistry) {
-    val endreTelefonnummerCounter: Counter = Counter.build()
-        .name("endring_telefonnummer")
-        .namespace(NAMESPACE)
+class MetricsCollector(registry: PrometheusRegistry) {
+    val endreTelefonnummerCounter: Counter = Counter.builder()
+        .name("${NAMESPACE}_endring_telefonnummer")
         .help("Antall endringer av telefonnummer")
+        .withoutExemplars()
         .register(registry)
 
-    val slettTelefonnummerCounter: Counter = Counter.build()
-        .name("sletting_telefonnummer")
-        .namespace(NAMESPACE)
+    val slettTelefonnummerCounter: Counter = Counter.builder()
+        .name("${NAMESPACE}_sletting_telefonnummer")
         .help("Antall slettinger av telefonnummer")
+        .withoutExemplars()
         .register(registry)
 
-    val endreNorskKontonummerCounter: Counter = Counter.build()
-        .name("endring_norsk_kontonummer")
-        .namespace(NAMESPACE)
+    val endreNorskKontonummerCounter: Counter = Counter.builder()
+        .name("${NAMESPACE}_endring_norsk_kontonummer")
         .help("Antall endringer av norske kontonummer")
+        .withoutExemplars()
         .register(registry)
 
-    val endreUtenlandskKontonummerCounter: Counter = Counter.build()
-        .name("endring_utenlandsk_kontonummer")
-        .namespace(NAMESPACE)
+    val endreUtenlandskKontonummerCounter: Counter = Counter.builder()
+        .name("${NAMESPACE}_endring_utenlandsk_kontonummer")
         .help("Antall endringer av utenlandske kontonummer")
+        .withoutExemplars()
         .register(registry)
 
-    val slettKontaktadresseCounter: Counter = Counter.build()
-        .name("sletting_kontaktadresse")
-        .namespace(NAMESPACE)
+    val slettKontaktadresseCounter: Counter = Counter.builder()
+        .name("${NAMESPACE}_sletting_kontaktadresse")
         .help("Antall slettinger av kontaktadresser")
+        .withoutExemplars()
         .register(registry)
 
     companion object {

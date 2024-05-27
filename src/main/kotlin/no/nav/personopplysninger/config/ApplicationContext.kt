@@ -4,8 +4,8 @@ import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import io.ktor.http.URLBuilder
 import io.ktor.http.takeFrom
-import io.micrometer.prometheus.PrometheusConfig
-import io.micrometer.prometheus.PrometheusMeterRegistry
+import io.micrometer.prometheusmetrics.PrometheusConfig
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
 import no.nav.personopplysninger.common.consumer.kodeverk.dto.Kodeverk

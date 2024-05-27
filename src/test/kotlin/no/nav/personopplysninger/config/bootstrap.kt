@@ -10,7 +10,8 @@ import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
 import io.ktor.server.routing.routing
-import io.prometheus.client.CollectorRegistry
+import io.micrometer.prometheusmetrics.PrometheusConfig
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import no.nav.personopplysninger.endreopplysninger.endreOpplysninger
 import no.nav.personopplysninger.institusjon.institusjon
 import no.nav.personopplysninger.kontaktinformasjon.kontaktinformasjon
@@ -41,7 +42,11 @@ fun Application.testModule(appContext: TestApplicationContext) {
     }
 
     routing {
-        endreOpplysninger(appContext.endreOpplysningerService, MetricsCollector(CollectorRegistry()), appContext.idporten)
+        endreOpplysninger(
+            appContext.endreOpplysningerService,
+            MetricsCollector(PrometheusMeterRegistry(PrometheusConfig.DEFAULT).prometheusRegistry),
+            appContext.idporten
+        )
         institusjon(appContext.institusjonService)
         medl(appContext.medlService)
         personalia(appContext.personaliaService)
