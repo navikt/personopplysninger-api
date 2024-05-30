@@ -1,0 +1,247 @@
+query HentPersonQuery($ident: ID!) {
+    person: hentPerson(ident: $ident) {
+        navn {
+            fornavn
+            mellomnavn
+            etternavn
+        }
+        telefonnummer {
+            landskode
+            nummer
+            prioritet
+            metadata {
+                opplysningsId
+            }
+        }
+        folkeregisteridentifikator {
+            identifikasjonsnummer
+            status
+            type
+        }
+        statsborgerskap {
+            land
+            gyldigTilOgMed
+        }
+        foedsel {
+            foedested
+            foedekommune
+            foedeland
+        }
+        sivilstand {
+            type
+            gyldigFraOgMed
+        }
+        kjoenn {
+            kjoenn
+        }
+        bostedsadresse {
+            angittFlyttedato
+            gyldigFraOgMed
+            gyldigTilOgMed
+            coAdressenavn
+            vegadresse {
+                husnummer
+                husbokstav
+                bruksenhetsnummer
+                adressenavn
+                kommunenummer
+                bydelsnummer
+                tilleggsnavn
+                postnummer
+            }
+            matrikkeladresse {
+                bruksenhetsnummer
+                tilleggsnavn
+                postnummer
+                kommunenummer
+            }
+            utenlandskAdresse {
+                adressenavnNummer
+                bygningEtasjeLeilighet
+                postboksNummerNavn
+                postkode
+                bySted
+                regionDistriktOmraade
+                landkode
+            }
+            ukjentBosted {
+                bostedskommune
+            }
+            metadata {
+                opplysningsId
+                master
+                endringer {
+                    type
+                    registrert
+                    registrertAv
+                    systemkilde
+                    kilde
+                }
+                historisk
+            }
+        }
+        deltBosted {
+            startdatoForKontrakt
+            sluttdatoForKontrakt
+            coAdressenavn
+            vegadresse {
+                husnummer
+                husbokstav
+                bruksenhetsnummer
+                adressenavn
+                kommunenummer
+                bydelsnummer
+                tilleggsnavn
+                postnummer
+            }
+            matrikkeladresse {
+                bruksenhetsnummer
+                tilleggsnavn
+                postnummer
+                kommunenummer
+            }
+            utenlandskAdresse {
+                adressenavnNummer
+                bygningEtasjeLeilighet
+                postboksNummerNavn
+                postkode
+                bySted
+                regionDistriktOmraade
+                landkode
+            }
+            ukjentBosted {
+                bostedskommune
+            }
+            metadata {
+                opplysningsId
+                master
+                endringer {
+                    type
+                    registrert
+                    registrertAv
+                    systemkilde
+                    kilde
+                }
+                historisk
+            }
+        }
+        kontaktadresse {
+            gyldigFraOgMed
+            gyldigTilOgMed
+            type
+            coAdressenavn
+            postboksadresse {
+                postbokseier
+                postboks
+                postnummer
+            }
+            vegadresse {
+                matrikkelId
+                husnummer
+                husbokstav
+                bruksenhetsnummer
+                adressenavn
+                kommunenummer
+                tilleggsnavn
+                postnummer
+                koordinater {
+                    x
+                    y
+                    z
+                    kvalitet
+                }
+            }
+            postadresseIFrittFormat {
+                adresselinje1
+                adresselinje2
+                adresselinje3
+                postnummer
+            }
+            utenlandskAdresse {
+                adressenavnNummer
+                bygningEtasjeLeilighet
+                postboksNummerNavn
+                postkode
+                bySted
+                regionDistriktOmraade
+                landkode
+            }
+            utenlandskAdresseIFrittFormat {
+                adresselinje1
+                adresselinje2
+                adresselinje3
+                postkode
+                byEllerStedsnavn
+                landkode
+            }
+            folkeregistermetadata {
+                ajourholdstidspunkt
+                gyldighetstidspunkt
+                opphoerstidspunkt
+                kilde
+                aarsak
+                sekvens
+            }
+            metadata {
+                opplysningsId
+                master
+                endringer {
+                    type
+                    registrert
+                    registrertAv
+                    systemkilde
+                    kilde
+                }
+                historisk
+            }
+        }
+        oppholdsadresse {
+            gyldigFraOgMed
+            gyldigTilOgMed
+            coAdressenavn
+            utenlandskAdresse {
+                adressenavnNummer
+                bygningEtasjeLeilighet
+                postboksNummerNavn
+                postkode
+                bySted
+                regionDistriktOmraade
+                landkode
+            }
+            vegadresse {
+                husnummer
+                husbokstav
+                bruksenhetsnummer
+                adressenavn
+                kommunenummer
+                bydelsnummer
+                tilleggsnavn
+                postnummer
+            }
+            matrikkeladresse {
+                bruksenhetsnummer
+                tilleggsnavn
+                postnummer
+                kommunenummer
+            }
+            oppholdAnnetSted
+            metadata {
+                opplysningsId
+                master
+                endringer {
+                    type
+                    registrert
+                    registrertAv
+                    systemkilde
+                    kilde
+                }
+                historisk
+            }
+        }
+    }
+    geografiskTilknytning: hentGeografiskTilknytning(ident: $ident) {
+        gtKommune
+        gtBydel
+        gtLand
+    }
+}

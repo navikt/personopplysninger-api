@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.common.consumer.pdl
 
+import com.expediagroup.graphql.client.types.GraphQLClientRequest
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.header
@@ -9,14 +10,13 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
+import no.nav.pdl.generated.dto.HentKontaktadresseQuery
+import no.nav.pdl.generated.dto.HentPersonQuery
+import no.nav.pdl.generated.dto.HentTelefonQuery
 import no.nav.personopplysninger.common.consumer.pdl.dto.PdlData
 import no.nav.personopplysninger.common.consumer.pdl.dto.PdlPerson
 import no.nav.personopplysninger.common.consumer.pdl.dto.PdlResponse
 import no.nav.personopplysninger.common.consumer.pdl.dto.PdlWarning
-import no.nav.personopplysninger.common.consumer.pdl.request.PDLRequest
-import no.nav.personopplysninger.common.consumer.pdl.request.createKontaktadresseRequest
-import no.nav.personopplysninger.common.consumer.pdl.request.createPersonInfoRequest
-import no.nav.personopplysninger.common.consumer.pdl.request.createTelefonRequest
 import no.nav.personopplysninger.common.util.consumerErrorMessage
 import no.nav.personopplysninger.config.BEARER
 import no.nav.personopplysninger.config.CONSUMER_ID
@@ -41,18 +41,18 @@ class PdlConsumer(
     private val tokenDingsService: TokendingsService,
 ) {
     suspend fun getPersonInfo(token: String, ident: String): PdlData {
-        return postPersonQuery(token, createPersonInfoRequest(ident))
+        return postPersonQuery(token, HentPersonQuery(HentPersonQuery.Variables(ident = ident)))
     }
 
     suspend fun getKontaktadresseInfo(token: String, ident: String): PdlPerson {
-        return postPersonQuery(token, createKontaktadresseRequest(ident)).person
+        return postPersonQuery(token, HentKontaktadresseQuery(HentKontaktadresseQuery.Variables(ident = ident))).person
     }
 
     suspend fun getTelefonInfo(token: String, ident: String): PdlPerson {
-        return postPersonQuery(token, createTelefonRequest(ident)).person
+        return postPersonQuery(token, HentTelefonQuery(HentTelefonQuery.Variables(ident = ident))).person
     }
 
-    private suspend fun postPersonQuery(token: String, request: PDLRequest): PdlData {
+    private suspend fun postPersonQuery(token: String, request: GraphQLClientRequest<*>): PdlData {
         val accessToken = tokenDingsService.exchangeToken(token, environment.pdlTargetApp)
         val endpoint = environment.pdlUrl
 
@@ -64,7 +64,7 @@ class PdlConsumer(
                 header(HEADER_TEMA, RETT_PERSONOPPLYSNINGER)
                 header(HEADER_BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_PERSONOPPLYSNINGER)
                 contentType(ContentType.Application.Json)
-                setBody(request)
+                setBody(request.query)
             }
         if (response.status.isSuccess()) {
             val responseBody = response.body<PdlResponse>()

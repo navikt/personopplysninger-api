@@ -1,0 +1,12 @@
+query HentTelefonQuery($ident: ID!) {
+    person: hentPerson(ident: $ident) {
+        telefonnummer {
+            landskode
+            nummer
+            prioritet
+            metadata {
+                opplysningsId
+            }
+        }
+    }
+}
