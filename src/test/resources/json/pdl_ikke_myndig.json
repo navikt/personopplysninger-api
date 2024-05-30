@@ -28,11 +28,25 @@
       "statsborgerskap": [
         {
           "land": "NOR"
+        },
+        {
+          "land": "SYR",
+          "gyldigTilOgMed": "2020-02-28"
+        },
+        {
+          "land": "CZE",
+          "gyldigTilOgMed": "3000-02-28"
+        },
+        {
+          "land": "XUK"
+        },
+        {
+          "land": "XXX"
         }
       ],
       "foedsel": [
         {
-          "foedselsdato": "1987-07-30",
+          "foedselsdato": "2023-07-30",
           "foedested": null,
           "foedekommune": "4601",
           "foedeland": "NOR"
@@ -103,59 +117,13 @@
           "type": "Innland",
           "coAdressenavn": null,
           "postboksadresse": null,
-          "vegadresse": {
-            "husnummer": "100",
-            "husbokstav": null,
-            "bruksenhetsnummer": null,
-            "adressenavn": "Kontaktadresseveien 1",
-            "kommunenummer": "3014",
-            "bydelsnummer": null,
-            "tilleggsnavn": null,
-            "postnummer": "1820"
+          "vegadresse": null,
+          "postadresseIFrittFormat": {
+            "adresselinje1": "Hylkjelia",
+            "adresselinje2": "5109 HYLKJE",
+            "adresselinje3": "Norge",
+            "postnummer": null
           },
-          "postadresseIFrittFormat": null,
-          "utenlandskAdresse": null,
-          "utenlandskAdresseIFrittFormat": null,
-          "folkeregistermetadata": {
-            "ajourholdstidspunkt": null,
-            "gyldighetstidspunkt": "2020-03-24T00:00",
-            "opphoerstidspunkt": null,
-            "kilde": "KILDE_DSF",
-            "aarsak": null,
-            "sekvens": null
-          },
-          "metadata": {
-            "opplysningsId": "ad35b2d7-2e50-4b64-89e6-ab220d66e9fa",
-            "master": "pdl",
-            "endringer": [
-              {
-                "type": "OPPRETT",
-                "registrert": "2020-04-24T13:07:20",
-                "registrertAv": "Folkeregisteret",
-                "systemkilde": "FREG",
-                "kilde": "KILDE_DSF"
-              }
-            ],
-            "historisk": false
-          }
-        },
-        {
-          "gyldigFraOgMed": "2020-03-24T00:00",
-          "gyldigTilOgMed": null,
-          "type": "Innland",
-          "coAdressenavn": null,
-          "postboksadresse": null,
-          "vegadresse": {
-            "husnummer": "100",
-            "husbokstav": null,
-            "bruksenhetsnummer": null,
-            "adressenavn": "Kontaktadresseveien 2",
-            "kommunenummer": "5434",
-            "bydelsnummer": null,
-            "tilleggsnavn": null,
-            "postnummer": "1861"
-          },
-          "postadresseIFrittFormat": null,
           "utenlandskAdresse": null,
           "utenlandskAdresseIFrittFormat": null,
           "folkeregistermetadata": {
@@ -182,46 +150,45 @@
           }
         }
       ],
-      "oppholdsadresse": [
-        {
-          "gyldigFraOgMed": "2020-05-07T12:09:19",
-          "gyldigTilOgMed": null,
-          "coAdressenavn": null,
-          "oppholdAnnetSted": "UTENRIKS",
-          "metadata": {
-            "opplysningsId": "7de1afaa-8119-4520-958f-3a464972d117",
-            "master": "Freg",
-            "endringer": [],
-            "historisk": false
-          }
-        },
-        {
-          "gyldigFraOgMed": "2020-05-07T12:09:19",
-          "gyldigTilOgMed": null,
-          "coAdressenavn": null,
-          "vegadresse": {
-            "husnummer": "100",
-            "husbokstav": null,
-            "bruksenhetsnummer": null,
-            "adressenavn": "Oppholdsadresseveien 1",
-            "kommunenummer": "3014",
-            "bydelsnummer": null,
-            "tilleggsnavn": null,
-            "postnummer": "1820"
-          },
-          "metadata": {
-            "opplysningsId": "7de1afaa-8119-4520-958f-3a464972d117",
-            "master": "Freg",
-            "endringer": [],
-            "historisk": false
-          }
-        }
-      ]
+      "oppholdsadresse": []
     },
     "geografiskTilknytning": {
       "gtKommune": null,
       "gtBydel": "460108",
       "gtLand": null
     }
+  },
+  "extensions": {
+    "warnings": [
+      {
+        "query": "hentPerson",
+        "id": "behandlingskatalogen",
+        "message": "Behandling mangler opplysningstyper",
+        "details": {
+          "missing": [
+            "INNFLYTTING_TIL_NORGE",
+            "FOLKEREGISTERPERSONSTATUS_V1",
+            "UTFLYTTING_FRA_NORGE",
+            "IDENTITETSGRUNNLAG_V1",
+            "FAMILIERELASJON_V1",
+            "DOEDFOEDT_BARN_V1",
+            "KONTAKTINFORMASJON_DOEDSBO_V1",
+            "FORELDREANSVAR_V1",
+            "SIKKERHETSTILTAK_V1",
+            "DELT_BOSTED_V1",
+            "VERGEMAAL_ELLER_FREMTIDSFULLMAKT_V1",
+            "OPPHOLD_V1",
+            "FULLMAKT_V1",
+            "FOLKEREGISTERIDENTIFIKATOR_V1",
+            "ADRESSEBESKYTTELSE_V1",
+            "TILRETTELAGT_KOMMUNIKASJON_V1",
+            "UTENLANDSK_ID_V1",
+            "OPPHOLDSADRESSE_V1",
+            "DOEDSFALL_V1",
+            "FALSK_ID_V1"
+          ]
+        }
+      }
+    ]
   }
 }

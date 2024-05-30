@@ -46,6 +46,7 @@
       ],
       "foedsel": [
         {
+          "foedselsdato": "1987-07-30",
           "foedested": null,
           "foedekommune": "4601",
           "foedeland": "NOR"

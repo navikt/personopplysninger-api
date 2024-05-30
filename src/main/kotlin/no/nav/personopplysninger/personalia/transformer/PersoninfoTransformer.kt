@@ -30,7 +30,8 @@ object PersoninfoTransformer {
             foedested = foedested(kodeverk.foedekommuneterm, kodeverk.foedelandterm),
             sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.beskrivelse,
             kjoenn = pdlPerson.kjoenn.firstOrNull()?.kjoenn?.beskrivelse,
-            kontoregisterStatus = if (konto?.error == true) "ERROR" else "SUCCESS"
+            kontoregisterStatus = if (konto?.error == true) "ERROR" else "SUCCESS",
+            isMyndig = pdlPerson.foedsel.firstOrNull()?.isMyndig() ?: false
         )
     }
 

@@ -4,6 +4,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
+import no.nav.personopplysninger.common.consumer.pdl.request.FoedselRequest
 import no.nav.personopplysninger.common.consumer.pdl.request.KontaktadresseRequest
 import no.nav.personopplysninger.common.consumer.pdl.request.PDLRequest
 import no.nav.personopplysninger.common.consumer.pdl.request.PersonInfoRequest
@@ -44,6 +45,7 @@ fun jsonConfig(): Json {
                 subclass(PersonInfoRequest::class)
                 subclass(TelefonRequest::class)
                 subclass(KontaktadresseRequest::class)
+                subclass(FoedselRequest::class)
             }
         }
     }

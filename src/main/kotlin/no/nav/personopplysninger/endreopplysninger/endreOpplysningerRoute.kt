@@ -27,6 +27,7 @@ import no.nav.personopplysninger.config.IDPortenException
 import no.nav.personopplysninger.config.MetricsCollector
 import no.nav.personopplysninger.config.Pkce
 import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
+import no.nav.personopplysninger.endreopplysninger.exception.IkkeMyndigException
 import org.slf4j.LoggerFactory
 import java.util.*
 
@@ -161,6 +162,13 @@ fun Route.endreOpplysninger(
 
             call.respondRedirect(url)
         } catch (e: KontoregisterValidationException) {
+            logger.error("Validering feilet ved endring av kontonummer", e)
+            call.handleEndreKontonummerException(
+                idporten.frontendUri.withLocale(locale),
+                "validation",
+                HttpStatusCode.BadRequest
+            )
+        } catch (e: IkkeMyndigException) {
             logger.error("Validering feilet ved endring av kontonummer", e)
             call.handleEndreKontonummerException(
                 idporten.frontendUri.withLocale(locale),

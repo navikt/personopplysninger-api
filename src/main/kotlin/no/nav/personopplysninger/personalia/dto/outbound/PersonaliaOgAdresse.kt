@@ -26,7 +26,8 @@ data class Personalia(
     val statsborgerskap: List<String> = arrayListOf(),
     val foedested: String? = null,
     val sivilstand: String? = null,
-    val kjoenn: String? = null
+    val kjoenn: String? = null,
+    val isMyndig: Boolean,
 )
 
 @Serializable

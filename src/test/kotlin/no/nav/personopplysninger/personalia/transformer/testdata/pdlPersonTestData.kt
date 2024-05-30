@@ -66,7 +66,7 @@ fun createDummyPerson(): PdlPerson {
             )
         ),
         foedsel = listOf(
-            PdlFoedsel("foedested", "foedekommune", "foedeland")
+            PdlFoedsel(LocalDate.now().minusYears(19), "foedested", "foedekommune", "foedeland")
         ),
         sivilstand = listOf(
             PdlSivilstand(PdlSivilstandstype.GIFT, LocalDate.now().minusDays(1000))
@@ -87,10 +87,10 @@ fun createDummyBostedsadresse(adresseType: AdresseType): PdlBostedsadresse {
         LocalDateTime.now().minusDays(1000),
         LocalDateTime.now().plusDays(1000),
         "coAdressenavn",
-        if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
-        if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if(adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
+        if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
+        if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        if (adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
         createDummyMetadata()
     )
 }
@@ -100,10 +100,10 @@ fun createDummyDeltBosted(adresseType: AdresseType): PdlDeltBosted {
         LocalDate.now().minusDays(1000),
         LocalDate.now().plusDays(1000),
         "coAdressenavn",
-        if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
-        if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if(adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
+        if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
+        if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        if (adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
         createDummyMetadata()
     )
 }
@@ -114,11 +114,11 @@ fun createDummyKontaktadresse(adresseType: AdresseType): PdlKontaktadresse {
         LocalDateTime.now().plusDays(1000),
         PdlKontaktadressetype.Innland,
         "coAdressenavn",
-        if(adresseType == POSTBOKSADRESSE) createDummyPostboksadresse() else null,
-        if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if(adresseType == POSTADRESSE_I_FRITT_FORMAT) createDummyPostadresseIFrittFormat() else null,
-        if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if(adresseType == UTENLANDSK_ADRESSE_I_FRITT_FORMAT) createDummyUtenlandskAdresseIFrittFormat() else null,
+        if (adresseType == POSTBOKSADRESSE) createDummyPostboksadresse() else null,
+        if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        if (adresseType == POSTADRESSE_I_FRITT_FORMAT) createDummyPostadresseIFrittFormat() else null,
+        if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        if (adresseType == UTENLANDSK_ADRESSE_I_FRITT_FORMAT) createDummyUtenlandskAdresseIFrittFormat() else null,
         null,
         createDummyMetadata()
     )
@@ -129,9 +129,9 @@ fun createDummyOppholdsadresse(adresseType: AdresseType): PdlOppholdsadresse {
         LocalDateTime.now().minusDays(1000),
         LocalDateTime.now().plusDays(1000),
         "coAdressenavn",
-        if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
+        if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
         null,
         createDummyMetadata()
     )
