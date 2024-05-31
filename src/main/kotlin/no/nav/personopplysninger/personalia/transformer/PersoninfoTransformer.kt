@@ -6,6 +6,7 @@ import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Kont
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.personalia.dto.outbound.Personident
+import no.nav.personopplysninger.personalia.extensions.stringValue
 
 
 object PersoninfoTransformer {
@@ -28,8 +29,8 @@ object PersoninfoTransformer {
             utenlandskbank = konto?.utenlandskKontoInfo?.let { UtenlandskBankTransformer.toOutbound(konto, kodeverk) },
             statsborgerskap = kodeverk.statsborgerskaptermer,
             foedested = foedested(kodeverk.foedekommuneterm, kodeverk.foedelandterm),
-            sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.name, //todo: må ha mapping her
-            kjoenn = pdlPerson.kjoenn.firstOrNull()?.kjoenn?.name, //todo: må ha mapping her
+            sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.stringValue,
+            kjoenn = pdlPerson.kjoenn.firstOrNull()?.kjoenn?.stringValue,
             kontoregisterStatus = if (konto?.error == true) "ERROR" else "SUCCESS"
         )
     }
