@@ -1,0 +1,2 @@
+schema: https://pdl-api.dev-fss-pub.nais.io/graphql
+documents: '**/*.graphql'
