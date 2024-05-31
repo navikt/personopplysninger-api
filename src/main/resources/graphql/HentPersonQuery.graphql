@@ -12,7 +12,6 @@ query HentPersonQuery($ident: ID!) {
         }
         folkeregisteridentifikator {
             identifikasjonsnummer
-            status
             type
         }
         statsborgerskap {
@@ -20,13 +19,11 @@ query HentPersonQuery($ident: ID!) {
             gyldigTilOgMed
         }
         foedsel {
-            foedested
             foedekommune
             foedeland
         }
         sivilstand {
             type
-            gyldigFraOgMed
         }
         kjoenn {
             kjoenn
@@ -105,7 +102,6 @@ query HentPersonQuery($ident: ID!) {
         kontaktadresse {
             gyldigFraOgMed
             gyldigTilOgMed
-            type
             coAdressenavn
             postboksadresse {
                 postbokseier
@@ -143,14 +139,6 @@ query HentPersonQuery($ident: ID!) {
                 postkode
                 byEllerStedsnavn
                 landkode
-            }
-            folkeregistermetadata {
-                ajourholdstidspunkt
-                gyldighetstidspunkt
-                opphoerstidspunkt
-                kilde
-                aarsak
-                sekvens
             }
             metadata {
                 master

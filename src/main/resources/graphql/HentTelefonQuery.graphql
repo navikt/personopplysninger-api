@@ -3,7 +3,6 @@ query HentTelefonQuery($ident: ID!) {
         telefonnummer {
             landskode
             nummer
-            prioritet
             metadata {
                 opplysningsId
             }

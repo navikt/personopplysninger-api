@@ -2,7 +2,6 @@ package no.nav.personopplysninger.personalia.transformer.testdata
 
 import no.nav.pdl.generated.dto.HentPersonQuery
 import no.nav.pdl.generated.dto.enums.KjoennType
-import no.nav.pdl.generated.dto.enums.KontaktadresseType
 import no.nav.pdl.generated.dto.enums.Sivilstandstype
 import no.nav.pdl.generated.dto.hentpersonquery.Bostedsadresse
 import no.nav.pdl.generated.dto.hentpersonquery.DeltBosted
@@ -56,7 +55,7 @@ fun createDummyPerson(): Person {
         ),
         folkeregisteridentifikator = listOf(
             Folkeregisteridentifikator(
-                "identifikasjonsnummer", "status", "type"
+                "identifikasjonsnummer", "type"
             )
         ),
         statsborgerskap = listOf(
@@ -66,10 +65,10 @@ fun createDummyPerson(): Person {
             )
         ),
         foedsel = listOf(
-            Foedsel("foedested", "foedekommune", "foedeland")
+            Foedsel("foedekommune", "foedeland")
         ),
         sivilstand = listOf(
-            Sivilstand(Sivilstandstype.GIFT, LocalDate.now().minusDays(1000).toString())
+            Sivilstand(Sivilstandstype.GIFT)
         ),
         kjoenn = listOf(
             Kjoenn(KjoennType.KVINNE)
@@ -112,14 +111,12 @@ fun createDummyKontaktadresse(adresseType: AdresseType): Kontaktadresse {
     return Kontaktadresse(
         LocalDateTime.now().minusDays(1000).toString(),
         LocalDateTime.now().plusDays(1000).toString(),
-        KontaktadresseType.INNLAND,
         "coAdressenavn",
         if (adresseType == POSTBOKSADRESSE) createDummyPostboksadresse() else null,
         if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
         if (adresseType == POSTADRESSE_I_FRITT_FORMAT) createDummyPostadresseIFrittFormat() else null,
         if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
         if (adresseType == UTENLANDSK_ADRESSE_I_FRITT_FORMAT) createDummyUtenlandskAdresseIFrittFormat() else null,
-        null,
         createDummyMetadata()
     )
 }
