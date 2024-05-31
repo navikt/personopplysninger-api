@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.personalia
 
-import no.nav.pdl.generated.dto.Date
 import no.nav.pdl.generated.dto.HentPersonQuery
 import no.nav.pdl.generated.dto.hentpersonquery.Statsborgerskap
 import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
@@ -72,13 +71,13 @@ class PersonaliaService(
 
     private suspend fun hentGyldigeStatsborgerskap(statsborgerskap: List<Statsborgerskap>): List<String> {
         return statsborgerskap
-            .filter { it.land != UKJENT_LAND && it.gyldigTilOgMed?.isFuture() ?: false } // Filtrer ut ukjent og ugyldige
+            .filter { it.land != UKJENT_LAND && it.isValid() } // Filtrer ut ukjent og ugyldige
             .map { kodeverkService.hentStatsborgerskap().term(it.land) }
             .filter { it.isNotEmpty() }
     }
 
-    private fun Date.isFuture(): Boolean {
-        return LocalDate.parse(this).isAfter(LocalDate.now())
+    private fun Statsborgerskap.isValid(): Boolean {
+        return this.gyldigTilOgMed.let { it == null || LocalDate.parse(it).isAfter(LocalDate.now()) }
     }
 
     private suspend fun hentAdresseKodeverk(
