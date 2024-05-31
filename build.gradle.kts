@@ -97,5 +97,6 @@ graphql {
         packageName = "no.nav.pdl.generated.dto"
         schemaFile = file("$projectDir/src/main/resources/graphql/schema/pdl.graphql")
         serializer = GraphQLSerializer.KOTLINX
+        sdlEndpoint = "https://navikt.github.io/pdl/pdl-api-sdl.graphqls"
     }
 }
