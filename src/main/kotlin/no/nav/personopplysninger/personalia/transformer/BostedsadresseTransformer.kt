@@ -1,12 +1,12 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.INNLAND_VEGADRESSE
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.MATRIKKELADRESSE
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.UKJENT_BOSTED
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.UTLAND_ADRESSE
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Adresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Bostedsadresse
+import no.nav.personopplysninger.personalia.enums.AdresseMappingType.INNLAND_VEGADRESSE
+import no.nav.personopplysninger.personalia.enums.AdresseMappingType.MATRIKKELADRESSE
+import no.nav.personopplysninger.personalia.enums.AdresseMappingType.UKJENT_BOSTED
+import no.nav.personopplysninger.personalia.enums.AdresseMappingType.UTLAND_ADRESSE
 import no.nav.personopplysninger.personalia.extensions.mappingType
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

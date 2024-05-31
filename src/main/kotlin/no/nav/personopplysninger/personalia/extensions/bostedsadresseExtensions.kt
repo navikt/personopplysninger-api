@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.personalia.extensions
 
 import no.nav.pdl.generated.dto.hentpersonquery.Bostedsadresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType
+import no.nav.personopplysninger.personalia.enums.AdresseMappingType
 
 val Bostedsadresse.mappingType: AdresseMappingType
     get() = if (vegadresse != null) {

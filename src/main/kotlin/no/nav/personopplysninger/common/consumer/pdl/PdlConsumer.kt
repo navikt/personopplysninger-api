@@ -5,7 +5,6 @@ import io.ktor.client.request.header
 import no.nav.pdl.generated.dto.HentKontaktadresseQuery
 import no.nav.pdl.generated.dto.HentPersonQuery
 import no.nav.pdl.generated.dto.HentTelefonQuery
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlWarning
 import no.nav.personopplysninger.config.BEARER
 import no.nav.personopplysninger.config.CONSUMER_ID
 import no.nav.personopplysninger.config.Environment
@@ -103,6 +102,7 @@ class PdlConsumer(
         }
     }
 
+    /*
     private fun logWarnings(warnings: List<PdlWarning>) {
         warnings.forEach {
             try {
@@ -112,4 +112,5 @@ class PdlConsumer(
             }
         }
     }
+    */
 }
