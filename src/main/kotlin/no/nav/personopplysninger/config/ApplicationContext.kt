@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.config
 
+import com.expediagroup.graphql.client.ktor.GraphQLKtorClient
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import io.ktor.http.URLBuilder
@@ -24,6 +25,7 @@ import no.nav.personopplysninger.medl.consumer.MedlConsumer
 import no.nav.personopplysninger.personalia.PersonaliaService
 import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
 import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
+import java.net.URI
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.crypto.spec.SecretKeySpec
@@ -47,7 +49,7 @@ class ApplicationContext {
     val kodeverkConsumer = KodeverkConsumer(httpClient, env)
     val medlConsumer = MedlConsumer(httpClient, env, tokendingsService)
     val norg2Consumer = Norg2Consumer(httpClient, env)
-    val pdlConsumer = PdlConsumer(httpClient, env, tokendingsService)
+    val pdlConsumer = PdlConsumer(GraphQLKtorClient(URI(env.pdlUrl).toURL(), httpClient), env, tokendingsService)
     val pdlMottakConsumer = PdlMottakConsumer(httpClient, env, tokendingsService)
 
     val kodeverkService = KodeverkService(setupKodeverkCache(env), kodeverkConsumer)

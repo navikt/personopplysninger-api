@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.personalia.transformer
 
+import no.nav.pdl.generated.dto.HentPersonQuery
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlData
 import no.nav.personopplysninger.personalia.consumer.dto.Norg2EnhetKontaktinfo
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.PersonaliaOgAdresser
@@ -9,13 +9,13 @@ import no.nav.personopplysninger.personalia.dto.outbound.PersonaliaOgAdresser
 object PersonaliaOgAdresserTransformer {
 
     fun toOutbound(
-        pdlData: PdlData,
+        pdlData: HentPersonQuery.Result,
         konto: Konto?,
         kodeverk: PersonaliaKodeverk,
         enhetKontaktInformasjon: Norg2EnhetKontaktinfo?
     ) =
         PersonaliaOgAdresser(
-            personalia = PersoninfoTransformer.toOutbound(pdlData.person, konto, kodeverk),
+            personalia = PersoninfoTransformer.toOutbound(pdlData.person!!, konto, kodeverk),
             adresser = AdresseinfoTransformer.toOutbound(pdlData, kodeverk),
             enhetKontaktInformasjon = enhetKontaktInformasjon
         )

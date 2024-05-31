@@ -1,34 +1,28 @@
 package no.nav.personopplysninger.personalia.transformer.testdata
 
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlKoordinater
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlMatrikkeladresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlPostadresseIFrittFormat
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlPostboksadresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUkjentbosted
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUtenlandskAdresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUtenlandskAdresseIFrittFormat
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlVegadresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.common.PdlMetadata
+import no.nav.pdl.generated.dto.hentpersonquery.Matrikkeladresse
+import no.nav.pdl.generated.dto.hentpersonquery.PostadresseIFrittFormat
+import no.nav.pdl.generated.dto.hentpersonquery.Postboksadresse
+import no.nav.pdl.generated.dto.hentpersonquery.UkjentBosted
+import no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresse
+import no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresseIFrittFormat
+import no.nav.pdl.generated.dto.hentpersonquery.Vegadresse
 
-fun createDummyVegadresse(): PdlVegadresse {
-
-    return PdlVegadresse(
-        matrikkelId = 0,
+fun createDummyVegadresse(): Vegadresse {
+    return Vegadresse(
         husnummer = "dummy husnummer",
         husbokstav = "dummy husbokstav",
         bruksenhetsnummer = "dummy bruksenhetsnummer",
         adressenavn = "dummy adressenavn",
         kommunenummer = "dummy kommunenummer",
-        bydelsnummer = "dummy bydelsnummer",
         tilleggsnavn = "dummy tilleggsnavn",
         postnummer = "dummy postnummer",
-        koordinater = createDummyKoordinater()
     )
 }
 
-fun createDummyPostadresseIFrittFormat(): PdlPostadresseIFrittFormat {
+fun createDummyPostadresseIFrittFormat(): PostadresseIFrittFormat {
 
-    return PdlPostadresseIFrittFormat(
+    return PostadresseIFrittFormat(
         adresselinje1 = "dummy adresselinje1",
         adresselinje2 = "dummy adresselinje2",
         adresselinje3 = "dummy adresselinje3",
@@ -36,16 +30,16 @@ fun createDummyPostadresseIFrittFormat(): PdlPostadresseIFrittFormat {
     )
 }
 
-fun createDummyPostboksadresse(): PdlPostboksadresse {
-    return PdlPostboksadresse(
+fun createDummyPostboksadresse(): Postboksadresse {
+    return Postboksadresse(
         postbokseier = "dummy postbokseier",
         postboks = "dummy postboks",
         postnummer = "dummy postnummer"
     )
 }
 
-fun createDummyUtenlandskAdresse(): PdlUtenlandskAdresse {
-    return PdlUtenlandskAdresse(
+fun createDummyUtenlandskAdresse(): UtenlandskAdresse {
+    return UtenlandskAdresse(
         adressenavnNummer = "dummy adressenavnNummer",
         bygningEtasjeLeilighet = "dummy bygningEtasjeLeilighet",
         postboksNummerNavn = "dummy postboksNummerNavn",
@@ -56,8 +50,8 @@ fun createDummyUtenlandskAdresse(): PdlUtenlandskAdresse {
     )
 }
 
-fun createDummyUtenlandskAdresseIFrittFormat(): PdlUtenlandskAdresseIFrittFormat {
-    return PdlUtenlandskAdresseIFrittFormat(
+fun createDummyUtenlandskAdresseIFrittFormat(): UtenlandskAdresseIFrittFormat {
+    return UtenlandskAdresseIFrittFormat(
         adresselinje1 = "dummy adresselinje1",
         adresselinje2 = "dummy adresselinje2",
         adresselinje3 = "dummy adresselinje3",
@@ -67,8 +61,8 @@ fun createDummyUtenlandskAdresseIFrittFormat(): PdlUtenlandskAdresseIFrittFormat
     )
 }
 
-fun createDummyMatrikkeladresse(): PdlMatrikkeladresse {
-    return PdlMatrikkeladresse(
+fun createDummyMatrikkeladresse(): Matrikkeladresse {
+    return Matrikkeladresse(
         bruksenhetsnummer = "dummy bruksenhetsnummer",
         tilleggsnavn = "dummy tilleggsnavn",
         postnummer = "dummy postnummer",
@@ -76,22 +70,12 @@ fun createDummyMatrikkeladresse(): PdlMatrikkeladresse {
     )
 }
 
-fun createDummyUkjentbosted(): PdlUkjentbosted {
-    return PdlUkjentbosted(
+fun createDummyUkjentbosted(): UkjentBosted {
+    return UkjentBosted(
         bostedskommune = "dummy bostedskommune",
     )
 }
 
-fun createDummyMetadata() = PdlMetadata(
-    opplysningsId = "",
+fun createDummyMetadata() = no.nav.pdl.generated.dto.hentpersonquery.Metadata(
     master = "pdl",
-    endringer = emptyList(),
-    historisk = false
-)
-
-private fun createDummyKoordinater() = PdlKoordinater(
-    x = 0.0,
-    y = 0.0,
-    z = 0.0,
-    kvalitet = 0
 )

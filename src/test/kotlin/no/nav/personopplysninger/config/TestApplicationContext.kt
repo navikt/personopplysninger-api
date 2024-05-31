@@ -1,5 +1,6 @@
 package no.nav.personopplysninger.config
 
+import com.expediagroup.graphql.client.ktor.GraphQLKtorClient
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import io.ktor.client.HttpClient
@@ -28,6 +29,7 @@ import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
 import no.nav.personopplysninger.testutils.createAccessToken
 import no.nav.personopplysninger.testutils.endreKontonummerState
 import org.apache.kafka.clients.producer.MockProducer
+import java.net.URI
 import java.util.concurrent.TimeUnit
 
 class TestApplicationContext(httpClient: HttpClient) {
@@ -74,7 +76,7 @@ class TestApplicationContext(httpClient: HttpClient) {
     val kodeverkConsumer = KodeverkConsumer(httpClient, env)
     val medlConsumer = MedlConsumer(httpClient, env, tokendingsService)
     val norg2Consumer = Norg2Consumer(httpClient, env)
-    val pdlConsumer = PdlConsumer(httpClient, env, tokendingsService)
+    val pdlConsumer = PdlConsumer(GraphQLKtorClient(URI(env.pdlUrl).toURL(), httpClient), env, tokendingsService)
     val pdlMottakConsumer = PdlMottakConsumer(httpClient, env, tokendingsService)
 
     val kodeverkService = KodeverkService(setupKodeverkCache(env), kodeverkConsumer)

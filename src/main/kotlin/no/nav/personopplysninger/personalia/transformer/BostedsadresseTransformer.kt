@@ -4,10 +4,10 @@ import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingT
 import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.MATRIKKELADRESSE
 import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.UKJENT_BOSTED
 import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.UTLAND_ADRESSE
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlBostedsadresse
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Adresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Bostedsadresse
+import no.nav.personopplysninger.personalia.extensions.mappingType
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -15,7 +15,7 @@ object BostedsadresseTransformer {
 
     private val logger: Logger = LoggerFactory.getLogger(BostedsadresseTransformer::class.java)
 
-    fun toOutbound(inbound: PdlBostedsadresse, kodeverk: AdresseKodeverk): Bostedsadresse? {
+    fun toOutbound(inbound: no.nav.pdl.generated.dto.hentpersonquery.Bostedsadresse, kodeverk: AdresseKodeverk): Bostedsadresse? {
         val adresse = transformAdresse(inbound, kodeverk)
         return if (adresse != null) {
             Bostedsadresse(
@@ -31,7 +31,7 @@ object BostedsadresseTransformer {
         }
     }
 
-    private fun transformAdresse(inbound: PdlBostedsadresse, kodeverk: AdresseKodeverk): Adresse? {
+    private fun transformAdresse(inbound: no.nav.pdl.generated.dto.hentpersonquery.Bostedsadresse, kodeverk: AdresseKodeverk): Adresse? {
         return when (inbound.mappingType) {
             INNLAND_VEGADRESSE -> transformVegadresse(
                 inbound.vegadresse,

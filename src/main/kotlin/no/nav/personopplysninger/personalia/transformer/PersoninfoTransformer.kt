@@ -1,8 +1,8 @@
 package no.nav.personopplysninger.personalia.transformer
 
+import no.nav.pdl.generated.dto.hentpersonquery.Navn
+import no.nav.pdl.generated.dto.hentpersonquery.Person
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlPerson
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlNavn
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.personalia.dto.outbound.Personident
@@ -10,9 +10,9 @@ import no.nav.personopplysninger.personalia.dto.outbound.Personident
 
 object PersoninfoTransformer {
 
-    fun toOutbound(pdlPerson: PdlPerson, konto: Konto?, kodeverk: PersonaliaKodeverk): Personalia {
+    fun toOutbound(pdlPerson: Person, konto: Konto?, kodeverk: PersonaliaKodeverk): Personalia {
 
-        fun fornavn(navn: PdlNavn): String =
+        fun fornavn(navn: Navn): String =
             if (navn.mellomnavn == null) navn.fornavn
             else {
                 "${navn.fornavn} ${navn.mellomnavn}".trim()
@@ -28,8 +28,8 @@ object PersoninfoTransformer {
             utenlandskbank = konto?.utenlandskKontoInfo?.let { UtenlandskBankTransformer.toOutbound(konto, kodeverk) },
             statsborgerskap = kodeverk.statsborgerskaptermer,
             foedested = foedested(kodeverk.foedekommuneterm, kodeverk.foedelandterm),
-            sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.beskrivelse,
-            kjoenn = pdlPerson.kjoenn.firstOrNull()?.kjoenn?.beskrivelse,
+            sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.name, //todo: må ha mapping her
+            kjoenn = pdlPerson.kjoenn.firstOrNull()?.kjoenn?.name, //todo: må ha mapping her
             kontoregisterStatus = if (konto?.error == true) "ERROR" else "SUCCESS"
         )
     }

@@ -1,23 +1,11 @@
 package no.nav.personopplysninger.common.consumer.pdl
 
-import com.expediagroup.graphql.client.types.GraphQLClientRequest
-import io.ktor.client.HttpClient
-import io.ktor.client.call.body
+import com.expediagroup.graphql.client.ktor.GraphQLKtorClient
 import io.ktor.client.request.header
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
-import io.ktor.client.statement.HttpResponse
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
-import io.ktor.http.isSuccess
 import no.nav.pdl.generated.dto.HentKontaktadresseQuery
 import no.nav.pdl.generated.dto.HentPersonQuery
 import no.nav.pdl.generated.dto.HentTelefonQuery
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlData
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlPerson
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlResponse
 import no.nav.personopplysninger.common.consumer.pdl.dto.PdlWarning
-import no.nav.personopplysninger.common.util.consumerErrorMessage
 import no.nav.personopplysninger.config.BEARER
 import no.nav.personopplysninger.config.CONSUMER_ID
 import no.nav.personopplysninger.config.Environment
@@ -36,45 +24,82 @@ private const val BEHANDLINGSNUMMER_PERSONOPPLYSNINGER = "B258"
 private val logger = LoggerFactory.getLogger(PdlConsumer::class.java)
 
 class PdlConsumer(
-    private val client: HttpClient,
+    private val client: GraphQLKtorClient,
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,
 ) {
-    suspend fun getPersonInfo(token: String, ident: String): PdlData {
-        return postPersonQuery(token, HentPersonQuery(HentPersonQuery.Variables(ident = ident)))
-    }
-
-    suspend fun getKontaktadresseInfo(token: String, ident: String): PdlPerson {
-        return postPersonQuery(token, HentKontaktadresseQuery(HentKontaktadresseQuery.Variables(ident = ident))).person
-    }
-
-    suspend fun getTelefonInfo(token: String, ident: String): PdlPerson {
-        return postPersonQuery(token, HentTelefonQuery(HentTelefonQuery.Variables(ident = ident))).person
-    }
-
-    private suspend fun postPersonQuery(token: String, request: GraphQLClientRequest<*>): PdlData {
+    suspend fun hentPerson(token: String, ident: String): HentPersonQuery.Result {
         val accessToken = tokenDingsService.exchangeToken(token, environment.pdlTargetApp)
-        val endpoint = environment.pdlUrl
 
-        val response: HttpResponse =
-            client.post(endpoint) {
-                header(HEADER_AUTHORIZATION, BEARER + accessToken)
-                header(HEADER_NAV_CALL_ID, UUID.randomUUID())
-                header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-                header(HEADER_TEMA, RETT_PERSONOPPLYSNINGER)
-                header(HEADER_BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_PERSONOPPLYSNINGER)
-                contentType(ContentType.Application.Json)
-                setBody(request.query)
-            }
-        if (response.status.isSuccess()) {
-            val responseBody = response.body<PdlResponse>()
-            val warnings = responseBody.extensions?.warnings
+        val response = client.execute(HentPersonQuery(HentPersonQuery.Variables(ident = ident))) {
+            header(HEADER_AUTHORIZATION, BEARER + accessToken)
+            header(HEADER_NAV_CALL_ID, UUID.randomUUID())
+            header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+            header(HEADER_TEMA, RETT_PERSONOPPLYSNINGER)
+            header(HEADER_BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_PERSONOPPLYSNINGER)
+        }
+        if (response.errors.isNullOrEmpty()) {
+            /*val warnings = response.extensions?.warnings
             if (!warnings.isNullOrEmpty()) {
                 logWarnings(warnings)
             }
-            return responseBody.data
+             */
+            return response.data!!
         } else {
+            /*
             throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
+             */
+            throw Exception()
+        }
+    }
+
+    suspend fun hentKontaktadresse(token: String, ident: String): HentKontaktadresseQuery.Result {
+        val accessToken = tokenDingsService.exchangeToken(token, environment.pdlTargetApp)
+
+        val response = client.execute(HentKontaktadresseQuery(HentKontaktadresseQuery.Variables(ident = ident))) {
+            header(HEADER_AUTHORIZATION, BEARER + accessToken)
+            header(HEADER_NAV_CALL_ID, UUID.randomUUID())
+            header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+            header(HEADER_TEMA, RETT_PERSONOPPLYSNINGER)
+            header(HEADER_BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_PERSONOPPLYSNINGER)
+        }
+        if (response.errors.isNullOrEmpty()) {
+            /*val warnings = response.extensions?.warnings
+            if (!warnings.isNullOrEmpty()) {
+                logWarnings(warnings)
+            }
+             */
+            return response.data!!
+        } else {
+            /*
+            throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
+             */
+            throw Exception()
+        }
+    }
+
+    suspend fun hentTelefon(token: String, ident: String): HentTelefonQuery.Result {
+        val accessToken = tokenDingsService.exchangeToken(token, environment.pdlTargetApp)
+
+        val response = client.execute(HentTelefonQuery(HentTelefonQuery.Variables(ident = ident))) {
+            header(HEADER_AUTHORIZATION, BEARER + accessToken)
+            header(HEADER_NAV_CALL_ID, UUID.randomUUID())
+            header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+            header(HEADER_TEMA, RETT_PERSONOPPLYSNINGER)
+            header(HEADER_BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_PERSONOPPLYSNINGER)
+        }
+        if (response.errors.isNullOrEmpty()) {
+            /*val warnings = response.extensions?.warnings
+            if (!warnings.isNullOrEmpty()) {
+                logWarnings(warnings)
+            }
+             */
+            return response.data!!
+        } else {
+            /*
+            throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
+             */
+            throw Exception()
         }
     }
 

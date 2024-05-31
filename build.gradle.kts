@@ -1,3 +1,4 @@
+import com.expediagroup.graphql.plugin.gradle.config.GraphQLSerializer
 import com.expediagroup.graphql.plugin.gradle.graphql
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
@@ -65,7 +66,7 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-client-apache:$ktorVersion")
     implementation("io.ktor:ktor-server-metrics-micrometer:$ktorVersion")
-    implementation("com.expediagroup:graphql-kotlin-client:$graphqlVersion")
+    implementation("com.expediagroup:graphql-kotlin-ktor-client:$graphqlVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
     implementation("no.nav.security:token-validation-ktor-v2:$navSecurityVersion")
     implementation("no.nav.tms.token.support:tokendings-exchange:$tmsKtorTokenSupportVersion")
@@ -95,5 +96,6 @@ graphql {
     client {
         packageName = "no.nav.pdl.generated.dto"
         schemaFile = file("$projectDir/src/main/resources/graphql/schema/pdl.graphql")
+        serializer = GraphQLSerializer.KOTLINX
     }
 }

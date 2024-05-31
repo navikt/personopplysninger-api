@@ -1,11 +1,6 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlMatrikkeladresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlPostadresseIFrittFormat
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlPostboksadresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUtenlandskAdresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUtenlandskAdresseIFrittFormat
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlVegadresse
+import no.nav.pdl.generated.dto.hentpersonquery.PostadresseIFrittFormat
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Matrikkeladresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.PostAdresseIFrittFormat
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Postboksadresse
@@ -16,7 +11,8 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
 
 private const val FANT_IKKE_ADRESSE_ERROR_MESSAGE = "Fant ikke adresse som skulle transformeres"
 
-fun transformVegadresse(inbound: PdlVegadresse?, poststed: String?, kommune: String?): Vegadresse {
+
+fun transformVegadresse(inbound: no.nav.pdl.generated.dto.hentpersonquery.Vegadresse?, poststed: String?, kommune: String?): Vegadresse {
     inbound ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return Vegadresse(
         husnummer = inbound.husnummer,
@@ -32,7 +28,7 @@ fun transformVegadresse(inbound: PdlVegadresse?, poststed: String?, kommune: Str
 }
 
 fun transformPostadresseIFrittFormat(
-    inbound: PdlPostadresseIFrittFormat?,
+    inbound: PostadresseIFrittFormat?,
     poststed: String?
 ): PostAdresseIFrittFormat {
     inbound ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
@@ -45,7 +41,7 @@ fun transformPostadresseIFrittFormat(
     )
 }
 
-fun transformPostboksadresse(inbound: PdlPostboksadresse?, poststed: String?): Postboksadresse {
+fun transformPostboksadresse(inbound: no.nav.pdl.generated.dto.hentpersonquery.Postboksadresse?, poststed: String?): Postboksadresse {
     inbound ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return Postboksadresse(
         postbokseier = inbound.postbokseier,
@@ -56,7 +52,7 @@ fun transformPostboksadresse(inbound: PdlPostboksadresse?, poststed: String?): P
 }
 
 fun transformUtenlandskAdresse(
-    inbound: PdlUtenlandskAdresse?,
+    inbound: no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresse?,
     land: String?
 ): UtenlandskAdresse {
     inbound ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
@@ -73,7 +69,7 @@ fun transformUtenlandskAdresse(
 }
 
 fun transformUtenlandskAdresseIFrittFormat(
-    inbound: PdlUtenlandskAdresseIFrittFormat?,
+    inbound: no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresseIFrittFormat?,
     land: String?
 ): UtenlandskAdresseIFrittFormat {
     inbound ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
@@ -89,7 +85,7 @@ fun transformUtenlandskAdresseIFrittFormat(
 }
 
 fun transformMatrikkeladresse(
-    inbound: PdlMatrikkeladresse?,
+    inbound: no.nav.pdl.generated.dto.hentpersonquery.Matrikkeladresse?,
     poststed: String?,
     kommune: String?
 ): Matrikkeladresse {

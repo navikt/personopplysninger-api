@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlGeografiskTilknytning
+import no.nav.pdl.generated.dto.hentpersonquery.GeografiskTilknytning
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyGeografiskTilknytning
 import org.junit.jupiter.api.Test
@@ -15,7 +15,7 @@ class GeografiskTilknytningTransformerTest {
         val inbound = createDummyGeografiskTilknytning()
         val kodeverk = PersonaliaKodeverk().apply { gtLandterm = land }
 
-        val actual = GeografiskTilknytningTransformer.toOutbound(inbound, kodeverk)
+        val actual = GeografiskTilknytningTransformer.toOutbound(inbound!!, kodeverk)
 
         assertEquals(inbound.gtBydel, actual.bydel)
         assertEquals(inbound.gtKommune, actual.kommune)
@@ -24,7 +24,7 @@ class GeografiskTilknytningTransformerTest {
 
     @Test
     fun gittNull_skalFaaNull() {
-        val inbound = PdlGeografiskTilknytning(null, null, null)
+        val inbound = GeografiskTilknytning(null, null, null)
 
         val actual = GeografiskTilknytningTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 

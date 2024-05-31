@@ -9,9 +9,6 @@ query HentPersonQuery($ident: ID!) {
             landskode
             nummer
             prioritet
-            metadata {
-                opplysningsId
-            }
         }
         folkeregisteridentifikator {
             identifikasjonsnummer
@@ -45,7 +42,6 @@ query HentPersonQuery($ident: ID!) {
                 bruksenhetsnummer
                 adressenavn
                 kommunenummer
-                bydelsnummer
                 tilleggsnavn
                 postnummer
             }
@@ -68,16 +64,7 @@ query HentPersonQuery($ident: ID!) {
                 bostedskommune
             }
             metadata {
-                opplysningsId
                 master
-                endringer {
-                    type
-                    registrert
-                    registrertAv
-                    systemkilde
-                    kilde
-                }
-                historisk
             }
         }
         deltBosted {
@@ -90,7 +77,6 @@ query HentPersonQuery($ident: ID!) {
                 bruksenhetsnummer
                 adressenavn
                 kommunenummer
-                bydelsnummer
                 tilleggsnavn
                 postnummer
             }
@@ -113,16 +99,7 @@ query HentPersonQuery($ident: ID!) {
                 bostedskommune
             }
             metadata {
-                opplysningsId
                 master
-                endringer {
-                    type
-                    registrert
-                    registrertAv
-                    systemkilde
-                    kilde
-                }
-                historisk
             }
         }
         kontaktadresse {
@@ -136,7 +113,6 @@ query HentPersonQuery($ident: ID!) {
                 postnummer
             }
             vegadresse {
-                matrikkelId
                 husnummer
                 husbokstav
                 bruksenhetsnummer
@@ -144,12 +120,6 @@ query HentPersonQuery($ident: ID!) {
                 kommunenummer
                 tilleggsnavn
                 postnummer
-                koordinater {
-                    x
-                    y
-                    z
-                    kvalitet
-                }
             }
             postadresseIFrittFormat {
                 adresselinje1
@@ -183,16 +153,7 @@ query HentPersonQuery($ident: ID!) {
                 sekvens
             }
             metadata {
-                opplysningsId
                 master
-                endringer {
-                    type
-                    registrert
-                    registrertAv
-                    systemkilde
-                    kilde
-                }
-                historisk
             }
         }
         oppholdsadresse {
@@ -214,7 +175,6 @@ query HentPersonQuery($ident: ID!) {
                 bruksenhetsnummer
                 adressenavn
                 kommunenummer
-                bydelsnummer
                 tilleggsnavn
                 postnummer
             }
@@ -226,16 +186,7 @@ query HentPersonQuery($ident: ID!) {
             }
             oppholdAnnetSted
             metadata {
-                opplysningsId
                 master
-                endringer {
-                    type
-                    registrert
-                    registrertAv
-                    systemkilde
-                    kilde
-                }
-                historisk
             }
         }
     }

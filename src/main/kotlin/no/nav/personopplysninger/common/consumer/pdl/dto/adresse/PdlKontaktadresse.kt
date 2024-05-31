@@ -5,6 +5,9 @@ import no.nav.personopplysninger.common.consumer.pdl.dto.common.PdlMetadata
 import no.nav.personopplysninger.common.serializer.LocalDateTimeSerializer
 import java.time.LocalDateTime
 
+
+//todo: Må lage extension functions for å hente postnummer osv
+
 @Serializable
 data class PdlKontaktadresse(
     @Serializable(with = LocalDateTimeSerializer::class)

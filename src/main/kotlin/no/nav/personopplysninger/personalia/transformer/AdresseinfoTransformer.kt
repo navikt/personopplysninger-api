@@ -1,14 +1,14 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlData
+import no.nav.pdl.generated.dto.HentPersonQuery
 import no.nav.personopplysninger.common.util.firstOrNull
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.Adresser
 
 object AdresseinfoTransformer {
 
-    fun toOutbound(pdlData: PdlData, kodeverk: PersonaliaKodeverk): Adresser {
-        val kontaktadresse = pdlData.person.kontaktadresse
+    fun toOutbound(pdlData: HentPersonQuery.Result, kodeverk: PersonaliaKodeverk): Adresser {
+        val kontaktadresse = pdlData.person!!.kontaktadresse
         val bostedsadresse = pdlData.person.bostedsadresse.firstOrNull()
         val oppholdsadresse = pdlData.person.oppholdsadresse
         val deltBosted = pdlData.person.deltBosted.firstOrNull()

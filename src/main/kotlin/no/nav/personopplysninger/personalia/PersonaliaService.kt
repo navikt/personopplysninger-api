@@ -1,15 +1,19 @@
 package no.nav.personopplysninger.personalia
 
+import no.nav.pdl.generated.dto.Date
+import no.nav.pdl.generated.dto.HentPersonQuery
+import no.nav.pdl.generated.dto.hentpersonquery.Statsborgerskap
 import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
 import no.nav.personopplysninger.common.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
 import no.nav.personopplysninger.common.consumer.pdl.PdlService
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlData
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlStatsborgerskap
 import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.PersonaliaOgAdresser
+import no.nav.personopplysninger.personalia.extensions.kommunenummer
+import no.nav.personopplysninger.personalia.extensions.landkode
+import no.nav.personopplysninger.personalia.extensions.postnummer
 import no.nav.personopplysninger.personalia.transformer.PersonaliaOgAdresserTransformer
 import java.time.LocalDate
 
@@ -36,11 +40,14 @@ class PersonaliaService(
         return PersonaliaOgAdresserTransformer.toOutbound(pdlPersonInfo, konto, personaliaKV, enhetKontaktInformasjon)
     }
 
-    private suspend fun createPersonaliaKodeverk(inboundPdl: PdlData, inboundKonto: Konto?): PersonaliaKodeverk {
+    private suspend fun createPersonaliaKodeverk(
+        inboundPdl: HentPersonQuery.Result,
+        inboundKonto: Konto?
+    ): PersonaliaKodeverk {
         val pdlPerson = inboundPdl.person
         val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning
 
-        val kontaktadresse = pdlPerson.kontaktadresse
+        val kontaktadresse = pdlPerson!!.kontaktadresse
         val bostedsadresse = pdlPerson.bostedsadresse.firstOrNull()
         val deltBosted = pdlPerson.deltBosted.firstOrNull()
         val oppholdsadresse = pdlPerson.oppholdsadresse
@@ -63,11 +70,15 @@ class PersonaliaService(
         }
     }
 
-    private suspend fun hentGyldigeStatsborgerskap(statsborgerskap: List<PdlStatsborgerskap>): List<String> {
+    private suspend fun hentGyldigeStatsborgerskap(statsborgerskap: List<Statsborgerskap>): List<String> {
         return statsborgerskap
-            .filter { it.land != UKJENT_LAND && it.gyldigTilOgMed?.isBefore(LocalDate.now()) != true } // Filtrer ut ukjent og ugyldige
+            .filter { it.land != UKJENT_LAND && it.gyldigTilOgMed?.isFuture() ?: false } // Filtrer ut ukjent og ugyldige
             .map { kodeverkService.hentStatsborgerskap().term(it.land) }
             .filter { it.isNotEmpty() }
+    }
+
+    private fun Date.isFuture(): Boolean {
+        return LocalDate.parse(this).isAfter(LocalDate.now())
     }
 
     private suspend fun hentAdresseKodeverk(

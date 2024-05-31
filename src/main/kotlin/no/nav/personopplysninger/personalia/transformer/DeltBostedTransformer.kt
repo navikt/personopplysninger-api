@@ -4,10 +4,10 @@ import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingT
 import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.MATRIKKELADRESSE
 import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.UKJENT_BOSTED
 import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.UTLAND_ADRESSE
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlDeltBosted
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Adresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.DeltBosted
+import no.nav.personopplysninger.personalia.extensions.mappingType
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -15,7 +15,7 @@ object DeltBostedTransformer {
 
     private val logger: Logger = LoggerFactory.getLogger(DeltBostedTransformer::class.java)
 
-    fun toOutbound(inbound: PdlDeltBosted, kodeverk: AdresseKodeverk): DeltBosted? {
+    fun toOutbound(inbound: no.nav.pdl.generated.dto.hentpersonquery.DeltBosted, kodeverk: AdresseKodeverk): DeltBosted? {
         val adresse = transformAdresse(inbound, kodeverk)
         return if (adresse != null) {
             DeltBosted(
@@ -30,7 +30,7 @@ object DeltBostedTransformer {
         }
     }
 
-    private fun transformAdresse(inbound: PdlDeltBosted, kodeverk: AdresseKodeverk): Adresse? {
+    private fun transformAdresse(inbound: no.nav.pdl.generated.dto.hentpersonquery.DeltBosted, kodeverk: AdresseKodeverk): Adresse? {
         return when (inbound.mappingType) {
             INNLAND_VEGADRESSE -> transformVegadresse(
                 inbound.vegadresse,
