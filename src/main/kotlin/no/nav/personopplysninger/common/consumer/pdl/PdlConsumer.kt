@@ -1,10 +1,15 @@
 package no.nav.personopplysninger.common.consumer.pdl
 
 import com.expediagroup.graphql.client.ktor.GraphQLKtorClient
+import com.expediagroup.graphql.client.types.GraphQLClientRequest
+import com.expediagroup.graphql.client.types.GraphQLClientResponse
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
+import io.ktor.http.HttpHeaders
 import no.nav.pdl.generated.dto.HentKontaktadresseQuery
 import no.nav.pdl.generated.dto.HentPersonQuery
 import no.nav.pdl.generated.dto.HentTelefonQuery
+import no.nav.personopplysninger.common.util.consumerErrorMessage
 import no.nav.personopplysninger.config.BEARER
 import no.nav.personopplysninger.config.CONSUMER_ID
 import no.nav.personopplysninger.config.Environment
@@ -28,89 +33,55 @@ class PdlConsumer(
     private val tokenDingsService: TokendingsService,
 ) {
     suspend fun hentPerson(token: String, ident: String): HentPersonQuery.Result {
-        val accessToken = tokenDingsService.exchangeToken(token, environment.pdlTargetApp)
+        val request = HentPersonQuery(HentPersonQuery.Variables(ident = ident))
+        val response = exhangeTokenAndExecutePdlRequest(request, token)
 
-        val response = client.execute(HentPersonQuery(HentPersonQuery.Variables(ident = ident))) {
-            header(HEADER_AUTHORIZATION, BEARER + accessToken)
-            header(HEADER_NAV_CALL_ID, UUID.randomUUID())
-            header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-            header(HEADER_TEMA, RETT_PERSONOPPLYSNINGER)
-            header(HEADER_BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_PERSONOPPLYSNINGER)
-        }
-        if (response.errors.isNullOrEmpty()) {
-            /*val warnings = response.extensions?.warnings
-            if (!warnings.isNullOrEmpty()) {
-                logWarnings(warnings)
-            }
-             */
-            return response.data!!
-        } else {
-            /*
-            throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
-             */
-            throw Exception()
-        }
+        return response.data!!
     }
 
     suspend fun hentKontaktadresse(token: String, ident: String): HentKontaktadresseQuery.Result {
-        val accessToken = tokenDingsService.exchangeToken(token, environment.pdlTargetApp)
+        val request = HentKontaktadresseQuery(HentKontaktadresseQuery.Variables(ident = ident))
+        val response = exhangeTokenAndExecutePdlRequest(request, token)
 
-        val response = client.execute(HentKontaktadresseQuery(HentKontaktadresseQuery.Variables(ident = ident))) {
-            header(HEADER_AUTHORIZATION, BEARER + accessToken)
-            header(HEADER_NAV_CALL_ID, UUID.randomUUID())
-            header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-            header(HEADER_TEMA, RETT_PERSONOPPLYSNINGER)
-            header(HEADER_BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_PERSONOPPLYSNINGER)
-        }
-        if (response.errors.isNullOrEmpty()) {
-            /*val warnings = response.extensions?.warnings
-            if (!warnings.isNullOrEmpty()) {
-                logWarnings(warnings)
-            }
-             */
-            return response.data!!
-        } else {
-            /*
-            throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
-             */
-            throw Exception()
-        }
+        return response.data!!
     }
 
     suspend fun hentTelefon(token: String, ident: String): HentTelefonQuery.Result {
+        val request = HentTelefonQuery(HentTelefonQuery.Variables(ident = ident))
+        val response = exhangeTokenAndExecutePdlRequest(request, token)
+
+        return response.data!!
+    }
+
+    private suspend fun <T : Any> exhangeTokenAndExecutePdlRequest(
+        request: GraphQLClientRequest<T>,
+        token: String
+    ): GraphQLClientResponse<T> {
         val accessToken = tokenDingsService.exchangeToken(token, environment.pdlTargetApp)
+        val response = client.execute(request) { pdlHeaders(accessToken) }
+        response.handleWarningsAndErrors()
 
-        val response = client.execute(HentTelefonQuery(HentTelefonQuery.Variables(ident = ident))) {
-            header(HEADER_AUTHORIZATION, BEARER + accessToken)
-            header(HEADER_NAV_CALL_ID, UUID.randomUUID())
-            header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
-            header(HEADER_TEMA, RETT_PERSONOPPLYSNINGER)
-            header(HEADER_BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_PERSONOPPLYSNINGER)
-        }
-        if (response.errors.isNullOrEmpty()) {
-            /*val warnings = response.extensions?.warnings
-            if (!warnings.isNullOrEmpty()) {
-                logWarnings(warnings)
-            }
-             */
-            return response.data!!
-        } else {
-            /*
-            throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
-             */
-            throw Exception()
+        return response
+    }
+
+    private fun HttpRequestBuilder.pdlHeaders(accessToken: String) {
+        HttpHeaders
+        header(HEADER_AUTHORIZATION, BEARER + accessToken)
+        header(HEADER_NAV_CALL_ID, UUID.randomUUID())
+        header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
+        header(HEADER_TEMA, RETT_PERSONOPPLYSNINGER)
+        header(HEADER_BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_PERSONOPPLYSNINGER)
+    }
+
+    private fun <T> GraphQLClientResponse<T>.handleWarningsAndErrors() {
+        extensions?.get(WARNINGS_EXTENSION)?.let { logger.warn(it.toString()) }
+
+        if (!errors.isNullOrEmpty()) {
+            throw RuntimeException(consumerErrorMessage(environment.pdlUrl, errors.toString()))
         }
     }
 
-    /*
-    private fun logWarnings(warnings: List<PdlWarning>) {
-        warnings.forEach {
-            try {
-                logger.warn("Advarsel fra PDL: ${it.message}. Detaljer: ${it.details}.")
-            } catch (e: Exception) {
-                logger.warn("Fikk advarsel fra PDL (deserialisering av advarsel feilet)")
-            }
-        }
+    companion object {
+        private const val WARNINGS_EXTENSION = "warnings"
     }
-    */
 }
