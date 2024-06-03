@@ -18,15 +18,15 @@ import io.ktor.util.date.GMTDate
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
-import no.nav.personopplysninger.common.consumer.kontoregister.exception.KontoregisterValidationException
-import no.nav.personopplysninger.common.util.getAuthTokenFromCall
-import no.nav.personopplysninger.common.util.getFnrFromToken
 import no.nav.personopplysninger.config.IDPorten
 import no.nav.personopplysninger.config.IDPortenException
 import no.nav.personopplysninger.config.MetricsCollector
 import no.nav.personopplysninger.config.Pkce
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
+import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.consumer.kontoregister.exception.KontoregisterValidationException
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Telefonnummer
+import no.nav.personopplysninger.util.getAuthTokenFromCall
+import no.nav.personopplysninger.util.getFnrFromToken
 import org.slf4j.LoggerFactory
 import java.util.*
 

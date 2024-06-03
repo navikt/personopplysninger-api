@@ -1,11 +1,11 @@
-package no.nav.personopplysninger.common.consumer.kodeverk
+package no.nav.personopplysninger.consumer.kodeverk
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import no.nav.personopplysninger.common.consumer.kodeverk.dto.Kodeverk
+import no.nav.personopplysninger.consumer.kodeverk.dto.Kodeverk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -14,7 +14,7 @@ import kotlin.test.assertNotEquals
 class KodeverkServiceTest {
 
     private val cache: Cache<String, Kodeverk> = Caffeine.newBuilder().build()
-    private val kodeverkConsumer: KodeverkConsumer = mockk()
+    private val kodeverkConsumer: no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer = mockk()
     private val kodeverkService = KodeverkService(cache, kodeverkConsumer)
 
     @BeforeEach

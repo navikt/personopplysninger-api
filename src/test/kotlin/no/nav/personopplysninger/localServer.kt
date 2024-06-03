@@ -4,11 +4,11 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.mockk.coEvery
 import io.mockk.mockkStatic
-import no.nav.personopplysninger.common.util.getAuthTokenFromCall
-import no.nav.personopplysninger.common.util.getFnrFromToken
 import no.nav.personopplysninger.config.TestApplicationContext
 import no.nav.personopplysninger.config.setupMockedClient
 import no.nav.personopplysninger.config.testModule
+import no.nav.personopplysninger.util.getAuthTokenFromCall
+import no.nav.personopplysninger.util.getFnrFromToken
 
 fun main() {
     embeddedServer(Netty, port = 8080, watchPaths = listOf("classes")) {

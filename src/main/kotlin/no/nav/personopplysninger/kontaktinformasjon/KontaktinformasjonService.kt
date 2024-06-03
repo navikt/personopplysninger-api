@@ -1,8 +1,8 @@
 package no.nav.personopplysninger.kontaktinformasjon
 
-import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
-import no.nav.personopplysninger.kontaktinformasjon.consumer.KontaktinfoConsumer
-import no.nav.personopplysninger.kontaktinformasjon.dto.outbound.Kontaktinformasjon
+import no.nav.personopplysninger.consumer.digdirkrr.KontaktinfoConsumer
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkService
+import no.nav.personopplysninger.kontaktinformasjon.dto.Kontaktinformasjon
 import no.nav.personopplysninger.kontaktinformasjon.transformer.KontaktinformasjonTransformer
 
 class KontaktinformasjonService(

@@ -1,9 +1,9 @@
 package no.nav.personopplysninger.personalia.transformer
 
 import no.nav.pdl.generated.dto.HentPersonQuery
-import no.nav.personopplysninger.common.util.firstOrNull
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.Adresser
+import no.nav.personopplysninger.util.firstOrNull
 
 object AdresseinfoTransformer {
 

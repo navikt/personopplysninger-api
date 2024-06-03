@@ -15,10 +15,10 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.config.ApplicationConfig
 import io.ktor.server.testing.ApplicationTestBuilder
 import io.ktor.server.testing.testApplication
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
 import no.nav.personopplysninger.config.TestApplicationContext
 import no.nav.personopplysninger.config.testModule
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
+import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.consumer.pdlmottak.dto.Telefonnummer
 import no.nav.personopplysninger.testutils.createAccessToken
 
 open class IntegrationTest {

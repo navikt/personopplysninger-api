@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.personalia.dto.outbound
 
 import kotlinx.serialization.Serializable
-import no.nav.personopplysninger.personalia.consumer.dto.Norg2EnhetKontaktinfo
+import no.nav.personopplysninger.consumer.norg2.dto.Norg2EnhetKontaktinfo
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Bostedsadresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.DeltBosted
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Kontaktadresse

@@ -2,7 +2,7 @@ package no.nav.personopplysninger.testutils
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.Kontonummer
 import no.nav.personopplysninger.endreopplysninger.EndreKontonummerState
 
 const val STATE = "state"

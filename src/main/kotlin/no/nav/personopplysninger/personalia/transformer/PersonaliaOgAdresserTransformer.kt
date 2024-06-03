@@ -1,8 +1,8 @@
 package no.nav.personopplysninger.personalia.transformer
 
 import no.nav.pdl.generated.dto.HentPersonQuery
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
-import no.nav.personopplysninger.personalia.consumer.dto.Norg2EnhetKontaktinfo
+import no.nav.personopplysninger.consumer.kontoregister.dto.outbound.Konto
+import no.nav.personopplysninger.consumer.norg2.dto.Norg2EnhetKontaktinfo
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.PersonaliaOgAdresser
 

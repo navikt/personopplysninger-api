@@ -1,8 +1,8 @@
 package no.nav.personopplysninger.medl
 
-import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
-import no.nav.personopplysninger.medl.consumer.MedlConsumer
-import no.nav.personopplysninger.medl.dto.Medlemskapsunntak
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkService
+import no.nav.personopplysninger.consumer.medl.MedlConsumer
+import no.nav.personopplysninger.consumer.medl.dto.Medlemskapsunntak
 
 class MedlService(
     private val medlConsumer: MedlConsumer,
