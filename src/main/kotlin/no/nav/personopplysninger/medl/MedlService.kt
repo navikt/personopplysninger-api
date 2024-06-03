@@ -1,14 +1,14 @@
 package no.nav.personopplysninger.medl
 
-import no.nav.personopplysninger.consumer.kodeverk.KodeverkService
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.consumer.medl.MedlConsumer
 import no.nav.personopplysninger.consumer.medl.dto.Medlemskapsunntak
 
 class MedlService(
     private val medlConsumer: MedlConsumer,
-    private val kodeverkService: KodeverkService
+    private val kodeverkConsumer: KodeverkConsumer
 ) {
-    suspend fun hentMeldemskap(token: String, fnr: String): Medlemskapsunntak {
+    suspend fun hentMedlemskap(token: String, fnr: String): Medlemskapsunntak {
         val perioder = medlConsumer.hentMedlemskap(token, fnr)
         return hentMedlemskapKodeverk(perioder)
     }
@@ -17,13 +17,16 @@ class MedlService(
         val perioderMedKodeverk = inbound.apply {
             perioder = inbound.perioder.map { periode ->
                 periode.apply {
-                    hjemmel = kodeverkService.hentGrunnlagMedl().tekst(periode.hjemmel)
-                    trygdedekning = kodeverkService.hentDekningMedl().tekst(periode.trygdedekning)
-                    lovvalgsland = kodeverkService.hentLandKoder().term(periode.lovvalgsland)
+                    hjemmel = kodeverkConsumer.hentGrunnlagMedl().tekst(periode.hjemmel)
+                    trygdedekning = periode.trygdedekning?.let { kodeverkConsumer.hentDekningMedl().tekst(it) }
+                    lovvalgsland = periode.lovvalgsland?.let { kodeverkConsumer.hentLandKoder().term(it) }
                     studieinformasjon = periode.studieinformasjon?.apply {
-                        statsborgerland =
-                            kodeverkService.hentLandKoder().term(periode.studieinformasjon?.statsborgerland)
-                        studieland = kodeverkService.hentLandKoder().term(periode.studieinformasjon?.studieland)
+                        statsborgerland = periode.studieinformasjon!!.statsborgerland.let {
+                            kodeverkConsumer.hentLandKoder().term(it)
+                        }
+                        studieland = periode.studieinformasjon?.studieland?.let {
+                            kodeverkConsumer.hentLandKoder().term(it)
+                        }
                     }
                 }
             }

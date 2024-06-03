@@ -17,7 +17,7 @@ fun Route.medl(medlService: MedlService) {
             val authToken = getAuthTokenFromCall(call)
             val fnr = getFnrFromToken(authToken)
 
-            val resp = medlService.hentMeldemskap(authToken, fnr)
+            val resp = medlService.hentMedlemskap(authToken, fnr)
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved henting av medlemskap", e)

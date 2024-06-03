@@ -4,11 +4,11 @@ import no.nav.personopplysninger.consumer.digdirkrr.inbound.DigitalKontaktinform
 import no.nav.personopplysninger.kontaktinformasjon.dto.Kontaktinformasjon
 
 object KontaktinformasjonTransformer {
-    fun toOutbound(inbound: DigitalKontaktinformasjon, spraakTerm: String) = Kontaktinformasjon(
+    fun toOutbound(inbound: DigitalKontaktinformasjon, spraakTerm: String?) = Kontaktinformasjon(
         epostadresse = inbound.epostadresse,
         kanVarsles = inbound.kanVarsles,
         mobiltelefonnummer = inbound.mobiltelefonnummer,
         reservert = inbound.reservert,
-        spraak = if (spraakTerm == "Norsk") "Bokmål" else spraakTerm
+        spraak = spraakTerm?.let { if (it == "Norsk") "Bokmål" else it }
     )
 }

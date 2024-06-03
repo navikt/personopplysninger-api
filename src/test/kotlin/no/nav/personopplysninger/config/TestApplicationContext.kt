@@ -1,8 +1,6 @@
 package no.nav.personopplysninger.config
 
 import com.expediagroup.graphql.client.ktor.GraphQLKtorClient
-import com.github.benmanes.caffeine.cache.Cache
-import com.github.benmanes.caffeine.cache.Caffeine
 import io.ktor.client.HttpClient
 import io.ktor.http.Url
 import io.mockk.coEvery
@@ -11,8 +9,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import no.nav.personopplysninger.consumer.digdirkrr.KontaktinfoConsumer
 import no.nav.personopplysninger.consumer.inst2.InstitusjonConsumer
-import no.nav.personopplysninger.consumer.kodeverk.KodeverkService
-import no.nav.personopplysninger.consumer.kodeverk.dto.Kodeverk
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.consumer.medl.MedlConsumer
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
@@ -29,7 +25,6 @@ import no.nav.personopplysninger.testutils.createAccessToken
 import no.nav.personopplysninger.testutils.endreKontonummerState
 import org.apache.kafka.clients.producer.MockProducer
 import java.net.URI
-import java.util.concurrent.TimeUnit
 
 class TestApplicationContext(httpClient: HttpClient) {
 
@@ -78,27 +73,19 @@ class TestApplicationContext(httpClient: HttpClient) {
     val pdlConsumer = PdlConsumer(GraphQLKtorClient(URI(env.pdlUrl).toURL(), httpClient), env, tokendingsService)
     val pdlMottakConsumer = PdlMottakConsumer(httpClient, env, tokendingsService)
 
-    val kodeverkService = KodeverkService(setupKodeverkCache(env), kodeverkConsumer)
     val pdlService = PdlService(pdlConsumer)
     val endreOpplysningerService =
         EndreOpplysningerService(
             pdlMottakConsumer,
-            kodeverkService,
+            kodeverkConsumer,
             kontoregisterConsumer,
             pdlService,
             hendelseProducer
         )
     val institusjonService = InstitusjonService(institusjonConsumer)
-    val medlService = MedlService(medlConsumer, kodeverkService)
-    val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkService)
-    val personaliaService = PersonaliaService(kodeverkService, norg2Consumer, kontoregisterConsumer, pdlService)
-
-    private fun setupKodeverkCache(environment: Environment): Cache<String, Kodeverk> {
-        return Caffeine.newBuilder()
-            .maximumSize(environment.subjectNameCacheThreshold)
-            .expireAfterWrite(environment.subjectNameCacheExpiryMinutes, TimeUnit.MINUTES)
-            .build()
-    }
+    val medlService = MedlService(medlConsumer, kodeverkConsumer)
+    val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkConsumer)
+    val personaliaService = PersonaliaService(kodeverkConsumer, norg2Consumer, kontoregisterConsumer, pdlService)
 
     private fun mockIdporten(): IDPorten {
         val idportenMock: IDPorten = mockk()

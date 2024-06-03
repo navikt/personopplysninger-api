@@ -21,8 +21,8 @@ import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_PERSONIDENT
-import no.nav.personopplysninger.consumer.pdlmottak.dto.Personopplysning
-import no.nav.personopplysninger.endreopplysninger.dto.Endring
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Personopplysning
+import no.nav.personopplysninger.consumer.pdlmottak.dto.outbound.Endring
 import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.LoggerFactory

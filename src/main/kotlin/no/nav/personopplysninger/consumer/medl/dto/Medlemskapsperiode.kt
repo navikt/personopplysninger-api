@@ -8,12 +8,12 @@ import java.time.LocalDate
 data class Medlemskapsperiode(
     @Serializable(with = LocalDateSerializer::class)
     val fraOgMed: LocalDate,
-    var hjemmel: String,
-    val kilde: String,
-    var lovvalgsland: String? = null,
-    val medlem: Boolean,
-    var studieinformasjon: Studieinformasjon? = null,
     @Serializable(with = LocalDateSerializer::class)
-    val tilOgMed: LocalDate? = null,
-    var trygdedekning: String? = null
+    val tilOgMed: LocalDate,
+    val medlem: Boolean,
+    var hjemmel: String,
+    var trygdedekning: String? = null,
+    var lovvalgsland: String? = null,
+    val kilde: String,
+    var studieinformasjon: Studieinformasjon? = null
 )

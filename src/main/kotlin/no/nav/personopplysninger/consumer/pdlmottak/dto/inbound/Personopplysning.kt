@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.consumer.pdlmottak.dto
+package no.nav.personopplysninger.consumer.pdlmottak.dto.inbound
 
 import kotlinx.serialization.Serializable
 

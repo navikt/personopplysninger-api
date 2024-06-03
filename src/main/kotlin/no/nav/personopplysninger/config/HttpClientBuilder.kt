@@ -4,6 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.apache.Apache
 import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
@@ -11,8 +12,11 @@ import io.ktor.serialization.kotlinx.json.json
 
 object HttpClientBuilder {
 
-    fun build(): HttpClient {
+    fun build(cached: Boolean = false): HttpClient {
         return HttpClient(Apache) {
+            if (cached) {
+                install(HttpCache)
+            }
             defaultRequest {
                 header("Nav-Consumer-Id", CONSUMER_ID)
             }
