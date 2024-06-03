@@ -25,6 +25,8 @@ class PdlConsumer(
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,
 ) {
+    private val logger = LoggerFactory.getLogger(PdlConsumer::class.java)
+
     suspend fun hentPerson(token: String, ident: String): HentPersonQuery.Result {
         val request = HentPersonQuery(HentPersonQuery.Variables(ident = ident))
         val response = exhangeTokenAndExecutePdlRequest(request, token)
@@ -75,8 +77,6 @@ class PdlConsumer(
     }
 
     companion object {
-        private val logger = LoggerFactory.getLogger(PdlConsumer::class.java)
-
         private const val HEADER_TEMA = "tema"
         private const val HEADER_BEHANDLINGSNUMMER = "behandlingsnummer"
         private const val RETT_PERSONOPPLYSNINGER = "RPO"
