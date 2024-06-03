@@ -20,13 +20,6 @@ import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.LoggerFactory
 import java.util.*
 
-private const val HEADER_TEMA = "tema"
-private const val HEADER_BEHANDLINGSNUMMER = "behandlingsnummer"
-private const val RETT_PERSONOPPLYSNINGER = "RPO"
-private const val BEHANDLINGSNUMMER_PERSONOPPLYSNINGER = "B258"
-
-private val logger = LoggerFactory.getLogger(PdlConsumer::class.java)
-
 class PdlConsumer(
     private val client: GraphQLKtorClient,
     private val environment: Environment,
@@ -82,6 +75,13 @@ class PdlConsumer(
     }
 
     companion object {
+        private val logger = LoggerFactory.getLogger(PdlConsumer::class.java)
+
+        private const val HEADER_TEMA = "tema"
+        private const val HEADER_BEHANDLINGSNUMMER = "behandlingsnummer"
+        private const val RETT_PERSONOPPLYSNINGER = "RPO"
+        private const val BEHANDLINGSNUMMER_PERSONOPPLYSNINGER = "B258"
+
         private const val WARNINGS_EXTENSION = "warnings"
     }
 }
