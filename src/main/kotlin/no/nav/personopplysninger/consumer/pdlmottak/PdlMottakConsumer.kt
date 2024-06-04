@@ -42,7 +42,7 @@ class PdlMottakConsumer(
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,
 ) {
-    private val log = LoggerFactory.getLogger(PdlMottakConsumer::class.java)
+    private val logger = LoggerFactory.getLogger(PdlMottakConsumer::class.java)
 
     suspend fun endreTelefonnummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
         val payload = endreTelefonnummerPayload(fnr, telefonnummer)
@@ -83,12 +83,12 @@ class PdlMottakConsumer(
     private suspend fun readResponseAndPollStatus(accessToken: String, response: HttpResponse): Endring {
         return when {
             response.status == HttpStatusCode.Locked -> {
-                log.info("Oppdatering avvist pga status pending.")
+                logger.info("Oppdatering avvist pga status pending.")
                 Endring(statusType = "REJECTED", error = response.body())
             }
 
             response.status == HttpStatusCode.UnprocessableEntity -> {
-                log.error("Fikk valideringsfeil: ${response.bodyAsText()}")
+                logger.error("Fikk valideringsfeil: ${response.bodyAsText()}")
                 Endring(statusType = "ERROR", error = response.body())
             }
 
@@ -125,13 +125,13 @@ class PdlMottakConsumer(
                 }
             endring = response.body<List<Endring>>().first()
         } while (++i < MAX_POLLS && endring.isPending())
-        log.info("Antall polls for status: $i")
+        logger.info("Antall polls for status: $i")
 
         if (!endring.confirmedOk()) {
             if (endring.hasTpsError()) {
                 endring.addValidationError()
             } else {
-                log.warn("Polling timet ut før endring ble bekreftet OK av pdl-mottak")
+                logger.warn("Polling timet ut før endring ble bekreftet OK av pdl-mottak")
             }
         }
         return endring
