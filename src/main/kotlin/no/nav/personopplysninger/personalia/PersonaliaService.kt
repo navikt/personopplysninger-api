@@ -43,23 +43,23 @@ class PersonaliaService(
         inboundPdl: HentPersonQuery.Result,
         inboundKonto: Konto?
     ): PersonaliaKodeverk {
-        val pdlPerson = inboundPdl.person!!
-        val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning
+        val person = inboundPdl.person!!
+        val geografiskTilknytning = inboundPdl.geografiskTilknytning
 
-        val foedsel = pdlPerson.foedsel.firstOrNull()
+        val foedsel = person.foedsel.firstOrNull()
 
-        val kontaktadresse = pdlPerson.kontaktadresse
-        val bostedsadresse = pdlPerson.bostedsadresse.firstOrNull()
-        val deltBosted = pdlPerson.deltBosted.firstOrNull()
-        val oppholdsadresse = pdlPerson.oppholdsadresse
+        val kontaktadresse = person.kontaktadresse
+        val bostedsadresse = person.bostedsadresse.firstOrNull()
+        val deltBosted = person.deltBosted.firstOrNull()
+        val oppholdsadresse = person.oppholdsadresse
 
         return PersonaliaKodeverk(
-            foedekommuneterm = getKommuneKodeverksTerm(foedsel?.foedekommune),
-            foedelandterm = foedsel?.foedeland?.let { kodeverkConsumer.hentLandKoder().term(it) },
-            gtLandterm = pdlGeografiskTilknytning?.gtLand?.let { kodeverkConsumer.hentLandKoder().term(it) },
-            statsborgerskaptermer = hentGyldigeStatsborgerskap(pdlPerson.statsborgerskap),
-            utenlandskbanklandterm = inboundKonto?.utenlandskKontoInfo?.let { hentLandKodeterm(it.bankLandkode) },
-            utenlandskbankvalutaterm = inboundKonto?.utenlandskKontoInfo?.let { hentValutaKodeterm(it.valutakode) },
+            foedekommuneterm = hentKommuneKodeverksTerm(foedsel?.foedekommune),
+            foedelandterm = hentLandKodeverksTerm(foedsel?.foedeland),
+            gtLandterm = hentLandKodeverksTerm(geografiskTilknytning?.gtLand),
+            statsborgerskaptermer = hentGyldigeStatsborgerskap(person.statsborgerskap),
+            utenlandskbanklandterm = inboundKonto?.utenlandskKontoInfo?.let { hentLandKontoregisterKodeterm(it.bankLandkode) },
+            utenlandskbankvalutaterm = inboundKonto?.utenlandskKontoInfo?.let { hentValutaKontoregisterKodeterm(it.valutakode) },
             kontaktadresseKodeverk = kontaktadresse.map {
                 hentAdresseKodeverk(
                     it.postnummer,
@@ -106,11 +106,15 @@ class PersonaliaService(
         return AdresseKodeverk(
             poststed = postnummer?.let { kodeverkConsumer.hentPostnummer().term(it) },
             land = landkode?.let { kodeverkConsumer.hentLandKoder().term(it) },
-            kommune = getKommuneKodeverksTerm(kommunenummer),
+            kommune = hentKommuneKodeverksTerm(kommunenummer),
         )
     }
 
-    private suspend fun getKommuneKodeverksTerm(inbound: String?): String? {
+    private suspend fun hentLandKodeverksTerm(inbound: String?): String? {
+        return inbound?.let { kodeverkConsumer.hentLandKoder().term(it) }
+    }
+
+    private suspend fun hentKommuneKodeverksTerm(inbound: String?): String? {
         return if ("0000" == inbound) {
             ""
         } else {
@@ -118,12 +122,12 @@ class PersonaliaService(
         }
     }
 
-    private suspend fun hentValutaKodeterm(kode: String?): String? {
-        return kontoregisterConsumer.hentValutakoder().find { valuta -> kode == valuta.kode }?.tekst
+    private suspend fun hentValutaKontoregisterKodeterm(kode: String?): String? {
+        return kontoregisterConsumer.hentValutakoder().find { it.kode == kode }?.tekst
     }
 
-    private suspend fun hentLandKodeterm(kode: String?): String? {
-        return kontoregisterConsumer.hentLandkoder().find { land -> kode == land.kode }?.tekst
+    private suspend fun hentLandKontoregisterKodeterm(kode: String?): String? {
+        return kontoregisterConsumer.hentLandkoder().find { it.kode == kode }?.tekst
     }
 
     companion object {
