@@ -13,10 +13,11 @@ object PersonaliaOgAdresserTransformer {
         konto: Konto?,
         kodeverk: PersonaliaKodeverk,
         enhetKontaktInformasjon: Norg2EnhetKontaktinfo?
-    ) =
-        PersonaliaOgAdresser(
+    ): PersonaliaOgAdresser {
+        return PersonaliaOgAdresser(
             personalia = PersoninfoTransformer.toOutbound(pdlData.person!!, konto, kodeverk),
             adresser = AdresseinfoTransformer.toOutbound(pdlData, kodeverk),
             enhetKontaktInformasjon = enhetKontaktInformasjon
         )
+    }
 }

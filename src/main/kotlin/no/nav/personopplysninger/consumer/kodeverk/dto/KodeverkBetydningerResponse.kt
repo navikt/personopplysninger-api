@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory
 
 @Serializable
 class KodeverkBetydningerResponse {
-    private val logger = LoggerFactory.getLogger(KodeverkBetydningerResponse::class.java)
-
     val betydninger: Map<String, List<Betydning>> = emptyMap()
 
     fun tekst(key: String): String {
@@ -17,5 +15,9 @@ class KodeverkBetydningerResponse {
     fun term(key: String): String {
         return betydninger[key]?.first()?.term()
             ?: key.also { logger.warn("Feil ved utledning av kodeverksterm for $key", Throwable()) }
+    }
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(KodeverkBetydningerResponse::class.java)
     }
 }

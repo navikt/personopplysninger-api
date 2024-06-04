@@ -9,12 +9,17 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdres
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresseIFrittFormat
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
 import org.junit.jupiter.api.Assertions.assertEquals
+import no.nav.pdl.generated.dto.hentpersonquery.Matrikkeladresse as PdlMatrikkeladresse
+import no.nav.pdl.generated.dto.hentpersonquery.Postboksadresse as PdlPostboksadresse
+import no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresse as PdlUtenlandskAdresse
+import no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresseIFrittFormat as PdlUtenlandskAdresseIFrittFormat
+import no.nav.pdl.generated.dto.hentpersonquery.Vegadresse as PdlVegadresse
 
 fun assertVegadresseEquals(
     vegadresse: Vegadresse,
     poststed: String?,
     kommune: String?,
-    inbound: no.nav.pdl.generated.dto.hentpersonquery.Vegadresse?
+    inbound: PdlVegadresse?
 ) {
     assertEquals(vegadresse.husnummer, inbound?.husnummer)
     assertEquals(vegadresse.husbokstav, inbound?.husbokstav)
@@ -43,7 +48,7 @@ fun assertPostAdresseIFrittFormatEquals(
 fun assertPostboksadresseEquals(
     postboksadresse: Postboksadresse,
     poststed: String?,
-    inbound: no.nav.pdl.generated.dto.hentpersonquery.Postboksadresse?
+    inbound: PdlPostboksadresse?
 ) {
     assertEquals(postboksadresse.postbokseier, inbound?.postbokseier)
     assertEquals(postboksadresse.postboks, inbound?.postboks)
@@ -54,7 +59,7 @@ fun assertPostboksadresseEquals(
 fun assertUtenlandskAdresseEquals(
     utenlandskAdresse: UtenlandskAdresse,
     land: String?,
-    inbound: no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresse?
+    inbound: PdlUtenlandskAdresse?
 ) {
     assertEquals(utenlandskAdresse.adressenavnNummer, inbound?.adressenavnNummer)
     assertEquals(utenlandskAdresse.bygningEtasjeLeilighet, inbound?.bygningEtasjeLeilighet)
@@ -69,7 +74,7 @@ fun assertUtenlandskAdresseEquals(
 fun assertUtenlandskAdresseIFrittFormatEquals(
     utenlandskAdresseIFrittFormat: UtenlandskAdresseIFrittFormat,
     land: String?,
-    inbound: no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresseIFrittFormat?
+    inbound: PdlUtenlandskAdresseIFrittFormat?
 ) {
     assertEquals(utenlandskAdresseIFrittFormat.adresselinje1, inbound?.adresselinje1)
     assertEquals(utenlandskAdresseIFrittFormat.adresselinje2, inbound?.adresselinje2)
@@ -87,7 +92,7 @@ fun assertMatrikkeladresseEquals(
     matrikkeladresse: Matrikkeladresse,
     poststed: String?,
     kommune: String?,
-    inbound: no.nav.pdl.generated.dto.hentpersonquery.Matrikkeladresse?
+    inbound: PdlMatrikkeladresse?
 ) {
     assertEquals(matrikkeladresse.bruksenhetsnummer, inbound?.bruksenhetsnummer)
     assertEquals(matrikkeladresse.tilleggsnavn, inbound?.tilleggsnavn)
