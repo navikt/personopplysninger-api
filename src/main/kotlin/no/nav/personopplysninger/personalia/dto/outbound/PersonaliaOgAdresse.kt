@@ -23,7 +23,7 @@ data class Personalia(
     val kontonr: String? = null,
     val utenlandskbank: UtenlandskBankInfo? = null,
     val tlfnr: Tlfnr? = null,
-    val statsborgerskap: List<String> = arrayListOf(),
+    val statsborgerskap: List<String> = emptyList(),
     val foedested: String? = null,
     val sivilstand: String? = null,
     val kjoenn: String? = null
@@ -32,8 +32,8 @@ data class Personalia(
 @Serializable
 data class Adresser(
     val geografiskTilknytning: GeografiskTilknytning? = null,
-    val kontaktadresser: List<Kontaktadresse> = arrayListOf(),
+    val kontaktadresser: List<Kontaktadresse> = emptyList(),
     val bostedsadresse: Bostedsadresse? = null,
-    val oppholdsadresser: List<Oppholdsadresse> = arrayListOf(),
+    val oppholdsadresser: List<Oppholdsadresse> = emptyList(),
     val deltBosted: DeltBosted? = null,
 )

@@ -2,38 +2,45 @@ package no.nav.personopplysninger.consumer.pdlmottak.dto.inbound
 
 import kotlinx.serialization.Serializable
 
-private const val TELEFONNUMMER = "TELEFONNUMMER"
-private const val KONTAKTADRESSE = "KONTAKTADRESSE"
-
 @Serializable
-class Personopplysning(
+data class Personopplysning(
     val ident: String,
     val endringstype: EndringsType,
     val opplysningstype: String,
     val endringsmelding: Endringsmelding,
     val opplysningsId: String? = null
 ) {
-    fun asSingleEndring(): PersonEndring {
-        return PersonEndring(personopplysninger = listOf(this))
+    companion object {
+        private const val TELEFONNUMMER = "TELEFONNUMMER"
+        private const val KONTAKTADRESSE = "KONTAKTADRESSE"
+
+        fun slettTelefonnummerPayload(ident: String, opplysningsId: String): Personopplysning {
+            return Personopplysning(
+                ident = ident,
+                endringstype = EndringsType.OPPHOER,
+                opplysningstype = TELEFONNUMMER,
+                endringsmelding = OpphoerEndringsMelding(),
+                opplysningsId = opplysningsId
+            )
+        }
+
+        fun endreTelefonnummerPayload(ident: String, endringsmelding: Telefonnummer): Personopplysning {
+            return Personopplysning(
+                ident = ident,
+                endringstype = EndringsType.OPPRETT,
+                opplysningstype = TELEFONNUMMER,
+                endringsmelding = endringsmelding
+            )
+        }
+
+        fun slettKontaktadressePayload(ident: String, opplysningsId: String): Personopplysning {
+            return Personopplysning(
+                ident = ident,
+                endringstype = EndringsType.OPPHOER,
+                opplysningstype = KONTAKTADRESSE,
+                endringsmelding = OpphoerEndringsMelding(),
+                opplysningsId = opplysningsId
+            )
+        }
     }
-}
-
-fun slettNummerPayload(ident: String, opplysningsId: String): Personopplysning {
-    return Personopplysning(
-        ident,
-        EndringsType.OPPHOER, TELEFONNUMMER,
-        OpphoerEndringsMelding(), opplysningsId
-    )
-}
-
-fun endreNummerPayload(ident: String, endringsMelding: Telefonnummer): Personopplysning {
-    return Personopplysning(ident, EndringsType.OPPRETT, TELEFONNUMMER, endringsMelding)
-}
-
-fun slettKontaktadressePayload(ident: String, opplysningsId: String): Personopplysning {
-    return Personopplysning(
-        ident,
-        EndringsType.OPPHOER, KONTAKTADRESSE,
-        OpphoerEndringsMelding(), opplysningsId
-    )
 }

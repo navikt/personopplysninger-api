@@ -11,9 +11,9 @@ data class Medlemskapsperiode(
     @Serializable(with = LocalDateSerializer::class)
     val tilOgMed: LocalDate,
     val medlem: Boolean,
-    var hjemmel: String,
-    var trygdedekning: String? = null,
-    var lovvalgsland: String? = null,
+    val hjemmel: String,
+    val trygdedekning: String? = null,
+    val lovvalgsland: String? = null,
     val kilde: String,
-    var studieinformasjon: Studieinformasjon? = null
+    val studieinformasjon: Studieinformasjon? = null
 )

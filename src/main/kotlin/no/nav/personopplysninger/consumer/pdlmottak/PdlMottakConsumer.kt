@@ -21,7 +21,12 @@ import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_PERSONIDENT
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.PersonEndring
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Personopplysning
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Personopplysning.Companion.endreTelefonnummerPayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Personopplysning.Companion.slettKontaktadressePayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Personopplysning.Companion.slettTelefonnummerPayload
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.consumer.pdlmottak.dto.outbound.Endring
 import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
@@ -39,15 +44,22 @@ class PdlMottakConsumer(
 ) {
     private val log = LoggerFactory.getLogger(PdlMottakConsumer::class.java)
 
-    suspend fun endreTelefonnummer(token: String, fnr: String, endreTelefon: Personopplysning): Endring {
-        return sendPdlEndring(token, endreTelefon, fnr)
+    suspend fun endreTelefonnummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
+        val payload = endreTelefonnummerPayload(fnr, telefonnummer)
+        return sendPdlEndring(token, payload, fnr)
     }
 
-    suspend fun slettPersonopplysning(token: String, fnr: String, opphoerPersonopplysning: Personopplysning): Endring {
-        return sendPdlEndring(token, opphoerPersonopplysning, fnr)
+    suspend fun slettTelefonnummer(token: String, fnr: String, opplysningsId: String): Endring {
+        val payload = slettTelefonnummerPayload(fnr, opplysningsId)
+        return sendPdlEndring(token, payload, fnr)
     }
 
-    private suspend fun sendPdlEndring(token: String, entitetSomEndres: Personopplysning, fnr: String): Endring {
+    suspend fun slettKontaktadresse(token: String, fnr: String, opplysningsId: String): Endring {
+        val payload = slettKontaktadressePayload(fnr, opplysningsId)
+        return sendPdlEndring(token, payload, fnr)
+    }
+
+    private suspend fun sendPdlEndring(token: String, payload: Personopplysning, fnr: String): Endring {
         val accessToken = tokenDingsService.exchangeToken(token, environment.pdlMottakTargetApp)
         val endpoint = environment.pdlMottakUrl.plus(URL_ENDRINGER)
 
@@ -58,7 +70,7 @@ class PdlMottakConsumer(
                 header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                 header(HEADER_NAV_PERSONIDENT, fnr)
                 contentType(ContentType.Application.Json)
-                setBody(entitetSomEndres.asSingleEndring())
+                setBody(PersonEndring(payload))
             }
 
         return try {
@@ -74,15 +86,18 @@ class PdlMottakConsumer(
                 log.info("Oppdatering avvist pga status pending.")
                 Endring(statusType = "REJECTED", error = response.body())
             }
+
             response.status == HttpStatusCode.UnprocessableEntity -> {
                 log.error("Fikk valideringsfeil: ${response.bodyAsText()}")
                 Endring(statusType = "ERROR", error = response.body())
             }
+
             !response.status.isSuccess() -> {
                 throw RuntimeException(
                     consumerErrorMessage(environment.pdlMottakUrl, response.status.value, response.body())
                 )
             }
+
             else -> {
                 val location = response.headers[HttpHeaders.Location]
                     ?: throw RuntimeException("Fant ikke Location-header i respons fra Pdl-mottak")

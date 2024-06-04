@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Studieinformasjon(
-    var statsborgerland: String,
-    var studieland: String?,
+    val statsborgerland: String,
+    val studieland: String?,
 )

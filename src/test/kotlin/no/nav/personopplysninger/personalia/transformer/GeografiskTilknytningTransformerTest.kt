@@ -13,7 +13,7 @@ class GeografiskTilknytningTransformerTest {
     fun gittGeografiskTilknytning_skalFaaGeografiskTilknytning() {
         val land = "land"
         val inbound = createDummyGeografiskTilknytning()
-        val kodeverk = PersonaliaKodeverk().apply { gtLandterm = land }
+        val kodeverk = PersonaliaKodeverk(gtLandterm = land)
 
         val actual = GeografiskTilknytningTransformer.toOutbound(inbound!!, kodeverk)
 

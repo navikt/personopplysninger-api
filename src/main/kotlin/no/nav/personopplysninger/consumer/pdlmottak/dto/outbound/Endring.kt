@@ -17,9 +17,8 @@ data class Endring(
     }
 
     fun addValidationError() {
-        val validationError = Error(message = getTpsBeskrivelse())
         this.statusType = "ERROR"
-        this.error = validationError
+        this.error = Error(message = getTpsBeskrivelse())
     }
 
     fun hasTpsError(): Boolean {

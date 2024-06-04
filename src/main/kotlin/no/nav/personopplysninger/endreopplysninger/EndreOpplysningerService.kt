@@ -10,9 +10,6 @@ import no.nav.personopplysninger.consumer.kontoregister.dto.response.Valutakode
 import no.nav.personopplysninger.consumer.pdl.PdlConsumer
 import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
-import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.endreNummerPayload
-import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.slettKontaktadressePayload
-import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.slettNummerPayload
 import no.nav.personopplysninger.consumer.pdlmottak.dto.outbound.Endring
 import no.nav.personopplysninger.endreopplysninger.dto.Postnummer
 import no.nav.personopplysninger.endreopplysninger.dto.Retningsnummer
@@ -34,7 +31,7 @@ class EndreOpplysningerService(
         if (!setOf(1, 2).contains(telefonnummer.prioritet)) {
             throw RuntimeException("Støtter kun prioritet [1, 2] eller type ['HJEM', 'MOBIL']")
         } else {
-            return pdlMottakConsumer.endreTelefonnummer(token, fnr, endreNummerPayload(fnr, telefonnummer))
+            return pdlMottakConsumer.endreTelefonnummer(token, fnr, telefonnummer)
         }
     }
 
@@ -43,18 +40,14 @@ class EndreOpplysningerService(
             .findOpplysningsId(telefonnummer.landskode, telefonnummer.nummer)
             ?: throw RuntimeException("Fant ikke oppgitt telefonnummer")
 
-        return pdlMottakConsumer.slettPersonopplysning(token, fnr, slettNummerPayload(fnr, opplysningsId))
+        return pdlMottakConsumer.slettTelefonnummer(token, fnr, opplysningsId)
     }
 
     suspend fun slettKontaktadresse(token: String, fnr: String): Endring {
         val opplysningsId = pdlConsumer.hentKontaktadresse(token, fnr).findOpplysningsId()
             ?: throw RuntimeException("Fant ingen kontaktadresser som kan slettes")
 
-        return pdlMottakConsumer.slettPersonopplysning(
-            token,
-            fnr,
-            slettKontaktadressePayload(fnr, opplysningsId),
-        )
+        return pdlMottakConsumer.slettKontaktadresse(token, fnr, opplysningsId)
     }
 
     suspend fun endreKontonummer(token: String, fnr: String, kontonummer: Kontonummer) {
