@@ -8,21 +8,13 @@ class KodeverkBetydningerResponse {
     val betydninger: Map<String, List<Betydning>> = emptyMap()
 
     fun tekst(key: String): String {
-        try {
-            return betydninger[key]?.first()?.tekst()!!
-        } catch (e: NullPointerException) {
-            logger.warn("Feil ved utledning av kodeverkstekst for $key", e)
-            return key
-        }
+        return betydninger[key]?.first()?.tekst()
+            ?: key.also { logger.warn("Feil ved utledning av kodeverkstekst for $key", Throwable()) }
     }
 
     fun term(key: String): String {
-        try {
-            return betydninger[key]?.first()?.term()!!
-        } catch (e: NullPointerException) {
-            logger.warn("Feil ved utledning av kodeverksterm for $key", e)
-            return key
-        }
+        return betydninger[key]?.first()?.term()
+            ?: key.also { logger.warn("Feil ved utledning av kodeverksterm for $key", Throwable()) }
     }
 
     companion object {
