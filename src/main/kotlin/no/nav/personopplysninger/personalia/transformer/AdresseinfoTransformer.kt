@@ -19,7 +19,6 @@ object AdresseinfoTransformer {
         val deltBostedKodeverk = kodeverk.deltBostedKodeverk
 
         return Adresser(
-            //todo: zip her??
             kontaktadresser = kontaktadresse.zip(kontaktadresseKodeverk)
                 .mapNotNull { pair -> KontaktadresseTransformer.toOutbound(pair.first, pair.second) },
             bostedsadresse = bostedsadresse?.let { BostedsadresseTransformer.toOutbound(it, bostedsadresseKodeverk) },
