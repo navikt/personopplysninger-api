@@ -31,7 +31,6 @@ data class Personalia(
 
 @Serializable
 data class Adresser(
-    val geografiskTilknytning: GeografiskTilknytning? = null,
     val kontaktadresser: List<Kontaktadresse> = emptyList(),
     val bostedsadresse: Bostedsadresse? = null,
     val oppholdsadresser: List<Oppholdsadresse> = emptyList(),

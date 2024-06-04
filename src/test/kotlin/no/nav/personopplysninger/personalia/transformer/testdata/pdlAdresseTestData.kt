@@ -55,8 +55,6 @@ fun createDummyUtenlandskAdresseIFrittFormat(): UtenlandskAdresseIFrittFormat {
         adresselinje1 = "dummy adresselinje1",
         adresselinje2 = "dummy adresselinje2",
         adresselinje3 = "dummy adresselinje3",
-        postkode = "dummy postkode",
-        byEllerStedsnavn = "dummy byEllerStedsnavn",
         landkode = "dummy landkode"
     )
 }

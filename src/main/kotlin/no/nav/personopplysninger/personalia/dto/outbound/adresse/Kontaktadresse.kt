@@ -5,7 +5,6 @@ import no.nav.pdl.generated.dto.DateTime
 
 @Serializable
 data class Kontaktadresse(
-    val gyldigFraOgMed: DateTime?,
     val gyldigTilOgMed: DateTime?,
     val coAdressenavn: String?,
     val kilde: String?,

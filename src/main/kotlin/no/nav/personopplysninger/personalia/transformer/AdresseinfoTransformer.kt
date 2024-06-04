@@ -19,12 +19,7 @@ object AdresseinfoTransformer {
         val deltBostedKodeverk = kodeverk.deltBostedKodeverk
 
         return Adresser(
-            geografiskTilknytning = pdlData.geografiskTilknytning?.let {
-                GeografiskTilknytningTransformer.toOutbound(
-                    it,
-                    kodeverk
-                )
-            },
+            //todo: zip her??
             kontaktadresser = kontaktadresse.zip(kontaktadresseKodeverk)
                 .mapNotNull { pair -> KontaktadresseTransformer.toOutbound(pair.first, pair.second) },
             bostedsadresse = bostedsadresse?.let { BostedsadresseTransformer.toOutbound(it, bostedsadresseKodeverk) },

@@ -22,11 +22,9 @@ object OppholdsadresseTransformer {
         val adresse = transformAdresse(inbound, kodeverk)
         return if (adresse != null || inbound.oppholdAnnetSted != null) {
             Oppholdsadresse(
-                oppholdAnnetSted = inbound.oppholdAnnetSted,
-                gyldigFraOgMed = inbound.gyldigFraOgMed,
                 gyldigTilOgMed = inbound.gyldigTilOgMed,
                 coAdressenavn = inbound.coAdressenavn,
-                kilde = inbound.metadata.master?.lowercase(),
+                kilde = inbound.metadata.master.lowercase(),
                 adresse = adresse
             )
         } else {

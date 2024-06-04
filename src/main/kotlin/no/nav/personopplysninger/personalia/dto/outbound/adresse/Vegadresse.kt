@@ -11,7 +11,6 @@ data class Vegadresse(
     val husbokstav: String?,
     val bruksenhetsnummer: String?,
     val adressenavn: String?,
-    val kommunenummer: String?,
     val kommune: String?,
     val tilleggsnavn: String?,
     val postnummer: String?,

@@ -24,10 +24,7 @@ object DeltBostedTransformer {
         val adresse = transformAdresse(inbound, kodeverk)
         return if (adresse != null) {
             DeltBosted(
-                startdatoForKontrakt = inbound.startdatoForKontrakt,
-                sluttdatoForKontrakt = inbound.sluttdatoForKontrakt,
                 coAdressenavn = inbound.coAdressenavn,
-                kilde = inbound.metadata.master?.lowercase(),
                 adresse = adresse
             )
         } else {

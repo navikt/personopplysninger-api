@@ -25,7 +25,6 @@ fun assertVegadresseEquals(
     assertEquals(vegadresse.husbokstav, inbound?.husbokstav)
     assertEquals(vegadresse.bruksenhetsnummer, inbound?.bruksenhetsnummer)
     assertEquals(vegadresse.adressenavn, inbound?.adressenavn)
-    assertEquals(vegadresse.kommunenummer, inbound?.kommunenummer)
     assertEquals(vegadresse.kommune, kommune)
     assertEquals(vegadresse.tilleggsnavn, inbound?.tilleggsnavn)
     assertEquals(vegadresse.postnummer, inbound?.postnummer)
@@ -67,7 +66,6 @@ fun assertUtenlandskAdresseEquals(
     assertEquals(utenlandskAdresse.postkode, inbound?.postkode)
     assertEquals(utenlandskAdresse.bySted, inbound?.bySted)
     assertEquals(utenlandskAdresse.regionDistriktOmraade, inbound?.regionDistriktOmraade)
-    assertEquals(utenlandskAdresse.landkode, inbound?.landkode)
     assertEquals(utenlandskAdresse.land, land)
 }
 
@@ -79,12 +77,6 @@ fun assertUtenlandskAdresseIFrittFormatEquals(
     assertEquals(utenlandskAdresseIFrittFormat.adresselinje1, inbound?.adresselinje1)
     assertEquals(utenlandskAdresseIFrittFormat.adresselinje2, inbound?.adresselinje2)
     assertEquals(utenlandskAdresseIFrittFormat.adresselinje3, inbound?.adresselinje3)
-    assertEquals(utenlandskAdresseIFrittFormat.postkode, inbound?.postkode)
-    assertEquals(
-        utenlandskAdresseIFrittFormat.byEllerStedsnavn,
-        inbound?.byEllerStedsnavn
-    )
-    assertEquals(utenlandskAdresseIFrittFormat.landkode, inbound?.landkode)
     assertEquals(utenlandskAdresseIFrittFormat.land, land)
 }
 
@@ -98,7 +90,6 @@ fun assertMatrikkeladresseEquals(
     assertEquals(matrikkeladresse.tilleggsnavn, inbound?.tilleggsnavn)
     assertEquals(matrikkeladresse.postnummer, inbound?.postnummer)
     assertEquals(matrikkeladresse.poststed, poststed)
-    assertEquals(matrikkeladresse.kommunenummer, inbound?.kommunenummer)
     assertEquals(matrikkeladresse.kommune, kommune)
 }
 

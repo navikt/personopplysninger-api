@@ -82,55 +82,47 @@ fun createDummyPerson(): Person {
 
 fun createDummyBostedsadresse(adresseType: AdresseType): Bostedsadresse {
     return Bostedsadresse(
-        LocalDate.now().minusDays(1000).toString(),
-        LocalDateTime.now().minusDays(1000).toString(),
-        LocalDateTime.now().plusDays(1000).toString(),
-        "coAdressenavn",
-        if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
-        if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if (adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
-        createDummyMetadata()
+        angittFlyttedato = LocalDate.now().minusDays(1000).toString(),
+        coAdressenavn = "coAdressenavn",
+        vegadresse = if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        matrikkeladresse = if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
+        utenlandskAdresse = if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        ukjentBosted = if (adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
     )
 }
 
 fun createDummyDeltBosted(adresseType: AdresseType): DeltBosted {
     return DeltBosted(
-        LocalDate.now().minusDays(1000).toString(),
-        LocalDate.now().plusDays(1000).toString(),
-        "coAdressenavn",
-        if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
-        if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if (adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
-        createDummyMetadata()
+        coAdressenavn = "coAdressenavn",
+        vegadresse = if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        matrikkeladresse = if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
+        utenlandskAdresse = if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        ukjentBosted = if (adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
     )
 }
 
 fun createDummyKontaktadresse(adresseType: AdresseType): Kontaktadresse {
     return Kontaktadresse(
-        LocalDateTime.now().minusDays(1000).toString(),
-        LocalDateTime.now().plusDays(1000).toString(),
-        "coAdressenavn",
-        if (adresseType == POSTBOKSADRESSE) createDummyPostboksadresse() else null,
-        if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if (adresseType == POSTADRESSE_I_FRITT_FORMAT) createDummyPostadresseIFrittFormat() else null,
-        if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if (adresseType == UTENLANDSK_ADRESSE_I_FRITT_FORMAT) createDummyUtenlandskAdresseIFrittFormat() else null,
-        createDummyMetadata()
+        gyldigTilOgMed = LocalDateTime.now().plusDays(1000).toString(),
+        coAdressenavn = "coAdressenavn",
+        postboksadresse = if (adresseType == POSTBOKSADRESSE) createDummyPostboksadresse() else null,
+        vegadresse = if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        postadresseIFrittFormat = if (adresseType == POSTADRESSE_I_FRITT_FORMAT) createDummyPostadresseIFrittFormat() else null,
+        utenlandskAdresse = if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        utenlandskAdresseIFrittFormat = if (adresseType == UTENLANDSK_ADRESSE_I_FRITT_FORMAT) createDummyUtenlandskAdresseIFrittFormat() else null,
+        metadata = createDummyMetadata()
     )
 }
 
 fun createDummyOppholdsadresse(adresseType: AdresseType): Oppholdsadresse {
     return Oppholdsadresse(
-        LocalDateTime.now().minusDays(1000).toString(),
-        LocalDateTime.now().plusDays(1000).toString(),
-        "coAdressenavn",
-        if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
-        null,
-        createDummyMetadata()
+        gyldigTilOgMed = LocalDateTime.now().plusDays(1000).toString(),
+        coAdressenavn = "coAdressenavn",
+        utenlandskAdresse = if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        vegadresse = if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        matrikkeladresse = if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
+        oppholdAnnetSted = null,
+        metadata = createDummyMetadata()
     )
 }
 

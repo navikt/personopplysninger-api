@@ -18,7 +18,6 @@ class AdresseinfoTransformerTest {
         val kodeverk = createDummyPersonaliaKodeverk()
         val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk)
 
-        assertNotNull(actual.geografiskTilknytning)
         assertNotNull(actual.deltBosted)
         assertNotNull(actual.oppholdsadresser)
         assertNotNull(actual.kontaktadresser)
@@ -32,7 +31,6 @@ class AdresseinfoTransformerTest {
         val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertTrue(actual.kontaktadresser.isEmpty())
-        assertNull(actual.geografiskTilknytning)
         assertNull(actual.deltBosted)
         assertTrue(actual.oppholdsadresser.isEmpty())
     }

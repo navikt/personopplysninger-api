@@ -25,7 +25,6 @@ object KontaktadresseTransformer {
     fun toOutbound(inbound: PdlKontaktadresse, kodeverk: AdresseKodeverk): Kontaktadresse? {
         return transformAdresse(inbound, kodeverk)?.let {
             Kontaktadresse(
-                gyldigFraOgMed = inbound.gyldigFraOgMed,
                 gyldigTilOgMed = inbound.gyldigTilOgMed,
                 coAdressenavn = inbound.coAdressenavn,
                 kilde = inbound.metadata.master.lowercase(),

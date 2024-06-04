@@ -25,7 +25,6 @@ object AdresseTransformer {
             husbokstav = inbound.husbokstav,
             bruksenhetsnummer = inbound.bruksenhetsnummer,
             adressenavn = inbound.adressenavn,
-            kommunenummer = inbound.kommunenummer,
             kommune = kommune,
             tilleggsnavn = inbound.tilleggsnavn,
             postnummer = inbound.postnummer,
@@ -69,7 +68,6 @@ object AdresseTransformer {
             postkode = inbound.postkode,
             bySted = inbound.bySted,
             regionDistriktOmraade = inbound.regionDistriktOmraade,
-            landkode = inbound.landkode,
             land = land,
         )
     }
@@ -83,9 +81,6 @@ object AdresseTransformer {
             adresselinje1 = inbound.adresselinje1,
             adresselinje2 = inbound.adresselinje2,
             adresselinje3 = inbound.adresselinje3,
-            postkode = inbound.postkode,
-            byEllerStedsnavn = inbound.byEllerStedsnavn,
-            landkode = inbound.landkode,
             land = land,
         )
     }
@@ -101,7 +96,6 @@ object AdresseTransformer {
             tilleggsnavn = inbound.tilleggsnavn,
             postnummer = inbound.postnummer,
             poststed = poststed,
-            kommunenummer = inbound.kommunenummer,
             kommune = kommune,
         )
     }
