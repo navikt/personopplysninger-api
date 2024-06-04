@@ -11,7 +11,6 @@ import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.consumer.medl.MedlConsumer
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
 import no.nav.personopplysninger.consumer.pdl.PdlConsumer
-import no.nav.personopplysninger.consumer.pdl.PdlService
 import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
 import no.nav.personopplysninger.endreopplysninger.EndreOpplysningerService
 import no.nav.personopplysninger.endreopplysninger.kafka.HendelseProducer
@@ -47,20 +46,18 @@ class ApplicationContext {
     val pdlConsumer = PdlConsumer(GraphQLKtorClient(URI(env.pdlUrl).toURL(), httpClient), env, tokendingsService)
     val pdlMottakConsumer = PdlMottakConsumer(httpClient, env, tokendingsService)
 
-    val pdlService = PdlService(pdlConsumer)
-
     val endreOpplysningerService =
         EndreOpplysningerService(
+            pdlConsumer,
             pdlMottakConsumer,
             kodeverkConsumer,
             kontoregisterConsumer,
-            pdlService,
             hendelseProducer
         )
     val institusjonService = InstitusjonService(institusjonConsumer)
     val medlService = MedlService(medlConsumer, kodeverkConsumer)
     val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkConsumer)
-    val personaliaService = PersonaliaService(kodeverkConsumer, norg2Consumer, kontoregisterConsumer, pdlService)
+    val personaliaService = PersonaliaService(kodeverkConsumer, norg2Consumer, kontoregisterConsumer, pdlConsumer)
 
 
     private fun setupIdporten(env: Environment): IDPorten {

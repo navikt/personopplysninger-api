@@ -7,7 +7,7 @@ import no.nav.personopplysninger.consumer.kontoregister.dto.request.UtenlandskKo
 import no.nav.personopplysninger.consumer.kontoregister.dto.response.Kontonummer
 import no.nav.personopplysninger.consumer.kontoregister.dto.response.Landkode
 import no.nav.personopplysninger.consumer.kontoregister.dto.response.Valutakode
-import no.nav.personopplysninger.consumer.pdl.PdlService
+import no.nav.personopplysninger.consumer.pdl.PdlConsumer
 import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.endreNummerPayload
@@ -16,15 +16,16 @@ import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.slettNummerPaylo
 import no.nav.personopplysninger.consumer.pdlmottak.dto.outbound.Endring
 import no.nav.personopplysninger.endreopplysninger.dto.Postnummer
 import no.nav.personopplysninger.endreopplysninger.dto.Retningsnummer
+import no.nav.personopplysninger.endreopplysninger.extensions.findOpplysningsId
 import no.nav.personopplysninger.endreopplysninger.kafka.HendelseProducer
 import org.slf4j.LoggerFactory
 import java.util.*
 
 class EndreOpplysningerService(
+    private val pdlConsumer: PdlConsumer,
     private val pdlMottakConsumer: PdlMottakConsumer,
     private val kodeverkConsumer: KodeverkConsumer,
     private val kontoregisterConsumer: KontoregisterConsumer,
-    private val pdlService: PdlService,
     private val hendelseProducer: HendelseProducer
 ) {
     private val logger = LoggerFactory.getLogger(EndreOpplysningerService::class.java)
@@ -38,19 +39,15 @@ class EndreOpplysningerService(
     }
 
     suspend fun slettTelefonNummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
-        val opplysningsId =
-            pdlService.getOpplysningsIdForTelefon(token, fnr, telefonnummer.landskode, telefonnummer.nummer)
-                ?: throw RuntimeException("Fant ikke oppgitt telefonnummer")
+        val opplysningsId = pdlConsumer.hentTelefon(token, fnr)
+            .findOpplysningsId(telefonnummer.landskode, telefonnummer.nummer)
+            ?: throw RuntimeException("Fant ikke oppgitt telefonnummer")
 
-        return pdlMottakConsumer.slettPersonopplysning(
-            token,
-            fnr,
-            slettNummerPayload(fnr, opplysningsId)
-        )
+        return pdlMottakConsumer.slettPersonopplysning(token, fnr, slettNummerPayload(fnr, opplysningsId))
     }
 
     suspend fun slettKontaktadresse(token: String, fnr: String): Endring {
-        val opplysningsId = pdlService.getOpplysningsIdForKontaktadresse(token, fnr)
+        val opplysningsId = pdlConsumer.hentKontaktadresse(token, fnr).findOpplysningsId()
             ?: throw RuntimeException("Fant ingen kontaktadresser som kan slettes")
 
         return pdlMottakConsumer.slettPersonopplysning(

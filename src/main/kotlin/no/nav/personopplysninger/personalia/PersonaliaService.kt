@@ -6,7 +6,7 @@ import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.consumer.kontoregister.dto.request.Konto
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
-import no.nav.personopplysninger.consumer.pdl.PdlService
+import no.nav.personopplysninger.consumer.pdl.PdlConsumer
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.PersonaliaOgAdresser
@@ -20,11 +20,11 @@ class PersonaliaService(
     private val kodeverkConsumer: KodeverkConsumer,
     private val norg2Consumer: Norg2Consumer,
     private val kontoregisterConsumer: KontoregisterConsumer,
-    private val pdlService: PdlService
+    private val pdlConsumer: PdlConsumer
 ) {
 
     suspend fun hentPersoninfo(token: String, fodselsnr: String): PersonaliaOgAdresser {
-        val pdlPersonInfo = pdlService.getPersonInfo(token, fodselsnr)
+        val pdlPersonInfo = pdlConsumer.hentPerson(token, fodselsnr)
 
         val konto = kontoregisterConsumer.hentAktivKonto(token, fodselsnr)
 
