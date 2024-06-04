@@ -22,7 +22,7 @@ import no.nav.personopplysninger.config.IDPorten
 import no.nav.personopplysninger.config.IDPortenException
 import no.nav.personopplysninger.config.MetricsCollector
 import no.nav.personopplysninger.config.Pkce
-import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Kontonummer
 import no.nav.personopplysninger.consumer.kontoregister.exception.KontoregisterValidationException
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.util.getAuthTokenFromCall

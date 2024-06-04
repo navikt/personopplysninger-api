@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.consumer.digdirkrr.inbound
+package no.nav.personopplysninger.consumer.digdirkrr.dto
 
 import kotlinx.serialization.Serializable
 

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.consumer.kontoregister.dto.inbound
+package no.nav.personopplysninger.consumer.kontoregister.dto.response
 
 import kotlinx.serialization.Serializable
 

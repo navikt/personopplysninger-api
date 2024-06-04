@@ -4,7 +4,7 @@ import no.nav.pdl.generated.dto.HentPersonQuery
 import no.nav.pdl.generated.dto.hentpersonquery.Statsborgerskap
 import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
-import no.nav.personopplysninger.consumer.kontoregister.dto.outbound.Konto
+import no.nav.personopplysninger.consumer.kontoregister.dto.request.Konto
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
 import no.nav.personopplysninger.consumer.pdl.PdlService
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk

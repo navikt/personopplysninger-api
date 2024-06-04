@@ -17,7 +17,7 @@ import io.ktor.server.testing.ApplicationTestBuilder
 import io.ktor.server.testing.testApplication
 import no.nav.personopplysninger.config.TestApplicationContext
 import no.nav.personopplysninger.config.testModule
-import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.Kontonummer
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Kontonummer
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.testutils.createAccessToken
 

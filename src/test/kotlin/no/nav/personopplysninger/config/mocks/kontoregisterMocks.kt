@@ -12,7 +12,7 @@ import io.ktor.http.isSuccess
 import kotlinx.coroutines.delay
 import kotlinx.serialization.encodeToString
 import no.nav.personopplysninger.config.jsonConfig
-import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.ValidationError
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.ValidationError
 import no.nav.personopplysninger.testutils.TestFileReader.readFile
 
 const val KONTONUMMER_VALIDERINGSFEIL = "Valideringsfeil"

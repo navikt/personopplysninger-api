@@ -2,11 +2,11 @@ package no.nav.personopplysninger.endreopplysninger
 
 import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
-import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.Kontonummer
-import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.Landkode
-import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.Valutakode
-import no.nav.personopplysninger.consumer.kontoregister.dto.outbound.OppdaterKonto
-import no.nav.personopplysninger.consumer.kontoregister.dto.outbound.UtenlandskKontoInfo
+import no.nav.personopplysninger.consumer.kontoregister.dto.request.OppdaterKonto
+import no.nav.personopplysninger.consumer.kontoregister.dto.request.UtenlandskKontoInfo
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Kontonummer
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Landkode
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Valutakode
 import no.nav.personopplysninger.consumer.pdl.PdlService
 import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer

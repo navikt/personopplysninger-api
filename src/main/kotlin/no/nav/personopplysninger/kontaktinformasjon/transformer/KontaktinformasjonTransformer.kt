@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.kontaktinformasjon.transformer
 
-import no.nav.personopplysninger.consumer.digdirkrr.inbound.DigitalKontaktinformasjon
+import no.nav.personopplysninger.consumer.digdirkrr.dto.DigitalKontaktinformasjon
 import no.nav.personopplysninger.kontaktinformasjon.dto.Kontaktinformasjon
 
 object KontaktinformasjonTransformer {

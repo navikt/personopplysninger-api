@@ -20,12 +20,12 @@ import no.nav.personopplysninger.config.Environment
 import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
-import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.Landkode
-import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.ValidationError
-import no.nav.personopplysninger.consumer.kontoregister.dto.inbound.Valutakode
-import no.nav.personopplysninger.consumer.kontoregister.dto.outbound.HentAktivKonto
-import no.nav.personopplysninger.consumer.kontoregister.dto.outbound.Konto
-import no.nav.personopplysninger.consumer.kontoregister.dto.outbound.OppdaterKonto
+import no.nav.personopplysninger.consumer.kontoregister.dto.request.HentAktivKonto
+import no.nav.personopplysninger.consumer.kontoregister.dto.request.Konto
+import no.nav.personopplysninger.consumer.kontoregister.dto.request.OppdaterKonto
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Landkode
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.ValidationError
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Valutakode
 import no.nav.personopplysninger.consumer.kontoregister.exception.KontoregisterValidationException
 import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
@@ -33,17 +33,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.*
 
-private const val HENT_KONTO_PATH = "/api/borger/v1/hent-aktiv-konto"
-private const val OPPDATER_KONTO_PATH = "/api/borger/v1/oppdater-konto"
-private const val HENT_LANDKODER_PATH = "/api/system/v1/hent-landkoder"
-private const val HENT_VALUTAKODER_PATH = "/api/system/v1/hent-valutakoder"
-
 class KontoregisterConsumer(
     private val client: HttpClient,
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,
 ) {
-
     private val logger: Logger = LoggerFactory.getLogger(KontoregisterConsumer::class.java)
 
     suspend fun hentAktivKonto(token: String, fnr: String): Konto? {
@@ -74,6 +68,7 @@ class KontoregisterConsumer(
                 is SocketTimeoutException,
                 is HttpRequestTimeoutException,
                 is ConnectTimeoutException -> "Kall mot kontoregister timet ut. Returnerer feilobjekt."
+
                 else -> "Ukjent feil ved kall mot kontoregister. Returnerer feilobjekt."
             }
             logger.warn(feilmelding, e)
@@ -110,5 +105,12 @@ class KontoregisterConsumer(
             }
             throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
         }
+    }
+
+    companion object {
+        private const val HENT_KONTO_PATH = "/api/borger/v1/hent-aktiv-konto"
+        private const val OPPDATER_KONTO_PATH = "/api/borger/v1/oppdater-konto"
+        private const val HENT_LANDKODER_PATH = "/api/system/v1/hent-landkoder"
+        private const val HENT_VALUTAKODER_PATH = "/api/system/v1/hent-valutakoder"
     }
 }
