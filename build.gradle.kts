@@ -1,14 +1,18 @@
+import com.expediagroup.graphql.plugin.gradle.config.GraphQLSerializer
+import com.expediagroup.graphql.plugin.gradle.graphql
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
     val kotlinVersion = "2.0.0"
     val shadowVersion = "8.1.1"
     val versionsVersion = "0.51.0"
+    val graphqlVersion = "7.1.1"
 
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.allopen") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
 
+    id("com.expediagroup.graphql") version graphqlVersion
     id("com.github.johnrengelman.shadow") version shadowVersion
     id("com.github.ben-manes.versions") version versionsVersion // ./gradlew dependencyUpdates to check for new versions
     application
@@ -23,8 +27,8 @@ repositories {
     maven("https://jitpack.io")
     maven("https://maven.pkg.github.com/navikt/tms-varsel-authority") {
         credentials {
-            username = System.getenv("GITHUB_ACTOR")?: "x-access-token"
-            password = System.getenv("GITHUB_TOKEN")?: project.findProperty("githubPassword") as String
+            username = System.getenv("GITHUB_ACTOR") ?: "x-access-token"
+            password = System.getenv("GITHUB_TOKEN") ?: project.findProperty("githubPassword") as String
         }
     }
 }
@@ -32,6 +36,7 @@ repositories {
 dependencies {
     val auth0JwtVersion = "4.4.0"
     val caffeineVersion = "3.1.8"
+    val graphqlVersion = "7.1.1"
     val kafkaVersion = "3.7.0"
     val ktorVersion = "2.3.11"
     val logbackVersion = "1.5.6"
@@ -61,6 +66,7 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-client-apache:$ktorVersion")
     implementation("io.ktor:ktor-server-metrics-micrometer:$ktorVersion")
+    implementation("com.expediagroup:graphql-kotlin-ktor-client:$graphqlVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
     implementation("no.nav.security:token-validation-ktor-v2:$navSecurityVersion")
     implementation("no.nav.tms.token.support:tokendings-exchange:$tmsKtorTokenSupportVersion")
@@ -83,5 +89,13 @@ tasks {
             exceptionFormat = TestExceptionFormat.FULL
             events("passed", "skipped", "failed")
         }
+    }
+}
+
+graphql {
+    client {
+        packageName = "no.nav.pdl.generated.dto"
+        serializer = GraphQLSerializer.KOTLINX
+        sdlEndpoint = "https://navikt.github.io/pdl/pdl-api-sdl.graphqls"
     }
 }

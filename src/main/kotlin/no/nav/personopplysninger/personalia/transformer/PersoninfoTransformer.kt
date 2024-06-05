@@ -1,18 +1,21 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlPerson
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlNavn
+import no.nav.pdl.generated.dto.hentpersonquery.Navn
+import no.nav.pdl.generated.dto.hentpersonquery.Person
+import no.nav.pdl.generated.dto.hentpersonquery.Telefonnummer
+import no.nav.personopplysninger.consumer.kontoregister.dto.request.Konto
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.personalia.dto.outbound.Personident
+import no.nav.personopplysninger.personalia.dto.outbound.Tlfnr
+import no.nav.personopplysninger.personalia.extensions.stringValue
 
 
 object PersoninfoTransformer {
 
-    fun toOutbound(pdlPerson: PdlPerson, konto: Konto?, kodeverk: PersonaliaKodeverk): Personalia {
+    fun toOutbound(pdlPerson: Person, konto: Konto?, kodeverk: PersonaliaKodeverk): Personalia {
 
-        fun fornavn(navn: PdlNavn): String =
+        fun fornavn(navn: Navn): String =
             if (navn.mellomnavn == null) navn.fornavn
             else {
                 "${navn.fornavn} ${navn.mellomnavn}".trim()
@@ -28,8 +31,8 @@ object PersoninfoTransformer {
             utenlandskbank = konto?.utenlandskKontoInfo?.let { UtenlandskBankTransformer.toOutbound(konto, kodeverk) },
             statsborgerskap = kodeverk.statsborgerskaptermer,
             foedested = foedested(kodeverk.foedekommuneterm, kodeverk.foedelandterm),
-            sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.beskrivelse,
-            kjoenn = pdlPerson.kjoenn.firstOrNull()?.kjoenn?.beskrivelse,
+            sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.stringValue,
+            kjoenn = pdlPerson.kjoenn.firstOrNull()?.kjoenn?.stringValue,
             kontoregisterStatus = if (konto?.error == true) "ERROR" else "SUCCESS"
         )
     }
@@ -37,5 +40,17 @@ object PersoninfoTransformer {
     private fun foedested(foedtIKommune: String?, foedtILand: String?): String? {
         val names = listOfNotNull(foedtIKommune, foedtILand).filter { it.isNotEmpty() }
         return if (names.isEmpty()) null else names.joinToString(", ")
+    }
+
+    private fun List<Telefonnummer>.toTlfnr(): Tlfnr {
+        val hoved = find { it.prioritet == 1}
+        val alternativ = find { it.prioritet == 2}
+
+        return Tlfnr(
+            telefonHoved = hoved?.nummer,
+            landskodeHoved = hoved?.landskode,
+            telefonAlternativ =  alternativ?.nummer,
+            landskodeAlternativ = alternativ?.landskode
+        )
     }
 }

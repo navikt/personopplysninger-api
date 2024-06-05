@@ -1,8 +1,7 @@
 package no.nav.personopplysninger.personalia.dto
 
-class AdresseKodeverk {
-    var poststed: String? = null
-    var land: String? = null
-    var kommune: String? = null
-}
-
+data class AdresseKodeverk (
+    val poststed: String? = null,
+    val land: String? = null,
+    val kommune: String? = null,
+)

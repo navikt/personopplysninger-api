@@ -4,8 +4,8 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.URLBuilder
 import io.ktor.http.takeFrom
 import no.nav.personopplysninger.IntegrationTest
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
 import no.nav.personopplysninger.config.setupMockedClient
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Kontonummer
 import no.nav.personopplysninger.testutils.FNR
 import no.nav.personopplysninger.testutils.STATE
 import org.junit.jupiter.api.Assertions.assertEquals

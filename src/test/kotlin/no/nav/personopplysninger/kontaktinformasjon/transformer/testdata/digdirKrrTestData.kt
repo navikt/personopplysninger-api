@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.kontaktinformasjon.transformer.testdata
 
-import no.nav.personopplysninger.kontaktinformasjon.dto.inbound.DigitalKontaktinformasjon
-import no.nav.personopplysninger.kontaktinformasjon.dto.inbound.SikkerDigitalPostkasse
+import no.nav.personopplysninger.consumer.digdirkrr.dto.DigitalKontaktinformasjon
+import no.nav.personopplysninger.consumer.digdirkrr.dto.SikkerDigitalPostkasse
 
 fun createDummyDigitalKontaktinfo(): DigitalKontaktinformasjon {
     return DigitalKontaktinformasjon(

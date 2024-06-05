@@ -1,14 +1,18 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.INNLAND_VEGADRESSE
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.MATRIKKELADRESSE
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.AdresseMappingType.UTLAND_ADRESSE
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlOppholdsadresse
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Adresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Oppholdsadresse
+import no.nav.personopplysninger.personalia.enums.AdresseMappingType.INNLAND_VEGADRESSE
+import no.nav.personopplysninger.personalia.enums.AdresseMappingType.MATRIKKELADRESSE
+import no.nav.personopplysninger.personalia.enums.AdresseMappingType.UTLAND_ADRESSE
+import no.nav.personopplysninger.personalia.extensions.mappingType
+import no.nav.personopplysninger.personalia.transformer.AdresseTransformer.transformMatrikkeladresse
+import no.nav.personopplysninger.personalia.transformer.AdresseTransformer.transformUtenlandskAdresse
+import no.nav.personopplysninger.personalia.transformer.AdresseTransformer.transformVegadresse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import no.nav.pdl.generated.dto.hentpersonquery.Oppholdsadresse as PdlOppholdsadresse
 
 object OppholdsadresseTransformer {
 
@@ -18,11 +22,9 @@ object OppholdsadresseTransformer {
         val adresse = transformAdresse(inbound, kodeverk)
         return if (adresse != null || inbound.oppholdAnnetSted != null) {
             Oppholdsadresse(
-                oppholdAnnetSted = inbound.oppholdAnnetSted,
-                gyldigFraOgMed = inbound.gyldigFraOgMed,
                 gyldigTilOgMed = inbound.gyldigTilOgMed,
                 coAdressenavn = inbound.coAdressenavn,
-                kilde = inbound.metadata.master?.lowercase(),
+                kilde = inbound.metadata.master.lowercase(),
                 adresse = adresse
             )
         } else {
@@ -37,11 +39,13 @@ object OppholdsadresseTransformer {
                 kodeverk.poststed,
                 kodeverk.kommune
             )
+
             MATRIKKELADRESSE -> transformMatrikkeladresse(
                 inbound.matrikkeladresse,
                 kodeverk.poststed,
                 kodeverk.kommune
             )
+
             UTLAND_ADRESSE -> transformUtenlandskAdresse(inbound.utenlandskAdresse, kodeverk.land)
             else -> {
                 // Adresse kan være null dersom oppholdAnnetSted er satt. Da trenger vi ikke logge warning.

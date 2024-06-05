@@ -5,8 +5,8 @@ import io.ktor.server.application.call
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
-import no.nav.personopplysninger.common.util.getFnrFromToken
-import no.nav.personopplysninger.common.util.getAuthTokenFromCall
+import no.nav.personopplysninger.util.getAuthTokenFromCall
+import no.nav.personopplysninger.util.getFnrFromToken
 import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("medlRoute")
@@ -17,7 +17,7 @@ fun Route.medl(medlService: MedlService) {
             val authToken = getAuthTokenFromCall(call)
             val fnr = getFnrFromToken(authToken)
 
-            val resp = medlService.hentMeldemskap(authToken, fnr)
+            val resp = medlService.hentMedlemskap(authToken, fnr)
             call.respond(resp)
         } catch (e: Exception) {
             logger.error("Noe gikk galt ved henting av medlemskap", e)

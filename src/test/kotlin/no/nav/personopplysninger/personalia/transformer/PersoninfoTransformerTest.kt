@@ -1,12 +1,13 @@
 package no.nav.personopplysninger.personalia.transformer
 
 
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlTelefonnummer
+import no.nav.pdl.generated.dto.hentpersonquery.Telefonnummer
+import no.nav.personopplysninger.consumer.kontoregister.dto.request.Konto
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.personalia.dto.outbound.UtenlandskBankInfo
+import no.nav.personopplysninger.personalia.extensions.stringValue
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyKonto
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyPerson
 import no.nav.personopplysninger.personalia.transformer.testdata.createDummyPersonaliaKodeverk
@@ -24,8 +25,8 @@ class PersoninfoTransformerTest {
 
         val pdlNavn = pdlPerson.navn.first()
         val pdlFolkeregisteridentifikator = pdlPerson.folkeregisteridentifikator.first()
-        val pdlSivilstand = pdlPerson.sivilstand.first().type.beskrivelse
-        val pdlKjoenn = pdlPerson.kjoenn.first().kjoenn?.beskrivelse
+        val pdlSivilstand = pdlPerson.sivilstand.first().type.stringValue
+        val pdlKjoenn = pdlPerson.kjoenn.first().kjoenn?.stringValue
 
         assertEquals(pdlNavn.let { "${it.fornavn} ${it.mellomnavn}" }, actual.fornavn)
         assertEquals(pdlNavn.etternavn, actual.etternavn)
@@ -39,7 +40,7 @@ class PersoninfoTransformerTest {
         assertEquals(pdlKjoenn, actual.kjoenn)
     }
 
-    private fun assertTlfnr(expected: List<PdlTelefonnummer>, actual: Tlfnr?) {
+    private fun assertTlfnr(expected: List<Telefonnummer>, actual: Tlfnr?) {
         assertEquals(expected.find { it.prioritet == 1 }?.nummer, actual?.telefonHoved)
         assertEquals(expected.find { it.prioritet == 2 }?.nummer, actual?.telefonAlternativ)
     }

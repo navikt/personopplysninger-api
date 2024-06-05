@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.personalia.dto.outbound
 
 import kotlinx.serialization.Serializable
-import no.nav.personopplysninger.personalia.consumer.dto.Norg2EnhetKontaktinfo
+import no.nav.personopplysninger.consumer.norg2.dto.Norg2EnhetKontaktinfo
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Bostedsadresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.DeltBosted
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Kontaktadresse
@@ -23,7 +23,7 @@ data class Personalia(
     val kontonr: String? = null,
     val utenlandskbank: UtenlandskBankInfo? = null,
     val tlfnr: Tlfnr? = null,
-    val statsborgerskap: List<String> = arrayListOf(),
+    val statsborgerskap: List<String> = emptyList(),
     val foedested: String? = null,
     val sivilstand: String? = null,
     val kjoenn: String? = null
@@ -31,9 +31,8 @@ data class Personalia(
 
 @Serializable
 data class Adresser(
-    val geografiskTilknytning: GeografiskTilknytning? = null,
-    val kontaktadresser: List<Kontaktadresse> = arrayListOf(),
+    val kontaktadresser: List<Kontaktadresse> = emptyList(),
     val bostedsadresse: Bostedsadresse? = null,
-    val oppholdsadresser: List<Oppholdsadresse> = arrayListOf(),
+    val oppholdsadresser: List<Oppholdsadresse> = emptyList(),
     val deltBosted: DeltBosted? = null,
 )

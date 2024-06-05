@@ -4,13 +4,9 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
-import no.nav.personopplysninger.common.consumer.pdl.request.KontaktadresseRequest
-import no.nav.personopplysninger.common.consumer.pdl.request.PDLRequest
-import no.nav.personopplysninger.common.consumer.pdl.request.PersonInfoRequest
-import no.nav.personopplysninger.common.consumer.pdl.request.TelefonRequest
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.Endringsmelding
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.OpphoerEndringsMelding
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Endringsmelding
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.OpphoerEndringsMelding
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Adresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Matrikkeladresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.PostAdresseIFrittFormat
@@ -39,11 +35,6 @@ fun jsonConfig(): Json {
             polymorphic(Endringsmelding::class) {
                 subclass(Telefonnummer::class)
                 subclass(OpphoerEndringsMelding::class)
-            }
-            polymorphic(PDLRequest::class) {
-                subclass(PersonInfoRequest::class)
-                subclass(TelefonRequest::class)
-                subclass(KontaktadresseRequest::class)
             }
         }
     }

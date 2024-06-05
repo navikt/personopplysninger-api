@@ -1,22 +1,21 @@
 package no.nav.personopplysninger.personalia.transformer.testdata
 
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlData
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlGeografiskTilknytning
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlPerson
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlBostedsadresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlDeltBosted
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlKontaktadresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlKontaktadressetype
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlOppholdsadresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlFoedsel
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlFolkeregisteridentifikator
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlKjoenn
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlKjoennType
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlNavn
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlSivilstand
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlSivilstandstype
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlStatsborgerskap
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlTelefonnummer
+import no.nav.pdl.generated.dto.HentPersonQuery
+import no.nav.pdl.generated.dto.enums.KjoennType
+import no.nav.pdl.generated.dto.enums.Sivilstandstype
+import no.nav.pdl.generated.dto.hentpersonquery.Bostedsadresse
+import no.nav.pdl.generated.dto.hentpersonquery.DeltBosted
+import no.nav.pdl.generated.dto.hentpersonquery.Foedsel
+import no.nav.pdl.generated.dto.hentpersonquery.Folkeregisteridentifikator
+import no.nav.pdl.generated.dto.hentpersonquery.GeografiskTilknytning
+import no.nav.pdl.generated.dto.hentpersonquery.Kjoenn
+import no.nav.pdl.generated.dto.hentpersonquery.Kontaktadresse
+import no.nav.pdl.generated.dto.hentpersonquery.Navn
+import no.nav.pdl.generated.dto.hentpersonquery.Oppholdsadresse
+import no.nav.pdl.generated.dto.hentpersonquery.Person
+import no.nav.pdl.generated.dto.hentpersonquery.Sivilstand
+import no.nav.pdl.generated.dto.hentpersonquery.Statsborgerskap
+import no.nav.pdl.generated.dto.hentpersonquery.Telefonnummer
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.MATRIKKELADRESSE
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.POSTADRESSE_I_FRITT_FORMAT
@@ -29,11 +28,11 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 
-fun createDummyPdlData(): PdlData {
-    return PdlData(createDummyPerson(), createDummyGeografiskTilknytning())
+fun createDummyPdlData(): HentPersonQuery.Result {
+    return HentPersonQuery.Result(createDummyPerson(), createDummyGeografiskTilknytning())
 }
 
-fun createDummyPdlDataWithoutAdresser(): PdlData {
+fun createDummyPdlDataWithoutAdresser(): HentPersonQuery.Result {
     return createDummyPdlData().copy(
         person = createDummyPerson().copy(
             oppholdsadresse = emptyList(),
@@ -45,34 +44,34 @@ fun createDummyPdlDataWithoutAdresser(): PdlData {
     )
 }
 
-fun createDummyPerson(): PdlPerson {
-    return PdlPerson(
+fun createDummyPerson(): Person {
+    return Person(
         navn = listOf(
-            PdlNavn("fornavn", "mellomnavn", "etternavn")
+            Navn("fornavn", "mellomnavn", "etternavn")
         ),
         telefonnummer = listOf(
-            PdlTelefonnummer("+47", "97505050", 1, createDummyMetadata()),
-            PdlTelefonnummer("+47", "22113344", 2, createDummyMetadata())
+            Telefonnummer("+47", "97505050", 1),
+            Telefonnummer("+47", "22113344", 2)
         ),
         folkeregisteridentifikator = listOf(
-            PdlFolkeregisteridentifikator(
-                "identifikasjonsnummer", "status", "type"
+            Folkeregisteridentifikator(
+                "identifikasjonsnummer", "type"
             )
         ),
         statsborgerskap = listOf(
-            PdlStatsborgerskap(
+            Statsborgerskap(
                 land = "land",
                 gyldigTilOgMed = null
             )
         ),
         foedsel = listOf(
-            PdlFoedsel("foedested", "foedekommune", "foedeland")
+            Foedsel("foedekommune", "foedeland")
         ),
         sivilstand = listOf(
-            PdlSivilstand(PdlSivilstandstype.GIFT, LocalDate.now().minusDays(1000))
+            Sivilstand(Sivilstandstype.GIFT)
         ),
         kjoenn = listOf(
-            PdlKjoenn(PdlKjoennType.KVINNE)
+            Kjoenn(KjoennType.KVINNE)
         ),
         bostedsadresse = listOf(createDummyBostedsadresse(MATRIKKELADRESSE)),
         deltBosted = listOf(createDummyDeltBosted(VEGADRESSE)),
@@ -81,62 +80,52 @@ fun createDummyPerson(): PdlPerson {
     )
 }
 
-fun createDummyBostedsadresse(adresseType: AdresseType): PdlBostedsadresse {
-    return PdlBostedsadresse(
-        LocalDate.now().minusDays(1000),
-        LocalDateTime.now().minusDays(1000),
-        LocalDateTime.now().plusDays(1000),
-        "coAdressenavn",
-        if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
-        if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if(adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
-        createDummyMetadata()
+fun createDummyBostedsadresse(adresseType: AdresseType): Bostedsadresse {
+    return Bostedsadresse(
+        angittFlyttedato = LocalDate.now().minusDays(1000).toString(),
+        coAdressenavn = "coAdressenavn",
+        vegadresse = if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        matrikkeladresse = if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
+        utenlandskAdresse = if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        ukjentBosted = if (adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
     )
 }
 
-fun createDummyDeltBosted(adresseType: AdresseType): PdlDeltBosted {
-    return PdlDeltBosted(
-        LocalDate.now().minusDays(1000),
-        LocalDate.now().plusDays(1000),
-        "coAdressenavn",
-        if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
-        if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if(adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
-        createDummyMetadata()
+fun createDummyDeltBosted(adresseType: AdresseType): DeltBosted {
+    return DeltBosted(
+        coAdressenavn = "coAdressenavn",
+        vegadresse = if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        matrikkeladresse = if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
+        utenlandskAdresse = if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        ukjentBosted = if (adresseType == UKJENTBOSTED) createDummyUkjentbosted() else null,
     )
 }
 
-fun createDummyKontaktadresse(adresseType: AdresseType): PdlKontaktadresse {
-    return PdlKontaktadresse(
-        LocalDateTime.now().minusDays(1000),
-        LocalDateTime.now().plusDays(1000),
-        PdlKontaktadressetype.Innland,
-        "coAdressenavn",
-        if(adresseType == POSTBOKSADRESSE) createDummyPostboksadresse() else null,
-        if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if(adresseType == POSTADRESSE_I_FRITT_FORMAT) createDummyPostadresseIFrittFormat() else null,
-        if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if(adresseType == UTENLANDSK_ADRESSE_I_FRITT_FORMAT) createDummyUtenlandskAdresseIFrittFormat() else null,
-        null,
-        createDummyMetadata()
+fun createDummyKontaktadresse(adresseType: AdresseType): Kontaktadresse {
+    return Kontaktadresse(
+        gyldigTilOgMed = LocalDateTime.now().plusDays(1000).toString(),
+        coAdressenavn = "coAdressenavn",
+        postboksadresse = if (adresseType == POSTBOKSADRESSE) createDummyPostboksadresse() else null,
+        vegadresse = if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        postadresseIFrittFormat = if (adresseType == POSTADRESSE_I_FRITT_FORMAT) createDummyPostadresseIFrittFormat() else null,
+        utenlandskAdresse = if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        utenlandskAdresseIFrittFormat = if (adresseType == UTENLANDSK_ADRESSE_I_FRITT_FORMAT) createDummyUtenlandskAdresseIFrittFormat() else null,
+        metadata = createDummyMetadata()
     )
 }
 
-fun createDummyOppholdsadresse(adresseType: AdresseType): PdlOppholdsadresse {
-    return PdlOppholdsadresse(
-        LocalDateTime.now().minusDays(1000),
-        LocalDateTime.now().plusDays(1000),
-        "coAdressenavn",
-        if(adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
-        if(adresseType == VEGADRESSE) createDummyVegadresse() else null,
-        if(adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
-        null,
-        createDummyMetadata()
+fun createDummyOppholdsadresse(adresseType: AdresseType): Oppholdsadresse {
+    return Oppholdsadresse(
+        gyldigTilOgMed = LocalDateTime.now().plusDays(1000).toString(),
+        coAdressenavn = "coAdressenavn",
+        utenlandskAdresse = if (adresseType == UTENLANDSK_ADRESSE) createDummyUtenlandskAdresse() else null,
+        vegadresse = if (adresseType == VEGADRESSE) createDummyVegadresse() else null,
+        matrikkeladresse = if (adresseType == MATRIKKELADRESSE) createDummyMatrikkeladresse() else null,
+        oppholdAnnetSted = null,
+        metadata = createDummyMetadata()
     )
 }
 
-fun createDummyGeografiskTilknytning(): PdlGeografiskTilknytning {
-    return PdlGeografiskTilknytning("gtKommune", "gtBydel", "gtLand")
+fun createDummyGeografiskTilknytning(): GeografiskTilknytning? {
+    return GeografiskTilknytning("gtKommune", "gtBydel", "gtLand")
 }

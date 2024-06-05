@@ -1,34 +1,50 @@
 package no.nav.personopplysninger.medl
 
-import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
-import no.nav.personopplysninger.medl.consumer.MedlConsumer
-import no.nav.personopplysninger.medl.dto.Medlemskapsunntak
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.consumer.medl.MedlConsumer
+import no.nav.personopplysninger.consumer.medl.dto.Medlemskapsperiode
+import no.nav.personopplysninger.consumer.medl.dto.Medlemskapsunntak
+import no.nav.personopplysninger.consumer.medl.dto.Studieinformasjon
 
 class MedlService(
     private val medlConsumer: MedlConsumer,
-    private val kodeverkService: KodeverkService
+    private val kodeverkConsumer: KodeverkConsumer
 ) {
-    suspend fun hentMeldemskap(token: String, fnr: String): Medlemskapsunntak {
-        val perioder = medlConsumer.hentMedlemskap(token, fnr)
-        return hentMedlemskapKodeverk(perioder)
+    suspend fun hentMedlemskap(token: String, fnr: String): Medlemskapsunntak {
+        val medlemskap = medlConsumer.hentMedlemskap(token, fnr)
+        return Medlemskapsunntak(
+            medlemskap.perioder.map { periode ->
+                periode.copy(
+                    hjemmel = periode.hjemmelKodeverk(),
+                    trygdedekning = periode.trygdedekningKodeverk(),
+                    lovvalgsland = periode.lovvalgslandKodeverk(),
+                    studieinformasjon = periode.studieinformasjon?.copy(
+                        statsborgerland = periode.studieinformasjon.statsborgerlandKodeverk(),
+                        studieland = periode.studieinformasjon.studielandKodeverk()
+                    )
+                )
+            }
+        )
     }
 
-    private suspend fun hentMedlemskapKodeverk(inbound: Medlemskapsunntak): Medlemskapsunntak {
-        val perioderMedKodeverk = inbound.apply {
-            perioder = inbound.perioder.map { periode ->
-                periode.apply {
-                    hjemmel = kodeverkService.hentGrunnlagMedl().tekst(periode.hjemmel)
-                    trygdedekning = kodeverkService.hentDekningMedl().tekst(periode.trygdedekning)
-                    lovvalgsland = kodeverkService.hentLandKoder().term(periode.lovvalgsland)
-                    studieinformasjon = periode.studieinformasjon?.apply {
-                        statsborgerland =
-                            kodeverkService.hentLandKoder().term(periode.studieinformasjon?.statsborgerland)
-                        studieland = kodeverkService.hentLandKoder().term(periode.studieinformasjon?.studieland)
-                    }
-                }
-            }
-        }
-        return perioderMedKodeverk
+    private suspend fun Medlemskapsperiode.trygdedekningKodeverk(): String? {
+        return trygdedekning?.let { kodeverkConsumer.hentDekningMedl().tekst(it) }
+    }
+
+    private suspend fun Medlemskapsperiode.hjemmelKodeverk(): String {
+        return kodeverkConsumer.hentGrunnlagMedl().tekst(hjemmel)
+    }
+
+    private suspend fun Medlemskapsperiode.lovvalgslandKodeverk(): String? {
+        return lovvalgsland?.let { kodeverkConsumer.hentLandKoder().term(it) }
+    }
+
+    private suspend fun Studieinformasjon.statsborgerlandKodeverk(): String {
+        return statsborgerland.let { kodeverkConsumer.hentLandKoder().term(it) }
+    }
+
+    private suspend fun Studieinformasjon.studielandKodeverk(): String? {
+        return studieland?.let { kodeverkConsumer.hentLandKoder().term(it) }
     }
 }
 

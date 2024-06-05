@@ -11,7 +11,6 @@ data class Matrikkeladresse(
     val tilleggsnavn: String?,
     val postnummer: String?,
     val poststed: String?,
-    val kommunenummer: String?,
     val kommune: String?,
 ) : Adresse {
     override val type: AdresseType get() = MATRIKKELADRESSE

@@ -31,7 +31,6 @@ class KontaktadresseTransformerTest {
         val inbound = createDummyKontaktadresse(VEGADRESSE)
         val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
-        assertEquals(actual?.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, VEGADRESSE)
@@ -52,7 +51,6 @@ class KontaktadresseTransformerTest {
         val inbound = createDummyKontaktadresse(POSTADRESSE_I_FRITT_FORMAT)
         val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
-        assertEquals(actual?.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, POSTADRESSE_I_FRITT_FORMAT)
@@ -72,7 +70,6 @@ class KontaktadresseTransformerTest {
         val inbound = createDummyKontaktadresse(POSTBOKSADRESSE)
         val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
-        assertEquals(actual?.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, POSTBOKSADRESSE)
@@ -92,7 +89,6 @@ class KontaktadresseTransformerTest {
         val inbound = createDummyKontaktadresse(UTENLANDSK_ADRESSE)
         val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
-        assertEquals(actual?.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, UTENLANDSK_ADRESSE)
@@ -113,7 +109,6 @@ class KontaktadresseTransformerTest {
             createDummyKontaktadresse(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
         val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
-        assertEquals(actual?.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, UTENLANDSK_ADRESSE_I_FRITT_FORMAT)

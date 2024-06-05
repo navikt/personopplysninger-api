@@ -1,11 +1,6 @@
 package no.nav.personopplysninger.testutils
 
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlMatrikkeladresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlPostadresseIFrittFormat
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlPostboksadresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUtenlandskAdresse
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlUtenlandskAdresseIFrittFormat
-import no.nav.personopplysninger.common.consumer.pdl.dto.adresse.PdlVegadresse
+import no.nav.pdl.generated.dto.hentpersonquery.PostadresseIFrittFormat
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Matrikkeladresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.PostAdresseIFrittFormat
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Postboksadresse
@@ -14,13 +9,22 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdres
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresseIFrittFormat
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
 import org.junit.jupiter.api.Assertions.assertEquals
+import no.nav.pdl.generated.dto.hentpersonquery.Matrikkeladresse as PdlMatrikkeladresse
+import no.nav.pdl.generated.dto.hentpersonquery.Postboksadresse as PdlPostboksadresse
+import no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresse as PdlUtenlandskAdresse
+import no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresseIFrittFormat as PdlUtenlandskAdresseIFrittFormat
+import no.nav.pdl.generated.dto.hentpersonquery.Vegadresse as PdlVegadresse
 
-fun assertVegadresseEquals(vegadresse: Vegadresse, poststed: String?, kommune: String?, inbound: PdlVegadresse?) {
+fun assertVegadresseEquals(
+    vegadresse: Vegadresse,
+    poststed: String?,
+    kommune: String?,
+    inbound: PdlVegadresse?
+) {
     assertEquals(vegadresse.husnummer, inbound?.husnummer)
     assertEquals(vegadresse.husbokstav, inbound?.husbokstav)
     assertEquals(vegadresse.bruksenhetsnummer, inbound?.bruksenhetsnummer)
     assertEquals(vegadresse.adressenavn, inbound?.adressenavn)
-    assertEquals(vegadresse.kommunenummer, inbound?.kommunenummer)
     assertEquals(vegadresse.kommune, kommune)
     assertEquals(vegadresse.tilleggsnavn, inbound?.tilleggsnavn)
     assertEquals(vegadresse.postnummer, inbound?.postnummer)
@@ -30,7 +34,7 @@ fun assertVegadresseEquals(vegadresse: Vegadresse, poststed: String?, kommune: S
 fun assertPostAdresseIFrittFormatEquals(
     postAdresseIFrittFormat: PostAdresseIFrittFormat,
     poststed: String?,
-    inbound: PdlPostadresseIFrittFormat?
+    inbound: PostadresseIFrittFormat?
 ) {
     assertEquals(postAdresseIFrittFormat.adresselinje1, inbound?.adresselinje1)
     assertEquals(postAdresseIFrittFormat.adresselinje2, inbound?.adresselinje2)
@@ -62,7 +66,6 @@ fun assertUtenlandskAdresseEquals(
     assertEquals(utenlandskAdresse.postkode, inbound?.postkode)
     assertEquals(utenlandskAdresse.bySted, inbound?.bySted)
     assertEquals(utenlandskAdresse.regionDistriktOmraade, inbound?.regionDistriktOmraade)
-    assertEquals(utenlandskAdresse.landkode, inbound?.landkode)
     assertEquals(utenlandskAdresse.land, land)
 }
 
@@ -74,12 +77,6 @@ fun assertUtenlandskAdresseIFrittFormatEquals(
     assertEquals(utenlandskAdresseIFrittFormat.adresselinje1, inbound?.adresselinje1)
     assertEquals(utenlandskAdresseIFrittFormat.adresselinje2, inbound?.adresselinje2)
     assertEquals(utenlandskAdresseIFrittFormat.adresselinje3, inbound?.adresselinje3)
-    assertEquals(utenlandskAdresseIFrittFormat.postkode, inbound?.postkode)
-    assertEquals(
-        utenlandskAdresseIFrittFormat.byEllerStedsnavn,
-        inbound?.byEllerStedsnavn
-    )
-    assertEquals(utenlandskAdresseIFrittFormat.landkode, inbound?.landkode)
     assertEquals(utenlandskAdresseIFrittFormat.land, land)
 }
 
@@ -93,7 +90,6 @@ fun assertMatrikkeladresseEquals(
     assertEquals(matrikkeladresse.tilleggsnavn, inbound?.tilleggsnavn)
     assertEquals(matrikkeladresse.postnummer, inbound?.postnummer)
     assertEquals(matrikkeladresse.poststed, poststed)
-    assertEquals(matrikkeladresse.kommunenummer, inbound?.kommunenummer)
     assertEquals(matrikkeladresse.kommune, kommune)
 }
 

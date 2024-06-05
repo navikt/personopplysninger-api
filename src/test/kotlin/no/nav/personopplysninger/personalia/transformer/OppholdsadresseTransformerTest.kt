@@ -25,8 +25,6 @@ class OppholdsadresseTransformerTest {
         val inbound = createDummyOppholdsadresse(VEGADRESSE)
         val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
-        assertEquals(actual?.oppholdAnnetSted, inbound.oppholdAnnetSted)
-        assertEquals(actual?.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, VEGADRESSE)
@@ -47,8 +45,6 @@ class OppholdsadresseTransformerTest {
         val inbound = createDummyOppholdsadresse(MATRIKKELADRESSE)
         val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
-        assertEquals(actual?.oppholdAnnetSted, inbound.oppholdAnnetSted)
-        assertEquals(actual?.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, MATRIKKELADRESSE)
@@ -69,8 +65,6 @@ class OppholdsadresseTransformerTest {
         val inbound = createDummyOppholdsadresse(UTENLANDSK_ADRESSE)
         val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
-        assertEquals(actual?.oppholdAnnetSted, inbound.oppholdAnnetSted)
-        assertEquals(actual?.gyldigFraOgMed, inbound.gyldigFraOgMed)
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, UTENLANDSK_ADRESSE)

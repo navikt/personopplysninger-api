@@ -1,31 +1,28 @@
 package no.nav.personopplysninger.endreopplysninger
 
-import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
-import no.nav.personopplysninger.common.consumer.kodeverk.dto.KodeOgTekstDto
-import no.nav.personopplysninger.common.consumer.kodeverk.dto.Kodeverk
-import no.nav.personopplysninger.common.consumer.kodeverk.dto.Retningsnummer
-import no.nav.personopplysninger.common.consumer.kontoregister.KontoregisterConsumer
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Kontonummer
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Landkode
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.inbound.Valutakode
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.OppdaterKonto
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.UtenlandskKontoInfo
-import no.nav.personopplysninger.common.consumer.pdl.PdlService
-import no.nav.personopplysninger.endreopplysninger.consumer.PdlMottakConsumer
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.Telefonnummer
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.endreNummerPayload
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettKontaktadressePayload
-import no.nav.personopplysninger.endreopplysninger.dto.inbound.slettNummerPayload
-import no.nav.personopplysninger.endreopplysninger.dto.outbound.Endring
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
+import no.nav.personopplysninger.consumer.kontoregister.dto.request.OppdaterKonto
+import no.nav.personopplysninger.consumer.kontoregister.dto.request.UtenlandskKontoInfo
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Kontonummer
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Landkode
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Valutakode
+import no.nav.personopplysninger.consumer.pdl.PdlConsumer
+import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
+import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
+import no.nav.personopplysninger.consumer.pdlmottak.dto.outbound.Endring
+import no.nav.personopplysninger.endreopplysninger.dto.Postnummer
+import no.nav.personopplysninger.endreopplysninger.dto.Retningsnummer
+import no.nav.personopplysninger.endreopplysninger.extensions.findOpplysningsId
 import no.nav.personopplysninger.endreopplysninger.kafka.HendelseProducer
 import org.slf4j.LoggerFactory
 import java.util.*
 
 class EndreOpplysningerService(
+    private val pdlConsumer: PdlConsumer,
     private val pdlMottakConsumer: PdlMottakConsumer,
-    private val kodeverkService: KodeverkService,
+    private val kodeverkConsumer: KodeverkConsumer,
     private val kontoregisterConsumer: KontoregisterConsumer,
-    private val pdlService: PdlService,
     private val hendelseProducer: HendelseProducer
 ) {
     private val logger = LoggerFactory.getLogger(EndreOpplysningerService::class.java)
@@ -34,31 +31,23 @@ class EndreOpplysningerService(
         if (!setOf(1, 2).contains(telefonnummer.prioritet)) {
             throw RuntimeException("Støtter kun prioritet [1, 2] eller type ['HJEM', 'MOBIL']")
         } else {
-            return pdlMottakConsumer.endreTelefonnummer(token, fnr, endreNummerPayload(fnr, telefonnummer))
+            return pdlMottakConsumer.endreTelefonnummer(token, fnr, telefonnummer)
         }
     }
 
     suspend fun slettTelefonNummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
-        val opplysningsId =
-            pdlService.getOpplysningsIdForTelefon(token, fnr, telefonnummer.landskode, telefonnummer.nummer)
-                ?: throw RuntimeException("Fant ikke oppgitt telefonnummer")
+        val opplysningsId = pdlConsumer.hentTelefon(token, fnr)
+            .findOpplysningsId(telefonnummer.landskode, telefonnummer.nummer)
+            ?: throw RuntimeException("Fant ikke oppgitt telefonnummer")
 
-        return pdlMottakConsumer.slettPersonopplysning(
-            token,
-            fnr,
-            slettNummerPayload(fnr, opplysningsId)
-        )
+        return pdlMottakConsumer.slettTelefonnummer(token, fnr, opplysningsId)
     }
 
     suspend fun slettKontaktadresse(token: String, fnr: String): Endring {
-        val opplysningsId = pdlService.getOpplysningsIdForKontaktadresse(token, fnr)
+        val opplysningsId = pdlConsumer.hentKontaktadresse(token, fnr).findOpplysningsId()
             ?: throw RuntimeException("Fant ingen kontaktadresser som kan slettes")
 
-        return pdlMottakConsumer.slettPersonopplysning(
-            token,
-            fnr,
-            slettKontaktadressePayload(fnr, opplysningsId),
-        )
+        return pdlMottakConsumer.slettKontaktadresse(token, fnr, opplysningsId)
     }
 
     suspend fun endreKontonummer(token: String, fnr: String, kontonummer: Kontonummer) {
@@ -87,14 +76,7 @@ class EndreOpplysningerService(
     }
 
     suspend fun hentRetningsnumre(): List<Retningsnummer> {
-        return kodeverkService.hentRetningsnumre().koder
-            .map { kode ->
-                Retningsnummer(
-                    kode.navn,
-                    kode.betydninger.first().beskrivelser.entries.first().value.tekst
-                )
-            }
-            .sortedBy { it.land }
+        return kodeverkConsumer.hentRetningsnumre().betydninger.map(Retningsnummer::fromBetydning).sortedBy { it.land }
     }
 
     suspend fun hentLandkoder(): List<Landkode> {
@@ -105,14 +87,7 @@ class EndreOpplysningerService(
         return kontoregisterConsumer.hentValutakoder()
     }
 
-    suspend fun hentPostnummer(): List<KodeOgTekstDto> {
-        return toSortedKodeOgTekstArray(kodeverkService.hentPostnummer())
-    }
-
-    private fun toSortedKodeOgTekstArray(kodeverk: Kodeverk): List<KodeOgTekstDto> {
-        return kodeverk.koder
-            .filter { kode -> kode.betydninger.isNotEmpty() }
-            .map(KodeOgTekstDto::fromKode)
-            .sortedBy { it.tekst }
+    suspend fun hentPostnummer(): List<Postnummer> {
+        return kodeverkConsumer.hentPostnummer().betydninger.map(Postnummer::fromBetydning).sortedBy { it.tekst }
     }
 }

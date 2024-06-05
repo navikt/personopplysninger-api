@@ -1,27 +1,30 @@
 package no.nav.personopplysninger.personalia
 
-import no.nav.personopplysninger.common.consumer.kodeverk.KodeverkService
-import no.nav.personopplysninger.common.consumer.kontoregister.KontoregisterConsumer
-import no.nav.personopplysninger.common.consumer.kontoregister.dto.outbound.Konto
-import no.nav.personopplysninger.common.consumer.pdl.PdlService
-import no.nav.personopplysninger.common.consumer.pdl.dto.PdlData
-import no.nav.personopplysninger.common.consumer.pdl.dto.personalia.PdlStatsborgerskap
-import no.nav.personopplysninger.personalia.consumer.Norg2Consumer
+import no.nav.pdl.generated.dto.HentPersonQuery
+import no.nav.pdl.generated.dto.hentpersonquery.Statsborgerskap
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
+import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
+import no.nav.personopplysninger.consumer.kontoregister.dto.request.Konto
+import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
+import no.nav.personopplysninger.consumer.pdl.PdlConsumer
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.PersonaliaOgAdresser
+import no.nav.personopplysninger.personalia.extensions.kommunenummer
+import no.nav.personopplysninger.personalia.extensions.landkode
+import no.nav.personopplysninger.personalia.extensions.postnummer
 import no.nav.personopplysninger.personalia.transformer.PersonaliaOgAdresserTransformer
 import java.time.LocalDate
 
 class PersonaliaService(
-    private val kodeverkService: KodeverkService,
+    private val kodeverkConsumer: KodeverkConsumer,
     private val norg2Consumer: Norg2Consumer,
     private val kontoregisterConsumer: KontoregisterConsumer,
-    private val pdlService: PdlService
+    private val pdlConsumer: PdlConsumer
 ) {
 
     suspend fun hentPersoninfo(token: String, fodselsnr: String): PersonaliaOgAdresser {
-        val pdlPersonInfo = pdlService.getPersonInfo(token, fodselsnr)
+        val pdlPersonInfo = pdlConsumer.hentPerson(token, fodselsnr)
 
         val konto = kontoregisterConsumer.hentAktivKonto(token, fodselsnr)
 
@@ -31,43 +34,68 @@ class PersonaliaService(
             ?.let { norg2Consumer.hentEnhet(token, it) }
             ?.let { norg2Consumer.hentKontaktinfo(token, it.enhetNr) }
 
-        val personaliaKV = createPersonaliaKodeverk(pdlPersonInfo, konto)
+        val kodeverk = createPersonaliaKodeverk(pdlPersonInfo, konto)
 
-        return PersonaliaOgAdresserTransformer.toOutbound(pdlPersonInfo, konto, personaliaKV, enhetKontaktInformasjon)
+        return PersonaliaOgAdresserTransformer.toOutbound(pdlPersonInfo, konto, kodeverk, enhetKontaktInformasjon)
     }
 
-    private suspend fun createPersonaliaKodeverk(inboundPdl: PdlData, inboundKonto: Konto?): PersonaliaKodeverk {
-        val pdlPerson = inboundPdl.person
-        val pdlGeografiskTilknytning = inboundPdl.geografiskTilknytning
+    private suspend fun createPersonaliaKodeverk(
+        inboundPdl: HentPersonQuery.Result,
+        inboundKonto: Konto?
+    ): PersonaliaKodeverk {
+        val person = inboundPdl.person!!
+        val geografiskTilknytning = inboundPdl.geografiskTilknytning
 
-        val kontaktadresse = pdlPerson.kontaktadresse
-        val bostedsadresse = pdlPerson.bostedsadresse.firstOrNull()
-        val deltBosted = pdlPerson.deltBosted.firstOrNull()
-        val oppholdsadresse = pdlPerson.oppholdsadresse
+        val foedsel = person.foedsel.firstOrNull()
 
-        return PersonaliaKodeverk().apply {
-            foedekommuneterm = getKommuneKodeverksTerm(pdlPerson.foedsel.firstOrNull()?.foedekommune)
-            foedelandterm = kodeverkService.hentLandKoder().term(pdlPerson.foedsel.firstOrNull()?.foedeland)
-            gtLandterm = kodeverkService.hentLandKoder().term(pdlGeografiskTilknytning?.gtLand)
-            statsborgerskaptermer = hentGyldigeStatsborgerskap(pdlPerson.statsborgerskap)
-            utenlandskbanklandterm = inboundKonto?.utenlandskKontoInfo?.let { hentLandKodeterm(it.bankLandkode) }
-            utenlandskbankvalutaterm = inboundKonto?.utenlandskKontoInfo?.let { hentValutaKodeterm(it.valutakode) }
-            kontaktadresseKodeverk =
-                kontaktadresse.map { hentAdresseKodeverk(it.postnummer, it.landkode, it.kommunenummer) }
-            bostedsadresseKodeverk =
-                hentAdresseKodeverk(bostedsadresse?.postnummer, bostedsadresse?.landkode, bostedsadresse?.kommunenummer)
-            deltBostedKodeverk =
-                hentAdresseKodeverk(deltBosted?.postnummer, deltBosted?.landkode, deltBosted?.kommunenummer)
-            oppholdsadresseKodeverk =
-                oppholdsadresse.map { hentAdresseKodeverk(it.postnummer, it.landkode, it.kommunenummer) }
-        }
+        val kontaktadresse = person.kontaktadresse
+        val bostedsadresse = person.bostedsadresse.firstOrNull()
+        val deltBosted = person.deltBosted.firstOrNull()
+        val oppholdsadresse = person.oppholdsadresse
+
+        return PersonaliaKodeverk(
+            foedekommuneterm = hentKommuneKodeverksTerm(foedsel?.foedekommune),
+            foedelandterm = hentLandKodeverksTerm(foedsel?.foedeland),
+            gtLandterm = hentLandKodeverksTerm(geografiskTilknytning?.gtLand),
+            statsborgerskaptermer = hentGyldigeStatsborgerskap(person.statsborgerskap),
+            utenlandskbanklandterm = inboundKonto?.utenlandskKontoInfo?.let { hentLandKontoregisterKodeterm(it.bankLandkode) },
+            utenlandskbankvalutaterm = inboundKonto?.utenlandskKontoInfo?.let { hentValutaKontoregisterKodeterm(it.valutakode) },
+            kontaktadresseKodeverk = kontaktadresse.map {
+                hentAdresseKodeverk(
+                    it.postnummer,
+                    it.landkode,
+                    it.kommunenummer
+                )
+            },
+            bostedsadresseKodeverk = hentAdresseKodeverk(
+                bostedsadresse?.postnummer,
+                bostedsadresse?.landkode,
+                bostedsadresse?.kommunenummer
+            ),
+            deltBostedKodeverk = hentAdresseKodeverk(
+                deltBosted?.postnummer,
+                deltBosted?.landkode,
+                deltBosted?.kommunenummer
+            ),
+            oppholdsadresseKodeverk = oppholdsadresse.map {
+                hentAdresseKodeverk(
+                    it.postnummer,
+                    it.landkode,
+                    it.kommunenummer
+                )
+            },
+        )
     }
 
-    private suspend fun hentGyldigeStatsborgerskap(statsborgerskap: List<PdlStatsborgerskap>): List<String> {
+    private suspend fun hentGyldigeStatsborgerskap(statsborgerskap: List<Statsborgerskap>): List<String> {
         return statsborgerskap
-            .filter { it.land != UKJENT_LAND && it.gyldigTilOgMed?.isBefore(LocalDate.now()) != true } // Filtrer ut ukjent og ugyldige
-            .map { kodeverkService.hentStatsborgerskap().term(it.land) }
+            .filter { it.land != UKJENT_LAND && it.isValid() } // Filtrer ut ukjent og ugyldige
+            .map { kodeverkConsumer.hentStatsborgerskap().term(it.land) }
             .filter { it.isNotEmpty() }
+    }
+
+    private fun Statsborgerskap.isValid(): Boolean {
+        return this.gyldigTilOgMed.let { it == null || LocalDate.parse(it).isAfter(LocalDate.now()) }
     }
 
     private suspend fun hentAdresseKodeverk(
@@ -75,27 +103,31 @@ class PersonaliaService(
         landkode: String?,
         kommunenummer: String?
     ): AdresseKodeverk {
-        return AdresseKodeverk().apply {
-            poststed = kodeverkService.hentPostnummer().term(postnummer)
-            land = kodeverkService.hentLandKoder().term(landkode)
-            kommune = getKommuneKodeverksTerm(kommunenummer)
-        }
+        return AdresseKodeverk(
+            poststed = postnummer?.let { kodeverkConsumer.hentPostnummer().term(it) },
+            land = landkode?.let { kodeverkConsumer.hentLandKoder().term(it) },
+            kommune = hentKommuneKodeverksTerm(kommunenummer),
+        )
     }
 
-    private suspend fun getKommuneKodeverksTerm(inbound: String?): String {
+    private suspend fun hentLandKodeverksTerm(inbound: String?): String? {
+        return inbound?.let { kodeverkConsumer.hentLandKoder().term(it) }
+    }
+
+    private suspend fun hentKommuneKodeverksTerm(inbound: String?): String? {
         return if ("0000" == inbound) {
             ""
         } else {
-            kodeverkService.hentKommuner().term(inbound)
+            inbound?.let { kodeverkConsumer.hentKommuner().term(it) }
         }
     }
 
-    private suspend fun hentValutaKodeterm(kode: String?): String? {
-        return kontoregisterConsumer.hentValutakoder().find { valuta -> kode == valuta.kode }?.tekst
+    private suspend fun hentValutaKontoregisterKodeterm(kode: String?): String? {
+        return kontoregisterConsumer.hentValutakoder().find { it.kode == kode }?.tekst
     }
 
-    private suspend fun hentLandKodeterm(kode: String?): String? {
-        return kontoregisterConsumer.hentLandkoder().find { land -> kode == land.kode }?.tekst
+    private suspend fun hentLandKontoregisterKodeterm(kode: String?): String? {
+        return kontoregisterConsumer.hentLandkoder().find { it.kode == kode }?.tekst
     }
 
     companion object {
