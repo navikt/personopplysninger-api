@@ -115,7 +115,10 @@ fun Route.endreOpplysninger(
                 extensions = mapOf("SameSite" to "Lax"),
             )
 
-            val decrypted: String = idporten.decrypt(call.request.cookies["endreKontonummerState"]!!)
+            val decrypted: String = idporten.decrypt(
+                call.request.cookies["endreKontonummerState"]
+                    ?: throw IDPortenException("missing endreKontonummerState cookie")
+            )
             val endreKontonummerState: EndreKontonummerState = Json.decodeFromString(decrypted)
             locale = endreKontonummerState.locale
 
