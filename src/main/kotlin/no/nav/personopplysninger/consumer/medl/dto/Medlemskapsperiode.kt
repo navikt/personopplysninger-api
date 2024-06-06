@@ -9,7 +9,7 @@ data class Medlemskapsperiode(
     @Serializable(with = LocalDateSerializer::class)
     val fraOgMed: LocalDate,
     @Serializable(with = LocalDateSerializer::class)
-    val tilOgMed: LocalDate,
+    val tilOgMed: LocalDate? = null,
     val medlem: Boolean,
     val hjemmel: String,
     val trygdedekning: String? = null,
