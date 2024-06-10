@@ -26,9 +26,9 @@ data class Environment(
     val medlUrl: String = System.getenv("MEDLEMSKAP_MEDL_API_URL"),
     val kontoregisterUrl: String = System.getenv("KONTOREGISTER_URL"),
 
-    val inst2TargetApp: String = System.getenv("PERSONOPPLYSNINGER_PROXY_TARGET_APP"),
+    val inst2TargetApp: String = System.getenv("INST2_TARGET_APP"),
     val digdirKrrProxyTargetApp: String = System.getenv("DIGDIR_KRR_PROXY_CONSUMER_TARGET_APP"),
-    val medlTargetApp: String = System.getenv("PERSONOPPLYSNINGER_PROXY_TARGET_APP"),
+    val medlTargetApp: String = System.getenv("MEDL_TARGET_APP"),
     val personopplysningerProxyTargetApp: String = System.getenv("PERSONOPPLYSNINGER_PROXY_TARGET_APP"),
     val pdlTargetApp: String = System.getenv("PDL_CONSUMER_TARGET_APP"),
     val pdlMottakTargetApp: String = System.getenv("PDL_MOTTAK_TARGET_APP"),
