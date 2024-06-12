@@ -37,7 +37,7 @@ import io.ktor.http.takeFrom
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
-import java.net.URL
+import java.net.URI
 import java.time.Instant
 import java.util.*
 import javax.crypto.SecretKey
@@ -59,11 +59,12 @@ data class IDPorten(
         runBlocking {
             httpClient.getOAuthServerConfigurationMetadata(wellKnownUrl)
         }
-    private val jwkSource: JWKSource<SecurityContext> = JWKSourceBuilder.create<SecurityContext>(URL(metadata.jwksUri))
-        .cache(true)
-        .rateLimited(false)
-        .refreshAheadCache(true)
-        .build()
+    private val jwkSource: JWKSource<SecurityContext> =
+        JWKSourceBuilder.create<SecurityContext>(URI(metadata.jwksUri).toURL())
+            .cache(true)
+            .rateLimited(false)
+            .refreshAheadCache(true)
+            .build()
     private val jwsKeySelector = JWSVerificationKeySelector(JWSAlgorithm.RS256, jwkSource)
     private val idTokenValidator = IDTokenValidator(Issuer(metadata.issuer), ClientID(clientId), jwsKeySelector, null)
 

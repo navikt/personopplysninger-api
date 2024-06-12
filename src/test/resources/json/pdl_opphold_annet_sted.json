@@ -30,9 +30,8 @@
           "land": "NOR"
         }
       ],
-      "foedsel": [
+      "foedested": [
         {
-          "foedested": null,
           "foedekommune": "4601",
           "foedeland": "NOR"
         }
