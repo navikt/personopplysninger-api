@@ -46,7 +46,7 @@ class PersonaliaService(
         val person = inboundPdl.person!!
         val geografiskTilknytning = inboundPdl.geografiskTilknytning
 
-        val foedsel = person.foedsel.firstOrNull()
+        val foedested = person.foedested.firstOrNull()
 
         val kontaktadresse = person.kontaktadresse
         val bostedsadresse = person.bostedsadresse.firstOrNull()
@@ -54,8 +54,8 @@ class PersonaliaService(
         val oppholdsadresse = person.oppholdsadresse
 
         return PersonaliaKodeverk(
-            foedekommuneterm = hentKommuneKodeverksTerm(foedsel?.foedekommune),
-            foedelandterm = hentLandKodeverksTerm(foedsel?.foedeland),
+            foedekommuneterm = hentKommuneKodeverksTerm(foedested?.foedekommune),
+            foedelandterm = hentLandKodeverksTerm(foedested?.foedeland),
             gtLandterm = hentLandKodeverksTerm(geografiskTilknytning?.gtLand),
             statsborgerskaptermer = hentGyldigeStatsborgerskap(person.statsborgerskap),
             utenlandskbanklandterm = inboundKonto?.utenlandskKontoInfo?.let { hentLandKontoregisterKodeterm(it.bankLandkode) },

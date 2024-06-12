@@ -5,7 +5,7 @@ import no.nav.pdl.generated.dto.enums.KjoennType
 import no.nav.pdl.generated.dto.enums.Sivilstandstype
 import no.nav.pdl.generated.dto.hentpersonquery.Bostedsadresse
 import no.nav.pdl.generated.dto.hentpersonquery.DeltBosted
-import no.nav.pdl.generated.dto.hentpersonquery.Foedsel
+import no.nav.pdl.generated.dto.hentpersonquery.Foedested
 import no.nav.pdl.generated.dto.hentpersonquery.Folkeregisteridentifikator
 import no.nav.pdl.generated.dto.hentpersonquery.GeografiskTilknytning
 import no.nav.pdl.generated.dto.hentpersonquery.Kjoenn
@@ -64,8 +64,8 @@ fun createDummyPerson(): Person {
                 gyldigTilOgMed = null
             )
         ),
-        foedsel = listOf(
-            Foedsel("foedekommune", "foedeland")
+        foedested = listOf(
+            Foedested("foedekommune", "foedeland")
         ),
         sivilstand = listOf(
             Sivilstand(Sivilstandstype.GIFT)
