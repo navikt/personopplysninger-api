@@ -218,8 +218,7 @@
     },
     "geografiskTilknytning": {
       "gtKommune": null,
-      "gtBydel": "460108",
-      "gtLand": null
+      "gtBydel": "460108"
     }
   }
 }

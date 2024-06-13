@@ -127,5 +127,5 @@ fun createDummyOppholdsadresse(adresseType: AdresseType): Oppholdsadresse {
 }
 
 fun createDummyGeografiskTilknytning(): GeografiskTilknytning? {
-    return GeografiskTilknytning("gtKommune", "gtBydel", "gtLand")
+    return GeografiskTilknytning("gtKommune", "gtBydel")
 }

@@ -4,9 +4,10 @@ import no.nav.pdl.generated.dto.HentKontaktadresseQuery
 
 private const val PDL_MASTER = "pdl"
 
-fun HentKontaktadresseQuery.Result.findOpplysningsId(): String? {
+fun HentKontaktadresseQuery.Result.findOpplysningsId(): String {
     return person?.kontaktadresse
         ?.firstOrNull { it.metadata.master.equals(PDL_MASTER, true) }
         ?.metadata
         ?.opplysningsId
+        ?: throw RuntimeException("Fant ikke opplysningsId for kontaktadresse")
 }
