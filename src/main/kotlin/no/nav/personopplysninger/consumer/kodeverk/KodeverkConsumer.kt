@@ -28,7 +28,7 @@ class KodeverkConsumer(
     }
 
     suspend fun hentLandKoder(): KodeverkBetydningerResponse {
-        return fetchFromKodeverk("Landkoder", true)
+        return fetchFromKodeverk("Landkoder", false)
     }
 
     suspend fun hentPostnummer(): KodeverkBetydningerResponse {
