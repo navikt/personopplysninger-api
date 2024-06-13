@@ -7,7 +7,7 @@
   "pdl-mottak-host": "pdl-mottak.dev-fss-pub.nais.io",
   "pdl-api-host": "pdl-api.dev-fss-pub.nais.io",
   "inst2-host": "institusjon-opphold-proxy-q2.dev-fss-pub.nais.io",
-  "medlemskap-host": "medlemskap-medl-api.intern.dev.nav.no",
+  "medlemskap-host": "medlemskap-medl-api.dev-fss-pub.nais.io",
   "kontoregister-host": "sokos-kontoregister-person.intern.dev.nav.no",
   "min-replicas": 1,
   "max-replicas": 1,
