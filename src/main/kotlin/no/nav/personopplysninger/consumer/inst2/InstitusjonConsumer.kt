@@ -5,6 +5,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.isSuccess
 import no.nav.personopplysninger.config.BEARER
 import no.nav.personopplysninger.config.CONSUMER_ID
@@ -16,6 +17,7 @@ import no.nav.personopplysninger.config.HEADER_NAV_PERSONIDENT
 import no.nav.personopplysninger.consumer.inst2.dto.InnsynInstitusjonsopphold
 import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
+import org.slf4j.LoggerFactory
 import java.util.*
 
 
@@ -24,6 +26,7 @@ class InstitusjonConsumer(
     private val environment: Environment,
     private val tokenDingsService: TokendingsService,
 ) {
+    private val logger = LoggerFactory.getLogger(InstitusjonConsumer::class.java)
 
     suspend fun getInstitusjonsopphold(token: String, fnr: String): List<InnsynInstitusjonsopphold> {
         val accessToken = tokenDingsService.exchangeToken(token, environment.inst2TargetApp)
@@ -39,6 +42,10 @@ class InstitusjonConsumer(
         return if (response.status.isSuccess()) {
             response.body()
         } else {
+            // todo: fjern
+            if (response.status == HttpStatusCode.Unauthorized) {
+                logger.warn("Fikk 401 mot inst2. www-authenticate: ${response.headers["www-authenticate"]}")
+            }
             throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
         }
     }
