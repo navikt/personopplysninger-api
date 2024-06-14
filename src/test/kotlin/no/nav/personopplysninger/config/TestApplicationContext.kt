@@ -52,7 +52,6 @@ class TestApplicationContext(httpClient: HttpClient) {
         inst2TargetApp = "",
         digdirKrrProxyTargetApp = "",
         medlTargetApp = "",
-        personopplysningerProxyTargetApp = "",
         pdlTargetApp = "",
         pdlMottakTargetApp = "",
         kontoregisterTargetApp = "",
