@@ -15,7 +15,6 @@ import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.consumer.kodeverk.dto.KodeverkBetydningerResponse
 import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.tms.token.support.azure.exchange.AzureService
-import org.slf4j.LoggerFactory
 import java.util.*
 
 class KodeverkConsumer(
@@ -69,11 +68,6 @@ class KodeverkConsumer(
                 return if (response.status.isSuccess()) {
                     response.body<KodeverkBetydningerResponse>()
                 } else {
-
-                    response.headers["www-authenticate"]?.let {
-                        LoggerFactory.getLogger(this::class.java).warn("Authenticate header: $it")
-                    }
-
                     throw RuntimeException(consumerErrorMessage(endpoint, response.status.value, response.body()))
                 }
             }
