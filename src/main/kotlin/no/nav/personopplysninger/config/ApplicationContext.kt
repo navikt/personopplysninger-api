@@ -7,6 +7,7 @@ import io.micrometer.prometheusmetrics.PrometheusConfig
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import no.nav.personopplysninger.consumer.digdirkrr.KontaktinfoConsumer
 import no.nav.personopplysninger.consumer.inst2.InstitusjonConsumer
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.consumer.medl.MedlConsumer
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
@@ -18,6 +19,7 @@ import no.nav.personopplysninger.institusjon.InstitusjonService
 import no.nav.personopplysninger.kontaktinformasjon.KontaktinformasjonService
 import no.nav.personopplysninger.medl.MedlService
 import no.nav.personopplysninger.personalia.PersonaliaService
+import no.nav.tms.token.support.azure.exchange.AzureServiceBuilder
 import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
 import java.net.URI
 import java.util.*
@@ -33,6 +35,7 @@ class ApplicationContext {
     val metricsCollector = MetricsCollector(appMicrometerRegistry.prometheusRegistry)
 
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
+    val azureService = AzureServiceBuilder.buildAzureService()
     val hendelseProducer = HendelseProducer(initializeKafkaProducer(env), env.varselHendelseTopic)
 
     val idporten = setupIdporten(env)
@@ -40,7 +43,7 @@ class ApplicationContext {
     val institusjonConsumer = InstitusjonConsumer(httpClient, env, tokendingsService)
     val kontaktinfoConsumer = KontaktinfoConsumer(httpClient, env, tokendingsService)
     val kontoregisterConsumer = KontoregisterConsumer(httpClient, env, tokendingsService)
-    val kodeverkConsumer = no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer(cachedHttpClient, env)
+    val kodeverkConsumer = KodeverkConsumer(cachedHttpClient, env, azureService)
     val medlConsumer = MedlConsumer(httpClient, env, tokendingsService)
     val norg2Consumer = Norg2Consumer(httpClient, env)
     val pdlConsumer = PdlConsumer(GraphQLKtorClient(URI(env.pdlUrl).toURL(), httpClient), env, tokendingsService)

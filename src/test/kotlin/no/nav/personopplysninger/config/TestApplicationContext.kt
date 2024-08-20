@@ -9,6 +9,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import no.nav.personopplysninger.consumer.digdirkrr.KontaktinfoConsumer
 import no.nav.personopplysninger.consumer.inst2.InstitusjonConsumer
+import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
 import no.nav.personopplysninger.consumer.medl.MedlConsumer
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
@@ -55,9 +56,11 @@ class TestApplicationContext(httpClient: HttpClient) {
         pdlTargetApp = "",
         pdlMottakTargetApp = "",
         kontoregisterTargetApp = "",
+        kodeverkTargetApp = "",
     )
 
     val tokendingsService = DummyTokendingsService()
+    val azureService = DummyAzureService()
     val hendelseProducer = HendelseProducer(MockProducer(), "")
 
     val idporten: IDPorten = mockIdporten()
@@ -65,7 +68,7 @@ class TestApplicationContext(httpClient: HttpClient) {
     val institusjonConsumer = InstitusjonConsumer(httpClient, env, tokendingsService)
     val kontaktinfoConsumer = KontaktinfoConsumer(httpClient, env, tokendingsService)
     val kontoregisterConsumer = KontoregisterConsumer(httpClient, env, tokendingsService)
-    val kodeverkConsumer = no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer(httpClient, env)
+    val kodeverkConsumer = KodeverkConsumer(httpClient, env, azureService)
     val medlConsumer = MedlConsumer(httpClient, env, tokendingsService)
     val norg2Consumer = Norg2Consumer(httpClient, env)
     val pdlConsumer = PdlConsumer(GraphQLKtorClient(URI(env.pdlUrl).toURL(), httpClient), env, tokendingsService)
