@@ -57,7 +57,7 @@ class KodeverkConsumer(
     private suspend fun fetchFromKodeverk(navn: String, eksluderUgyldige: Boolean): KodeverkBetydningerResponse {
         kodeverkEndpoint(navn).let { endpoint ->
             azureService.getAccessToken(environment.kodeverkTargetApp).let { accessToken ->
-                client.get(kodeverkEndpoint(endpoint)) {
+                client.get(endpoint) {
                     parameter("spraak", "nb")
                     parameter("ekskluderUgyldige", eksluderUgyldige)
                     header(HEADER_NAV_CALL_ID, UUID.randomUUID())
