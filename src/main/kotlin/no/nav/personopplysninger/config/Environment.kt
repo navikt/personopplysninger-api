@@ -32,6 +32,7 @@ data class Environment(
     val pdlTargetApp: String = System.getenv("PDL_CONSUMER_TARGET_APP"),
     val pdlMottakTargetApp: String = System.getenv("PDL_MOTTAK_TARGET_APP"),
     val kontoregisterTargetApp: String = System.getenv("KONTOREGISTER_TARGET_APP"),
+    val kodeverkTargetApp: String = System.getenv("KODEVERK_TARGET_APP"),
 
     val subjectNameCacheThreshold: Long = (System.getenv("KODEVERK_CACHE_THRESHOLD") ?: 20L) as Long,
     val subjectNameCacheExpiryMinutes: Long = (System.getenv("KODEVERK_CACHE_EXPIRY_MINUTES") ?: 60L) as Long,
