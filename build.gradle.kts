@@ -39,7 +39,7 @@ dependencies {
     val graphqlVersion = "7.1.1"
     val kafkaVersion = "3.8.0"
     val ktorVersion = "2.3.12"
-    val logbackVersion = "1.5.6"
+    val logbackVersion = "1.5.7"
     val logstashVersion = "8.0"
     val micrometerVersion = "1.13.3"
     val mockkVersion = "1.13.12"
