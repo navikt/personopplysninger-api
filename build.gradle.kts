@@ -3,7 +3,7 @@ import com.expediagroup.graphql.plugin.gradle.graphql
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    val kotlinVersion = "2.0.10"
+    val kotlinVersion = "2.0.20"
     val shadowVersion = "8.1.1"
     val versionsVersion = "0.51.0"
     val graphqlVersion = "7.1.4"
