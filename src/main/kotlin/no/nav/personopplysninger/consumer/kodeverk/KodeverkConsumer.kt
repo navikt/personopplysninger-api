@@ -58,8 +58,8 @@ class KodeverkConsumer(
         kodeverkEndpoint(navn).let { endpoint ->
             azureService.getAccessToken(environment.kodeverkTargetApp).let { accessToken ->
                 client.get(endpoint) {
-                    parameter("spraak", "nb")
-                    parameter("ekskluderUgyldige", eksluderUgyldige)
+                    parameter(PARAM_SPRAAK, NORSK_BOKMAAL)
+                    parameter(PARAM_EKSKLUDER_UGYLDIGE, eksluderUgyldige)
                     header(HEADER_NAV_CALL_ID, UUID.randomUUID())
                     header(HEADER_NAV_CONSUMER_ID, CONSUMER_ID)
                     header(HEADER_AUTHORIZATION, BEARER + accessToken)
@@ -76,5 +76,11 @@ class KodeverkConsumer(
 
     private fun kodeverkEndpoint(navn: String): String {
         return environment.kodeverkUrl.plus("/api/v1/kodeverk/$navn/koder/betydninger")
+    }
+
+    companion object {
+        private const val PARAM_SPRAAK = "spraak"
+        private const val PARAM_EKSKLUDER_UGYLDIGE = "ekskluderUgyldige"
+        private const val NORSK_BOKMAAL = "nb"
     }
 }
