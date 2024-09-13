@@ -51,7 +51,7 @@ data class IDPorten(
     val clientJwk: String,
     val encryptionKey: SecretKey,
     val acr: String = "idporten-loa-high",
-    val allowedAuthTimeSkewSeconds: Long = 3,
+    val allowedAuthTimeSkewSeconds: Long = 5,
     val secureCookie: Boolean = true,
 ) {
     private val rsaKey: RSAKey = RSAKey.parse(clientJwk)
