@@ -16,6 +16,7 @@ import com.nimbusds.jose.jwk.source.JWKSource
 import com.nimbusds.jose.jwk.source.JWKSourceBuilder
 import com.nimbusds.jose.proc.JWSVerificationKeySelector
 import com.nimbusds.jose.proc.SecurityContext
+import com.nimbusds.jose.util.DefaultResourceRetriever
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
 import com.nimbusds.oauth2.sdk.id.ClientID
@@ -60,11 +61,10 @@ data class IDPorten(
             httpClient.getOAuthServerConfigurationMetadata(wellKnownUrl)
         }
     private val jwkSource: JWKSource<SecurityContext> =
-        JWKSourceBuilder.create<SecurityContext>(URI(metadata.jwksUri).toURL())
+        JWKSourceBuilder.create<SecurityContext>(URI(metadata.jwksUri).toURL(), DefaultResourceRetriever(1000, 1000))
             .cache(true)
             .rateLimited(false)
             .refreshAheadCache(true)
-            .retrying(true)
             .build()
     private val jwsKeySelector = JWSVerificationKeySelector(JWSAlgorithm.RS256, jwkSource)
     private val idTokenValidator = IDTokenValidator(Issuer(metadata.issuer), ClientID(clientId), jwsKeySelector, null)
