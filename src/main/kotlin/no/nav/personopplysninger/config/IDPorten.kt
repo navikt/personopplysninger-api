@@ -64,6 +64,7 @@ data class IDPorten(
             .cache(true)
             .rateLimited(false)
             .refreshAheadCache(true)
+            .retrying(true)
             .build()
     private val jwsKeySelector = JWSVerificationKeySelector(JWSAlgorithm.RS256, jwkSource)
     private val idTokenValidator = IDTokenValidator(Issuer(metadata.issuer), ClientID(clientId), jwsKeySelector, null)
