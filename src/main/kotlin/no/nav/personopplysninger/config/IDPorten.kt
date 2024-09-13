@@ -61,7 +61,7 @@ data class IDPorten(
             httpClient.getOAuthServerConfigurationMetadata(wellKnownUrl)
         }
     private val jwkSource: JWKSource<SecurityContext> =
-        JWKSourceBuilder.create<SecurityContext>(URI(metadata.jwksUri).toURL(), DefaultResourceRetriever(2000, 2000))
+        JWKSourceBuilder.create<SecurityContext>(URI(metadata.jwksUri).toURL(), DefaultResourceRetriever(3000, 3000))
             .cache(true)
             .rateLimited(false)
             .refreshAheadCache(true)
