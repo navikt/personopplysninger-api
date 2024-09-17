@@ -19,14 +19,14 @@ import no.nav.personopplysninger.config.mocks.mockNorg2
 import no.nav.personopplysninger.config.mocks.mockPdl
 import no.nav.personopplysninger.config.mocks.mockPdlMottak
 
-const val INST2 = "inst2"
-const val KODEVERK = "kodeverk"
-const val DIGDIR_KRR_PROXY = "digdir-krr-proxy"
-const val KONTOREGISTER = "kontoregister"
-const val MEDL = "medl"
-const val NORG2 = "norg2"
-const val PDL = "pdl"
-const val PDL_MOTTAK = "pdl-mottak"
+private const val INST2 = "inst2"
+private const val KODEVERK = "kodeverk"
+private const val DIGDIR_KRR_PROXY = "digdir-krr-proxy"
+private const val KONTOREGISTER = "kontoregister"
+private const val MEDL = "medl"
+private const val NORG2 = "norg2"
+private const val PDL = "pdl"
+private const val PDL_MOTTAK = "pdl-mottak"
 
 fun setupMockedClient(
     inst2Status: HttpStatusCode = HttpStatusCode.OK,
@@ -46,33 +46,15 @@ fun setupMockedClient(
             engine {
                 addHandler { request ->
                     when (request.url.host) {
-                        INST2 -> {
-                            mockInst2(inst2Status)
-                        }
-                        KODEVERK -> {
-                            mockKodeverk(request, kodeverkStatus)
-                        }
-                        DIGDIR_KRR_PROXY -> {
-                            mockDigdirKrrProxy(digdirKrrProxyStatus)
-                        }
-                        KONTOREGISTER -> {
-                            mockKontoregister(request, kontoregisterStatus, delayMilliseconds = kontoregisterDelay)
-                        }
-                        MEDL -> {
-                            mockMedl(medlStatus)
-                        }
-                        NORG2 -> {
-                            mockNorg2(request, norg2Status)
-                        }
-                        PDL -> {
-                            mockPdl(pdlStatus, pdlResponseType)
-                        }
-                        PDL_MOTTAK -> {
-                            mockPdlMottak(request, pdlMottakStatus, pdlMottakResponseType)
-                        }
-                        else -> {
-                            respondError(HttpStatusCode.NotFound)
-                        }
+                        INST2 -> mockInst2(inst2Status)
+                        KODEVERK -> mockKodeverk(request, kodeverkStatus)
+                        DIGDIR_KRR_PROXY -> mockDigdirKrrProxy(digdirKrrProxyStatus)
+                        KONTOREGISTER -> mockKontoregister(request, kontoregisterStatus, kontoregisterDelay)
+                        MEDL -> mockMedl(medlStatus)
+                        NORG2 -> mockNorg2(request, norg2Status)
+                        PDL -> mockPdl(pdlStatus, pdlResponseType)
+                        PDL_MOTTAK -> mockPdlMottak(request, pdlMottakStatus, pdlMottakResponseType)
+                        else -> respondError(HttpStatusCode.NotFound)
                     }
                 }
 
@@ -83,7 +65,6 @@ fun setupMockedClient(
             install(HttpTimeout) {
                 requestTimeoutMillis = 100L
             }
-            expectSuccess = false
         }
     }
 }

@@ -18,7 +18,6 @@ import no.nav.personopplysninger.kontaktinformasjon.kontaktinformasjon
 import no.nav.personopplysninger.medl.medl
 import no.nav.personopplysninger.personalia.personalia
 
-
 fun Application.testModule(appContext: TestApplicationContext) {
 
     install(CORS) {
