@@ -8,9 +8,9 @@ import no.nav.personopplysninger.personalia.dto.outbound.Personalia
 import no.nav.personopplysninger.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.personalia.dto.outbound.UtenlandskBankInfo
 import no.nav.personopplysninger.personalia.extensions.stringValue
-import no.nav.personopplysninger.personalia.transformer.testdata.createDummyKonto
-import no.nav.personopplysninger.personalia.transformer.testdata.createDummyPerson
-import no.nav.personopplysninger.personalia.transformer.testdata.createDummyPersonaliaKodeverk
+import no.nav.personopplysninger.personalia.transformer.testdata.defaultKonto
+import no.nav.personopplysninger.personalia.transformer.testdata.defaultPerson
+import no.nav.personopplysninger.personalia.transformer.testdata.defaultPersonaliaKodeverk
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -18,9 +18,9 @@ class PersoninfoTransformerTest {
 
     @Test
     fun gittPersonalia_skalFaaPersonalia() {
-        val konto = createDummyKonto()
-        val kodeverk = createDummyPersonaliaKodeverk()
-        val pdlPerson = createDummyPerson()
+        val konto = defaultKonto
+        val kodeverk = defaultPersonaliaKodeverk
+        val pdlPerson = defaultPerson
         val actual: Personalia = PersoninfoTransformer.toOutbound(pdlPerson, konto, kodeverk)
 
         val pdlNavn = pdlPerson.navn.first()

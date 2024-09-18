@@ -1,9 +1,9 @@
-package no.nav.personopplysninger.endreopplysninger
+package no.nav.personopplysninger.integration.endreopplysninger
 
 import io.ktor.http.HttpStatusCode
-import no.nav.personopplysninger.IntegrationTest
 import no.nav.personopplysninger.config.mocks.PdlMottakResponseType
 import no.nav.personopplysninger.config.setupMockedClient
+import no.nav.personopplysninger.integration.IntegrationTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 

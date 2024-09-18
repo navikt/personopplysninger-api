@@ -11,18 +11,21 @@ import no.nav.personopplysninger.consumer.digdirkrr.KontaktinfoConsumer
 import no.nav.personopplysninger.consumer.inst2.InstitusjonConsumer
 import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.consumer.kontoregister.KontoregisterConsumer
+import no.nav.personopplysninger.consumer.kontoregister.dto.response.Kontonummer
 import no.nav.personopplysninger.consumer.medl.MedlConsumer
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
 import no.nav.personopplysninger.consumer.pdl.PdlConsumer
 import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
+import no.nav.personopplysninger.endreopplysninger.EndreKontonummerState
 import no.nav.personopplysninger.endreopplysninger.EndreOpplysningerService
 import no.nav.personopplysninger.endreopplysninger.kafka.HendelseProducer
 import no.nav.personopplysninger.institusjon.InstitusjonService
 import no.nav.personopplysninger.kontaktinformasjon.KontaktinformasjonService
 import no.nav.personopplysninger.medl.MedlService
 import no.nav.personopplysninger.personalia.PersonaliaService
+import no.nav.personopplysninger.testutils.FNR
+import no.nav.personopplysninger.testutils.STATE
 import no.nav.personopplysninger.testutils.createAccessToken
-import no.nav.personopplysninger.testutils.endreKontonummerState
 import org.apache.kafka.clients.producer.MockProducer
 import java.net.URI
 
@@ -97,4 +100,15 @@ class TestApplicationContext(httpClient: HttpClient) {
         coEvery { idportenMock.secureCookie } returns false
         return idportenMock
     }
+
+    private fun endreKontonummerState() = EndreKontonummerState(
+        state = STATE,
+        nonce = "",
+        codeVerifier = "",
+        kontonummer = kontonummer(),
+        bruker = FNR,
+        locale = "",
+    )
+
+    private fun kontonummer() = Kontonummer("kilde", null, FNR)
 }

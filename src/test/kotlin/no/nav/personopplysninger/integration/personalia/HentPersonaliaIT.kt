@@ -1,10 +1,10 @@
-package no.nav.personopplysninger.personalia
+package no.nav.personopplysninger.integration.personalia
 
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
-import no.nav.personopplysninger.IntegrationTest
 import no.nav.personopplysninger.config.mocks.PdlResponseType
 import no.nav.personopplysninger.config.setupMockedClient
+import no.nav.personopplysninger.integration.IntegrationTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import kotlin.test.Test

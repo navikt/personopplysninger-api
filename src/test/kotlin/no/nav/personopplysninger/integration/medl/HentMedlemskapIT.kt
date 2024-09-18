@@ -1,8 +1,8 @@
-package no.nav.personopplysninger.medl
+package no.nav.personopplysninger.integration.medl
 
 import io.ktor.http.HttpStatusCode
-import no.nav.personopplysninger.IntegrationTest
 import no.nav.personopplysninger.config.setupMockedClient
+import no.nav.personopplysninger.integration.IntegrationTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 

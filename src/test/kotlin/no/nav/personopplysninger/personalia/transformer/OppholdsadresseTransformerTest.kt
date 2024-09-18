@@ -7,8 +7,8 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.VEG
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Matrikkeladresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
-import no.nav.personopplysninger.personalia.transformer.testdata.createDummyAdresseKodeverk
-import no.nav.personopplysninger.personalia.transformer.testdata.createDummyOppholdsadresse
+import no.nav.personopplysninger.personalia.transformer.testdata.createOppholdsadresse
+import no.nav.personopplysninger.personalia.transformer.testdata.defaultAdresseKodeverk
 import no.nav.personopplysninger.testutils.assertMatrikkeladresseEquals
 import no.nav.personopplysninger.testutils.assertUtenlandskAdresseEquals
 import no.nav.personopplysninger.testutils.assertVegadresseEquals
@@ -18,11 +18,11 @@ import org.junit.jupiter.api.Test
 
 class OppholdsadresseTransformerTest {
 
-    private val adresseKodeverk = createDummyAdresseKodeverk()
+    private val adresseKodeverk = defaultAdresseKodeverk
 
     @Test
     fun canTransformVegdresse() {
-        val inbound = createDummyOppholdsadresse(VEGADRESSE)
+        val inbound = createOppholdsadresse(VEGADRESSE)
         val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -42,7 +42,7 @@ class OppholdsadresseTransformerTest {
 
     @Test
     fun canTransformMatrikkeladresse() {
-        val inbound = createDummyOppholdsadresse(MATRIKKELADRESSE)
+        val inbound = createOppholdsadresse(MATRIKKELADRESSE)
         val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -62,7 +62,7 @@ class OppholdsadresseTransformerTest {
 
     @Test
     fun canTransformUtenlandskAdresse() {
-        val inbound = createDummyOppholdsadresse(UTENLANDSK_ADRESSE)
+        val inbound = createOppholdsadresse(UTENLANDSK_ADRESSE)
         val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
@@ -81,7 +81,7 @@ class OppholdsadresseTransformerTest {
 
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
-        val inbound = createDummyOppholdsadresse(UKJENTBOSTED)
+        val inbound = createOppholdsadresse(UKJENTBOSTED)
         val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
 
         Assertions.assertNull(actual)

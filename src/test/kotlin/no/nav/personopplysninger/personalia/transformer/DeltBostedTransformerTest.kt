@@ -9,8 +9,8 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.Matrikkeladress
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Ukjentbosted
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
-import no.nav.personopplysninger.personalia.transformer.testdata.createDummyAdresseKodeverk
-import no.nav.personopplysninger.personalia.transformer.testdata.createDummyDeltBosted
+import no.nav.personopplysninger.personalia.transformer.testdata.createDeltBosted
+import no.nav.personopplysninger.personalia.transformer.testdata.defaultAdresseKodeverk
 import no.nav.personopplysninger.testutils.assertMatrikkeladresseEquals
 import no.nav.personopplysninger.testutils.assertUkjentbostedEquals
 import no.nav.personopplysninger.testutils.assertUtenlandskAdresseEquals
@@ -21,11 +21,11 @@ import org.junit.jupiter.api.Test
 
 class DeltBostedTransformerTest {
 
-    private val adresseKodeverk = createDummyAdresseKodeverk()
+    private val adresseKodeverk = defaultAdresseKodeverk
 
     @Test
     fun canTransformVegdresse() {
-        val inbound = createDummyDeltBosted(VEGADRESSE)
+        val inbound = createDeltBosted(VEGADRESSE)
         val actual = DeltBostedTransformer.toOutbound(inbound, adresseKodeverk)
 
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -43,7 +43,7 @@ class DeltBostedTransformerTest {
 
     @Test
     fun canTransformMatrikkeladresse() {
-        val inbound = createDummyDeltBosted(MATRIKKELADRESSE)
+        val inbound = createDeltBosted(MATRIKKELADRESSE)
         val actual = DeltBostedTransformer.toOutbound(inbound, adresseKodeverk)
 
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -62,7 +62,7 @@ class DeltBostedTransformerTest {
 
     @Test
     fun canTransformUtenlandskAdresse() {
-        val inbound = createDummyDeltBosted(UTENLANDSK_ADRESSE)
+        val inbound = createDeltBosted(UTENLANDSK_ADRESSE)
         val actual = DeltBostedTransformer.toOutbound(inbound, adresseKodeverk)
 
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -79,7 +79,7 @@ class DeltBostedTransformerTest {
 
     @Test
     fun canTransformUkjentbosted() {
-        val inbound = createDummyDeltBosted(UKJENTBOSTED)
+        val inbound = createDeltBosted(UKJENTBOSTED)
         val actual = DeltBostedTransformer.toOutbound(inbound, adresseKodeverk)
 
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -92,7 +92,7 @@ class DeltBostedTransformerTest {
 
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
-        val inbound = createDummyDeltBosted(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
+        val inbound = createDeltBosted(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
         val actual = DeltBostedTransformer.toOutbound(inbound, adresseKodeverk)
 
         Assertions.assertNull(actual)

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger
+package no.nav.personopplysninger.integration
 
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

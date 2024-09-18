@@ -1,9 +1,9 @@
 package no.nav.personopplysninger.personalia.transformer
 
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
-import no.nav.personopplysninger.personalia.transformer.testdata.createDummyPdlData
-import no.nav.personopplysninger.personalia.transformer.testdata.createDummyPdlDataWithoutAdresser
-import no.nav.personopplysninger.personalia.transformer.testdata.createDummyPersonaliaKodeverk
+import no.nav.personopplysninger.personalia.transformer.testdata.defaultPdlData
+import no.nav.personopplysninger.personalia.transformer.testdata.defaultPdlDataWithoutAdresser
+import no.nav.personopplysninger.personalia.transformer.testdata.defaultPersonaliaKodeverk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
@@ -14,8 +14,8 @@ class AdresseinfoTransformerTest {
 
     @Test
     fun gittAdresse_skalFaaAdresse() {
-        val inbound = createDummyPdlData()
-        val kodeverk = createDummyPersonaliaKodeverk()
+        val inbound = defaultPdlData
+        val kodeverk = defaultPersonaliaKodeverk
         val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk)
 
         assertNotNull(actual.deltBosted)
@@ -27,7 +27,7 @@ class AdresseinfoTransformerTest {
 
     @Test
     fun gittNull_skalFaaNull() {
-        val inbound = createDummyPdlDataWithoutAdresser()
+        val inbound = defaultPdlDataWithoutAdresser
         val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
 
         assertTrue(actual.kontaktadresser.isEmpty())

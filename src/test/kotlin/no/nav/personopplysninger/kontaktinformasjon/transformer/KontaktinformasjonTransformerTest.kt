@@ -1,6 +1,6 @@
 package no.nav.personopplysninger.kontaktinformasjon.transformer
 
-import no.nav.personopplysninger.kontaktinformasjon.transformer.testdata.createDummyDigitalKontaktinfo
+import no.nav.personopplysninger.kontaktinformasjon.transformer.testdata.defaultDigitalKontaktinfo
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -8,7 +8,7 @@ class KontaktinformasjonTransformerTest {
 
     @Test
     fun gittKontaktinformasjon_skalFaaKontaktinformasjon() {
-        val inbound = createDummyDigitalKontaktinfo()
+        val inbound = defaultDigitalKontaktinfo
         val spraakTerm = "Nynorsk"
 
         val actual = KontaktinformasjonTransformer.toOutbound(inbound, spraakTerm)
@@ -20,7 +20,7 @@ class KontaktinformasjonTransformerTest {
 
     @Test
     fun gittSpraakNorsk_skalReturnereBokmaal() {
-        val inbound = createDummyDigitalKontaktinfo()
+        val inbound = defaultDigitalKontaktinfo
         val spraakTerm = "Norsk"
 
         val actual = KontaktinformasjonTransformer.toOutbound(inbound, spraakTerm)
