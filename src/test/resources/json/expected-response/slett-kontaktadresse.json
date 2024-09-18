@@ -1,0 +1,31 @@
+{
+  "status": {
+    "endringId": 3286,
+    "statusType": "DONE",
+    "substatus": [
+      {
+        "beskrivelse": null,
+        "domene": "PDL",
+        "kode": null,
+        "referanse": "e1d21684-46fe-4b17-a35c-2be8b8dcbc6f",
+        "status": null
+      },
+      {
+        "beskrivelse": null,
+        "domene": "TPS",
+        "kode": null,
+        "referanse": "e1d21684-46fe-4b17-a35c-2be8b8dcbc6f",
+        "status": null
+      },
+      {
+        "beskrivelse": null,
+        "domene": "FREG",
+        "kode": null,
+        "referanse": "e1d21684-46fe-4b17-a35c-2be8b8dcbc6f",
+        "status": null
+      }
+    ]
+  },
+  "statusType": "OK",
+  "error": null
+}

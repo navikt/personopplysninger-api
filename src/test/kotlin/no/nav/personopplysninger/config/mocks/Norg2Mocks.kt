@@ -22,7 +22,7 @@ fun MockRequestHandleScope.mockNorg2(request: HttpRequestData, status: HttpStatu
 }
 
 private fun readNorg2Response(path: String) = when {
-    path.contains("navkontor") -> readJsonFile("/json/norg2-navkontor.json")
-    path.contains("kontaktinformasjon") -> readJsonFile("/json/norg2-kontaktinformasjon.json")
+    path.contains("navkontor") -> readJsonFile("/json/mocks/norg2-navkontor.json")
+    path.contains("kontaktinformasjon") -> readJsonFile("/json/mocks/norg2-kontaktinformasjon.json")
     else -> throw IllegalArgumentException("Fant ikke mock for path: $path")
 }

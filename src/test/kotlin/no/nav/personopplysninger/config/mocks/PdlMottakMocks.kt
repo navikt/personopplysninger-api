@@ -39,6 +39,6 @@ private fun successResponseParams(
 }
 
 private fun readPdlMottakResponse(responseType: PdlMottakResponseType) = when (responseType) {
-    PdlMottakResponseType.TELEFON -> readJsonFile("/json/endring-telefonnummer.json")
-    PdlMottakResponseType.SLETT_KONTAKTADRESSE -> readJsonFile("/json/endring-kontaktadresse.json")
+    PdlMottakResponseType.TELEFON -> readJsonFile("/json/mocks/endring-telefonnummer.json")
+    PdlMottakResponseType.SLETT_KONTAKTADRESSE -> readJsonFile("/json/mocks/endring-kontaktadresse.json")
 }

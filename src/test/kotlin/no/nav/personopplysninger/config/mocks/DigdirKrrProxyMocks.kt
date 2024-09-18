@@ -12,7 +12,7 @@ import no.nav.personopplysninger.testutils.readJsonFile
 fun MockRequestHandleScope.mockDigdirKrrProxy(status: HttpStatusCode): HttpResponseData {
     return if (status.isSuccess()) {
         respond(
-            content = readJsonFile("/json/digdir-krr-proxy.json"),
+            content = readJsonFile("/json/mocks/digdir-krr-proxy.json"),
             headers = contentTypeJsonHeader()
         )
     } else {

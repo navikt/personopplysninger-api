@@ -1,40 +1,41 @@
 package no.nav.personopplysninger.integration.medl
 
+import io.kotest.assertions.json.shouldEqualJson
+import io.kotest.matchers.shouldBe
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import no.nav.personopplysninger.config.setupMockedClient
 import no.nav.personopplysninger.integration.IntegrationTest
-import org.junit.jupiter.api.Assertions.assertEquals
+import no.nav.personopplysninger.testutils.readJsonFile
 import kotlin.test.Test
 
 class HentMedlemskapIT : IntegrationTest() {
 
     @Test
     fun hentMedlemskap200() = integrationTest(setupMockedClient()) {
-        val client = httpClient()
-        val response = get(client, HENT_MEDLEMSKAP_PATH)
+        val response = get(HENT_MEDLEMSKAP_PATH)
 
-        assertEquals(HttpStatusCode.OK, response.status)
+        response.status shouldBe HttpStatusCode.OK
+        response.bodyAsText() shouldEqualJson readJsonFile("/json/expected-response/medlemskap.json")
     }
 
     @Test
-    fun feilMotMedlSkalGi500() =
-        integrationTest(setupMockedClient(medlStatus = HttpStatusCode.InternalServerError)) {
-            val client = httpClient()
+    fun feilMotMedlSkalGi500() = integrationTest(
+        setupMockedClient(medlStatus = HttpStatusCode.InternalServerError)
+    ) {
+        val response = get(HENT_MEDLEMSKAP_PATH)
 
-            val response = get(client, HENT_MEDLEMSKAP_PATH)
-
-            assertEquals(HttpStatusCode.InternalServerError, response.status)
-        }
+        response.status shouldBe HttpStatusCode.InternalServerError
+    }
 
     @Test
-    fun feilMotKodeverkSkalGi500() =
-        integrationTest(setupMockedClient(kodeverkStatus = HttpStatusCode.InternalServerError)) {
-            val client = httpClient()
+    fun feilMotKodeverkSkalGi500() = integrationTest(
+        setupMockedClient(kodeverkStatus = HttpStatusCode.InternalServerError)
+    ) {
+        val response = get(HENT_MEDLEMSKAP_PATH)
 
-            val response = get(client, HENT_MEDLEMSKAP_PATH)
-
-            assertEquals(HttpStatusCode.InternalServerError, response.status)
-        }
+        response.status shouldBe HttpStatusCode.InternalServerError
+    }
 
     companion object {
         private const val HENT_MEDLEMSKAP_PATH = "/medl"

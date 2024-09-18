@@ -1,0 +1,215 @@
+{
+  "personalia": {
+    "fornavn": "AREMARK",
+    "etternavn": "TESTFAMILIEN",
+    "personident": {
+      "verdi": "10108000398",
+      "type": "FNR"
+    },
+    "kontoregisterStatus": "SUCCESS",
+    "kontonr": null,
+    "utenlandskbank": {
+      "adresse1": "string",
+      "adresse2": "string",
+      "adresse3": "string",
+      "bankkode": "CC123456789",
+      "banknavn": "string",
+      "iban": null,
+      "kontonummer": "8361347234732292",
+      "land": "Afghanistan",
+      "swiftkode": "SHEDNO22",
+      "valuta": "Angolansk kwanza"
+    },
+    "tlfnr": {
+      "telefonAlternativ": null,
+      "landskodeAlternativ": null,
+      "telefonHoved": "55553334",
+      "landskodeHoved": "+47"
+    },
+    "statsborgerskap": [
+      "NORGE",
+      "TSJEKKIA",
+      "XXX"
+    ],
+    "foedested": "4601, NORGE",
+    "sivilstand": "Ugift",
+    "kjoenn": "Mann"
+  },
+  "adresser": {
+    "kontaktadresser": [
+      {
+        "gyldigTilOgMed": null,
+        "coAdressenavn": null,
+        "kilde": "pdl",
+        "adresse": {
+          "type": "POSTADRESSE_I_FRITT_FORMAT",
+          "adresselinje1": "Hylkjelia",
+          "adresselinje2": "5109 HYLKJE",
+          "adresselinje3": "Norge",
+          "postnummer": null,
+          "poststed": null
+        }
+      }
+    ],
+    "bostedsadresse": {
+      "angittFlyttedato": null,
+      "coAdressenavn": null,
+      "adresse": {
+        "type": "VEGADRESSE",
+        "husnummer": "100",
+        "husbokstav": null,
+        "bruksenhetsnummer": null,
+        "adressenavn": "Almåsvegen",
+        "kommune": "4601",
+        "tilleggsnavn": null,
+        "postnummer": "5109",
+        "poststed": "5109"
+      }
+    },
+    "oppholdsadresser": [],
+    "deltBosted": null
+  },
+  "enhetKontaktInformasjon": {
+    "navn": "NAV Halden-Aremark",
+    "brukerkontakt": {
+      "publikumsmottak": [
+        {
+          "besoeksadresse": {
+            "postnummer": "1771",
+            "poststed": "HALDEN",
+            "gatenavn": "Storgata",
+            "husnummer": "8",
+            "husbokstav": null,
+            "adresseTilleggsnavn": null
+          },
+          "aapningstider": [
+            {
+              "dag": "Mandag",
+              "dato": null,
+              "fra": null,
+              "til": null,
+              "kommentar": "Timeavtaler i tidsrommet 10.00 - 14.00",
+              "stengt": "true",
+              "kunTimeavtale": "false"
+            },
+            {
+              "dag": "Tirsdag",
+              "dato": null,
+              "fra": null,
+              "til": null,
+              "kommentar": "Timeavtaler i tidsrommet 10.00 - 14.00",
+              "stengt": "true",
+              "kunTimeavtale": "false"
+            },
+            {
+              "dag": "Onsdag",
+              "dato": null,
+              "fra": null,
+              "til": null,
+              "kommentar": "Timeavtaler i tidsrommet 10.00 - 14.00",
+              "stengt": "true",
+              "kunTimeavtale": "false"
+            },
+            {
+              "dag": "Torsdag",
+              "dato": null,
+              "fra": null,
+              "til": null,
+              "kommentar": "Timeavtaler i tidsrommet 10.00 - 14.00",
+              "stengt": "true",
+              "kunTimeavtale": "false"
+            },
+            {
+              "dag": "Fredag",
+              "dato": null,
+              "fra": null,
+              "til": null,
+              "kommentar": "Timeavtaler i tidsrommet 10.00 - 14.00",
+              "stengt": "true",
+              "kunTimeavtale": "false"
+            },
+            {
+              "dag": null,
+              "dato": "2023-03-31",
+              "fra": null,
+              "til": null,
+              "kommentar": "Steng fordi Bjørnar er i Granca",
+              "stengt": "true",
+              "kunTimeavtale": "false"
+            },
+            {
+              "dag": null,
+              "dato": "2023-04-01",
+              "fra": null,
+              "til": null,
+              "kommentar": "Kun åpent for timeavtaler",
+              "stengt": "false",
+              "kunTimeavtale": "true"
+            }
+          ],
+          "stedsbeskrivelse": "Halden",
+          "adkomstbeskrivelse": null
+        },
+        {
+          "besoeksadresse": {
+            "postnummer": "1798",
+            "poststed": "AREMARK",
+            "gatenavn": "Aremarkveien",
+            "husnummer": "2276",
+            "husbokstav": null,
+            "adresseTilleggsnavn": null
+          },
+          "aapningstider": [
+            {
+              "dag": "Tirsdag",
+              "dato": null,
+              "fra": null,
+              "til": null,
+              "kommentar": "Timeavtaler i tidsrommet 09.00 - 15.00.",
+              "stengt": "true",
+              "kunTimeavtale": "false"
+            },
+            {
+              "dag": "Torsdag",
+              "dato": null,
+              "fra": null,
+              "til": null,
+              "kommentar": null,
+              "stengt": "true",
+              "kunTimeavtale": "false"
+            },
+            {
+              "dag": "Mandag",
+              "dato": null,
+              "fra": null,
+              "til": null,
+              "kommentar": "Timeavtaler i tidsrommet 09.00 - 15.00.",
+              "stengt": "true",
+              "kunTimeavtale": "false"
+            },
+            {
+              "dag": "Onsdag",
+              "dato": null,
+              "fra": null,
+              "til": null,
+              "kommentar": "Timeavtaler i tidsrommet 09.00 - 15.00.",
+              "stengt": "true",
+              "kunTimeavtale": "false"
+            },
+            {
+              "dag": "Fredag",
+              "dato": null,
+              "fra": null,
+              "til": null,
+              "kommentar": "Timeavtaler i tidsrommet 09.00 - 15.00.",
+              "stengt": "true",
+              "kunTimeavtale": "false"
+            }
+          ],
+          "stedsbeskrivelse": "Aremark",
+          "adkomstbeskrivelse": null
+        }
+      ]
+    }
+  }
+}

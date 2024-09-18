@@ -1,0 +1,101 @@
+[
+  {
+    "kode": "AF",
+    "tekst": "Afghanistan",
+    "kreverIban": false,
+    "ibanLengde": null,
+    "kreverBankkode": false,
+    "bankkodeLengde": null,
+    "alternativLandkode": null
+  },
+  {
+    "kode": "AL",
+    "tekst": "Albania",
+    "kreverIban": true,
+    "ibanLengde": 28,
+    "kreverBankkode": false,
+    "bankkodeLengde": null,
+    "alternativLandkode": null
+  },
+  {
+    "kode": "DZ",
+    "tekst": "Algerie",
+    "kreverIban": false,
+    "ibanLengde": 26,
+    "kreverBankkode": false,
+    "bankkodeLengde": null,
+    "alternativLandkode": null
+  },
+  {
+    "kode": "AS",
+    "tekst": "Amerikansk Samoa",
+    "kreverIban": false,
+    "ibanLengde": null,
+    "kreverBankkode": false,
+    "bankkodeLengde": null,
+    "alternativLandkode": null
+  },
+  {
+    "kode": "AD",
+    "tekst": "Andorra",
+    "kreverIban": true,
+    "ibanLengde": 24,
+    "kreverBankkode": false,
+    "bankkodeLengde": null,
+    "alternativLandkode": null
+  },
+  {
+    "kode": "AO",
+    "tekst": "Angola",
+    "kreverIban": false,
+    "ibanLengde": 25,
+    "kreverBankkode": false,
+    "bankkodeLengde": null,
+    "alternativLandkode": null
+  },
+  {
+    "kode": "AI",
+    "tekst": "Anguilla",
+    "kreverIban": false,
+    "ibanLengde": null,
+    "kreverBankkode": false,
+    "bankkodeLengde": null,
+    "alternativLandkode": null
+  },
+  {
+    "kode": "AQ",
+    "tekst": "Antarktika",
+    "kreverIban": false,
+    "ibanLengde": null,
+    "kreverBankkode": false,
+    "bankkodeLengde": null,
+    "alternativLandkode": null
+  },
+  {
+    "kode": "AG",
+    "tekst": "Antigua og Barbuda",
+    "kreverIban": false,
+    "ibanLengde": null,
+    "kreverBankkode": false,
+    "bankkodeLengde": null,
+    "alternativLandkode": null
+  },
+  {
+    "kode": "AR",
+    "tekst": "Argentina",
+    "kreverIban": false,
+    "ibanLengde": null,
+    "kreverBankkode": false,
+    "bankkodeLengde": null,
+    "alternativLandkode": null
+  },
+  {
+    "kode": "AX",
+    "tekst": "Åland",
+    "kreverIban": false,
+    "ibanLengde": null,
+    "kreverBankkode": false,
+    "bankkodeLengde": null,
+    "alternativLandkode": "FI"
+  }
+]

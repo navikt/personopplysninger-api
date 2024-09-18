@@ -12,7 +12,7 @@ import no.nav.personopplysninger.testutils.readJsonFile
 fun MockRequestHandleScope.mockMedl(status: HttpStatusCode): HttpResponseData {
     return if (status.isSuccess()) {
         respond(
-            content = readJsonFile("/json/medl-response.json"),
+            content = readJsonFile("/json/mocks/medl-response.json"),
             headers = contentTypeJsonHeader()
         )
     } else {

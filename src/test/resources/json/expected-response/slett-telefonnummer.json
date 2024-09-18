@@ -1,0 +1,34 @@
+{
+  "status": {
+    "endringId": 65,
+    "statusType": "DONE",
+    "substatus": [
+      {
+        "beskrivelse": "Er ikke gyldig Dnummer",
+        "domene": "FREG",
+        "kode": null,
+        "referanse": "2fa7b57c-8a3b-4f40-b999-67fd848021f8",
+        "status": "IGNORED"
+      },
+      {
+        "beskrivelse": null,
+        "domene": "PDL",
+        "kode": null,
+        "referanse": "e23ef345-cb94-466b-a5db-bda7835adfa3",
+        "status": "IGNORED"
+      },
+      {
+        "beskrivelse": "Person ikke funnet i TPS",
+        "domene": "TPS",
+        "kode": "VALIDERINGSFEIL",
+        "referanse": "b8a2619b-1e9e-4d67-9d16-3ec678791685",
+        "status": "ERROR"
+      }
+    ]
+  },
+  "statusType": "ERROR",
+  "error": {
+    "message": "Person ikke funnet i TPS",
+    "details": null
+  }
+}

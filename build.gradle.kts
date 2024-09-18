@@ -47,6 +47,7 @@ dependencies {
     val kotlinVersion = "2.0.0"
     val tmsKtorTokenSupportVersion = "4.1.2"
     val tmsVarselBuilderVersion = "1.0.4"
+    val kotestVersion = "5.7.2"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
     implementation("com.github.ben-manes.caffeine:caffeine:$caffeineVersion")
@@ -77,6 +78,8 @@ dependencies {
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation("io.kotest:kotest-assertions-json:$kotestVersion")
 }
 
 application {

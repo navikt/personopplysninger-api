@@ -33,21 +33,14 @@ open class IntegrationTest {
         block()
     }
 
-    fun ApplicationTestBuilder.httpClient() =
-        createClient {
-            install(ContentNegotiation) { json() }
-            followRedirects = false
-        }
-
-    suspend fun get(
-        client: HttpClient,
+    suspend fun ApplicationTestBuilder.get(
         path: String,
         cookie: Pair<String, String>? = null,
         queryParams: Map<String, String>? = null,
     ): HttpResponse {
         val token = createAccessToken()
 
-        return client.get(path) {
+        return httpClient.get(path) {
             header("Authorization", "Bearer $token")
             cookie?.let {
                 cookie(cookie.first, cookie.second)
@@ -58,21 +51,26 @@ open class IntegrationTest {
         }
     }
 
-    suspend fun post(client: HttpClient, path: String, body: Any? = null): HttpResponse {
+    suspend fun ApplicationTestBuilder.post(path: String, body: Any? = null): HttpResponse {
         val token = createAccessToken()
 
-        return client.post(path) {
+        return httpClient.post(path) {
             header("Authorization", "Bearer $token")
             contentType(ContentType.Application.Json)
 
-            // Body castes til riktig klasse automagisk
-            if (body is Telefonnummer) {
-                setBody(body)
-            } else if (body is Kontonummer) {
-                setBody(body)
-            } else if (body != null) {
-                throw RuntimeException("Body er ugyldig. Legg inn en sjekk for klassen så den smart castes.")
+            body?.run {
+                when (body) {
+                    is Telefonnummer -> setBody(body)
+                    is Kontonummer -> setBody(body)
+                    else -> throw IllegalArgumentException("Body er ugyldig. Legg inn en sjekk for klassen så den smart castes.")
+                }
             }
         }
     }
+
+    private val ApplicationTestBuilder.httpClient
+        get() = createClient {
+            install(ContentNegotiation) { json() }
+            followRedirects = false
+        }
 }

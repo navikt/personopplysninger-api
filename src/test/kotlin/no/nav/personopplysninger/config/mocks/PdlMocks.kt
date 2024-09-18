@@ -25,7 +25,7 @@ fun MockRequestHandleScope.mockPdl(status: HttpStatusCode, responseType: PdlResp
 }
 
 private fun readPdlResponse(responseType: PdlResponseType) = when (responseType) {
-    PdlResponseType.STANDARD -> readJsonFile("/json/pdl.json")
-    PdlResponseType.FLERE_ADRESSER -> readJsonFile("/json/pdl_flere_adresser.json")
-    PdlResponseType.OPPHOLD_ANNET_STED -> readJsonFile("/json/pdl_opphold_annet_sted.json")
+    PdlResponseType.STANDARD -> readJsonFile("/json/mocks/pdl.json")
+    PdlResponseType.FLERE_ADRESSER -> readJsonFile("/json/mocks/pdl_flere_adresser.json")
+    PdlResponseType.OPPHOLD_ANNET_STED -> readJsonFile("/json/mocks/pdl_opphold_annet_sted.json")
 }

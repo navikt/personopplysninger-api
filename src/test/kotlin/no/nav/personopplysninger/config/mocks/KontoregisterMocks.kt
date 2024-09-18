@@ -36,9 +36,9 @@ suspend fun MockRequestHandleScope.mockKontoregister(
 }
 
 private fun readKontoregisterResponse(path: String) = when {
-    path.contains("hent-aktiv-konto") -> readJsonFile("/json/kontoregister.json")
-    path.contains("oppdater-konto") -> readJsonFile("/json/kontoregister.json")
-    path.contains("hent-landkoder") -> readJsonFile("/json/kontoregister-landkoder.json")
-    path.contains("hent-valutakoder") -> readJsonFile("/json/kontoregister-valutakoder.json")
+    path.contains("hent-aktiv-konto") -> readJsonFile("/json/mocks/kontoregister.json")
+    path.contains("oppdater-konto") -> readJsonFile("/json/mocks/kontoregister.json")
+    path.contains("hent-landkoder") -> readJsonFile("/json/mocks/kontoregister-landkoder.json")
+    path.contains("hent-valutakoder") -> readJsonFile("/json/mocks/kontoregister-valutakoder.json")
     else -> throw IllegalArgumentException("Fant ikke mock for path: $path")
 }

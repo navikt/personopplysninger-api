@@ -22,14 +22,14 @@ fun MockRequestHandleScope.mockKodeverk(request: HttpRequestData, status: HttpSt
 }
 
 private fun readKodeverkResponse(path: String) = when {
-    path.contains("Kommuner") -> readJsonFile("/json/kodeverk-kommuner.json")
-    path.contains("Landkoder") -> readJsonFile("/json/kodeverk-land.json")
-    path.contains("StatsborgerskapFreg") -> readJsonFile("/json/kodeverk-statsborgerskap.json")
-    path.contains("Valutaer") -> readJsonFile("/json/kodeverk-valutaer.json")
-    path.contains("Postnummer") -> readJsonFile("/json/kodeverk-postnummer.json")
-    path.contains("GrunnlagMedl") -> readJsonFile("/json/kodeverk-grunnlagmedl.json")
-    path.contains("DekningMedl") -> readJsonFile("/json/kodeverk-dekningmedl.json")
-    path.contains("Retningsnumre") -> readJsonFile("/json/kodeverk-retningsnumre.json")
-    path.contains("Språk") -> readJsonFile("/json/kodeverk-spraak.json")
+    path.contains("Kommuner") -> readJsonFile("/json/mocks/kodeverk-kommuner.json")
+    path.contains("Landkoder") -> readJsonFile("/json/mocks/kodeverk-land.json")
+    path.contains("StatsborgerskapFreg") -> readJsonFile("/json/mocks/kodeverk-statsborgerskap.json")
+    path.contains("Valutaer") -> readJsonFile("/json/mocks/kodeverk-valutaer.json")
+    path.contains("Postnummer") -> readJsonFile("/json/mocks/kodeverk-postnummer.json")
+    path.contains("GrunnlagMedl") -> readJsonFile("/json/mocks/kodeverk-grunnlagmedl.json")
+    path.contains("DekningMedl") -> readJsonFile("/json/mocks/kodeverk-dekningmedl.json")
+    path.contains("Retningsnumre") -> readJsonFile("/json/mocks/kodeverk-retningsnumre.json")
+    path.contains("Språk") -> readJsonFile("/json/mocks/kodeverk-spraak.json")
     else -> throw IllegalArgumentException("Fant ikke mock for path: $path")
 }
