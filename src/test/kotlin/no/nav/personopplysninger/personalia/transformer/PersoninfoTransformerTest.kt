@@ -21,7 +21,7 @@ class PersoninfoTransformerTest {
         val konto = defaultKonto
         val kodeverk = defaultPersonaliaKodeverk
         val pdlPerson = defaultPerson
-        val actual: Personalia = PersoninfoTransformer.toOutbound(pdlPerson, konto, kodeverk)
+        val actual: Personalia = pdlPerson.toOutbound(konto, kodeverk)
 
         val pdlNavn = pdlPerson.navn.first()
         val pdlFolkeregisteridentifikator = pdlPerson.folkeregisteridentifikator.first()

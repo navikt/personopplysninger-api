@@ -10,47 +10,40 @@ import no.nav.personopplysninger.personalia.dto.outbound.Personident
 import no.nav.personopplysninger.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.personalia.extensions.stringValue
 
-
-object PersoninfoTransformer {
-
-    fun toOutbound(pdlPerson: Person, konto: Konto?, kodeverk: PersonaliaKodeverk): Personalia {
-
-        fun fornavn(navn: Navn): String =
-            if (navn.mellomnavn == null) navn.fornavn
-            else {
-                "${navn.fornavn} ${navn.mellomnavn}".trim()
-            }
-
-        return Personalia(
-            fornavn = pdlPerson.navn.firstOrNull()?.let { fornavn(it) },
-            etternavn = pdlPerson.navn.firstOrNull()?.etternavn,
-            personident = pdlPerson.folkeregisteridentifikator.first()
-                .let { Personident(it.identifikasjonsnummer, it.type) },
-            kontonr = if (konto?.utenlandskKontoInfo == null) konto?.kontonummer else null,
-            tlfnr = pdlPerson.telefonnummer.toTlfnr(),
-            utenlandskbank = konto?.utenlandskKontoInfo?.let { UtenlandskBankTransformer.toOutbound(konto, kodeverk) },
-            statsborgerskap = kodeverk.statsborgerskaptermer,
-            foedested = foedested(kodeverk.foedekommuneterm, kodeverk.foedelandterm),
-            sivilstand = pdlPerson.sivilstand.firstOrNull()?.type?.stringValue,
-            kjoenn = pdlPerson.kjoenn.firstOrNull()?.kjoenn?.stringValue,
-            kontoregisterStatus = if (konto?.error == true) "ERROR" else "SUCCESS"
+fun Person.toOutbound(konto: Konto?, kodeverk: PersonaliaKodeverk) = Personalia(
+    fornavn = navn.firstOrNull()?.fornavn(),
+    etternavn = navn.firstOrNull()?.etternavn,
+    personident = folkeregisteridentifikator.first()
+        .let { Personident(it.identifikasjonsnummer, it.type) },
+    kontonr = if (konto?.utenlandskKontoInfo == null) konto?.kontonummer else null,
+    tlfnr = telefonnummer.toTlfnr(),
+    utenlandskbank = konto?.utenlandskKontoInfo?.let {
+        konto.toOutbound(
+            kodeverk
         )
-    }
+    },
+    statsborgerskap = kodeverk.statsborgerskaptermer,
+    foedested = foedested(kodeverk.foedekommuneterm, kodeverk.foedelandterm),
+    sivilstand = sivilstand.firstOrNull()?.type?.stringValue,
+    kjoenn = kjoenn.firstOrNull()?.kjoenn?.stringValue,
+    kontoregisterStatus = if (konto?.error == true) "ERROR" else "SUCCESS"
+)
 
-    private fun foedested(foedtIKommune: String?, foedtILand: String?): String? {
-        val names = listOfNotNull(foedtIKommune, foedtILand).filter { it.isNotEmpty() }
-        return if (names.isEmpty()) null else names.joinToString(", ")
-    }
+private fun Navn.fornavn() = if (mellomnavn == null) fornavn else "$fornavn $mellomnavn".trim()
 
-    private fun List<Telefonnummer>.toTlfnr(): Tlfnr {
-        val hoved = find { it.prioritet == 1}
-        val alternativ = find { it.prioritet == 2}
+private fun foedested(foedtIKommune: String?, foedtILand: String?): String? {
+    val names = listOfNotNull(foedtIKommune, foedtILand).filter { it.isNotEmpty() }
+    return if (names.isEmpty()) null else names.joinToString(", ")
+}
 
-        return Tlfnr(
-            telefonHoved = hoved?.nummer,
-            landskodeHoved = hoved?.landskode,
-            telefonAlternativ =  alternativ?.nummer,
-            landskodeAlternativ = alternativ?.landskode
-        )
-    }
+private fun List<Telefonnummer>.toTlfnr(): Tlfnr {
+    val hoved = find { it.prioritet == 1 }
+    val alternativ = find { it.prioritet == 2 }
+
+    return Tlfnr(
+        telefonHoved = hoved?.nummer,
+        landskodeHoved = hoved?.landskode,
+        telefonAlternativ = alternativ?.nummer,
+        landskodeAlternativ = alternativ?.landskode
+    )
 }

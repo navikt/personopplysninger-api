@@ -29,7 +29,7 @@ class KontaktadresseTransformerTest {
     @Test
     fun canTransformVegdresse() {
         val inbound = createKontaktadresse(VEGADRESSE)
-        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -49,7 +49,7 @@ class KontaktadresseTransformerTest {
     @Test
     fun canTransformPostadresseIFrittFormat() {
         val inbound = createKontaktadresse(POSTADRESSE_I_FRITT_FORMAT)
-        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -68,7 +68,7 @@ class KontaktadresseTransformerTest {
     @Test
     fun canTransformPdlPostboksadresse() {
         val inbound = createKontaktadresse(POSTBOKSADRESSE)
-        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -87,7 +87,7 @@ class KontaktadresseTransformerTest {
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createKontaktadresse(UTENLANDSK_ADRESSE)
-        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -107,7 +107,7 @@ class KontaktadresseTransformerTest {
     fun canTransformUtenlandskAdresseIFrittFormat() {
         val inbound =
             createKontaktadresse(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -126,7 +126,7 @@ class KontaktadresseTransformerTest {
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createKontaktadresse(UKJENTBOSTED)
-        val actual = KontaktadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertNull(actual)
     }

@@ -26,7 +26,7 @@ class BostedsadresseTransformerTest {
     @Test
     fun canTransformVegdresse() {
         val inbound = createBostedsadresse(VEGADRESSE)
-        val actual = BostedsadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -45,7 +45,7 @@ class BostedsadresseTransformerTest {
     @Test
     fun canTransformMatrikkeladresse() {
         val inbound = createBostedsadresse(MATRIKKELADRESSE)
-        val actual = BostedsadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -65,7 +65,7 @@ class BostedsadresseTransformerTest {
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createBostedsadresse(UTENLANDSK_ADRESSE)
-        val actual = BostedsadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -83,7 +83,7 @@ class BostedsadresseTransformerTest {
     @Test
     fun canTransformUkjentbosted() {
         val inbound = createBostedsadresse(UKJENTBOSTED)
-        val actual = BostedsadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -97,7 +97,7 @@ class BostedsadresseTransformerTest {
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createBostedsadresse(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-        val actual = BostedsadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         Assertions.assertNull(actual)
     }

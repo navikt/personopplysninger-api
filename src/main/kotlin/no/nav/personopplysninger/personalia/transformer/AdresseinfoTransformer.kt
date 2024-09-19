@@ -5,26 +5,23 @@ import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.Adresser
 import no.nav.personopplysninger.util.firstOrNull
 
-object AdresseinfoTransformer {
+fun HentPersonQuery.Result.toOutbound(kodeverk: PersonaliaKodeverk): Adresser {
+    val kontaktadresse = person!!.kontaktadresse
+    val bostedsadresse = person.bostedsadresse.firstOrNull()
+    val oppholdsadresse = person.oppholdsadresse
+    val deltBosted = person.deltBosted.firstOrNull()
 
-    fun toOutbound(pdlData: HentPersonQuery.Result, kodeverk: PersonaliaKodeverk): Adresser {
-        val kontaktadresse = pdlData.person!!.kontaktadresse
-        val bostedsadresse = pdlData.person.bostedsadresse.firstOrNull()
-        val oppholdsadresse = pdlData.person.oppholdsadresse
-        val deltBosted = pdlData.person.deltBosted.firstOrNull()
+    val kontaktadresseKodeverk = kodeverk.kontaktadresseKodeverk
+    val bostedsadresseKodeverk = kodeverk.bostedsadresseKodeverk
+    val oppholdsadresseKodeverk = kodeverk.oppholdsadresseKodeverk
+    val deltBostedKodeverk = kodeverk.deltBostedKodeverk
 
-        val kontaktadresseKodeverk = kodeverk.kontaktadresseKodeverk
-        val bostedsadresseKodeverk = kodeverk.bostedsadresseKodeverk
-        val oppholdsadresseKodeverk = kodeverk.oppholdsadresseKodeverk
-        val deltBostedKodeverk = kodeverk.deltBostedKodeverk
-
-        return Adresser(
-            kontaktadresser = kontaktadresse.zip(kontaktadresseKodeverk)
-                .mapNotNull { pair -> KontaktadresseTransformer.toOutbound(pair.first, pair.second) },
-            bostedsadresse = bostedsadresse?.let { BostedsadresseTransformer.toOutbound(it, bostedsadresseKodeverk) },
-            oppholdsadresser = oppholdsadresse.zip(oppholdsadresseKodeverk)
-                .mapNotNull { pair -> OppholdsadresseTransformer.toOutbound(pair.first, pair.second) },
-            deltBosted = deltBosted?.let { DeltBostedTransformer.toOutbound(it, deltBostedKodeverk) },
-        )
-    }
+    return Adresser(
+        kontaktadresser = kontaktadresse.zip(kontaktadresseKodeverk)
+            .mapNotNull { pair -> pair.first.toOutbound(pair.second) },
+        bostedsadresse = bostedsadresse?.toOutbound(bostedsadresseKodeverk),
+        oppholdsadresser = oppholdsadresse.zip(oppholdsadresseKodeverk)
+            .mapNotNull { pair -> pair.first.toOutbound(pair.second) },
+        deltBosted = deltBosted?.toOutbound(deltBostedKodeverk),
+    )
 }

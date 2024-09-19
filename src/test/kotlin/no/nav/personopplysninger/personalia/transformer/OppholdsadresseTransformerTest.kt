@@ -23,7 +23,7 @@ class OppholdsadresseTransformerTest {
     @Test
     fun canTransformVegdresse() {
         val inbound = createOppholdsadresse(VEGADRESSE)
-        val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -43,7 +43,7 @@ class OppholdsadresseTransformerTest {
     @Test
     fun canTransformMatrikkeladresse() {
         val inbound = createOppholdsadresse(MATRIKKELADRESSE)
-        val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -63,7 +63,7 @@ class OppholdsadresseTransformerTest {
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createOppholdsadresse(UTENLANDSK_ADRESSE)
-        val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -82,7 +82,7 @@ class OppholdsadresseTransformerTest {
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createOppholdsadresse(UKJENTBOSTED)
-        val actual = OppholdsadresseTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         Assertions.assertNull(actual)
     }

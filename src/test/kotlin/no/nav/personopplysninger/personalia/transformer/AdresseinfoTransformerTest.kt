@@ -16,7 +16,7 @@ class AdresseinfoTransformerTest {
     fun gittAdresse_skalFaaAdresse() {
         val inbound = defaultPdlData
         val kodeverk = defaultPersonaliaKodeverk
-        val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk)
+        val actual = inbound.toOutbound(kodeverk)
 
         assertNotNull(actual.deltBosted)
         assertNotNull(actual.oppholdsadresser)
@@ -28,7 +28,7 @@ class AdresseinfoTransformerTest {
     @Test
     fun gittNull_skalFaaNull() {
         val inbound = defaultPdlDataWithoutAdresser
-        val actual = AdresseinfoTransformer.toOutbound(inbound, kodeverk = PersonaliaKodeverk())
+        val actual = inbound.toOutbound(kodeverk = PersonaliaKodeverk())
 
         assertTrue(actual.kontaktadresser.isEmpty())
         assertNull(actual.deltBosted)

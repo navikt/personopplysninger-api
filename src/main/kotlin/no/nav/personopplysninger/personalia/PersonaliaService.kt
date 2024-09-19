@@ -13,7 +13,7 @@ import no.nav.personopplysninger.personalia.dto.outbound.PersonaliaOgAdresser
 import no.nav.personopplysninger.personalia.extensions.kommunenummer
 import no.nav.personopplysninger.personalia.extensions.landkode
 import no.nav.personopplysninger.personalia.extensions.postnummer
-import no.nav.personopplysninger.personalia.transformer.PersonaliaOgAdresserTransformer
+import no.nav.personopplysninger.personalia.transformer.toOutbound
 import java.time.LocalDate
 
 class PersonaliaService(
@@ -36,7 +36,7 @@ class PersonaliaService(
 
         val kodeverk = createPersonaliaKodeverk(pdlPersonInfo, konto)
 
-        return PersonaliaOgAdresserTransformer.toOutbound(pdlPersonInfo, konto, kodeverk, enhetKontaktInformasjon)
+        return pdlPersonInfo.toOutbound(konto, kodeverk, enhetKontaktInformasjon)
     }
 
     private suspend fun createPersonaliaKodeverk(

@@ -15,8 +15,7 @@ class PersonaliaOgAdresserTransformerTest {
     fun gittPersonaliaOgAdresser_skalFaaPersonaliaOgAdresser() {
         val konto = defaultKonto
         val pdlData = defaultPdlData
-        val actual = PersonaliaOgAdresserTransformer.toOutbound(
-            pdlData,
+        val actual = pdlData.toOutbound(
             konto,
             personaliaKodeverk,
             null

@@ -26,7 +26,7 @@ class DeltBostedTransformerTest {
     @Test
     fun canTransformVegdresse() {
         val inbound = createDeltBosted(VEGADRESSE)
-        val actual = DeltBostedTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, VEGADRESSE)
@@ -44,7 +44,7 @@ class DeltBostedTransformerTest {
     @Test
     fun canTransformMatrikkeladresse() {
         val inbound = createDeltBosted(MATRIKKELADRESSE)
-        val actual = DeltBostedTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, MATRIKKELADRESSE)
@@ -63,7 +63,7 @@ class DeltBostedTransformerTest {
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createDeltBosted(UTENLANDSK_ADRESSE)
-        val actual = DeltBostedTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, UTENLANDSK_ADRESSE)
@@ -80,7 +80,7 @@ class DeltBostedTransformerTest {
     @Test
     fun canTransformUkjentbosted() {
         val inbound = createDeltBosted(UKJENTBOSTED)
-        val actual = DeltBostedTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
         assertEquals(actual?.adresse?.type, UKJENTBOSTED)
@@ -93,7 +93,7 @@ class DeltBostedTransformerTest {
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createDeltBosted(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-        val actual = DeltBostedTransformer.toOutbound(inbound, adresseKodeverk)
+        val actual = inbound.toOutbound(adresseKodeverk)
 
         Assertions.assertNull(actual)
     }
