@@ -27,7 +27,6 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.VEG
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-
 val defaultPerson = Person(
     navn = listOf(
         Navn("fornavn", "mellomnavn", "etternavn")
@@ -63,16 +62,6 @@ val defaultPerson = Person(
 )
 
 val defaultPdlData = HentPersonQuery.Result(defaultPerson, createGeografiskTilknytning())
-
-val defaultPdlDataWithoutAdresser = defaultPdlData.copy(
-    person = defaultPerson.copy(
-        oppholdsadresse = emptyList(),
-        deltBosted = emptyList(),
-        kontaktadresse = emptyList(),
-        bostedsadresse = emptyList(),
-    ),
-    geografiskTilknytning = null
-)
 
 fun createBostedsadresse(adresseType: AdresseType): Bostedsadresse {
     return Bostedsadresse(

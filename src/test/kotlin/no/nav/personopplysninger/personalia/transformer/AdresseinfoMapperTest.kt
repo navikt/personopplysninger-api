@@ -1,38 +1,112 @@
 package no.nav.personopplysninger.personalia.transformer
 
+import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
+import no.nav.pdl.generated.dto.HentPersonQuery
+import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
+import no.nav.personopplysninger.personalia.dto.outbound.Adresser
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresse
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
+import no.nav.personopplysninger.personalia.transformer.testdata.createKontaktadresse
+import no.nav.personopplysninger.personalia.transformer.testdata.createOppholdsadresse
 import no.nav.personopplysninger.personalia.transformer.testdata.defaultPdlData
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultPdlDataWithoutAdresser
+import no.nav.personopplysninger.personalia.transformer.testdata.defaultPerson
 import no.nav.personopplysninger.personalia.transformer.testdata.defaultPersonaliaKodeverk
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertNull
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class AdresseinfoMapperTest {
 
     @Test
-    fun gittAdresse_skalFaaAdresse() {
-        val inbound = defaultPdlData
-        val kodeverk = defaultPersonaliaKodeverk
-        val actual = inbound.toOutbound(kodeverk)
+    fun `should map all fields correctly`() {
+        val inbound: HentPersonQuery.Result = defaultPdlData
+        val outbound: Adresser = inbound.toOutbound(defaultPersonaliaKodeverk)
 
-        assertNotNull(actual.deltBosted)
-        assertNotNull(actual.oppholdsadresser)
-        assertNotNull(actual.kontaktadresser)
-        assertEquals(1, actual.kontaktadresser.size)
-        assertEquals(1, actual.oppholdsadresser.size)
+        assertSoftly(outbound) {
+            kontaktadresser.shouldHaveSize(1)
+            bostedsadresse.shouldNotBeNull()
+            oppholdsadresser.shouldHaveSize(1)
+            deltBosted.shouldNotBeNull()
+        }
     }
 
     @Test
-    fun gittNull_skalFaaNull() {
-        val inbound = defaultPdlDataWithoutAdresser
-        val actual = inbound.toOutbound(kodeverk = PersonaliaKodeverk())
+    fun `should map all fields correctly when no addresses`() {
+        val inbound: HentPersonQuery.Result = defaultPdlData.copy(
+            person = defaultPerson.copy(
+                oppholdsadresse = emptyList(),
+                deltBosted = emptyList(),
+                kontaktadresse = emptyList(),
+                bostedsadresse = emptyList(),
+            )
+        )
+        val outbound: Adresser = inbound.toOutbound(PersonaliaKodeverk())
 
-        assertTrue(actual.kontaktadresser.isEmpty())
-        assertNull(actual.deltBosted)
-        assertTrue(actual.oppholdsadresser.isEmpty())
+        assertSoftly(outbound) {
+            kontaktadresser.shouldBeEmpty()
+            bostedsadresse.shouldBeNull()
+            oppholdsadresser.shouldBeEmpty()
+            deltBosted.shouldBeNull()
+        }
     }
 
+    @Test
+    fun `should map kodeverk fields correctly when multiple oppholdsadresser`() {
+        val inbound: HentPersonQuery.Result = defaultPdlData.copy(
+            person = defaultPerson.copy(
+                oppholdsadresse = List(GENERATED_ADRESSER_SIZE) { createOppholdsadresse(AdresseType.VEGADRESSE) },
+            )
+        )
+        val outbound: Adresser = inbound.toOutbound(PersonaliaKodeverk(
+            oppholdsadresseKodeverk = generateAdresseKodeverk(),
+        ))
+
+        assertSoftly(outbound.oppholdsadresser) {
+            shouldHaveSize(GENERATED_ADRESSER_SIZE)
+            indices.forEach{
+                with(get(it).adresse as Vegadresse) {
+                    kommune shouldBe "kommune $it"
+                    poststed shouldBe "poststed $it"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `should map kodeverk fields correctly when multiple kontaktadresser`() {
+        val inbound: HentPersonQuery.Result = defaultPdlData.copy(
+            person = defaultPerson.copy(
+                kontaktadresse = List(GENERATED_ADRESSER_SIZE) { createKontaktadresse(AdresseType.UTENLANDSK_ADRESSE) },
+            )
+        )
+        val outbound: Adresser = inbound.toOutbound(PersonaliaKodeverk(
+            kontaktadresseKodeverk = generateAdresseKodeverk()
+        ))
+
+        assertSoftly(outbound.kontaktadresser) {
+            shouldHaveSize(GENERATED_ADRESSER_SIZE)
+            indices.forEach{
+                with(get(it).adresse as UtenlandskAdresse) {
+                    land shouldBe "land $it"
+                }
+            }
+        }
+    }
+
+    companion object {
+        private const val GENERATED_ADRESSER_SIZE = 3
+
+        private fun generateAdresseKodeverk() = List(GENERATED_ADRESSER_SIZE) {
+            AdresseKodeverk(
+                poststed = "poststed $it",
+                land = "land $it",
+                kommune = "kommune $it"
+            )
+        }
+    }
 }
