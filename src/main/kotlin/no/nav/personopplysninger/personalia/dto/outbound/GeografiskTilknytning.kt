@@ -2,7 +2,6 @@ package no.nav.personopplysninger.personalia.dto.outbound
 
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class GeografiskTilknytning(
         val bydel: String? = null,

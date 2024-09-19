@@ -9,7 +9,6 @@ import no.nav.personopplysninger.util.getAuthTokenFromCall
 import no.nav.personopplysninger.util.getFnrFromToken
 import org.slf4j.LoggerFactory
 
-
 private val logger = LoggerFactory.getLogger("kontaktinformasjonRoute")
 
 fun Route.kontaktinformasjon(kontaktinformasjonService: KontaktinformasjonService) {

@@ -8,7 +8,6 @@ import org.apache.kafka.common.config.SslConfigs
 import org.apache.kafka.common.serialization.StringSerializer
 import java.util.*
 
-
 fun initializeKafkaProducer(environment: Environment) = KafkaProducer<String, String>(
     Properties().apply {
         put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, environment.kafkaBrokers)

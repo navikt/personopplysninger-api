@@ -18,7 +18,6 @@ import no.nav.personopplysninger.util.consumerErrorMessage
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import java.util.*
 
-
 class InstitusjonConsumer(
     private val client: HttpClient,
     private val environment: Environment,

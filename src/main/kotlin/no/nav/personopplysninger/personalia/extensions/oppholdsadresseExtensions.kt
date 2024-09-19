@@ -14,7 +14,6 @@ val Oppholdsadresse.mappingType: AdresseMappingType
         AdresseMappingType.EMPTY
     }
 
-
 val Oppholdsadresse.postnummer: String?
     get() = when (mappingType) {
         AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse?.postnummer
@@ -22,13 +21,11 @@ val Oppholdsadresse.postnummer: String?
         else -> null
     }
 
-
 val Oppholdsadresse.landkode: String?
     get() = when (mappingType) {
         AdresseMappingType.UTLAND_ADRESSE -> utenlandskAdresse?.landkode
         else -> null
     }
-
 
 val Oppholdsadresse.kommunenummer: String?
     get() = when (mappingType) {

@@ -18,7 +18,6 @@ val Kontaktadresse.mappingType: AdresseMappingType
         AdresseMappingType.EMPTY
     }
 
-
 val Kontaktadresse.postnummer: String?
     get() = when (mappingType) {
         AdresseMappingType.INNLAND_VEGADRESSE -> vegadresse?.postnummer
@@ -27,14 +26,12 @@ val Kontaktadresse.postnummer: String?
         else -> null
     }
 
-
 val Kontaktadresse.landkode: String?
     get() = when (mappingType) {
         AdresseMappingType.UTLAND_ADRESSE -> utenlandskAdresse?.landkode
         AdresseMappingType.UTLAND_FRIFORMADRESSE -> utenlandskAdresseIFrittFormat?.landkode
         else -> null
     }
-
 
 val Kontaktadresse.kommunenummer: String?
     get() = when (mappingType) {

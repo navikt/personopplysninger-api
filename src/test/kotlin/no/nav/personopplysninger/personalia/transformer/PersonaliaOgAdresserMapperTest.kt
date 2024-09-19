@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.personalia.transformer
 
-
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.transformer.testdata.defaultKonto
 import no.nav.personopplysninger.personalia.transformer.testdata.defaultPdlData

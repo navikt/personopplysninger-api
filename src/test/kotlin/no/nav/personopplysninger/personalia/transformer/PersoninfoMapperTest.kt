@@ -1,6 +1,5 @@
 package no.nav.personopplysninger.personalia.transformer
 
-
 import no.nav.pdl.generated.dto.hentpersonquery.Telefonnummer
 import no.nav.personopplysninger.consumer.kontoregister.dto.request.Konto
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
