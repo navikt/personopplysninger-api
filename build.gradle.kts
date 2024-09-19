@@ -36,7 +36,7 @@ repositories {
 dependencies {
     val auth0JwtVersion = "4.4.0"
     val caffeineVersion = "3.1.8"
-    val graphqlVersion = "7.1.1"
+    val graphqlVersion = "8.0.0"
     val kafkaVersion = "3.8.0"
     val ktorVersion = "2.3.12"
     val logbackVersion = "1.5.8"
@@ -47,7 +47,7 @@ dependencies {
     val kotlinVersion = "2.0.0"
     val tmsKtorTokenSupportVersion = "4.1.2"
     val tmsVarselBuilderVersion = "1.0.4"
-    val kotestVersion = "5.7.2"
+    val kotestVersion = "5.9.1"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
     implementation("com.github.ben-manes.caffeine:caffeine:$caffeineVersion")
