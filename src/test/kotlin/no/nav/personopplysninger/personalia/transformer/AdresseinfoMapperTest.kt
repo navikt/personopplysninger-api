@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-class AdresseinfoTransformerTest {
+class AdresseinfoMapperTest {
 
     @Test
     fun gittAdresse_skalFaaAdresse() {

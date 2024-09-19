@@ -7,7 +7,7 @@ import no.nav.personopplysninger.personalia.transformer.testdata.defaultPdlData
 import org.junit.jupiter.api.Test
 import kotlin.test.assertNotNull
 
-class PersonaliaOgAdresserTransformerTest {
+class PersonaliaOgAdresserMapperTest {
 
     private val personaliaKodeverk = PersonaliaKodeverk()
 

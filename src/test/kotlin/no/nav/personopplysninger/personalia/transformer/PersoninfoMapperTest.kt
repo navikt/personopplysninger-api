@@ -14,7 +14,7 @@ import no.nav.personopplysninger.personalia.transformer.testdata.defaultPersonal
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-class PersoninfoTransformerTest {
+class PersoninfoMapperTest {
 
     @Test
     fun gittPersonalia_skalFaaPersonalia() {
