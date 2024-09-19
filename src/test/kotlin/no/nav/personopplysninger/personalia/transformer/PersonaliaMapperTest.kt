@@ -13,14 +13,14 @@ import no.nav.personopplysninger.personalia.transformer.testdata.defaultPersonal
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-class PersoninfoMapperTest {
+class PersonaliaMapperTest {
 
     @Test
     fun gittPersonalia_skalFaaPersonalia() {
         val konto = defaultKonto
         val kodeverk = defaultPersonaliaKodeverk
         val pdlPerson = defaultPerson
-        val actual: Personalia = pdlPerson.toOutbound(konto, kodeverk)
+        val actual: Personalia = pdlPerson.toOutboundPersonalia(konto, kodeverk)
 
         val pdlNavn = pdlPerson.navn.first()
         val pdlFolkeregisteridentifikator = pdlPerson.folkeregisteridentifikator.first()

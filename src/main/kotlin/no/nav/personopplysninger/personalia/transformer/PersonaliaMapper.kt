@@ -10,7 +10,7 @@ import no.nav.personopplysninger.personalia.dto.outbound.Personident
 import no.nav.personopplysninger.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.personalia.extensions.stringValue
 
-fun Person.toOutbound(konto: Konto?, kodeverk: PersonaliaKodeverk) = Personalia(
+fun Person.toOutboundPersonalia(konto: Konto?, kodeverk: PersonaliaKodeverk) = Personalia(
     fornavn = navn.firstOrNull()?.fornavn(),
     etternavn = navn.firstOrNull()?.etternavn,
     personident = folkeregisteridentifikator.first()

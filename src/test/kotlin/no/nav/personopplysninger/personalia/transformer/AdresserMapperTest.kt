@@ -6,7 +6,7 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.nav.pdl.generated.dto.HentPersonQuery
+import no.nav.pdl.generated.dto.hentpersonquery.Person
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.Adresser
@@ -15,17 +15,16 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdres
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
 import no.nav.personopplysninger.personalia.transformer.testdata.createKontaktadresse
 import no.nav.personopplysninger.personalia.transformer.testdata.createOppholdsadresse
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultPdlData
 import no.nav.personopplysninger.personalia.transformer.testdata.defaultPerson
 import no.nav.personopplysninger.personalia.transformer.testdata.defaultPersonaliaKodeverk
 import org.junit.jupiter.api.Test
 
-class AdresseinfoMapperTest {
+class AdresserMapperTest {
 
     @Test
     fun `should map all fields correctly`() {
-        val inbound: HentPersonQuery.Result = defaultPdlData
-        val outbound: Adresser = inbound.toOutbound(defaultPersonaliaKodeverk)
+        val inbound: Person = defaultPerson
+        val outbound: Adresser = inbound.toOutboundAdresser(defaultPersonaliaKodeverk)
 
         assertSoftly(outbound) {
             kontaktadresser.shouldHaveSize(1)
@@ -37,15 +36,13 @@ class AdresseinfoMapperTest {
 
     @Test
     fun `should map all fields correctly when no addresses`() {
-        val inbound: HentPersonQuery.Result = defaultPdlData.copy(
-            person = defaultPerson.copy(
-                oppholdsadresse = emptyList(),
-                deltBosted = emptyList(),
-                kontaktadresse = emptyList(),
-                bostedsadresse = emptyList(),
-            )
+        val inbound: Person = defaultPerson.copy(
+            oppholdsadresse = emptyList(),
+            deltBosted = emptyList(),
+            kontaktadresse = emptyList(),
+            bostedsadresse = emptyList(),
         )
-        val outbound: Adresser = inbound.toOutbound(PersonaliaKodeverk())
+        val outbound: Adresser = inbound.toOutboundAdresser(PersonaliaKodeverk())
 
         assertSoftly(outbound) {
             kontaktadresser.shouldBeEmpty()
@@ -57,18 +54,16 @@ class AdresseinfoMapperTest {
 
     @Test
     fun `should map kodeverk fields correctly when multiple oppholdsadresser`() {
-        val inbound: HentPersonQuery.Result = defaultPdlData.copy(
-            person = defaultPerson.copy(
-                oppholdsadresse = List(GENERATED_ADRESSER_SIZE) { createOppholdsadresse(AdresseType.VEGADRESSE) },
-            )
+        val inbound: Person = defaultPerson.copy(
+            oppholdsadresse = List(GENERATED_ADRESSER_SIZE) { createOppholdsadresse(AdresseType.VEGADRESSE) },
         )
-        val outbound: Adresser = inbound.toOutbound(PersonaliaKodeverk(
-            oppholdsadresseKodeverk = generateAdresseKodeverk(),
-        ))
+        val outbound: Adresser = inbound.toOutboundAdresser(
+            PersonaliaKodeverk(oppholdsadresseKodeverk = generateAdresseKodeverk())
+        )
 
         assertSoftly(outbound.oppholdsadresser) {
             shouldHaveSize(GENERATED_ADRESSER_SIZE)
-            indices.forEach{
+            indices.forEach {
                 with(get(it).adresse as Vegadresse) {
                     kommune shouldBe "kommune $it"
                     poststed shouldBe "poststed $it"
@@ -79,18 +74,16 @@ class AdresseinfoMapperTest {
 
     @Test
     fun `should map kodeverk fields correctly when multiple kontaktadresser`() {
-        val inbound: HentPersonQuery.Result = defaultPdlData.copy(
-            person = defaultPerson.copy(
-                kontaktadresse = List(GENERATED_ADRESSER_SIZE) { createKontaktadresse(AdresseType.UTENLANDSK_ADRESSE) },
-            )
+        val inbound: Person = defaultPerson.copy(
+            kontaktadresse = List(GENERATED_ADRESSER_SIZE) { createKontaktadresse(AdresseType.UTENLANDSK_ADRESSE) },
         )
-        val outbound: Adresser = inbound.toOutbound(PersonaliaKodeverk(
-            kontaktadresseKodeverk = generateAdresseKodeverk()
-        ))
+        val outbound: Adresser = inbound.toOutboundAdresser(
+            PersonaliaKodeverk(kontaktadresseKodeverk = generateAdresseKodeverk())
+        )
 
         assertSoftly(outbound.kontaktadresser) {
             shouldHaveSize(GENERATED_ADRESSER_SIZE)
-            indices.forEach{
+            indices.forEach {
                 with(get(it).adresse as UtenlandskAdresse) {
                     land shouldBe "land $it"
                 }
