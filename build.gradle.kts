@@ -46,7 +46,7 @@ dependencies {
     val navSecurityVersion = "5.0.5"
     val kotlinVersion = "2.0.0"
     val tmsKtorTokenSupportVersion = "4.1.2"
-    val tmsVarselBuilderVersion = "1.0.4"
+    val tmsVarselBuilderVersion = "1.1.0"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
     implementation("com.github.ben-manes.caffeine:caffeine:$caffeineVersion")
