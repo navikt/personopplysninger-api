@@ -13,10 +13,7 @@ import no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresse as PdlUtenland
 import no.nav.pdl.generated.dto.hentpersonquery.UtenlandskAdresseIFrittFormat as PdlUtenlandskAdresseIFrittFormat
 import no.nav.pdl.generated.dto.hentpersonquery.Vegadresse as PdlVegadresse
 
-private const val FANT_IKKE_ADRESSE_ERROR_MESSAGE = "Fant ikke adresse som skulle transformeres"
-
-fun PdlVegadresse?.toOutbound(poststed: String?, kommune: String?): Vegadresse {
-    this ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
+fun PdlVegadresse.toOutbound(poststed: String?, kommune: String?): Vegadresse {
     return Vegadresse(
         husnummer = husnummer,
         husbokstav = husbokstav,
@@ -29,10 +26,9 @@ fun PdlVegadresse?.toOutbound(poststed: String?, kommune: String?): Vegadresse {
     )
 }
 
-fun PdlPostadresseIFrittFormat?.toOutbound(
+fun PdlPostadresseIFrittFormat.toOutbound(
     poststed: String?
 ): PostAdresseIFrittFormat {
-    this ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return PostAdresseIFrittFormat(
         adresselinje1 = adresselinje1,
         adresselinje2 = adresselinje2,
@@ -42,8 +38,7 @@ fun PdlPostadresseIFrittFormat?.toOutbound(
     )
 }
 
-fun PdlPostboksadresse?.toOutbound(poststed: String?): Postboksadresse {
-    this ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
+fun PdlPostboksadresse.toOutbound(poststed: String?): Postboksadresse {
     return Postboksadresse(
         postbokseier = postbokseier,
         postboks = postboks,
@@ -52,10 +47,9 @@ fun PdlPostboksadresse?.toOutbound(poststed: String?): Postboksadresse {
     )
 }
 
-fun PdlUtenlandskAdresse?.toOutbound(
+fun PdlUtenlandskAdresse.toOutbound(
     land: String?
 ): UtenlandskAdresse {
-    this ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return UtenlandskAdresse(
         adressenavnNummer = adressenavnNummer,
         bygningEtasjeLeilighet = bygningEtasjeLeilighet,
@@ -67,10 +61,9 @@ fun PdlUtenlandskAdresse?.toOutbound(
     )
 }
 
-fun PdlUtenlandskAdresseIFrittFormat?.toOutbound(
+fun PdlUtenlandskAdresseIFrittFormat.toOutbound(
     land: String?
 ): UtenlandskAdresseIFrittFormat {
-    this ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return UtenlandskAdresseIFrittFormat(
         adresselinje1 = adresselinje1,
         adresselinje2 = adresselinje2,
@@ -79,11 +72,10 @@ fun PdlUtenlandskAdresseIFrittFormat?.toOutbound(
     )
 }
 
-fun PdlMatrikkeladresse?.toOutbound(
+fun PdlMatrikkeladresse.toOutbound(
     poststed: String?,
     kommune: String?
 ): Matrikkeladresse {
-    this ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return Matrikkeladresse(
         bruksenhetsnummer = bruksenhetsnummer,
         tilleggsnavn = tilleggsnavn,

@@ -5,8 +5,8 @@ import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.UtenlandskBankInfo
 
 fun Konto.toOutbound(kodeverk: PersonaliaKodeverk): UtenlandskBankInfo {
-    val utenlandskKontoInfo = utenlandskKontoInfo
-        ?: throw IllegalStateException("Forsøkte å transformere ikke-eksisterende UtenlandskBankInfo-objekt")
+    requireNotNull(utenlandskKontoInfo)
+
     return UtenlandskBankInfo(
         adresse1 = utenlandskKontoInfo.bankadresse1,
         adresse2 = utenlandskKontoInfo.bankadresse2,
@@ -15,7 +15,7 @@ fun Konto.toOutbound(kodeverk: PersonaliaKodeverk): UtenlandskBankInfo {
         banknavn = utenlandskKontoInfo.banknavn,
         kontonummer = kontonummer,
         swiftkode = utenlandskKontoInfo.swiftBicKode,
-        land = utenlandskKontoInfo.bankLandkode.let { kodeverk.utenlandskbanklandterm },
-        valuta = utenlandskKontoInfo.valutakode.let { kodeverk.utenlandskbankvalutaterm }
+        land = kodeverk.utenlandskbanklandterm,
+        valuta = kodeverk.utenlandskbankvalutaterm,
     )
 }

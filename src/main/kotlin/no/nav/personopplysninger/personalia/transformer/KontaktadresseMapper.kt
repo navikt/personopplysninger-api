@@ -28,11 +28,11 @@ fun PdlKontaktadresse.toOutbound(kodeverk: AdresseKodeverk): Kontaktadresse? {
 
 private fun PdlKontaktadresse.transformAdresse(kodeverk: AdresseKodeverk): Adresse? {
     return when (mappingType) {
-        INNLAND_VEGADRESSE -> vegadresse.toOutbound(kodeverk.poststed, kodeverk.kommune)
-        INNLAND_FRIFORMADRESSE -> postadresseIFrittFormat.toOutbound(kodeverk.poststed)
-        INNLAND_POSTBOKSADRESSE -> postboksadresse.toOutbound(kodeverk.poststed)
-        UTLAND_ADRESSE -> utenlandskAdresse.toOutbound(kodeverk.land)
-        UTLAND_FRIFORMADRESSE -> utenlandskAdresseIFrittFormat.toOutbound(kodeverk.land)
+        INNLAND_VEGADRESSE -> requireNotNull(vegadresse).toOutbound(kodeverk.poststed, kodeverk.kommune)
+        INNLAND_FRIFORMADRESSE -> requireNotNull(postadresseIFrittFormat).toOutbound(kodeverk.poststed)
+        INNLAND_POSTBOKSADRESSE -> requireNotNull(postboksadresse).toOutbound(kodeverk.poststed)
+        UTLAND_ADRESSE -> requireNotNull(utenlandskAdresse).toOutbound(kodeverk.land)
+        UTLAND_FRIFORMADRESSE -> requireNotNull(utenlandskAdresseIFrittFormat).toOutbound(kodeverk.land)
         else -> {
             logger.warn("Forsøkte å mappe oppholdsadresse på uventet format, null returnert. Adressetype: $mappingType")
             null

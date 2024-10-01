@@ -16,7 +16,7 @@ class PersonaliaMapperTest {
 
     @Test
     fun `should map all fields correctly`() {
-        val outbound: Personalia = defaultPerson.toOutboundPersonalia(defaultKonto, defaultPersonaliaKodeverk)
+        val outbound: Personalia = defaultPerson.toOutbound(defaultKonto, defaultPersonaliaKodeverk)
 
         assertSoftly(outbound) {
             fornavn shouldBe "fornavn mellomnavn"
@@ -41,7 +41,7 @@ class PersonaliaMapperTest {
     @Test
     fun `should map correctly with norsk konto`() {
         val norskKonto = defaultKonto.copy(utenlandskKontoInfo = null)
-        val outbound: Personalia = defaultPerson.toOutboundPersonalia(norskKonto, defaultPersonaliaKodeverk)
+        val outbound: Personalia = defaultPerson.toOutbound(norskKonto, defaultPersonaliaKodeverk)
 
         assertSoftly(outbound) {
             kontonr shouldBe "dummyKontonummer"
@@ -52,7 +52,7 @@ class PersonaliaMapperTest {
     @Test
     fun `should map correctly with utenlandsk konto`() {
         val utenlandskKonto = defaultKonto
-        val outbound: Personalia = defaultPerson.toOutboundPersonalia(utenlandskKonto, defaultPersonaliaKodeverk)
+        val outbound: Personalia = defaultPerson.toOutbound(utenlandskKonto, defaultPersonaliaKodeverk)
 
         assertSoftly(outbound) {
             kontonr.shouldBeNull()

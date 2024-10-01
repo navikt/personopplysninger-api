@@ -27,9 +27,9 @@ fun PdlBostedsadresse.toOutbound(kodeverk: AdresseKodeverk): Bostedsadresse? {
 
 private fun PdlBostedsadresse.transformAdresse(kodeverk: AdresseKodeverk): Adresse? {
     return when (mappingType) {
-        INNLAND_VEGADRESSE -> vegadresse.toOutbound(kodeverk.poststed, kodeverk.kommune)
-        MATRIKKELADRESSE -> matrikkeladresse.toOutbound(kodeverk.poststed, kodeverk.kommune)
-        UTLAND_ADRESSE -> utenlandskAdresse.toOutbound(kodeverk.land)
+        INNLAND_VEGADRESSE -> requireNotNull(vegadresse).toOutbound(kodeverk.poststed, kodeverk.kommune)
+        MATRIKKELADRESSE -> requireNotNull(matrikkeladresse).toOutbound(kodeverk.poststed, kodeverk.kommune)
+        UTLAND_ADRESSE -> requireNotNull(utenlandskAdresse).toOutbound(kodeverk.land)
         UKJENT_BOSTED -> Ukjentbosted(kodeverk.kommune)
         else -> {
             logger.warn("Forsøkte å mappe bostedsadresse på uventet format, null returnert. Adressetype: $mappingType")

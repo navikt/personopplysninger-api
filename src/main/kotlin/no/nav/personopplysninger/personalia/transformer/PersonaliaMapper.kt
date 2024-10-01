@@ -10,18 +10,13 @@ import no.nav.personopplysninger.personalia.dto.outbound.Personident
 import no.nav.personopplysninger.personalia.dto.outbound.Tlfnr
 import no.nav.personopplysninger.personalia.extensions.stringValue
 
-fun Person.toOutboundPersonalia(konto: Konto?, kodeverk: PersonaliaKodeverk) = Personalia(
+fun Person.toOutbound(konto: Konto?, kodeverk: PersonaliaKodeverk) = Personalia(
     fornavn = navn.firstOrNull()?.fornavn(),
     etternavn = navn.firstOrNull()?.etternavn,
-    personident = folkeregisteridentifikator.first()
-        .let { Personident(it.identifikasjonsnummer, it.type) },
-    kontonr = if (konto?.utenlandskKontoInfo == null) konto?.kontonummer else null,
+    personident = folkeregisteridentifikator.first().let { Personident(it.identifikasjonsnummer, it.type) },
+    kontonr = konto?.kontonummer.takeIf { konto?.utenlandskKontoInfo == null },
     tlfnr = telefonnummer.toTlfnr(),
-    utenlandskbank = konto?.utenlandskKontoInfo?.let {
-        konto.toOutbound(
-            kodeverk
-        )
-    },
+    utenlandskbank = konto?.utenlandskKontoInfo?.let { konto.toOutbound(kodeverk) },
     statsborgerskap = kodeverk.statsborgerskaptermer,
     foedested = foedested(kodeverk.foedekommuneterm, kodeverk.foedelandterm),
     sivilstand = sivilstand.firstOrNull()?.type?.stringValue,
@@ -32,7 +27,7 @@ fun Person.toOutboundPersonalia(konto: Konto?, kodeverk: PersonaliaKodeverk) = P
 private fun Navn.fornavn() = if (mellomnavn == null) fornavn else "$fornavn $mellomnavn".trim()
 
 private fun foedested(foedtIKommune: String?, foedtILand: String?): String? {
-    val names = listOfNotNull(foedtIKommune, foedtILand).filter { it.isNotEmpty() }
+    val names = listOf(foedtIKommune, foedtILand).filter { !it.isNullOrEmpty() }
     return if (names.isEmpty()) null else names.joinToString(", ")
 }
 

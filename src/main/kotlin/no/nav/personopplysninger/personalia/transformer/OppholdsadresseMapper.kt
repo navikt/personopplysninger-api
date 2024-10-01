@@ -14,7 +14,7 @@ import no.nav.pdl.generated.dto.hentpersonquery.Oppholdsadresse as PdlOppholdsad
 private val logger: Logger = LoggerFactory.getLogger("OppholdsadresseTransformer")
 
 fun PdlOppholdsadresse.toOutbound(kodeverk: AdresseKodeverk): Oppholdsadresse? {
-    val adresse = transformAdresse(kodeverk)
+    val adresse = this.transformAdresse(kodeverk)
 
     if (adresse == null && oppholdAnnetSted == null) return null
 
@@ -28,9 +28,9 @@ fun PdlOppholdsadresse.toOutbound(kodeverk: AdresseKodeverk): Oppholdsadresse? {
 
 private fun PdlOppholdsadresse.transformAdresse(kodeverk: AdresseKodeverk): Adresse? {
     return when (mappingType) {
-        INNLAND_VEGADRESSE -> vegadresse.toOutbound(kodeverk.poststed, kodeverk.kommune)
-        MATRIKKELADRESSE -> matrikkeladresse.toOutbound(kodeverk.poststed, kodeverk.kommune)
-        UTLAND_ADRESSE -> utenlandskAdresse.toOutbound(kodeverk.land)
+        INNLAND_VEGADRESSE -> requireNotNull(vegadresse).toOutbound(kodeverk.poststed, kodeverk.kommune)
+        MATRIKKELADRESSE -> requireNotNull(matrikkeladresse).toOutbound(kodeverk.poststed, kodeverk.kommune)
+        UTLAND_ADRESSE -> requireNotNull(utenlandskAdresse).toOutbound(kodeverk.land)
         else -> {
             // Adresse kan være null dersom oppholdAnnetSted er satt. Da trenger vi ikke logge warning.
             if (oppholdAnnetSted == null) {

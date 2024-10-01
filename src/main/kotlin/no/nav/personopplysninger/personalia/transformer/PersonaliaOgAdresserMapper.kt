@@ -11,9 +11,10 @@ fun HentPersonQuery.Result.toOutbound(
     kodeverk: PersonaliaKodeverk,
     enhetKontaktInformasjon: Norg2EnhetKontaktinfo?
 ): PersonaliaOgAdresser {
-    requireNotNull(person) { "Person kan ikke være null" }
+    requireNotNull(person)
+
     return PersonaliaOgAdresser(
-        personalia = person.toOutboundPersonalia(konto, kodeverk),
+        personalia = person.toOutbound(konto, kodeverk),
         adresser = person.toOutboundAdresser(kodeverk),
         enhetKontaktInformasjon = enhetKontaktInformasjon
     )
