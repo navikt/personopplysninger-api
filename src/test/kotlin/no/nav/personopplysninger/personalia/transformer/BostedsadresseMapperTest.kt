@@ -21,12 +21,10 @@ import org.junit.jupiter.api.Test
 
 class BostedsadresseMapperTest {
 
-    private val adresseKodeverk = defaultAdresseKodeverk
-
     @Test
     fun canTransformVegdresse() {
         val inbound = createBostedsadresse(VEGADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val actual = inbound.toOutbound(defaultAdresseKodeverk)
 
         assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -36,8 +34,8 @@ class BostedsadresseMapperTest {
 
         assertVegadresseEquals(
             vegadresse,
-            adresseKodeverk.poststed,
-            adresseKodeverk.kommune,
+            defaultAdresseKodeverk.poststed,
+            defaultAdresseKodeverk.kommune,
             inbound.vegadresse
         )
     }
@@ -45,7 +43,7 @@ class BostedsadresseMapperTest {
     @Test
     fun canTransformMatrikkeladresse() {
         val inbound = createBostedsadresse(MATRIKKELADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val actual = inbound.toOutbound(defaultAdresseKodeverk)
 
         assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -55,8 +53,8 @@ class BostedsadresseMapperTest {
 
         assertMatrikkeladresseEquals(
             matrikkeladresse,
-            adresseKodeverk.poststed,
-            adresseKodeverk.kommune,
+            defaultAdresseKodeverk.poststed,
+            defaultAdresseKodeverk.kommune,
             inbound.matrikkeladresse
         )
 
@@ -65,7 +63,7 @@ class BostedsadresseMapperTest {
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createBostedsadresse(UTENLANDSK_ADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val actual = inbound.toOutbound(defaultAdresseKodeverk)
 
         assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -75,7 +73,7 @@ class BostedsadresseMapperTest {
 
         assertUtenlandskAdresseEquals(
             utenlandskAdresse,
-            adresseKodeverk.land,
+            defaultAdresseKodeverk.land,
             inbound.utenlandskAdresse
         )
     }
@@ -83,7 +81,7 @@ class BostedsadresseMapperTest {
     @Test
     fun canTransformUkjentbosted() {
         val inbound = createBostedsadresse(UKJENTBOSTED)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val actual = inbound.toOutbound(defaultAdresseKodeverk)
 
         assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
         assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
@@ -91,13 +89,13 @@ class BostedsadresseMapperTest {
 
         val ukjentbosted = actual?.adresse as Ukjentbosted
 
-        assertUkjentbostedEquals(ukjentbosted, adresseKodeverk.kommune)
+        assertUkjentbostedEquals(ukjentbosted, defaultAdresseKodeverk.kommune)
     }
 
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createBostedsadresse(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val actual = inbound.toOutbound(defaultAdresseKodeverk)
 
         Assertions.assertNull(actual)
     }

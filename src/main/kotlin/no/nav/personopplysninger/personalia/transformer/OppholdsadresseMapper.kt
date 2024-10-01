@@ -28,9 +28,9 @@ fun PdlOppholdsadresse.toOutbound(kodeverk: AdresseKodeverk): Oppholdsadresse? {
 
 private fun PdlOppholdsadresse.transformAdresse(kodeverk: AdresseKodeverk): Adresse? {
     return when (mappingType) {
-        INNLAND_VEGADRESSE -> vegadresse.transformVegadresse(kodeverk.poststed, kodeverk.kommune)
-        MATRIKKELADRESSE -> matrikkeladresse.transformMatrikkeladresse(kodeverk.poststed, kodeverk.kommune)
-        UTLAND_ADRESSE -> utenlandskAdresse.transformUtenlandskAdresse(kodeverk.land)
+        INNLAND_VEGADRESSE -> vegadresse.toOutbound(kodeverk.poststed, kodeverk.kommune)
+        MATRIKKELADRESSE -> matrikkeladresse.toOutbound(kodeverk.poststed, kodeverk.kommune)
+        UTLAND_ADRESSE -> utenlandskAdresse.toOutbound(kodeverk.land)
         else -> {
             // Adresse kan være null dersom oppholdAnnetSted er satt. Da trenger vi ikke logge warning.
             if (oppholdAnnetSted == null) {

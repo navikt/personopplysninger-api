@@ -15,7 +15,7 @@ import no.nav.pdl.generated.dto.hentpersonquery.Vegadresse as PdlVegadresse
 
 private const val FANT_IKKE_ADRESSE_ERROR_MESSAGE = "Fant ikke adresse som skulle transformeres"
 
-fun PdlVegadresse?.transformVegadresse(poststed: String?, kommune: String?): Vegadresse {
+fun PdlVegadresse?.toOutbound(poststed: String?, kommune: String?): Vegadresse {
     this ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return Vegadresse(
         husnummer = husnummer,
@@ -29,7 +29,7 @@ fun PdlVegadresse?.transformVegadresse(poststed: String?, kommune: String?): Veg
     )
 }
 
-fun PdlPostadresseIFrittFormat?.transformPostadresseIFrittFormat(
+fun PdlPostadresseIFrittFormat?.toOutbound(
     poststed: String?
 ): PostAdresseIFrittFormat {
     this ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
@@ -42,7 +42,7 @@ fun PdlPostadresseIFrittFormat?.transformPostadresseIFrittFormat(
     )
 }
 
-fun PdlPostboksadresse?.transformPostboksadresse(poststed: String?): Postboksadresse {
+fun PdlPostboksadresse?.toOutbound(poststed: String?): Postboksadresse {
     this ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
     return Postboksadresse(
         postbokseier = postbokseier,
@@ -52,7 +52,7 @@ fun PdlPostboksadresse?.transformPostboksadresse(poststed: String?): Postboksadr
     )
 }
 
-fun PdlUtenlandskAdresse?.transformUtenlandskAdresse(
+fun PdlUtenlandskAdresse?.toOutbound(
     land: String?
 ): UtenlandskAdresse {
     this ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
@@ -67,7 +67,7 @@ fun PdlUtenlandskAdresse?.transformUtenlandskAdresse(
     )
 }
 
-fun PdlUtenlandskAdresseIFrittFormat?.transformUtenlandskAdresseIFrittFormat(
+fun PdlUtenlandskAdresseIFrittFormat?.toOutbound(
     land: String?
 ): UtenlandskAdresseIFrittFormat {
     this ?: throw IllegalArgumentException(FANT_IKKE_ADRESSE_ERROR_MESSAGE)
@@ -79,7 +79,7 @@ fun PdlUtenlandskAdresseIFrittFormat?.transformUtenlandskAdresseIFrittFormat(
     )
 }
 
-fun PdlMatrikkeladresse?.transformMatrikkeladresse(
+fun PdlMatrikkeladresse?.toOutbound(
     poststed: String?,
     kommune: String?
 ): Matrikkeladresse {

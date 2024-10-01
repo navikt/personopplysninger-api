@@ -26,9 +26,9 @@ fun PdlDeltBosted.toOutbound(kodeverk: AdresseKodeverk): DeltBosted? {
 
 private fun PdlDeltBosted.transformAdresse(kodeverk: AdresseKodeverk): Adresse? {
     return when (mappingType) {
-        INNLAND_VEGADRESSE -> vegadresse.transformVegadresse(kodeverk.poststed, kodeverk.kommune)
-        MATRIKKELADRESSE -> matrikkeladresse.transformMatrikkeladresse(kodeverk.poststed, kodeverk.kommune)
-        UTLAND_ADRESSE -> utenlandskAdresse.transformUtenlandskAdresse(kodeverk.land)
+        INNLAND_VEGADRESSE -> vegadresse.toOutbound(kodeverk.poststed, kodeverk.kommune)
+        MATRIKKELADRESSE -> matrikkeladresse.toOutbound(kodeverk.poststed, kodeverk.kommune)
+        UTLAND_ADRESSE -> utenlandskAdresse.toOutbound(kodeverk.land)
         UKJENT_BOSTED -> Ukjentbosted(kodeverk.kommune)
         else -> {
             logger.warn("Forsøkte å mappe deltbosted på uventet format, null returnert. Adressetype: $mappingType")
