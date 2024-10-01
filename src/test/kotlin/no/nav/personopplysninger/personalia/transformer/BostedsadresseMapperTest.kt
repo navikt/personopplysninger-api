@@ -24,13 +24,13 @@ class BostedsadresseMapperTest {
     @Test
     fun canTransformVegdresse() {
         val inbound = createBostedsadresse(VEGADRESSE)
-        val actual = inbound.toOutbound(defaultAdresseKodeverk)
+        val outbound = inbound.toOutbound(defaultAdresseKodeverk)
 
-        assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, VEGADRESSE)
+        assertEquals(outbound?.angittFlyttedato, inbound.angittFlyttedato)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, VEGADRESSE)
 
-        val vegadresse = actual?.adresse as Vegadresse
+        val vegadresse = outbound?.adresse as Vegadresse
 
         assertVegadresseEquals(
             vegadresse,
@@ -43,13 +43,13 @@ class BostedsadresseMapperTest {
     @Test
     fun canTransformMatrikkeladresse() {
         val inbound = createBostedsadresse(MATRIKKELADRESSE)
-        val actual = inbound.toOutbound(defaultAdresseKodeverk)
+        val outbound = inbound.toOutbound(defaultAdresseKodeverk)
 
-        assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, MATRIKKELADRESSE)
+        assertEquals(outbound?.angittFlyttedato, inbound.angittFlyttedato)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, MATRIKKELADRESSE)
 
-        val matrikkeladresse = actual?.adresse as Matrikkeladresse
+        val matrikkeladresse = outbound?.adresse as Matrikkeladresse
 
         assertMatrikkeladresseEquals(
             matrikkeladresse,
@@ -63,13 +63,13 @@ class BostedsadresseMapperTest {
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createBostedsadresse(UTENLANDSK_ADRESSE)
-        val actual = inbound.toOutbound(defaultAdresseKodeverk)
+        val outbound = inbound.toOutbound(defaultAdresseKodeverk)
 
-        assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, UTENLANDSK_ADRESSE)
+        assertEquals(outbound?.angittFlyttedato, inbound.angittFlyttedato)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, UTENLANDSK_ADRESSE)
 
-        val utenlandskAdresse = actual?.adresse as UtenlandskAdresse
+        val utenlandskAdresse = outbound?.adresse as UtenlandskAdresse
 
         assertUtenlandskAdresseEquals(
             utenlandskAdresse,
@@ -81,13 +81,13 @@ class BostedsadresseMapperTest {
     @Test
     fun canTransformUkjentbosted() {
         val inbound = createBostedsadresse(UKJENTBOSTED)
-        val actual = inbound.toOutbound(defaultAdresseKodeverk)
+        val outbound = inbound.toOutbound(defaultAdresseKodeverk)
 
-        assertEquals(actual?.angittFlyttedato, inbound.angittFlyttedato)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, UKJENTBOSTED)
+        assertEquals(outbound?.angittFlyttedato, inbound.angittFlyttedato)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, UKJENTBOSTED)
 
-        val ukjentbosted = actual?.adresse as Ukjentbosted
+        val ukjentbosted = outbound?.adresse as Ukjentbosted
 
         assertUkjentbostedEquals(ukjentbosted, defaultAdresseKodeverk.kommune)
     }
@@ -95,8 +95,8 @@ class BostedsadresseMapperTest {
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createBostedsadresse(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-        val actual = inbound.toOutbound(defaultAdresseKodeverk)
+        val outbound = inbound.toOutbound(defaultAdresseKodeverk)
 
-        Assertions.assertNull(actual)
+        Assertions.assertNull(outbound)
     }
 }

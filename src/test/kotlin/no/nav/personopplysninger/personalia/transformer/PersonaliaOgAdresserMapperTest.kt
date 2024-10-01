@@ -14,14 +14,14 @@ class PersonaliaOgAdresserMapperTest {
     fun gittPersonaliaOgAdresser_skalFaaPersonaliaOgAdresser() {
         val konto = defaultKonto
         val pdlData = defaultPdlData
-        val actual = pdlData.toOutbound(
+        val outbound = pdlData.toOutbound(
             konto,
             personaliaKodeverk,
             null
         )
 
-        assertNotNull(actual.personalia)
-        assertNotNull(actual.adresser)
+        assertNotNull(outbound.personalia)
+        assertNotNull(outbound.adresser)
     }
 
 }

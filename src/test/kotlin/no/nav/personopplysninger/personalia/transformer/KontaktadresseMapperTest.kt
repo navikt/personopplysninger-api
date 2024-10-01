@@ -29,14 +29,14 @@ class KontaktadresseMapperTest {
     @Test
     fun canTransformVegdresse() {
         val inbound = createKontaktadresse(VEGADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, VEGADRESSE)
-        assertEquals(actual?.kilde, inbound.metadata.master)
+        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, VEGADRESSE)
+        assertEquals(outbound?.kilde, inbound.metadata.master)
 
-        val vegadresse = actual?.adresse as Vegadresse
+        val vegadresse = outbound?.adresse as Vegadresse
 
         assertVegadresseEquals(
             vegadresse,
@@ -49,14 +49,14 @@ class KontaktadresseMapperTest {
     @Test
     fun canTransformPostadresseIFrittFormat() {
         val inbound = createKontaktadresse(POSTADRESSE_I_FRITT_FORMAT)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, POSTADRESSE_I_FRITT_FORMAT)
-        assertEquals(actual?.kilde, inbound.metadata.master)
+        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, POSTADRESSE_I_FRITT_FORMAT)
+        assertEquals(outbound?.kilde, inbound.metadata.master)
 
-        val postAdresseIFrittFormat = actual?.adresse as PostAdresseIFrittFormat
+        val postAdresseIFrittFormat = outbound?.adresse as PostAdresseIFrittFormat
 
         assertPostAdresseIFrittFormatEquals(
             postAdresseIFrittFormat,
@@ -68,14 +68,14 @@ class KontaktadresseMapperTest {
     @Test
     fun canTransformPdlPostboksadresse() {
         val inbound = createKontaktadresse(POSTBOKSADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, POSTBOKSADRESSE)
-        assertEquals(actual?.kilde, inbound.metadata.master)
+        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, POSTBOKSADRESSE)
+        assertEquals(outbound?.kilde, inbound.metadata.master)
 
-        val postboksadresse = actual?.adresse as Postboksadresse
+        val postboksadresse = outbound?.adresse as Postboksadresse
 
         assertPostboksadresseEquals(
             postboksadresse,
@@ -87,14 +87,14 @@ class KontaktadresseMapperTest {
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createKontaktadresse(UTENLANDSK_ADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, UTENLANDSK_ADRESSE)
-        assertEquals(actual?.kilde, inbound.metadata.master)
+        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, UTENLANDSK_ADRESSE)
+        assertEquals(outbound?.kilde, inbound.metadata.master)
 
-        val utenlandskAdresse = actual?.adresse as UtenlandskAdresse
+        val utenlandskAdresse = outbound?.adresse as UtenlandskAdresse
 
         assertUtenlandskAdresseEquals(
             utenlandskAdresse,
@@ -107,14 +107,14 @@ class KontaktadresseMapperTest {
     fun canTransformUtenlandskAdresseIFrittFormat() {
         val inbound =
             createKontaktadresse(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-        assertEquals(actual?.kilde, inbound.metadata.master)
+        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
+        assertEquals(outbound?.kilde, inbound.metadata.master)
 
-        val utenlandskAdresseIFrittFormat = actual?.adresse as UtenlandskAdresseIFrittFormat
+        val utenlandskAdresseIFrittFormat = outbound?.adresse as UtenlandskAdresseIFrittFormat
 
         assertUtenlandskAdresseIFrittFormatEquals(
             utenlandskAdresseIFrittFormat,
@@ -126,8 +126,8 @@ class KontaktadresseMapperTest {
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createKontaktadresse(UKJENTBOSTED)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertNull(actual)
+        assertNull(outbound)
     }
 }

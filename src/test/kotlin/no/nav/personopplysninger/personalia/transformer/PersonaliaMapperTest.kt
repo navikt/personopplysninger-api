@@ -20,28 +20,28 @@ class PersonaliaMapperTest {
         val konto = defaultKonto
         val kodeverk = defaultPersonaliaKodeverk
         val pdlPerson = defaultPerson
-        val actual: Personalia = pdlPerson.toOutboundPersonalia(konto, kodeverk)
+        val outbound: Personalia = pdlPerson.toOutboundPersonalia(konto, kodeverk)
 
         val pdlNavn = pdlPerson.navn.first()
         val pdlFolkeregisteridentifikator = pdlPerson.folkeregisteridentifikator.first()
         val pdlSivilstand = pdlPerson.sivilstand.first().type.stringValue
         val pdlKjoenn = pdlPerson.kjoenn.first().kjoenn?.stringValue
 
-        assertEquals(pdlNavn.let { "${it.fornavn} ${it.mellomnavn}" }, actual.fornavn)
-        assertEquals(pdlNavn.etternavn, actual.etternavn)
-        assertEquals(pdlFolkeregisteridentifikator.identifikasjonsnummer, actual.personident?.verdi)
-        assertEquals(pdlFolkeregisteridentifikator.type, actual.personident?.type)
-        assertTlfnr(pdlPerson.telefonnummer, actual.tlfnr)
-        assertUtenlandskBank(konto, actual.utenlandskbank!!, kodeverk)
-        assertEquals(kodeverk.statsborgerskaptermer, actual.statsborgerskap)
-        assertEquals("${kodeverk.foedekommuneterm}, ${kodeverk.foedelandterm}", actual.foedested)
-        assertEquals(pdlSivilstand, actual.sivilstand)
-        assertEquals(pdlKjoenn, actual.kjoenn)
+        assertEquals(pdlNavn.let { "${it.fornavn} ${it.mellomnavn}" }, outbound.fornavn)
+        assertEquals(pdlNavn.etternavn, outbound.etternavn)
+        assertEquals(pdlFolkeregisteridentifikator.identifikasjonsnummer, outbound.personident?.verdi)
+        assertEquals(pdlFolkeregisteridentifikator.type, outbound.personident?.type)
+        assertTlfnr(pdlPerson.telefonnummer, outbound.tlfnr)
+        assertUtenlandskBank(konto, outbound.utenlandskbank!!, kodeverk)
+        assertEquals(kodeverk.statsborgerskaptermer, outbound.statsborgerskap)
+        assertEquals("${kodeverk.foedekommuneterm}, ${kodeverk.foedelandterm}", outbound.foedested)
+        assertEquals(pdlSivilstand, outbound.sivilstand)
+        assertEquals(pdlKjoenn, outbound.kjoenn)
     }
 
-    private fun assertTlfnr(expected: List<Telefonnummer>, actual: Tlfnr?) {
-        assertEquals(expected.find { it.prioritet == 1 }?.nummer, actual?.telefonHoved)
-        assertEquals(expected.find { it.prioritet == 2 }?.nummer, actual?.telefonAlternativ)
+    private fun assertTlfnr(expected: List<Telefonnummer>, outbound: Tlfnr?) {
+        assertEquals(expected.find { it.prioritet == 1 }?.nummer, outbound?.telefonHoved)
+        assertEquals(expected.find { it.prioritet == 2 }?.nummer, outbound?.telefonAlternativ)
     }
 
     private fun assertUtenlandskBank(

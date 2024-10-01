@@ -23,14 +23,14 @@ class OppholdsadresseMapperTest {
     @Test
     fun canTransformVegdresse() {
         val inbound = createOppholdsadresse(VEGADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, VEGADRESSE)
-        assertEquals(actual?.kilde, inbound.metadata.master)
+        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, VEGADRESSE)
+        assertEquals(outbound?.kilde, inbound.metadata.master)
 
-        val vegadresse = actual?.adresse as Vegadresse
+        val vegadresse = outbound?.adresse as Vegadresse
 
         assertVegadresseEquals(
             vegadresse,
@@ -43,14 +43,14 @@ class OppholdsadresseMapperTest {
     @Test
     fun canTransformMatrikkeladresse() {
         val inbound = createOppholdsadresse(MATRIKKELADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, MATRIKKELADRESSE)
-        assertEquals(actual?.kilde, inbound.metadata.master)
+        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, MATRIKKELADRESSE)
+        assertEquals(outbound?.kilde, inbound.metadata.master)
 
-        val matrikkeladresse = actual?.adresse as Matrikkeladresse
+        val matrikkeladresse = outbound?.adresse as Matrikkeladresse
 
         assertMatrikkeladresseEquals(
             matrikkeladresse,
@@ -63,14 +63,14 @@ class OppholdsadresseMapperTest {
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createOppholdsadresse(UTENLANDSK_ADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, UTENLANDSK_ADRESSE)
-        assertEquals(actual?.kilde, inbound.metadata.master)
+        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, UTENLANDSK_ADRESSE)
+        assertEquals(outbound?.kilde, inbound.metadata.master)
 
-        val utenlandskAdresse = actual?.adresse as UtenlandskAdresse
+        val utenlandskAdresse = outbound?.adresse as UtenlandskAdresse
 
         assertUtenlandskAdresseEquals(
             utenlandskAdresse,
@@ -82,8 +82,8 @@ class OppholdsadresseMapperTest {
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createOppholdsadresse(UKJENTBOSTED)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        Assertions.assertNull(actual)
+        Assertions.assertNull(outbound)
     }
 }

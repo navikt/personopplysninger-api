@@ -26,12 +26,12 @@ class DeltBostedMapperTest {
     @Test
     fun canTransformVegdresse() {
         val inbound = createDeltBosted(VEGADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, VEGADRESSE)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, VEGADRESSE)
 
-        val vegadresse = actual?.adresse as Vegadresse
+        val vegadresse = outbound?.adresse as Vegadresse
 
         assertVegadresseEquals(
             vegadresse,
@@ -44,12 +44,12 @@ class DeltBostedMapperTest {
     @Test
     fun canTransformMatrikkeladresse() {
         val inbound = createDeltBosted(MATRIKKELADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, MATRIKKELADRESSE)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, MATRIKKELADRESSE)
 
-        val matrikkeladresse = actual?.adresse as Matrikkeladresse
+        val matrikkeladresse = outbound?.adresse as Matrikkeladresse
 
         assertMatrikkeladresseEquals(
             matrikkeladresse,
@@ -63,12 +63,12 @@ class DeltBostedMapperTest {
     @Test
     fun canTransformUtenlandskAdresse() {
         val inbound = createDeltBosted(UTENLANDSK_ADRESSE)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, UTENLANDSK_ADRESSE)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, UTENLANDSK_ADRESSE)
 
-        val utenlandskAdresse = actual?.adresse as UtenlandskAdresse
+        val utenlandskAdresse = outbound?.adresse as UtenlandskAdresse
 
         assertUtenlandskAdresseEquals(
             utenlandskAdresse,
@@ -80,12 +80,12 @@ class DeltBostedMapperTest {
     @Test
     fun canTransformUkjentbosted() {
         val inbound = createDeltBosted(UKJENTBOSTED)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        assertEquals(actual?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(actual?.adresse?.type, UKJENTBOSTED)
+        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
+        assertEquals(outbound?.adresse?.type, UKJENTBOSTED)
 
-        val ukjentbosted = actual?.adresse as Ukjentbosted
+        val ukjentbosted = outbound?.adresse as Ukjentbosted
 
         assertUkjentbostedEquals(ukjentbosted, adresseKodeverk.kommune)
     }
@@ -93,8 +93,8 @@ class DeltBostedMapperTest {
     @Test
     fun unsupportedAdresseTypeReturnsNull() {
         val inbound = createDeltBosted(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-        val actual = inbound.toOutbound(adresseKodeverk)
+        val outbound = inbound.toOutbound(adresseKodeverk)
 
-        Assertions.assertNull(actual)
+        Assertions.assertNull(outbound)
     }
 }
