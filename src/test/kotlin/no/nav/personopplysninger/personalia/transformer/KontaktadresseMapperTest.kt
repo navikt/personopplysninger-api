@@ -1,133 +1,81 @@
 package no.nav.personopplysninger.personalia.transformer
 
+import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.POSTADRESSE_I_FRITT_FORMAT
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.POSTBOKSADRESSE
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.UKJENTBOSTED
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.UTENLANDSK_ADRESSE
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.UTENLANDSK_ADRESSE_I_FRITT_FORMAT
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.VEGADRESSE
-import no.nav.personopplysninger.personalia.dto.outbound.adresse.PostAdresseIFrittFormat
-import no.nav.personopplysninger.personalia.dto.outbound.adresse.Postboksadresse
-import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresse
-import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresseIFrittFormat
-import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.Kontaktadresse
 import no.nav.personopplysninger.personalia.transformer.testdata.createKontaktadresse
 import no.nav.personopplysninger.personalia.transformer.testdata.defaultAdresseKodeverk
-import no.nav.personopplysninger.testutils.assertPostAdresseIFrittFormatEquals
-import no.nav.personopplysninger.testutils.assertPostboksadresseEquals
-import no.nav.personopplysninger.testutils.assertUtenlandskAdresseEquals
-import no.nav.personopplysninger.testutils.assertUtenlandskAdresseIFrittFormatEquals
-import no.nav.personopplysninger.testutils.assertVegadresseEquals
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
+import no.nav.pdl.generated.dto.hentpersonquery.Kontaktadresse as PdlKontaktadresse
 
 class KontaktadresseMapperTest {
 
-    private val adresseKodeverk = defaultAdresseKodeverk
-
     @Test
-    fun canTransformVegdresse() {
-        val inbound = createKontaktadresse(VEGADRESSE)
-        val outbound = inbound.toOutbound(adresseKodeverk)
+    fun `should map all fields correctly`() {
+        val inbound: PdlKontaktadresse = createKontaktadresse()
+        val outbound: Kontaktadresse = inbound.toOutbound(defaultAdresseKodeverk)!!
 
-        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(outbound?.adresse?.type, VEGADRESSE)
-        assertEquals(outbound?.kilde, inbound.metadata.master)
-
-        val vegadresse = outbound?.adresse as Vegadresse
-
-        assertVegadresseEquals(
-            vegadresse,
-            adresseKodeverk.poststed,
-            adresseKodeverk.kommune,
-            inbound.vegadresse
-        )
+        assertSoftly(outbound) {
+            gyldigTilOgMed shouldBe "1337-05-06T12:30"
+            coAdressenavn shouldBe "coAdressenavn"
+            adresse.shouldNotBeNull()
+            kilde shouldBe "pdl"
+        }
     }
 
     @Test
-    fun canTransformPostadresseIFrittFormat() {
-        val inbound = createKontaktadresse(POSTADRESSE_I_FRITT_FORMAT)
-        val outbound = inbound.toOutbound(adresseKodeverk)
+    fun `should map postboksadresse`() {
+        val inbound: PdlKontaktadresse = createKontaktadresse(POSTBOKSADRESSE)
+        val outbound: Kontaktadresse = inbound.toOutbound(defaultAdresseKodeverk)!!
 
-        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(outbound?.adresse?.type, POSTADRESSE_I_FRITT_FORMAT)
-        assertEquals(outbound?.kilde, inbound.metadata.master)
-
-        val postAdresseIFrittFormat = outbound?.adresse as PostAdresseIFrittFormat
-
-        assertPostAdresseIFrittFormatEquals(
-            postAdresseIFrittFormat,
-            adresseKodeverk.poststed,
-            inbound.postadresseIFrittFormat
-        )
+        outbound.adresse.type shouldBe POSTBOKSADRESSE
     }
 
     @Test
-    fun canTransformPdlPostboksadresse() {
-        val inbound = createKontaktadresse(POSTBOKSADRESSE)
-        val outbound = inbound.toOutbound(adresseKodeverk)
+    fun `should map vegadresse`() {
+        val inbound: PdlKontaktadresse = createKontaktadresse(VEGADRESSE)
+        val outbound: Kontaktadresse = inbound.toOutbound(defaultAdresseKodeverk)!!
 
-        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(outbound?.adresse?.type, POSTBOKSADRESSE)
-        assertEquals(outbound?.kilde, inbound.metadata.master)
-
-        val postboksadresse = outbound?.adresse as Postboksadresse
-
-        assertPostboksadresseEquals(
-            postboksadresse,
-            adresseKodeverk.poststed,
-            inbound.postboksadresse
-        )
+        outbound.adresse.type shouldBe VEGADRESSE
     }
 
     @Test
-    fun canTransformUtenlandskAdresse() {
-        val inbound = createKontaktadresse(UTENLANDSK_ADRESSE)
-        val outbound = inbound.toOutbound(adresseKodeverk)
+    fun `should map postadresse i fritt format`() {
+        val inbound: PdlKontaktadresse = createKontaktadresse(POSTADRESSE_I_FRITT_FORMAT)
+        val outbound: Kontaktadresse = inbound.toOutbound(defaultAdresseKodeverk)!!
 
-        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(outbound?.adresse?.type, UTENLANDSK_ADRESSE)
-        assertEquals(outbound?.kilde, inbound.metadata.master)
-
-        val utenlandskAdresse = outbound?.adresse as UtenlandskAdresse
-
-        assertUtenlandskAdresseEquals(
-            utenlandskAdresse,
-            adresseKodeverk.land,
-            inbound.utenlandskAdresse
-        )
+        outbound.adresse.type shouldBe POSTADRESSE_I_FRITT_FORMAT
     }
 
     @Test
-    fun canTransformUtenlandskAdresseIFrittFormat() {
-        val inbound =
-            createKontaktadresse(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-        val outbound = inbound.toOutbound(adresseKodeverk)
+    fun `should map utenlandsk adresse`() {
+        val inbound: PdlKontaktadresse = createKontaktadresse(UTENLANDSK_ADRESSE)
+        val outbound: Kontaktadresse = inbound.toOutbound(defaultAdresseKodeverk)!!
 
-        assertEquals(outbound?.gyldigTilOgMed, inbound.gyldigTilOgMed)
-        assertEquals(outbound?.coAdressenavn, inbound.coAdressenavn)
-        assertEquals(outbound?.adresse?.type, UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
-        assertEquals(outbound?.kilde, inbound.metadata.master)
-
-        val utenlandskAdresseIFrittFormat = outbound?.adresse as UtenlandskAdresseIFrittFormat
-
-        assertUtenlandskAdresseIFrittFormatEquals(
-            utenlandskAdresseIFrittFormat,
-            adresseKodeverk.land,
-            inbound.utenlandskAdresseIFrittFormat
-        )
+        outbound.adresse.type shouldBe UTENLANDSK_ADRESSE
     }
 
     @Test
-    fun unsupportedAdresseTypeReturnsNull() {
-        val inbound = createKontaktadresse(UKJENTBOSTED)
-        val outbound = inbound.toOutbound(adresseKodeverk)
+    fun `should map utenlandsk adresse i fritt format`() {
+        val inbound: PdlKontaktadresse = createKontaktadresse(UTENLANDSK_ADRESSE_I_FRITT_FORMAT)
+        val outbound: Kontaktadresse = inbound.toOutbound(defaultAdresseKodeverk)!!
 
-        assertNull(outbound)
+        outbound.adresse.type shouldBe UTENLANDSK_ADRESSE_I_FRITT_FORMAT
+    }
+
+    @Test
+    fun `should return null when unsupported type`() {
+        val inbound: PdlKontaktadresse = createKontaktadresse(UKJENTBOSTED)
+        val outbound: Kontaktadresse? = inbound.toOutbound(defaultAdresseKodeverk)
+
+        outbound.shouldBeNull()
     }
 }

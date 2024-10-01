@@ -55,17 +55,17 @@ val defaultPerson = Person(
     kjoenn = listOf(
         Kjoenn(KjoennType.KVINNE)
     ),
-    bostedsadresse = listOf(createBostedsadresse(MATRIKKELADRESSE)),
-    deltBosted = listOf(createDeltBosted(VEGADRESSE)),
-    kontaktadresse = listOf(createKontaktadresse(VEGADRESSE)),
-    oppholdsadresse = listOf(createOppholdsadresse(UTENLANDSK_ADRESSE))
+    bostedsadresse = listOf(createBostedsadresse()),
+    deltBosted = listOf(createDeltBosted()),
+    kontaktadresse = listOf(createKontaktadresse()),
+    oppholdsadresse = listOf(createOppholdsadresse())
 )
 
 val defaultPdlData = HentPersonQuery.Result(defaultPerson, createGeografiskTilknytning())
 
-fun createBostedsadresse(adresseType: AdresseType): Bostedsadresse {
+fun createBostedsadresse(adresseType: AdresseType = VEGADRESSE): Bostedsadresse {
     return Bostedsadresse(
-        angittFlyttedato = LocalDate.now().minusDays(1000).toString(),
+        angittFlyttedato = LocalDate.of(1337, 5,6).toString(),
         coAdressenavn = "coAdressenavn",
         vegadresse = if (adresseType == VEGADRESSE) defaultVegadresse else null,
         matrikkeladresse = if (adresseType == MATRIKKELADRESSE) defaultMatrikkeladresse else null,
@@ -74,7 +74,7 @@ fun createBostedsadresse(adresseType: AdresseType): Bostedsadresse {
     )
 }
 
-fun createDeltBosted(adresseType: AdresseType): DeltBosted {
+fun createDeltBosted(adresseType: AdresseType = VEGADRESSE): DeltBosted {
     return DeltBosted(
         coAdressenavn = "coAdressenavn",
         vegadresse = if (adresseType == VEGADRESSE) defaultVegadresse else null,
@@ -84,9 +84,9 @@ fun createDeltBosted(adresseType: AdresseType): DeltBosted {
     )
 }
 
-fun createKontaktadresse(adresseType: AdresseType): Kontaktadresse {
+fun createKontaktadresse(adresseType: AdresseType = VEGADRESSE): Kontaktadresse {
     return Kontaktadresse(
-        gyldigTilOgMed = LocalDateTime.now().plusDays(1000).toString(),
+        gyldigTilOgMed = LocalDateTime.of(1337, 5, 6, 12, 30).toString(),
         coAdressenavn = "coAdressenavn",
         postboksadresse = if (adresseType == POSTBOKSADRESSE) defaultPostboksadresse else null,
         vegadresse = if (adresseType == VEGADRESSE) defaultVegadresse else null,
@@ -97,9 +97,9 @@ fun createKontaktadresse(adresseType: AdresseType): Kontaktadresse {
     )
 }
 
-fun createOppholdsadresse(adresseType: AdresseType): Oppholdsadresse {
+fun createOppholdsadresse(adresseType: AdresseType = VEGADRESSE): Oppholdsadresse {
     return Oppholdsadresse(
-        gyldigTilOgMed = LocalDateTime.now().plusDays(1000).toString(),
+        gyldigTilOgMed = LocalDateTime.of(1337, 5, 6, 12, 30).toString(),
         coAdressenavn = "coAdressenavn",
         utenlandskAdresse = if (adresseType == UTENLANDSK_ADRESSE) defaultUtenlandskAdresse else null,
         vegadresse = if (adresseType == VEGADRESSE) defaultVegadresse else null,
