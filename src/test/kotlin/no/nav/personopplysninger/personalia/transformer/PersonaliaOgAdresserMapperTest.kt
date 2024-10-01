@@ -1,27 +1,27 @@
 package no.nav.personopplysninger.personalia.transformer
 
-import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
+import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.nulls.shouldNotBeNull
+import no.nav.personopplysninger.personalia.transformer.testdata.defaultEnhetKontaktinfo
 import no.nav.personopplysninger.personalia.transformer.testdata.defaultKonto
 import no.nav.personopplysninger.personalia.transformer.testdata.defaultPdlData
+import no.nav.personopplysninger.personalia.transformer.testdata.defaultPersonaliaKodeverk
 import org.junit.jupiter.api.Test
-import kotlin.test.assertNotNull
 
 class PersonaliaOgAdresserMapperTest {
 
-    private val personaliaKodeverk = PersonaliaKodeverk()
-
     @Test
-    fun gittPersonaliaOgAdresser_skalFaaPersonaliaOgAdresser() {
-        val konto = defaultKonto
-        val pdlData = defaultPdlData
-        val outbound = pdlData.toOutbound(
-            konto,
-            personaliaKodeverk,
-            null
+    fun `should map all fields correctly`() {
+        val outbound = defaultPdlData.toOutbound(
+            defaultKonto,
+            defaultPersonaliaKodeverk,
+            defaultEnhetKontaktinfo
         )
 
-        assertNotNull(outbound.personalia)
-        assertNotNull(outbound.adresser)
+        assertSoftly(outbound) {
+            personalia.shouldNotBeNull()
+            adresser.shouldNotBeNull()
+            enhetKontaktInformasjon.shouldNotBeNull()
+        }
     }
-
 }

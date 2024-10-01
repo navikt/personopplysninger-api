@@ -16,6 +16,8 @@ import no.nav.pdl.generated.dto.hentpersonquery.Person
 import no.nav.pdl.generated.dto.hentpersonquery.Sivilstand
 import no.nav.pdl.generated.dto.hentpersonquery.Statsborgerskap
 import no.nav.pdl.generated.dto.hentpersonquery.Telefonnummer
+import no.nav.personopplysninger.consumer.norg2.dto.Brukerkontakt
+import no.nav.personopplysninger.consumer.norg2.dto.Norg2EnhetKontaktinfo
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.MATRIKKELADRESSE
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.POSTADRESSE_I_FRITT_FORMAT
@@ -63,9 +65,14 @@ val defaultPerson = Person(
 
 val defaultPdlData = HentPersonQuery.Result(defaultPerson, createGeografiskTilknytning())
 
+val defaultEnhetKontaktinfo = Norg2EnhetKontaktinfo(
+    navn = "navn",
+    brukerkontakt = Brukerkontakt(publikumsmottak = emptyList())
+)
+
 fun createBostedsadresse(adresseType: AdresseType = VEGADRESSE): Bostedsadresse {
     return Bostedsadresse(
-        angittFlyttedato = LocalDate.of(1337, 5,6).toString(),
+        angittFlyttedato = LocalDate.of(1337, 5, 6).toString(),
         coAdressenavn = "coAdressenavn",
         vegadresse = if (adresseType == VEGADRESSE) defaultVegadresse else null,
         matrikkeladresse = if (adresseType == MATRIKKELADRESSE) defaultMatrikkeladresse else null,

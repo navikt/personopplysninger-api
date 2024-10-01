@@ -6,12 +6,12 @@ import no.nav.personopplysninger.consumer.kontoregister.dto.request.UtenlandskKo
 val defaultUtenlandskKontoInfo = UtenlandskKontoInfo(
     bankadresse1 = "Adresselinje 1",
     bankadresse2 = "Adresselinje 2",
-    bankadresse3 = "adresselinje 3",
-    bankkode = "ssss",
-    banknavn = "xxxx",
-    swiftBicKode = "gdgf",
-    bankLandkode = "sdf",
-    valutakode = "asdf"
+    bankadresse3 = "Adresselinje 3",
+    bankkode = "bankkode",
+    banknavn = "banknavn",
+    swiftBicKode = "swiftBicKode",
+    bankLandkode = "bankLandkode",
+    valutakode = "valutakode"
 )
 
 val defaultKonto = Konto(
