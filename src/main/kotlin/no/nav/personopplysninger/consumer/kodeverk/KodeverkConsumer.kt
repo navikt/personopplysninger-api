@@ -13,7 +13,7 @@ import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.consumer.kodeverk.dto.KodeverkBetydningerResponse
-import no.nav.personopplysninger.util.consumerErrorMessage
+import no.nav.personopplysninger.utils.consumerErrorMessage
 import no.nav.tms.token.support.azure.exchange.AzureService
 import java.util.*
 

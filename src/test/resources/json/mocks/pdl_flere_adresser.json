@@ -1,0 +1,224 @@
+{
+  "data": {
+    "person": {
+      "navn": [
+        {
+          "fornavn": "AREMARK",
+          "mellomnavn": "",
+          "etternavn": "TESTFAMILIEN"
+        }
+      ],
+      "telefonnummer": [
+        {
+          "landskode": "+47",
+          "nummer": "55553334",
+          "prioritet": 1,
+          "metadata": {
+            "opplysningsId": "81cfd87b-4e83-4bfc-b6c3-fe99b76b6d18"
+          }
+        }
+      ],
+      "folkeregisteridentifikator": [
+        {
+          "identifikasjonsnummer": "10108000398",
+          "status": "I_BRUK",
+          "type": "FNR"
+        }
+      ],
+      "statsborgerskap": [
+        {
+          "land": "NOR"
+        }
+      ],
+      "foedested": [
+        {
+          "foedekommune": "4601",
+          "foedeland": "NOR"
+        }
+      ],
+      "sivilstand": [
+        {
+          "type": "UGIFT",
+          "gyldigFraOgMed": "2007-02-18"
+        },
+        {
+          "type": "GIFT",
+          "gyldigFraOgMed": "2001-10-09"
+        }
+      ],
+      "kjoenn": [
+        {
+          "kjoenn": "MANN"
+        }
+      ],
+      "bostedsadresse": [
+        {
+          "angittFlyttedato": null,
+          "gyldigFraOgMed": "2020-05-07T12:09:19",
+          "gyldigTilOgMed": null,
+          "coAdressenavn": null,
+          "vegadresse": {
+            "husnummer": "100",
+            "husbokstav": null,
+            "bruksenhetsnummer": null,
+            "adressenavn": "Almåsvegen",
+            "kommunenummer": "4601",
+            "bydelsnummer": null,
+            "tilleggsnavn": null,
+            "postnummer": "5109"
+          },
+          "matrikkeladresse": null,
+          "utenlandskAdresse": null,
+          "ukjentBosted": null,
+          "metadata": {
+            "opplysningsId": "7de1afaa-8119-4520-958f-3a464972d117",
+            "master": "Freg",
+            "endringer": [
+              {
+                "type": "OPPRETT",
+                "registrert": "2020-05-08T10:43:38",
+                "registrertAv": "Folkeregisteret",
+                "systemkilde": "FREG",
+                "kilde": "DataPatch 17"
+              },
+              {
+                "type": "KORRIGER",
+                "registrert": "2020-11-12T07:13:54",
+                "registrertAv": "Folkeregisteret",
+                "systemkilde": "FREG",
+                "kilde": "DataPatch 17"
+              }
+            ],
+            "historisk": false
+          }
+        }
+      ],
+      "deltBosted": [],
+      "kontaktadresse": [
+        {
+          "gyldigFraOgMed": "2020-03-24T00:00",
+          "gyldigTilOgMed": null,
+          "type": "Innland",
+          "coAdressenavn": null,
+          "postboksadresse": null,
+          "vegadresse": {
+            "husnummer": "100",
+            "husbokstav": null,
+            "bruksenhetsnummer": null,
+            "adressenavn": "Kontaktadresseveien 1",
+            "kommunenummer": "3014",
+            "bydelsnummer": null,
+            "tilleggsnavn": null,
+            "postnummer": "1820"
+          },
+          "postadresseIFrittFormat": null,
+          "utenlandskAdresse": null,
+          "utenlandskAdresseIFrittFormat": null,
+          "folkeregistermetadata": {
+            "ajourholdstidspunkt": null,
+            "gyldighetstidspunkt": "2020-03-24T00:00",
+            "opphoerstidspunkt": null,
+            "kilde": "KILDE_DSF",
+            "aarsak": null,
+            "sekvens": null
+          },
+          "metadata": {
+            "opplysningsId": "ad35b2d7-2e50-4b64-89e6-ab220d66e9fa",
+            "master": "pdl",
+            "endringer": [
+              {
+                "type": "OPPRETT",
+                "registrert": "2020-04-24T13:07:20",
+                "registrertAv": "Folkeregisteret",
+                "systemkilde": "FREG",
+                "kilde": "KILDE_DSF"
+              }
+            ],
+            "historisk": false
+          }
+        },
+        {
+          "gyldigFraOgMed": "2020-03-24T00:00",
+          "gyldigTilOgMed": null,
+          "type": "Innland",
+          "coAdressenavn": null,
+          "postboksadresse": null,
+          "vegadresse": {
+            "husnummer": "100",
+            "husbokstav": null,
+            "bruksenhetsnummer": null,
+            "adressenavn": "Kontaktadresseveien 2",
+            "kommunenummer": "5434",
+            "bydelsnummer": null,
+            "tilleggsnavn": null,
+            "postnummer": "1861"
+          },
+          "postadresseIFrittFormat": null,
+          "utenlandskAdresse": null,
+          "utenlandskAdresseIFrittFormat": null,
+          "folkeregistermetadata": {
+            "ajourholdstidspunkt": null,
+            "gyldighetstidspunkt": "2020-03-24T00:00",
+            "opphoerstidspunkt": null,
+            "kilde": "KILDE_DSF",
+            "aarsak": null,
+            "sekvens": null
+          },
+          "metadata": {
+            "opplysningsId": "ad35b2d7-2e50-4b64-89e6-ab220d66e9fa",
+            "master": "pdl",
+            "endringer": [
+              {
+                "type": "OPPRETT",
+                "registrert": "2020-04-24T13:07:20",
+                "registrertAv": "Folkeregisteret",
+                "systemkilde": "FREG",
+                "kilde": "KILDE_DSF"
+              }
+            ],
+            "historisk": false
+          }
+        }
+      ],
+      "oppholdsadresse": [
+        {
+          "gyldigFraOgMed": "2020-05-07T12:09:19",
+          "gyldigTilOgMed": null,
+          "coAdressenavn": null,
+          "oppholdAnnetSted": "UTENRIKS",
+          "metadata": {
+            "opplysningsId": "7de1afaa-8119-4520-958f-3a464972d117",
+            "master": "Freg",
+            "endringer": [],
+            "historisk": false
+          }
+        },
+        {
+          "gyldigFraOgMed": "2020-05-07T12:09:19",
+          "gyldigTilOgMed": null,
+          "coAdressenavn": null,
+          "vegadresse": {
+            "husnummer": "100",
+            "husbokstav": null,
+            "bruksenhetsnummer": null,
+            "adressenavn": "Oppholdsadresseveien 1",
+            "kommunenummer": "3014",
+            "bydelsnummer": null,
+            "tilleggsnavn": null,
+            "postnummer": "1820"
+          },
+          "metadata": {
+            "opplysningsId": "7de1afaa-8119-4520-958f-3a464972d117",
+            "master": "Freg",
+            "endringer": [],
+            "historisk": false
+          }
+        }
+      ]
+    },
+    "geografiskTilknytning": {
+      "gtKommune": null,
+      "gtBydel": "460108"
+    }
+  }
+}

@@ -36,10 +36,10 @@ repositories {
 dependencies {
     val auth0JwtVersion = "4.4.0"
     val caffeineVersion = "3.1.8"
-    val graphqlVersion = "7.1.1"
+    val graphqlVersion = "8.1.0"
     val kafkaVersion = "3.8.0"
     val ktorVersion = "2.3.12"
-    val logbackVersion = "1.5.8"
+    val logbackVersion = "1.5.9"
     val logstashVersion = "8.0"
     val micrometerVersion = "1.13.5"
     val mockkVersion = "1.13.12"
@@ -47,6 +47,7 @@ dependencies {
     val kotlinVersion = "2.0.0"
     val tmsKtorTokenSupportVersion = "4.1.2"
     val tmsVarselBuilderVersion = "1.1.0"
+    val kotestVersion = "5.9.1"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
     implementation("com.github.ben-manes.caffeine:caffeine:$caffeineVersion")
@@ -77,6 +78,8 @@ dependencies {
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation("io.kotest:kotest-assertions-json:$kotestVersion")
 }
 
 application {

@@ -62,7 +62,6 @@ class ApplicationContext {
     val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkConsumer)
     val personaliaService = PersonaliaService(kodeverkConsumer, norg2Consumer, kontoregisterConsumer, pdlConsumer)
 
-
     private fun setupIdporten(env: Environment): IDPorten {
         return IDPorten(
             redirectUri = env.redirectUri,

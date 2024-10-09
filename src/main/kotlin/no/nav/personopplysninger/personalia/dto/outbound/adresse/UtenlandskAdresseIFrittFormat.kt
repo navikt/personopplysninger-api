@@ -4,7 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.UTENLANDSK_ADRESSE_I_FRITT_FORMAT
 
-
 @Serializable
 @SerialName("UTENLANDSK_ADRESSE_I_FRITT_FORMAT")
 data class UtenlandskAdresseIFrittFormat(

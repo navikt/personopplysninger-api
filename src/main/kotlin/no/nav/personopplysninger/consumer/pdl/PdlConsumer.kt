@@ -15,7 +15,7 @@ import no.nav.personopplysninger.config.Environment
 import no.nav.personopplysninger.config.HEADER_AUTHORIZATION
 import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
-import no.nav.personopplysninger.util.consumerErrorMessage
+import no.nav.personopplysninger.utils.consumerErrorMessage
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.LoggerFactory
 import java.util.*

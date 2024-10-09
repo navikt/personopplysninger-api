@@ -28,7 +28,7 @@ import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Personopplysning
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Personopplysning.Companion.slettTelefonnummerPayload
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.consumer.pdlmottak.dto.outbound.Endring
-import no.nav.personopplysninger.util.consumerErrorMessage
+import no.nav.personopplysninger.utils.consumerErrorMessage
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.LoggerFactory
 import java.util.*

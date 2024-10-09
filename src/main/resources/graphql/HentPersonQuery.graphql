@@ -102,7 +102,6 @@ query HentPersonQuery($ident: ID!) {
     geografiskTilknytning: hentGeografiskTilknytning(ident: $ident) {
         gtKommune
         gtBydel
-        gtLand
     }
 }
 

@@ -14,10 +14,9 @@ import no.nav.personopplysninger.config.HEADER_NAV_CALL_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_PERSONIDENT
 import no.nav.personopplysninger.consumer.inst2.dto.InnsynInstitusjonsopphold
-import no.nav.personopplysninger.util.consumerErrorMessage
+import no.nav.personopplysninger.utils.consumerErrorMessage
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import java.util.*
-
 
 class InstitusjonConsumer(
     private val client: HttpClient,
