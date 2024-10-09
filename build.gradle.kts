@@ -6,7 +6,7 @@ plugins {
     val kotlinVersion = "2.0.20"
     val shadowVersion = "8.1.1"
     val versionsVersion = "0.51.0"
-    val graphqlVersion = "8.0.0"
+    val graphqlVersion = "8.1.0"
 
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.allopen") version kotlinVersion
@@ -36,17 +36,17 @@ repositories {
 dependencies {
     val auth0JwtVersion = "4.4.0"
     val caffeineVersion = "3.1.8"
-    val graphqlVersion = "8.0.0"
+    val graphqlVersion = "8.1.0"
     val kafkaVersion = "3.8.0"
     val ktorVersion = "2.3.12"
     val logbackVersion = "1.5.8"
     val logstashVersion = "8.0"
-    val micrometerVersion = "1.13.4"
+    val micrometerVersion = "1.13.5"
     val mockkVersion = "1.13.12"
     val navSecurityVersion = "5.0.5"
     val kotlinVersion = "2.0.0"
     val tmsKtorTokenSupportVersion = "4.1.2"
-    val tmsVarselBuilderVersion = "1.0.4"
+    val tmsVarselBuilderVersion = "1.1.0"
     val kotestVersion = "5.9.1"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
