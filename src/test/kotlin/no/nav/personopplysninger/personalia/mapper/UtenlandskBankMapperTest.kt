@@ -1,10 +1,10 @@
-package no.nav.personopplysninger.personalia.transformer
+package no.nav.personopplysninger.personalia.mapper
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import no.nav.personopplysninger.personalia.dto.outbound.UtenlandskBankInfo
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultKonto
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultPersonaliaKodeverk
+import no.nav.personopplysninger.personalia.mapper.testdata.defaultKonto
+import no.nav.personopplysninger.personalia.mapper.testdata.defaultPersonaliaKodeverk
 import org.junit.jupiter.api.Test
 
 class UtenlandskBankMapperTest {

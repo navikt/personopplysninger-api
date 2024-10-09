@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.personalia.transformer
+package no.nav.personopplysninger.personalia.mapper
 
 import no.nav.pdl.generated.dto.hentpersonquery.Kontaktadresse
 import no.nav.pdl.generated.dto.hentpersonquery.Oppholdsadresse

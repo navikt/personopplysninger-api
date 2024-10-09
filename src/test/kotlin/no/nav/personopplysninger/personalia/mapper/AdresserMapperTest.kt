@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.personalia.transformer
+package no.nav.personopplysninger.personalia.mapper
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -13,10 +13,10 @@ import no.nav.personopplysninger.personalia.dto.outbound.Adresser
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
-import no.nav.personopplysninger.personalia.transformer.testdata.createKontaktadresse
-import no.nav.personopplysninger.personalia.transformer.testdata.createOppholdsadresse
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultPerson
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultPersonaliaKodeverk
+import no.nav.personopplysninger.personalia.mapper.testdata.createKontaktadresse
+import no.nav.personopplysninger.personalia.mapper.testdata.createOppholdsadresse
+import no.nav.personopplysninger.personalia.mapper.testdata.defaultPerson
+import no.nav.personopplysninger.personalia.mapper.testdata.defaultPersonaliaKodeverk
 import org.junit.jupiter.api.Test
 
 class AdresserMapperTest {

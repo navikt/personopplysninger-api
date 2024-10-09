@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.kontaktinformasjon.transformer
+package no.nav.personopplysninger.kontaktinformasjon.mapper
 
 import no.nav.personopplysninger.consumer.digdirkrr.dto.DigitalKontaktinformasjon
 import no.nav.personopplysninger.kontaktinformasjon.dto.Kontaktinformasjon

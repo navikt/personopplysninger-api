@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.personalia.transformer
+package no.nav.personopplysninger.personalia.mapper
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.nulls.shouldBeNull
@@ -10,8 +10,8 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.UTE
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.UTENLANDSK_ADRESSE_I_FRITT_FORMAT
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.VEGADRESSE
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.DeltBosted
-import no.nav.personopplysninger.personalia.transformer.testdata.createDeltBosted
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultAdresseKodeverk
+import no.nav.personopplysninger.personalia.mapper.testdata.createDeltBosted
+import no.nav.personopplysninger.personalia.mapper.testdata.defaultAdresseKodeverk
 import org.junit.jupiter.api.Test
 import no.nav.pdl.generated.dto.hentpersonquery.DeltBosted as PdlDeltBosted
 

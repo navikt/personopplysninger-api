@@ -1,9 +1,9 @@
-package no.nav.personopplysninger.kontaktinformasjon.transformer
+package no.nav.personopplysninger.kontaktinformasjon.mapper
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import no.nav.personopplysninger.kontaktinformasjon.dto.Kontaktinformasjon
-import no.nav.personopplysninger.kontaktinformasjon.transformer.testdata.defaultDigitalKontaktinfo
+import no.nav.personopplysninger.kontaktinformasjon.mapper.testdata.defaultDigitalKontaktinfo
 import org.junit.jupiter.api.Test
 
 class KontaktinformasjonMapperTest {

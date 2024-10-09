@@ -3,7 +3,7 @@ package no.nav.personopplysninger.kontaktinformasjon
 import no.nav.personopplysninger.consumer.digdirkrr.KontaktinfoConsumer
 import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
 import no.nav.personopplysninger.kontaktinformasjon.dto.Kontaktinformasjon
-import no.nav.personopplysninger.kontaktinformasjon.transformer.toOutbound
+import no.nav.personopplysninger.kontaktinformasjon.mapper.toOutbound
 
 class KontaktinformasjonService(
     private val kontaktinfoConsumer: KontaktinfoConsumer,

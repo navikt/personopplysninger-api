@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.personalia.transformer.testdata
+package no.nav.personopplysninger.personalia.mapper.testdata
 
 import no.nav.personopplysninger.consumer.kontoregister.dto.request.Konto
 import no.nav.personopplysninger.consumer.kontoregister.dto.request.UtenlandskKontoInfo

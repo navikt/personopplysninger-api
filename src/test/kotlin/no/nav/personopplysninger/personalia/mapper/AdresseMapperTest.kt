@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.personalia.transformer
+package no.nav.personopplysninger.personalia.mapper
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
@@ -8,12 +8,12 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.Postboksadresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresseIFrittFormat
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Vegadresse
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultMatrikkeladresse
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultPostadresseIFrittFormat
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultPostboksadresse
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultUtenlandskAdresse
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultUtenlandskAdresseIFrittFormat
-import no.nav.personopplysninger.personalia.transformer.testdata.defaultVegadresse
+import no.nav.personopplysninger.personalia.mapper.testdata.defaultMatrikkeladresse
+import no.nav.personopplysninger.personalia.mapper.testdata.defaultPostadresseIFrittFormat
+import no.nav.personopplysninger.personalia.mapper.testdata.defaultPostboksadresse
+import no.nav.personopplysninger.personalia.mapper.testdata.defaultUtenlandskAdresse
+import no.nav.personopplysninger.personalia.mapper.testdata.defaultUtenlandskAdresseIFrittFormat
+import no.nav.personopplysninger.personalia.mapper.testdata.defaultVegadresse
 import org.junit.jupiter.api.Test
 
 class AdresseMapperTest {

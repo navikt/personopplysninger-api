@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.personalia.transformer.testdata
+package no.nav.personopplysninger.personalia.mapper.testdata
 
 import no.nav.pdl.generated.dto.HentPersonQuery
 import no.nav.pdl.generated.dto.enums.KjoennType

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.kontaktinformasjon.transformer.testdata
+package no.nav.personopplysninger.kontaktinformasjon.mapper.testdata
 
 import no.nav.personopplysninger.consumer.digdirkrr.dto.DigitalKontaktinformasjon
 import no.nav.personopplysninger.consumer.digdirkrr.dto.SikkerDigitalPostkasse

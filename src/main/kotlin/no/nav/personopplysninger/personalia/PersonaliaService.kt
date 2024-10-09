@@ -13,7 +13,7 @@ import no.nav.personopplysninger.personalia.dto.outbound.PersonaliaOgAdresser
 import no.nav.personopplysninger.personalia.extensions.kommunenummer
 import no.nav.personopplysninger.personalia.extensions.landkode
 import no.nav.personopplysninger.personalia.extensions.postnummer
-import no.nav.personopplysninger.personalia.transformer.toOutbound
+import no.nav.personopplysninger.personalia.mapper.toOutbound
 import java.time.LocalDate
 
 class PersonaliaService(
