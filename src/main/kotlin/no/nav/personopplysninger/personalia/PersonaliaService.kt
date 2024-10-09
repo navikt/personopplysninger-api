@@ -15,7 +15,7 @@ import no.nav.personopplysninger.personalia.dto.outbound.PersonaliaOgAdresser
 import no.nav.personopplysninger.personalia.extensions.kommunenummer
 import no.nav.personopplysninger.personalia.extensions.landkode
 import no.nav.personopplysninger.personalia.extensions.postnummer
-import no.nav.personopplysninger.personalia.transformer.PersonaliaOgAdresserTransformer
+import no.nav.personopplysninger.personalia.mapper.toOutbound
 import java.time.LocalDate
 
 class PersonaliaService(
@@ -28,8 +28,7 @@ class PersonaliaService(
     suspend fun hentPersoninfo(token: String, fodselsnr: String): PersonaliaOgAdresser {
         return pdlConsumer.hentPerson(token, fodselsnr).let { person ->
             val konto = kontoregisterConsumer.hentAktivKonto(token, fodselsnr)
-            PersonaliaOgAdresserTransformer.toOutbound(
-                pdlData = person,
+            person.toOutbound(
                 konto = konto,
                 kodeverk = createPersonaliaKodeverk(person, konto),
                 enhetKontaktInformasjon = enhetKontaktInfoFor(person.geografiskTilknytning, token)

@@ -117,5 +117,5 @@ fun createOppholdsadresse(adresseType: AdresseType = VEGADRESSE): Oppholdsadress
 }
 
 fun createGeografiskTilknytning(): GeografiskTilknytning {
-    return GeografiskTilknytning("gtKommune", "gtBydel", "gtLand")
+    return GeografiskTilknytning("gtKommune", "gtBydel")
 }

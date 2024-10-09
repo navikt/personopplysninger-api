@@ -11,7 +11,6 @@ val defaultAdresseKodeverk = AdresseKodeverk(
 
 val defaultPersonaliaKodeverk = PersonaliaKodeverk(
     foedelandterm = "foedelandterm",
-    gtLandterm = "gtLandterm",
     foedekommuneterm = "foedekommuneterm",
     statsborgerskaptermer = listOf("statsborgerskapterm"),
     utenlandskbanklandterm = "utenlandskbanklandterm",
