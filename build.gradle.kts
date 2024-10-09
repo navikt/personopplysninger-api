@@ -41,7 +41,7 @@ dependencies {
     val ktorVersion = "2.3.12"
     val logbackVersion = "1.5.8"
     val logstashVersion = "8.0"
-    val micrometerVersion = "1.13.4"
+    val micrometerVersion = "1.13.5"
     val mockkVersion = "1.13.12"
     val navSecurityVersion = "5.0.5"
     val kotlinVersion = "2.0.0"
