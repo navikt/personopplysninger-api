@@ -36,38 +36,32 @@ class EndreOpplysningerService(
     }
 
     suspend fun slettTelefonNummer(token: String, fnr: String, telefonnummer: Telefonnummer): Endring {
-        val opplysningsId = pdlConsumer.hentTelefon(token, fnr)
-            .findOpplysningsId(telefonnummer.landskode, telefonnummer.nummer)
-            ?: throw RuntimeException("Fant ikke oppgitt telefonnummer")
-
-        return pdlMottakConsumer.slettTelefonnummer(token, fnr, opplysningsId)
+        return pdlMottakConsumer.slettTelefonnummer(
+            token = token,
+            fnr = fnr,
+            opplysningsId = pdlConsumer.hentTelefon(token, fnr)
+                .findOpplysningsId(telefonnummer.landskode, telefonnummer.nummer)
+        )
     }
 
     suspend fun slettKontaktadresse(token: String, fnr: String): Endring {
-        val opplysningsId = pdlConsumer.hentKontaktadresse(token, fnr).findOpplysningsId()
-            ?: throw RuntimeException("Fant ingen kontaktadresser som kan slettes")
-
-        return pdlMottakConsumer.slettKontaktadresse(token, fnr, opplysningsId)
+        return pdlMottakConsumer.slettKontaktadresse(
+            token = token,
+            fnr = fnr,
+            opplysningsId = pdlConsumer.hentKontaktadresse(token, fnr).findOpplysningsId()
+        )
     }
 
     suspend fun endreKontonummer(token: String, fnr: String, kontonummer: Kontonummer) {
-        val request = OppdaterKonto(
-            kontohaver = fnr,
-            nyttKontonummer = kontonummer.value,
-            utenlandskKontoInfo = kontonummer.utenlandskKontoInformasjon?.let {
-                UtenlandskKontoInfo(
-                    banknavn = kontonummer.utenlandskKontoInformasjon.bank?.navn.orEmpty(),
-                    bankkode = kontonummer.utenlandskKontoInformasjon.bank?.kode,
-                    bankLandkode = kontonummer.utenlandskKontoInformasjon.landkode.orEmpty(),
-                    valutakode = kontonummer.utenlandskKontoInformasjon.valuta,
-                    swiftBicKode = kontonummer.utenlandskKontoInformasjon.swift,
-                    bankadresse1 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje1.orEmpty(),
-                    bankadresse2 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje2.orEmpty(),
-                    bankadresse3 = kontonummer.utenlandskKontoInformasjon.bank?.adresseLinje3.orEmpty(),
-                )
-            }
+        kontoregisterConsumer.endreKontonummer(
+            token = token,
+            request = OppdaterKonto(
+                kontohaver = fnr,
+                nyttKontonummer = kontonummer.value,
+                utenlandskKontoInfo = kontonummer.utenlandskKontoInformasjon?.let { UtenlandskKontoInfo.from(it) }
+            )
         )
-        kontoregisterConsumer.endreKontonummer(token, request)
+
         try {
             hendelseProducer.sendVarselHendelse(fnr = fnr, eventId = UUID.randomUUID().toString())
         } catch (e: Exception) {
