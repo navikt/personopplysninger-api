@@ -7,8 +7,8 @@ import io.mockk.mockkStatic
 import no.nav.personopplysninger.config.TestApplicationContext
 import no.nav.personopplysninger.config.setupMockedClient
 import no.nav.personopplysninger.config.testModule
-import no.nav.personopplysninger.util.getAuthTokenFromCall
-import no.nav.personopplysninger.util.getFnrFromToken
+import no.nav.personopplysninger.utils.getAuthTokenFromCall
+import no.nav.personopplysninger.utils.getFnrFromToken
 
 fun main() {
     embeddedServer(Netty, port = 8080, watchPaths = listOf("classes")) {

@@ -25,8 +25,8 @@ import no.nav.personopplysninger.config.Pkce
 import no.nav.personopplysninger.consumer.kontoregister.dto.response.Kontonummer
 import no.nav.personopplysninger.consumer.kontoregister.exception.KontoregisterValidationException
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
-import no.nav.personopplysninger.util.getAuthTokenFromCall
-import no.nav.personopplysninger.util.getFnrFromToken
+import no.nav.personopplysninger.utils.getAuthTokenFromCall
+import no.nav.personopplysninger.utils.getFnrFromToken
 import org.slf4j.LoggerFactory
 import java.util.*
 

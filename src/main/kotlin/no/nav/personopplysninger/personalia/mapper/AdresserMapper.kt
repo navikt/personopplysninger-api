@@ -6,7 +6,7 @@ import no.nav.pdl.generated.dto.hentpersonquery.Person
 import no.nav.personopplysninger.personalia.dto.AdresseKodeverk
 import no.nav.personopplysninger.personalia.dto.PersonaliaKodeverk
 import no.nav.personopplysninger.personalia.dto.outbound.Adresser
-import no.nav.personopplysninger.util.firstOrNull
+import no.nav.personopplysninger.utils.firstOrNull
 
 fun Person.toOutboundAdresser(kodeverk: PersonaliaKodeverk) = with(kodeverk) {
     Adresser(

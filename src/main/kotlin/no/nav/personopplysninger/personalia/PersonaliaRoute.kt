@@ -5,8 +5,8 @@ import io.ktor.server.application.call
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
-import no.nav.personopplysninger.util.getAuthTokenFromCall
-import no.nav.personopplysninger.util.getFnrFromToken
+import no.nav.personopplysninger.utils.getAuthTokenFromCall
+import no.nav.personopplysninger.utils.getFnrFromToken
 import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("personaliaRoute")

@@ -1,4 +1,4 @@
-package no.nav.personopplysninger.util
+package no.nav.personopplysninger.utils
 
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.authorization

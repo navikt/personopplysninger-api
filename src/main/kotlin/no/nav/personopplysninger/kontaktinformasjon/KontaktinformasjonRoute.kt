@@ -1,26 +1,26 @@
-package no.nav.personopplysninger.medl
+package no.nav.personopplysninger.kontaktinformasjon
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
-import no.nav.personopplysninger.util.getAuthTokenFromCall
-import no.nav.personopplysninger.util.getFnrFromToken
+import no.nav.personopplysninger.utils.getAuthTokenFromCall
+import no.nav.personopplysninger.utils.getFnrFromToken
 import org.slf4j.LoggerFactory
 
-private val logger = LoggerFactory.getLogger("medlRoute")
+private val logger = LoggerFactory.getLogger("kontaktinformasjonRoute")
 
-fun Route.medl(medlService: MedlService) {
-    get("/medl") {
+fun Route.kontaktinformasjon(kontaktinformasjonService: KontaktinformasjonService) {
+    get("/kontaktinformasjon") {
         try {
             val authToken = getAuthTokenFromCall(call)
             val fnr = getFnrFromToken(authToken)
 
-            val resp = medlService.hentMedlemskap(authToken, fnr)
+            val resp = kontaktinformasjonService.hentKontaktinformasjon(authToken, fnr)
             call.respond(resp)
         } catch (e: Exception) {
-            logger.error("Noe gikk galt ved henting av medlemskap", e)
+            logger.error("Noe gikk galt ved henting av kontaktinformasjon", e)
             call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
         }
     }

@@ -13,7 +13,7 @@ import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_ID
 import no.nav.personopplysninger.config.HEADER_NAV_CONSUMER_TOKEN
 import no.nav.personopplysninger.consumer.norg2.dto.Norg2Enhet
 import no.nav.personopplysninger.consumer.norg2.dto.Norg2EnhetKontaktinfo
-import no.nav.personopplysninger.util.consumerErrorMessage
+import no.nav.personopplysninger.utils.consumerErrorMessage
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.*

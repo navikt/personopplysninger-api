@@ -27,7 +27,7 @@ import no.nav.personopplysninger.consumer.kontoregister.dto.response.Landkode
 import no.nav.personopplysninger.consumer.kontoregister.dto.response.ValidationError
 import no.nav.personopplysninger.consumer.kontoregister.dto.response.Valutakode
 import no.nav.personopplysninger.consumer.kontoregister.exception.KontoregisterValidationException
-import no.nav.personopplysninger.util.consumerErrorMessage
+import no.nav.personopplysninger.utils.consumerErrorMessage
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
