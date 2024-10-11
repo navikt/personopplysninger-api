@@ -44,7 +44,7 @@ class TestApplicationContext(httpClient: HttpClient) {
         wellKnownUrl = "",
         clientId = "",
         clientJwk = "",
-        encryptionKey = "ZHVtbXk=",
+        encryptionKey = "ZHVtbXk=", // Ikke reell key
         inst2Url = "https://inst2",
         kodeverkUrl = "https://kodeverk",
         norg2Url = "https://norg2",
