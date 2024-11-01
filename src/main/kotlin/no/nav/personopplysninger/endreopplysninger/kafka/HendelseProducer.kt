@@ -48,6 +48,7 @@ class HendelseProducer(
                 epostVarslingstittel = VARSLINGSTITTEL,
                 epostVarslingstekst = epostVarslingstekst,
                 smsVarslingstekst = smsVarslingstekst,
+                kanBatches = false,
             )
         }
     }
