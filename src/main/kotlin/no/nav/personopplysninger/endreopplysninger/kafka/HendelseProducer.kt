@@ -1,7 +1,6 @@
 package no.nav.personopplysninger.endreopplysninger.kafka
 
 import no.nav.tms.varsel.action.EksternKanal
-import no.nav.tms.varsel.action.EksternVarslingBestilling
 import no.nav.tms.varsel.action.Sensitivitet
 import no.nav.tms.varsel.action.Tekst
 import no.nav.tms.varsel.action.Varseltype
@@ -24,12 +23,7 @@ class HendelseProducer(
     }
 
     private fun createHendelse(fnr: String, eventId: String): String {
-        val timestamp = LocalDateTime.now()
-        val endringstidspunkt = endringstidspunkt(timestamp)
-
-        val dekoratorVarslingstekst = dekoratorVarslingstekst(endringstidspunkt)
-        val epostVarslingstekst = epostVarslingstekst(endringstidspunkt)
-        val smsVarslingstekst = smsVarslingstekst(endringstidspunkt)
+        val endringstidspunkt = LocalDateTime.now().toFormattedString()
 
         return VarselActionBuilder.opprett {
             type = Varseltype.Beskjed
@@ -38,17 +32,17 @@ class HendelseProducer(
             ident = fnr
             tekster += Tekst(
                 spraakkode = "nb",
-                tekst = dekoratorVarslingstekst,
+                tekst = dekoratorVarslingstekst(endringstidspunkt),
                 default = true
             )
             link = "https://www.nav.no/person/personopplysninger/nb/#utbetaling"
             aktivFremTil = ZonedDateTime.now(ZoneId.of("Z")).plusDays(14)
-            eksternVarsling = EksternVarslingBestilling(
-                prefererteKanaler = listOf(EksternKanal.SMS, EksternKanal.EPOST),
-                epostVarslingstittel = VARSLINGSTITTEL,
-                epostVarslingstekst = epostVarslingstekst,
-                smsVarslingstekst = smsVarslingstekst,
-            )
+            eksternVarsling {
+                preferertKanal = EksternKanal.BETINGET_SMS
+                epostVarslingstittel = VARSLINGSTITTEL
+                epostVarslingstekst = epostVarslingstekst(endringstidspunkt)
+                smsVarslingstekst = smsVarslingstekst(endringstidspunkt)
+            }
         }
     }
 
@@ -69,17 +63,16 @@ class HendelseProducer(
                 "Hvis det er feil, må du logge inn på NAV for å rette det eller ringe oss på 55 55 33 33 fra 9-15."
     }
 
-    private fun endringstidspunkt(timestamp: LocalDateTime): String {
-        val dayOfMonth = timestamp.dayOfMonth
-        val month = timestamp.monthValue
-        val time = timestamp.format(timeFormatter)
+    private fun LocalDateTime.toFormattedString(): String {
+        val dayOfMonth = this.dayOfMonth
+        val month = this.monthValue
+        val time = this.format(timeFormatter)
 
         return "$dayOfMonth.$month. kl. $time"
     }
 
     companion object {
-        const val VARSLINGSTITTEL =
-            "Du har endret kontonummeret ditt hos NAV"
+        const val VARSLINGSTITTEL = "Du har endret kontonummeret ditt hos NAV"
 
         val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     }
