@@ -6,7 +6,7 @@ import no.nav.personopplysninger.personalia.dto.outbound.adresse.AdresseType.POS
 
 @Serializable
 @SerialName("POSTADRESSE_I_FRITT_FORMAT")
-data class PostAdresseIFrittFormat(
+data class PostadresseIFrittFormat(
     val adresselinje1: String?,
     val adresselinje2: String?,
     val adresselinje3: String?,

@@ -9,7 +9,7 @@ import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.OpphoerEndringsM
 import no.nav.personopplysninger.consumer.pdlmottak.dto.inbound.Telefonnummer
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Adresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Matrikkeladresse
-import no.nav.personopplysninger.personalia.dto.outbound.adresse.PostAdresseIFrittFormat
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.PostadresseIFrittFormat
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Postboksadresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Ukjentbosted
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresse
@@ -25,7 +25,7 @@ fun jsonConfig(): Json {
         serializersModule = SerializersModule {
             polymorphic(Adresse::class) {
                 subclass(Vegadresse::class)
-                subclass(PostAdresseIFrittFormat::class)
+                subclass(PostadresseIFrittFormat::class)
                 subclass(Postboksadresse::class)
                 subclass(UtenlandskAdresse::class)
                 subclass(UtenlandskAdresseIFrittFormat::class)

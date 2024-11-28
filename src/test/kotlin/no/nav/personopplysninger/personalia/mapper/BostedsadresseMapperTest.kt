@@ -23,8 +23,8 @@ class BostedsadresseMapperTest {
         val outbound: Bostedsadresse = inbound.toOutbound(defaultAdresseKodeverk)!!
 
         assertSoftly(outbound) {
-            angittFlyttedato shouldBe "1337-05-06"
-            coAdressenavn shouldBe "coAdressenavn"
+            angittFlyttedato shouldBe inbound.angittFlyttedato
+            coAdressenavn shouldBe inbound.coAdressenavn
             adresse.shouldNotBeNull()
         }
     }

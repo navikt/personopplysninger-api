@@ -22,10 +22,10 @@ class OppholdsadresseMapperTest {
         val outbound: Oppholdsadresse = inbound.toOutbound(defaultAdresseKodeverk)!!
 
         assertSoftly(outbound) {
-            gyldigTilOgMed shouldBe "1337-05-06T12:30"
-            coAdressenavn shouldBe "coAdressenavn"
+            gyldigTilOgMed shouldBe inbound.gyldigTilOgMed
+            coAdressenavn shouldBe inbound.coAdressenavn
             adresse.shouldNotBeNull()
-            kilde shouldBe "pdl"
+            kilde shouldBe inbound.metadata.master.lowercase()
         }
     }
 
