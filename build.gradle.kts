@@ -3,10 +3,10 @@ import com.expediagroup.graphql.plugin.gradle.graphql
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    val kotlinVersion = "2.0.21"
+    val kotlinVersion = "2.1.0"
     val shadowVersion = "8.1.1"
     val versionsVersion = "0.51.0"
-    val graphqlVersion = "8.1.0"
+    val graphqlVersion = "8.2.1"
 
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.allopen") version kotlinVersion
@@ -36,16 +36,16 @@ repositories {
 dependencies {
     val auth0JwtVersion = "4.4.0"
     val caffeineVersion = "3.1.8"
-    val graphqlVersion = "8.1.0"
-    val kafkaVersion = "3.8.0"
-    val ktorVersion = "2.3.12"
-    val logbackVersion = "1.5.10"
+    val graphqlVersion = "8.2.1"
+    val kafkaVersion = "3.9.0"
+    val ktorVersion = "3.0.1"
+    val logbackVersion = "1.5.12"
     val logstashVersion = "8.0"
-    val micrometerVersion = "1.13.5"
+    val micrometerVersion = "1.14.1"
     val mockkVersion = "1.13.13"
-    val navSecurityVersion = "5.0.5"
-    val kotlinVersion = "2.0.0"
-    val tmsKtorTokenSupportVersion = "4.1.2"
+    val navSecurityVersion = "5.0.13"
+    val kotlinVersion = "2.1.0"
+    val tmsKtorTokenSupportVersion = "5.0.0"
     val tmsVarselBuilderVersion = "2.1.0"
     val kotestVersion = "5.9.1"
 
@@ -69,7 +69,7 @@ dependencies {
     implementation("io.ktor:ktor-server-metrics-micrometer:$ktorVersion")
     implementation("com.expediagroup:graphql-kotlin-ktor-client:$graphqlVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
-    implementation("no.nav.security:token-validation-ktor-v2:$navSecurityVersion")
+    implementation("no.nav.security:token-validation-ktor-v3:$navSecurityVersion")
     implementation("no.nav.tms.token.support:tokendings-exchange:$tmsKtorTokenSupportVersion")
     implementation("no.nav.tms.token.support:azure-exchange:$tmsKtorTokenSupportVersion")
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashVersion")
