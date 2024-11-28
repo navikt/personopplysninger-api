@@ -1,7 +1,7 @@
 package no.nav.personopplysninger.personalia.mapper
 
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Matrikkeladresse
-import no.nav.personopplysninger.personalia.dto.outbound.adresse.PostAdresseIFrittFormat
+import no.nav.personopplysninger.personalia.dto.outbound.adresse.PostadresseIFrittFormat
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.Postboksadresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresse
 import no.nav.personopplysninger.personalia.dto.outbound.adresse.UtenlandskAdresseIFrittFormat
@@ -28,8 +28,8 @@ fun PdlVegadresse.toOutbound(poststed: String?, kommune: String?): Vegadresse {
 
 fun PdlPostadresseIFrittFormat.toOutbound(
     poststed: String?
-): PostAdresseIFrittFormat {
-    return PostAdresseIFrittFormat(
+): PostadresseIFrittFormat {
+    return PostadresseIFrittFormat(
         adresselinje1 = adresselinje1,
         adresselinje2 = adresselinje2,
         adresselinje3 = adresselinje3,

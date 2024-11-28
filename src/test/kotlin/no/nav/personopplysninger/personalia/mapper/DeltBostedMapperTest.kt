@@ -23,7 +23,7 @@ class DeltBostedMapperTest {
         val outbound: DeltBosted = inbound.toOutbound(defaultAdresseKodeverk)!!
 
         assertSoftly(outbound) {
-            coAdressenavn shouldBe "coAdressenavn"
+            coAdressenavn shouldBe inbound.coAdressenavn
             adresse.shouldNotBeNull()
         }
     }

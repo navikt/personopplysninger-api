@@ -27,9 +27,9 @@ class AdresserMapperTest {
         val outbound: Adresser = inbound.toOutboundAdresser(defaultPersonaliaKodeverk)
 
         assertSoftly(outbound) {
-            kontaktadresser.shouldHaveSize(1)
+            kontaktadresser.shouldHaveSize(inbound.kontaktadresse.size)
             bostedsadresse.shouldNotBeNull()
-            oppholdsadresser.shouldHaveSize(1)
+            oppholdsadresser.shouldHaveSize(inbound.oppholdsadresse.size)
             deltBosted.shouldNotBeNull()
         }
     }
@@ -54,19 +54,18 @@ class AdresserMapperTest {
 
     @Test
     fun `should map kodeverk fields correctly when multiple oppholdsadresser`() {
-        val inbound: Person = defaultPerson.copy(
-            oppholdsadresse = List(GENERATED_ADRESSER_SIZE) { createOppholdsadresse(AdresseType.VEGADRESSE) },
-        )
-        val outbound: Adresser = inbound.toOutboundAdresser(
-            PersonaliaKodeverk(oppholdsadresseKodeverk = generateAdresseKodeverk())
-        )
+        val generatedOppholdsadresser = List(GENERATED_ADRESSER_SIZE) { createOppholdsadresse(AdresseType.VEGADRESSE) }
+        val generatedKodeverk = PersonaliaKodeverk(oppholdsadresseKodeverk = generateAdresseKodeverk())
+
+        val inbound: Person = defaultPerson.copy(oppholdsadresse = generatedOppholdsadresser)
+        val outbound: Adresser = inbound.toOutboundAdresser(generatedKodeverk)
 
         assertSoftly(outbound.oppholdsadresser) {
             shouldHaveSize(GENERATED_ADRESSER_SIZE)
             indices.forEach {
                 with(get(it).adresse as Vegadresse) {
-                    kommune shouldBe "kommune $it"
-                    poststed shouldBe "poststed $it"
+                    kommune shouldBe generatedKodeverk.oppholdsadresseKodeverk[it].kommune
+                    poststed shouldBe generatedKodeverk.oppholdsadresseKodeverk[it].poststed
                 }
             }
         }
@@ -74,18 +73,17 @@ class AdresserMapperTest {
 
     @Test
     fun `should map kodeverk fields correctly when multiple kontaktadresser`() {
-        val inbound: Person = defaultPerson.copy(
-            kontaktadresse = List(GENERATED_ADRESSER_SIZE) { createKontaktadresse(AdresseType.UTENLANDSK_ADRESSE) },
-        )
-        val outbound: Adresser = inbound.toOutboundAdresser(
-            PersonaliaKodeverk(kontaktadresseKodeverk = generateAdresseKodeverk())
-        )
+        val generatedKontaktadresser = List(GENERATED_ADRESSER_SIZE) { createKontaktadresse(AdresseType.UTENLANDSK_ADRESSE) }
+        val generatedKodeverk = PersonaliaKodeverk(kontaktadresseKodeverk = generateAdresseKodeverk())
+
+        val inbound: Person = defaultPerson.copy(kontaktadresse = generatedKontaktadresser)
+        val outbound: Adresser = inbound.toOutboundAdresser(generatedKodeverk)
 
         assertSoftly(outbound.kontaktadresser) {
             shouldHaveSize(GENERATED_ADRESSER_SIZE)
             indices.forEach {
                 with(get(it).adresse as UtenlandskAdresse) {
-                    land shouldBe "land $it"
+                    land shouldBe generatedKodeverk.kontaktadresseKodeverk[it].land
                 }
             }
         }
