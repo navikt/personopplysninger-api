@@ -38,7 +38,7 @@ dependencies {
     val caffeineVersion = "3.1.8"
     val graphqlVersion = "8.2.1"
     val kafkaVersion = "3.9.0"
-    val ktorVersion = "3.0.1"
+    val ktorVersion = "3.0.2"
     val logbackVersion = "1.5.12"
     val logstashVersion = "8.0"
     val micrometerVersion = "1.14.1"
