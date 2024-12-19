@@ -82,7 +82,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     routing {
         health(appContext.appMicrometerRegistry)
         authenticate {
-            endreOpplysninger(appContext.endreOpplysningerService, appContext.metricsCollector, appContext.idporten)
+            endreOpplysninger(appContext.endreOpplysningerService, appContext.metricsCollector, appContext.idportenService)
             institusjon(appContext.institusjonService)
             medl(appContext.medlService)
             personalia(appContext.personaliaService)
