@@ -14,6 +14,7 @@ import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
 import no.nav.personopplysninger.consumer.pdl.PdlConsumer
 import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
 import no.nav.personopplysninger.endreopplysninger.EndreOpplysningerService
+import no.nav.personopplysninger.endreopplysninger.idporten.IDPortenServiceImpl
 import no.nav.personopplysninger.endreopplysninger.kafka.HendelseProducer
 import no.nav.personopplysninger.institusjon.InstitusjonService
 import no.nav.personopplysninger.kontaktinformasjon.KontaktinformasjonService
@@ -37,8 +38,7 @@ class ApplicationContext {
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
     val azureService = AzureServiceBuilder.buildAzureService()
     val hendelseProducer = HendelseProducer(initializeKafkaProducer(env), env.varselHendelseTopic)
-
-    val idporten = setupIdporten(env)
+    val idportenService = IDPortenServiceImpl(setupIdporten(env), httpClient)
 
     val institusjonConsumer = InstitusjonConsumer(httpClient, env, tokendingsService)
     val kontaktinfoConsumer = KontaktinfoConsumer(httpClient, env, tokendingsService)
@@ -62,8 +62,8 @@ class ApplicationContext {
     val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkConsumer)
     val personaliaService = PersonaliaService(kodeverkConsumer, norg2Consumer, kontoregisterConsumer, pdlConsumer)
 
-    private fun setupIdporten(env: Environment): IDPorten {
-        return IDPorten(
+    private fun setupIdporten(env: Environment): IDPortenConfig {
+        return IDPortenConfig(
             redirectUri = env.redirectUri,
             frontendUri = URLBuilder().takeFrom(env.frontendUri).build(),
             wellKnownUrl = env.wellKnownUrl,
