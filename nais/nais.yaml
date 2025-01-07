@@ -49,6 +49,7 @@ spec:
          {{/each}}
   envFrom:
     - secret: personopplysninger-api-secret
+    - secret: idporten-personopplysninger-api
   secureLogs:
     enabled: true
   resources:
