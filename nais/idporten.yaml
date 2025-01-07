@@ -1,0 +1,22 @@
+apiVersion: nais.io/v1
+kind: IDPortenClient
+metadata:
+  labels:
+    team: personbruker
+  name: personopplysninger-api
+  namespace: personbruker
+spec:
+  accessTokenLifetime: 30
+  clientURI: {{idporten-client-uri}}
+  frontchannelLogoutURI: {{idporten-nav-base-uri}}/oauth2/logout/frontchannel
+  integrationType: idporten
+  postLogoutRedirectURIs:
+    - {{idporten-client-uri}}
+  redirectURIs:
+    - {{idporten-client-uri}}
+    - {{idporten-nav-base-uri}}
+  {{#each ingresses}}
+    - "{{this}}/lagreKontonummer"
+  {{/each }}
+  secretName: idporten-personopplysninger-api
+  ssoDisabled: true

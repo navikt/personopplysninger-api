@@ -12,10 +12,10 @@ data class Environment(
 
     val redirectUri: String = System.getenv("AUTH_REDIRECT_URI"),
     val frontendUri: String = System.getenv("AUTH_FRONTEND_URI"),
-    val wellKnownUrl: String = System.getenv("IDPORTEN_WELL_KNOWN_URL"),
-    val clientId: String = System.getenv("AUTH_CLIENT_ID"),
-    val clientJwk: String = System.getenv("AUTH_CLIENT_JWK"),
     val encryptionKey: String = System.getenv("AUTH_ENCRYPTION_KEY"),
+    val clientId: String = System.getenv("IDPORTEN_CLIENT_ID"),
+    val clientJwk: String = System.getenv("IDPORTEN_CLIENT_JWK"),
+    val wellKnownUrl: String = System.getenv("IDPORTEN_WELL_KNOWN_URL"),
 
     val inst2Url: String = System.getenv("INST2_API_URL"),
     val kodeverkUrl: String = System.getenv("KODEVERK_REST_API_URL"),
