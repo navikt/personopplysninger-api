@@ -35,7 +35,7 @@ repositories {
 
 dependencies {
     val auth0JwtVersion = "4.4.0"
-    val caffeineVersion = "3.1.8"
+    val caffeineVersion = "3.2.0"
     val graphqlVersion = "8.2.1"
     val kafkaVersion = "3.9.0"
     val ktorVersion = "3.0.3"
