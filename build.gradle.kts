@@ -25,11 +25,8 @@ kotlin {
 repositories {
     mavenCentral()
     maven("https://jitpack.io")
-    maven("https://maven.pkg.github.com/navikt/tms-varsel-authority") {
-        credentials {
-            username = System.getenv("GITHUB_ACTOR") ?: "x-access-token"
-            password = System.getenv("GITHUB_TOKEN") ?: project.findProperty("githubPassword") as String
-        }
+    maven {
+        url = uri("https://github-package-registry-mirror.gc.nav.no/cached/maven-release")
     }
 }
 
