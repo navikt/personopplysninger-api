@@ -47,20 +47,20 @@ class HendelseProducer(
     }
 
     private fun dekoratorVarslingstekst(endringstidspunkt: String): String {
-        return "Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
-                "Hvis det ikke var deg som endret, må du logge inn på NAV for å rette det. " +
+        return "Kontonummeret ditt hos Nav ble endret $endringstidspunkt. " +
+                "Hvis det ikke var deg som endret, må du logge inn på Nav for å rette det. " +
                 "Trenger du hjelp, kan du ringe oss på 55 55 33 33 eller kontakte oss i våre digitale kanaler."
     }
 
     private fun epostVarslingstekst(endringstidspunkt: String): String {
-        return "Hei! Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
-                "Hvis det ikke var deg som endret, må du logge deg inn på NAV for å rette kontonummeret. " +
-                "Trenger du hjelp, kan du ringe oss på 55 55 33 33 kl. 09:00–15:00. Hilsen NAV."
+        return "Hei! Kontonummeret ditt hos Nav ble endret $endringstidspunkt. " +
+                "Hvis det ikke var deg som endret, må du logge deg inn på Nav for å rette kontonummeret. " +
+                "Trenger du hjelp, kan du ringe oss på 55 55 33 33 kl. 09:00–15:00. Vennlig hilsen Nav."
     }
 
     private fun smsVarslingstekst(endringstidspunkt: String): String {
-        return "Kontonummeret ditt hos NAV ble endret $endringstidspunkt. " +
-                "Hvis det er feil, må du logge inn på NAV for å rette det eller ringe oss på 55 55 33 33 fra 9-15."
+        return "Kontonummeret ditt hos Nav ble endret $endringstidspunkt. " +
+                "Hvis det er feil, må du logge inn på Nav for å rette det eller ringe oss på 55 55 33 33 fra 9-15."
     }
 
     private fun LocalDateTime.toFormattedString(): String {
@@ -72,7 +72,7 @@ class HendelseProducer(
     }
 
     companion object {
-        const val VARSLINGSTITTEL = "Du har endret kontonummeret ditt hos NAV"
+        const val VARSLINGSTITTEL = "Du har endret kontonummeret ditt hos Nav"
 
         val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     }
