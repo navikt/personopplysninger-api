@@ -2,11 +2,9 @@ package no.nav.personopplysninger.config
 
 import com.expediagroup.graphql.client.ktor.GraphQLKtorClient
 import io.ktor.client.HttpClient
+import io.ktor.http.Cookie
 import io.ktor.http.Url
-import io.mockk.coEvery
-import io.mockk.mockk
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import io.ktor.server.routing.RoutingRequest
 import no.nav.personopplysninger.consumer.digdirkrr.KontaktinfoConsumer
 import no.nav.personopplysninger.consumer.inst2.InstitusjonConsumer
 import no.nav.personopplysninger.consumer.kodeverk.KodeverkConsumer
@@ -16,8 +14,10 @@ import no.nav.personopplysninger.consumer.medl.MedlConsumer
 import no.nav.personopplysninger.consumer.norg2.Norg2Consumer
 import no.nav.personopplysninger.consumer.pdl.PdlConsumer
 import no.nav.personopplysninger.consumer.pdlmottak.PdlMottakConsumer
-import no.nav.personopplysninger.endreopplysninger.EndreKontonummerState
 import no.nav.personopplysninger.endreopplysninger.EndreOpplysningerService
+import no.nav.personopplysninger.endreopplysninger.idporten.EndreKontonummerState
+import no.nav.personopplysninger.endreopplysninger.idporten.IDPortenService
+import no.nav.personopplysninger.endreopplysninger.idporten.Pkce
 import no.nav.personopplysninger.endreopplysninger.kafka.HendelseProducer
 import no.nav.personopplysninger.institusjon.InstitusjonService
 import no.nav.personopplysninger.kontaktinformasjon.KontaktinformasjonService
@@ -25,7 +25,6 @@ import no.nav.personopplysninger.medl.MedlService
 import no.nav.personopplysninger.personalia.PersonaliaService
 import no.nav.personopplysninger.testutils.FNR
 import no.nav.personopplysninger.testutils.STATE
-import no.nav.personopplysninger.testutils.createAccessToken
 import org.apache.kafka.clients.producer.MockProducer
 import java.net.URI
 
@@ -65,8 +64,7 @@ class TestApplicationContext(httpClient: HttpClient) {
     val tokendingsService = DummyTokendingsService()
     val azureService = DummyAzureService()
     val hendelseProducer = HendelseProducer(MockProducer(), "")
-
-    val idporten: IDPorten = mockIdporten()
+    val idPortenService = IDPortenMockedService()
 
     val institusjonConsumer = InstitusjonConsumer(httpClient, env, tokendingsService)
     val kontaktinfoConsumer = KontaktinfoConsumer(httpClient, env, tokendingsService)
@@ -90,25 +88,34 @@ class TestApplicationContext(httpClient: HttpClient) {
     val kontaktinformasjonService = KontaktinformasjonService(kontaktinfoConsumer, kodeverkConsumer)
     val personaliaService = PersonaliaService(kodeverkConsumer, norg2Consumer, kontoregisterConsumer, pdlConsumer)
 
-    private fun mockIdporten(): IDPorten {
-        val idportenMock: IDPorten = mockk()
-        coEvery { idportenMock.encrypt(any()) } returns ""
-        coEvery { idportenMock.decrypt(any()) } returns Json.encodeToString(endreKontonummerState())
-        coEvery { idportenMock.authorizeUrl(any(), any(), any()) } returns Url("")
-        coEvery { idportenMock.token(any(), any(), any()) } returns createAccessToken()
-        coEvery { idportenMock.frontendUri } returns Url("")
-        coEvery { idportenMock.secureCookie } returns false
-        return idportenMock
+
+    class IDPortenMockedService : IDPortenService {
+        override fun createParams(): Triple<String, String, Pkce> = Triple("state", "nonce", Pkce())
+
+        override fun createCookie(endreKontonummerState: EndreKontonummerState) =
+            Cookie(name = "dummyCookieName", value = "dummyCookieValue")
+
+        override fun createAuthorizeUrl(state: String, nonce: String, pkce: Pkce) = Url("")
+
+        override fun createExpiredCookie() = Cookie(name = "dummyCookieName", value = "dummyCookieValue")
+
+        override fun createEndreKontonummerState(encryptedState: String?) = EndreKontonummerState(
+            state = STATE,
+            nonce = "",
+            codeVerifier = "",
+            kontonummer = Kontonummer(value = "12345678911"),
+            bruker = FNR,
+            locale = "",
+        )
+
+        override suspend fun validateRequest(
+            request: RoutingRequest,
+            endreKontonummerState: EndreKontonummerState,
+            fnr: String
+        ) {
+            //noop}
+        }
+
+        override fun frontendUriWithLocale(locale: String) = Url("")
     }
-
-    private fun endreKontonummerState() = EndreKontonummerState(
-        state = STATE,
-        nonce = "",
-        codeVerifier = "",
-        kontonummer = kontonummer(),
-        bruker = FNR,
-        locale = "",
-    )
-
-    private fun kontonummer() = Kontonummer("kilde", null, FNR)
 }
