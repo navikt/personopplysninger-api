@@ -11,5 +11,7 @@
   "kontoregister-host": "sokos-kontoregister-person.intern.nav.no",
   "min-replicas": 2,
   "max-replicas": 4,
-  "kafka-pool": "nav-prod"
+  "kafka-pool": "nav-prod",
+  "idporten-client-uri": "https://www.nav.no/person/personopplysninger",
+  "idporten-nav-base-uri": "https://login.nav.no"
 }
