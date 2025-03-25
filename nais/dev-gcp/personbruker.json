@@ -1,12 +1,10 @@
 {
-  "ingresses": [
-    "https://www.ansatt.dev.nav.no/person/personopplysninger-api"
-  ],
+  "ingresses": ["https://www.ansatt.dev.nav.no/person/personopplysninger-api"],
   "norg2-host": "norg2.dev-fss-pub.nais.io",
   "digdir-krr-proxy-host": "digdir-krr-proxy.intern.dev.nav.no",
   "pdl-mottak-host": "pdl-mottak.dev-fss-pub.nais.io",
   "pdl-api-host": "pdl-api.dev-fss-pub.nais.io",
-  "inst2-host": "institusjon-opphold-proxy-q2.dev-fss-pub.nais.io",
+  "inst2-host": "inst2-q2.dev-fss-pub.nais.io",
   "medlemskap-host": "medlemskap-medl-api.dev-fss-pub.nais.io",
   "kontoregister-host": "sokos-kontoregister-person.intern.dev.nav.no",
   "min-replicas": 1,
