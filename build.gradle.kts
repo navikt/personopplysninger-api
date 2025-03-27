@@ -3,10 +3,10 @@ import com.expediagroup.graphql.plugin.gradle.graphql
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    val kotlinVersion = "2.1.0"
+    val kotlinVersion = "2.1.20"
     val shadowVersion = "8.1.1"
     val versionsVersion = "0.52.0"
-    val graphqlVersion = "8.2.1"
+    val graphqlVersion = "8.4.0"
 
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.allopen") version kotlinVersion
@@ -33,15 +33,15 @@ repositories {
 dependencies {
     val auth0JwtVersion = "4.5.0"
     val caffeineVersion = "3.2.0"
-    val graphqlVersion = "8.3.0"
-    val kafkaVersion = "3.9.0"
-    val ktorVersion = "3.1.0"
-    val logbackVersion = "1.5.16"
+    val graphqlVersion = "8.4.0"
+    val kafkaVersion = "4.0.0"
+    val ktorVersion = "3.1.1"
+    val logbackVersion = "1.5.18"
     val logstashVersion = "8.0"
-    val micrometerVersion = "1.14.4"
-    val mockkVersion = "1.13.16"
-    val navSecurityVersion = "5.0.17"
-    val kotlinVersion = "2.1.0"
+    val micrometerVersion = "1.14.5"
+    val mockkVersion = "1.13.17"
+    val navSecurityVersion = "5.0.20"
+    val kotlinVersion = "2.1.20"
     val tmsKtorTokenSupportVersion = "5.0.1"
     val tmsVarselBuilderVersion = "2.1.1"
     val kotestVersion = "5.9.1"
