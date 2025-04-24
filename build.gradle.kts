@@ -6,7 +6,7 @@ plugins {
     val kotlinVersion = "2.1.20"
     val shadowVersion = "8.1.1"
     val versionsVersion = "0.52.0"
-    val graphqlVersion = "8.4.0"
+    val graphqlVersion = "8.6.2"
 
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.allopen") version kotlinVersion
