@@ -57,5 +57,6 @@ spec:
             action: "test "
           labels:
             severity: info
+            namespace: min-side
             receiver_reference: min-side-slack-receiver
             alert_type: custom
