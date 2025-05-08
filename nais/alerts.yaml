@@ -51,11 +51,11 @@ spec:
             alert_type: custom
         - alert: Test alert til min side fra personopplysninger-api
           expr: vector(1)
-          for: 10m
+          for: 15m
           annotations:
             summary: "Test alert fra personopplysninger-api til Min side"
             action: "test "
           labels:
-            severity: test
+            severity: info
             receiver_reference: min-side-slack-receiver
             alert_type: custom
