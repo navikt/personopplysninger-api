@@ -1,6 +1,6 @@
 name: Deploy alerts to dev
 on:
-  workflow_dispatch
+  push
 
 jobs:
   apply-alerts:
