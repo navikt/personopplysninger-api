@@ -44,7 +44,7 @@ fun Application.testModule(appContext: TestApplicationContext) {
         endreOpplysninger(
             appContext.endreOpplysningerService,
             MetricsCollector(PrometheusMeterRegistry(PrometheusConfig.DEFAULT).prometheusRegistry),
-            appContext.idporten
+            appContext.idPortenService
         )
         institusjon(appContext.institusjonService)
         medl(appContext.medlService)
