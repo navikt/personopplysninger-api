@@ -42,7 +42,7 @@ dependencies {
     val mockkVersion = "1.13.17"
     val navSecurityVersion = "5.0.20"
     val kotlinVersion = "2.1.20"
-    val tmsKtorTokenSupportVersion = "5.0.1"
+    val tmsKtorTokenSupportVersion = "5.0.2"
     val tmsVarselBuilderVersion = "2.1.1"
     val kotestVersion = "5.9.1"
 
