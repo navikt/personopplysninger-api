@@ -3,7 +3,22 @@ on:
   workflow_dispatch
 
 jobs:
+  deploy-idporten:
+    name: Deploy IDporten nais-operator
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: .nais/idporten.yaml
+          PRINT_PAYLOAD: true
+          VARS: ./nais/dev-gcp/personbruker.json
   deploy:
+    needs: [deploy-idporten]
     permissions:
       contents: read
       id-token: write
