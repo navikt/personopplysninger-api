@@ -44,7 +44,7 @@ dependencies {
     val kotlinVersion = "2.1.20"
     val tmsKtorTokenSupportVersion = "5.0.1"
     val tmsVarselBuilderVersion = "2.1.1"
-    val kotestVersion = "5.9.1"
+    val kotestVersion = "6.0.0"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
     implementation("com.github.ben-manes.caffeine:caffeine:$caffeineVersion")
